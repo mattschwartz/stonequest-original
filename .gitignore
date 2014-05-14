@@ -1,3 +1,9 @@
+stonequest/nbproject/build-impl.xml
+stonequest/nbproject/*.properties
+stonequest/nbproject/private/*
+stonequest/build/*
+
+
 #################
 ## Eclipse
 #################
