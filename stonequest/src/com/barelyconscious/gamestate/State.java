@@ -18,7 +18,7 @@ public enum State {
     NEW_PLAYER_MENU_STATE(1),
     LOAD_PLAYER_MENU_STATE(2),
     OPTIONS_MENU_STATE(3),
-    LOADING_STATE(4),
+    LOADING_MENU_STATE(4),
     WORLD_STATE(5);
 
     private final int value;

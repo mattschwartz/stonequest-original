@@ -12,6 +12,7 @@
  ************************************************************************** */
 package com.barelyconscious.gamestate;
 
+import com.barelyconscious.gamestate.menu.LoadingMenuState;
 import com.barelyconscious.gamestate.menu.MainMenuState;
 import com.barelyconscious.gamestate.menu.NewPlayerMenuState;
 import java.net.URL;
@@ -34,6 +35,7 @@ public class Client extends ClientBase<GameData> {
         addState(new MainMenuState(this, State.MAIN_MENU_STATE));
         addState(new NewPlayerMenuState(this, State.NEW_PLAYER_MENU_STATE));
         addState(new WorldState(this, State.WORLD_STATE));
+        addState(new LoadingMenuState(this, State.LOADING_MENU_STATE));
    }
     
 } // Client

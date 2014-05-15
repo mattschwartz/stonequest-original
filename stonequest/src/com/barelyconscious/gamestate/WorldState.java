@@ -25,22 +25,11 @@ public class WorldState extends GameStateBase<GameData> {
     }
 
     @Override
-    public void init(GameContainer container, StateBasedGame game) throws SlickException {
-    }
-
-    @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+        g.drawString("Welcome to the world, bitch", 50, 50);
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-    }
-
-    @Override
-    public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-    }
-
-    @Override
-    public void leave(GameContainer container, StateBasedGame game) throws SlickException {
     }
 } // WorldState
