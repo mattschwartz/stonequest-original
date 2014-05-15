@@ -45,10 +45,10 @@ public class NewPlayerMenu extends Menu {
         GUIHelper.setSize(playerNameEditField, 0.0f, 0.0f, 150.0f, 40.0f);
         GUIHelper.setPosition(playerNameEditField, 0.5f, 0.5f, 0.0f, -40.0f);
         
-        GUIHelper.setSize(backButton, 0.0f, 0.0f, 150.0f, 40.0f);
+        GUIHelper.setSize(backButton, 0.0f, 0.0f, 139.0f, 40.0f);
         GUIHelper.setPosition(backButton, 0.5f, 0.5f, -150.0f, 0.0f);
         
-        GUIHelper.setSize(startGameButton, 0.0f, 0.0f, 150.0f, 40.0f);
+        GUIHelper.setSize(startGameButton, 0.0f, 0.0f, 139.0f, 40.0f);
         GUIHelper.setPosition(startGameButton, 0.5f, 0.5f, 0.0f, 0.0f);
     }
 
