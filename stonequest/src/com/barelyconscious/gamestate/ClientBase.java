@@ -12,21 +12,15 @@
  ************************************************************************** */
 package com.barelyconscious.gamestate;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
+import TWLSlick.TWLStateBasedGame;
 
-public class ClientBase<T> extends StateBasedGame {
+public abstract class ClientBase<T> extends TWLStateBasedGame {
 
     private T gameData;
 
     public ClientBase(String name, T gameData) {
         super(name);
         this.gameData = gameData;
-    }
-
-    @Override
-    public void initStatesList(GameContainer gc) throws SlickException {
     }
 
     public void setData(T gameData) {

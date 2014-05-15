@@ -12,6 +12,9 @@
  ************************************************************************** */
 package com.barelyconscious.gamestate;
 
+import com.barelyconscious.gamestate.menu.MainMenuState;
+import com.barelyconscious.gamestate.menu.NewPlayerMenuState;
+import java.net.URL;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
@@ -20,11 +23,17 @@ public class Client extends ClientBase<GameData> {
     public Client(String name, GameData gameData) {
         super(name, gameData);
     }
-
+    
+    @Override
+    protected URL getThemeURL() {
+        return getClass().getResource("/theme/chutzpah.xml");
+    }
+    
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
-        addState(new WorldState(this, States.WORLD_STATE));
-//        addState(new LoadingState(this, States.LOADING_STATE));
-    }
-
+        addState(new MainMenuState(this, State.MAIN_MENU_STATE));
+        addState(new NewPlayerMenuState(this, State.NEW_PLAYER_MENU_STATE));
+        addState(new WorldState(this, State.WORLD_STATE));
+   }
+    
 } // Client

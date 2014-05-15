@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:           stonequest
- * File Name:         States.java
+ * File Name:         State.java
  * Author:            Matt Schwartz
  * Date Created:      05.15.2014 
  * Redistribution:    You are free to use, reuse, and edit any of the text in
@@ -12,14 +12,18 @@
  ************************************************************************** */
 package com.barelyconscious.gamestate;
 
-public enum States {
+public enum State {
 
-    LOADING_STATE(0),
-    WORLD_STATE(1);
+    MAIN_MENU_STATE(0),
+    NEW_PLAYER_MENU_STATE(1),
+    LOAD_PLAYER_MENU_STATE(2),
+    OPTIONS_MENU_STATE(3),
+    LOADING_STATE(4),
+    WORLD_STATE(5);
 
     private final int value;
 
-    private States(int value) {
+    private State(int value) {
         this.value = value;
     }
 
@@ -27,4 +31,4 @@ public enum States {
         return value;
     }
 
-} // States
+} // State

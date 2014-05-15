@@ -1,8 +1,8 @@
 /* *****************************************************************************
  * Project:           stonequest
- * File Name:         MainMenu.java
+ * File Name:         MainMenuState.java
  * Author:            Matt Schwartz
- * Date Created:      05.14.2014 
+ * Date Created:      05.15.2014 
  * Redistribution:    You are free to use, reuse, and edit any of the text in
  *                    this file.  You are not allowed to take credit for code
  *                    that was not written fully by yourself, or to remove 
@@ -10,64 +10,57 @@
  *                    Please email stonequest.bcgames@gmail.com for issues or concerns.
  * File Description:  
  ************************************************************************** */
-package com.barelyconscious.gui;
+package com.barelyconscious.gamestate.menu;
 
+import TWLSlick.RootPane;
+import com.barelyconscious.gamestate.ClientBase;
+import com.barelyconscious.gamestate.GameData;
+import com.barelyconscious.gamestate.GameStateBase;
+import com.barelyconscious.gamestate.State;
 import com.barelyconscious.util.GUIHelper;
 import de.matthiasmann.twl.Button;
-import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.Label;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class MainMenu extends Menu {
+public class MainMenuState extends GameStateBase<GameData> {
 
-    private Widget rootWidget;
+    private RootPane root;
     private Label titleLabel;
     private Button newPlayerButton;
     private Button loadPlayerButton;
     private Button optionsButton;
     private Button exitGameButton;
-
-    public MainMenu() {
-        createWidgets();
-        createRootWidget();
-        registerHandlers();
+    
+    public MainMenuState(ClientBase<GameData> client, State state) {
+        super(client, state);
     }
 
     @Override
-    protected final void createWidgets() {
+    protected RootPane createRootPane() {
+        root = super.createRootPane();
+        
+        createWidgets();
+        registerHandlers();
+        
+        return root;
+    }
+    
+    private void createWidgets() {
         titleLabel = new Label("StoneQuest");
         newPlayerButton = new Button("New Player");
         loadPlayerButton = new Button("Load Player");
         optionsButton = new Button("Options");
         exitGameButton = new Button("Exit Game");
 
-        GUIHelper.setSize(titleLabel, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(titleLabel, 0.0f, 0.0f, 0.0f, 0.0f);
-        
-        GUIHelper.setSize(newPlayerButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(newPlayerButton, 0.5f, 0.5f, -75.0f, -80.0f);
-
-        GUIHelper.setSize(loadPlayerButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(loadPlayerButton, 0.5f, 0.5f, -75.0f, -40.0f);
-
-        GUIHelper.setSize(optionsButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(optionsButton, 0.5f, 0.5f, -75.0f, 0.0f);
-
-        GUIHelper.setSize(exitGameButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(exitGameButton, 0.5f, 0.5f, -75.0f, 40.0f);
+        root.add(newPlayerButton);
+        root.add(loadPlayerButton);
+        root.add(optionsButton);
+        root.add(exitGameButton);
     }
-
-    @Override
-    protected final void createRootWidget() {
-        rootWidget = new Widget();
-
-        rootWidget.add(newPlayerButton);
-        rootWidget.add(loadPlayerButton);
-        rootWidget.add(optionsButton);
-        rootWidget.add(exitGameButton);
-    }
-
-    @Override
-    protected final void registerHandlers() {
+    
+    private void registerHandlers() {
         newPlayerButton.addCallback(new Runnable() {
 
             @Override
@@ -99,17 +92,25 @@ public class MainMenu extends Menu {
     }
 
     @Override
-    public final void show() {
-        guiHandler.setRootWidget(rootWidget);
-    }
+    protected void layoutRootPane() {
+        GUIHelper.setSize(titleLabel, 0.0f, 0.0f, 150.0f, 40.0f);
+        GUIHelper.setPosition(titleLabel, 0.0f, 0.0f, 0.0f, 0.0f);
+        
+        GUIHelper.setSize(newPlayerButton, 0.0f, 0.0f, 150.0f, 40.0f);
+        GUIHelper.setPosition(newPlayerButton, 0.5f, 0.5f, -75.0f, -80.0f);
 
-    @Override
-    public final void hide() {
-        guiHandler.setRootWidget(null);
-    }
+        GUIHelper.setSize(loadPlayerButton, 0.0f, 0.0f, 150.0f, 40.0f);
+        GUIHelper.setPosition(loadPlayerButton, 0.5f, 0.5f, -75.0f, -40.0f);
 
+        GUIHelper.setSize(optionsButton, 0.0f, 0.0f, 150.0f, 40.0f);
+        GUIHelper.setPosition(optionsButton, 0.5f, 0.5f, -75.0f, 0.0f);
+
+        GUIHelper.setSize(exitGameButton, 0.0f, 0.0f, 150.0f, 40.0f);
+        GUIHelper.setPosition(exitGameButton, 0.5f, 0.5f, -75.0f, 40.0f);
+    }
+    
     private void newPlayerEvent() {
-        guiHandler.newPlayerMenu.show();
+        getClient().enterState(State.NEW_PLAYER_MENU_STATE.getValue(), new FadeOutTransition(Color.white), new FadeInTransition(Color.white));
     }
 
     private void loadPlayerEvent() {
@@ -121,7 +122,7 @@ public class MainMenu extends Menu {
     }
 
     private void exitGameEvent() {
-        guiHandler.quitGame();
+        getClient().getContainer().exit();
     }
 
-} // MainMenu
+} // MainMenuState
