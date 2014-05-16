@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:           stonequest
- * File Name:         MainMenuState.java
+ * File Name:         InGameOptionsMenuState.java
  * Author:            Matt Schwartz
  * Date Created:      05.15.2014 
  * Redistribution:    You are free to use, reuse, and edit any of the text in
@@ -15,60 +15,64 @@ package com.barelyconscious.gamestate.menu;
 import com.barelyconscious.gamestate.ClientBase;
 import com.barelyconscious.gamestate.GameData;
 import com.barelyconscious.gamestate.State;
+import com.barelyconscious.input.KeyMap;
+import com.barelyconscious.input.KeyboardArgs;
 import com.barelyconscious.util.GUIHelper;
 import de.matthiasmann.twl.Button;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class MainMenuState extends MenuState {
+public class InGameOptionsMenuState extends MenuState {
 
-    private Button newPlayerButton;
-    private Button loadPlayerButton;
-    private Button optionsButton;
+    private Button continueButton;
+    private Button exitToMenuButton;
     private Button exitGameButton;
     
-    public MainMenuState(ClientBase<GameData> client, State state) {
+    public InGameOptionsMenuState(ClientBase<GameData> client, State state) {
         super(client, state);
     }
-    
+
     @Override
     protected void createWidgets() {
-        newPlayerButton = new Button("New Player");
-        loadPlayerButton = new Button("Load Player");
-        optionsButton = new Button("Options");
+        continueButton = new Button("Continue Game");
+        exitToMenuButton = new Button("Quit to Main Menu");
         exitGameButton = new Button("Exit Game");
     }
 
     @Override
     protected void addWidgets() {
-        root.add(newPlayerButton);
-        root.add(loadPlayerButton);
-        root.add(optionsButton);
+        root.add(continueButton);
+        root.add(exitToMenuButton);
         root.add(exitGameButton);
+    }
+
+    @Override
+    protected void layoutRootPane() {
+        GUIHelper.setSize(continueButton, 0.0f, 0.0f, 150.0f, 40.0f);
+        GUIHelper.setPosition(continueButton, 0.5f, 0.5f, -75.0f, -60.0f);
+        
+        GUIHelper.setSize(exitToMenuButton, 0.0f, 0.0f, 150.0f, 40.0f);
+        GUIHelper.setPosition(exitToMenuButton, 0.5f, 0.5f, -75.0f, -20.0f);
+        
+        GUIHelper.setSize(exitGameButton, 0.0f, 0.0f, 150.0f, 40.0f);
+        GUIHelper.setPosition(exitGameButton, 0.5f, 0.5f, -75.0f, 20.0f);
     }
     
     @Override
     protected void registerEvents() {
-        newPlayerButton.addCallback(new Runnable() {
+        continueButton.addCallback(new Runnable() {
 
             @Override
             public void run() {
-                newPlayerEvent();
+                continueEvent();
             }
         });
-        loadPlayerButton.addCallback(new Runnable() {
+        exitToMenuButton.addCallback(new Runnable() {
 
             @Override
             public void run() {
-                loadPlayerEvent();
-            }
-        });
-        optionsButton.addCallback(new Runnable() {
-
-            @Override
-            public void run() {
-                optionsEvent();
+                exitToMenuEvent();
             }
         });
         exitGameButton.addCallback(new Runnable() {
@@ -79,36 +83,24 @@ public class MainMenuState extends MenuState {
             }
         });
     }
-
-    @Override
-    protected void layoutRootPane() {
-        GUIHelper.setSize(newPlayerButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(newPlayerButton, 0.5f, 0.5f, -75.0f, -80.0f);
-
-        GUIHelper.setSize(loadPlayerButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(loadPlayerButton, 0.5f, 0.5f, -75.0f, -40.0f);
-
-        GUIHelper.setSize(optionsButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(optionsButton, 0.5f, 0.5f, -75.0f, 0.0f);
-
-        GUIHelper.setSize(exitGameButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(exitGameButton, 0.5f, 0.5f, -75.0f, 40.0f);
+    
+    private void continueEvent() {
+        getClient().enterState(State.WORLD_STATE.getValue(), new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
     }
-
-    private void newPlayerEvent() {
-        getClient().enterState(State.NEW_PLAYER_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
+    
+    private void exitToMenuEvent() {
+        getClient().enterState(State.MAIN_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
     }
-
-    private void loadPlayerEvent() {
-
-    }
-
-    private void optionsEvent() {
-
-    }
-
+    
     private void exitGameEvent() {
         getClient().getContainer().exit();
     }
 
-} // MainMenuState
+    @Override
+    public void keyPressed(int key, char c) {
+        KeyboardArgs args = new KeyboardArgs(getClient().getContainer(), getClient(), key, c);
+        
+        KeyMap.invoke(args);
+    }
+    
+} // InGameOptionsMenuState

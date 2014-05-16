@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:           stonequest
- * File Name:         ResourceLoader.java
+ * File Name:         KeyAction.java
  * Author:            Matt Schwartz
  * Date Created:      05.15.2014 
  * Redistribution:    You are free to use, reuse, and edit any of the text in
@@ -10,25 +10,10 @@
  *                    Please email stonequest.bcgames@gmail.com for issues or concerns.
  * File Description:  
  ************************************************************************** */
-package com.barelyconscious.util;
+package com.barelyconscious.input;
 
-import java.util.Map;
-import org.newdawn.slick.Image;
+public interface KeyAction {
 
-public class ResourceLoader {
+    public void invoke(KeyboardArgs args);
 
-    private static final ResourceLoader INSTANCE = new ResourceLoader();
-
-    private Map<String, Image> imageResources;
-
-    private ResourceLoader() {
-        if (INSTANCE != null) {
-            throw new IllegalStateException(this + " has already been initialized.");
-        }
-    }
-
-    public static ResourceLoader getInstance() {
-        return INSTANCE;
-    }
-
-} // ResourceLoader
+} // KeyAction

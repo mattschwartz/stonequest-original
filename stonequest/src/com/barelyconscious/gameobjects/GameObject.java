@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:           stonequest
- * File Name:         State.java
+ * File Name:         GameObject.java
  * Author:            Matt Schwartz
  * Date Created:      05.15.2014 
  * Redistribution:    You are free to use, reuse, and edit any of the text in
@@ -10,25 +10,29 @@
  *                    Please email stonequest.bcgames@gmail.com for issues or concerns.
  * File Description:  
  ************************************************************************** */
-package com.barelyconscious.gamestate;
+package com.barelyconscious.gameobjects;
 
-public enum State {
+import java.awt.Point;
 
-    MAIN_MENU_STATE(0),
-    NEW_PLAYER_MENU_STATE(1),
-    LOAD_PLAYER_MENU_STATE(2),
-    IN_GAME_OPTIONS_MENU_STATE(3),
-    LOADING_MENU_STATE(4),
-    WORLD_STATE(5);
+public abstract class GameObject {
 
-    private final int value;
+    protected boolean removeOnUpdate = false;
+    protected Point position;
 
-    private State(int value) {
-        this.value = value;
-    }
+    public GameObject() {
+    } // constructor
 
-    public int getValue() {
-        return value;
-    }
+    public void spawnObject() {
+    } // spawnObject
 
-} // State
+    public void render(UpdateEvent args) {
+    } // render
+
+    public void update(UpdateEvent args) {
+    } // update
+
+    public boolean shouldRemove() {
+        return removeOnUpdate;
+    } // shouldRemove
+    
+} // GameObject

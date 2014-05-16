@@ -22,7 +22,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.Transition;
 
 public abstract class MenuState extends GameStateBase<GameData> {
 
@@ -36,19 +35,20 @@ public abstract class MenuState extends GameStateBase<GameData> {
     @Override
     protected RootPane createRootPane() {
         root = super.createRootPane();
-        
+
         createWidgets();
         addWidgets();
         registerEvents();
-        
+
         return root;
     }
-    
+
     protected abstract void createWidgets();
-    
+
     protected abstract void addWidgets();
-    
-    protected abstract void registerEvents();
+
+    protected void registerEvents() {
+    }
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -59,7 +59,7 @@ public abstract class MenuState extends GameStateBase<GameData> {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         int y = (container.getHeight() - backgroundImage.getHeight()) / 2;
-        g.drawImage(backgroundImage, 0, y);
+        backgroundImage.draw(0, y);
     }
 
 } // MenuState

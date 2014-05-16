@@ -15,14 +15,17 @@ package com.barelyconscious.gamestate;
 import com.barelyconscious.gamestate.menu.LoadingMenuState;
 import com.barelyconscious.gamestate.menu.MainMenuState;
 import com.barelyconscious.gamestate.menu.NewPlayerMenuState;
+import com.barelyconscious.gamestate.menu.InGameOptionsMenuState;
 import java.net.URL;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.loading.LoadingList;
 
 public class Client extends ClientBase<GameData> {
 
     public Client(String name, GameData gameData) {
         super(name, gameData);
+        LoadingList.setDeferredLoading(true);
     }
     
     @Override
@@ -34,8 +37,9 @@ public class Client extends ClientBase<GameData> {
     public void initStatesList(GameContainer gc) throws SlickException {
         addState(new MainMenuState(this, State.MAIN_MENU_STATE));
         addState(new NewPlayerMenuState(this, State.NEW_PLAYER_MENU_STATE));
-        addState(new WorldState(this, State.WORLD_STATE));
+        addState(new InGameOptionsMenuState(this, State.IN_GAME_OPTIONS_MENU_STATE));
         addState(new LoadingMenuState(this, State.LOADING_MENU_STATE));
+        addState(new WorldState(this, State.WORLD_STATE));
    }
     
 } // Client

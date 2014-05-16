@@ -25,6 +25,7 @@ public class Main {
 
             apc.setDisplayMode(800, 640, false);
             apc.setTargetFrameRate(60);
+            apc.setShowFPS(false);
             apc.start();
         } catch (SlickException ex) {
             System.err.println("Error: " + ex);
