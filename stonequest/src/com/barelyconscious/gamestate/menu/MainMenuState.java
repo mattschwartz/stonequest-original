@@ -18,6 +18,10 @@ import com.barelyconscious.gamestate.State;
 import com.barelyconscious.util.GUIHelper;
 import de.matthiasmann.twl.Button;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
@@ -34,15 +38,10 @@ public class MainMenuState extends MenuState {
     
     @Override
     protected void createWidgets() {
-        newPlayerButton = new Button("New Player");
-        loadPlayerButton = new Button("Load Player");
-        optionsButton = new Button("Options");
-        exitGameButton = new Button("Exit Game");
-        
-        newPlayerButton.setTheme("button_right");
-        loadPlayerButton.setTheme("button_right");
-        optionsButton.setTheme("button_right");
-        exitGameButton.setTheme("button_right");
+        newPlayerButton = new Button("New Game");
+        loadPlayerButton = new Button("Load Game");
+        optionsButton = new Button("Settings");
+        exitGameButton = new Button("Quit");
     }
 
     @Override
@@ -87,19 +86,27 @@ public class MainMenuState extends MenuState {
 
     @Override
     protected void layoutRootPane() {
-        GUIHelper.setSize(newPlayerButton, 0.0f, 0.0f, 300.0f, 25.0f);
-        GUIHelper.setPosition(newPlayerButton, 1.0f, 1.0f, -300.0f, -100.0f);
+        GUIHelper.setSize(newPlayerButton, 0.0f, 0.0f, 150.0f, 25.0f);
+        GUIHelper.setPosition(newPlayerButton, 0.0f, 0.5f, 75.0f, -60.0f);
 
-        GUIHelper.setSize(loadPlayerButton, 0.0f, 0.0f, 250.0f, 25.0f);
-        GUIHelper.setPosition(loadPlayerButton, 1.0f, 1.0f, -250.0f, -75.0f);
+        GUIHelper.setSize(loadPlayerButton, 0.0f, 0.0f, 150.0f, 25.0f);
+        GUIHelper.setPosition(loadPlayerButton, 0.0f, 0.5f, 75.0f, -30.0f);
 
-        GUIHelper.setSize(optionsButton, 0.0f, 0.0f, 200.0f, 25.0f);
-        GUIHelper.setPosition(optionsButton, 1.0f, 1.0f, -200.0f, -50.0f);
+        GUIHelper.setSize(optionsButton, 0.0f, 0.0f, 150.0f, 25.0f);
+        GUIHelper.setPosition(optionsButton, 0.0f, 0.5f, 75.0f, 0.0f);
 
         GUIHelper.setSize(exitGameButton, 0.0f, 0.0f, 150.0f, 25.0f);
-        GUIHelper.setPosition(exitGameButton, 1.0f, 1.0f, -150.0f, -25.0f);
+        GUIHelper.setPosition(exitGameButton, 0.0f, 0.5f, 75.0f, 30.0f);
     }
 
+    @Override
+    public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+        super.render(container, game, g);
+        
+        g.setColor(new Color(41f/256f, 48f/256f, 61f/256f, 0.6f));
+        g.fillRect(75, 0, 150, container.getHeight());
+    }
+    
     private void newPlayerEvent() {
         getClient().enterState(State.NEW_PLAYER_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
     }

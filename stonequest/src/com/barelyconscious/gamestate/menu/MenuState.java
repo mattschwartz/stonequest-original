@@ -17,6 +17,7 @@ import com.barelyconscious.gamestate.ClientBase;
 import com.barelyconscious.gamestate.GameData;
 import com.barelyconscious.gamestate.GameStateBase;
 import com.barelyconscious.gamestate.State;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -26,7 +27,6 @@ import org.newdawn.slick.state.StateBasedGame;
 public abstract class MenuState extends GameStateBase<GameData> {
 
     protected RootPane root;
-    private Image titleImage;
     private Image backgroundImage;
 
     public MenuState(ClientBase<GameData> client, State state) {
@@ -54,7 +54,6 @@ public abstract class MenuState extends GameStateBase<GameData> {
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         super.init(container, game);
-        titleImage = new Image("images/title.jpg");
         backgroundImage = new Image("images/menu_bg.png");
     }
 
@@ -62,8 +61,32 @@ public abstract class MenuState extends GameStateBase<GameData> {
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         int y = (container.getHeight() - backgroundImage.getHeight()) / 2;
         backgroundImage.draw(0, y);
-        y = container.getHeight() - titleImage.getHeight() / 2;
-        titleImage.draw(0, y, 0.5f);
+        
+        String str = "StoneQuest";
+        int x = (container.getWidth() - g.getFont().getWidth(str)) / 2;
+        y -= g.getFont().getHeight(str);
+        
+        g.setColor(Color.black);
+        g.drawString(str, x, y - 1);
+        g.drawString(str, x, y + 1);
+        g.drawString(str, x - 1, y);
+        g.drawString(str, x + 1, y);
+        
+        g.setColor(Color.white);
+        g.drawString(str, x, y);
+        
+        str = "Version 2.0.1";
+        x = (container.getWidth() - g.getFont().getWidth(str)) / 2;
+        y += g.getFont().getHeight(str);
+        
+        g.setColor(Color.black);
+        g.drawString(str, x, y - 1);
+        g.drawString(str, x, y + 1);
+        g.drawString(str, x - 1, y);
+        g.drawString(str, x + 1, y);
+        
+        g.setColor(Color.white);
+        g.drawString(str, x, y);
     }
 
 } // MenuState

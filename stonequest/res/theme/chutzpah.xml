@@ -222,6 +222,7 @@
         <param name="minHeight"><int>30</int></param>
         <param name="minWidth"><int>30</int></param>
         <param name="font"><font>button_font</font></param>
+        <param name="textAlignment"><enum type="alignment">center</enum></param>
     </theme>
     <theme name="button_right" ref="label">
         <param name="border"><border>6,0</border></param>
@@ -231,13 +232,12 @@
         <param name="font"><font>button_font</font></param>
         <param name="textAlignment"><enum type="alignment">right</enum></param>
     </theme>
-    <theme name="button_center" ref="label">
+    <theme name="button_left" ref="label">
         <param name="border"><border>6,0</border></param>
         <param name="background"><image>button_background</image></param>
         <param name="minHeight"><int>30</int></param>
         <param name="minWidth"><int>30</int></param>
         <param name="font"><font>button_font</font></param>
-        <param name="textAlignment"><enum type="alignment">center</enum></param>
     </theme>
     <theme name="radiobutton" ref="button">
         <param name="background"><image>radiobutton_background</image></param>
