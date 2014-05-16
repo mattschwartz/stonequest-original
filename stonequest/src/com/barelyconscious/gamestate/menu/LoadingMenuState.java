@@ -44,11 +44,13 @@ public class LoadingMenuState extends MenuState {
 
     public LoadingMenuState(ClientBase<GameData> client, State state) {
         super(client, state);
+        log = new ArrayList<>();
     }
 
     @Override
     protected void createWidgets() {
         progressBar = new ProgressBar();
+        progressBar.setTheme("progressBar");
         tipPanel = new DialogLayout();
 
         tipPanel = new DialogLayout();
@@ -76,12 +78,6 @@ public class LoadingMenuState extends MenuState {
     }
 
     @Override
-    public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        super.init(container, game);
-        log = new ArrayList<>();
-    }
-
-    @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         super.render(container, game, g);
 
@@ -105,7 +101,7 @@ public class LoadingMenuState extends MenuState {
         String logMessage = "";
         
         if (complete) {
-            getClient().enterState(State.WORLD_STATE.getValue(), new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
+            getClient().enterState(State.WORLD_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
             return;
         }
         

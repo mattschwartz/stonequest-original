@@ -16,6 +16,7 @@ import com.barelyconscious.gamestate.menu.LoadingMenuState;
 import com.barelyconscious.gamestate.menu.MainMenuState;
 import com.barelyconscious.gamestate.menu.NewPlayerMenuState;
 import com.barelyconscious.gamestate.menu.InGameOptionsMenuState;
+import com.barelyconscious.gamestate.menu.SavingGameMenuState;
 import java.net.URL;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -39,6 +40,7 @@ public class Client extends ClientBase<GameData> {
         addState(new NewPlayerMenuState(this, State.NEW_PLAYER_MENU_STATE));
         addState(new InGameOptionsMenuState(this, State.IN_GAME_OPTIONS_MENU_STATE));
         addState(new LoadingMenuState(this, State.LOADING_MENU_STATE));
+        addState(new SavingGameMenuState(this, State.SAVING_GAME_MENU_STATE));
         addState(new WorldState(this, State.WORLD_STATE));
    }
     

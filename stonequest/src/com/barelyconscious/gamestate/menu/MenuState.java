@@ -26,6 +26,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public abstract class MenuState extends GameStateBase<GameData> {
 
     protected RootPane root;
+    private Image titleImage;
     private Image backgroundImage;
 
     public MenuState(ClientBase<GameData> client, State state) {
@@ -53,6 +54,7 @@ public abstract class MenuState extends GameStateBase<GameData> {
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         super.init(container, game);
+        titleImage = new Image("images/title.jpg");
         backgroundImage = new Image("images/menu_bg.png");
     }
 
@@ -60,6 +62,8 @@ public abstract class MenuState extends GameStateBase<GameData> {
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         int y = (container.getHeight() - backgroundImage.getHeight()) / 2;
         backgroundImage.draw(0, y);
+        y = container.getHeight() - titleImage.getHeight() / 2;
+        titleImage.draw(0, y, 0.5f);
     }
 
 } // MenuState

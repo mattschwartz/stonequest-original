@@ -85,15 +85,16 @@ public class InGameOptionsMenuState extends MenuState {
     }
     
     private void continueEvent() {
-        getClient().enterState(State.WORLD_STATE.getValue(), new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
+        getClient().enterState(State.WORLD_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
     }
     
     private void exitToMenuEvent() {
-        getClient().enterState(State.MAIN_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
+        ((SavingGameMenuState)getClient().getState(State.SAVING_GAME_MENU_STATE.getValue())).setReturnState(State.MAIN_MENU_STATE.getValue());
+        getClient().enterState(State.SAVING_GAME_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
     }
     
     private void exitGameEvent() {
-        getClient().getContainer().exit();
+        getClient().enterState(State.SAVING_GAME_MENU_STATE.getValue());
     }
 
     @Override

@@ -100,6 +100,6 @@ public class NewPlayerMenuState extends MenuState {
     }
 
     private void backEvent() {
-        getClient().enterState(State.MAIN_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
+        getClient().enterState(State.MAIN_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
     }
 } // NewPlayerMenuState

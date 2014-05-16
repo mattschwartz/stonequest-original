@@ -38,6 +38,11 @@ public class MainMenuState extends MenuState {
         loadPlayerButton = new Button("Load Player");
         optionsButton = new Button("Options");
         exitGameButton = new Button("Exit Game");
+        
+        newPlayerButton.setTheme("button_right");
+        loadPlayerButton.setTheme("button_right");
+        optionsButton.setTheme("button_right");
+        exitGameButton.setTheme("button_right");
     }
 
     @Override
@@ -82,21 +87,21 @@ public class MainMenuState extends MenuState {
 
     @Override
     protected void layoutRootPane() {
-        GUIHelper.setSize(newPlayerButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(newPlayerButton, 0.5f, 0.5f, -75.0f, -80.0f);
+        GUIHelper.setSize(newPlayerButton, 0.0f, 0.0f, 300.0f, 25.0f);
+        GUIHelper.setPosition(newPlayerButton, 1.0f, 1.0f, -300.0f, -100.0f);
 
-        GUIHelper.setSize(loadPlayerButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(loadPlayerButton, 0.5f, 0.5f, -75.0f, -40.0f);
+        GUIHelper.setSize(loadPlayerButton, 0.0f, 0.0f, 250.0f, 25.0f);
+        GUIHelper.setPosition(loadPlayerButton, 1.0f, 1.0f, -250.0f, -75.0f);
 
-        GUIHelper.setSize(optionsButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(optionsButton, 0.5f, 0.5f, -75.0f, 0.0f);
+        GUIHelper.setSize(optionsButton, 0.0f, 0.0f, 200.0f, 25.0f);
+        GUIHelper.setPosition(optionsButton, 1.0f, 1.0f, -200.0f, -50.0f);
 
-        GUIHelper.setSize(exitGameButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(exitGameButton, 0.5f, 0.5f, -75.0f, 40.0f);
+        GUIHelper.setSize(exitGameButton, 0.0f, 0.0f, 150.0f, 25.0f);
+        GUIHelper.setPosition(exitGameButton, 1.0f, 1.0f, -150.0f, -25.0f);
     }
 
     private void newPlayerEvent() {
-        getClient().enterState(State.NEW_PLAYER_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
+        getClient().enterState(State.NEW_PLAYER_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
     }
 
     private void loadPlayerEvent() {
@@ -108,7 +113,7 @@ public class MainMenuState extends MenuState {
     }
 
     private void exitGameEvent() {
-        getClient().getContainer().exit();
+        getClient().enterState(State.SAVING_GAME_MENU_STATE.getValue());
     }
 
 } // MainMenuState

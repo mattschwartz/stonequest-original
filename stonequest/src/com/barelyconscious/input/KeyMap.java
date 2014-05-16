@@ -87,9 +87,9 @@ public class KeyMap {
 
     private static void toggleOptionsMenu(KeyboardArgs args) {
         if (args.game.getCurrentStateID() == State.IN_GAME_OPTIONS_MENU_STATE.getValue()) {
-            args.game.enterState(State.WORLD_STATE.getValue(), new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
+            args.game.enterState(State.WORLD_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
         } else {
-            args.game.enterState(State.IN_GAME_OPTIONS_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
+            args.game.enterState(State.IN_GAME_OPTIONS_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
         }
     }
 } // KeyMap

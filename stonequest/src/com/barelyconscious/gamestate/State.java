@@ -19,7 +19,8 @@ public enum State {
     LOAD_PLAYER_MENU_STATE(2),
     IN_GAME_OPTIONS_MENU_STATE(3),
     LOADING_MENU_STATE(4),
-    WORLD_STATE(5);
+    SAVING_GAME_MENU_STATE(5),
+    WORLD_STATE(6);
 
     private final int value;
 
