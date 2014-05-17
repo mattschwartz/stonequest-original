@@ -61,9 +61,25 @@ public abstract class MenuState extends GameStateBase<GameData> {
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         int y = (container.getHeight() - backgroundImage.getHeight()) / 2;
         backgroundImage.draw(0, y);
+        printInfo(container.getWidth(), container.getHeight(), g);
+    }
+    
+    private void printInfo(int width, int height, Graphics g) {
+        String str = "Version 2.0.1";
+        int x = width - g.getFont().getWidth(str) - 5;
+        int y = height - g.getFont().getHeight(str) - 5;
         
-        String str = "StoneQuest";
-        int x = (container.getWidth() - g.getFont().getWidth(str)) / 2;
+        g.setColor(Color.black);
+        g.drawString(str, x, y - 1);
+        g.drawString(str, x, y + 1);
+        g.drawString(str, x - 1, y);
+        g.drawString(str, x + 1, y);
+        
+        g.setColor(Color.white);
+        g.drawString(str, x, y);
+        
+        str = "StoneQuest";
+        x = width - g.getFont().getWidth(str) - 5;
         y -= g.getFont().getHeight(str);
         
         g.setColor(Color.black);
@@ -75,18 +91,6 @@ public abstract class MenuState extends GameStateBase<GameData> {
         g.setColor(Color.white);
         g.drawString(str, x, y);
         
-        str = "Version 2.0.1";
-        x = (container.getWidth() - g.getFont().getWidth(str)) / 2;
-        y += g.getFont().getHeight(str);
-        
-        g.setColor(Color.black);
-        g.drawString(str, x, y - 1);
-        g.drawString(str, x, y + 1);
-        g.drawString(str, x - 1, y);
-        g.drawString(str, x + 1, y);
-        
-        g.setColor(Color.white);
-        g.drawString(str, x, y);
     }
 
 } // MenuState

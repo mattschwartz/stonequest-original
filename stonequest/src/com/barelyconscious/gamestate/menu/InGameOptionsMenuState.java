@@ -15,11 +15,14 @@ package com.barelyconscious.gamestate.menu;
 import com.barelyconscious.gamestate.ClientBase;
 import com.barelyconscious.gamestate.GameData;
 import com.barelyconscious.gamestate.State;
-import com.barelyconscious.input.KeyMap;
-import com.barelyconscious.input.KeyboardArgs;
 import com.barelyconscious.util.GUIHelper;
 import de.matthiasmann.twl.Button;
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
@@ -49,14 +52,14 @@ public class InGameOptionsMenuState extends MenuState {
 
     @Override
     protected void layoutRootPane() {
-        GUIHelper.setSize(continueButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(continueButton, 0.5f, 0.5f, -75.0f, -60.0f);
+        GUIHelper.setSize(continueButton, 0.0f, 0.0f, 150.0f, 25.0f);
+        GUIHelper.setPosition(continueButton, 0.0f, 0.5f, 75.0f, -45.0f);
         
-        GUIHelper.setSize(exitToMenuButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(exitToMenuButton, 0.5f, 0.5f, -75.0f, -20.0f);
+        GUIHelper.setSize(exitToMenuButton, 0.0f, 0.0f, 150.0f, 25.0f);
+        GUIHelper.setPosition(exitToMenuButton, 0.0f, 0.5f, 75.0f, -15.0f);
         
-        GUIHelper.setSize(exitGameButton, 0.0f, 0.0f, 150.0f, 40.0f);
-        GUIHelper.setPosition(exitGameButton, 0.5f, 0.5f, -75.0f, 20.0f);
+        GUIHelper.setSize(exitGameButton, 0.0f, 0.0f, 150.0f, 25.0f);
+        GUIHelper.setPosition(exitGameButton, 0.0f, 0.5f, 75.0f, 15.0f);
     }
     
     @Override
@@ -83,6 +86,16 @@ public class InGameOptionsMenuState extends MenuState {
             }
         });
     }
+
+    @Override
+    public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+        super.render(container, game, g);
+        
+        Color oldColor = g.getColor();
+        g.setColor(new Color(41f/256f, 48f/256f, 61f/256f, 0.6f));
+        g.fillRect(75, 0, 150, container.getHeight());
+        g.setColor(oldColor);
+    }
     
     private void continueEvent() {
         getClient().enterState(State.WORLD_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
@@ -99,9 +112,9 @@ public class InGameOptionsMenuState extends MenuState {
 
     @Override
     public void keyPressed(int key, char c) {
-        KeyboardArgs args = new KeyboardArgs(getClient().getContainer(), getClient(), key, c);
-        
-        KeyMap.invoke(args);
+        if (key == Keyboard.KEY_ESCAPE) {
+            getClient().enterState(State.WORLD_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
+        }
     }
     
 } // InGameOptionsMenuState
