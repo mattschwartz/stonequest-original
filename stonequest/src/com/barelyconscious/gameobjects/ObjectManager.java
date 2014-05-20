@@ -14,9 +14,6 @@ package com.barelyconscious.gameobjects;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class ObjectManager {
 

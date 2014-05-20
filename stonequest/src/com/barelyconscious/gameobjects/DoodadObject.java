@@ -1,8 +1,8 @@
 /* *****************************************************************************
  * Project:           stonequest
- * File Name:         GameObject.java
+ * File Name:         DoodadObject.java
  * Author:            Matt Schwartz
- * Date Created:      05.15.2014 
+ * Date Created:      05.19.2014 
  * Redistribution:    You are free to use, reuse, and edit any of the text in
  *                    this file.  You are not allowed to take credit for code
  *                    that was not written fully by yourself, or to remove 
@@ -12,24 +12,22 @@
  ************************************************************************** */
 package com.barelyconscious.gameobjects;
 
-public abstract class GameObject {
+import com.barelyconscious.doodads.Doodad;
 
-    protected boolean removeOnUpdate = false;
+public class DoodadObject extends GameObject {
 
-    public GameObject() {
-    } // constructor
+    private Doodad doodad;
 
-    public void spawnObject() {
-    } // spawnObject
+    public DoodadObject() {
 
+    }
+
+    @Override
     public void render(UpdateEvent args) {
-    } // render
+    }
 
+    @Override
     public void update(UpdateEvent args) {
-    } // update
+    }
 
-    public boolean shouldRemove() {
-        return removeOnUpdate;
-    } // shouldRemove
-
-} // GameObject
+} // DoodadObject

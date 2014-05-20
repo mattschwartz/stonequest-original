@@ -1,8 +1,8 @@
 /* *****************************************************************************
-   * Project:           StoneQuest
-   * File Name:         EntityObject.java
+   * Project:           stonequest
+   * File Name:         RandomizedZone.java
    * Author:            Matt Schwartz
-   * Date Created:      05.09.2014 
+   * Date Created:      05.19.2014 
    * Redistribution:    You are free to use, reuse, and edit any of the text in
    *                    this file.  You are not allowed to take credit for code
    *                    that was not written fully by yourself, or to remove 
@@ -11,23 +11,15 @@
    * File Description:  
    ************************************************************************** */
 
-package com.barelyconscious.gameobjects;
+package com.barelyconscious.world;
 
-import com.barelyconscious.entities.Entity;
+import com.barelyconscious.gameobjects.UpdateEvent;
 
-public class EntityObject extends GameObject {
-    
-    protected Entity entity;
-    
-    public EntityObject(Entity entity, float x, float y) {
-        this.entity = entity;
-    } // constructor
+public class RandomizedZone extends Zone {
 
     @Override
-    public void spawnObject() {
-    } // spawnObject
-
-    @Override
-    public void update(UpdateEvent args) {
-    } // update
-} // EntityObject
+    public void render(UpdateEvent args) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+} // RandomizedZone

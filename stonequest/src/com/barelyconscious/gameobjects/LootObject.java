@@ -13,7 +13,6 @@
 package com.barelyconscious.gameobjects;
 
 import com.barelyconscious.items.Item;
-import java.awt.Point;
 
 public class LootObject extends GameObject {
 
@@ -21,13 +20,6 @@ public class LootObject extends GameObject {
 
     public LootObject(Item item, int x, int y) {
         this.item = item;
-        super.position.x = x;
-        super.position.y = y;
-    } // constructor
-
-    public LootObject(Item item, Point position) {
-        this.item = item;
-        this.position = position;
     } // constructor
 
     @Override

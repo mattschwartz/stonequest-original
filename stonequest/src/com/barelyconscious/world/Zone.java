@@ -1,8 +1,8 @@
 /* *****************************************************************************
  * Project:           stonequest
- * File Name:         GameObject.java
+ * File Name:         Zone.java
  * Author:            Matt Schwartz
- * Date Created:      05.15.2014 
+ * Date Created:      05.19.2014 
  * Redistribution:    You are free to use, reuse, and edit any of the text in
  *                    this file.  You are not allowed to take credit for code
  *                    that was not written fully by yourself, or to remove 
@@ -10,26 +10,22 @@
  *                    Please email stonequest.bcgames@gmail.com for issues or concerns.
  * File Description:  
  ************************************************************************** */
-package com.barelyconscious.gameobjects;
+package com.barelyconscious.world;
 
-public abstract class GameObject {
+import com.barelyconscious.gameobjects.UpdateEvent;
 
-    protected boolean removeOnUpdate = false;
+public abstract class Zone {
 
-    public GameObject() {
-    } // constructor
+    protected float xShift;
+    protected float yShift;
 
-    public void spawnObject() {
-    } // spawnObject
-
-    public void render(UpdateEvent args) {
-    } // render
+    public void shift(float xShift, float yShift) {
+        this.xShift = xShift;
+        this.yShift = yShift;
+    }
 
     public void update(UpdateEvent args) {
-    } // update
+    }
 
-    public boolean shouldRemove() {
-        return removeOnUpdate;
-    } // shouldRemove
-
-} // GameObject
+    public abstract void render(UpdateEvent args);
+} // Zone

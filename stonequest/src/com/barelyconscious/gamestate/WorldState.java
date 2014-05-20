@@ -16,6 +16,7 @@ import com.barelyconscious.gameobjects.ObjectManager;
 import com.barelyconscious.gameobjects.UpdateEvent;
 import com.barelyconscious.input.KeyMap;
 import com.barelyconscious.input.KeyboardArgs;
+import com.barelyconscious.world.World;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -29,14 +30,15 @@ public class WorldState extends GameStateBase<GameData> {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.drawString("Welcome to the world.", 50, 50);
         UpdateEvent args = new UpdateEvent(gc, getClient(), g);
+        World.getInstance().render(args);
         ObjectManager.getInstance().render(args);
     }
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
         UpdateEvent args = new UpdateEvent(gc, getClient(), delta);
+        World.getInstance().update(args);
         ObjectManager.getInstance().update(args);
     }
 

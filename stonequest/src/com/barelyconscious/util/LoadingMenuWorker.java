@@ -1,8 +1,8 @@
 /* *****************************************************************************
-   * Project:           StoneQuest
-   * File Name:         EntityObject.java
+   * Project:           stonequest
+   * File Name:         LoadingMenuWorker.java
    * Author:            Matt Schwartz
-   * Date Created:      05.09.2014 
+   * Date Created:      05.20.2014 
    * Redistribution:    You are free to use, reuse, and edit any of the text in
    *                    this file.  You are not allowed to take credit for code
    *                    that was not written fully by yourself, or to remove 
@@ -11,23 +11,22 @@
    * File Description:  
    ************************************************************************** */
 
-package com.barelyconscious.gameobjects;
+package com.barelyconscious.util;
 
-import com.barelyconscious.entities.Entity;
+public class LoadingMenuWorker implements Runnable {
 
-public class EntityObject extends GameObject {
+    public String name = "resources";
+    public String description = "loads resources";
     
-    protected Entity entity;
+    public LoadingMenuWorker() {
+    }
     
-    public EntityObject(Entity entity, float x, float y) {
-        this.entity = entity;
-    } // constructor
-
+    public LoadingMenuWorker(String name) {
+        this.name = name;
+    }
+    
     @Override
-    public void spawnObject() {
-    } // spawnObject
+    public void run() {
+    }
 
-    @Override
-    public void update(UpdateEvent args) {
-    } // update
-} // EntityObject
+} // LoadingMenuWorker

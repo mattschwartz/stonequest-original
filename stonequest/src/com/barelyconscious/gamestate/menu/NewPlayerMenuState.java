@@ -12,10 +12,13 @@
  ************************************************************************** */
 package com.barelyconscious.gamestate.menu;
 
+import com.barelyconscious.entities.player.Player;
 import com.barelyconscious.gamestate.ClientBase;
 import com.barelyconscious.gamestate.GameData;
 import com.barelyconscious.gamestate.State;
 import com.barelyconscious.util.GUIHelper;
+import com.barelyconscious.util.LoadingMenuWorker;
+import com.barelyconscious.world.World;
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.DialogLayout;
 import de.matthiasmann.twl.EditField;
@@ -46,12 +49,12 @@ public class NewPlayerMenuState extends MenuState {
         playerNameEditField = new EditField();
         backButton = new Button("Back");
         startGameButton = new Button("Start Game");
-        
+
         Label label1 = new Label("Player Name");
-        
+
         playerNameText.setHorizontalGroup(playerNameText.createParallelGroup(label1));
         playerNameText.setVerticalGroup(playerNameText.createParallelGroup(label1));
-        
+
         GUIHelper.setPosition(playerNameText, 2.0f, 2.0f, 0.0f, 0.0f);
         GUIHelper.setPosition(playerNameEditField, 2.0f, 0.0f, 0.0f, 0.0f);
         GUIHelper.setPosition(backButton, 2.0f, 2.0f, 0.0f, 0.0f);
@@ -102,12 +105,27 @@ public class NewPlayerMenuState extends MenuState {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         super.render(container, game, g);
-        
-        g.setColor(new Color(41f/256f, 48f/256f, 61f/256f, 0.6f));
+
+        g.setColor(new Color(41f / 256f, 48f / 256f, 61f / 256f, 0.6f));
         g.fillRect(75, 0, 150, container.getHeight());
     }
-    
+
     private void startGameEvent() {
+        LoadingMenuState loadingMenu = (LoadingMenuState) getClient().getState(State.LOADING_MENU_STATE.getValue());
+
+        if (loadingMenu != null) {
+            loadingMenu.setReturnState(State.WORLD_STATE.getValue());
+            loadingMenu.addWorkload(new LoadingMenuWorker("Building world...") {
+
+                @Override
+                public void run() {
+                    Player player = new Player();
+                    World.getInstance().setPlayer(player, true);
+                    World.getInstance().spawnCurrentPlayer();
+                }
+            });
+        }
+
         getClient().enterState(State.LOADING_MENU_STATE.getValue());
     }
 

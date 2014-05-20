@@ -24,6 +24,11 @@ public class KeyMap {
 
     private static final Map<Integer, KeyAction> keymap;
     private static boolean showFPS = false;
+    
+    public static int playerMoveUp = Keyboard.KEY_W;
+    public static int playerMoveDown = Keyboard.KEY_S;
+    public static int playerMoveLeft = Keyboard.KEY_A;
+    public static int playerMoveRight = Keyboard.KEY_D;
 
     static {
         keymap = new HashMap<>();

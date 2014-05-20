@@ -1,8 +1,8 @@
 /* *****************************************************************************
-   * Project:           StoneQuest
-   * File Name:         EntityObject.java
+   * Project:           stonequest
+   * File Name:         Doodad.java
    * Author:            Matt Schwartz
-   * Date Created:      05.09.2014 
+   * Date Created:      05.19.2014 
    * Redistribution:    You are free to use, reuse, and edit any of the text in
    *                    this file.  You are not allowed to take credit for code
    *                    that was not written fully by yourself, or to remove 
@@ -11,23 +11,8 @@
    * File Description:  
    ************************************************************************** */
 
-package com.barelyconscious.gameobjects;
+package com.barelyconscious.doodads;
 
-import com.barelyconscious.entities.Entity;
+public class Doodad {
 
-public class EntityObject extends GameObject {
-    
-    protected Entity entity;
-    
-    public EntityObject(Entity entity, float x, float y) {
-        this.entity = entity;
-    } // constructor
-
-    @Override
-    public void spawnObject() {
-    } // spawnObject
-
-    @Override
-    public void update(UpdateEvent args) {
-    } // update
-} // EntityObject
+} // Doodad

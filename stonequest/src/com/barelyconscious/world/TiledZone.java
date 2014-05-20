@@ -1,8 +1,8 @@
 /* *****************************************************************************
  * Project:           stonequest
- * File Name:         Main.java
+ * File Name:         TiledZone.java
  * Author:            Matt Schwartz
- * Date Created:      05.11.2014 
+ * Date Created:      05.19.2014 
  * Redistribution:    You are free to use, reuse, and edit any of the text in
  *                    this file.  You are not allowed to take credit for code
  *                    that was not written fully by yourself, or to remove 
@@ -10,27 +10,31 @@
  *                    Please email stonequest.bcgames@gmail.com for issues or concerns.
  * File Description:  
  ************************************************************************** */
-package com.barelyconscious.main;
+package com.barelyconscious.world;
 
-import com.barelyconscious.gamestate.Client;
-import com.barelyconscious.gamestate.GameData;
-import org.newdawn.slick.AppGameContainer;
+import com.barelyconscious.gameobjects.UpdateEvent;
+import com.barelyconscious.util.ConsoleWriter;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
-public class Main {
+public class TiledZone extends Zone {
 
-    public static void main(String[] args) {
+    private TiledMap map;
+
+    public TiledZone(String path) {
         try {
-            AppGameContainer apc = new AppGameContainer(new Client("StoneQuest v2.0", new GameData()), 800, 600, false);
-
-            apc.setIcons(new String[]{"images/app/applicationIconSmall.png", "images/app/applicationIcon.png"});
-            apc.setDisplayMode(800, 640, false);
-            apc.setTargetFrameRate(60);
-            apc.setShowFPS(false);
-            apc.start();
+            map = new TiledMap(path);
         } catch (SlickException ex) {
-            System.err.println("Error: " + ex);
+            ConsoleWriter.writeError("Failed to create map from path " + path + ": " + ex);
         }
     }
 
-}
+    @Override
+    public void update(UpdateEvent args) {
+    }
+
+    @Override
+    public void render(UpdateEvent args) {
+        map.render((int) xShift, (int) yShift);
+    }
+} // TiledZone
