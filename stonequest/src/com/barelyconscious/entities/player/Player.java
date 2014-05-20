@@ -17,9 +17,10 @@ import com.barelyconscious.entities.Entity;
 
 public class Player extends Entity {
     
+    private String name;
     private Cauldron cauldron;
     
-    public Player() {
-        
+    public Player(String name) {
+        this.name = name;
     }
 } // Player

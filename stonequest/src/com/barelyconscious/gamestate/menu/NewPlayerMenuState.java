@@ -47,6 +47,7 @@ public class NewPlayerMenuState extends MenuState {
         playerNameText = new DialogLayout();
         playerNameText.setTheme("panel");
         playerNameEditField = new EditField();
+        playerNameEditField.setText("player1");
         backButton = new Button("Back");
         startGameButton = new Button("Start Game");
 
@@ -111,6 +112,7 @@ public class NewPlayerMenuState extends MenuState {
     }
 
     private void startGameEvent() {
+        final String playerName = playerNameEditField.getText();
         LoadingMenuState loadingMenu = (LoadingMenuState) getClient().getState(State.LOADING_MENU_STATE.getValue());
 
         if (loadingMenu != null) {
@@ -119,7 +121,7 @@ public class NewPlayerMenuState extends MenuState {
 
                 @Override
                 public void run() {
-                    Player player = new Player();
+                    Player player = new Player(playerName);
                     World.getInstance().setPlayer(player, true);
                     World.getInstance().spawnCurrentPlayer();
                 }

@@ -17,42 +17,64 @@ import com.barelyconscious.input.KeyMap;
 import com.barelyconscious.util.ConsoleWriter;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 public class PlayerObject extends GameObject {
 
     private float x;
     private float y;
-    private float walkSpeed = 0.5f;
+    private float walkSpeed = 0.3f;
     private final Player player;
+    private SpriteSheet playerSheet;
     private Animation currentAnimation;
     private Animation animationWalkUp;
     private Animation animationWalkDown;
     private Animation animationWalkLeft;
     private Animation animationWalkRight;
-    private Animation animationIdle;
 
     public PlayerObject(Player player, int x, int y) {
         this.player = player;
         this.x = x;
         this.y = y;
-
-        loadImages();
+        
+        loadAnimations();
     } // constructor
 
-    private void loadImages() {
+    private void loadAnimations() {
+        Image[] images;
+
         try {
-            animationIdle = new Animation(new Image[]{new Image("sprites/playerIdle.png")}, 100);
-            animationWalkUp = new Animation(new Image[]{new Image("sprites/playerWalkUp.png")}, 100);
-            animationWalkDown = new Animation(new Image[]{new Image("sprites/playerWalkDown.png")}, 100);
+            playerSheet = new SpriteSheet("sprites/player.png", 32, 64);
+
+            images = getRowImages(playerSheet, 0);
+            animationWalkDown = new Animation(images, 100);
+
+            images = getRowImages(playerSheet, 1);
+            animationWalkUp = new Animation(images, 100);
+
+            images = getRowImages(playerSheet, 2);
+            animationWalkLeft = new Animation(images, 100);
+
+            images = getRowImages(playerSheet, 3);
+            animationWalkRight = new Animation(images, 100);
         } catch (SlickException ex) {
             ConsoleWriter.writeError("Failed to load resource: " + ex);
         }
 
-        currentAnimation = animationIdle;
+        currentAnimation = animationWalkDown;
+    }
+
+    public Image[] getRowImages(SpriteSheet sheet, int row) {
+        Image[] images = new Image[sheet.getHorizontalCount()];
+
+        for (int i = 0; i < images.length; i++) {
+            images[i] = sheet.getSprite(i, row);
+        }
+
+        return images;
     }
 
     public float getX() {
@@ -86,29 +108,25 @@ public class PlayerObject extends GameObject {
         }
         if (input.isKeyDown(KeyMap.playerMoveLeft)) {
             x -= walkSpeed * args.delta;
-//            currentAnimation = animationWalkLeft;
+            currentAnimation = animationWalkLeft;
             idle = false;
         }
         if (input.isKeyDown(KeyMap.playerMoveRight)) {
             x += walkSpeed * args.delta;
-//            currentAnimation = animationWalkRight;
+            currentAnimation = animationWalkRight;
             idle = false;
         }
-        if (idle) {
-            currentAnimation = animationIdle;
+        if (!idle) {
+            currentAnimation.update(args.delta);
         }
 
         // if can't move here,
         // reset x and y
-        currentAnimation.update(args.delta);
     } // update
 
     @Override
     public void render(UpdateEvent args) {
-        Graphics g = args.g;
-
-        g.drawString("Player position:\nx: " + x + "\ny: " + y, 10, 25);
-        currentAnimation.draw(Display.getWidth() / 2, Display.getHeight() / 2);
+        currentAnimation.draw((Display.getWidth() - 32) / 2, (Display.getHeight() - 64) / 2);
     }
 
 } // PlayerObject
