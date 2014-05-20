@@ -14,9 +14,13 @@ package com.barelyconscious.gameobjects;
 
 import com.barelyconscious.entities.player.Player;
 import com.barelyconscious.input.KeyMap;
+import com.barelyconscious.util.ConsoleWriter;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 
 public class PlayerObject extends GameObject {
 
@@ -35,7 +39,21 @@ public class PlayerObject extends GameObject {
         this.player = player;
         this.x = x;
         this.y = y;
+
+        loadImages();
     } // constructor
+
+    private void loadImages() {
+        try {
+            animationIdle = new Animation(new Image[]{new Image("sprites/playerIdle.png")}, 100);
+            animationWalkUp = new Animation(new Image[]{new Image("sprites/playerWalkUp.png")}, 100);
+            animationWalkDown = new Animation(new Image[]{new Image("sprites/playerWalkDown.png")}, 100);
+        } catch (SlickException ex) {
+            ConsoleWriter.writeError("Failed to load resource: " + ex);
+        }
+
+        currentAnimation = animationIdle;
+    }
 
     public float getX() {
         return x;
@@ -52,8 +70,10 @@ public class PlayerObject extends GameObject {
     @Override
     public void update(UpdateEvent args) {
         boolean idle = true;
+        float oldX = x;
+        float oldY = y;
         Input input = args.gc.getInput();
-        
+
         if (input.isKeyDown(KeyMap.playerMoveUp)) {
             y += walkSpeed * args.delta;
             currentAnimation = animationWalkUp;
@@ -66,27 +86,29 @@ public class PlayerObject extends GameObject {
         }
         if (input.isKeyDown(KeyMap.playerMoveLeft)) {
             x -= walkSpeed * args.delta;
-            currentAnimation = animationWalkLeft;
+//            currentAnimation = animationWalkLeft;
             idle = false;
         }
         if (input.isKeyDown(KeyMap.playerMoveRight)) {
             x += walkSpeed * args.delta;
-            currentAnimation = animationWalkRight;
+//            currentAnimation = animationWalkRight;
             idle = false;
         }
         if (idle) {
             currentAnimation = animationIdle;
         }
 
-//        currentAnimation.update(args.delta);
+        // if can't move here,
+        // reset x and y
+        currentAnimation.update(args.delta);
     } // update
 
     @Override
     public void render(UpdateEvent args) {
         Graphics g = args.g;
-        
+
         g.drawString("Player position:\nx: " + x + "\ny: " + y, 10, 25);
-//        currentAnimation.draw(x, y);
+        currentAnimation.draw(Display.getWidth() / 2, Display.getHeight() / 2);
     }
 
 } // PlayerObject
