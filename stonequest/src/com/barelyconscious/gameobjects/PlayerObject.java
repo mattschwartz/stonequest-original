@@ -142,11 +142,11 @@ public class PlayerObject extends GameObject {
 
     @Override
     public void render(UpdateEvent args) {
-        if (boundingBox.contains(args.mouseInWorldX, args.mouseInWorldY)) {
-            args.g.drawString(player.getName(), args.mouseX, args.mouseY);
-        }
-
         currentAnimation.draw((Display.getWidth() - SPRITE_WIDTH) / 2, (Display.getHeight() - SPRITE_HEIGHT) / 2);
+        
+        if (boundingBox.contains(args.mouseInWorldX, args.mouseInWorldY)) {
+            args.g.drawString(player.getName(), args.mouseX, args.mouseY - 25);
+        }
     }
 
 } // PlayerObject

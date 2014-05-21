@@ -29,6 +29,8 @@ public class KeyMap {
     public static int playerMoveDown = Keyboard.KEY_S;
     public static int playerMoveLeft = Keyboard.KEY_A;
     public static int playerMoveRight = Keyboard.KEY_D;
+    
+    public static int pickupItemKey = Keyboard.KEY_P;
 
     static {
         keymap = new HashMap<>();

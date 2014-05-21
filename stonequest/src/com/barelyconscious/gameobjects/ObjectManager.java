@@ -34,6 +34,7 @@ public class ObjectManager {
     }
 
     public void spawnObject(GameObject object) {
+        object.spawnObject();
         gameObjects.add(object);
     } // spawnObject
 

@@ -21,7 +21,15 @@ public class Item implements Comparable {
 
     public Item() {
     }
+    
+    public Item(String name) {
+        this.name = name;
+    }
 
+    public String getName() {
+        return name;
+    }
+    
     @Override
     public int compareTo(Object o) {
         return 0;

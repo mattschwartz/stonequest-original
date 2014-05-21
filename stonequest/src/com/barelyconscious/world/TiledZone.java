@@ -12,13 +12,14 @@
  ************************************************************************** */
 package com.barelyconscious.world;
 
+import com.barelyconscious.gameobjects.LootObject;
+import com.barelyconscious.gameobjects.ObjectManager;
 import com.barelyconscious.gameobjects.UpdateEvent;
+import com.barelyconscious.items.Item;
 import com.barelyconscious.util.ConsoleWriter;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -27,13 +28,17 @@ public class TiledZone extends Zone {
     private TiledMap map;
     private Rectangle mapBounds;
     private List<Rectangle> objectList = new ArrayList<>();
+    
+    private LootObject dbgLoot;
 
     public TiledZone(String path) {
         try {
             map = new TiledMap(path);
             mapBounds = new Rectangle(0, 0, map.getWidth() * map.getTileWidth(), map.getHeight() * map.getTileHeight());
-            System.err.println("map bounds is " + mapBounds);
             createObjectList();
+            
+            dbgLoot = new LootObject(new Item("Potion of Sexiness"), 5, 7);
+            ObjectManager.getInstance().spawnObject(dbgLoot);
         } catch (SlickException ex) {
             ConsoleWriter.writeError("Failed to create map from path " + path + ": " + ex);
         }

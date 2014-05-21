@@ -55,6 +55,10 @@ public class World {
     public void loadZone(Zone zone) {
         currentZone = zone;
     }
+    
+    public Rectangle getPlayerBoundingBox() {
+        return playerObject.getBoundingBox();
+    }
 
     public void spawnCurrentPlayer() {
         ObjectManager.getInstance().spawnObject(playerObject);

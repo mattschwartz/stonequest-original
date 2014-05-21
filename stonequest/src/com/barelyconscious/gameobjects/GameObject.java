@@ -34,11 +34,15 @@ public abstract class GameObject {
     } // update
     
     public Rectangle getBoundingBox() {
-        return boundingBox;
+        return new Rectangle(boundingBox);
     }
     
     public void setBoundingBox(Rectangle box) {
         boundingBox = box;
+    }
+    
+    protected void remove() {
+        removeOnUpdate = true;
     }
 
     public boolean shouldRemove() {

@@ -28,6 +28,8 @@ public class UpdateEvent {
     public float mouseY;
     public float mouseInWorldX;
     public float mouseInWorldY;
+    public float worldShiftX;
+    public float worldShiftY;
 
     public UpdateEvent() {
         findMousePosition();
@@ -49,8 +51,6 @@ public class UpdateEvent {
 
     private void findMousePosition() {
         Pair<Float, Float> shift = World.getInstance().getShift();
-        float worldShiftX;
-        float worldShiftY;
         
         mouseX = gc.getInput().getMouseX();
         mouseY = gc.getInput().getMouseY();
