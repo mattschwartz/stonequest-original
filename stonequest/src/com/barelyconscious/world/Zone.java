@@ -13,6 +13,7 @@
 package com.barelyconscious.world;
 
 import com.barelyconscious.gameobjects.UpdateEvent;
+import java.awt.Rectangle;
 
 public abstract class Zone {
 
@@ -28,4 +29,6 @@ public abstract class Zone {
     }
 
     public abstract void render(UpdateEvent args);
+    
+    public abstract boolean canMove(Rectangle boundingBox);
 } // Zone

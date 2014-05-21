@@ -12,9 +12,12 @@
  ************************************************************************** */
 package com.barelyconscious.gameobjects;
 
+import java.awt.Rectangle;
+
 public abstract class GameObject {
 
     protected boolean removeOnUpdate = false;
+    protected Rectangle boundingBox;
 
     public GameObject() {
     } // constructor
@@ -27,6 +30,14 @@ public abstract class GameObject {
 
     public void update(UpdateEvent args) {
     } // update
+    
+    public Rectangle getBoundingBox() {
+        return boundingBox;
+    }
+    
+    public void setBoundingBox(Rectangle box) {
+        boundingBox = box;
+    }
 
     public boolean shouldRemove() {
         return removeOnUpdate;

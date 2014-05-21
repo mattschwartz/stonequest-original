@@ -21,12 +21,13 @@
   <object x="608" y="240" width="449" height="18"/>
   <object x="1046" y="1" width="12" height="237"/>
   <object x="480" y="896" width="12" height="224"/>
-  <object x="492" y="1110" width="470" height="10"/>
-  <object x="950" y="960" width="10" height="149"/>
+  <object x="492" y="1110" width="466" height="6"/>
+  <object x="950" y="960" width="7" height="151"/>
   <object x="961" y="952" width="383" height="8"/>
   <object x="961" y="800" width="383" height="13"/>
   <object x="949" y="640" width="11" height="158"/>
   <object x="480" y="640" width="467" height="9"/>
   <object x="481" y="651" width="11" height="182"/>
+  <object x="-16" y="-4" width="14" height="1598"/>
  </objectgroup>
 </map>

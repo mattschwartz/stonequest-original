@@ -17,6 +17,7 @@ import com.barelyconscious.gameobjects.ObjectManager;
 import com.barelyconscious.gameobjects.PlayerObject;
 import com.barelyconscious.gameobjects.UpdateEvent;
 import com.barelyconscious.pcg.ZoneFactory;
+import org.lwjgl.opengl.Display;
 
 public class World {
 
@@ -48,6 +49,10 @@ public class World {
         }
     }
     
+    public Zone getCurrentZone() {
+        return currentZone;
+    }
+    
     public void loadZone(Zone zone) {
         currentZone = zone;
     }
@@ -61,7 +66,16 @@ public class World {
     }
 
     public void update(UpdateEvent args) {
-        currentZone.shift(-playerObject.getX(), playerObject.getY());
+        int xShift = Display.getWidth() - playerObject.getBoundingBox().width;
+        int yShift = Display.getHeight() - playerObject.getBoundingBox().height;
+        
+        xShift /= 2;
+        yShift /= 2;
+        
+        xShift -= playerObject.getX();
+        yShift -= playerObject.getY();
+        
+        currentZone.shift(xShift, yShift);
         currentZone.update(args);
     }
 

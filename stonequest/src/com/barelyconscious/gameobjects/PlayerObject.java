@@ -15,6 +15,8 @@ package com.barelyconscious.gameobjects;
 import com.barelyconscious.entities.player.Player;
 import com.barelyconscious.input.KeyMap;
 import com.barelyconscious.util.ConsoleWriter;
+import com.barelyconscious.world.World;
+import java.awt.Rectangle;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
@@ -26,7 +28,8 @@ public class PlayerObject extends GameObject {
 
     private float x;
     private float y;
-    private float walkSpeed = 0.3f;
+    private float walkSpeed = 0.2f;
+    private int frameDuration = 400;
     private final Player player;
     private SpriteSheet playerSheet;
     private Animation currentAnimation;
@@ -39,7 +42,8 @@ public class PlayerObject extends GameObject {
         this.player = player;
         this.x = x;
         this.y = y;
-        
+
+        setBoundingBox(new Rectangle(x, y, 32, 64));
         loadAnimations();
     } // constructor
 
@@ -50,16 +54,16 @@ public class PlayerObject extends GameObject {
             playerSheet = new SpriteSheet("sprites/player.png", 32, 64);
 
             images = getRowImages(playerSheet, 0);
-            animationWalkDown = new Animation(images, 100);
+            animationWalkDown = new Animation(images, frameDuration);
 
             images = getRowImages(playerSheet, 1);
-            animationWalkUp = new Animation(images, 100);
+            animationWalkUp = new Animation(images, frameDuration);
 
             images = getRowImages(playerSheet, 2);
-            animationWalkLeft = new Animation(images, 100);
+            animationWalkLeft = new Animation(images, frameDuration);
 
             images = getRowImages(playerSheet, 3);
-            animationWalkRight = new Animation(images, 100);
+            animationWalkRight = new Animation(images, frameDuration);
         } catch (SlickException ex) {
             ConsoleWriter.writeError("Failed to load resource: " + ex);
         }
@@ -97,12 +101,12 @@ public class PlayerObject extends GameObject {
         Input input = args.gc.getInput();
 
         if (input.isKeyDown(KeyMap.playerMoveUp)) {
-            y += walkSpeed * args.delta;
+            y -= walkSpeed * args.delta;
             currentAnimation = animationWalkUp;
             idle = false;
         }
         if (input.isKeyDown(KeyMap.playerMoveDown)) {
-            y -= walkSpeed * args.delta;
+            y += walkSpeed * args.delta;
             currentAnimation = animationWalkDown;
             idle = false;
         }
@@ -116,12 +120,21 @@ public class PlayerObject extends GameObject {
             currentAnimation = animationWalkRight;
             idle = false;
         }
-        if (!idle) {
-            currentAnimation.update(args.delta);
+        if (idle) {
+            currentAnimation.stop();
+        } else {
+            currentAnimation.start();
         }
+        
+        boundingBox.x = (int) x;
+        boundingBox.y = (int) y;
 
-        // if can't move here,
-        // reset x and y
+        if (!World.getInstance().getCurrentZone().canMove(boundingBox)) {
+            x = oldX;
+            y = oldY;
+        }
+        
+        currentAnimation.update(args.delta);
     } // update
 
     @Override
