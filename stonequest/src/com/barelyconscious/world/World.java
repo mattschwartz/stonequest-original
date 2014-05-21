@@ -17,8 +17,10 @@ import com.barelyconscious.gameobjects.ObjectManager;
 import com.barelyconscious.gameobjects.PlayerObject;
 import com.barelyconscious.gameobjects.UpdateEvent;
 import com.barelyconscious.pcg.ZoneFactory;
+import com.barelyconscious.util.Pair;
 import java.awt.Rectangle;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Input;
 
 public class World {
 
@@ -40,7 +42,7 @@ public class World {
     public static World getInstance() {
         return INSTANCE;
     }
-    
+
     public void setPlayer(Player player, boolean newPlayer) {
         this.player = player;
         playerObject = new PlayerObject(player, 0, 0);
@@ -49,7 +51,7 @@ public class World {
             loadZone(zoneFactory.getIntroductionZone());
         }
     }
-    
+
     public void loadZone(Zone zone) {
         currentZone = zone;
     }
@@ -58,21 +60,40 @@ public class World {
         ObjectManager.getInstance().spawnObject(playerObject);
     }
 
+    public void exitWorld() {
+        ObjectManager.getInstance().removeAllObjects();
+    }
+
     public void render(UpdateEvent args) {
         currentZone.render(args);
+        
+        Pair<Float, Float> shift = getShift();
+        Input input = args.gc.getInput();
+        
+        if (input.isMouseButtonDown(0)) {
+            int mouseX = input.getMouseX() - shift.first.intValue();
+            int mouseY = input.getMouseY() - shift.second.intValue();
+            args.g.drawString("Clickclack [" + mouseX + ", " + mouseY + "]", input.getMouseX(), input.getMouseY());
+        }
+    }
+
+    public Pair<Float, Float> getShift() {
+        float xShift = Display.getWidth() - playerObject.getBoundingBox().width;
+        float yShift = Display.getHeight() - playerObject.getBoundingBox().height;
+
+        xShift /= 2;
+        yShift /= 2;
+
+        xShift -= playerObject.getX();
+        yShift -= playerObject.getY();
+
+        return new Pair<>(xShift, yShift);
     }
 
     public void update(UpdateEvent args) {
-        int xShift = Display.getWidth() - playerObject.getBoundingBox().width;
-        int yShift = Display.getHeight() - playerObject.getBoundingBox().height;
-        
-        xShift /= 2;
-        yShift /= 2;
-        
-        xShift -= playerObject.getX();
-        yShift -= playerObject.getY();
-        
-        currentZone.shift(xShift, yShift);
+        Pair<Float, Float> shift = getShift();
+
+        currentZone.shift(shift.first, shift.second);
         currentZone.update(args);
     }
 

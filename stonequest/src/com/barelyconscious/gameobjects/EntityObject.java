@@ -21,6 +21,8 @@ public class EntityObject extends GameObject {
     
     public EntityObject(Entity entity, float x, float y) {
         this.entity = entity;
+        this.x = x;
+        this.y = y;
     } // constructor
 
     @Override

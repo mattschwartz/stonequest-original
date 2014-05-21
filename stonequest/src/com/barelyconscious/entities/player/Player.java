@@ -23,4 +23,8 @@ public class Player extends Entity {
     public Player(String name) {
         this.name = name;
     }
+    
+    public String getName() {
+        return name;
+    }
 } // Player

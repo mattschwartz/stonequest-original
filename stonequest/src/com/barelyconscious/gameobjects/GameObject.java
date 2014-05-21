@@ -16,6 +16,8 @@ import java.awt.Rectangle;
 
 public abstract class GameObject {
 
+    protected float x;
+    protected float y;
     protected boolean removeOnUpdate = false;
     protected Rectangle boundingBox;
 

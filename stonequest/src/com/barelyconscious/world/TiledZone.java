@@ -18,6 +18,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -33,7 +34,6 @@ public class TiledZone extends Zone {
             mapBounds = new Rectangle(0, 0, map.getWidth() * map.getTileWidth(), map.getHeight() * map.getTileHeight());
             System.err.println("map bounds is " + mapBounds);
             createObjectList();
-
         } catch (SlickException ex) {
             ConsoleWriter.writeError("Failed to create map from path " + path + ": " + ex);
         }

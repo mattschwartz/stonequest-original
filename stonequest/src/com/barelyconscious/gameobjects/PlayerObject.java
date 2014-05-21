@@ -26,8 +26,9 @@ import org.newdawn.slick.SpriteSheet;
 
 public class PlayerObject extends GameObject {
 
-    private float x;
-    private float y;
+    private final int SPRITE_WIDTH = 32;
+    private final int SPRITE_HEIGHT = 64;
+    
     private float walkSpeed = 0.2f;
     private int frameDuration = 400;
     private final Player player;
@@ -38,12 +39,12 @@ public class PlayerObject extends GameObject {
     private Animation animationWalkLeft;
     private Animation animationWalkRight;
 
-    public PlayerObject(Player player, int x, int y) {
+    public PlayerObject(Player player, float x, float y) {
         this.player = player;
         this.x = x;
         this.y = y;
 
-        setBoundingBox(new Rectangle(x, y, 32, 64));
+        setBoundingBox(new Rectangle((int) x, (int) y, SPRITE_WIDTH, SPRITE_HEIGHT));
         loadAnimations();
     } // constructor
 
@@ -51,7 +52,7 @@ public class PlayerObject extends GameObject {
         Image[] images;
 
         try {
-            playerSheet = new SpriteSheet("sprites/player.png", 32, 64);
+            playerSheet = new SpriteSheet("sprites/player.png", SPRITE_WIDTH, SPRITE_HEIGHT);
 
             images = getRowImages(playerSheet, 0);
             animationWalkDown = new Animation(images, frameDuration);
@@ -141,7 +142,11 @@ public class PlayerObject extends GameObject {
 
     @Override
     public void render(UpdateEvent args) {
-        currentAnimation.draw((Display.getWidth() - 32) / 2, (Display.getHeight() - 64) / 2);
+        if (boundingBox.contains(args.mouseInWorldX, args.mouseInWorldY)) {
+            args.g.drawString(player.getName(), args.mouseX, args.mouseY);
+        }
+
+        currentAnimation.draw((Display.getWidth() - SPRITE_WIDTH) / 2, (Display.getHeight() - SPRITE_HEIGHT) / 2);
     }
 
 } // PlayerObject

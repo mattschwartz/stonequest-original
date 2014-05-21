@@ -60,7 +60,7 @@ public abstract class MenuState extends GameStateBase<GameData> {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         int y = (container.getHeight() - backgroundImage.getHeight()) / 2;
-        backgroundImage.draw(0, y);
+        backgroundImage.draw(0, y, container.getWidth(), backgroundImage.getHeight());
         printInfo(container.getWidth(), container.getHeight(), g);
     }
     

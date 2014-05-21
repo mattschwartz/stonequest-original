@@ -79,4 +79,8 @@ public class ObjectManager {
         return false;
     } // canReach
 
+    public void removeAllObjects() {
+        gameObjects.clear();
+    }
+
 } // ObjectManager

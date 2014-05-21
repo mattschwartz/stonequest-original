@@ -16,6 +16,7 @@ import com.barelyconscious.gamestate.ClientBase;
 import com.barelyconscious.gamestate.GameData;
 import com.barelyconscious.gamestate.State;
 import com.barelyconscious.util.GUIHelper;
+import com.barelyconscious.world.World;
 import de.matthiasmann.twl.Button;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
@@ -31,7 +32,7 @@ public class InGameOptionsMenuState extends MenuState {
     private Button continueButton;
     private Button exitToMenuButton;
     private Button exitGameButton;
-    
+
     public InGameOptionsMenuState(ClientBase<GameData> client, State state) {
         super(client, state);
     }
@@ -54,14 +55,14 @@ public class InGameOptionsMenuState extends MenuState {
     protected void layoutRootPane() {
         GUIHelper.setSize(continueButton, 0.0f, 0.0f, 150.0f, 25.0f);
         GUIHelper.setPosition(continueButton, 0.0f, 0.5f, 75.0f, -45.0f);
-        
+
         GUIHelper.setSize(exitToMenuButton, 0.0f, 0.0f, 150.0f, 25.0f);
         GUIHelper.setPosition(exitToMenuButton, 0.0f, 0.5f, 75.0f, -15.0f);
-        
+
         GUIHelper.setSize(exitGameButton, 0.0f, 0.0f, 150.0f, 25.0f);
         GUIHelper.setPosition(exitGameButton, 0.0f, 0.5f, 75.0f, 15.0f);
     }
-    
+
     @Override
     protected void registerEvents() {
         continueButton.addCallback(new Runnable() {
@@ -90,22 +91,23 @@ public class InGameOptionsMenuState extends MenuState {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         super.render(container, game, g);
-        
+
         Color oldColor = g.getColor();
-        g.setColor(new Color(41f/256f, 48f/256f, 61f/256f, 0.6f));
+        g.setColor(new Color(41f / 256f, 48f / 256f, 61f / 256f, 0.6f));
         g.fillRect(75, 0, 150, container.getHeight());
         g.setColor(oldColor);
     }
-    
+
     private void continueEvent() {
         getClient().enterState(State.WORLD_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
     }
-    
+
     private void exitToMenuEvent() {
-        ((SavingGameMenuState)getClient().getState(State.SAVING_GAME_MENU_STATE.getValue())).setReturnState(State.MAIN_MENU_STATE.getValue());
+        World.getInstance().exitWorld();
+        ((SavingGameMenuState) getClient().getState(State.SAVING_GAME_MENU_STATE.getValue())).setReturnState(State.MAIN_MENU_STATE.getValue());
         getClient().enterState(State.SAVING_GAME_MENU_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
     }
-    
+
     private void exitGameEvent() {
         getClient().enterState(State.SAVING_GAME_MENU_STATE.getValue());
     }
@@ -116,5 +118,5 @@ public class InGameOptionsMenuState extends MenuState {
             getClient().enterState(State.WORLD_STATE.getValue(), new FadeOutTransition(Color.black, 175), new FadeInTransition(Color.black, 175));
         }
     }
-    
+
 } // InGameOptionsMenuState

@@ -24,7 +24,7 @@ public class Main {
             AppGameContainer apc = new AppGameContainer(new Client("StoneQuest v2.0", new GameData()), 800, 600, false);
 
             apc.setIcons(new String[]{"images/app/applicationIconSmall.png", "images/app/applicationIcon.png"});
-            apc.setDisplayMode(800, 640, false);
+            apc.setDisplayMode(1280, 720, false);
             apc.setTargetFrameRate(60);
             apc.setShowFPS(false);
             apc.start();

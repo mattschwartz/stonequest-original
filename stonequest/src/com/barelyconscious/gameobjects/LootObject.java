@@ -13,21 +13,25 @@
 package com.barelyconscious.gameobjects;
 
 import com.barelyconscious.items.Item;
+import com.barelyconscious.util.Pair;
+import com.barelyconscious.world.World;
+import org.newdawn.slick.Image;
 
 public class LootObject extends GameObject {
 
     private Item item;
+    private Image image;
 
-    public LootObject(Item item, int x, int y) {
+    public LootObject(Item item, float x, float y) {
         this.item = item;
+        this.x = x;
+        this.y = y;
     } // constructor
 
     @Override
-    public void spawnObject() {
-    } // spawnObject
-
-    @Override
-    public void update(UpdateEvent args) {
-    } // update
+    public void render(UpdateEvent args) {
+        Pair<Float, Float> shift = World.getInstance().getShift();
+        image.draw(shift.first + x, shift.second + y);
+    }
 
 } // LootObject
