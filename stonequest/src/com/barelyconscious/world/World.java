@@ -17,6 +17,7 @@ import com.barelyconscious.gameobjects.ObjectManager;
 import com.barelyconscious.gameobjects.PlayerObject;
 import com.barelyconscious.gameobjects.UpdateEvent;
 import com.barelyconscious.pcg.ZoneFactory;
+import java.awt.Rectangle;
 import org.lwjgl.opengl.Display;
 
 public class World {
@@ -49,10 +50,6 @@ public class World {
         }
     }
     
-    public Zone getCurrentZone() {
-        return currentZone;
-    }
-    
     public void loadZone(Zone zone) {
         currentZone = zone;
     }
@@ -77,6 +74,10 @@ public class World {
         
         currentZone.shift(xShift, yShift);
         currentZone.update(args);
+    }
+
+    public boolean canMove(Rectangle boundingBox) {
+        return currentZone.canMove(boundingBox);
     }
 
 } // World

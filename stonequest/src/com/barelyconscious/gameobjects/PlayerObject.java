@@ -120,20 +120,22 @@ public class PlayerObject extends GameObject {
             currentAnimation = animationWalkRight;
             idle = false;
         }
+
+        boundingBox.x = (int) x;
+        boundingBox.y = (int) y;
+
+        if (!World.getInstance().canMove(boundingBox)) {
+            idle = true;
+            x = oldX;
+            y = oldY;
+        }
+
         if (idle) {
             currentAnimation.stop();
         } else {
             currentAnimation.start();
         }
-        
-        boundingBox.x = (int) x;
-        boundingBox.y = (int) y;
 
-        if (!World.getInstance().getCurrentZone().canMove(boundingBox)) {
-            x = oldX;
-            y = oldY;
-        }
-        
         currentAnimation.update(args.delta);
     } // update
 
