@@ -12,8 +12,10 @@
  ************************************************************************** */
 package com.barelyconscious.world;
 
+import com.barelyconscious.doodads.Doodad;
 import com.barelyconscious.gameobjects.LootObject;
 import com.barelyconscious.gameobjects.ObjectManager;
+import com.barelyconscious.gameobjects.TorchDoodadObject;
 import com.barelyconscious.gameobjects.UpdateEvent;
 import com.barelyconscious.items.Item;
 import com.barelyconscious.util.ConsoleWriter;
@@ -30,6 +32,7 @@ public class TiledZone extends Zone {
     private List<Rectangle> objectList = new ArrayList<>();
     
     private LootObject dbgLoot;
+    private TorchDoodadObject dbgTorch;
 
     public TiledZone(String path) {
         try {
@@ -37,6 +40,8 @@ public class TiledZone extends Zone {
             mapBounds = new Rectangle(0, 0, map.getWidth() * map.getTileWidth(), map.getHeight() * map.getTileHeight());
             createObjectList();
             
+            dbgTorch = new TorchDoodadObject(new Doodad(), 5, 12);
+            ObjectManager.getInstance().spawnObject(dbgTorch);
             dbgLoot = new LootObject(new Item("Potion of Sexiness"), 5, 7);
             ObjectManager.getInstance().spawnObject(dbgLoot);
         } catch (SlickException ex) {

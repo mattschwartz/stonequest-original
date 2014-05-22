@@ -12,26 +12,59 @@
  ************************************************************************** */
 package com.barelyconscious.gameobjects;
 
+import com.barelyconscious.util.ConsoleWriter;
+import com.barelyconscious.world.World;
 import java.awt.Rectangle;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 public abstract class GameObject {
 
     protected float x;
     protected float y;
+    private String filepath;
+    protected int frameTime;
     protected boolean removeOnUpdate = false;
     protected Rectangle boundingBox;
-
+    protected float renderX;
+    protected float renderY;
+    protected SpriteSheet itemFrames;
+    protected Animation itemAnimation;
+    
     public GameObject() {
-    } // constructor
+    }
+    
+    public GameObject(String filepath, float x, float y) {
+        this.filepath = filepath;
+        this.x = x * World.TILE_WIDTH;
+        this.y = y * World.TILE_HEIGHT;
+    }
 
     public void spawnObject() {
+        try {
+            itemFrames = new SpriteSheet(new Image(filepath), 32, 32);
+            itemAnimation = new Animation(itemFrames, frameTime);
+            itemAnimation.setPingPong(true);
+            
+            boundingBox = new Rectangle((int) x, (int) y, itemAnimation.getWidth(), itemAnimation.getHeight());
+        } catch (SlickException ex) {
+            ConsoleWriter.writeError("Failed to load resource: " + ex);
+        }
     } // spawnObject
 
     public void render(UpdateEvent args) {
     } // render
 
     public void update(UpdateEvent args) {
+        renderX = args.worldShiftX + x;
+        renderY = args.worldShiftY + y;
     } // update
+    
+    public boolean intersects(Rectangle boundingBox) {
+        return false;
+    }
     
     public Rectangle getBoundingBox() {
         return new Rectangle(boundingBox);

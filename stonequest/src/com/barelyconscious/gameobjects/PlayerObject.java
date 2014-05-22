@@ -24,14 +24,13 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-public class PlayerObject extends GameObject {
+public class PlayerObject extends EntityObject {
 
     private final int SPRITE_WIDTH = 32;
     private final int SPRITE_HEIGHT = 64;
-    
+
     private float walkSpeed = 0.2f;
     private int frameDuration = 400;
-    private final Player player;
     private SpriteSheet playerSheet;
     private Animation currentAnimation;
     private Animation animationWalkUp;
@@ -40,9 +39,7 @@ public class PlayerObject extends GameObject {
     private Animation animationWalkRight;
 
     public PlayerObject(Player player, float x, float y) {
-        this.player = player;
-        this.x = x;
-        this.y = y;
+        super(player, x, y);
 
         setBoundingBox(new Rectangle((int) x, (int) y, SPRITE_WIDTH, SPRITE_HEIGHT));
         loadAnimations();
@@ -82,17 +79,11 @@ public class PlayerObject extends GameObject {
         return images;
     }
 
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
     @Override
     public void spawnObject() {
-    } // spawnObject
+        super.spawnObject();
+        LightManager.getInstance().addLight(Display.getWidth() / 2, Display.getHeight() / 2, 250);
+    }
 
     @Override
     public void update(UpdateEvent args) {
@@ -123,12 +114,19 @@ public class PlayerObject extends GameObject {
         }
 
         boundingBox.x = (int) x;
-        boundingBox.y = (int) y;
-
-        if (!World.getInstance().canMove(boundingBox)) {
-            idle = true;
+        if (!World.getInstance().canMove(this)) {
             x = oldX;
+            boundingBox.x = (int) x;
+        }
+
+        boundingBox.y = (int) y;
+        if (!World.getInstance().canMove(this)) {
             y = oldY;
+            boundingBox.y = (int) y;
+        }
+
+        if (x == oldX && y == oldY) {
+            idle = true;
         }
 
         if (idle) {
@@ -143,9 +141,9 @@ public class PlayerObject extends GameObject {
     @Override
     public void render(UpdateEvent args) {
         currentAnimation.draw((Display.getWidth() - SPRITE_WIDTH) / 2, (Display.getHeight() - SPRITE_HEIGHT) / 2);
-        
+
         if (boundingBox.contains(args.mouseInWorldX, args.mouseInWorldY)) {
-            args.g.drawString(player.getName(), args.mouseX, args.mouseY - 25);
+            args.g.drawString(entity.getName(), args.mouseX, args.mouseY - 25);
         }
     }
 

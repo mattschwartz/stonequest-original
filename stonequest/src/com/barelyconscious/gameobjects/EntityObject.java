@@ -14,6 +14,7 @@
 package com.barelyconscious.gameobjects;
 
 import com.barelyconscious.entities.Entity;
+import java.awt.Rectangle;
 
 public class EntityObject extends GameObject {
     
@@ -25,8 +26,22 @@ public class EntityObject extends GameObject {
         this.y = y;
     } // constructor
 
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    @Override
+    public boolean intersects(Rectangle boundingBox) {
+        return this.boundingBox.intersects(boundingBox);
+    }
+    
     @Override
     public void spawnObject() {
+        entity.onSpawn();
     } // spawnObject
 
     @Override

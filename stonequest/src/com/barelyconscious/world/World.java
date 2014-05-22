@@ -13,6 +13,8 @@
 package com.barelyconscious.world;
 
 import com.barelyconscious.entities.player.Player;
+import com.barelyconscious.gameobjects.GameObject;
+import com.barelyconscious.gameobjects.LightManager;
 import com.barelyconscious.gameobjects.ObjectManager;
 import com.barelyconscious.gameobjects.PlayerObject;
 import com.barelyconscious.gameobjects.UpdateEvent;
@@ -20,11 +22,12 @@ import com.barelyconscious.pcg.ZoneFactory;
 import com.barelyconscious.util.Pair;
 import java.awt.Rectangle;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.Input;
 
 public class World {
 
     private static final World INSTANCE = new World();
+    public static float TILE_WIDTH = 32;
+    public static float TILE_HEIGHT = 32;
 
     private Player player;
     private PlayerObject playerObject;
@@ -66,19 +69,11 @@ public class World {
 
     public void exitWorld() {
         ObjectManager.getInstance().removeAllObjects();
+        LightManager.getInstance().removeAllLights();
     }
 
     public void render(UpdateEvent args) {
         currentZone.render(args);
-        
-        Pair<Float, Float> shift = getShift();
-        Input input = args.gc.getInput();
-        
-        if (input.isMouseButtonDown(0)) {
-            int mouseX = input.getMouseX() - shift.first.intValue();
-            int mouseY = input.getMouseY() - shift.second.intValue();
-            args.g.drawString("Clickclack [" + mouseX + ", " + mouseY + "]", input.getMouseX(), input.getMouseY());
-        }
     }
 
     public Pair<Float, Float> getShift() {
@@ -101,8 +96,8 @@ public class World {
         currentZone.update(args);
     }
 
-    public boolean canMove(Rectangle boundingBox) {
-        return currentZone.canMove(boundingBox);
+    public boolean canMove(GameObject object) {
+        return ObjectManager.getInstance().canMove(object) && currentZone.canMove(object.getBoundingBox());
     }
 
 } // World

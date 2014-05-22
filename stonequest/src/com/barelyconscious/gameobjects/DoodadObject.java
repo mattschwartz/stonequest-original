@@ -16,18 +16,11 @@ import com.barelyconscious.doodads.Doodad;
 
 public class DoodadObject extends GameObject {
 
-    private Doodad doodad;
+    protected Doodad doodad;
 
-    public DoodadObject() {
-
-    }
-
-    @Override
-    public void render(UpdateEvent args) {
-    }
-
-    @Override
-    public void update(UpdateEvent args) {
+    public DoodadObject(Doodad doodad, String filepath, float x, float y) {
+        super(filepath, x, y);
+        this.doodad = doodad;
     }
 
 } // DoodadObject

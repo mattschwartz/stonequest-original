@@ -80,6 +80,18 @@ public class ObjectManager {
         return false;
     } // canReach
 
+    public boolean canMove(GameObject object1) {
+        for (GameObject object2 : gameObjects) {
+            if (object1 != object2) {
+                if (object2.intersects(object1.boundingBox)) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+
     public void removeAllObjects() {
         gameObjects.clear();
     }
