@@ -16,6 +16,7 @@ import com.barelyconscious.util.ConsoleWriter;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
