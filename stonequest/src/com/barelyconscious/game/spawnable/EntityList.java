@@ -6,8 +6,8 @@
                         this file.  You are not allowed to take credit for code
                         that was not written fully by yourself, or to remove 
                         credit from code that was not written fully by yourself.  
-                        Please email schwamat@gmail.com for issues or concerns.
-   * File Description:  
+                        Please email stonequest.bcgames@gmail.com for issues or concerns.
+   * File Description:  ArrayList to keep track of Entities currently in the world.
    ************************************************************************** */
 
 package com.barelyconscious.game.spawnable;
@@ -70,9 +70,9 @@ public class EntityList {
         ArrayList<Entity> list = new ArrayList();
         
         for (Entity e : this.list) {
-            if ( (e.getXPos() == x) && (e.getYPos() == y) ) {
-                list.add(e);
-            } // if
+//            if ( (e.getXPos() == x) && (e.getYPos() == y) ) {
+//                list.add(e);
+//            } // if
         } // for
         
         return list;
@@ -84,8 +84,8 @@ public class EntityList {
         
         for (int i = 0; i < count; i++) {
             e = list[i];
-            if ((list[i].getXPos() == x) && (list[i].getYPos() == y))
-                return e;
+//            if ((list[i].getXPos() == x) && (list[i].getYPos() == y))
+//                return e;
         } // for
         
         return null;

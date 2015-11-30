@@ -1,294 +1,363 @@
 /* *****************************************************************************
- * Project:          Roguelike2.0
+ * Project:          StoneQuest
  * File name:        Game.java
  * Author:           Matt Schwartz
  * Date created:     07.01.2012
  * Redistribution:   You are free to use, reuse, and edit any of the text in
-                     this file.  You are not allowed to take credit for code
-                     that was not written fully by yourself, or to remove 
-                     credit from code that was not written fully by yourself.  
-                     Please email stonequest.bcgames@gmail.com for issues or concerns.
- * File description: Note that using the max window size and setting frame 
- *                   decoration to false creates a "windowless fullscreen"
- *                   effect.
+ *                   this file.  You are not allowed to take credit for code
+ *                   that was not written fully by yourself, or to remove 
+ *                   credit from code that was not written fully by yourself.  
+ *                   Please email stonequest.bcgames@gmail.com for issues or concerns.
+ * File description: The game's main, running thread.  In control of rendering
+ *                   data to the screen and performing animations as well as keeping
+ *                   track of game cross-project classes.
  **************************************************************************** */
-
 package com.barelyconscious.game;
 
-import com.barelyconscious.game.input.InputHandler;
+import com.barelyconscious.game.graphics.Font;
 import com.barelyconscious.game.player.Player;
-import com.barelyconscious.game.player.Inventory;
-import com.barelyconscious.game.menu.TextLog;
-import com.barelyconscious.game.menu.InventoryMenu;
-import com.barelyconscious.game.graphics.LineElement;
-import com.barelyconscious.game.graphics.Map;
-import com.barelyconscious.game.graphics.tiles.Tile;
+import com.barelyconscious.game.graphics.gui.Cursors;
+import com.barelyconscious.game.graphics.gui.DialogPane;
+import com.barelyconscious.game.graphics.gui.windows.InterfaceDelegate;
+import com.barelyconscious.game.input.KeyHandler;
+import com.barelyconscious.game.input.MouseHandler;
 import com.barelyconscious.game.item.Armor;
-import com.barelyconscious.game.item.Food;
-import com.barelyconscious.game.item.Potion;
-import com.barelyconscious.game.item.Projectile;
-import com.barelyconscious.game.item.Scroll;
-import com.barelyconscious.game.item.Weapon;
-import com.barelyconscious.game.menu.AttributesMenu;
-import com.barelyconscious.game.menu.BuffBar;
-import com.barelyconscious.game.menu.LootPickupMenu;
-import com.barelyconscious.game.menu.ToolTipMenu;
-import com.barelyconscious.game.player.StatBonus;
-import com.barelyconscious.game.player.activeeffects.Curse;
-import com.barelyconscious.game.player.activeeffects.Poison;
+import com.barelyconscious.game.item.Item;
+import com.barelyconscious.game.player.AttributeMod;
+import com.barelyconscious.game.spawnable.Entity;
+import com.barelyconscious.game.spawnable.entities.SewerRatEntity;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class Game implements Runnable {
-    private static final JFrame window = new JFrame();
+
+    public static final JFrame applicationWindow = new JFrame();
+    public static final int WORLD_HEIGHT_OFFS_Y = 112;
     private boolean running = false;
-    
-    private final static String GAME_TITLE = "StoneQuest";
-    private final static String GAME_VERSION = "0.6.2";
-    
-    // Game components
+    private static final String GAME_TITLE = "StoneQuest";
+    private static final String GAME_VERSION = "0.7.0";
     public static Screen screen;
-    public static TextLog textLog;
-    public static Player player;
-    public static BuffBar buffBar;
-    public static AttributesMenu attributesMenu;
-    public static ToolTipMenu toolTipMenu;
-    public static Inventory inventory;
-    public static InventoryMenu invenMenu;
-    public static LootPickupMenu lootWindow;
-    public static WorldFrame world;
-    public static Map map;
-    public static InputHandler inputHandler;
-    
-    private static int width;
-    private static int height;
-    
+    public static World world;
+    public static KeyHandler keyHandler = new KeyHandler();
+    public static MouseHandler mouseHandler = new MouseHandler();
+    private int width;
+    private int height;
+    // dbg
+    public static long frametime;
+    public static int frames2;
+
     /**
-     * Initializes the game window.
+     * Initializes the game window and all of its components.
      */
-    public void init() {
-        width = 1280;
-        height = 700;
+    public void initGame() {
+        // Generate 1000 random words 
+        new Thread() {
+            @Override
+            public void run() {
+                Common.generateGibberish(1000);
+            } // run
+        }.start();
+
+        setSize(1280, 758);
+
+        screen = new Screen(width, height);
+        Font.init(screen);
+
+        // Set up the application's input handler objects
+        setInputHandlers();
+
+        // Set up other window properties 
+        setApplicationWindowProperties();
+
+        // Set the application's large and small icons
+        setApplicationIcons();
+
+        // Change the application's cursor to a custom-created one
+        Cursors.setCursor(Cursors.DEFAULT_CURSOR);
+
+        // Set up the interface to be rendered
+        world = new World(screen.getVisibleWidth(), screen.getVisibleHeight() - WORLD_HEIGHT_OFFS_Y);
+        world.spawnPlayer(new Player("cassiius"), 35, 14);
+        InterfaceDelegate.getInstance().init(screen.getWidth(), screen.getHeight());
+        screen.addBackgroundComponent(world);
+
+        // Add a resize listener
+        applicationWindow.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent evt) {
+                onResize(applicationWindow.getWidth(), applicationWindow.getHeight());
+            } // componentsResized
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+            }
+        });
+
+        onResize(width, height);
+
+        // dbg
+//        DialogPane dpane = new DialogPane(500, 195, "Tip - Movement in StoneQuest", "Movement is tile-based and can be accomplished one of three ways:\n\n-The WASD keys\n-The arrow keys or\n-Clicking on a tile\n\nYou can turn off tips like these in the Options menu");
+//        screen.addAlwaysOnTopComponent(dpane);
         
-        screen = new Screen(60, 40);
-        textLog = new TextLog(45, 50, 100);
-        player = new Player(textLog);
-        buffBar = new BuffBar(player);
-        attributesMenu = new AttributesMenu(player);
-        toolTipMenu = new ToolTipMenu();
-        inventory = new Inventory();
-        lootWindow = new LootPickupMenu();
-        map = new Map(width / Common.TILE_SIZE, height / Common.TILE_SIZE);
-        world = new WorldFrame(textLog, map);
-        invenMenu = new InventoryMenu(world, player, inventory, textLog);
-        inputHandler = new InputHandler();
+//        int x, y;
+//        for (int i = 0; i < 75; i++) {
+//            x = (int)(Math.random() * 150);
+//            y = (int)(Math.random() * 150);
+//            world.spawnSprite(new SewerRatEntity((int)(Math.random() * 15)+1, x, y));
+//        }
         
-        window.setTitle(GAME_TITLE);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-//        window.setUndecorated(true); // Makes the frame go bye-bye
         
-        window.add(screen);
-        
-        resize(width, height);
-        
-        window.setVisible(true);
-        window.addKeyListener(inputHandler);
-        window.requestFocus();
-        
-        textLog.writeFormattedString("Welcome to " + GAME_TITLE + " v" + GAME_VERSION + "!", null, new LineElement(GAME_TITLE + " v" + GAME_VERSION, true, Common.THEME_FG_COLOR_RGB));
-        textLog.writeFormattedString("Press ? for help and instructions.", null);
-        
-        disposableFunctionToAddStuffToThePlayersInventory();
+        Armor clothRobe = new Armor("Cloth robe", 1, 69, 12, Entity.CHEST_SLOT_ID, Item.ITEM_ROOT_FILE_PATH + "armor/chest/clothRobe.png", world.getPlayer(), new AttributeMod(Entity.HEALTH_ATTRIBUTE, 43.5), new AttributeMod(Entity.STRENGTH_ATTRIBUTE, 22));
+        Armor clothHat = new Armor("Cloth hat", 1, 69, 12, Entity.HELMET_SLOT_ID, Item.ITEM_ROOT_FILE_PATH + "armor/helmet/clothHat.png", world.getPlayer(), new AttributeMod(Entity.HEALTH_ATTRIBUTE, 43.5), new AttributeMod(Entity.STRENGTH_ATTRIBUTE, 22));
+//        Item leatherBikini = new Armor("Leather Bikini", 1, 69, 12, Entity.CHEST_SLOT_ID, Item.ITEM_ROOT_FILE_PATH + "armor/chest/leatherBikini.png", world.getPlayer());
+        Item ironShield = new Armor("Iron shield", 1, 100, 55, Entity.OFF_HAND_SLOT_ID, Item.ITEM_ROOT_FILE_PATH + "armor/shield/ironShield.png", world.getPlayer());
+        Item essenceOfMind = new Item("Essence of Mind", 0, 155, 3, Item.ITEM_ROOT_FILE_PATH + "salvage/essenceOfMind.png", world.getPlayer()) {
+
+            @Override
+            public String getType() {
+                return "salvage";
+            }
+            
+        };
+        world.getPlayer().getInventory().addItem(clothRobe);
+        world.getPlayer().getInventory().addItem(clothHat);
+//        world.getPlayer().getInventory().addItem(leatherBikini);
+        world.getPlayer().getInventory().addItem(ironShield);
+        world.getPlayer().getInventory().addItem(essenceOfMind);
     } // init
-    
+
     /**
-     * Start the game.
+     * Sets the size of the application to width, height.
+     *
+     * @param width
+     * @param height
      */
-    private void start() {
+    private void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+
+        applicationWindow.setMinimumSize(new Dimension(width, height));
+        applicationWindow.pack();
+    } // setSize
+
+    /**
+     * Load and set the application icons for both the small and large sizes,
+     * the large icon is what is displayed in the OS-dependent toolbar-like area
+     * and the small icon is what is displayed in the OS-dependent application
+     * window (if applicable, i.e., Windows-based OSs).
+     */
+    private void setApplicationIcons() {
+        Image applicationIcon32; // 32x32
+        Image applicationIcon16; // 16x16
+        List<Image> icons;
+
+        try {
+            icons = new ArrayList<Image>();
+            applicationIcon32 = ImageIO.read(Game.class.getResourceAsStream("/gfx/applicationIcon.png"));
+            applicationIcon16 = ImageIO.read(Game.class.getResourceAsStream("/gfx/applicationIconSmall.png"));
+
+            icons.add(applicationIcon16);
+            icons.add(applicationIcon32);
+
+            applicationWindow.setIconImages(icons);
+        } catch (IOException ex) {
+            System.err.println("Failed to load application icon: " + ex);
+        }
+    } // setApplicationIcons
+
+    /**
+     * Add input (mouse and keyboard) handler objects to the application so that
+     * the user can interact properly with the game.
+     */
+    private void setInputHandlers() {
+        applicationWindow.addKeyListener(keyHandler);
+        screen.addMouseListener(mouseHandler);
+        screen.addMouseMotionListener(mouseHandler);
+        screen.addMouseWheelListener(mouseHandler);
+    } // setInputHandlers
+
+    /**
+     * Set other application window properties such as adding the game's
+     * rendering engine to the window and its title, and other JFrame
+     * properties.
+     */
+    private void setApplicationWindowProperties() {
+        applicationWindow.add(screen);
+        applicationWindow.setTitle(GAME_TITLE);
+        applicationWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        applicationWindow.setLocationRelativeTo(null);
+        applicationWindow.setVisible(true);
+        applicationWindow.setFocusTraversalKeysEnabled(false);
+    } // setApplicationWindowProperties
+
+    /**
+     * Resizes the game's window as well as all game components
+     *
+     * @param width the number of tiles wide
+     * @param height the number of tiles high
+     */
+    public void onResize(int width, int height) {
+        screen.resizeScreen(width, height);
+
+        width = screen.getWidth();
+        height = screen.getHeight();
+
+        InterfaceDelegate.getInstance().resize(width, height);
+        world.resize(screen.getVisibleWidth(), InterfaceDelegate.getInstance().getVisibleHeight());
+    } // resize
+
+    /**
+     * Start the game's main running thread.
+     */
+    private void Start() {
         running = true;
         new Thread(this).start();
     } // start
-    
+
     /**
-     * Gracefully quit the program by dumping any save data.
+     * Called when the player quits the game.
      */
-    public static void stop() {
+    public static void Stop() {
         System.err.println("saving data");
         System.exit(0);
     } // stop
-    
+
     /**
-     * Animation and frame updates.  Method copied from Notch's LD22 entry.
+     * Animation and JFrame updates. Method copied and modified from Notch's
+     * LD22 entry.
      */
     @Override
     public void run() {
-        long lastTime = System.nanoTime();
-        long now;
-        boolean shouldRender;
-        double unprocessed = 0;
-        double nsPerTick = 1000000000.0 / 60;
         int frames = 0;
-        int ticks = 0;
+        long end, start;
         long lastTimer2 = System.currentTimeMillis();
-        
-        init();
-        
+
+        start = System.currentTimeMillis();
+        initGame();
+        end = System.currentTimeMillis();
+        System.err.println(" [TEST] Startup took " + (end-start) + " ms");
+        writeWelcomeMessage();
+
         while (running) {
-            now = System.nanoTime();
-            unprocessed += (now - lastTime) / nsPerTick;
-            lastTime = now;
-            shouldRender = true;
-//            while (unprocessed >= 1) {
-//                ticks++;
-//                world.tick();
-//                unprocessed -= 1;
-//                shouldRender = true;
-//            } // while
-            
             try {
-                Thread.sleep(25);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
+                System.err.println(" [ERR] Fatal error in run(): " + e);
+                System.exit(1);
             } // try-catch
-            
-            window.requestFocus();
-            
-            if (shouldRender) {
-                frames++;
-                screen.clear();
-                screen.render();
-            } // if
-            
+
+            frames++;
+
+            start = System.nanoTime();
+            screen.clear();
+            screen.render();
+            end = System.nanoTime();
+
             if (System.currentTimeMillis() - lastTimer2 > 1000) {
                 lastTimer2 += 1000;
-                System.out.println(ticks + " ticks, " + frames + " fps");
+                frametime = end - start;
+                frames2 = frames;
                 frames = 0;
-                ticks = 0;
+            } // if
+
+            if (!applicationWindow.hasFocus()) {
+                applicationWindow.requestFocusInWindow();
             } // if
         } // while
     } // run
     
     /**
-     * Resizes the game's window.
-     * @param width the number of tiles wide
-     * @param height the number of tiles high
+     * 
+     * @return the current player
      */
-    public static void resize(int width, int height) {
-        window.setMinimumSize(new Dimension(width * Common.SCALE, height * Common.SCALE));
-        window.pack();
-        
-        screen.resizeScreen(width, height);
-        attributesMenu.resizeMenu(width, height);
-        invenMenu.resizeMenu(width, height);
-        lootWindow.resizeMenu(width, height);
-        toolTipMenu.resizeMenu(width, height);
-        textLog.resizeMenu(width, height);
-        buffBar.resizeMenu(width, height);
-        world.onResize();
-        
-        window.setLocationRelativeTo(null);
-    } // resize
+    public static Player getCurrentPlayer() {
+        return world.getPlayer();
+    } // getCurrentPlayer
     
-    public static int getWidth() {
-        return width;
-    } // getWidth
+    /**
+     * 
+     * @return the entire world
+     */
+    public static World getWorld() {
+        return world;
+    }// getWorld
     
-    public static int getHeight() {
-        return height;
-    } // getHeight
-    
+    /**
+     * Returns the width, in pixels, of the frame
+     *
+     * @return
+     */
+    public static int getGameWidth() {
+        return screen.getWidth();
+    } // getPixelWidth
+
+    /**
+     * Returns the height, in pixels, of the frame
+     *
+     * @return
+     */
+    public static int getGameHeight() {
+        return screen.getHeight();
+    } // getPixelHeight
+
+    private void writeWelcomeMessage() {
+        // Write a welcome message to the text log
+//        textLog.writeFormattedString("Welcome to " + GAME_TITLE + " v"
+//                + GAME_VERSION + "!", Common.FONT_NULL_RGB, new LineElement(
+//                GAME_TITLE + " v" + GAME_VERSION, true,
+//                Common.themeForegroundColor));
+//
+//        textLog.writeFormattedString("Press ? for help and instructions.",
+//                Common.FONT_NULL_RGB);
+    } // writeWelcomeMessage
+
+    /**
+     * Self-explanatory
+     *
+     * @param args unused
+     */
     public static void main(String[] args) throws InterruptedException {
         Game game = new Game();
-        game.start();
+        game.Start();
     } // main
     
-    public static void disposableFunctionToAddStuffToThePlayersInventory() {
-         Armor lHelm = new Armor("Leather Helmet", 2567, 15, Player.HELM_SLOT, Tile.ARMOR_HELMET_LEATHER_TILE_ID, new StatBonus(Player.ACCURACY, 11), new StatBonus(Player.FIRE_MAGIC, 54), new StatBonus(Player.HOLY_MAGIC, 22), new StatBonus(Player.DEFENSE, 25), new StatBonus(Player.HITPOINTS, 12), new StatBonus(Player.AGILITY, 5));
-        Armor lChest = new Armor ("Leather Chest", 1500, 27, Player.CHEST_SLOT, Tile.ARMOR_CHEST_LEATHER_TILE_ID);
-        Armor lGreaves = new Armor ("Leather Greaves", 220, 15, Player.GREAVES_SLOT, Tile.ARMOR_GREAVES_LEATHER_TILE_ID);
-        Armor lboots = new Armor("Leather Boots", 1789, 10, Player.BOOTS_SLOT, Tile.ARMOR_BOOTS_LEATHER_TILE_ID);
-        Armor lBelt = new Armor("Leather Belt", 1677, 11, Player.BELT_SLOT, Tile.ARMOR_BELT_LEATHER_TILE_ID);
-        Armor lShield = new Armor ("Wooden Shield", 1500, 55, Player.OFF_HAND_SLOT, Tile.ARMOR_SHIELD_WOOD_TILE_ID);
-        Weapon wSword = new Weapon("Wooden Sword", 1358, 1, 4, Tile.SWORD_TILE_ID);
-        Armor bNeck = new Armor("Epic Awesome SLJ Necklace", 256888, 0, Player.NECK_SLOT, Tile.ARMOR_NECKLACE_TILE_ID, new StatBonus(Player.HITPOINTS, 200));
-        Armor bRing = new Armor("Lousy Piece of Boring Ring", 0, 0, Player.RING_SLOT, Tile.ARMOR_RING_TILE_ID);
-        Armor bERing = new Armor("Broken Earring", 0, 0, Player.EARRING_SLOT, Tile.ARMOR_EARRING_TILE_ID);
-        
-        lChest.setRarityColor(Common.LEGENDARY_ITEM_COLOR_RGB);
-        
-        Food apple = new Food("Apple", 0, 1, Tile.FOOD_TILE_ID, 99f);
-        Food apple2 = new Food("Apple", 0, 2, Tile.FOOD_TILE_ID, 99f);
-        Potion healthPotion = new Potion("Potion of Might", 2990, 1, 125, Potion.STATBUFF, Tile.POTION_TILE_ID, new StatBonus(Player.HITPOINTS, 21), new StatBonus(Player.STRENGTH, 15));
-        Potion newPotion = new Potion("Potion of Awesome", 159, 3, 29, Potion.STATBUFF, Tile.POTION_TILE_ID, new StatBonus(Player.DEFENSE, 12), new StatBonus(Player.STRENGTH, 3));
-        Potion pootion = new Potion("Potion of Pi", 1, 5, 95, Potion.STATBUFF, Tile.POTION_TILE_ID, new StatBonus(Player.STRENGTH, 1), new StatBonus(Player.ACCURACY, 11));
-        Potion antiMagicPotion = new Potion("Antimagic Potion", 1589, 2, 0, Potion.ANTIMAGIC, Tile.POTION_TILE_ID);
-        Potion antivenomPotion = new Potion("Antivenom", 18890, 3, 1, Potion.ANTIVENOM, Tile.POTION_TILE_ID);
-        
-        Curse curse = new Curse("Curse of Evilness", 299, new StatBonus(Player.ACCURACY, 15), new StatBonus(Player.DEFENSE, 5));
-        Curse curse2 = new Curse("Curse of Evilness", 1000, new StatBonus(Player.AGILITY, 15), new StatBonus(Player.DEFENSE, 5));
-        Curse curse3 = new Curse("Curse of Evilness", 1335, new StatBonus(Player.AGILITY, 15), new StatBonus(Player.DEFENSE, 5));
-        Curse curse4 = new Curse("Curse of Evilness", 1240, new StatBonus(Player.AGILITY, 15), new StatBonus(Player.DEFENSE, 5));
-        
-        Poison poi = new Poison("Snake Venom", 69, 98756f, 7);
-        Poison poi2 = new Poison("Spider Bite", 24, 0.5f, 6);
-        
-        Projectile someBronzeArrows = new Projectile("Bronze-tipped Arrows", 255, 15, Tile.ARROW_TILE_ID, true, Projectile.BRONZE_TIP);
-        
-        Scroll scr1 = new Scroll("Invisibility", 258, 1, Tile.SCROLL_TILE_ID, new StatBonus(Player.ACCURACY, 255f));
-        
-        inventory.addItem(scr1);
-        
-        player.applyDebuff(poi);
-        player.applyDebuff(curse);
-        player.applyDebuff(curse2);
-        player.applyDebuff(curse3);
-        player.applyDebuff(curse4);
-        player.applyDebuff(poi2);
-        
-        inventory.addItem(apple);
-        inventory.addItem(healthPotion);
-        inventory.addItem(apple2);
-        inventory.addItem(newPotion);
-        inventory.addItem(pootion);
-        inventory.addItem(antiMagicPotion);
-        inventory.addItem(antivenomPotion);
-        
-        inventory.addItem(lHelm);
-        inventory.addItem(lChest);
-        inventory.addItem(lGreaves);
-        inventory.addItem(lboots);
-        inventory.addItem(lBelt);
-        inventory.addItem(lShield);
-        inventory.addItem(wSword);
-        inventory.addItem(bNeck);
-        inventory.addItem(bRing);
-        inventory.addItem(bERing);
-        
-        inventory.addItem(someBronzeArrows);
-    }
-    
     /* 
-    // closing down the window makes sense as a method, so here are
-    // the salient parts of what happens with the JFrame extending class ..
+     // closing down the window makes sense as a method, so here are
+     // the salient parts of what happens with the JFrame extending class ..
 
-    public class FooWindow extends JFrame {
-        public FooWindow() {
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setBounds(5, 5, 400, 300);  // yeah yeah, this is an example ;P
-            setVisible(true);
-        }
-        public void pullThePlug() {
-                WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
-                Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
-        }
-    }
+     public class FooWindow extends JFrame {
+     public FooWindow() {
+     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+     setBounds(5, 5, 400, 300);  // yeah yeah, this is an example ;P
+     setVisible(true);
+     }
+     public void pullThePlug() {
+     WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+     Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
+     }
+     }
 
-    // Here's how that would be employed from elsewhere -
+     // Here's how that would be employed from elsewhere -
 
-    // someplace the window gets created ..
-    FooWindow fooey = new FooWindow();
-    ...
-    // and someplace else, you can close it thusly
-    fooey.pullThePlug();
+     // someplace the window gets created ..
+     FooWindow fooey = new FooWindow();
+     ...
+     // and someplace else, you can close it thusly
+     fooey.pullThePlug();
      */
 } // Game

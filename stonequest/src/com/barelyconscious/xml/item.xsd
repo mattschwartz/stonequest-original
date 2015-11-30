@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+    
+    <!-- Attributes defined for salvagesInto -->
+    <xs:attribute name="material" type="xs:string" />
+    <xs:attribute name="quantity" type="xs:string" />
+    
+    <!-- Attributes defined for item -->
+    <xs:attribute name="baseName" type="xs:string" />
+    <xs:attribute name="fileLocation" type="xs:string" />
+    <xs:attribute name="itemType" type="xs:string" />
+    <xs:attribute name="itemLevel" type="xs:integer" />
+
+    <!-- Sipmle elements for complex type dropRate -->
+    <xs:attribute name="common" type="xs:string" />
+    <xs:attribute name="magic" type="xs:string" />
+    <xs:attribute name="rare" type="xs:string" />
+    <xs:attribute name="unique" type="xs:string" />
+
+    <!-- Simple types for complex type attributes -->
+    <xs:element name="armor" />
+    <xs:element name="health" />
+    <xs:element name="strength" />
+    <xs:element name="accuracy" />
+    <xs:element name="defense" />
+    <xs:element name="evasion" />
+    <xs:element name="fireMagicBonus" />
+    <xs:element name="frostMagicBonus" />
+    <xs:element name="holyMagicBonus" />
+    <xs:element name="chaosMagicBonus" />
+    <xs:element name="faithMagicBonus" />
+    
+    <!-- Defines the drop rate of an item for each type of quality -->
+    <xs:element name="dropRate">
+        <xs:complexType>
+            <xs:attribute ref="common" />
+            <xs:attribute ref="magic" />
+            <xs:attribute ref="rare" />
+            <xs:attribute ref="unique" />
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- Defines the attributes and their values that can appear on the item -->
+    <xs:element name="attributes">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="armor" minOccurs="0"/>
+                <xs:element ref="health" minOccurs="0"/>
+                <xs:element ref="strength" minOccurs="0" />
+                <xs:element ref="accuracy" minOccurs="0" />
+                <xs:element ref="defense" minOccurs="0" />
+                <xs:element ref="evasion" minOccurs="0" />
+                <xs:element ref="fireMagicBonus" minOccurs="0" />
+                <xs:element ref="frostMagicBonus" minOccurs="0" />
+                <xs:element ref="holyMagicBonus" minOccurs="0" />
+                <xs:element ref="chaosMagicBonus" minOccurs="0" />
+                <xs:element ref="faithMagicBonus" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- Defines what types of materials the Item salvages into -->
+    <xs:element name="salvagesInto">
+        <xs:complexType>
+            <xs:attribute ref="material" />
+            <xs:attribute ref="quantity" />
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="equippable">
+        <xs:complexType>
+            <xs:attribute name="slot" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- Defines the item object -->
+    <xs:element name="item">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="equippable" minOccurs="0" />
+                <xs:element ref="salvagesInto" maxOccurs="unbounded" />
+                <xs:element name="dropRate" />
+                <xs:element name="attributes" />
+            </xs:sequence>
+
+            <xs:attribute ref="baseName" />
+            <xs:attribute ref="fileLocation" />
+            <xs:attribute ref="itemType" />
+            <xs:attribute ref="itemLevel" />
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

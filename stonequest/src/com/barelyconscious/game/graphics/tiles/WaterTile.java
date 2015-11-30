@@ -14,6 +14,8 @@ package com.barelyconscious.game.graphics.tiles;
 
 public class WaterTile extends Tile {
     public WaterTile() {
-        super(WATER_TILE_ID, "/tiles/world/water.png", true, false, false);
+        super(WATER_TILE_ID, "/gfx/tiles/world/environment/water/water.png", true, false, false);
     }
+    
+    
 } // WaterTile

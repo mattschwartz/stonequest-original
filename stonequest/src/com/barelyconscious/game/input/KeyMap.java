@@ -3,122 +3,219 @@
  * File name:        KeyMap.java
  * Author:           Matt Schwartz
  * Date created:     07.06.2012 
- * Redistribution:   You are free to use = reuse = and edit any of the text in
-                     this file.  You are not allowed to take credit for code
-                     that was not written fully by yourself = or to remove 
-                     credit from code that was not written fully by yourself.  
-                     Please email schwamat@gmail.com for issues or concerns.
- * File description: Contains the default keymapping for the game.  
+ * Redistribution:   You are free to use, reuse, and edit any of the text in
+ *                   this file.  You are not allowed to take credit for code
+ *                   that was not written fully by yourself, or to remove 
+ *                   credit from code that was not written fully by yourself.  
+ *                   Please email stonequest.bcgames@gmail.com for issues or concerns.
+ * File description: Keeps track of the each adjustable keybind for the player.
+ *                   Keybinds determine how the game should react when its 
+ *                   corresponding key is pressed on the keyboard.  Two default
+ *                   maps are available for quickloading in functions below.
  **************************************************************************** */
-
 package com.barelyconscious.game.input;
 
+import com.barelyconscious.game.Game;
+import com.barelyconscious.game.graphics.gui.windows.BrewingWindow;
+import com.barelyconscious.game.graphics.gui.windows.CharacterWindow;
+import com.barelyconscious.game.graphics.gui.windows.InterfaceDelegate;
+import com.barelyconscious.game.graphics.gui.windows.InventoryWindow;
+import com.barelyconscious.game.graphics.gui.windows.JournalWindow;
+import com.barelyconscious.game.graphics.gui.windows.SalvageWindow;
+import com.barelyconscious.game.graphics.gui.windows.UpgradeItemWindow;
+import com.barelyconscious.game.spawnable.Sprite;
+import com.barelyconscious.game.spawnable.entities.SewerRatEntity;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class KeyMap {
-    // Left  = H
-    // Right = L
-    // Up    = K
-    // Down  = J
-    public static int PLAYER_SKIP_TURN;
-    public static int PLAYER_MOVE_UP;
-    public static int PLAYER_MOVE_DOWN;
-    public static int PLAYER_MOVE_LEFT;
-    public static int PLAYER_MOVE_RIGHT;
-    public static int MENU_MOVE_UP;
-    public static int MENU_MOVE_DOWN;
-    public static int PLAYER_MOVE_LEFT_ALT;
-    public static int PLAYER_MOVE_RIGHT_ALT;
-    public static int TEXT_LOG_SCROLL_UP;
-    public static int TEXT_LOG_SCROLL_DOWN;
-    public static int MENU_CLEAR_FOCUS;
-    public static int MENU_SELECT;
-    public static int OPEN_HELP_MENU;
-    public static int OPEN_INVENTORY;
-    public static int OPEN_SKILL_TAB;
-    public static int PICKUP_ITEM;
-    public static int DROP_ITEM;
-    public static int USE_ITEM;
-    public static int EXAMINE_ITEM;
-    public static int SALVAGE_ITEM;
-    
-    public static final int CLASSIC_MAPPING = 0;
-    public static final int MODERN_MAPPING = 1;
-    
-    /** 
-     * Mapping similar to the classic Rogue.
-     */
-    private static void setClassicRogueMapping() {
-        PLAYER_SKIP_TURN = KeyEvent.VK_SPACE;
-        PLAYER_MOVE_UP = KeyEvent.VK_K;
-        PLAYER_MOVE_DOWN = KeyEvent.VK_J;
-        PLAYER_MOVE_LEFT = KeyEvent.VK_H;
-        PLAYER_MOVE_RIGHT = KeyEvent.VK_L;
-        MENU_MOVE_UP = KeyEvent.VK_UP;
-        MENU_MOVE_DOWN = KeyEvent.VK_DOWN;
-        PLAYER_MOVE_LEFT_ALT = KeyEvent.VK_LEFT;
-        PLAYER_MOVE_RIGHT_ALT = KeyEvent.VK_RIGHT;
-        TEXT_LOG_SCROLL_UP = KeyEvent.VK_PAGE_UP;
-        TEXT_LOG_SCROLL_DOWN = KeyEvent.VK_PAGE_DOWN;
-        MENU_CLEAR_FOCUS = KeyEvent.VK_ESCAPE;
-        MENU_SELECT = KeyEvent.VK_ENTER;
-        OPEN_HELP_MENU = '?';
-        OPEN_INVENTORY = KeyEvent.VK_I;
-        OPEN_SKILL_TAB = KeyEvent.VK_S;
-        PICKUP_ITEM = KeyEvent.VK_COMMA;
-        DROP_ITEM = KeyEvent.VK_D;
-        USE_ITEM = KeyEvent.VK_E;
-        EXAMINE_ITEM = KeyEvent.VK_X;
-        SALVAGE_ITEM = KeyEvent.VK_S;
-    } // setClassicRogueMapping
-    
-    /**
-     * Move with WASD instead of HJKL.
-     */
-    private static void setModernMapping() {
-        PLAYER_SKIP_TURN = KeyEvent.VK_SPACE;
-        PLAYER_MOVE_UP = KeyEvent.VK_W;
-        PLAYER_MOVE_DOWN = KeyEvent.VK_S;
-        PLAYER_MOVE_LEFT = KeyEvent.VK_A;
-        PLAYER_MOVE_RIGHT = KeyEvent.VK_D;
-        MENU_MOVE_UP = KeyEvent.VK_UP;
-        MENU_MOVE_DOWN = KeyEvent.VK_DOWN;
-        PLAYER_MOVE_LEFT_ALT = KeyEvent.VK_LEFT;
-        PLAYER_MOVE_RIGHT_ALT = KeyEvent.VK_RIGHT;
-        TEXT_LOG_SCROLL_UP = KeyEvent.VK_PAGE_UP;
-        TEXT_LOG_SCROLL_DOWN = KeyEvent.VK_PAGE_DOWN;
-        MENU_CLEAR_FOCUS = KeyEvent.VK_ESCAPE;
-        MENU_SELECT = KeyEvent.VK_ENTER;
-        OPEN_HELP_MENU = '?';
-        OPEN_INVENTORY = KeyEvent.VK_I;
-        OPEN_SKILL_TAB = KeyEvent.VK_K;
-        PICKUP_ITEM = KeyEvent.VK_P;
-        DROP_ITEM = KeyEvent.VK_D;
-        USE_ITEM = KeyEvent.VK_E;
-        EXAMINE_ITEM = KeyEvent.VK_X;
-        SALVAGE_ITEM = KeyEvent.VK_S;
-    } // setModernMapping
-    
-    /**
-     * Change the entire key map to map.
-     * @param map 
-     */
-    public static void changeMapping(int map) {
-        if (map == MODERN_MAPPING) {
-            setModernMapping();
+    // Player-related keybindings
+
+    public static final int PLAYER_MOVE_UP_DEFAULT_BINDING = KeyEvent.VK_W;
+    public static final int PLAYER_MOVE_DOWN_DEFAULT_BINDING = KeyEvent.VK_S;
+    public static final int PLAYER_MOVE_LEFT_DEFAULT_BINDING = KeyEvent.VK_A;
+    public static final int PLAYER_MOVE_RIGHT_DEFAULT_BINDING = KeyEvent.VK_D;
+    public static final int PLAYER_MOVE_UP_LEFT_DEFAULT_BINDING = KeyEvent.VK_Q;
+    public static final int PLAYER_MOVE_UP_RIGHT_DEFAULT_BINDING = KeyEvent.VK_E;
+    public static final int PLAYER_MOVE_DOWN_LEFT_DEFAULT_BINDING = KeyEvent.VK_Z;
+    public static final int PLAYER_MOVE_DOWN_RIGHT_DEFAULT_BINDING = KeyEvent.VK_X;
+    public static final int PLAYER_SKIP_TURN_DEFAULT_BINDING = KeyEvent.VK_SPACE;
+    // Interface-related keybindings
+    public static final int OPEN_INVENTORY_WINDOW_DEFAULT_BINDING = KeyEvent.VK_I;
+    public static final int OPEN_CHARACTER_WINDOW_DEFAULT_BINDING = KeyEvent.VK_C;
+    public static final int OPEN_UPGRADE_WEAPON_WINDOW_DEFAULT_BINDING = KeyEvent.VK_U;
+    public static final int OPEN_JOURNAL_WINDOW_DEFAULT_BINDING = KeyEvent.VK_J;
+    public static final int OPEN_SALVAGE_ITEM_WINDOW_DEFAULT_BINDING = KeyEvent.VK_K;
+    public static final int OPEN_BREWING_WINDOW_DEFAULT_BINDING = KeyEvent.VK_B;
+    public static final int ESCAPE_BUTTON_DEFAULT_BINDING = KeyEvent.VK_ESCAPE;
+    public static final int PRINT_SCREEN_BUTTON_DEFAULT_BINDING = KeyEvent.VK_F12;
+    // Player-related actions
+    public static final KeyAction PLAYER_MOVE_UP = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            Game.getCurrentPlayer().moveUp();
+            Game.getWorld().tick();
+        } // action
+    };
+    public static final KeyAction PLAYER_MOVE_DOWN = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            Game.getCurrentPlayer().moveDown();
+            Game.getWorld().tick();
+        }
+    };
+    public static final KeyAction PLAYER_MOVE_LEFT = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            Game.getCurrentPlayer().moveLeft();
+            Game.getWorld().tick();
+        }
+    };
+    public static final KeyAction PLAYER_MOVE_RIGHT = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            Game.getCurrentPlayer().moveRight();
+            Game.getWorld().tick();
+        }
+    };
+    public static final KeyAction PLAYER_MOVE_UP_LEFT = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            Game.getCurrentPlayer().moveUpLeft();
+            Game.getWorld().tick();
+        }
+    };
+    public static final KeyAction PLAYER_MOVE_UP_RIGHT = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            Game.getCurrentPlayer().moveUpRight();
+            Game.getWorld().tick();
+        }
+    };
+    public static final KeyAction PLAYER_MOVE_DOWN_LEFT = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            Game.getCurrentPlayer().moveDownLeft();
+            Game.getWorld().tick();
+        }
+    };
+    public static final KeyAction PLAYER_MOVE_DOWN_RIGHT = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            Game.getCurrentPlayer().moveDownRight();
+            Game.getWorld().tick();
+        }
+    };
+    public static final KeyAction PLAYER_SKIP_TURN = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            System.out.println("You twiddle your thumbs.");
+            Game.getWorld().tick();
+        }
+    };
+    // Interface-related actions
+    public static final KeyAction OPEN_INVENTORY_WINDOW = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            InterfaceDelegate.getInstance().toggleUI(new InventoryWindow());
+        }
+    };
+    public static final KeyAction OPEN_CHARACTER_WINDOW = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            InterfaceDelegate.getInstance().toggleUI(new CharacterWindow());
+        }
+    };
+    public static final KeyAction OPEN_UPGRADE_WEAPON_WINDOW = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            InterfaceDelegate.getInstance().toggleUI(new UpgradeItemWindow());
+        }
+    };
+    public static final KeyAction OPEN_JOURNAL_WINDOW = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            InterfaceDelegate.getInstance().toggleUI(new JournalWindow());
+        }
+    };
+    public static final KeyAction OPEN_SALVAGE_ITEM_WINDOW = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            InterfaceDelegate.getInstance().toggleUI(new SalvageWindow());
+        }
+    };
+    public static final KeyAction OPEN_BREWING_WINDOW = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            InterfaceDelegate.getInstance().toggleUI(new BrewingWindow());
+        }
+    };
+    public static final KeyAction ESCAPE_BUTTON = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            InterfaceDelegate.getInstance().closeWindows();
+        }
+    };
+    public static final KeyAction PRINT_SCREEN_BUTTON = new KeyAction() {
+        @Override
+        public void action(KeyEvent e) {
+            Game.screen.saveScreenshot();
+        }
+    };
+    private static Map<Integer, KeyAction> keyBindings = new HashMap<Integer, KeyAction>();
+
+    public static void addKeyBinding(int key, KeyAction action) {
+        // Overwriting a key binding
+        if (keyBindings.containsKey(key)) {
+            keyBindings.remove(key);
         } // if
-        
-        else if (map == CLASSIC_MAPPING) {
-            setClassicRogueMapping();
+
+        keyBindings.put(key, action);
+    } // addKeyBinding
+
+    public static void setDefaultKeyBindings() {
+        setDefaultPlayerKeyBindings();
+        setDefaultInterfaceKeyBindings();
+    } // setDefaultKeyBindings
+
+    public static void setDefaultPlayerKeyBindings() {
+        addKeyBinding(PLAYER_MOVE_LEFT_DEFAULT_BINDING, PLAYER_MOVE_LEFT);
+        addKeyBinding(PLAYER_MOVE_RIGHT_DEFAULT_BINDING, PLAYER_MOVE_RIGHT);
+        addKeyBinding(PLAYER_MOVE_UP_DEFAULT_BINDING, PLAYER_MOVE_UP);
+        addKeyBinding(PLAYER_MOVE_DOWN_DEFAULT_BINDING, PLAYER_MOVE_DOWN);
+        addKeyBinding(PLAYER_MOVE_LEFT_DEFAULT_BINDING, PLAYER_MOVE_LEFT);
+        addKeyBinding(PLAYER_MOVE_RIGHT_DEFAULT_BINDING, PLAYER_MOVE_RIGHT);
+        addKeyBinding(PLAYER_MOVE_UP_LEFT_DEFAULT_BINDING, PLAYER_MOVE_UP_LEFT);
+        addKeyBinding(PLAYER_MOVE_UP_RIGHT_DEFAULT_BINDING, PLAYER_MOVE_UP_RIGHT);
+        addKeyBinding(PLAYER_MOVE_DOWN_LEFT_DEFAULT_BINDING, PLAYER_MOVE_DOWN_LEFT);
+        addKeyBinding(PLAYER_MOVE_DOWN_RIGHT_DEFAULT_BINDING, PLAYER_MOVE_DOWN_RIGHT);
+        addKeyBinding(PLAYER_SKIP_TURN_DEFAULT_BINDING, PLAYER_SKIP_TURN);
+
+        addKeyBinding(KeyEvent.VK_LEFT, PLAYER_MOVE_LEFT);
+        addKeyBinding(KeyEvent.VK_RIGHT, PLAYER_MOVE_RIGHT);
+        addKeyBinding(KeyEvent.VK_UP, PLAYER_MOVE_UP);
+        addKeyBinding(KeyEvent.VK_DOWN, PLAYER_MOVE_DOWN);
+
+    } // setDefaultPlayerKeyBindings
+
+    public static void setDefaultInterfaceKeyBindings() {
+        addKeyBinding(OPEN_INVENTORY_WINDOW_DEFAULT_BINDING, OPEN_INVENTORY_WINDOW);
+        addKeyBinding(OPEN_CHARACTER_WINDOW_DEFAULT_BINDING, OPEN_CHARACTER_WINDOW);
+        addKeyBinding(OPEN_UPGRADE_WEAPON_WINDOW_DEFAULT_BINDING, OPEN_UPGRADE_WEAPON_WINDOW);
+        addKeyBinding(OPEN_JOURNAL_WINDOW_DEFAULT_BINDING, OPEN_JOURNAL_WINDOW);
+        addKeyBinding(OPEN_SALVAGE_ITEM_WINDOW_DEFAULT_BINDING, OPEN_SALVAGE_ITEM_WINDOW);
+        addKeyBinding(OPEN_BREWING_WINDOW_DEFAULT_BINDING, OPEN_BREWING_WINDOW);
+        addKeyBinding(ESCAPE_BUTTON_DEFAULT_BINDING, ESCAPE_BUTTON);
+        addKeyBinding(PRINT_SCREEN_BUTTON_DEFAULT_BINDING, PRINT_SCREEN_BUTTON);
+    } // setDefaultInterfaceKeyBindings
+
+    public static KeyAction getAction(int key) {
+        if (!keyBindings.containsKey(key)) {
+            return null;
         } // if
-    } // changeMapping
-    
-    /**
-     * Change key key to newBind.
-     * @param key
-     * @param newBind 
-     */
-    public static void changeKeyBind(int key, int newBind) {
-        
-    } // changeKeyBind
+
+        return keyBindings.get(key);
+    } // getAction
 } // KeyMap

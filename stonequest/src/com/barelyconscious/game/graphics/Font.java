@@ -4,115 +4,228 @@
  * Author:           Matt Schwartz
  * Date created:     02.23.2013
  * Redistribution:   You are free to use, reuse, and edit any of the text in
-                     this file.  You are not allowed to take credit for code
-                     that was not written fully by yourself, or to remove 
-                     credit from code that was not written fully by yourself.  
-                     Please email stonequest.bcgames@gmail.com for issues or concerns.
- * File description: 
+ *                   this file.  You are not allowed to take credit for code
+ *                   that was not written fully by yourself, or to remove 
+ *                   credit from code that was not written fully by yourself.  
+ *                   Please email stonequest.bcgames@gmail.com for issues or concerns.
+ * File description: Draws characters defined in FONT_SHEET to the screen
  **************************************************************************** */
-
 package com.barelyconscious.game.graphics;
 
+import com.barelyconscious.game.Common;
+import com.barelyconscious.game.Game;
 import com.barelyconscious.game.Screen;
 import java.awt.Color;
+import java.awt.FontFormatException;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.List;
 
 public class Font {
+
     /**
-     * List of characters in order, matching fontspace.
+     * List of characters in order, matching the font sheet.
      */
-    private final static String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz[]<>?!@#$%^&123456789.,;:\\/()*-_=+{}\"'~`0 "; // width = 22
-    private final static BufferedImage img = Icon.FONT_SHEET;
-    private final static int[] pixels = img.getRGB(0, 0, img.getWidth(), img.getHeight(), null, 0, img.getWidth());
-    
-    private final static int WHITE_RGB = (Color.white).getRGB();
-    
-    private final static int SHEET_WIDTH = 32;
-    public final static int CHAR_WIDTH = 8;
-    public final static int CHAR_HEIGHT = 10;
-    
+    private static final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz[]<>?!@#$%^&123456789.,;:\\/()*-_=+{}\"'~`0 "; // width = 22
     /**
-     * Draw a message to the screen starting at xStart, yStart
-     * @param scr the screen to draw to
-     * @param msg the message to be drawn
-     * @param xStart x starting coordinate
-     * @param yStart y starting coordinate
+     * The color to skip when scanning each letter.
      */
-    public static void drawFormattedMessage(Screen scr, ScreenElement element, int xStart, int yStart) {
-        int pix;
-        int xPos;
-        int yPos;
-        
-        if (element == null) {
-            return;
-        } // if
-        
-        xPos = (chars.indexOf(element.getElement()) % SHEET_WIDTH) * CHAR_WIDTH;
-        yPos = (chars.indexOf(element.getElement()) / SHEET_WIDTH) * CHAR_HEIGHT;
+    private static final int TRANSPARENT_COLOR = (Color.white).getRGB();
+    /**
+     * The width, in number of squares, of the font sheet.
+     */
+    private static final int SHEET_WIDTH = 32;
+    /**
+     * The width of each character.
+     */
+    public static int CHAR_WIDTH = 8;
+    /**
+     * The height of each character.
+     */
+    public static int CHAR_HEIGHT = 10;
+    public static int NEW_CHAR_HEIGHT;
+    public static int NEW_CHAR_WIDTH;
+    // test
+    public static BufferedImage stringImage;
+    public static Graphics2D g;
+    public static java.awt.Font exocetFont;
+    public static int[] stringImagePix;
 
-        // Unrecognized character
-        if (xPos < 0 || yPos < 0) {
-            return;
-        } // if
+    /**
+     * Creates the necessary fonts for the application to be packaged and run on
+     * computers that may or may not have the necessary font packages and sets
+     * other values necessary at runtime. Should be called once per runtime.
+     */
+    public static void init(Screen scr) {
+        try {
+            System.err.print(" [NOTIFY] Loading font \"Exocet.ttf\"...");
 
-        // Draw the character
-        for (int x = xPos, xx = 0; x < (xPos + CHAR_WIDTH); x++, xx++) {
-            for (int y = yPos, yy = 0; y < (yPos + CHAR_HEIGHT); y++, yy++) {
-//                    if (msg[i].isBold()) {
-//                        pix = pixels[x + (y + 2) * CHAR_WIDTH];
-//                    } else {
-                    pix = pixels[x + y * img.getWidth()];
-//                    } // else
+            java.awt.Font font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, Game.class.getResourceAsStream("/fonts/Exocet.ttf"));
+            exocetFont = font.deriveFont(13f);
 
-                if (pix == WHITE_RGB) {
-                        if (element.getElement() == 'g' || element.getElement() == 'j' 
-                                || element.getElement() == 'p' || element.getElement() == 'q' 
-                                || element.getElement() == 'y') {
-                            scr.setPixel(element.getColor(), xStart + xx, yStart + yy + 2);
-                        } else {
-                            scr.setPixel(element.getColor(), xStart + xx, yStart + yy);
-                        } // else
-                } // if
-            } // for
-        } // for
-    } // drawMessage
-    
-    public static void drawMessage(Screen scr, String msg, int color, boolean bold, int xStart, int yStart) {
-        int pix;
-        int xPos;
-        int yPos;
-        
-        if (msg == null) {
-            return;
+            NEW_CHAR_HEIGHT = scr.getGraphics().getFontMetrics(exocetFont).getHeight();
+            NEW_CHAR_WIDTH = scr.getGraphics().getFontMetrics(exocetFont).getMaxAdvance();
+
+            System.err.println("done.");
+        } catch (FontFormatException ex) {
+            System.err.println("\n [ERROR] Error loading font \"Exocet.ttf\": " + ex);
+        } catch (IOException ex) {
+            System.err.println("\n [ERROR] Error loading font \"Exocet.ttf\": " + ex);
         }
-        
-        for (int i = 0; i < msg.length(); i++) {
-            xPos = (chars.indexOf(msg.charAt(i)) % SHEET_WIDTH) * CHAR_WIDTH;
-            yPos = (chars.indexOf(msg.charAt(i)) / SHEET_WIDTH) * CHAR_HEIGHT;
-            
-            // Unrecognized character
-            if (xPos < 0 || yPos < 0) {
-                continue;
+    } // init
+
+    /**
+     * Gets the width of the message once it is drawn to the screen
+     *
+     * @param scr the screen the message would be rendered to
+     * @param msg the message to be drawn to the screen
+     * @return
+     */
+    public static int getStringWidth(Screen scr, String msg) {
+        return scr.getGraphics().getFontMetrics(exocetFont).stringWidth(msg);
+    } // getStringWidth
+
+    /**
+     * Gets the width of the message once it is drawn to the screen
+     *
+     * @param scr the screen the message would be rendered to
+     * @param msg the message to be drawn to the screen
+     * @return
+     */
+    /**
+     * Gets the width of the message once it is drawn to the screen
+     *
+     * @param scr the screen the message would be rendered to
+     * @param msg the message to be drawn to the screen
+     * @param bold if true, the font used will be bold
+     * @param fontSize the point size of the font to be used
+     * @return 
+     */
+    public static int getStringWidth(Screen scr, String msg, boolean bold, float fontSize) {
+        java.awt.Font newFont = exocetFont.deriveFont(fontSize);
+
+        if (bold) {
+            newFont = newFont.deriveFont(java.awt.Font.BOLD);
+        } // if
+
+        return scr.getGraphics().getFontMetrics(newFont).stringWidth(msg);
+    } // getStringWidth
+
+    /**
+     * Returns the maximum width as an integer based on a given list of strings.
+     *
+     * @param scr the screen the messages would be rendered to
+     * @param strings the list of strings from which to determine a maximum
+     * width
+     * @return the max width in pixels
+     */
+    public static int getMaxStringWidth(Screen scr, List<String> strings) {
+        int stringLength;
+        int maxLength = Integer.MIN_VALUE;
+
+        for (String str : strings) {
+            stringLength = getStringWidth(scr, str);
+
+            if (stringLength > maxLength) {
+                maxLength = stringLength;
             } // if
-            
-            // Draw the character
-            for (int x = xPos, xx = 0; x < (xPos + CHAR_WIDTH); x++, xx++) {
-                for (int y = yPos, yy = 0; y < (yPos + CHAR_HEIGHT); y++, yy++) {
-//                    if (bold) {
-//                        pix = pixels[x + (y + 2) * CHAR_WIDTH];
-//                    } else {
-                        pix = pixels[x + y * img.getWidth()];
-//                    } // else
-                    
-                    if (pix == WHITE_RGB) {
-                        if (msg.charAt(i) == 'g' || msg.charAt(i) == 'j' || msg.charAt(i) == 'p' || msg.charAt(i) == 'q' || msg.charAt(i) == 'y') {
-                            scr.setPixel(color, xStart + xx + i * CHAR_WIDTH, yStart + yy + 2);
-                        } else {
-                            scr.setPixel(color, xStart + xx + i * CHAR_WIDTH, yStart + yy);
-                        } // else
-                    } // if
-                } // for
-            } // for
         } // for
-    } // drawMessage
+
+        return maxLength;
+    } // getMaxStringLength
+
+    /**
+     * Draws a string to the screen at the supplied coordinates.
+     *
+     * @param scr the screen to render to
+     * @param msg the message to be written to the screen
+     * @param col the color of the message as a Color object
+     * @param font if null, the default font will be used
+     * @param xStart the starting x coordinate where the message will be drawn,
+     * this value should be greater than or equal to 0 but less than the width
+     * of the screen
+     * @param yStart the starting y coordinate where the message will be drawn,
+     * this value should be greater than or equal to 0 but less than the height
+     * of the screen
+     */
+    public static void drawFont(Screen scr, String msg, Color col, java.awt.Font font, int xStart, int yStart) {
+        String[] parts;
+
+        g = scr.getGraphics();
+
+        if (font == null) {
+            g.setFont(exocetFont);
+        } else {
+            g.setFont(font);
+        }
+
+        if (msg.contains("\n")) {
+            parts = msg.split("\n");
+
+            for (int i = 0; i < parts.length; i++) {
+                drawFont(scr, parts[i], col, font, xStart, yStart + (g.getFontMetrics().getHeight() * i));
+            } // for
+        } // if
+
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g.setColor(col);
+        g.drawString(msg, xStart, yStart);
+        g.dispose();
+    } // drawFont
+
+    public static void drawFont(Screen scr, String msg, Color col, boolean bold, float fontSize, int xStart, int yStart) {
+        java.awt.Font newFont = exocetFont.deriveFont(fontSize);
+
+        if (bold) {
+            drawFont(scr, msg, col, newFont.deriveFont(java.awt.Font.BOLD), xStart, yStart);
+        } // if
+        else {
+            drawFont(scr, msg, col, newFont, xStart, yStart);
+        } // else
+    } // drawFont
+
+    /**
+     * Draws a string to the screen at the supplied coordinates.
+     *
+     * @param scr the screen to render to
+     * @param msg the message to be written to the screen
+     * @param col the color of the message as an integer
+     * @param font if null, the default font will be used
+     * @param xStart the starting x coordinate where the message will be drawn,
+     * this value should be greater than or equal to 0 but less than the width
+     * of the screen
+     * @param yStart the starting y coordinate where the message will be drawn,
+     * this value should be greater than or equal to 0 but less than the height
+     * of the screen
+     */
+    public static void drawFont(Screen scr, String msg, int col, int xStart, int yStart) {
+        drawFont(scr, msg, new Color(col), null, xStart, yStart);
+    } // drawFont
+
+    /**
+     * Draws a string to the screen at the supplied coordinates using the
+     * default font.
+     *
+     * @param scr the screen to render to
+     * @param msg the message to be written to the screen
+     * @param col the color of the message as a Color object
+     * @param bold if true, the message printed will be bolded
+     * @param xStart the starting x coordinate where the message will be drawn,
+     * this value should be greater than or equal to 0 but less than the width
+     * of the screen
+     * @param yStart the starting y coordinate where the message will be drawn,
+     * this value should be greater than or equal to 0 but less than the height
+     * of the screen
+     */
+    public static void drawFont(Screen scr, String msg, Color col, boolean bold, int xStart, int yStart) {
+        java.awt.Font newFont = exocetFont.deriveFont(java.awt.Font.BOLD);
+        
+        if (bold) {
+            drawFont(scr, msg, col, newFont, xStart, yStart);
+        } else {
+            drawFont(scr, msg, col, exocetFont, xStart, yStart);
+        }
+    } // drawFont
 } // Font
