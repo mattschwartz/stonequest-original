@@ -1,8 +1,8 @@
 /* *****************************************************************************
- * Project:           stonequest
+ * Project:           StoneQuest
  * File Name:         ConsoleWriter.java
  * Author:            Matt Schwartz
- * Date Created:      05.19.2014 
+ * Date Created:      03.02.2014 
  * Redistribution:    You are free to use, reuse, and edit any of the text in
  *                    this file.  You are not allowed to take credit for code
  *                    that was not written fully by yourself, or to remove 
@@ -14,19 +14,22 @@ package com.barelyconscious.util;
 
 public class ConsoleWriter {
 
-    private static final int VERBOSITY_ERROR = 0;
-    private static final int VERBOSITY_ALL = 1;
+    public static final int VERBOSE_ALL = 2;
+    public static final int VERBOSE_MOST = 1;
+    public static final int VERBOSE_LOW = 0;
+    public static int verbosity = VERBOSE_ALL;
 
-    private static int verbosity = VERBOSITY_ALL;
+    public static void writeStr(String str) {
+        if (verbosity >= VERBOSE_ALL) {
+            System.out.println(" [INF] " + str);
+        } // if
+    } // writeStr
 
-    public static void writeError(String msg) {
-        System.err.println(" [ERR] " + msg);
-    }
-
-    public static void writeInfo(String msg) {
-        if (verbosity >= VERBOSITY_ALL) {
-            System.err.println(" [INF] " + msg);
-        }
-    }
+    public static void writeError(String str) {
+        if (verbosity >= VERBOSE_LOW) {
+            System.out.println(" [ERR] " + str);
+        } // if
+    } // writeError
 
 } // ConsoleWriter
+

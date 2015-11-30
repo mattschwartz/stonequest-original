@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- <tile name="Grass Tile" fileLocation="ground/grassTile.png" 
+hasCollision="false" blocksSight="false" /> -->
+
+<map
+    name="Howling Woods"
+    hallwayBendinessFactor="0.7"
+    level="1"
+    monsterSet="beast;arachnid;avian">
+
+    <tileSet location="">
+        <ground tileLocation="/Howling Woods/grass1.png;/Howling Woods/grass2.png;/Howling Woods/grass3.png" />
+        <wall tileLocation="/Howling Woods/wall1.png;/Howling Woods/wall2.png;/Howling Woods/wall3.png" />
+        <door tileLocation="/Howling Woods/door1.png;/Howling Woods/door2.png" />
+        <nexus tileLocation="/Howling Woods/nexusEntrance.png;/Howling Woods/nexusExit.png" />
+        <chest tileLocation="/Howling Woods/chest1.png;/Howling Woods/chest2.png" />
+    </tileSet>
+    
+    <!-- Define a set of rooms to be used in the map -->
+    <roomSet location="">
+        <!-- Define a room of size [width x height] -->
+        <room size="width,height">
+            <room layout="" />
+            <!-- Define a door at position x,y -->
+            <door coordinates="x,y" />
+            <door coordinates="x,y" />
+            <door coordinates="x,y" />
+        </room>
+    </roomSet>
+</map>
