@@ -1,61 +1,96 @@
 /* *****************************************************************************
- * Project:          StoneQuest
- * File name:        Loot2.java
- * Author:           Matt Schwartz
- * Date created:     09.04.2013
- * Redistribution:   You are free to use, reuse, and edit any of the text in
- *                   this file.  You are not allowed to take credit for code
- *                   that was not written fully by yourself, or to remove 
- *                   credit from code that was not written fully by yourself.  
- *                   Please email stonequest.bcgames@gmail.com for issues or concerns.
- * File description: 
- **************************************************************************** */
+   * File Name:         Loot.java
+   * Author:            Matt Schwartz
+   * Date Created:      10.19.2012
+   * Redistribution:    You are free to use, reuse, and edit any of the text in
+                        this file.  You are not allowed to take credit for code
+                        that was not written fully by yourself, or to remove 
+                        credit from code that was not written fully by yourself.  
+                        Please email schwamat@gmail.com for issues or concerns.
+   * File Description:  
+   ************************************************************************** */
+
 package com.barelyconscious.game.spawnable;
 
-import com.barelyconscious.game.World;
-import com.barelyconscious.game.graphics.UIElement;
+import com.barelyconscious.game.Game;
+import com.barelyconscious.game.graphics.LineElement;
+import com.barelyconscious.game.graphics.tiles.Tile;
 import com.barelyconscious.game.item.Item;
+import com.barelyconscious.game.item.Projectile;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Loot extends Sprite {
-
-    public static final UIElement LOOT_ICON = UIElement.createUIElement("/gfx/tiles/sprites/items/lootIcon.png");
-    private Item item;
-    private boolean pickupOnWalkOver;
-
-    public Loot(Item item) {
-        super(item.getName(), World.INSTANCE.getPlayer().getX(), World.INSTANCE.getPlayer().getY(), false, LOOT_ICON);
+    private boolean removeOnWalk;
+    public Item item;
+    
+    public Loot(Item item, int tileId, int x, int y) {
+        super(item.getDisplayName(), tileId);
+        super.setPosition(x, y);
+        
         this.item = item;
-        pickupOnWalkOver = false;
     } // constructor
-
-    public Loot(Item item, boolean pickupOnWalkOver) {
-        super(item.getName(), World.INSTANCE.getPlayer().getX(), World.INSTANCE.getPlayer().getY(), false, LOOT_ICON);
-        this.item = item;
-        this.pickupOnWalkOver = pickupOnWalkOver;
-    } // constructor
-
-    public Loot(Item item, int x, int y, boolean pickupOnWalkOver) {
-        super(item.getName(), x, y, false, LOOT_ICON);
-        this.item = item;
-        this.pickupOnWalkOver = pickupOnWalkOver;
-    } // constructor
+    
+    public void setRemovableOnWalkover(boolean removable) {
+        removeOnWalk = removable;
+    } // setRemovableOnWalkover
+    
+    public Item getItem() {
+        return item;
+    } // getItem
 
     @Override
-    public void remove() {
-        System.out.println("You pick up " + item.getName());
-        super.remove();
-    } // remove
+    public String getName() {
+        if (item instanceof Projectile) {
+            return item.getStackSize() + " " + super.getName();
+        } // if 
+        
+        return super.getName();
+    } // getDisplayName
 
     @Override
-    public void onWalkOver(Sprite interactee) {
-        if (pickupOnWalkOver) {
-            if (interactee instanceof Entity) {
-                ((Entity) interactee).getInventory().addItem(item);
-                remove();
-            } // if
+    public Tile getTile() {
+        return Tile.getTile(item.getTileId());
+    } // getTile
+    
+    /**
+     * This method is called when the player walks over Loot.  It prints a message
+     * to the text log informing the player of the Loot's existence and in the
+     * case of some items, automatically loots the item.
+     * @return 
+     */
+    @Override
+    public void onWalkOver() {
+        String message = "There is a";
+        ArrayList<Character> vowels = new ArrayList(Arrays.asList('a', 'e', 'i', 'o', 'u'));
+        
+        if (removeOnWalk) {
+            interact();
+            Game.world.removeLoot(this);
         } // if
         else {
-            System.out.println("There is a " + item.getName() + " here.");
+            if (vowels.contains(item.getDisplayName().toLowerCase().charAt(0))) {
+                message += "n";
+            } // if
+            
+            Game.textLog.writeFormattedString(message + " " + item.getDisplayName() + " here.", null, new LineElement(item.getDisplayName(), true, item.getRarityColor()));
         } // else
-    } // onWalkOver
-} // Loot2
+    } // checkCanRemove
+    
+    /**
+     * Adds the item to the player's inventory and writes a "loot message" to the
+     * text log.
+     */
+    @Override
+    public void interact() {
+        Game.inventory.addItem(item);
+        Game.textLog.writeLootMessage(item);
+//        Sound.LOOT_ITEM.play();
+        remove();
+    } // interact
+
+    @Override
+    public String toString() {
+        return item.getDisplayName();
+    } // toString
+} // Loot

@@ -1,274 +1,159 @@
 /* *****************************************************************************
- * Project:          StoneQuest
- * File name:        Sprite.java
- * Author:           Matt Schwartz
- * Date created:     09.04.2013
- * Redistribution:   You are free to use, reuse, and edit any of the text in
- *                   this file.  You are not allowed to take credit for code
- *                   that was not written fully by yourself, or to destroy 
- *                   credit from code that was not written fully by yourself.  
- *                   Please email stonequest.bcgames@gmail.com for issues or concerns.
- * File description: 
- **************************************************************************** */
+   * File Name:         Sprite.java
+   * Author:            Matt Schwartz
+   * Date Created:      02.18.2013
+   * Redistribution:    You are free to use, reuse, and edit any of the text in
+                        this file.  You are not allowed to take credit for code
+                        that was not written fully by yourself, or to remove 
+                        credit from code that was not written fully by yourself.  
+                        Please email schwamat@gmail.com for issues or concerns.
+   * File Description:  Contains all functions and variables shared between the
+   *                    spawnable objects, Entities and Doodads (such as Loot)
+   ************************************************************************** */
+
 package com.barelyconscious.game.spawnable;
 
-import com.barelyconscious.game.graphics.UIElement;
-import com.barelyconscious.util.LineElement;
-import com.barelyconscious.util.StringHelper;
-import com.barelyconscious.util.TextLogHelper;
+import com.barelyconscious.game.graphics.tiles.Tile;
 
-public class Sprite {
-
-    protected int x;
-    protected int y;
-    protected int lastKnownX;
-    protected int lastKnownY;
-    protected boolean isVisible;
-    protected boolean hasBeenSeen;
-    protected boolean hasCollision;
-    protected boolean destroy;
-    protected String name;
-    protected Faction faction;
-    protected UIElement spriteIcon;
-
-    /**
-     * Sprites are mobile objects within the World, such as Entities and Loot.
-     * This constructor creates a new Sprite with the following values:
-     *
-     * @param name the name of the Sprite (visible to the player)
-     * @param x the x coordinate of the Sprite
-     * @param y the y coordinate of the Sprite
-     * @param hasCollision if true, other Sprites will not be able to walk over
-     * this Sprite; if true, this Sprite will not be able to walk over other
-     * Sprites and will collide with other World objects
-     * @param icon this is what is rendered to the Screen
-     */
-    public Sprite(String name, int x, int y, boolean hasCollision, UIElement icon) {
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.hasCollision = hasCollision;
-        faction = new Faction();
-        spriteIcon = icon;
-        destroy = false;
-
+abstract public class Sprite {
+    private boolean isVisible;
+    private boolean removeOnTick;
+    private boolean hasCollision;
+    
+    private int xPos;
+    private int yPos;
+    private String displayName;
+    private int tileId;
+    
+    public Sprite(String displayname, int tileId) {
+        this.displayName = displayname;
+        this.tileId = tileId;
+        // Default values
+        removeOnTick = false;
         isVisible = false;
-        hasBeenSeen = false;
     } // constructor
-
+    
     /**
-     *
-     * @return the x coordinate of the Sprite within the world
-     */
-    public int getX() {
-        return x;
-    } // getX
-
-    /**
-     *
-     * @return the y coordinate of the Sprite within the world
-     */
-    public int getY() {
-        return y;
-    } // getY
-
-    /**
-     * Changes the x position of the Sprite to xPos.
-     *
-     * @param xPos the new x position of the Sprite
-     */
-    public void setX(int xPos) {
-        x = xPos;
-    } // setX
-
-    /**
-     * Changes the y position of the Sprite to xPos.
-     *
-     * @param yPos the new y position of the Sprite
-     */
-    public void setY(int yPos) {
-        y = yPos;
-    } // setY
-
-    /**
-     * Sets both the x and y coordinates of the Sprite simultaneously, for ease
-     * when it is necessary to change both values.
-     *
-     * @param x the new x coordinate of the Sprite
-     * @param y the new y coordinate of the Sprite
-     */
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
-    } // setPosition
-
-    /**
-     * Sets both the last known x and y coordinates of the Sprite
-     * simultaneously, for ease when it is necessary to change both values.
-     *
-     * @param x the new last known x coordinate of the Sprite
-     * @param y the new last known y coordinate of the Sprite
-     */
-    public void setLastKnownPosition(int x, int y) {
-        lastKnownX = x;
-        lastKnownY = y;
-    } // setLastKnownPosition
-
-    /**
-     * Adjusts the Sprite's position by xShift, yShift. Useful when the world
-     * must move around the player.
-     *
-     * @param xShift the value by which to shift the x coordinate of the Sprite
-     * @param yShift the value by which to shift the y coordinate of the Sprite
-     */
-    public void shiftBy(int xShift, int yShift) {
-        this.x += xShift;
-        this.y += yShift;
-    } // shiftBy
-
-    /**
-     *
-     * @return the last known x position of the Sprite, as seen by the player
-     */
-    public int getLastKnownX() {
-        return lastKnownX;
-    } // getlastKnownX
-
-    /**
-     *
-     * @return the last known y position of the Sprite, as seen by the player
-     */
-    public int getLastKnownY() {
-        return lastKnownY;
-    } // getLastKnownY
-
-    /**
-     *
-     * @return true if the Sprite is currently visible to the player, false if
-     * it is not
+     * Returns whether the Sprite is visible to the player and thus whether it
+     * should be drawn to the screen, if it is within sight.
+     * @return 
      */
     public boolean isVisible() {
         return isVisible;
     } // isVisible
-
+    
     /**
-     * Changes the visibility of the Sprite to visible.
-     *
-     * @param visible the new visibility of the Sprite
+     * Sets the object visible or invisible.
+     * @param visible 
      */
     public void setVisible(boolean visible) {
         isVisible = visible;
     } // setVisible
-
+    
     /**
-     *
-     * @return true if the Sprite has been seen by the player, false if it has
-     * not
+     * removeOnTick: if true, the Sprite will be removed on game tick()
+     * @return 
      */
-    public boolean hasBeenSeen() {
-        return hasBeenSeen;
-    } // hasBeenSeen
-
+    public boolean getRemoveOnTick() {
+        return removeOnTick;
+    } // getRemoveOnTick
+    
+    public void setRemoveOnTick(boolean removable) {
+        removeOnTick = removable;
+    } // setRemoveOnTick
+    
     /**
-     * Sets whether or not the Sprite has been seen by the player to beenSeen.
-     *
-     * @param beenSeen the new value for whether or not the Sprite has been seen
-     * by the player
-     */
-    public void setHasBeenSeen(boolean beenSeen) {
-        hasBeenSeen = beenSeen;
-    } // setHasBeenSeen
-
-    /**
-     *
-     * @return true if the Sprite has collision with other objects in the world
+     * Return hasCollision: whether or not the Sprite has collision with the 
+     * player.
+     * @return 
      */
     public boolean hasCollision() {
         return hasCollision;
     } // hasCollision
-
+    
+    public void setCollision(boolean coll) {
+        hasCollision = coll;
+    } // setCollision
+    
+    public int getXPos() {
+        return xPos;
+    } // getXPos
+    
+    public int getYPos() {
+        return yPos;
+    } // getYPos
+    
     /**
-     *
-     * @return returns this Sprite's faction
+     * Changes the position of the Sprite.
+     * @param x
+     * @param y 
      */
-    public Faction getFaction() {
-        return faction;
-    } // getFaction
-
+    public void setPosition(int x, int y) {
+        xPos = x;
+        yPos = y;
+    } // setPosition
+    
     /**
-     *
-     * @return the name of the Sprite (this is the name the player will see)
+     * Changes the position of the Sprite by some deltaX, deltaY amount.
+     * @param deltaX
+     * @param deltaY 
+     */
+    public void changePositionBy(int deltaX, int deltaY) {
+        xPos += deltaX;
+        yPos += deltaY;
+    } // changePositionBy
+    
+    /**
+     * Returns the name of the Sprite.
+     * @return 
      */
     public String getName() {
-        return name;
+        return displayName;
     } // getName
-
-    public LineElement getDescription() {
-        LineElement lineElement;
-
-        lineElement = LineElement.parseString("You see " + StringHelper.aOrAn(name) + " here.", name, TextLogHelper.TEXTLOG_DEFAULT_COLOR, TextLogHelper.TEXTLOG_ENTITY_LABEL_COLOR);
-
-        return lineElement;
-    } // getDescription
-
+    
     /**
-     * Method to be overriden by subclasses. All activity which must occur
-     * during a game tick should be done here.
+     * Returns the tile for the Sprite to be drawn to the screen.
+     * @return 
+     */
+    public Tile getTile() {
+        return Tile.getTile(tileId);
+    } // getIcon
+    
+    /**
+     * Whatever needs to happen for a subclass on game update.  This method is
+     * implemented in subclasses only.  Implementing subclasses should test if
+     * the Sprite ought to be removed and then remove it.
      */
     public void tick() {
     } // tick
-
+    
     /**
-     * Calling this method will cause the Sprite to be removed on the next game
-     * tick.
+     * Dispose of the Sprite and clear any resources the sprite was using.  Not
+     * sure if this is possible.
      */
     public void remove() {
-        destroy = true;
-    } // destroy
-
+        removeOnTick = true;
+    } // remove
+    
     /**
-     *
-     * @return if true, the Sprite should be removed from the World
+     * When the player walks over a Sprite that has no collision.  Generally only
+     * called from Loot.
      */
-    public boolean shouldRemove() {
-        return destroy;
-    } // shouldRemove
-
-    /**
-     * When one Sprite walks over another Sprite, it calls this function and
-     * passes itself to the other Sprite.
-     * <br>
-     * Example: SpriteA walks over SpriteB, calling SpriteB.onWalkOver(SpriteA);
-     *
-     * @param interactee the calling Sprite
-     */
-    public void onWalkOver(Sprite interactee) {
+    public void onWalkOver() {
     } // onWalkOver
-
+    
     /**
-     * When this Sprite attempts to interact with another Sprite, this method is
-     * called and the other Sprite is passed along with it.
-     *
-     * @param interactee the calling Sprite that is attempting to interact with
-     * this Sprite
+     * Implemented in subclasses.  This method is called when the player acts
+     * upon the Sprite in some way.
      */
-    public void interact(Sprite interactee) {
+    public void interact() {
     } // interact
-
+    
     /**
-     * Renders the Sprite to the screen, given
-     *
-     * @param xOffs The X location to render the Sprite
-     * @param yOffs The Y location to render the Sprite
+     * Perform some operation on or with another Sprite.  
+     * @param s 
      */
-    public void render(int xOffs, int yOffs) {
-        if (isVisible) {
-            spriteIcon.render(xOffs, yOffs);
-        } // if
-        else if (hasBeenSeen) {
-            spriteIcon.renderShaded(xOffs, yOffs);
-        } // else if
-
-        // Otherwise, do not render
-    } // render
+    public void interactWith(Sprite s) {
+    } // interactWith
+    
 } // Sprite

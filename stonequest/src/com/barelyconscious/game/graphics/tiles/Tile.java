@@ -1,166 +1,201 @@
 /* *****************************************************************************
- * Project:          StoneQuest
- * File name:        Tile.java
- * Author:           Matt Schwartz
- * Date created:     12.18.2013
- * Redistribution:   You are free to use, reuse, and edit any of the text in
- *                   this file.  You are not allowed to take credit for code
- *                   that was not written fully by yourself, or to remove 
- *                   credit from code that was not written fully by yourself.  
- *                   Please email stonequest.bcgames@gmail.com for issues or concerns.
- * File description: 
- **************************************************************************** */
+   * File Name:         Tile.java
+   * Author:            Matt Schwartz
+   * Date Created:      01.04.2013
+   * Redistribution:    You are free to use, reuse, and edit any of the text in
+                        this file.  You are not allowed to take credit for code
+                        that was not written fully by yourself, or to remove 
+                        credit from code that was not written fully by yourself.  
+                        Please email schwamat@gmail.com for issues or concerns.
+   * File Description:  
+   ************************************************************************** */
+
 package com.barelyconscious.game.graphics.tiles;
 
-import com.barelyconscious.game.graphics.Map;
-import com.barelyconscious.game.graphics.UIElement;
-import java.util.Random;
+import com.barelyconscious.game.Game;
+import com.barelyconscious.game.Screen;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class Tile {
-
-    protected int tickCount = 0;
-    protected int tileId;
-    protected boolean blocksPathing;
-    protected boolean blocksVision;
-    public boolean isVisible = false;
-    public boolean recentlySeen = false;
-    public boolean unlightOnRefresh = false;
-    protected Random random = new Random();
-    protected String name;
-    protected UIElement image;
-
-    protected Tile() {
-    }
-
-    /**
-     * Creates a Tile with the following parameters.
-     *
-     * @param name The name of the Tile
-     * @param image The image for rendering to the screen
-     * @param tileId The unique integer identifier for the Tile
-     * @param blocksPathing If true, the Tile will block Entity pathing
-     * @param blocksVision If true, the Tile will block sight for Entities
-     */
-    public Tile(String name, UIElement image, int tileId, boolean blocksPathing, boolean blocksVision) {
-        this.tileId = tileId;
-        this.name = name;
-        this.image = image;
-        this.blocksPathing = blocksPathing;
-        this.blocksVision = blocksVision;
+    private final int TRANSPARENT_COLOR = -65281; // rgb of 255,0,255
+    
+    // World tile ids
+    public static final int GRASS_TILE_ID = 0;
+    public static final int STONE_TILE_ID = 1;
+    public static final int STONE_WALL_TILE_ID = 2;
+    public static final int WATER_TILE_ID = 3;
+    public static final int DOOR_IRON_CLOSED_TILE_ID = 4;
+    public static final int DOOR_IRON_OPEN_TILE_ID = 5;
+    public static final int DOOR_WOODEN_CLOSED_TILE_ID = 6;
+    public static final int DOOR_WOODEN_OPEN_TILE_ID = 7;
+    public static final int MOSSY_STONEWALL_TILE_ID = 8;
+    
+    // Entity ids
+    public static final int PLAYER_TILE_ID = 9;
+    public static final int SEWER_RAT_TILE_ID = 10;
+    
+    // Item ids
+    public static final int GOLD_LOOT_SINGLE_TILE_ID = 11;
+    public static final int GOLD_LOOT_STACK_TILE_ID = 12;
+    
+    public static final int ARMOR_CHEST_IRON_TILE_ID = 13;
+    public static final int ARMOR_CHEST_LEATHER_TILE_ID = 14;
+    public static final int ARMOR_GREAVES_IRON_TILE_ID = 15;
+    public static final int ARMOR_GREAVES_LEATHER_TILE_ID = 16;
+    public static final int ARMOR_BOOTS_IRON_TILE_ID = 17;
+    public static final int ARMOR_BOOTS_LEATHER_TILE_ID = 18;
+    public static final int ARMOR_HELMET_IRON_TILE_ID = 19;
+    public static final int ARMOR_HELMET_LEATHER_TILE_ID = 20;
+    public static final int ARMOR_BELT_IRON_TILE_ID = 21;
+    public static final int ARMOR_BELT_LEATHER_TILE_ID = 22;
+    public static final int ARMOR_EARRING_TILE_ID = 23;
+    public static final int ARMOR_NECKLACE_TILE_ID = 24;
+    public static final int ARMOR_RING_TILE_ID = 25;
+    public static final int ARMOR_SHIELD_IRON_TILE_ID = 26;
+    public static final int ARMOR_SHIELD_WOOD_TILE_ID = 27;
+    
+    public static final int SWORD_TILE_ID = 28;
+    
+    public static final int FOOD_TILE_ID = 29;
+    public static final int POTION_TILE_ID = 30;
+    public static final int ARROW_TILE_ID = 31;
+    public static final int SCROLL_TILE_ID = 32;
+    public static final int GLASS_BOTTLE_TILE_ID = 33;
+    public static final int JUNK_TILE_ID = 34;
+    
+    // World tiles
+    private static Tile[] tiles = new Tile[256];
+    public static Tile grassTile = new GrassTile();
+    public static Tile stoneTile = new StoneFloor();
+    public static Tile stoneWallTile = new StoneWallTile();
+    public static Tile waterTile = new WaterTile();
+    public static Tile doorIronClosedTile = new DoorIronClosedTile();
+    public static Tile doorIronOpenTile = new DoorIronOpenTile();
+    public static Tile doorWoodenClosedTile = new DoorWoodenClosedTile();
+    public static Tile doorWoodenOpenTile = new DoorWoodenOpenTile();
+    public static Tile stoneWallMossyTile = new StoneWallMossyTile();
+    
+    // Entity tiles
+    public static Tile playerTile = new PlayerTile();
+    public static Tile sewerRatTile = new SewerRatTile();
+    
+    // Loot tiles
+    public static Tile goldCoinSingleTile = new Tile(GOLD_LOOT_SINGLE_TILE_ID, "/tiles/loot/gold_coin_single.png");
+    public static Tile goldCoinStackTile = new Tile(GOLD_LOOT_STACK_TILE_ID, "/tiles/loot/gold_coin_stack.png");
+    
+    public static Tile armorChestIronTile = new Tile(ARMOR_CHEST_IRON_TILE_ID, "/tiles/loot/armor/chest/iron.png");
+    public static Tile armorChestLeatherTile = new Tile(ARMOR_CHEST_LEATHER_TILE_ID, "/tiles/loot/armor/chest/leather.png");
+    public static Tile armorGreavesIronTile = new Tile(ARMOR_GREAVES_IRON_TILE_ID, "/tiles/loot/armor/greaves/iron.png");
+    public static Tile armorGreavesLeatherTile = new Tile(ARMOR_GREAVES_LEATHER_TILE_ID, "/tiles/loot/armor/greaves/leather.png");
+    public static Tile armorBootsIronTile = new Tile(ARMOR_BOOTS_IRON_TILE_ID, "/tiles/loot/armor/boots/iron.png");
+    public static Tile armorBootsLeatherTile = new Tile(ARMOR_BOOTS_LEATHER_TILE_ID, "/tiles/loot/armor/boots/leather.png");
+    public static Tile armorHelmetIronTile = new Tile(ARMOR_HELMET_IRON_TILE_ID, "/tiles/loot/armor/helmet/iron.png");
+    public static Tile armorHelmetLeatherTile = new Tile(ARMOR_HELMET_LEATHER_TILE_ID, "/tiles/loot/armor/helmet/leather.png");
+    public static Tile armorBeltIronTile = new Tile(ARMOR_BELT_IRON_TILE_ID, "/tiles/loot/armor/belt/iron.png");
+    public static Tile armorBeltLeatherTile = new Tile(ARMOR_BELT_LEATHER_TILE_ID, "/tiles/loot/armor/belt/leather.png");
+    public static Tile armorEarringTile = new Tile(ARMOR_EARRING_TILE_ID, "/tiles/loot/armor/jewelry/earring.png");
+    public static Tile armorNecklaceTile = new Tile(ARMOR_NECKLACE_TILE_ID, "/tiles/loot/armor/jewelry/necklace.png");
+    public static Tile armorRingTile = new Tile(ARMOR_RING_TILE_ID, "/tiles/loot/armor/jewelry/ring.png");
+    public static Tile armorShieldIronTile = new Tile(ARMOR_SHIELD_IRON_TILE_ID, "/tiles/loot/armor/shield/iron.png");
+    public static Tile armorShieldWoodTile = new Tile(ARMOR_SHIELD_WOOD_TILE_ID, "/tiles/loot/armor/shield/wood.png");
+    
+    public static Tile swordTileId = new Tile(SWORD_TILE_ID, "/tiles/loot/weapons/sword.png");
+    
+    public static Tile foodTileId = new Tile(FOOD_TILE_ID, "/tiles/loot/food.png");
+    public static Tile potionTileId = new Tile(POTION_TILE_ID, "/tiles/loot/potion.png");
+    public static Tile scrollTileId = new Tile(SCROLL_TILE_ID, "/tiles/loot/scroll.png");
+    public static Tile arrowTileId = new Tile(ARROW_TILE_ID, "/tiles/loot/projectile.png");
+    public static Tile glassBottleTile = new Tile(GLASS_BOTTLE_TILE_ID, "/tiles/loot/glass_bottle.png");
+    
+    private boolean hasCollision;
+    private boolean isVisible;
+    private boolean blocksSight;
+    
+    protected final byte id;
+    protected final int WIDTH;
+    protected final int HEIGHT;
+    protected int[] pixels;
+    
+    @SuppressWarnings("LeakingThisInConstructor")
+    public Tile(int id, String fileName, boolean hasCollision, boolean isVisible, boolean blocksSight) {
+        BufferedImage img = null;
+        this.hasCollision = hasCollision;
+        this.isVisible = isVisible;
+        this.blocksSight = blocksSight;
+        
+        try {
+            img = ImageIO.read(Game.class.getResourceAsStream(fileName));
+        } catch (IOException ex) {
+            System.err.println(" [ERR] Failed to load image (" + fileName + "): " + ex);
+        } // catch
+        
+        WIDTH = img.getWidth();
+        HEIGHT = img.getHeight();
+        pixels = img.getRGB(0, 0, img.getWidth(), img.getHeight(), null, 0, img.getWidth());
+        this.id = (byte) id;
+        
+        tiles[this.id] = this;
     } // constructor
+    
+    // Loot tile
+    @SuppressWarnings("LeakingThisInConstructor")
+    public Tile(int id, String fileName) {
+        this(id, fileName, false, false, false);
+    } // loot constructor
 
-    /**
-     * Creates a Tile with the following parameters.
-     *
-     * @param name The name of the Tile
-     * @param imagePath The file path for the location of the Tile
-     * @param tileId The unique integer identifier for the Tile
-     * @param blocksPathing If true, the Tile will block Entity pathing
-     * @param blocksVision If true, the Tile will block sight for Entities
+    /** 
+     * Draw the tile starting at xPos, yPos, skipping mask Color(255,0,255)
+     * @param xStart
+     * @param yStart 
      */
-    public Tile(String name, String imagePath, int tileId, boolean blocksPathing, boolean blocksVision) {
-        this.tileId = tileId;
-        this.name = name;
-        this.image = UIElement.createUIElement(imagePath);
-        this.blocksPathing = blocksPathing;
-        this.blocksVision = blocksVision;
-    } // constructor
+    public void render(Screen scr, int xStart, int yStart) {
+        int pix;
+        
+        for (int x = 0; x < WIDTH; x++) {
+            for (int y = 0; y < HEIGHT; y++) {
+                pix = pixels[x + y * WIDTH];
+                
+                if (pix == TRANSPARENT_COLOR) {
+                    continue;
+                } // if
+                
+                scr.setPixel(pix, xStart + x, yStart + y);
+            } // for
+        } // for
+    } // render
 
-    /**
-     * Used for player inspection of Tiles.
-     *
-     * @return Returns the name of the Tile
-     */
-    public String getName() {
-        return name;
-    } // getName
-
-    /**
-     * Descriptions are what the player sees when he/she inspects a Tile, so
-     * they should be helpful to describe anything interesting about it.
-     *
-     * @return
-     */
-    public String getDescription() {
-        return "A normal, uninteresting, inconspicuous bit of world.";
-    } // getDescription
-
-    /**
-     * If true, the Tile will block Entities from walking through it.
-     *
-     * @return Returns true if the Tile blocks Entity pathing.
-     */
     public boolean hasCollision() {
-        return blocksPathing;
+        return hasCollision;
     } // hasCollision
 
-    /**
-     * If true, the Tile will block Entities from seeing things beyond it.
-     *
-     * @return Returns true if the Tile blocks sight.
-     */
-    public boolean isSightBlocking() {
-        return blocksVision;
-    } // isSightBlocking
+    public void setCollision(boolean hasCollision) {
+        this.hasCollision = hasCollision;
+    } // setCollision
 
-    /**
-     * This method is called when an Entity walks over the Tile (if possible).
-     */
-    public void onWalkOver() {
-    } // onWalkOver
+    public boolean isVisible() {
+        return isVisible;
+    } // isVisible
 
-    /**
-     * This method is called when this Tile is hit by a light source (e.g., the
-     * player's vision).
-     */
-    public void onLight() {
-    } // onLight
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    } // setVisible
 
-    /**
-     * This method is called immediately after the Tile is removed from a light
-     * source.
-     */
-    public void onUnlight() {
-    } // onUnlight
+    public boolean blocksLineOfSight() {
+        return blocksSight;
+    } // blocksLineOfSight
 
-    /**
-     * This method is called every time a unit of time passes in the game.
-     */
-    public void tick() {
-        tickCount++;
-    } // tick
-
-    /**
-     * Renders the Tile to the screen at the given coordinates. Some atypical
-     * Tiles are rendered differently under special occasions.
-     *
-     * @param screen The screen to which the Tile will be rendered
-     * @param map The map in which the Tile is rendered. Some tiles need to know
-     * about surrounding Tiles
-     * @param x The x starting location for the Tile to be rendered
-     * @param y The y starting location for the Tile to be rendered
-     */
-    public void render(Map map, int x, int y) {
-        if (isVisible) {
-            image.render(x, y);
+    public void setBlocksLineOfSight(boolean blocksLineOfSight) {
+        this.blocksSight = blocksLineOfSight;
+    } // setBlocksLineOfSight
+    
+    public static Tile getTile(int tileId) {
+        if (tileId > 256) {
+            System.err.println(" [ERR] Requested tile id (" + tileId + ") greater than 256!");
+            return null;
         } // if
-        else if (recentlySeen) {
-            image.renderShaded(x, y);
-        } // if
-    } // render
-
-    /**
-     * Renders the Tile slightly darker than normal to the screen at the given
-     * coordinates. Some atypical Tiles are rendered differently under special
-     * occasions.
-     *
-     * @param screen The screen to which the Tile will be rendered
-     * @param map The map in which the Tile is rendered. Some tiles need to know
-     * about surrounding Tiles
-     * @param x The x starting location for the Tile to be rendered
-     * @param y The y starting location for the Tile to be rendered
-     */
-    public void renderShaded(Map map, int x, int y) {
-        image.renderShaded(x, y);
-    } // render
+        
+        return tiles[tileId];
+    } // getTile
 } // Tile

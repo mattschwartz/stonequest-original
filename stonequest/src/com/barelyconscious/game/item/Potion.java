@@ -1,91 +1,81 @@
-/* *****************************************************************************
- * Project:          StoneQuest
+ /* *****************************************************************************
+ * Project:          Roguelike2.0
  * File name:        Potion.java
  * Author:           Matt Schwartz
- * Date created:     09.04.2013
+ * Date created:     07.10.2012 
  * Redistribution:   You are free to use, reuse, and edit any of the text in
- *                   this file.  You are not allowed to take credit for code
- *                   that was not written fully by yourself, or to remove 
- *                   credit from code that was not written fully by yourself.  
- *                   Please email stonequest.bcgames@gmail.com for issues or concerns.
+                     this file.  You are not allowed to take credit for code
+                     that was not written fully by yourself, or to remove 
+                     credit from code that was not written fully by yourself.  
+                     Please email schwamat@gmail.com for issues or concerns.
  * File description: 
  **************************************************************************** */
+
 package com.barelyconscious.game.item;
 
-import com.barelyconscious.game.graphics.UIElement;
-import com.barelyconscious.game.player.AttributeMod;
-import com.barelyconscious.game.player.condition.PotionEffect;
-import com.barelyconscious.game.spawnable.Entity;
+import com.barelyconscious.game.player.StatBonus;
 
 public class Potion extends Item {
-
-    private static final UIElement DEFAULT_POTION_ICON = UIElement.createUIElement("/gfx/items/potions/potionIcon.png");
-    private PotionEffect effects;
-
-    /**
-     * Creates a new Potion with the default Item icon and the other following
-     * values:
-     *
-     * @param name the name of the Potion which is visible to the Player
-     * @param duration how long the Potion's effects last when used
-     * @param sellValue for how much the Potion sells to vendors
-     * @param stackSize the amount of Potion's of this type
-     * @param owner the Entity to which this Potion belongs
-     * @param affectedAttributes which attributes of the Entity are affected
-     * when the Potion is consumed
-     */
-    public Potion(String name, int duration, int sellValue, int stackSize, Entity owner, AttributeMod... affectedAttributes) {
-        super(name, 0, sellValue, stackSize, DEFAULT_POTION_ICON, owner, affectedAttributes);
-        this.effects = new PotionEffect(duration, name, owner, affectedAttributes);
+    public static final int STATBUFF    = 0;
+    public static final int ANTIMAGIC   = 1;
+    public static final int ANTIVENOM   = 2;
+    
+    private int duration;
+    private int potionType;
+    
+    public Potion(String name, int sellV, int stack, int dur, int type, int tileId, StatBonus... effects) {
+        super(name, sellV, stack, tileId, effects);
+        super.setItemDescription("Quaff to " + typeIdToString(type));
+        duration        = dur;
+        potionType      = type;
+        options[USE]    = "quaff";
     } // constructor
-
-    /**
-     * Creates a new Potion with a supplied Item icon and the other following
-     * values:
-     *
-     * @param name the name of the Potion which is visible to the Player
-     * @param duration how long the Potion's effects last when used
-     * @param sellValue for how much the Potion sells to vendors
-     * @param stackSize the amount of Potion's of this type
-     * @param itemIcon the Item icon to be used when rendering this Item
-     * @param owner the Entity to which this Potion belongs
-     * @param affectedAttributes which attributes of the Entity are affected
-     * when the Potion is consumed
-     */
-    public Potion(String name, int duration, int sellValue, int stackSize, UIElement itemIcon, Entity owner, PotionEffect effects) {
-        super(name, 0, sellValue, stackSize, itemIcon, owner, effects.getAffectedAttributes());
-        this.effects = effects;
-    } // constructor
-
-    /**
-     *
-     * @return how long the Potion's effects last (in game ticks)
-     */
-    public int getEffectsDuration() {
-        return effects.getDuration();
-    } // getEffectsDuration
+    
+    public void decrDuration() {
+        duration--;
+    } // decrDuration
+    
+    public int getDuration() {
+        return duration;
+    } // getDuration
+    
+    public int getPotionType() {
+        return potionType;
+    } // getPotionType
+    
+    public static String typeIdToString(int type) {
+        switch (type) {
+            case STATBUFF:  return "provide a temporary increase in stats";
+            case ANTIMAGIC: return "remove your afflictions";
+            case ANTIVENOM: return "remove your infections";
+            default:        return "sit around and dance";
+        } // switch
+    } // typeIdToString
 
     @Override
-    public String getDescription() {
-        return "Quaff to temporarily increase your attribute levels. Lasts for " + effects.getDuration() + " turns.";
-    } // getDescription
-
-    /**
-     * When an Entity uses a Potion, it benefits from its effects and consumes
-     * part of the stack size. If the stack size is reduced to 0, the Item is
-     * removed from the Entity's inventory.
-     */
-    @Override
-    public void onUse() {
-        effects.apply();
-        adjustStackBy(-1);
-    } // onUse
+    public String toString() {
+        switch(potionType) {
+            case STATBUFF:      return "a " + super.getDisplayName() + "";
+            case ANTIMAGIC:     return "an antimagic potion";
+            case ANTIVENOM:     return "an antivenom potion";
+            default:            return "a magical potion of love and peace etc etc ad nauseum";
+        } // switch
+    } // toString
 
     @Override
-    public void salvage() {
-        // Salvages into glass or maybe bottles of water and herbs?
-        // Create the salvage and add it to the owner's inventory
-        // Remove 1 from the stack size
-        adjustStackBy(-1);
-    } // salvage
+    public int compareTo(Item item) {
+        if (super.compareTo(item) < 0) {
+            return -1;
+        } // if
+        
+        if (this.getDuration() != ((Potion)item).getDuration()) {
+            return -1;
+        } // if
+        
+        if (this.getPotionType() != ((Potion)item).getPotionType()) {
+            return -1;
+        } // if
+        
+        return 0;
+    } // compareTo
 } // Potion

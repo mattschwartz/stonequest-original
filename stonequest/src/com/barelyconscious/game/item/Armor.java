@@ -4,80 +4,91 @@
  * Author:           Matt Schwartz
  * Date created:     07.09.2012 
  * Redistribution:   You are free to use, reuse, and edit any of the text in
- *                   this file.  You are not allowed to take credit for code
- *                   that was not written fully by yourself, or to remove 
- *                   credit from code that was not written fully by yourself.  
- *                   Please email stonequest.bcgames@gmail.com for issues or concerns.
- * File description: This class is the superclass of all armor-type items, such as:
- *                   Helmets
- *                   Chest pieces
- *                   Off hands like shields
- *                   Belts
- *                   Earrings
- *                   Greaves
- *                   Necklaces
- *                   Boots
- *                   Rings
- *                   All shared attributes exist in this class as well as shared
- *                   functions necessary for most every type of Armor:
- *         -     int slotId: the armor slot that the item fits each slot has a 
- *                    unique integer value
- *         -     int bonusArmor: most armor types give bonus armor to the player, 
- *                    which reduces the amount of physical damage entities can
- *                    deal to the player
- *         - boolean isEquipped: true if the player currently has the item 
- *                    equipped.  Only one piece of armor can fit in a slot at 
- *                    a time
+                     this file.  You are not allowed to take credit for code
+                     that was not written fully by yourself, or to remove 
+                     credit from code that was not written fully by yourself.  
+                     Please email schwamat@gmail.com for issues or concerns.
+ * File description: 
  **************************************************************************** */
+
 package com.barelyconscious.game.item;
 
-import com.barelyconscious.game.graphics.UIElement;
-import com.barelyconscious.game.player.AttributeMod;
-import com.barelyconscious.game.spawnable.Entity;
+import com.barelyconscious.game.player.Player;
+import com.barelyconscious.game.player.StatBonus;
 
-public class Armor extends Equippable {
-
-    private double defenseRating = 0;
+public class Armor extends Item {
+    private int slotId;
+    private int bonusArmor;
+    private boolean isEquipped;
     
-    /**
-     * Create a new piece of armor wearable by the player with the following parameters:
-     * 
-     * @param name the name of the armor displayable to the player
-     * @param itemLevel the level of the Item
-     * @param sellValue the value vendors place on the armor. When a player sells Items to the shop, this is the amount of
-     * gold credited to them in return
-     * @param defenseRating any amount of bonus defense rating afforded by the 
-     * Item
-     * @param slotId where on the player this piece of armor fits
-     * @param itemIcon  the icon corresponding to a Tile that will be drawn if the item is on the ground in the world
-     * @param owner the owner (an Entity) whose Inventory this Armor exists in
-     * @param itemAffixes if this is not null, is an array of StatBonuses which are bonuses to the player's attributes when
-     * the piece of armor is worn
-     */
-    public Armor(String name, int itemLevel, int sellValue, double defenseRating, int slotId, UIElement itemIcon, Entity owner, AttributeMod... itemAffixes) {
-        super(name, itemLevel, sellValue, slotId, itemIcon, owner, itemAffixes);
-        this.defenseRating = defenseRating;
+    public Armor(String name, int sellV, int armor, int slotId, int tileId, StatBonus... affixes) {
+        super(name, sellV, 1, tileId, affixes);
+        super.setItemDescription("Place " + armordIdToString(slotId) + " for best results.");
+        super.options[USE] = "equip";
+        
+        this.slotId = slotId;
+        bonusArmor = armor;
+        isEquipped = false;
     } // constructor
     
-    public Armor(String name, int itemLevel, int sellValue, double defenseRating, int slotId, String iconLocation, Entity owner, AttributeMod... itemAffixes) {
-        this(name, itemLevel, sellValue, defenseRating, slotId, UIElement.createUIElement(iconLocation), owner, itemAffixes);
-    } // constructor
+    public int getArmorType() {
+        return slotId;
+    } // getArmorType
     
-    /**
-     * 
-     * @return the armor's implicit amount of defense rating
-     */
-    public double getDefenseRating() {
-        return defenseRating;
-    } // getDefenseRating
+    public int getBonusArmor() {
+        return bonusArmor;
+    } // getBonusArmor
+    
+    public void setEquipped(boolean equipped) {
+        isEquipped = equipped;
+        
+        if (isEquipped) { 
+            options[USE] = "unequip";
+        } // if
+        
+        else {
+            options[USE] = "equip";
+        } // else
+    } // setEquipped
+    
+    public boolean isEquipped() {
+        return isEquipped;
+        
+    } // isEquipped/* Returns the name associated with a given equipment slot ID as a String */
+    private static String armordIdToString(int armorId) {
+        switch (armorId) {
+            case Player.NECK_SLOT:      return "around neck";
+            case Player.HELM_SLOT:      return "on head";
+            case Player.EARRING_SLOT:   return "in ear";
+            case Player.CHEST_SLOT:     return "on chest";
+            case Player.OFF_HAND_SLOT:  return "in off hand";
+            case Player.BELT_SLOT:      return "around waist";
+            case Player.GREAVES_SLOT:   return "on legs";
+            case Player.RING_SLOT:      return "on finger";
+            case Player.BOOTS_SLOT:     return "on feet";
+            default:                    return "??";
+        } // switch
+    } // armorIdToString
 
     @Override
-    public String getDescription() {
-        return "Place " + Equippable.slotIdToDescription(slotId) + " for best results.";
-    } // getDescription
+    public String toString() {
+        switch (slotId) {
+            case Player.NECK_SLOT:
+            case Player.HELM_SLOT:
+            case Player.EARRING_SLOT:
+            case Player.CHEST_SLOT:
+            case Player.OFF_HAND_SLOT:
+            case Player.BELT_SLOT:
+            case Player.RING_SLOT:      return "a " + super.getDisplayName();
+            case Player.GREAVES_SLOT:   
+            case Player.BOOTS_SLOT:     return "some " + super.getDisplayName();
+            default:                    return "Papaya fruitsauce";
+        } // switch
+    } // toString
 
+    // Armor never stacks, even if it is exactly the same item
     @Override
-    public String getType() {
-        return Equippable.slotIdToEquippableType(slotId);
-    } // getType
+    public int compareTo(Item item) {
+        return -1;
+    } // compareTo
 } // Armor
