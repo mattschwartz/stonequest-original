@@ -44,7 +44,7 @@ public class Game implements Runnable {
     private boolean running = false;
     
     private final static String GAME_TITLE = "StoneQuest";
-    private final static String GAME_VERSION = "0.6.1";
+    private final static String GAME_VERSION = "0.6.2";
     
     // Game components
     public static Screen screen;

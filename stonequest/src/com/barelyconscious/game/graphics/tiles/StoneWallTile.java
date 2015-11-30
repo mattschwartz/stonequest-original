@@ -14,6 +14,6 @@ package com.barelyconscious.game.graphics.tiles;
 
 public class StoneWallTile extends Tile {
     public StoneWallTile() {
-        super(STONE_WALL_TILE_ID, "/tiles/world/stonewall.png", true, false, false);
+        super(STONE_WALL_TILE_ID, "/tiles/world/stonewall.png", true, false, true);
     } // constructor
 } // StoneWallTile

@@ -182,8 +182,8 @@ public class Tile {
         this.isVisible = isVisible;
     } // setVisible
 
-    public boolean blocksLineOfSight() {
-        return blocksSight;
+    public static boolean blocksLineOfSight(int tileId) {
+        return tiles[tileId].blocksSight;
     } // blocksLineOfSight
 
     public void setBlocksLineOfSight(boolean blocksLineOfSight) {

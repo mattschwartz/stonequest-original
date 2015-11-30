@@ -45,7 +45,7 @@ public class WorldFrame {
         this.log = log;
         
         addEntity(new SewerRatEntity(this, 1, 40, 20));
-        generateMap(250);
+        generateMap(2587);
     } // constructor
     
     /**
