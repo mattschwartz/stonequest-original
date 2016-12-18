@@ -117,16 +117,16 @@ public class SceneService extends JFrame implements Service {
         if (currentMenu != null) {
             currentMenu.hide();
         }
-        
+
         removeComponents();
 
         for (BetterComponent c : menu.getComponents()) {
             addComponent(c);
         }
-        
+
         menu.resize(getWidth(), getHeight());
         menu.show();
-        
+
         currentMenu = menu;
     }
 

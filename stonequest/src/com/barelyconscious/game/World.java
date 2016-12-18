@@ -29,17 +29,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class World implements Component, Service {
-    
+
     public static final World INSTANCE = new World();
 
     /**
-     * A best-fit width, measured in Tiles, of the Screen available for
-     * the Map.
+     * A best-fit width, measured in Tiles, of the Screen available for the Map.
      */
     private int tilesWide;
     /**
-     * A best-fit height, measured in Tiles, of the Screen available for
-     * the Map.
+     * A best-fit height, measured in Tiles, of the Screen available for the
+     * Map.
      */
     private int tilesHigh;
     /**
@@ -59,12 +58,12 @@ public class World implements Component, Service {
     private List<Loot> lootList = new ArrayList<Loot>();
     public Map currentMap = new Map();
     public WorldInputHandler inputHandler = new WorldInputHandler();
-    
+
     private World() {
         if (INSTANCE != null) {
-            throw new IllegalStateException("Only one world can be created at runtime."); 
+            throw new IllegalStateException("Only one world can be created at runtime.");
         }
-        
+
         // debugger
         currentMap.generateAreaMap(256, 256, -1, 25, "Kud arajhi steppes");
     }
@@ -152,8 +151,7 @@ public class World implements Component, Service {
     public void spawnSprite(Sprite sprite) {
         if (sprite instanceof Entity) {
             entityList.add((Entity) sprite);
-        }
-        else if (sprite instanceof Loot) {
+        } else if (sprite instanceof Loot) {
             lootList.add((Loot) sprite);
         }
     }
@@ -184,8 +182,8 @@ public class World implements Component, Service {
      *
      * @param x the x coordinate of the tile to be retrieved
      * @param y the y coordinate of the tile to be retrieved
-     * @return a nonzero value is the Tile at [x,y]; a value of -1 means
-     * the tile cannot be seen by the player or is nonexistent
+     * @return a nonzero value is the Tile at [x,y]; a value of -1 means the
+     * tile cannot be seen by the player or is nonexistent
      */
     public Tile getTileAt(int x, int y) {
         // If tile is neither visible or recently seen, tile shouldn't be known by the player

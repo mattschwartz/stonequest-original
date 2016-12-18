@@ -27,15 +27,15 @@ public class Game implements Runnable {
     // dbg
     public static long frametime;
     public static int frames2;
-    
+
     /**
      * Initializes the game window and all of its components.
      */
     public void initGame() {
         sceneService = SceneService.INSTANCE;
-        
+
         startServices();
-        
+
         // Generate 1000 random words 
         new Thread() {
             @Override
@@ -44,7 +44,7 @@ public class Game implements Runnable {
             }
         }.start();
     }
-    
+
     private void startServices() {
         FileHandler.INSTANCE.start();
         sceneService.start();
