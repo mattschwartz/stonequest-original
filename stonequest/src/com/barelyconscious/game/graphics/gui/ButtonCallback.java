@@ -16,4 +16,4 @@ package com.barelyconscious.game.graphics.gui;
 public interface ButtonCallback {
     public void action(BetterButton buttonPressed);
     public void hoverOverAction(BetterButton caller);
-} // ButtonCallback
+}

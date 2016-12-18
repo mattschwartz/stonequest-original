@@ -22,7 +22,7 @@ public class Container extends Doodad {
     
     public Container(String name, int x, int y, boolean locked, UIElement initialTile, UIElement spentTile) {
         super(name, x, y, locked, initialTile, spentTile);
-    } // constructor
+    }
     
     /**
      * Fill the contents of the container with loot
@@ -31,22 +31,22 @@ public class Container extends Doodad {
     public void setContents(ArrayList<Item> itemContents) {
         for (Item item : itemContents) {
             itemList.add(item);
-        } // for
-    } // setContents
+        }
+    }
     
     @Override
     public void interact(Sprite interactee) {
         if (itemList == null || itemList.isEmpty()) {
 //            Game.textLog.writeFormattedString("The " + getDisplayName() + " is empty.", Common.FONT_NULL_RGB);
-        } // if
+        }
         
         else {
 //            Game.textLog.writeFormattedString("You open the " + getDisplayName() + ".", Common.FONT_NULL_RGB);
 //
 //            Game.lootWindow.setItemList(itemList);
 //            Game.lootWindow.setActive();
-        } // else
+        }
         
 //        super.interact();
-    } // interact
-} // Container
+    }
+}

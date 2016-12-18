@@ -50,7 +50,7 @@ public abstract class KeyMap {
         public void action(KeyEvent e) {
             World.INSTANCE.getPlayer().moveUp();
             World.INSTANCE.tick();
-        } // action
+        }
     };
     public static final KeyAction PLAYER_MOVE_DOWN = new KeyAction() {
         @Override
@@ -163,15 +163,15 @@ public abstract class KeyMap {
         // Overwriting a key binding
         if (keyBindings.containsKey(key)) {
             keyBindings.remove(key);
-        } // if
+        }
 
         keyBindings.put(key, action);
-    } // addKeyBinding
+    }
 
     public static void setDefaultKeyBindings() {
         setDefaultPlayerKeyBindings();
         setDefaultInterfaceKeyBindings();
-    } // setDefaultKeyBindings
+    }
 
     public static void setDefaultPlayerKeyBindings() {
         addKeyBinding(PLAYER_MOVE_LEFT_DEFAULT_BINDING, PLAYER_MOVE_LEFT);
@@ -191,7 +191,7 @@ public abstract class KeyMap {
         addKeyBinding(KeyEvent.VK_UP, PLAYER_MOVE_UP);
         addKeyBinding(KeyEvent.VK_DOWN, PLAYER_MOVE_DOWN);
 
-    } // setDefaultPlayerKeyBindings
+    }
 
     public static void setDefaultInterfaceKeyBindings() {
         addKeyBinding(OPEN_INVENTORY_WINDOW_DEFAULT_BINDING, OPEN_INVENTORY_WINDOW);
@@ -202,13 +202,13 @@ public abstract class KeyMap {
         addKeyBinding(OPEN_BREWING_WINDOW_DEFAULT_BINDING, OPEN_BREWING_WINDOW);
         addKeyBinding(ESCAPE_BUTTON_DEFAULT_BINDING, ESCAPE_BUTTON);
         addKeyBinding(PRINT_SCREEN_BUTTON_DEFAULT_BINDING, PRINT_SCREEN_BUTTON);
-    } // setDefaultInterfaceKeyBindings
+    }
 
     public static KeyAction getAction(int key) {
         if (!keyBindings.containsKey(key)) {
             return null;
-        } // if
+        }
 
         return keyBindings.get(key);
-    } // getAction
-} // KeyMap
+    }
+}

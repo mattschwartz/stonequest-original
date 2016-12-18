@@ -32,17 +32,17 @@ public class ItemSlot extends Interactable implements Component {
     
     public ItemSlot() {
         
-    } // constructor
+    }
     
     public boolean itemGoesHere(Item item) {
         for (Item i : acceptableItems) {
             if (item.getClass() == i.getClass()) {
                 return true;
-            } // if
-        } // for
+            }
+        }
         
         return false;
-    } // itemGoesHere
+    }
     
     public Item setItem(Item item) {
         Item oldItem = this.item;
@@ -50,55 +50,55 @@ public class ItemSlot extends Interactable implements Component {
         if (itemGoesHere(item)) {
             this.item = item;
             return oldItem;
-        } // if
+        }
         
         return null;
-    } // setItem
+    }
     
     public Item getItem() {
         return this.item;
-    } // getItem
+    }
     
     @Override
     public int getX() {
         return x;
-    } // getX
+    }
 
     @Override
     public void setX(int newX) {
         this.x = newX;
-    } // setX
+    }
 
     @Override
     public int getY() {
         return y;
-    } // getY
+    }
 
     @Override
     public void setY(int newY) {
         this.y = newY;
-    } // setY
+    }
 
     @Override
     public int getWidth() {
         return width;
-    } // getWidth
+    }
 
     @Override
     public int getHeight() {
         return height;
-    } // getHeight
+    }
 
     @Override
     public void dispose() {
-    } // dispose
+    }
 
     @Override
     public boolean shouldRemove() {
         return false;
-    } // shouldRemove
+    }
 
     @Override
     public void render() {
-    } // render
-} // ItemSlot
+    }
+}

@@ -22,15 +22,15 @@ public class CharacterElement {
     public CharacterElement(char c, Color col) {
         this.data = c;
         this.color = col.getRGB();
-    } // constructor
+    }
     
     public CharacterElement(char c, int col) {
         this.data = c;
         this.color = col;
-    } // constructor
+    }
 
     @Override
     public String toString() {
         return "" + data;
     }
-} // CharacterElement
+}

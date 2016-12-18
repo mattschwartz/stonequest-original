@@ -36,7 +36,7 @@ public class SewerRatEntity extends Entity {
         minimumDamage *= 1 + (level * 1.05);
         maximumDamage *= 1 + (level * 1.55);
         world = World.INSTANCE;
-    } // constructor
+    }
 
     @Override
     public void tick() {
@@ -50,36 +50,36 @@ public class SewerRatEntity extends Entity {
                 || ((Math.abs(playerY - y) <= reach) && (playerX - x) == 0)) {
             interact(world.getPlayer());
             return;
-        } // if
+        }
 
         // Pathing
         if (playerX > x) {
             xDir = 1;
-        } // if
+        }
         if (playerY > y) {
             yDir = 1;
-        } // if
+        }
 
         if (world.canMove(x + xDir, y + yDir) && !((x + xDir) == playerX && (y + yDir) == playerY)) {
             setPosition(x + xDir, y + yDir);
-        } // if
-    } // tick
+        }
+    }
 
     @Override
     public void interact(Sprite interactee) {
         /* If the sprite with which this SewerRat is interacting is hostile, 
          attack it. */
         if (interactee.getFaction().isHostile(this)) {
-        } // if
+        }
 
         if (!(interactee instanceof Entity)) {
             return;
-        } // if
+        }
 
         double hit = calculateHit();
         TextLog.INSTANCE.appendDamageMessage(this, (Entity)interactee, hit, EntityHelper.PHYSICAL_DAMAGE_TYPE);
         ((Entity) interactee).changeHealthBy(-hit);
-    } // interact
+    }
 
     private float calculateHit() {
         // Calculate a number between min hit and max hit
@@ -90,8 +90,8 @@ public class SewerRatEntity extends Entity {
         // Critical hit? multiply hit by critical multiplier
         if ((ran.nextDouble() * 100) <= criticalStrikeChance) {
             hit *= 1 + (criticalDamageMultiplier / 100);
-        } // if
+        }
 
         return hit;
-    } // calculateHit
-} // SewerRatEntity
+    }
+}

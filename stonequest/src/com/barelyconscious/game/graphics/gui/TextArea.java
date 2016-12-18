@@ -58,7 +58,7 @@ public class TextArea extends Interactable implements Component {
 
     public TextArea(int startX, int startY, int width, int height) {
         this(startX, startY, width, height, true);
-    } // constructor
+    }
 
     public TextArea(int startX, int startY, int width, int height, boolean addMouseListener) {
         loadBorder();
@@ -74,8 +74,8 @@ public class TextArea extends Interactable implements Component {
         if (addMouseListener) {
             super.setRegion(x, y, this.width, this.height);
             super.addMouseListener(Interactable.Z_TEXT_AREA);
-        } // if
-    } // constructor
+        }
+    }
     
     public void init(int startX, int startY, int width, int height, boolean addMouseListener) {
         x = Math.max(0, startX);
@@ -90,7 +90,7 @@ public class TextArea extends Interactable implements Component {
         if (addMouseListener) {
             super.setRegion(x, y, this.width, this.height);
             super.addMouseListener(Interactable.Z_TEXT_AREA);
-        } // if
+        }
     }
 
     /**
@@ -126,26 +126,26 @@ public class TextArea extends Interactable implements Component {
         
         pixels = unparsedImage.getRGB(subWidth*7, 0, subWidth, subHeight, null, 0, subWidth);
         textAreaBorderTopLeftCorner = new UIElement(pixels, subWidth, subHeight);
-    } // loadBorder
+    }
 
     public void resize(int startX, int startY) {
         setX(startX);
         setY(startY);
-    } // resize
+    }
 
     public void setBackgroundColor(Color newBackground) {
         backgroundColor = newBackground;
-    } // setBackgroundColor
+    }
 
     public void setTextColor(int newTextColor) {
         textColor = newTextColor;
-    } // setTextColor
+    }
 
     public void clearText() {
         pureText = "";
         startingLineOffset = 0;
         scrollBar.setLineCounts(0, 0);
-    } // clearText
+    }
 
     public void setText(String text) {
         int lineCount;
@@ -153,7 +153,7 @@ public class TextArea extends Interactable implements Component {
         lineCount = StringHelper.splitStringAlongWords(pureText, columns).size();
         startingLineOffset = lineCount - rows;
         scrollBar.setLineCounts(lineCount, startingLineOffset);
-    } // setText
+    }
 
     public void append(String text) {
         int lineCount;
@@ -161,13 +161,13 @@ public class TextArea extends Interactable implements Component {
         lineCount = StringHelper.splitStringAlongWords(pureText, columns).size();
         startingLineOffset = lineCount - rows;
         scrollBar.setLineCounts(lineCount, startingLineOffset);
-    } // append
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == Interactable.MOUSE_LEFT_CLICK) {
             mouseWheelDown();
-        } // if
+        }
         else if (e.getButton() == Interactable.MOUSE_RIGHT_CLICK) {
             mouseWheelUp();
         }
@@ -187,47 +187,47 @@ public class TextArea extends Interactable implements Component {
     public void mouseWheelDown() {
         startingLineOffset++;
         scrollBar.setTopLine(startingLineOffset);
-    } // scrollDown
+    }
 
     @Override
     public void mouseWheelUp() {
         startingLineOffset = Math.max(0, startingLineOffset - 1);
         scrollBar.setTopLine(startingLineOffset);
-    } // scrollUp
+    }
 
     @Override
     public int getX() {
         return x;
-    } // getX
+    }
 
     @Override
     public int getY() {
         return y;
-    } // getY
+    }
 
     @Override
     public void setX(int newX) {
         x = Math.max(0, newX);
         scrollBar.setX(x + width - ScrollBar.SCROLLBAR_WIDTH - textAreaBorderRightRepeat.getWidth() - 1);
         setRegion(x, y, width, height);
-    } // setX
+    }
 
     @Override
     public void setY(int newY) {
         y = Math.max(0, newY);
         scrollBar.setY(y + textAreaBorderTopRepeat.getHeight() + 1);
         setRegion(x, y, width, height);
-    } // setY
+    }
 
     @Override
     public int getWidth() {
         return width;
-    } // getWidth
+    }
 
     @Override
     public int getHeight() {
         return height;
-    } // getHeight
+    }
 
     public void setWidth(int newWidth) {
         width = newWidth;
@@ -238,7 +238,7 @@ public class TextArea extends Interactable implements Component {
         height = newHeight;
         scrollBar.setHeight(height - textAreaBorderTopRepeat.getHeight() * 2 - 2);
         setRegion(x, y, width, height);
-    } // setHeight
+    }
 
     /**
      * This function is called when the container is no longer necessary and should be removed as determined by the JRE.
@@ -247,19 +247,19 @@ public class TextArea extends Interactable implements Component {
     public void dispose() {
         destroy = true;
         removeMouseListener();
-    } // dispose
+    }
 
     @Override
     public boolean shouldRemove() {
         return destroy;
-    } // shouldDestroy
+    }
 
     @Override
     public void render() {
         renderBorder();
         renderText();
         scrollBar.render();
-    } // render
+    }
 
     protected void renderBorder() {
         // Black background
@@ -276,14 +276,14 @@ public class TextArea extends Interactable implements Component {
         for (int i = x + textAreaBorderTopLeftCorner.getWidth(); i < x + (width - textAreaBorderTopRightCorner.getWidth()); i += textAreaBorderTopRepeat.getWidth()) {
             textAreaBorderTopRepeat.render(i, y);
             textAreaBorderBottomRepeat.render(i, y + height - textAreaBorderBottomRepeat.getHeight());
-        } // for
+        }
 
         // left and right edges
         for (int i = y + textAreaBorderTopLeftCorner.getHeight(); i < y + (height - textAreaBorderBottomLeftCorner.getHeight()); i += textAreaBorderLeftRepeat.getWidth()) {
             textAreaBorderLeftRepeat.render(x, i);
             textAreaBorderRightRepeat.render(x + width - textAreaBorderRightRepeat.getWidth(), i);
-        } // for
-    } // renderBorder
+        }
+    }
 
     protected void renderText() {
         int textOffsX = x + textAreaBorderLeftRepeat.getWidth() + MARGIN;
@@ -294,7 +294,7 @@ public class TextArea extends Interactable implements Component {
         if (startingLineOffset + rows > lines.size()) {
             startingLineOffset = lines.size() - rows;
             scrollBar.setTopLine(startingLineOffset);
-        } // if
+        }
 
         if (startingLineOffset < 0) {
             startingLineOffset = 0;
@@ -308,7 +308,7 @@ public class TextArea extends Interactable implements Component {
 
             if (line >= rows) {
                 break;
-            } // if
-        } // for
-    } // renderText
-} // TextArea
+            }
+        }
+    }
+}

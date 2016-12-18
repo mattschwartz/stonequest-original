@@ -16,10 +16,10 @@ package com.barelyconscious.game.graphics.tiles;
 public class StoneWallTile extends Tile {
     public StoneWallTile () {
         super("stone wall", "/gfx/tiles/world/environment/walls/stoneWall.png", 0, true, true);
-    } // constructor
+    }
 
     @Override
     public String getDescription() {
         return "A wall built of stones.";
-    } // getDescription
-} // StoneWallTile
+    }
+}

@@ -84,11 +84,11 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
         super.setRegion(getX(), getY(), getWidth(), getHeight());
         super.addMouseListener(Interactable.Z_BACKGROUND);
         hide();
-    } // constructor
+    }
     
     private void createButtons() {
         closeWindowButton = new CloseWindowButton(this, WindowManager.INTERFACE_WINDOW_CLOSE_BUTTON);
-    } // createButtons
+    }
 
     /**
      * Disable or enable all buttons associated with the upgrade item window
@@ -105,7 +105,7 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
         itemDescriptionTextArea.setEnabled(enabled);
         divineFavorDescriptionTextArea.setEnabled(enabled);
         // item slot areas
-    } // setComponentsEnabled
+    }
 
     /**
      * Sets the callback functions for all of the buttons so this class so that
@@ -116,7 +116,7 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
         applyAugmentationButton.setCallbackFunction(this);
         removeAugmentationButton.setCallbackFunction(this);
         performRitualButton.setCallbackFunction(this);
-    } // setCallbacks
+    }
 
     /**
      * Resize elements as necessary when the application is resized.
@@ -150,7 +150,7 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
         itemSalvageProgressBar.resize(getX() + 97, getY() + 229);
 
         super.setRegion(getX(), getY(), getWidth(), getHeight());
-    } // resize
+    }
 
     /**
      * Given the new coordinates for the Upgrade Item window interface, all
@@ -177,7 +177,7 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
 
         performRitualButton.setX(windowOffsX + 97);
         performRitualButton.setY(windowOffsY + 419);
-    } // resizeButtons
+    }
 
     private void createItemSlots() {
         itemToUpgradeSlot = new ItemSlotArea() {
@@ -229,26 +229,26 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
             }
 
         };
-    } // createItemSlots
+    }
 
     private void resizeItemSlots() {
         itemToUpgradeSlot.resize(getX() + ITEM_TO_UPGRADE_OFFS_X, getY() + ITEM_TO_UPGRADE_OFFS_Y);
         salvageSlot.resize(getX() + SALVAGE_OFFS_X, getY() + SALVAGE_OFFS_Y);
         itemAugmentSlot.resize(getX() + ITEM_AUGMENT_OFFS_X, getY() + ITEM_AUGMENT_OFFS_Y);
         divineFavorSlot.resize(getX() + DIVINE_FAVOR_OFFS_X, getY() + DIVINE_FAVOR_OFFS_Y);
-    } // resizeItemSlots
+    }
 
     @Override
     public void show() {
         if (WindowManager.JOURNAL_WINDOW.isVisible()) {
             WindowManager.JOURNAL_WINDOW.hide();
-        } // if
+        }
 
         super.show();
         animationY = 0 - UPGRADE_ITEM_WINDOW_BACKGROUND.getHeight();
         setComponentsEnabled(true);
         setEnabled(true);
-    } // show
+    }
 
     @Override
     public final void hide() {
@@ -257,7 +257,7 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
         setEnabled(false);
         itemToUpgradeSlot.onHide();
         salvageSlot.onHide();
-    } // hide
+    }
 
     @Override
     public void action(Button buttonPressed) {
@@ -266,56 +266,56 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
 
             if (buttonPressed == windowButton) {
                 hoverOverAction(buttonPressed);
-            } // if
-        } // if
+            }
+        }
         else if (buttonPressed == applySalvageButton) {
             System.err.println("Applying salvage to item!");
-        } // else if
+        }
         else if (buttonPressed == applyAugmentationButton) {
             System.err.println("Applying augmentation to item!");
-        } // else if
+        }
         else if (buttonPressed == removeAugmentationButton) {
             System.err.println("Removing augmentation from item!");
-        } // else if
+        }
         else if (buttonPressed == performRitualButton) {
             System.err.println("Performing ritual!");
-        } // else if
+        }
         else {
             System.err.println("Unkown button: " + buttonPressed);
-        } // else
-    } // action
+        }
+    }
 
     @Override
     public void hoverOverAction(Button caller) {
         if (caller == null) {
             WindowManager.INSTANCE.clearTooltipText();
             return;
-        } // if
+        }
 
         if (caller == windowButton) {
             if (isVisible()) {
                 WindowManager.INSTANCE.setTooltipText("Click to close\nthe Upgrade\nItem Window");
-            } // if
+            }
             else {
                 WindowManager.INSTANCE.setTooltipText("Click to open\nthe Upgrade\nItem Window");
-            } // else
-        } // if
+            }
+        }
         else if (caller == closeWindowButton) {
             WindowManager.INSTANCE.setTooltipText("Click to close\nthe Upgrade\nItem Window");
-        } // else if
+        }
         else if (caller == applySalvageButton) {
             WindowManager.INSTANCE.setTooltipText("Adds selected\nsalvage to the\nitem, improving\nit");
-        } // else if
+        }
         else if (caller == applyAugmentationButton) {
             WindowManager.INSTANCE.setTooltipText("Applies an\naugmentation\nto the item");
-        } // else if
+        }
         else if (caller == removeAugmentationButton) {
             WindowManager.INSTANCE.setTooltipText("Removes the\naugmentation\nfrom the item");
-        } // else if
+        }
         else if (caller == performRitualButton) {
             WindowManager.INSTANCE.setTooltipText("Performs a\nreligious ritual\nin the hopes of\ngaining divine\nfavor");
-        } // else if
-    } // hoverOverAction
+        }
+    }
 
     private void updateItemInfo() {
         Item item = itemToUpgradeSlot.getItem();
@@ -323,12 +323,12 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
         itemDescriptionTextArea.clearText();
         if (item == null) {
             return;
-        } // if
+        }
 
         itemDescriptionTextArea.appendLine("Item level", "" + item.getItemLevel());
         itemDescriptionTextArea.appendLine("Next level", "" + item.getRequiredSalvage());
         itemDescriptionTextArea.appendLine("Material", item.getMaterial());
-    } // updateItemInfo
+    }
 
     private void updateDivineFavorInfo() {
         Item item = divineFavorSlot.getItem();
@@ -336,8 +336,8 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
         divineFavorDescriptionTextArea.clearText();
         if (item == null) {
             return;
-        } // if
-    } // updateDivineFavorInfo
+        }
+    }
 
     @Override
     public void render() {
@@ -345,7 +345,7 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
 
         if (!isVisible()) {
             return;
-        } // if
+        }
 
         animationY = Math.min(animationY + (int) (SceneService.INSTANCE.getHeight() * FALL_RATE), getY());
 
@@ -366,13 +366,13 @@ public class UpgradeItemWindow extends Window implements ButtonAction {
             renderItemSlots();
 
             itemSalvageProgressBar.render();
-        } // if
-    } // render
+        }
+    }
 
     private void renderItemSlots() {
         itemToUpgradeSlot.render();
         salvageSlot.render();
         itemAugmentSlot.render();
         divineFavorSlot.render();
-    } // renderItemSlots
-} // UpgradeItemWindow
+    }
+}

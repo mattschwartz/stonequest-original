@@ -32,21 +32,21 @@ public class BrewingSlotArea extends ItemSlotArea {
 
         super.setRegion(x, y, width, height);
         super.addMouseListener(Interactable.Z_TEXT_AREA);
-    } // constructor
+    }
 
     @Override
     public boolean itemGoesHere(Item item) {
         return slotId < Cauldron.MAX_INGREDIENTS;
-    } // itemGoesHere
+    }
 
     @Override
     public Item getItem() {
         if (slotId < Cauldron.MAX_INGREDIENTS) {
             return cauldron.getIngredient(slotId);
-        } // if
+        }
 
         return resultItem;
-    } // getItem
+    }
 
     @Override
     public Item setItem(Item item) {
@@ -54,27 +54,27 @@ public class BrewingSlotArea extends ItemSlotArea {
 
         if (slotId < Cauldron.MAX_INGREDIENTS) {
             oldItem = cauldron.setIngredient(slotId, item);
-        } // if
+        }
         else {
             oldItem = resultItem;
             resultItem = item;
-        } // else
+        }
 
         return oldItem;
-    } // setItem
+    }
 
     @Override
     public Item removeItem() {
         Item oldItem;
         if (slotId < Cauldron.MAX_INGREDIENTS) {
             oldItem = cauldron.setIngredient(slotId, null);
-        } // if
+        }
         else {
             oldItem = resultItem;
             resultItem = null;
-        } // else
+        }
         return oldItem;
-    } // removeItem
+    }
 
 //    @Override
 //    public void mouseClicked(MouseEvent e) {
@@ -83,7 +83,7 @@ public class BrewingSlotArea extends ItemSlotArea {
 //        if (e.getButton() == Interactable.MOUSE_LEFT_CLICK) {
 //            if (stackItem()) {
 //                return;
-//            } // if
+//            }
 //            
 //            cursorItem = delegate.getItemOnCursor();
 //
@@ -92,18 +92,18 @@ public class BrewingSlotArea extends ItemSlotArea {
 //                    item = removeItem();
 //                    delegate.putItemOnCursor(item);
 //                    setItem(cursorItem);
-//                } // if
-//            } // if
+//                }
+//            }
 //            else {
 //                item = removeItem();
 //                delegate.putItemOnCursor(item);
-//            } // else
-//        } // else
+//            }
+//        }
 //        else {
 //            item = getItem();
 //            if (delegate.getPlayerInventory().addItem(item)) {
 //                removeItem();
-//            } // if
-//        } // else
-//    } // mouseClicked
-} // BrewingSlotArea
+//            }
+//        }
+//    }
+}

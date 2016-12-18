@@ -26,54 +26,54 @@ public class InputHandler implements Service {
     private InputHandler() {
         if (INSTANCE != null) {
             throw new IllegalStateException(this + " has already been instantiated.");
-        } // if
+        }
 
         keyHandler = new KeyHandler();
         mouseHandler = new MouseHandler();
-    } // constructor
+    }
 
     public void addListeners(Component component) {
         component.addKeyListener(keyHandler);
         component.addMouseListener(mouseHandler);
         component.addMouseMotionListener(mouseHandler);
         component.addMouseWheelListener(mouseHandler);
-    } // addListeners
+    }
     
     public void addKeyListener(Interactable interactableObject) {
         keyHandler.addInteractable(interactableObject);
-    } // addKeyListener
+    }
     
     public void removeKeyListener(Interactable interactableObject) {
         keyHandler.removeInteractable(interactableObject);
-    } // removeKeyListener
+    }
     
     public void addMouseListener(Interactable interactableObject, int zLevel) {
         mouseHandler.addInteractable(interactableObject, zLevel);
-    } // addMouseListener
+    }
     
     public void removeMouseListener(Interactable interactableObject) {
         mouseHandler.removeInteractable(interactableObject);
-    } // removeMouseListener
+    }
     
     public int getMouseX() {
         return mouseHandler.getMouseX();
-    } // getMouseX
+    }
     
     public int getMouseY() {
         return mouseHandler.getMouseY();
-    } // getMouseY
+    }
 
     @Override
     public void start() {
-    } // start
+    }
 
     @Override
     public void stop() {
-    } // stop
+    }
 
     @Override
     public void restart() {
         stop();
         start();
-    } // restart
-} // InputHandler
+    }
+}

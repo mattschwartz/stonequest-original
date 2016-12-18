@@ -57,11 +57,11 @@ public class Armor extends Equippable {
     public Armor(String name, int itemLevel, int sellValue, double defenseRating, int slotId, UIElement itemIcon, Entity owner, AttributeMod... itemAffixes) {
         super(name, itemLevel, sellValue, slotId, itemIcon, owner, itemAffixes);
         this.defenseRating = defenseRating;
-    } // constructor
+    }
     
     public Armor(String name, int itemLevel, int sellValue, double defenseRating, int slotId, String iconLocation, Entity owner, AttributeMod... itemAffixes) {
         this(name, itemLevel, sellValue, defenseRating, slotId, UIElement.createUIElement(iconLocation), owner, itemAffixes);
-    } // constructor
+    }
     
     /**
      * 
@@ -69,15 +69,15 @@ public class Armor extends Equippable {
      */
     public double getDefenseRating() {
         return defenseRating;
-    } // getDefenseRating
+    }
 
     @Override
     public String getDescription() {
         return "Place " + Equippable.slotIdToDescription(slotId) + " for best results.";
-    } // getDescription
+    }
 
     @Override
     public String getType() {
         return Equippable.slotIdToEquippableType(slotId);
-    } // getType
-} // Armor
+    }
+}

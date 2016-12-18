@@ -47,8 +47,8 @@ public class Sound {
             soundClip = Applet.newAudioClip(Sound.class.getResource(soundFile));
         } catch(Throwable e) {
             System.err.println(" [ERR] Failed to load sound file (" + soundFile + "): " + e);
-        } // catch
-    } // constructor
+        }
+    }
     
     public void play() {
         new Thread() {
@@ -56,16 +56,16 @@ public class Sound {
             public void run() {
                 soundClip.stop();
                 soundClip.play();
-            } // run
+            }
         }.start();
-    } // play
+    }
     
     public void loop() {
         new Thread() {
             @Override
             public void run() {
                 soundClip.loop();
-            } // run
+            }
         }.start();
-    } // loop
+    }
 } // Sound

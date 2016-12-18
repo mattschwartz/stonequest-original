@@ -21,7 +21,7 @@ public class Journal {
     private final List<JournalEntry> entries = new ArrayList<JournalEntry>();
 
     public Journal() {
-    } // constructor
+    }
 
     /**
      * Adds a Journal entry to the player's Journal for future examination.
@@ -33,10 +33,10 @@ public class Journal {
     public boolean addEntry(JournalEntry entry) {
         if (entries.size() >= MAX_JOURNAL_ENTRIES) {
             return false;
-        } // if
+        }
 
         return entries.add(entry);
-    } // addEntry
+    }
 
     /**
      *
@@ -46,10 +46,10 @@ public class Journal {
     public JournalEntry getEntryAt(int index) {
         if (index < 0 || index >= entries.size()) {
             return null;
-        } // if
+        }
 
         return entries.get(index);
-    } // getEntryAt
+    }
 
     /**
      * Removes the Journal entry from the player's Journal log.
@@ -58,7 +58,7 @@ public class Journal {
      */
     public void removeEntry(int index) {
         entries.remove(index);
-    } // removeEntry
+    }
 
     /**
      *
@@ -66,5 +66,5 @@ public class Journal {
      */
     public int getNumEntries() {
         return entries.size();
-    } // getNumEntries
-} // Journal
+    }
+}

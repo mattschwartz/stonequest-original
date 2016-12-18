@@ -40,8 +40,8 @@ public class FontService implements Service {
     private FontService() {
         if (INSTANCE != null) {
             throw new IllegalStateException(this + " has already been instantiated.");
-        } // if
-    } // constructor
+        }
+    }
     
     /**
      * Creates the necessary fonts for the application to be packaged and run on
@@ -64,17 +64,17 @@ public class FontService implements Service {
         } catch (IOException ex) {
             ConsoleWriter.writeError("Error loading font \"Exocet.ttf\": " + ex);
         }
-    } // start
+    }
 
     @Override
     public void stop() {
-    } // stop
+    }
 
     @Override
     public void restart() {
         stop();
         start();
-    } // restart
+    }
     
     /**
      * Gets the width of the message once it is drawn to the screen
@@ -84,7 +84,7 @@ public class FontService implements Service {
      */
     public static int getStringWidth(String msg) {
         return SceneService.INSTANCE.getCurrentGraphics().getFontMetrics(exocetFont).stringWidth(msg);
-    } // getStringWidth
+    }
 
     /**
      * Gets the width of the message once it is drawn to the screen
@@ -99,10 +99,10 @@ public class FontService implements Service {
 
         if (bold) {
             newFont = newFont.deriveFont(java.awt.Font.BOLD);
-        } // if
+        }
 
         return SceneService.INSTANCE.getCurrentGraphics().getFontMetrics(newFont).stringWidth(msg);
-    } // getStringWidth
+    }
 
     /**
      * Returns the maximum width as an integer based on a given list of strings.
@@ -120,11 +120,11 @@ public class FontService implements Service {
 
             if (stringLength > maxLength) {
                 maxLength = stringLength;
-            } // if
-        } // for
+            }
+        }
 
         return maxLength;
-    } // getMaxStringLength
+    }
 
     /**
      * Draws a string to the screen at the supplied coordinates.
@@ -155,25 +155,25 @@ public class FontService implements Service {
 
             for (int i = 0; i < parts.length; i++) {
                 drawFont(parts[i], col, font, xStart, yStart + (g.getFontMetrics().getHeight() * i));
-            } // for
-        } // if
+            }
+        }
 
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g.setColor(col);
         g.drawString(msg, xStart, yStart);
         g.dispose();
-    } // drawFont
+    }
 
     public static void drawFont(String msg, Color col, boolean bold, float fontSize, int xStart, int yStart) {
         java.awt.Font newFont = exocetFont.deriveFont(fontSize);
 
         if (bold) {
             drawFont(msg, col, newFont.deriveFont(java.awt.Font.BOLD), xStart, yStart);
-        } // if
+        }
         else {
             drawFont(msg, col, newFont, xStart, yStart);
-        } // else
-    } // drawFont
+        }
+    }
 
     /**
      * Draws a string to the screen at the supplied coordinates.
@@ -189,7 +189,7 @@ public class FontService implements Service {
      */
     public static void drawFont(String msg, int col, int xStart, int yStart) {
         drawFont(msg, new Color(col), null, xStart, yStart);
-    } // drawFont
+    }
 
     /**
      * Draws a string to the screen at the supplied coordinates.
@@ -205,7 +205,7 @@ public class FontService implements Service {
      */
     public static void drawFont(String msg, Color col, int xStart, int yStart) {
         drawFont(msg, col, null, xStart, yStart);
-    } // drawFont
+    }
 
     /**
      * Draws a string to the screen at the supplied coordinates using the
@@ -229,7 +229,7 @@ public class FontService implements Service {
         } else {
             drawFont(msg, col, exocetFont, xStart, yStart);
         }
-    } // drawFont
+    }
 
     public static void drawFont(LineElement line, java.awt.Font font, int xStart, int yStart) {
         g = SceneService.INSTANCE.getCurrentGraphics();
@@ -237,17 +237,17 @@ public class FontService implements Service {
 
         if (font == null) {
             g.setFont(exocetFont);
-        } // if
+        }
         else {
             g.setFont(font);
-        } // else
+        }
 
         for (CharacterElement c : line.line) {
             g.setColor(new Color(c.color));
             g.drawString("" + c, xStart, yStart);
             xStart += getStringWidth("" + c);
-        } // for
+        }
 
         g.dispose();
-    } // drawFont
-} // Font
+    }
+}

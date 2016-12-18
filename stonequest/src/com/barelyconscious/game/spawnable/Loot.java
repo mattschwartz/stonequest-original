@@ -26,25 +26,25 @@ public class Loot extends Sprite {
         super(item.getName(), World.INSTANCE.getPlayer().getX(), World.INSTANCE.getPlayer().getY(), false, LOOT_ICON);
         this.item = item;
         pickupOnWalkOver = false;
-    } // constructor
+    }
 
     public Loot(Item item, boolean pickupOnWalkOver) {
         super(item.getName(), World.INSTANCE.getPlayer().getX(), World.INSTANCE.getPlayer().getY(), false, LOOT_ICON);
         this.item = item;
         this.pickupOnWalkOver = pickupOnWalkOver;
-    } // constructor
+    }
 
     public Loot(Item item, int x, int y, boolean pickupOnWalkOver) {
         super(item.getName(), x, y, false, LOOT_ICON);
         this.item = item;
         this.pickupOnWalkOver = pickupOnWalkOver;
-    } // constructor
+    }
 
     @Override
     public void remove() {
         System.out.println("You pick up " + item.getName());
         super.remove();
-    } // remove
+    }
 
     @Override
     public void onWalkOver(Sprite interactee) {
@@ -52,10 +52,10 @@ public class Loot extends Sprite {
             if (interactee instanceof Entity) {
                 ((Entity) interactee).getInventory().addItem(item);
                 remove();
-            } // if
-        } // if
+            }
+        }
         else {
             System.out.println("There is a " + item.getName() + " here.");
-        } // else
-    } // onWalkOver
-} // Loot2
+        }
+    }
+}

@@ -24,12 +24,12 @@ public class Toxin extends Condition {
         super(duration, Condition.DETRIMENT_TOXIN_TYPE, name, affectedEntity, null);
         this.damagerPerTick = damagePerTick;
         damageFrequency = frequency;
-    } // constructor
+    }
 
     @Override
     public String getDescription() {
         return "A harsh toxin that inflicts " + String.format("%.1f", damagerPerTick) + " damage as poison every " + damageFrequency + " turns.";
-    } // getDescription
+    }
 
     @Override
     public void tick() {
@@ -37,12 +37,12 @@ public class Toxin extends Condition {
         // Does nothing until damage frequency has been reached
         if (++tick < damageFrequency) {
             return;
-        } // if
+        }
         
         tick = 0;
         affectedEntity.changeHealthBy(-damagerPerTick);
         
         // Temporary - will ultimately write to the text log
         System.out.println(name + " inflicts " + String.format("%.1f", damagerPerTick) + " damage (Poison).");
-    } // tick
-} // Toxin
+    }
+}

@@ -36,7 +36,7 @@ public class ProgressBar implements Component {
         y = startY;
         this.width = width;
         height = 24;
-    } // constructor
+    }
 
     @Override
     public int getX() {
@@ -61,7 +61,7 @@ public class ProgressBar implements Component {
     public void resize(int x, int y) {
         this.x = x;
         this.y = y;
-    } // resize
+    }
 
     @Override
     public int getWidth() {
@@ -87,17 +87,17 @@ public class ProgressBar implements Component {
         renderBorder();
         renderBackground();
         renderText();
-    } // render
+    }
 
     private void renderBorder() {
         Button.borderLeft.render(x, y);
 
         for (int i = x + Button.borderLeft.getWidth(); i < x + (width - Button.borderRight.getWidth()); i += Button.borderRepeat.getWidth()) {
             Button.borderRepeat.render( i, y);
-        } // for
+        }
 
         Button.borderRight.render(x + width - Button.borderRight.getWidth(), y);
-    } // renderBorder
+    }
 
     private void renderBackground() {
         double baseWidthPercent, increaseWidthPercent;
@@ -114,7 +114,7 @@ public class ProgressBar implements Component {
         ShapeDrawer.fillRectangle(BASE_COLOR, x + 5, y + 5, (int) (baseWidthPercent * progressBarWidth), height - 10);
         ShapeDrawer.fillRectangle(INCREASE_COLOR, x + 5 + (int) (baseWidthPercent * progressBarWidth), y + 5, (int) (increaseWidthPercent * progressBarWidth), height - 10);
 
-    } // renderBackground
+    }
 
     private void renderText() {
         int startX, startY;
@@ -122,7 +122,7 @@ public class ProgressBar implements Component {
 
         if (increaseBy == 0) {
             return;
-        } // if
+        }
 
         msg = "+" + increaseBy;
 
@@ -131,6 +131,6 @@ public class ProgressBar implements Component {
 
         ShapeDrawer.fillTransluscentRectangle(startX, y + 6, FontService.getStringWidth(msg), FontService.characterHeight - 3);
         FontService.drawFont(msg, Color.white.getRGB(), startX, startY);
-    } // renderText
+    }
 
-} // ProgressBar
+}

@@ -60,4 +60,4 @@ public class TextLogHelper {
      * The RGB color value for health gain labels for the text log.
      */
     public static final int TEXTLOG_HEALTH_GAINED_COLOR = new Color(0, 255, 0).getRGB();
-} // TextLogHelper
+}

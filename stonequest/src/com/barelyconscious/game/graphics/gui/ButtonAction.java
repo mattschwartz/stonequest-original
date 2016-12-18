@@ -17,4 +17,4 @@ package com.barelyconscious.game.graphics.gui;
 public interface ButtonAction {
     public void action(Button buttonPressed);
     public void hoverOverAction(Button caller);
-} // ButtonAction
+}

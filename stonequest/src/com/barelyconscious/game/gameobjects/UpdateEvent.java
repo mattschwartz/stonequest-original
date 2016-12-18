@@ -15,4 +15,4 @@ package com.barelyconscious.game.gameobjects;
 
 public class UpdateEvent {
     public long timeSinceLastUpdate;
-} // UpdateEvent
+}

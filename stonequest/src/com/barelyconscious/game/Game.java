@@ -41,15 +41,15 @@ public class Game implements Runnable {
             @Override
             public void run() {
                 StringHelper.generateGibberish(1000);
-            } // run
+            }
         }.start();
-    } // init
+    }
     
     private void startServices() {
         FileHandler.INSTANCE.start();
         sceneService.start();
         FontService.INSTANCE.start();
-    } // startServices
+    }
 
     /**
      * Start the game's main running thread.
@@ -57,7 +57,7 @@ public class Game implements Runnable {
     private void Start() {
         running = true;
         new Thread(this).start();
-    } // start
+    }
 
     /**
      * Called when the player quits the game.
@@ -65,7 +65,7 @@ public class Game implements Runnable {
     public static void Stop() {
         System.err.println("saving data");
         System.exit(0);
-    } // stop
+    }
 
     /**
      * Animation and JFrame updates. Method copied and modified from Notch's
@@ -85,7 +85,7 @@ public class Game implements Runnable {
             } catch (InterruptedException e) {
                 ConsoleWriter.writeError("Fatal error in run(): " + e);
                 System.exit(1);
-            } // try-catch
+            }
 
             frames++;
 
@@ -98,13 +98,13 @@ public class Game implements Runnable {
                 frametime = end - start;
                 frames2 = frames;
                 frames = 0;
-            } // if
+            }
 
             if (!sceneService.hasFocus()) {
                 sceneService.requestFocusInWindow();
-            } // if
-        } // while
-    } // run
+            }
+        }
+    }
 
     /**
      * Self-explanatory?
@@ -114,7 +114,7 @@ public class Game implements Runnable {
     public static void main(String[] args) throws InterruptedException {
         Game game = new Game();
         game.Start();
-    } // main
+    }
 
     /* 
      // closing down the window makes sense as a method, so here are
@@ -140,4 +140,4 @@ public class Game implements Runnable {
      // and someplace else, you can close it thusly
      fooey.pullThePlug();
      */
-} // Game
+}

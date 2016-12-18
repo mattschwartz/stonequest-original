@@ -53,12 +53,12 @@ public class Scroll extends Item {
          its stats and name if so */
         if (owner instanceof Player) {
             isIdentified = ((Player)owner).isScrollIdentified(this.scrollId);
-        } // if
-    } // constructor
+        }
+    }
 
     public int getScrollId() {
         return scrollId;
-    } // getScrollId
+    }
 
     /**
      * Identifies a scroll for future reference. Scrolls can be identified by 
@@ -68,8 +68,8 @@ public class Scroll extends Item {
     public void identifyScroll() {
         if (owner instanceof Player) {
             ((Player)owner).read(this);
-        } // if
-    } // identifyScroll
+        }
+    }
 
     /**
      * When a Scroll is consumed, it may have additional effects on the player
@@ -78,7 +78,7 @@ public class Scroll extends Item {
      * those effects there.
      */
     public void extraEffects() {
-    } // extraEffects
+    }
 
     /**
      * Chooses 2-4 gibberish words, based on the hash from the name of the 
@@ -96,12 +96,12 @@ public class Scroll extends Item {
         // Create numOfWords number of unintelligible words
         for (int i = 0; i < numOfWords; i++) {
             str += StringHelper.GIBBERISH_WORD_LIST.get((hash + (i * 2586)) % 1000) + " ";
-        } // for
+        }
 
         str = str.trim();
 
         return str;
-    } // obfuscateName
+    }
 
     /**
      * 
@@ -115,10 +115,10 @@ public class Scroll extends Item {
         
         if (!isIdentified) {
             return obfuscateName();
-        } // if
+        }
         
         return displayName;
-    } // getName
+    }
 
     /**
      *
@@ -129,10 +129,10 @@ public class Scroll extends Item {
     public String getDescription() {
         if (isIdentified) {
             return "Read to cast this scroll.";
-        } // if
+        }
 
         return "You do not yet know what this scroll does.  Read it or use a Scroll of Identify to identify it for future use.";
-    } // getItemDescription
+    }
 
     /**
      * When used, an Entity gains the benefits from the scroll and if the owner
@@ -147,7 +147,7 @@ public class Scroll extends Item {
         
         for (AttributeMod attributeMod : itemAffixes) {
             owner.adjustAttribute(attributeMod.getAttributeId(), attributeMod.getAttributeModifier());
-        } // for
+        }
 
         extraEffects();
         identifyScroll();
@@ -155,7 +155,7 @@ public class Scroll extends Item {
         adjustStackBy(-1);
         
         System.out.println("It was a " + getName() + "!");
-    } // onUse
+    }
 
     /**
      * The compareTo functionality is used to compare two Scrolls to each other
@@ -170,12 +170,12 @@ public class Scroll extends Item {
     public int compareTo(Item item) {
         if (super.compareTo(item) < 0) {
             return -1;
-        } // if
+        }
 
         if (scrollId != ((Scroll) item).getScrollId()) {
             return -1;
-        } // if
+        }
 
         return 0;
-    } // compareTo
-} // Scroll
+    }
+}

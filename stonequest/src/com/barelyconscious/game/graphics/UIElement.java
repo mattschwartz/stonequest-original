@@ -53,24 +53,24 @@ public class UIElement {
         width = img.getWidth();
         height = img.getHeight();
         pixels = img.getRGB(0, 0, width, height, null, 0, width);
-    } // constructor
+    }
 
     public UIElement(int[] pixels, int width, int height) {
         this.pixels = pixels;
         this.width = width;
         this.height = height;
-    } // constructor
+    }
 
     public static UIElement createUIElement(String imageFile) {
         UIElement newElement;
         if (loadedAssets.containsKey(imageFile)) {
             return loadedAssets.get(imageFile);
-        } // if
+        }
 
         newElement = new UIElement(imageFile);
         loadedAssets.put(imageFile, newElement);
         return newElement;
-    } // createUIElement
+    }
 
     /**
      * Loads an image from file location iconFile into a BufferedImage which it
@@ -92,11 +92,11 @@ public class UIElement {
         ConsoleWriter.writeStr("done.");
 
         return img;
-    } // loadImage
+    }
 
     public int getWidth() {
         return width;
-    } // getWidth
+    }
 
     public int getHeight() {
         return height;
@@ -106,7 +106,7 @@ public class UIElement {
         String parts[] = string.split("/");
 
         return parts[parts.length - 1];
-    } // trim
+    }
 
     /**
      * Draw the UIElement to the screen at xStart,yStart
@@ -126,12 +126,12 @@ public class UIElement {
 
                 if (pix == TRANSPARENT_COLOR) {
                     continue;
-                } // if
+                }
 
                 SceneService.INSTANCE.setPixel(pix, xStart + x, yStart + y);
-            } // for
-        } // for
-    } // render
+            }
+        }
+    }
 
     /**
      * Draw the UIElement to the screen at xStart,yStart
@@ -153,16 +153,16 @@ public class UIElement {
 
                 if (pix == TRANSPARENT_COLOR) {
                     continue;
-                } // if
+                }
 
                 g = b = r = Math.max(r, Math.max(g, b));
 
                 pix = (r << 16) + (g << 8) + b;
 
                 SceneService.INSTANCE.setPixel(pix, xStart + x, yStart + y);
-            } // for
-        } // for
-    } // renderGrayscale
+            }
+        }
+    }
 
     /**
      * Draw the UIElement to the screen at xStart,yStart
@@ -183,7 +183,7 @@ public class UIElement {
 
                 if (pix == TRANSPARENT_COLOR) {
                     continue;
-                } // if
+                }
 
                 r = (pix >> 16) & mask;
                 g = (pix >> 8) & mask;
@@ -200,9 +200,9 @@ public class UIElement {
                 pix = (r << 16) + (g << 8) + b;
 
                 SceneService.INSTANCE.setPixel(pix, xStart + x, yStart + y);
-            } // for
-        } // for
-    } // renderHighlighted
+            }
+        }
+    }
 
     /**
      * Draw the UIElement to the screen at xStart,yStart
@@ -223,7 +223,7 @@ public class UIElement {
 
                 if (pix == TRANSPARENT_COLOR) {
                     continue;
-                } // if
+                }
 
                 r = (pix >> 16) & mask;
                 g = (pix >> 8) & mask;
@@ -240,7 +240,7 @@ public class UIElement {
                 pix = (r << 16) + (g << 8) + b;
 
                 SceneService.INSTANCE.setPixel(pix, xStart + x, yStart + y);
-            } // for
-        } // for
-    } // renderShaded
-} // UIElement
+            }
+        }
+    }
+}

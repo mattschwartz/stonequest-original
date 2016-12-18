@@ -58,10 +58,10 @@ public class StringHelper {
     public static String aOrAn(String str) {
         if (vowels.contains(str.charAt(0))) {
             return "an " + str;
-        } // if
+        }
         
         return "a " + str;
-    } // aOrAn
+    }
 
     /**
      * Takes a string and adds a roughly even number of spaces to either side to fit within 20 characters, centering the
@@ -79,16 +79,16 @@ public class StringHelper {
 
         for (int i = 0; i < leftSpaces; i++) {
             newStr += filler;
-        } // for
+        }
 
         newStr += str;
 
         for (int i = 0; i < rightSpaces; i++) {
             newStr += filler;
-        } // for
+        }
 
         return newStr;
-    } // centerString
+    }
 
     /**
      * Aligns text across line with strLeft on the far left and strRight on the far right
@@ -104,10 +104,10 @@ public class StringHelper {
 
         for (int i = 0; i < (lineLength - (strLeft.length() + strRight.length())); i++) {
             newStr += " ";
-        } // for
+        }
 
         return newStr + strRight;
-    } // alignToSides
+    }
 
     public static int intReverse(int num) {
         char[] reversed = ("" + num).toCharArray();
@@ -118,7 +118,7 @@ public class StringHelper {
         }
 
         return Integer.parseInt(reversedInt);
-    } // stringReverse
+    }
 
     /**
      * Takes in an integer,
@@ -130,7 +130,7 @@ public class StringHelper {
     public static String formatNumber(int number) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(number);
-    } // formatNumber
+    }
 
     public static String stringReverse(String str) {
         char[] reversed = str.toCharArray();
@@ -139,7 +139,7 @@ public class StringHelper {
             reversedString += reversed[i];
         }
         return reversedString;
-    } // stringReverse
+    }
 
     /**
      * Generate an array filled with gibberish words. Used for the static naming of unidentified words
@@ -219,7 +219,7 @@ public class StringHelper {
             start = end + 1;
         }
         return broken;
-    } // splitStringAlongWords
+    }
 
     /**
      * Performs a weighted randomized letter generator where the weights are based on each letter's rough percent
@@ -254,17 +254,17 @@ public class StringHelper {
     public static String rarityIdToString(int itemRarity) {
         if (itemRarity == ColorHelper.ITEMRARITY_COMMON_COLOR) {
             return "Common";
-        } // if
+        }
         if (itemRarity == ColorHelper.ITEMRARITY_MAGIC_COLOR) {
             return "Magic";
-        } // if
+        }
         if (itemRarity == ColorHelper.ITEMRARITY_RARE_COLOR) {
             return "Rare";
-        } // if
+        }
         if (itemRarity == ColorHelper.ITEMRARITY_UNIQUE_COLOR) {
             return "Unique";
-        } // if
+        }
         return "Unknown"; // should never be reached
     }
     
-} // StringHelper
+}

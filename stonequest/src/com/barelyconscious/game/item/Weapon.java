@@ -81,7 +81,7 @@ public class Weapon extends Equippable {
         minimumDamageBonus = weaponMinDamage;
         maximumDamageBonus = weaponMaxDamage;
         this.weaponType = weaponType;
-    } // constructor
+    }
 
     /**
      *
@@ -89,7 +89,7 @@ public class Weapon extends Equippable {
      */
     public int getWeaponType() {
         return weaponType;
-    } // getWeaponType
+    }
 
     /**
      *
@@ -97,7 +97,7 @@ public class Weapon extends Equippable {
      */
     public double getMinDamageBonus() {
         return minimumDamageBonus;
-    } // getMinDamageBonus
+    }
 
     /**
      *
@@ -105,12 +105,12 @@ public class Weapon extends Equippable {
      */
     public double getMaxDamageBonus() {
         return maximumDamageBonus;
-    } // getMaxDamageBonus
+    }
 
     @Override
     public String getDescription() {
         return "Hold the pointy end away from you and swing wildly for best results.";
-    } // getDescription
+    }
 
     /**
      * Returns a string representation of the weapon types available for the
@@ -123,14 +123,14 @@ public class Weapon extends Equippable {
     public static String weaponTypeToString(int weaponType) {
         if (weaponType == HEAVY_WEAPON_TYPE) {
             return "heavy";
-        } // if
+        }
         else if (weaponType == QUICK_WEAPON_TYPE) {
             return "quick";
-        } // if
+        }
         else if (weaponType == RETALIATING_WEAPON_TYPE) {
             return "retaliating";
-        } // if
+        }
 
         return "{ERR:UNDEF}";
-    } // weaponTypeToString
-} // Weapon
+    }
+}

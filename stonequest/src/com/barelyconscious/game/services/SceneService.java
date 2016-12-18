@@ -54,8 +54,8 @@ public class SceneService extends JFrame implements Service {
     private SceneService() {
         if (INSTANCE != null) {
             throw new IllegalStateException(this + " has already been instantiated.");
-        } // if
-    } // constructor
+        }
+    }
 
     public void saveScreenshot() {
         String hour, minute, second, day, month, year;
@@ -88,47 +88,47 @@ public class SceneService extends JFrame implements Service {
             System.err.println("Error: " + ex);
         } catch (AWTException ex) {
             System.err.println("Error: " + ex);
-        } // try-catch
-    } // saveScreenshot
+        }
+    }
 
     public Graphics2D getCurrentGraphics() {
         return view == null ? null : view.getGraphics();
-    } // getCurrentGraphics
+    }
 
     @Override
     public int getHeight() {
         return view.height;
-    } // getHeight
+    }
 
     @Override
     public int getWidth() {
         return view.width;
-    } // getWidth
+    }
 
     public void setPixel(int col, int x, int y) {
         view.setPixel(col, x, y);
-    } // setPixel
+    }
 
     public int getPixel(int x, int y) {
         return view.getPixel(x, y);
-    } // getPixel
+    }
 
     public void setMenu(Menu menu) {
         if (currentMenu != null) {
             currentMenu.hide();
-        } // if
+        }
         
         removeComponents();
 
         for (BetterComponent c : menu.getComponents()) {
             addComponent(c);
-        } // for
+        }
         
         menu.resize(getWidth(), getHeight());
         menu.show();
         
         currentMenu = menu;
-    } // setMenu
+    }
 
     /**
      * Add a Component to the current Viewport. Components are interactable
@@ -138,7 +138,7 @@ public class SceneService extends JFrame implements Service {
      */
     public void addComponent(BetterComponent c) {
         view.addComponent(c);
-    } // addComponent
+    }
 
     /**
      * Removes the specified Component from the current Viewport.
@@ -150,15 +150,15 @@ public class SceneService extends JFrame implements Service {
      */
     public boolean removeComponent(BetterComponent c) {
         return view.removeComponent(c);
-    } // removeComponent
+    }
 
     public void setComponentsEnabled(boolean enabled) {
         view.setComponentsEnabled(enabled);
-    } // setComponentsEnabled
+    }
 
     public void removeComponents() {
         view.removeComponents();
-    } // removeComponents
+    }
 
     /**
      * Renders the current Viewport to the window application. This is done
@@ -166,7 +166,7 @@ public class SceneService extends JFrame implements Service {
      */
     public void render() {
         view.render();
-    } // render
+    }
 
     @Override
     public void start() {
@@ -174,7 +174,7 @@ public class SceneService extends JFrame implements Service {
         setApplicationIcons();
         FontService.INSTANCE.start();
         Cursors.setCursor(Cursors.DEFAULT_CURSOR);
-    } // start
+    }
 
     /**
      * Load and set the application icons for both the small and large sizes,
@@ -195,7 +195,7 @@ public class SceneService extends JFrame implements Service {
         icons.add(applicationIcon32);
 
         setIconImages(icons);
-    } // setApplicationIcons
+    }
 
     /**
      * Set other application window properties such as adding the game's
@@ -214,15 +214,15 @@ public class SceneService extends JFrame implements Service {
         setVisible(true);
         inputHandler.addListeners(this);
         setFocusTraversalKeysEnabled(false);
-    } // setApplicationWindowProperties
+    }
 
     @Override
     public void stop() {
-    } // stop
+    }
 
     @Override
     public void restart() {
         stop();
         start();
-    } // restart
-} // SceneService
+    }
+}

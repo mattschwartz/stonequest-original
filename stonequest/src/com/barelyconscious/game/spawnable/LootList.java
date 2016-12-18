@@ -23,19 +23,19 @@ public class LootList {
 //    public LootList() {
 //        size = 100;
 //        list = new Loot[size];
-//    } // constructor
+//    }
 //    
 //    public LootList(int initSize) {
 //        size = initSize;
 //        list = new Loot[size];
-//    } // constructor
+//    }
 //    
 //    public void add(Loot e) {
 //        if (count == size) {
 //            list = extendList();
-//        } // if
+//        }
 //        list[count++] = e;
-//    } // add
+//    }
 //    
 //    /* Returns the value removed */
 //    public Loot remove(int index) {
@@ -43,29 +43,29 @@ public class LootList {
 //        
 //        for (int i = index; i < count; i++) {
 //            list[i] = list[i + 1];
-//        } // for
+//        }
 //        
 //        count--;
 //        return rem; 
-//    } // remove
+//    }
 //    
 //    public Loot remove(Loot e) {
 //        for (int i = 0; i <= count; i++) {
 //            if (list[i] == e) {
 //                return remove(i);
-//            } // if
-//        } // for
+//            }
+//        }
 //        
 //        return null;
-//    } // remove
+//    }
 //    
 //    public int size() {
 //        return count;
-//    } // size
+//    }
 //    
 //    public Loot get(int index) {
 //        return list[index];
-//    } // get
+//    }
 //    
 //    public ArrayList getList(int x, int y) {
 //        ArrayList<Loot> list = new ArrayList();
@@ -73,11 +73,11 @@ public class LootList {
 //        for (Loot e : this.list) {
 //            if ( e != null && (e.getXPos() == x) && (e.getYPos() == y) ) {
 //                list.add(e);
-//            } // if
-//        } // for
+//            }
+//        }
 //        
 //        return list;
-//    } // getList
+//    }
 //    
 //    public ArrayList getListAsItem(int x, int y) {
 //        ArrayList<Item> list = new ArrayList();
@@ -85,11 +85,11 @@ public class LootList {
 //        for (Loot e : this.list) {
 //            if ( e != null && (e.getXPos() == x) && (e.getYPos() == y) ) {
 //                list.add(e.getItem());
-//            } // if
-//        } // for
+//            }
+//        }
 //        
 //        return list;
-//    } // getListAsItem
+//    }
 //    
 //    /* Expensive operation */
 //    public Loot get(int x, int y) {
@@ -99,14 +99,14 @@ public class LootList {
 //            e = list[i];
 //            if ((list[i].getXPos() == x) && (list[i].getYPos() == y))
 //                return e;
-//        } // for
+//        }
 //        
 //        return null;
-//    } // get
+//    }
 //    
 //    private Loot[] extendList() {
 //        Loot[] newList = new Loot[size * 2];
 //        System.arraycopy(list, 0, newList, 0, size);
 //        return newList;
-//    } // extendList
-} // LootList
+//    }
+}

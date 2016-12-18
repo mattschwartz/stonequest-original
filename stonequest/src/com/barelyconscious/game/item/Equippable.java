@@ -39,7 +39,7 @@ public class Equippable extends Item {
     public Equippable(String name, int itemLevel, int sellValue, int slotId, UIElement itemIcon, Entity owner, AttributeMod... itemAffixes) {
         super(name, itemLevel, sellValue, 1, itemIcon, owner, itemAffixes);
         this.slotId = slotId;
-    } // constructor
+    }
 
     /**
      * Equippable items take up one item slot on the player and only one
@@ -49,7 +49,7 @@ public class Equippable extends Item {
      */
     public int getSlotId() {
         return slotId;
-    } // getSlotId
+    }
 
     /**
      *
@@ -58,12 +58,12 @@ public class Equippable extends Item {
      */
     public boolean isEquipped() {
         return equipped;
-    } // isEquipped
+    }
 
     @Override
     public String getDescription() {
         return "You can equip it. What more could you ask from an item?";
-    } // getDescription
+    }
 
     /**
      * When the player interacts with an Equippable item, that item is either
@@ -77,15 +77,15 @@ public class Equippable extends Item {
 
         if (equipped) {
             item = equip();
-        } // if
+        }
         else {
             item = unequip();
-        } // else
+        }
 
         if (item != null) {
             owner.getInventory().addItem(item);
-        } // if
-    } // setEquipped
+        }
+    }
 
     /**
      * Attempts to equip an Equippable item to the entity's person, improving
@@ -96,7 +96,7 @@ public class Equippable extends Item {
 
         if (currentlyEquippedItem != null) {
             currentlyEquippedItem.unequip();
-        } // if
+        }
 
         owner.getInventory().removeItem(this);
         owner.equipItem(this);
@@ -104,10 +104,10 @@ public class Equippable extends Item {
 
         for (AttributeMod mod : itemAffixes) {
             owner.adjustAttribute(mod.getAttributeId(), mod.getAttributeModifier());
-        } // for
+        }
 
         return currentlyEquippedItem;
-    } // equip
+    }
 
     /**
      * Removes the Equippable from the entity's person as well as any benefits
@@ -120,10 +120,10 @@ public class Equippable extends Item {
 
         for (AttributeMod mod : itemAffixes) {
             owner.adjustAttribute(mod.getAttributeId(), -mod.getAttributeModifier());
-        } // for
+        }
 
         return item;
-    } // unequip
+    }
 
     /**
      * Returns the default description associated with the slot the Equippable
@@ -154,8 +154,8 @@ public class Equippable extends Item {
                 return "on feet";
             default:
                 return "{ERR:UNDEF}";
-        } // switch
-    } // armorIdToString
+        }
+    }
 
     /**
      * Returns the item type associated with the supplied slot id.
@@ -186,8 +186,8 @@ public class Equippable extends Item {
                 return "boots";
             default:
                 return "{ERR:UNDEF}";
-        } // switch
-    } // armorIdToString
+        }
+    }
 
     /**
      * The compareTo functionality is used to compare to pieces of armor to each
@@ -200,5 +200,5 @@ public class Equippable extends Item {
     @Override
     public int compareTo(Item item) {
         return -1;
-    } // compareTo
-} // Equippable
+    }
+}

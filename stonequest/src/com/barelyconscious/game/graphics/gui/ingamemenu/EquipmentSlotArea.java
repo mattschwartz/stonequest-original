@@ -43,17 +43,17 @@ public class EquipmentSlotArea extends InventorySlotArea {
 
         super.setRegion(x, y, width, height);
         super.addMouseListener(Interactable.Z_TEXT_AREA);
-    } // constructor
+    }
 
     @Override
     public boolean itemGoesHere(Item item) {
         return item instanceof Equippable && ((Equippable) item).getSlotId() == equipmentSlotId;
-    } // itemGoesHere
+    }
 
     @Override
     public Item getItem() {
         return player.getEquippedItemAt(equipmentSlotId);
-    } // getItem
+    }
 
     @Override
     public Item setItem(Item item) {
@@ -61,36 +61,36 @@ public class EquipmentSlotArea extends InventorySlotArea {
         // function does nothing
         if (item == null || !(item instanceof Equippable)) {
             return null;
-        } // if
+        }
         Item oldItem;
 
         // Item must be same type of equipment slot
         if (((Equippable) item).getSlotId() != equipmentSlotId) {
             return null;
-        } // if
+        }
 
         oldItem = ((Equippable) item).equip();
 
         return oldItem;
-    } // setItem
+    }
 
     @Override
     public Item removeItem() {
         Item item = player.getEquippedItemAt(equipmentSlotId);
         if (item == null) {
             return null;
-        } // if
+        }
 
         return ((Equippable) item).unequip();
-    } // removeItem
+    }
 
     @Override
     public void useItem() {
         Item item = removeItem();
         if (item != null) {
             player.getInventory().addItem(item);
-        } // if
-    } // useItem
+        }
+    }
 
 //    @Override
 //    public void mouseClicked(MouseEvent e) {
@@ -104,15 +104,15 @@ public class EquipmentSlotArea extends InventorySlotArea {
 //                    item = removeItem();
 //                    delegate.putItemOnCursor(item);
 //                    setItem(cursorItem);
-//                } // if
-//            } // if
+//                }
+//            }
 //            else {
 //                item = removeItem();
 //                delegate.putItemOnCursor(item);
-//            } // else
-//        } // if
+//            }
+//        }
 //        else {
 //            useItem();
-//        } // else
-//    } // mouseClicked
-} // EquipmentSlotArea
+//        }
+//    }
+}

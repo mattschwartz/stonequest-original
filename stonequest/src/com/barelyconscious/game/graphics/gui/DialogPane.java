@@ -63,7 +63,7 @@ public class DialogPane extends Interactable implements Component, ButtonAction 
 
         super.setRegion(x, y, width, height);
         super.addMouseListener(Interactable.Z_DIALOG_PANE);
-    } // constructor
+    }
 
     private void determineDimensions() {
         int maxLineWidth = 0;
@@ -76,20 +76,20 @@ public class DialogPane extends Interactable implements Component, ButtonAction 
 
             if (lineLength > maxLineWidth) {
                 maxLineWidth = lineLength;
-            } // if
-        } // for
+            }
+        }
 
         // Find a better way to do this...
 //        width = Font.getMaxStringWidth(lines) + Font.CHAR_WIDTH * 2;
         height = (lines.size() + 1) * FontService.characterHeight + BUTTON_MARGIN + Button.DEFAULT_HEIGHT;
-    } // determineDimensions
+    }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
         moveCursorSet = false;
         Cursors.setCursor(Cursors.DEFAULT_CURSOR);
-    } // mouseReleased
+    }
 
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -100,14 +100,14 @@ public class DialogPane extends Interactable implements Component, ButtonAction 
         if (!moveCursorSet) {
             Cursors.setCursor(Cursors.MOVE_CURSOR);
             moveCursorSet = true;
-        } // if
+        }
 
         newX = Math.min(SceneService.INSTANCE.getWidth() - (width + BORDER_WIDTH * 4), Math.max(BORDER_WIDTH, this.x - diffX));
         newY = Math.min(SceneService.INSTANCE.getHeight() - (BORDER_WIDTH + height + BORDER_WIDTH + TOP_BORDER_HEIGHT + 2 + BORDER_WIDTH + 3), Math.max(TOP_BORDER_HEIGHT, this.y - diffY));
 
         setX(newX);
         setY(newY);
-    } // mouseDragged
+    }
 
     /**
      * The callback function for when one of the buttons are pressed.
@@ -117,22 +117,22 @@ public class DialogPane extends Interactable implements Component, ButtonAction 
     @Override
     public void action(Button buttonPressed) {
         dispose();
-    } // action
+    }
 
     @Override
     public void hoverOverAction(Button caller) {
         // Does nothing
-    } // hoverOverAction
+    }
 
     @Override
     public int getX() {
         return x;
-    } // getX
+    }
 
     @Override
     public int getY() {
         return y;
-    } // getY
+    }
 
     @Override
     public void setX(int newX) {
@@ -143,7 +143,7 @@ public class DialogPane extends Interactable implements Component, ButtonAction 
         cancelButton.setX(x + width - cancelButton.getWidth() - BUTTON_MARGIN);
 
         super.setRegion(x, y, width, height);
-    } // setX
+    }
 
     @Override
     public void setY(int newY) {
@@ -154,27 +154,27 @@ public class DialogPane extends Interactable implements Component, ButtonAction 
         cancelButton.setY(okButton.getY());
 
         super.setRegion(x, y, width, height);
-    } // setY
+    }
 
     public void setWidth(int newWidth) {
         width = newWidth;
         super.setRegion(x, y, width, height);
-    } // setWidth
+    }
 
     @Override
     public int getWidth() {
         return width;
-    } // getWidth
+    }
 
     public void setHeight(int newHeight) {
         height = newHeight;
         super.setRegion(x, y, width, height);
-    } // setHeight
+    }
 
     @Override
     public int getHeight() {
         return height + TOP_BORDER_HEIGHT;
-    } // getHeight
+    }
 
     /**
      * This function is called when the DialogPane is no longer necessary and
@@ -194,12 +194,12 @@ public class DialogPane extends Interactable implements Component, ButtonAction 
         cancelButton = null;
 
         Cursors.setCursor(Cursors.DEFAULT_CURSOR);
-    } // dispose
+    }
 
     @Override
     public boolean shouldRemove() {
         return destroy;
-    } // shouldDestroy
+    }
 
     @Override
     public void render() {
@@ -220,7 +220,7 @@ public class DialogPane extends Interactable implements Component, ButtonAction 
         } catch (NullPointerException ex) {
             System.err.println(" [ERROR]: " + ex);
         }
-    } // render
+    }
 
     private void renderTitle() {
         int borderWidth, borderHeight, borderOffsX, borderOffsY;
@@ -237,5 +237,5 @@ public class DialogPane extends Interactable implements Component, ButtonAction 
 
         ShapeDrawer.fillTransluscentRectangle(borderOffsX, borderOffsY, borderWidth, borderHeight);
         FontService.drawFont(title, TextLogHelper.TEXTLOG_DEFAULT_COLOR, titleOffsX, titleOffsY);
-    } // renderTitle
-} // DialogPane
+    }
+}

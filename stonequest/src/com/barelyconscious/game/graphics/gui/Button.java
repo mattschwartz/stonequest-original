@@ -52,7 +52,7 @@ public class Button extends Interactable implements Component {
      */
     public Button(String title, int startX, int startY, boolean hasBorder) {
         this(title, startX, startY, 50, 25, hasBorder);
-    } // constructor
+    }
 
     /**
      *
@@ -65,7 +65,7 @@ public class Button extends Interactable implements Component {
     public Button(ButtonAction callback, String title, int zLevel, int startX, int startY, boolean hasBorder) {
         this(title, zLevel, startX, startY, 50, 25, hasBorder);
         callbackFunction = callback;
-    } // constructor
+    }
 
     /**
      * Create a new button at the coordinates, (startX, startY) with the width width and height height. None of these values should be below 0 and if
@@ -78,12 +78,12 @@ public class Button extends Interactable implements Component {
      */
     public Button(String title, int startX, int startY, int width, int height, boolean hasBorder) {
         this(title, Interactable.Z_BUTTON, startX, startY, width, height, hasBorder);
-    } // constructor
+    }
     
     public Button(ButtonAction callback, String title, int startX, int startY, int width, int height, boolean hasBorder) {
         this(title, Interactable.Z_BUTTON, startX, startY, width, height, hasBorder);
         callbackFunction = callback;
-    } // constructor
+    }
 
     public Button(String title, int zLevel, int startX, int startY, int width, int height, boolean hasBorder) {
         loadBorder();
@@ -92,7 +92,7 @@ public class Button extends Interactable implements Component {
 
         if (height < 0) {
             height = this.height;
-        } // if
+        }
 
         this.width = width;
         this.height = height;
@@ -102,7 +102,7 @@ public class Button extends Interactable implements Component {
         this.hasBorder = hasBorder;
         super.setRegion(x, y, this.width, this.height);
         super.addMouseListener(zLevel);
-    } // constructor
+    }
     
     public void setSize(float absoluteX, float relativeX, float absoluteY, float relativeY) {
         float xStart = SceneService.INSTANCE.getWidth() * absoluteX;
@@ -114,7 +114,7 @@ public class Button extends Interactable implements Component {
         x = (int)xStart;
         y = (int)yStart;
         super.setRegion(x, y, width, height);
-    } // setSize
+    }
     
     /**
      * Loads the border from disk by locating subimages within the larger image. This results in a single, large disk access instead of multiple,
@@ -123,7 +123,7 @@ public class Button extends Interactable implements Component {
     private void loadBorder() {
         if (borderLeft != null) {
             return;
-        } // if
+        }
         
         int[] pixels;
         int subWidth = 4;
@@ -136,11 +136,11 @@ public class Button extends Interactable implements Component {
         borderRight = new UIElement(pixels, subWidth, subHeight);
         pixels = unparsedImage.getRGB(subWidth * 2, 0, subWidth, subHeight, null, 0, subWidth);
         borderRepeat = new UIElement(pixels, subWidth, subHeight);
-    } // loadBorder
+    }
 
     public void setCallbackFunction(ButtonAction callbackFunction) {
         this.callbackFunction = callbackFunction;
-    } // setCallbackFunction
+    }
 
     @Override
     public void setEnabled(boolean enabled) {
@@ -150,89 +150,89 @@ public class Button extends Interactable implements Component {
 
         if (!enabled && callbackFunction != null) {
             callbackFunction.hoverOverAction(null);
-        } // if
-    } // setEnabled
+        }
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (!isEnabled()) {
             return;
-        } // if
+        }
 
         if (callbackFunction != null && e.getButton() == Interactable.MOUSE_LEFT_CLICK) {
             callbackFunction.action(this);
-        } // if
-    } // mouseClicked
+        }
+    }
 
     @Override
     public void mouseEntered() {
         if (!isEnabled()) {
             return;
-        } // if
+        }
 
         if (callbackFunction != null) {
             callbackFunction.hoverOverAction(this);
-        } // if
+        }
 
         super.mouseEntered();
-    } // mouseEntered
+    }
 
     @Override
     public void mouseExited() {
         if (!isEnabled()) {
             return;
-        } // if
+        }
 
         if (callbackFunction != null) {
             callbackFunction.hoverOverAction(null);
-        } // if
+        }
 
         super.mouseExited();
-    } // mouseExited
+    }
 
     @Override
     public int getX() {
         return x;
-    } // getX
+    }
 
     @Override
     public int getY() {
         return y;
-    } // getY
+    }
 
     @Override
     public void setX(int newX) {
         x = Math.max(0, newX);
 
         super.setRegion(x, y, width, height);
-    } // setX
+    }
 
     @Override
     public void setY(int newY) {
         y = Math.max(0, newY);
 
         super.setRegion(x, y, width, height);
-    } // setY
+    }
 
     public void setHeight(int newHeight) {
         height = newHeight;
         super.setRegion(x, y, this.width, this.height);
-    } // setHeight
+    }
 
     @Override
     public int getHeight() {
         return height;
-    } // getHeight
+    }
 
     public void setWidth(int newWidth) {
         width = newWidth;
         super.setRegion(x, y, this.width, this.height);
-    } // setWidth
+    }
 
     @Override
     public int getWidth() {
         return width;
-    } // getWidth
+    }
 
     /**
      * This function is called when the DialogPane is no longer necessary and should be removed as determined by the JRE.
@@ -241,12 +241,12 @@ public class Button extends Interactable implements Component {
     public void dispose() {
         destroy = true;
         removeMouseListener();
-    } // dispose
+    }
 
     @Override
     public boolean shouldRemove() {
         return destroy;
-    } // shouldDestroy
+    }
 
     @Override
     public void render() {
@@ -256,18 +256,18 @@ public class Button extends Interactable implements Component {
         if (isMouseInFocus()) {
             renderHighlighted();
             return;
-        } // if
+        }
 
         if (isMouseButtonDown()) {
             xOffs++;
             yOffs++;
-        } // if
+        }
 
         borderLeft.render(xOffs, yOffs);
 
         for (int i = xOffs + borderLeft.getWidth(); i < xOffs + (width - borderRight.getWidth()); i += borderRepeat.getWidth()) {
             borderRepeat.render(i, yOffs);
-        } // for
+        }
 
         borderRight.render(xOffs + width - borderRight.getWidth(), yOffs);
 
@@ -275,8 +275,8 @@ public class Button extends Interactable implements Component {
 
         if (hasBorder) {
             renderBorder();
-        } // if
-    } // render
+        }
+    }
 
     /**
      * If the user is hovering over the button, the border is highlighted to help provide visual feedback to him/her.
@@ -290,24 +290,24 @@ public class Button extends Interactable implements Component {
         if (isMouseButtonDown()) {
             xOffs++;
             yOffs++;
-        } // if
+        }
 
         borderLeft.renderHighlighted(xOffs, yOffs);
 
         for (int i = xOffs + borderLeft.getWidth(); i < xOffs + (width - borderRight.getWidth()); i += borderRepeat.getWidth()) {
             borderRepeat.renderHighlighted(i, yOffs);
-        } // for
+        }
 
         borderRight.renderHighlighted(xOffs + width - borderRight.getWidth(), yOffs);
 
         if (title != null && !(title.equals(""))) {
             renderText();
-        } // if
+        }
 
         if (hasBorder) {
             renderBorder();
-        } // if
-    } // renderHighlighted
+        }
+    }
 
     protected void renderText() {
         int offsX = x + MARGIN + (width - MARGIN * 2 - FontService.getStringWidth(title)) / 2;
@@ -317,11 +317,11 @@ public class Button extends Interactable implements Component {
             offsX++;
             offsY++;
             FontService.drawFont(title, TextLogHelper.TEXTLOG_DEFAULT_COLOR, offsX, offsY);
-        } // if
+        }
         else {
             FontService.drawFont(title, Color.white, offsX, offsY);
-        } // else
-    } // renderText
+        }
+    }
 
     private void renderBorder() {
         int xOffs = x;
@@ -335,18 +335,18 @@ public class Button extends Interactable implements Component {
 
             ShapeDrawer.drawLine(borderHighlightColor, xOffs + width, yOffs, xOffs + width, yOffs + height);
             ShapeDrawer.drawLine(borderHighlightColor, xOffs, yOffs + height, xOffs + width, yOffs + height);
-        } // if
+        }
         else {
             ShapeDrawer.drawLine(borderHighlightColor, xOffs - 1, yOffs - 1, xOffs - 1, yOffs + height + 1);
             ShapeDrawer.drawLine(borderHighlightColor, xOffs, yOffs - 1, xOffs + width, yOffs - 1);
 
             ShapeDrawer.drawLine(borderShadowColor, xOffs + width, yOffs, xOffs + width, yOffs + height);
             ShapeDrawer.drawLine(borderShadowColor, xOffs, yOffs + height, xOffs + width, yOffs + height);
-        } // else
-    } // renderButton
+        }
+    }
 
     @Override
     public String toString() {
         return "[Button] Title: " + title;
-    } // toString
-} // Button
+    }
+}

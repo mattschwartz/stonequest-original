@@ -27,7 +27,7 @@ public class ShapeDrawer {
         g.setColor(c);
         g.drawRect(xStart, yStart, width, height);
         g.setColor(oldColor);
-    } // drawRectangle
+    }
 
     public static void fillRectangle(Color c, int xStart, int yStart, int width, int height) {
         Graphics2D g = SceneService.INSTANCE.getCurrentGraphics();
@@ -35,7 +35,7 @@ public class ShapeDrawer {
         g.setColor(c);
         g.fillRect(xStart, yStart, width, height);
         g.setColor(oldColor);
-    } // drawRectangle
+    }
 
     public static void drawLine(Color c, int xStart, int yStart, int xEnd, int yEnd) {
         Graphics2D g = SceneService.INSTANCE.getCurrentGraphics();
@@ -43,7 +43,7 @@ public class ShapeDrawer {
         g.setColor(c);
         g.drawLine(xStart, yStart, xEnd, yEnd);
         g.setColor(oldColor);
-    } // drawRectangle
+    }
 
     public static void fillTransluscentRectangle(int xStart, int yStart, int w, int h) {
         int pix;
@@ -64,7 +64,7 @@ public class ShapeDrawer {
 //                b = b > 255 ? 255 : b;
                 pix = (r << 16) + (g << 8) + b;
                 SceneService.INSTANCE.setPixel(pix, x, y);
-            } // for
-        } // for
-    } // fillTransluscentRectangle
+            }
+        }
+    }
 }

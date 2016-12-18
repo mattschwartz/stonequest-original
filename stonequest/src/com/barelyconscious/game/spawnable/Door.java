@@ -25,5 +25,5 @@ public class Door extends Doodad {
     public Door(String displayName, int x, int y, int lockId, UIElement initialTile, UIElement spentTile) {
         super(displayName, x, y, true, initialTile, spentTile);
         this.lockId = lockId;
-    } // constructor
-} // Door
+    }
+}

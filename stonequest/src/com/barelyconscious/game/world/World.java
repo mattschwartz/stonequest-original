@@ -25,10 +25,10 @@ public class World {
     private World() {
         if (INSTANCE != null) {
             throw new IllegalStateException(this + " has already been instantiated.");
-        } // if
-    } // constructor
+        }
+    }
 
     public void setCurrentPlayer(Player player) {
         this.player = player;
-    } // setCurrentPlayer
-} // World
+    }
+}

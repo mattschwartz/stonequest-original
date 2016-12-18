@@ -49,12 +49,12 @@ public class Player extends Entity {
 
         // Set the player's starting attributes
         setStartingAttributeValues();
-    } // constructor
+    }
     
     @Override
     public LineElement getDescription() {
         return new LineElement("Lookin' good.");
-    } // getDescription
+    }
     
     /**
      * Sets the player's starting attributes to the level one for every
@@ -66,8 +66,8 @@ public class Player extends Entity {
 
         for (int i = 1; i < NUM_ATTRIBUTES; i++) {
             attributes[i] = 1;
-        } // for
-    } // setStartingAttributeValues
+        }
+    }
 
     /**
      *
@@ -76,7 +76,7 @@ public class Player extends Entity {
      */
     public boolean isScrollIdentified(int scrollId) {
         return identifiedScrolls.contains(scrollId);
-    } // isScrollIdentified
+    }
 
     /**
      * If a Scroll has not been previously identified by the player, add it to
@@ -87,8 +87,8 @@ public class Player extends Entity {
     public void read(Scroll scroll) {
         if (!identifiedScrolls.contains(scroll.getScrollId())) {
             identifiedScrolls.add(scroll.getScrollId());
-        } // if
-    } // read
+        }
+    }
 
     /**
      * Adds amount worth of experience to the player's current pool of
@@ -102,11 +102,11 @@ public class Player extends Entity {
             amount = getRequiredExperience() - currentExperience;
             currentExperience = amount;
             levelUp();
-        } // if
+        }
         else {
             currentExperience += amount;
-        } // else
-    } // adjustExperienceBy
+        }
+    }
 
     /**
      *
@@ -115,11 +115,11 @@ public class Player extends Entity {
      */
     public int getCurrentExperience() {
         return currentExperience;
-    } // getCurrentExperience
+    }
 
     public int getRequiredExperience() {
         return (int) (Math.ceil((level + 1) * Math.sqrt(Math.pow((level + 1), 3))));
-    } // getRequiredExperience
+    }
 
     /**
      * Levels up the player and performs any necessary operations when that
@@ -128,7 +128,7 @@ public class Player extends Entity {
      */
     private void levelUp() {
         currentExperience = 0;
-    } // levelUp
+    }
 
     /**
      * Temporary? method that allows the user to click a location on the screen
@@ -145,20 +145,20 @@ public class Player extends Entity {
     public void interact(Sprite interactee) {
         // if hostile sprite
         if (interactee.getFaction().isHostile(this)) {
-        } // if
+        }
 
         if (interactee instanceof Entity) {
             TextLog.INSTANCE.appendDamageMessage(this, (Entity)interactee, 15, EntityHelper.PHYSICAL_DAMAGE_TYPE);
             ((Entity) interactee).changeHealthBy(-15);
         }
 
-    } // interact
+    }
 
     @Override
     public void render(int xOffs, int yOffs) {
         DEFAULT_PLAYER_ICON.render(xOffs, yOffs);
-    } // render
-} // Player
+    }
+}
 
 class PathFinder implements Runnable {
 
@@ -190,7 +190,7 @@ class PathFinder implements Runnable {
                         return;
                     }
                     entity.moveRight();
-                } // if
+                }
                 else {
                     if (!World.INSTANCE.canMove(entity.getX() - 1, entity.getY())) {
                         entity.moveLeft();
@@ -198,14 +198,14 @@ class PathFinder implements Runnable {
                         return;
                     }
                     entity.moveLeft();
-                } // else
+                }
 
                 World.INSTANCE.tick();
                 Thread.sleep(30);
-            } // for
+            }
             catch (InterruptedException ex) {
             }
-        } // for
+        }
 
 
         for (int y = 0; y < Math.abs(deltaY); y++) {
@@ -229,9 +229,9 @@ class PathFinder implements Runnable {
                 World.INSTANCE.tick();
 
                 Thread.sleep(30);
-            } // for
+            }
             catch (InterruptedException ex) {
             }
-        } // for
+        }
     }
 }

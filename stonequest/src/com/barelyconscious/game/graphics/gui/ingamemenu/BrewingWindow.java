@@ -54,14 +54,14 @@ public class BrewingWindow extends Window implements ButtonAction {
         super.setRegion(getX() + MIX_BUTTON_OFFS_X, getY() + MIX_BUTTON_OFFS_Y, getWidth(), getHeight());
         super.addMouseListener(Interactable.Z_BACKGROUND);
         hide();
-    } // constructor
+    }
     
     private void createButtons() {
         closeWindowButton = new CloseWindowButton(this, WindowManager.INTERFACE_WINDOW_CLOSE_BUTTON);
 
         brewPotionButton = new Button("Mix", getY() + MIX_BUTTON_OFFS_X, getY() + MIX_BUTTON_OFFS_Y, MIX_BUTTON_WIDTH, MIX_BUTTON_HEIGHT, true);
         brewPotionButton.setCallbackFunction(this);
-    } // createButtons
+    }
 
     /**
      * Resize elements as necessary when the application is resized.
@@ -82,22 +82,22 @@ public class BrewingWindow extends Window implements ButtonAction {
         resizeItemSlots();
 
         super.setRegion(getX(), getY(), getWidth(), getHeight());
-    } // resize
+    }
 
     private void setComponentsEnabled(boolean enabled) {
         for (int i = 0; i < NUM_INGREDIENT_SLOTS; i++) {
             ingredientSlots[i].setEnabled(enabled);
-        } // for
+        }
         
         resultSlot.setEnabled(enabled);
-    } // setComponentsEnabled
+    }
 
     private void createItemSlots() {
         for (int i = 0; i < NUM_INGREDIENT_SLOTS; i++) {
             ingredientSlots[i] = new BrewingSlotArea(cauldron, i);
-        } // for
+        }
         resultSlot = new BrewingSlotArea(cauldron, 5);
-    } // createItemSlots
+    }
 
     private void resizeItemSlots() {
         int xOffs = getX() + INGREDIENT_OFFS_X;
@@ -109,7 +109,7 @@ public class BrewingWindow extends Window implements ButtonAction {
         ingredientSlots[3].resize(xOffs + INGREDIENT_STEP_X, yOffs + INGREDIENT_STEP_Y);
 
         resultSlot.resize(getX() + RESULT_OFFS_X, getY() + RESULT_OFFS_Y);
-    } // resizeItemSlots
+    }
 
     @Override
     public void show() {
@@ -119,7 +119,7 @@ public class BrewingWindow extends Window implements ButtonAction {
         brewPotionButton.setEnabled(true);
         setComponentsEnabled(true);
         super.addMouseListener(Interactable.Z_BACKGROUND);
-    } // show
+    }
 
     @Override
     public final void hide() {
@@ -134,7 +134,7 @@ public class BrewingWindow extends Window implements ButtonAction {
         ingredientSlots[2].onHide();
         ingredientSlots[3].onHide();
         resultSlot.onHide();
-    } // hide
+    }
 
     @Override
     public void action(Button buttonPressed) {
@@ -145,36 +145,36 @@ public class BrewingWindow extends Window implements ButtonAction {
 
             if (buttonPressed == windowButton) {
                 hoverOverAction(buttonPressed);
-            } // if
-        } // if
+            }
+        }
         else {
             item = cauldron.brew();
             resultSlot.setItem(item);
-        } // else
-    } // action
+        }
+    }
 
     @Override
     public void hoverOverAction(Button caller) {
         if (caller == null) {
             WindowManager.INSTANCE.clearTooltipText();
             return;
-        } // if
+        }
 
         if (caller == windowButton) {
             if (isVisible()) {
                 WindowManager.INSTANCE.setTooltipText("Click to close\nthe Brewing\nWindow");
-            } // if
+            }
             else {
                 WindowManager.INSTANCE.setTooltipText("Click to open\nthe Brewing\nWindow");
-            } // else
-        } // if
+            }
+        }
         else if (caller == closeWindowButton) {
             WindowManager.INSTANCE.setTooltipText("Click to close\nthe Brewing\nWindow");
-        } // else if
+        }
         else if (caller == brewPotionButton) {
             WindowManager.INSTANCE.setTooltipText("Click to mix the\ningredients into\na potion");
-        } // else if
-    } // hoverOverAction
+        }
+    }
 
     @Override
     public void render() {
@@ -182,7 +182,7 @@ public class BrewingWindow extends Window implements ButtonAction {
 
         if (!isVisible()) {
             return;
-        } // if
+        }
 
         animationY = Math.min(animationY + (int) (SceneService.INSTANCE.getHeight() * FALL_RATE), getY());
 
@@ -192,14 +192,14 @@ public class BrewingWindow extends Window implements ButtonAction {
             closeWindowButton.render();
             brewPotionButton.render();
             renderItemSlots();
-        } // if
-    } // render
+        }
+    }
 
     private void renderItemSlots() {
         for (int i = 0; i < NUM_INGREDIENT_SLOTS; i++) {
             ingredientSlots[i].render();
-        } // for
+        }
 
         resultSlot.render();
-    } // renderItemSlots
-} // BrewingWindow
+    }
+}

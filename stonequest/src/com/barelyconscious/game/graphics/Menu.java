@@ -27,25 +27,25 @@ public abstract class Menu {
     public void resize(int width, int height) {
         this.width = width;
         this.height = height;
-    } // resize
+    }
     
     public void show() {
         for (BetterComponent c : components) {
             c.setEnabled(true);
-        } // for
-    } // show
+        }
+    }
     
     public void hide() {
         for (BetterComponent c : components) {
             c.setEnabled(false);
-        } // for
-    } // hide
+        }
+    }
 
     public void addComponent(BetterComponent c) {
         components.add(c);
-    } // addComponent
+    }
 
     public List<BetterComponent> getComponents() {
         return components;
-    } // getComponents
-} // Menu
+    }
+}

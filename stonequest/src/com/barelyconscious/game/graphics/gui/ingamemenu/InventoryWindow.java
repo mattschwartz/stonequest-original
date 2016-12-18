@@ -79,11 +79,11 @@ public class InventoryWindow extends Window implements ButtonAction {
         super.setRegion(getX(), getY(), getWidth(), getHeight());
         super.addMouseListener(Interactable.Z_BACKGROUND);
         hide();
-    } // constructor
+    }
     
     private void createButtons() {
         closeWindowButton = new CloseWindowButton(this, WindowManager.INTERFACE_WINDOW_CLOSE_BUTTON);
-    } // createButtons
+    }
 
     private void createItemSlots() {
         itemSlots = new InventorySlotArea[NUM_INVENTORY_SLOTS];
@@ -91,12 +91,12 @@ public class InventoryWindow extends Window implements ButtonAction {
 
         for (int i = 0; i < NUM_INVENTORY_SLOTS; i++) {
             itemSlots[i] = new InventorySlotArea(World.INSTANCE.getPlayer().getInventory(), i, -1, -1);
-        } // for
+        }
 
         for (int i = 0; i < NUM_EQUIPMENT_SLOTS; i++) {
             equipmentSlots[i] = new EquipmentSlotArea(World.INSTANCE.getPlayer(), i, -1, -1);
-        } // for
-    } // createItemSlots
+        }
+    }
 
     /**
      * Resize elements as necessary when the application is resized.
@@ -123,7 +123,7 @@ public class InventoryWindow extends Window implements ButtonAction {
         resizeItemSlots();
 
         super.setRegion(getX(), getY(), getWidth(), getHeight());
-    } // resize
+    }
 
     private void resizeItemSlots() {
         int i = 0;
@@ -134,8 +134,8 @@ public class InventoryWindow extends Window implements ButtonAction {
         for (int y = 0; y < INVENTORY_SLOT_ROWS; y++) {
             for (int x = 0; x < INVENTORY_SLOT_COLS; x++) {
                 itemSlots[i++].resize(xOffs + INVENTORY_SLOT_STEP_X * x, yOffs + INVENTORY_SLOT_STEP_Y * y);
-            } // for
-        } // for
+            }
+        }
 
         // Set equipment item slot values
         equipmentSlots[Entity.HELMET_SLOT_ID].resize(getX() + EQUIPMENT_SLOT_HELMET_OFFS_X, getY() + EQUIPMENT_SLOT_HELMET_OFFS_Y);
@@ -149,32 +149,32 @@ public class InventoryWindow extends Window implements ButtonAction {
         equipmentSlots[Entity.MAIN_HAND_SLOT_ID].resize(getX() + EQUIPMENT_SLOT_MAIN_HAND_OFFS_X, getY() + EQUIPMENT_SLOT_MAIN_HAND_OFFS_Y);
         equipmentSlots[Entity.OFF_HAND_SLOT_ID].resize(getX() + EQUIPMENT_SLOT_OFF_HAND_OFFS_X, getY() + EQUIPMENT_SLOT_OFF_HAND_OFFS_Y);
 
-    } // resizeItemSlots
+    }
 
     private void setComponentsEnabled(boolean enabled) {
         for (int slot = 0; slot < NUM_INVENTORY_SLOTS; slot++) {
             itemSlots[slot].setEnabled(enabled);
-        } // for
+        }
 
         for (int slot = 0; slot < NUM_EQUIPMENT_SLOTS; slot++) {
             equipmentSlots[slot].setEnabled(enabled);
-        } // for
+        }
 
         closeWindowButton.setEnabled(enabled);
-    } // setComponentsEnabled
+    }
 
     @Override
     public void show() {
         if (WindowManager.CHARACTER_WINDOW.isVisible()) {
             WindowManager.CHARACTER_WINDOW.hide();
-        } // if
+        }
 
         super.show();
         animationY = 0 - INVENTORY_WINDOW_BACKGROUND.getHeight();
         setComponentsEnabled(true);
         setEnabled(true);
         super.addMouseListener(Interactable.Z_BACKGROUND);
-    } // show
+    }
 
     @Override
     public final void hide() {
@@ -182,7 +182,7 @@ public class InventoryWindow extends Window implements ButtonAction {
         setComponentsEnabled(false);
         setEnabled(false);
         super.removeMouseListener();
-    } // hide
+    }
 
     @Override
     public void action(Button buttonPressed) {
@@ -191,29 +191,29 @@ public class InventoryWindow extends Window implements ButtonAction {
 
             if (buttonPressed == windowButton) {
                 hoverOverAction(buttonPressed);
-            } // if
-        } // if
-    } // action
+            }
+        }
+    }
 
     @Override
     public void hoverOverAction(Button caller) {
         if (caller == null) {
             WindowManager.INSTANCE.clearTooltipText();
             return;
-        } // if
+        }
 
         if (caller == windowButton) {
             if (isVisible()) {
                 WindowManager.INSTANCE.setTooltipText("Click to close\nthe Inventory\nWindow");
-            } // if
+            }
             else {
                 WindowManager.INSTANCE.setTooltipText("Click to open\nthe Inventory\nWindow");
-            } // else
-        } // if
+            }
+        }
         else if (caller == closeWindowButton) {
             WindowManager.INSTANCE.setTooltipText("Click to close\nthe Inventory\nWindow");
-        } // else if
-    } // hoverOverAction
+        }
+    }
 
     @Override
     public void render() {
@@ -222,7 +222,7 @@ public class InventoryWindow extends Window implements ButtonAction {
 
         if (!isVisible()) {
             return;
-        } // if
+        }
 
         animationY = Math.min(animationY + (int) (SceneService.INSTANCE.getHeight() * FALL_RATE), getY());
 
@@ -235,16 +235,16 @@ public class InventoryWindow extends Window implements ButtonAction {
             playerGold = World.INSTANCE.getPlayer().getInventory().getGold() + " g";
             FontService.drawFont(playerGold, ColorHelper.PLAYER_GOLD_TEXT_COLOR, null, getX() + goldTextOffsX + goldTextAreaWidth - FontService.getStringWidth(playerGold), getY() + goldTextOffsY);
             renderItemSlots();
-        } // if
-    } // render
+        }
+    }
 
     private void renderItemSlots() {
         for (int slot = 0; slot < NUM_INVENTORY_SLOTS; slot++) {
             itemSlots[slot].render();
-        } // for
+        }
 
         for (int i = 0; i < NUM_EQUIPMENT_SLOTS; i++) {
             equipmentSlots[i].render();
-        } // for
-    } // renderItemSlots
-} // InventoryWindow
+        }
+    }
+}

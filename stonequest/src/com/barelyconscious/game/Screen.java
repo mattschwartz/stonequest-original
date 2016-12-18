@@ -74,11 +74,11 @@ public class Screen extends Canvas {
 //        if (INSTANCE != null) {
 //            throw new IllegalStateException("Only one screen per runtime.");
 //        }
-//    } // constructor
+//    }
 //
 //    public void toggleUI() {
 //        showUI = !showUI;
-//    } // toggleUI
+//    }
 //
 //    public void saveScreenshot() {
 //        String hour, minute, second, day, month, year;
@@ -111,8 +111,8 @@ public class Screen extends Canvas {
 //            System.err.println("Error: " + ex);
 //        } catch (AWTException ex) {
 //            System.err.println("Error: " + ex);
-//        } // try-catch
-//    } // if
+//        }
+//    }
 //
 //    /**
 //     * This function should be called every time the game window's sized is
@@ -126,7 +126,7 @@ public class Screen extends Canvas {
 //        height = h;
 //        view = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 //        pixels = ((DataBufferInt) view.getRaster().getDataBuffer()).getData();
-//    } // resize
+//    }
 //
 //    /**
 //     *
@@ -134,7 +134,7 @@ public class Screen extends Canvas {
 //     */
 //    public int getVisibleWidth() {
 //        return getWidth();
-//    } // getPixelWidth
+//    }
 //
 //    /**
 //     *
@@ -142,7 +142,7 @@ public class Screen extends Canvas {
 //     */
 //    public int getVisibleHeight() {
 //        return getHeight();
-//    } // getPixelHeight
+//    }
 //
 //    /**
 //     * Sets the color of the pixel at x, y to pix.
@@ -154,10 +154,10 @@ public class Screen extends Canvas {
 //    public void setPixel(int color, int x, int y) {
 //        if (y < 0 || x + y * width >= pixels.length || x >= width) {
 //            return;
-//        } // if
+//        }
 //
 //        pixels[x + y * width] = color;
-//    } // setPixel
+//    }
 //
 //    /**
 //     *
@@ -169,7 +169,7 @@ public class Screen extends Canvas {
 //     */
 //    public int getPixel(int x, int y) {
 //        return pixels[x + y * width];
-//    } // getPixel
+//    }
 //
 //    /**
 //     * Draw a single pixel width rectangular box starting at xStart,yStart with
@@ -184,7 +184,7 @@ public class Screen extends Canvas {
 //     */
 //    public void drawRectangle(int color, int xStart, int yStart, int w, int h) {
 //        drawRectangle(new Color(color), xStart, yStart, w, h);
-//    } // drawRectangle
+//    }
 //
 //    /**
 //     * Draw a single pixel width rectangular box starting at xStart,yStart with
@@ -202,7 +202,7 @@ public class Screen extends Canvas {
 //        g.setColor(color);
 //        g.drawRect(xStart, yStart, w - 1, h - 1);
 //        g.dispose();
-//    } // drawRectangle
+//    }
 //
 //    public void fillTransluscentRectangle(int xStart, int yStart, int w, int h) {
 //        int pix;
@@ -223,9 +223,9 @@ public class Screen extends Canvas {
 ////                b = b > 255 ? 255 : b;
 //                pix = (r << 16) + (g << 8) + b;
 //                pixels[x + y * width] = pix;
-//            } // for
-//        } // for
-//    } // fillTransluscentRectangle
+//            }
+//        }
+//    }
 //
 //    public void fillTransluscentRectangle__2_electricboogaloo(int mask, int xStart, int yStart, int w, int h) {
 //        int pix;
@@ -271,9 +271,9 @@ public class Screen extends Canvas {
 ////                b = b > 255 ? 255 : b;
 //                pix = (r << 16) + (g << 8) + b;
 //                pixels[x + y * width] = pix;
-//            } // for
-//        } // for
-//    } // fillTransluscentRectangle
+//            }
+//        }
+//    }
 //
 //    /**
 //     * Draws a line from [
@@ -293,7 +293,7 @@ public class Screen extends Canvas {
 //        g.setColor(new Color(color));
 //        g.drawLine(xStart, yStart, xEnd, yEnd);
 //        g.dispose();
-//    } // drawLine
+//    }
 //
 //    /**
 //     * Draw a filled rectangular box starting at
@@ -314,7 +314,7 @@ public class Screen extends Canvas {
 //        g.setColor(new Color(pix));
 //        g.fillRect(xStart, yStart, w, h);
 //        g.dispose();
-//    } // fillRectangle
+//    }
 //
 //    /**
 //     * Draw a filled rectangular box starting at
@@ -335,7 +335,7 @@ public class Screen extends Canvas {
 //        g.setColor(color);
 //        g.fillRect(xStart, yStart, w, h);
 //        g.dispose();
-//    } // fillRectangle
+//    }
 //
 //    /**
 //     * Scale an image with data stored in 2D array,
@@ -356,12 +356,12 @@ public class Screen extends Canvas {
 //            for (int y = 0; y < pixToScale[x].length; y++) {
 //                if (pixToScale[x][y] == new Color(255, 0, 255).getRGB()) {
 //                    continue;
-//                } // if
+//                }
 //
 //                fillRectangle(pixToScale[x][y], (x * factor) + xStart, (y * factor) + yStart, factor, factor);
-//            } // for
-//        } // for
-//    } // scale
+//            }
+//        }
+//    }
 //
 //    /**
 //     * Resets the pixels on the screen to the BG color.
@@ -369,25 +369,25 @@ public class Screen extends Canvas {
 //    public void clear() {
 //        for (int i = 0; i < pixels.length; i++) {
 //            pixels[i] = Color.black.getRGB();
-//        } // for
-//    } // clear
+//        }
+//    }
 //
 //    public void addBackgroundComponent(Component c) {
 //        componentsBackground.add(c);
-//    } // addBackgroundComponent
+//    }
 //
 //    public void addForegroundComponent(Component c) {
 //        componentsForeground.add(c);
-//    } // addForegroundComponent
+//    }
 //
 //    public void addAlwaysOnTopComponent(Component c) {
 //        componentsAlwaysOnTop.add(c);
-//    } // addAlwaysOnTopComponent
+//    }
 //
 //    @Override
 //    public Graphics2D getGraphics() {
 //        return view.createGraphics();
-//    } // getGraphics
+//    }
 //
 //    /**
 //     * Draws everything to the screen that needs to be drawn. Some of the code
@@ -401,7 +401,7 @@ public class Screen extends Canvas {
 //            createBufferStrategy(3);
 //            requestFocus();
 //            return;
-//        } // if
+//        }
 //
 ////        animation();
 //        renderComponents();
@@ -417,7 +417,7 @@ public class Screen extends Canvas {
 //
 //        g.dispose();
 //        bs.show();
-//    } // renderSprites
+//    }
 //
 //    private void renderComponents() {
 //        Component component;
@@ -430,11 +430,11 @@ public class Screen extends Canvas {
 //                componentsBackground.remove(component);
 //                i--;
 //                continue;
-//            } // if
+//            }
 //            else {
 //                component.render(this);
-//            } // if
-//        } // for
+//            }
+//        }
 //
 //        for (int i = 0; i < componentsForeground.size(); i++) {
 //            component = componentsForeground.get(i);
@@ -443,11 +443,11 @@ public class Screen extends Canvas {
 //                componentsForeground.remove(component);
 //                i--;
 //                continue;
-//            } // if
+//            }
 //            else {
 //                component.render(this);
-//            } // if
-//        } // for
+//            }
+//        }
 //
 //        for (int i = 0; i < componentsAlwaysOnTop.size(); i++) {
 //            component = componentsAlwaysOnTop.get(i);
@@ -456,10 +456,10 @@ public class Screen extends Canvas {
 //                componentsAlwaysOnTop.remove(component);
 //                i--;
 //                continue;
-//            } // if
+//            }
 //            else {
 //                component.render(this);
-//            } // if
-//        } // for
-//    } // renderComponents
-} // Screen
+//            }
+//        }
+//    }
+}

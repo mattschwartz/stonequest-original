@@ -44,7 +44,7 @@ public class ScrollBar {
         this.height = height;
         viewableLines = lineHeight;
         topLineNumber = 0;
-    } // constructor
+    }
 
     /**
      * Loads the border from disk by locating subimages within the larger image. This results in a single, large disk access instead of multiple,
@@ -60,20 +60,20 @@ public class ScrollBar {
         barTop = new UIElement(pixels, subWidth, subHeight);
         pixels = unparsedImage.getRGB(subWidth, 0, subWidth, subHeight, null, 0, subWidth);
         barBottom = new UIElement(pixels, subWidth, subHeight);
-    } // loadBorder
+    }
 
     public void setLineCount(int lineCount) {
         this.lineCount = lineCount;
-    } // setLineCount
+    }
 
     public void setTopLine(int topLine) {
         topLineNumber = topLine;
-    } // setTopLine
+    }
 
     public void setLineCounts(int newLineCount, int topLine) {
         lineCount = newLineCount;
         topLineNumber = topLine;
-    } // setLineCounts
+    }
 
     /**
      * @return the empty space between the total height of the scroll bar and
@@ -82,41 +82,41 @@ public class ScrollBar {
     private int getEmptySpace() {
         if (lineCount <= viewableLines) {
             return height;
-        } // if
+        }
         
         return Math.min(height, height - (int) (height * ((lineCount - viewableLines) * 1.0 / lineCount)));
-    } // getEmptySpace
+    }
     
     private int getScrollBarOffset() {
         return y + Math.max(0, (int) ((topLineNumber * 1.0 / lineCount) * height));
-    } // getScrollBarOffset
+    }
     
     public void setX(int newX) {
         x = Math.max(0, newX);
-    } // setX
+    }
     
     public void setY(int newY) {
         y = Math.max(0, newY);
-    } // setY
+    }
     
     public void setHeight(int newHeight) {
         height = newHeight;
-    } // setHeight
+    }
 
     public void render() {
         if (lineCount <= viewableLines) {
             return;
-        } // if
+        }
         
         renderBackground();
         renderScrollBar(getScrollBarOffset(), getEmptySpace());
-    } // render
+    }
 
     private void renderBackground() {
         // Render background
         ShapeDrawer.fillRectangle(backgroundColor, x, y, SCROLLBAR_WIDTH, height);
         ShapeDrawer.fillRectangle(backgroundColorHighlight, x + SCROLLBAR_WIDTH - 1, y, 1, height);
-    } // renderBackground
+    }
 
     private void renderScrollBar(int yStart, int height) {
         // Render middle part of the scroll bar
@@ -129,5 +129,5 @@ public class ScrollBar {
 
         // Render bottom of scroll bar
         barBottom.render(x, yStart + height - barBottom.getHeight());
-    } // renderScrollBar
-} // ScrollBar
+    }
+}

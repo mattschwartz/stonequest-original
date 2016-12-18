@@ -15,4 +15,4 @@ package com.barelyconscious.game.file;
 
 public class ResourceLoader {
 
-} // ResourceLoader
+}

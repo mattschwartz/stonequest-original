@@ -22,7 +22,7 @@ public class SalvageWindow extends Window implements ButtonAction {
     protected InterfaceWindowButton windowButton;
     
     public SalvageWindow() {
-    } // constructor
+    }
     
     /**
      * Resize elements as necessary when the application is resized.
@@ -37,25 +37,25 @@ public class SalvageWindow extends Window implements ButtonAction {
          * showing of the Upgrade Item window */
         windowButton.setX(windowButtonX);
         windowButton.setY(windowButtonY);
-    } // resize
+    }
 
     @Override
     public void action(Button buttonPressed) {
 //        InterfaceDelegate.getInstance().setSalvageActive(!InterfaceDelegate.getInstance().isSalvageActive);
-    } // action
+    }
 
     @Override
     public void hoverOverAction(Button caller) {
         if (caller == null) {
             WindowManager.INSTANCE.clearTooltipText();
             return;
-        } // if
+        }
 
         WindowManager.INSTANCE.setTooltipText("Click to salvage\nan item");
-    } // hoverOverAction
+    }
 
     @Override
     public void render() {
         windowButton.render();
-    } // render
-} // SalvageWindow
+    }
+}

@@ -47,7 +47,7 @@ public class Tile {
         this.image = image;
         this.blocksPathing = blocksPathing;
         this.blocksVision = blocksVision;
-    } // constructor
+    }
 
     /**
      * Creates a Tile with the following parameters.
@@ -64,7 +64,7 @@ public class Tile {
         this.image = UIElement.createUIElement(imagePath);
         this.blocksPathing = blocksPathing;
         this.blocksVision = blocksVision;
-    } // constructor
+    }
 
     /**
      * Used for player inspection of Tiles.
@@ -73,7 +73,7 @@ public class Tile {
      */
     public String getName() {
         return name;
-    } // getName
+    }
 
     /**
      * Descriptions are what the player sees when he/she inspects a Tile, so
@@ -83,7 +83,7 @@ public class Tile {
      */
     public String getDescription() {
         return "A normal, uninteresting, inconspicuous bit of world.";
-    } // getDescription
+    }
 
     /**
      * If true, the Tile will block Entities from walking through it.
@@ -92,7 +92,7 @@ public class Tile {
      */
     public boolean hasCollision() {
         return blocksPathing;
-    } // hasCollision
+    }
 
     /**
      * If true, the Tile will block Entities from seeing things beyond it.
@@ -101,34 +101,34 @@ public class Tile {
      */
     public boolean isSightBlocking() {
         return blocksVision;
-    } // isSightBlocking
+    }
 
     /**
      * This method is called when an Entity walks over the Tile (if possible).
      */
     public void onWalkOver() {
-    } // onWalkOver
+    }
 
     /**
      * This method is called when this Tile is hit by a light source (e.g., the
      * player's vision).
      */
     public void onLight() {
-    } // onLight
+    }
 
     /**
      * This method is called immediately after the Tile is removed from a light
      * source.
      */
     public void onUnlight() {
-    } // onUnlight
+    }
 
     /**
      * This method is called every time a unit of time passes in the game.
      */
     public void tick() {
         tickCount++;
-    } // tick
+    }
 
     /**
      * Renders the Tile to the screen at the given coordinates. Some atypical
@@ -143,11 +143,11 @@ public class Tile {
     public void render(Map map, int x, int y) {
         if (isVisible) {
             image.render(x, y);
-        } // if
+        }
         else if (recentlySeen) {
             image.renderShaded(x, y);
-        } // if
-    } // render
+        }
+    }
 
     /**
      * Renders the Tile slightly darker than normal to the screen at the given
@@ -162,5 +162,5 @@ public class Tile {
      */
     public void renderShaded(Map map, int x, int y) {
         image.renderShaded(x, y);
-    } // render
-} // Tile
+    }
+}

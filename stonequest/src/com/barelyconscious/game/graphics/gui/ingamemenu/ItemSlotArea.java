@@ -32,17 +32,17 @@ public class ItemSlotArea extends InventorySlotArea {
 
         super.setRegion(x, y, width, height);
         super.addMouseListener(Interactable.Z_TEXT_AREA);
-    } // constructor
+    }
 
     @Override
     public boolean itemGoesHere(Item item) {
         return true;
-    } // itemGoesHere
+    }
 
     @Override
     public Item getItem() {
         return slottedItem;
-    } // getItem
+    }
 
     @Override
     public Item setItem(Item item) {
@@ -51,18 +51,18 @@ public class ItemSlotArea extends InventorySlotArea {
         slottedItem = item;
 
         return oldItem;
-    } // setItem
+    }
 
     public void onHide() {
 //        delegate.getPlayerInventory().addItem(removeItem());
-    } // onHide
+    }
 
     @Override
     public Item removeItem() {
         Item oldItem = slottedItem;
         slottedItem = null;
         return oldItem;
-    } // removeItem
+    }
 
 //    @Override
 //    public void mouseClicked(MouseEvent e) {
@@ -71,7 +71,7 @@ public class ItemSlotArea extends InventorySlotArea {
 //        if (e.getButton() == Interactable.MOUSE_LEFT_CLICK) {
 //            if (stackItem()) {
 //                return;
-//            } // if
+//            }
 //
 //            cursorItem = delegate.getItemOnCursor();
 //
@@ -80,20 +80,20 @@ public class ItemSlotArea extends InventorySlotArea {
 //                    item = removeItem();
 //                    delegate.putItemOnCursor(item);
 //                    setItem(cursorItem);
-//                } // if
-//            } // if
+//                }
+//            }
 //            else {
 //                item = removeItem();
 //                delegate.putItemOnCursor(item);
-//            } // else
-//        } // else
+//            }
+//        }
 //        else {
 //            item = getItem();
 //            if (delegate.getPlayerInventory().addItem(item)) {
 //                removeItem();
-//            } // if
-//        } // else
-//    } // mouseClicked
+//            }
+//        }
+//    }
 
     @Override
     public void render() {
@@ -107,15 +107,15 @@ public class ItemSlotArea extends InventorySlotArea {
 //                stack = "" + item.getStackSize();
 //                screen.fillTransluscentRectangle(x + width - Font.getStringWidth(screen, stack) - 2, y + height - Font.CHAR_HEIGHT + 3, Font.getStringWidth(screen, stack), Font.CHAR_HEIGHT - 5);
 //                Font.drawFont(screen, stack, Color.white, true, x + width - Font.getStringWidth(screen, stack) - 3, y + height - 3);
-//            } // if
+//            }
 //
 //            if (isMouseInFocus()) {
 //                screen.drawRectangle(ColorHelper.TILE_SELECT_CAN_MOVE, x, y, width, height);
-//            } // if
-//        } // if
+//            }
+//        }
 //        else {
 //            ITEM_SLOT_BACKGROUND.render(screen, x, y);
-//        } // else
+//        }
 //
 //        item = delegate.getItemOnCursor();
 //
@@ -123,11 +123,11 @@ public class ItemSlotArea extends InventorySlotArea {
 //            if (isMouseInFocus()) {
 //                if (itemGoesHere(item)) {
 //                    screen.drawRectangle(ColorHelper.TILE_SELECT_CAN_MOVE, x, y, width, height);
-//                } // if
+//                }
 //                else {
 //                    screen.drawRectangle(ColorHelper.TILE_SELECT_CANNOT_MOVE, x, y, width, height);
 //                }
-//            } // if
-//        } // if 
-    } // render
-} // ItemSlotArea
+//            }
+//        }
+    }
+}

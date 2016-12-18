@@ -76,4 +76,4 @@ public interface Component {
      * @param screen The Screen to render the Component to
      */
     public void render();
-} // Component
+}

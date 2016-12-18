@@ -59,4 +59,4 @@ public class ColorHelper {
      * from a quest.
      */
     public static final Color PLAYER_GOLD_TEXT_COLOR = new Color(207, 148, 20);
-} // ColorHelper
+}

@@ -27,11 +27,11 @@ public class KeyHandler implements KeyListener {
     
     public void addInteractable(Interactable interactable) {
         interactables.add(interactable);
-    } // addInteractable
+    }
     
     public void removeInteractable(Interactable interactable) {
         interactables.remove(interactable);
-    } // removeInteractable
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -45,14 +45,14 @@ public class KeyHandler implements KeyListener {
             if (interactable.hasFocus()) {
                 interactable.keyPressed(e);
                 return;
-            } // if
-        } // for
+            }
+        }
 
         keyAction = KeyMap.getAction(e.getKeyCode());
 
         if (keyAction != null) {
             keyAction.action(e);
-        } // if
+        }
     }
 
     @Override
@@ -65,9 +65,9 @@ public class KeyHandler implements KeyListener {
             if (interactable.hasFocus()) {
                 interactable.keyReleased(e);
                 return;
-            } // if
-        } // for
-    } // keyReleased
+            }
+        }
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -75,7 +75,7 @@ public class KeyHandler implements KeyListener {
             if (interactable.hasFocus()) {
                 interactable.keyTyped(e);
                 return;
-            } // if
-        } // for
-    } // keyTyped
-} // KeyHandler
+            }
+        }
+    }
+}

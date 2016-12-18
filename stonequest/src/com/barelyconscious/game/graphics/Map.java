@@ -60,13 +60,13 @@ public class Map {
             for (int y = 0; y < numVerticalTiles; y++) {
                 if (ran.nextInt(100) < 5) {
                     map[x + y * numHorizontalTiles] = new StoneWallTile();
-                } // if
+                }
                 else {
                     map[x + y * numHorizontalTiles] = new GrassTile();
-                } // else
-            } // for
-        } // for
-    } // generateAreaMap
+                }
+            }
+        }
+    }
 
     /**
      * Renders each tile to the Screen, lighting ones around the player,
@@ -99,21 +99,21 @@ public class Map {
 
                 if (y < 0 || y >= numVerticalTiles) {
                     continue;
-                } // if
+                }
 
                 if (map[tileId].recentlySeen) {
                     getTileAt(x, y).renderShaded(this, (x + xOffs) * SceneService.TILE_SIZE, (y + yOffs) * SceneService.TILE_SIZE);
-                } // if
-            } // for
-        } // for
+                }
+            }
+        }
 
         /* Unlight tiles that are no longer in view, even if they are out
          of frame. */
         for (int i = 0; i < map.length; i++) {
             if (map[i].unlightOnRefresh) {
                 map[i].isVisible = false;
-            } // if
-        } // for
+            }
+        }
 
         // Cast shadows around the player
         shadowCasting(pX, pY, world.getPlayer().getLightRadius());
@@ -131,16 +131,16 @@ public class Map {
 
                 if (y < 0 || y >= numVerticalTiles) {
                     continue;
-                } // if
+                }
 
                 if (map[tileId].isVisible) {
                     getTileAt(x, y).render(this, (x + xOffs) * SceneService.TILE_SIZE, (y + yOffs) * SceneService.TILE_SIZE);
                     map[tileId].unlightOnRefresh = true;
                     map[tileId].recentlySeen = true;
-                } // if
-            } // for
-        } // for
-    } // renderMap
+                }
+            }
+        }
+    }
 
     private void shadowCasting(int playerX, int playerY, int lightRadius) {
         /* Call shadowcasting for each octant around the player in accordance to
@@ -157,7 +157,7 @@ public class Map {
         /* Unlight some tiles around the player to make the light radius look
          more like a circle of light */
         circularizeLight(playerX, playerY, lightRadius);
-    } // shadowCasting
+    }
 
     /**
      * Recursive shadow casting algorithm described on Roguebasin:
@@ -224,20 +224,20 @@ public class Map {
                             // If blocked tile has already been seen, keep going
                             if (seenBlockedTile) {
                                 continue;
-                            } // if
+                            }
                             // if blocking tile is the very first tile found on a new row
                             else if (x == (int) Math.round(startSlope * y)) {
                                 seenBlockedTile = true;
                                 continue;
-                            } // else if
+                            }
                             else {
                                 seenBlockedTile = true;
                                 endSlope = ((x * 1.0) - 1 + 0.1) / (y * 1.0);
 
                                 shadowCasting(centerX, centerY, y + 1, originalStartSlope,
                                         endSlope, radius, octant);
-                            } // else
-                        } // if
+                            }
+                        }
                         // Non-blocking tile
                         else {
                             // End of a blocking tile block
@@ -245,18 +245,18 @@ public class Map {
                                 seenBlockedTile = false;
                                 // calculate new startSlope
                                 startSlope = ((x * 1.0) - 0.1) / (y * 1.0);
-                            } // if
+                            }
                             else {
                                 seenBlockedTile = false;
-                            } // else
-                        } // else
-                    } // for
+                            }
+                        }
+                    }
 
                     // If last tile in a row is a blocking tile, no need to keep going
                     if (seenBlockedTile) {
                         break;
-                    } // if
-                } // for
+                    }
+                }
                 break;
 
             case 6:
@@ -280,20 +280,20 @@ public class Map {
                             // If blocked tile has already been seen, keep going
                             if (seenBlockedTile) {
                                 continue;
-                            } // if
+                            }
                             // if blocking tile is the very first tile found on a new row
                             else if (x == (int) Math.round(startSlope * y)) {
                                 seenBlockedTile = true;
                                 continue;
-                            } // else if
+                            }
                             else {
                                 seenBlockedTile = true;
                                 endSlope = ((Math.abs(x) + 1) - 0.1) / (y * 1.0);
                                 endSlope = (x >> 31 == 1) ? endSlope : -endSlope;
                                 shadowCasting(centerX, centerY, y - 1, originalStartSlope,
                                         endSlope, radius, octant);
-                            } // else
-                        } // if
+                            }
+                        }
                         // Non-blocking tile
                         else {
                             // End of a blocking tile block
@@ -301,18 +301,18 @@ public class Map {
                                 seenBlockedTile = false;
                                 // calculate new startSlope
                                 startSlope = ((x * 1.0) - 0.1) / (y * 1.0);
-                            } // if
+                            }
                             else {
                                 seenBlockedTile = false;
-                            } // else
-                        } // else
-                    } // for
+                            }
+                        }
+                    }
 
                     // If last tile in a row is a blocking tile, no need to keep going
                     if (seenBlockedTile) {
                         break;
-                    } // if
-                } // for
+                    }
+                }
                 break;
 
             case 2:
@@ -336,20 +336,20 @@ public class Map {
                             // If blocked tile has already been seen, keep going
                             if (seenBlockedTile) {
                                 continue;
-                            } // if
+                            }
                             // if blocking tile is the very first tile found on a new row
                             else if (x == (int) Math.round(startSlope * y)) {
                                 seenBlockedTile = true;
                                 continue;
-                            } // else if
+                            }
                             else {
                                 seenBlockedTile = true;
                                 endSlope = ((x * 1.0) + 1 + 0.01) / (y * 1.0);
 
                                 shadowCasting(centerX, centerY, y + 1, originalStartSlope,
                                         endSlope, radius, octant);
-                            } // else
-                        } // if
+                            }
+                        }
                         // Non-blocking tile
                         else {
                             // End of a blocking tile block
@@ -357,18 +357,18 @@ public class Map {
                                 seenBlockedTile = false;
                                 // calculate new startSlope
                                 startSlope = ((x * 1.0) + 0.1) / (y * 1.0);
-                            } // if
+                            }
                             else {
                                 seenBlockedTile = false;
-                            } // else
-                        } // else
-                    } // for
+                            }
+                        }
+                    }
 
                     // If last tile in a row is a blocking tile, no need to keep going
                     if (seenBlockedTile) {
                         break;
-                    } // if
-                } // for
+                    }
+                }
                 break;
 
             case 5:
@@ -392,20 +392,20 @@ public class Map {
                             // If blocked tile has already been seen, keep going
                             if (seenBlockedTile) {
                                 continue;
-                            } // if
+                            }
                             // if blocking tile is the very first tile found on a new row
                             else if (x == (int) Math.round(originalEndSlope * y)) {
                                 seenBlockedTile = true;
                                 continue;
-                            } // else if
+                            }
                             else {
                                 seenBlockedTile = true;
                                 endSlope = (x + 1 - 0.1) / (y * 1.0);
 
                                 shadowCasting(centerX, centerY, y - 1, originalStartSlope,
                                         endSlope, radius, octant);
-                            } // else
-                        } // if
+                            }
+                        }
                         // Non-blocking tile
                         else {
                             // End of a blocking tile block
@@ -413,18 +413,18 @@ public class Map {
                                 seenBlockedTile = false;
                                 // calculate new startSlope
                                 startSlope = ((x * 1.0) - 0.1) / (y * 1.0);
-                            } // if
+                            }
                             else {
                                 seenBlockedTile = false;
-                            } // else
-                        } // else
-                    } // for
+                            }
+                        }
+                    }
 
                     // If last tile in a row is a blocking tile, no need to keep going
                     if (seenBlockedTile) {
                         break;
-                    } // if
-                } // for
+                    }
+                }
                 break;
 
             case 3:
@@ -448,19 +448,19 @@ public class Map {
                             // If blocked tile has already been seen, keep going
                             if (seenBlockedTile) {
                                 continue;
-                            } // if
+                            }
                             // if blocking tile is the very first tile found on a new row
                             else if (y == (int) Math.round(startSlope * x)) {
                                 seenBlockedTile = true;
                                 continue;
-                            } // else if
+                            }
                             else {
                                 seenBlockedTile = true;
                                 endSlope = ((Math.abs(y) + 1) - 0.1) / (x * 1.0);
                                 shadowCasting(centerX, centerY, x + 1, originalStartSlope,
                                         endSlope, radius, octant);
-                            } // else
-                        } // if
+                            }
+                        }
                         // Non-blocking tile
                         else {
                             // End of a blocking tile block
@@ -468,18 +468,18 @@ public class Map {
                                 seenBlockedTile = false;
                                 // calculate new startSlope
                                 startSlope = (y * 1.0) / ((x * 1.0) - 0.1);
-                            } // if
+                            }
                             else {
                                 seenBlockedTile = false;
-                            } // else
-                        } // else
-                    } // for
+                            }
+                        }
+                    }
 
                     // If last tile in a row is a blocking tile, no need to keep going
                     if (seenBlockedTile) {
                         break;
-                    } // if
-                } // for
+                    }
+                }
                 break;
 
             case 8: // top->bottom
@@ -503,20 +503,20 @@ public class Map {
                             // If blocked tile has already been seen, keep going
                             if (seenBlockedTile) {
                                 continue;
-                            } // if
+                            }
                             // if blocking tile is the very first tile found on a new row
                             else if (y == (int) Math.round(startSlope * x)) {
                                 seenBlockedTile = true;
                                 continue;
-                            } // else if
+                            }
                             else {
                                 seenBlockedTile = true;
                                 endSlope = ((Math.abs(y) + 1) - 0.1) / (x * 1.0);
 
                                 shadowCasting(centerX, centerY, x + 1, originalStartSlope,
                                         endSlope, radius, octant);
-                            } // else
-                        } // if
+                            }
+                        }
                         // Non-blocking tile
                         else {
                             // End of a blocking tile block
@@ -524,18 +524,18 @@ public class Map {
                                 seenBlockedTile = false;
                                 // calculate new startSlope
                                 startSlope = (y * 1.0) / ((x * 1.0) - 0.1);
-                            } // if
+                            }
                             else {
                                 seenBlockedTile = false;
-                            } // else
-                        } // else
-                    } // for
+                            }
+                        }
+                    }
 
                     // If last tile in a row is a blocking tile, no need to keep going
                     if (seenBlockedTile) {
                         break;
-                    } // if
-                } // for
+                    }
+                }
                 break;
 
             case 4:
@@ -561,20 +561,20 @@ public class Map {
                             // If blocked tile has already been seen, keep going
                             if (seenBlockedTile) {
                                 continue;
-                            } // if
+                            }
                             // if blocking tile is the very first tile found on a new row
                             else if (y == (int) Math.round(startSlope * x)) {
                                 seenBlockedTile = true;
                                 continue;
-                            } // else if
+                            }
                             else {
                                 seenBlockedTile = true;
                                 endSlope = ((Math.abs(y) + 1) - 0.1) / (x * 1.0);
                                 endSlope = -endSlope;
                                 shadowCasting(centerX, centerY, x + 1, originalStartSlope,
                                         endSlope, radius, octant);
-                            } // else
-                        } // if
+                            }
+                        }
                         // Non-blocking tile
                         else {
                             // End of a blocking tile block
@@ -582,18 +582,18 @@ public class Map {
                                 seenBlockedTile = false;
                                 // calculate new startSlope
                                 startSlope = (y * 1.0) / ((x * 1.0) - 0.1);
-                            } // if
+                            }
                             else {
                                 seenBlockedTile = false;
-                            } // else
-                        } // else
-                    } // for
+                            }
+                        }
+                    }
 
                     // If last tile in a col is a blocking tile, no need to keep going
                     if (seenBlockedTile) {
                         break;
-                    } // if
-                } // for
+                    }
+                }
                 break;
 
             case 7: // bottom->top
@@ -617,20 +617,20 @@ public class Map {
                             // If blocked tile has already been seen, keep going
                             if (seenBlockedTile) {
                                 continue;
-                            } // if
+                            }
                             // if blocking tile is the very first tile found on a new row
                             else if (y == (int) Math.round(startSlope * x)) {
                                 seenBlockedTile = true;
                                 continue;
-                            } // else if
+                            }
                             else {
                                 seenBlockedTile = true;
                                 endSlope = ((Math.abs(y) + 1) - 0.1) / (x * 1.0);
                                 endSlope = -endSlope;
                                 shadowCasting(centerX, centerY, x + 1, originalStartSlope,
                                         endSlope, radius, octant);
-                            } // else
-                        } // if
+                            }
+                        }
                         // Non-blocking tile
                         else {
                             // End of a blocking tile block
@@ -638,24 +638,24 @@ public class Map {
                                 seenBlockedTile = false;
                                 // calculate new startSlope
                                 startSlope = (y * 1.0) / ((x * 1.0) - 0.1);
-                            } // if
+                            }
                             else {
                                 seenBlockedTile = false;
-                            } // else
-                        } // else
-                    } // for
+                            }
+                        }
+                    }
 
                     // If last tile in a col is a blocking tile, no need to keep going
                     if (seenBlockedTile) {
                         break;
-                    } // if
-                } // for
+                    }
+                }
                 break;
 
             default:
                 return;
-        } // switch
-    } // checkVisibility
+        }
+    }
 
     /**
      * Unlight outter tiles to give the appearance of a circular light source
@@ -700,7 +700,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 1
             y = centerY - radius;
@@ -708,7 +708,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 2
             y = centerY + radius;
@@ -716,7 +716,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 3
             y = centerY + radius;
@@ -724,8 +724,8 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
-        } // for
+            }
+        }
 
         // 1 tile closer to the player
         for (int i = 0; i < 2; i++) {
@@ -735,7 +735,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 1
             y = centerY - radius + 1;
@@ -743,7 +743,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 2
             y = centerY + radius - 1;
@@ -751,7 +751,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 3
             y = centerY + radius - 1;
@@ -759,8 +759,8 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
-        } // for
+            }
+        }
 
         // 2 tiles closer to the player
         for (int i = 0; i < 1; i++) {
@@ -770,7 +770,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 1
             y = centerY - radius + 2;
@@ -778,7 +778,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 2
             y = centerY + radius - 2;
@@ -786,7 +786,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 3
             y = centerY + radius - 2;
@@ -794,8 +794,8 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
-        } // for
+            }
+        }
 
         // 3 tiles close to the player
         for (int i = 0; i < 1; i++) {
@@ -805,7 +805,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 1
             y = centerY - radius + 3;
@@ -813,7 +813,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 2
             y = centerY + radius - 3;
@@ -821,7 +821,7 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
+            }
 
             // Quadrant 3
             y = centerY + radius - 3;
@@ -829,9 +829,9 @@ public class Map {
 
             if (!(x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles)) {
                 map[x + y * numHorizontalTiles].isVisible = false;
-            } // if
-        } // for
-    } // circularizeLight
+            }
+        }
+    }
 
     /**
      * Moves the map by xShift, yShift when the player moves. This only changes
@@ -843,7 +843,7 @@ public class Map {
     public void shiftWorldBy(int xShift, int yShift) {
         xStart -= xShift / SceneService.TILE_SIZE;
         yStart -= yShift / SceneService.TILE_SIZE;
-    } // shiftWorldBy
+    }
 
     /**
      * The level of the current level determines the level of the monsters in
@@ -855,7 +855,7 @@ public class Map {
      */
     public int getZoneLevel() {
         return zoneLevel;
-    } // getZoneLevel
+    }
 
     /**
      * The value of elites decreases as each are killed by the player.
@@ -864,7 +864,7 @@ public class Map {
      */
     public int getRemainingElites() {
         return remainingElites;
-    } // getRemainingElites
+    }
 
     /**
      * This function is used to identify zones for the player.
@@ -873,7 +873,7 @@ public class Map {
      */
     public String getZoneName() {
         return zoneName;
-    } // getZoneName
+    }
 
     /**
      *
@@ -887,10 +887,10 @@ public class Map {
 
         if (x < 0 || y < 0 || x >= numHorizontalTiles || y >= numVerticalTiles) {
             return false;
-        } // if
+        }
 
         return !map[x + y * numHorizontalTiles].hasCollision();
-    } // canMove
+    }
 
     /**
      * Returns the Tile at a position xPos,yPos.
@@ -904,7 +904,7 @@ public class Map {
 //            return new WaterTile();
 //        }
         return map[xPos + yPos * numHorizontalTiles];
-    } // getMapTile
+    }
 
     /**
      * Removes a tile at xPos,yPos.
@@ -913,19 +913,19 @@ public class Map {
      * @param yPos
      */
     public void removeTile(int xPos, int yPos) {
-    } // removeTile
+    }
 
     public boolean isTileVisibleAt(int xPos, int yPos) {
         if (xPos < 0 || yPos < 0 || xPos >= numHorizontalTiles || yPos >= numVerticalTiles) {
             return false;
         }
         return map[xPos + yPos * numHorizontalTiles].isVisible;
-    } // isTileVisibleAt
+    }
 
     public boolean isTileRecentlySeenAt(int xPos, int yPos) {
         if (xPos < 0 || yPos < 0 || xPos >= numHorizontalTiles || yPos >= numVerticalTiles) {
             return false;
         }
         return map[xPos + yPos * numHorizontalTiles].recentlySeen;
-    } // isTileRecentlySeenAt
-} // Map
+    }
+}

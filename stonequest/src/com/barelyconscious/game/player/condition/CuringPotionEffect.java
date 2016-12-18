@@ -18,7 +18,7 @@ public class CuringPotionEffect extends PotionEffect {
 
     public CuringPotionEffect(Entity affectedEntity) {
         super(0, "Curing Potion", affectedEntity);
-    } // constructor
+    }
 
     /**
      * Removes all poison Conditions from the Entity.
@@ -28,14 +28,14 @@ public class CuringPotionEffect extends PotionEffect {
         for (Condition condition : affectedEntity.getConditions()) {
             if (condition.getConditionType() == Condition.DETRIMENT_TOXIN_TYPE) {
                 condition.remove();
-            } // if
-        } // for
+            }
+        }
         
         System.out.println(name + " cures your infections.");
-    } // apply
+    }
 
     @Override
     public String getDescription() {
         return "A viscous liquid rumored to cure even the most painful infections.";
-    } // getDescription
-} // CuringPotionEffect
+    }
+}

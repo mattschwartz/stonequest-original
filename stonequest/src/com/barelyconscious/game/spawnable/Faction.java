@@ -36,9 +36,9 @@ public class Faction {
     
     public Faction(int faction) {
         this.faction = faction;
-    } // constructor
+    }
     
     public boolean isHostile(Sprite sprite) {
         return faction == sprite.getFaction().faction;
-    } // isHostile
-} // Faction
+    }
+}

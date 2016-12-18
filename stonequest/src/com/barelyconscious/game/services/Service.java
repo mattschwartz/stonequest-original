@@ -36,4 +36,4 @@ public interface Service {
      * application.
      */
     public void restart();
-} // Service
+}

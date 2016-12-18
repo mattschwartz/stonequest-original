@@ -111,12 +111,12 @@ public class Item implements Comparable<Item> {
         if (itemAffixes != null) {
             this.itemAffixes = new ArrayList<AttributeMod>();
             this.itemAffixes.addAll(Arrays.asList(itemAffixes));
-        } // if
-    } // constructor
+        }
+    }
 
     public Item(String name, int itemLevel, int sellValue, int stackSize, String iconLocation, Entity owner, AttributeMod... itemAffixes) {
         this(name, itemLevel, sellValue, stackSize, UIElement.createUIElement(iconLocation), owner, itemAffixes);
-    } // constructor
+    }
 
     /**
      *
@@ -124,7 +124,7 @@ public class Item implements Comparable<Item> {
      */
     public int getItemLevel() {
         return itemLevel;
-    } // getItemLevel
+    }
 
     /**
      *
@@ -132,7 +132,7 @@ public class Item implements Comparable<Item> {
      */
     public int getUpgradeLevel() {
         return upgradeLevel;
-    } // getUpgradeLevel
+    }
 
     /**
      *
@@ -140,7 +140,7 @@ public class Item implements Comparable<Item> {
      */
     public int getAppliedSalvage() {
         return appliedSalvage;
-    } // getAppliedSalvage
+    }
 
     /**
      * Applies amount salvage to the Item. When the amount of salvage applied to
@@ -154,11 +154,11 @@ public class Item implements Comparable<Item> {
             amount = getRequiredSalvage() - appliedSalvage;
             appliedSalvage = amount;
             upgrade();
-        } // if
+        }
         else {
             appliedSalvage += amount;
-        } // else
-    } // applySalvage
+        }
+    }
 
     /**
      * Determines the total amount of salvage necessary to upgrade an Item's
@@ -170,7 +170,7 @@ public class Item implements Comparable<Item> {
     public int getRequiredSalvage() {
         // FORMULA NOT FINAL
         return Math.max(MAX_UPGRADE_LEVEL, (upgradeLevel + 1)) * 20;
-    } // getRequiredSalvage
+    }
 
     /**
      * Upgrades the Item to the next upgrade level, applying additional
@@ -180,7 +180,7 @@ public class Item implements Comparable<Item> {
      */
     protected void upgrade() {
         upgradeLevel++;
-    } // upgrade
+    }
 
     /**
      *
@@ -188,7 +188,7 @@ public class Item implements Comparable<Item> {
      */
     public int getSellValue() {
         return sellValue;
-    } // getSellValue
+    }
 
     /**
      *
@@ -196,11 +196,11 @@ public class Item implements Comparable<Item> {
      */
     public int getStackSize() {
         return stackSize;
-    } // getStackSize
+    }
 
     public void setStackSize(int stackSize) {
         this.stackSize = stackSize;
-    } // setStackSize
+    }
 
     /**
      * Adjust the current stack size of the Item by amount.
@@ -214,8 +214,8 @@ public class Item implements Comparable<Item> {
         if (stackSize == 0) {
             // Removes itself from the owner's inventory
 //            owner.removeFromInventory(this);
-        } // if
-    } // adjustStackBy
+        }
+    }
 
     /**
      *
@@ -223,23 +223,23 @@ public class Item implements Comparable<Item> {
      */
     public String getName() {
         return name;
-    } // getName
+    }
 
     public void setAugment(Augment augment) {
         this.augment = augment;
-    } // setAugment
+    }
 
     public Item getAugment() {
         return augment;
-    } // getAugment
+    }
 
     public void setDivineFavor(DivineFavor divineFavor) {
         this.divineFavor = divineFavor;
-    } // setDivineFavor
+    }
 
     public DivineFavor getDivineFavor() {
         return divineFavor;
-    } // getDivineFavor
+    }
 
     /**
      * Sets the name of the Item to newName, overwriting the old value for the
@@ -249,7 +249,7 @@ public class Item implements Comparable<Item> {
      */
     public void setName(String newName) {
         name = newName;
-    } // setName
+    }
 
     /**
      *
@@ -258,10 +258,10 @@ public class Item implements Comparable<Item> {
     public AttributeMod[] getItemAffixes() {
         if (itemAffixes == null) {
             return null;
-        } // if
+        }
 
         return itemAffixes.toArray(new AttributeMod[]{});
-    } // getItemAffixes
+    }
 
     /**
      *
@@ -272,10 +272,10 @@ public class Item implements Comparable<Item> {
     public AttributeMod getItemAffixAt(int index) {
         if (itemAffixes == null || index < 0 || index >= itemAffixes.size()) {
             return null;
-        } // if
+        }
 
         return itemAffixes.get(index);
-    } // getItemAfixAt
+    }
 
     /**
      *
@@ -285,10 +285,10 @@ public class Item implements Comparable<Item> {
 
         if (itemAffixes == null) {
             return 0;
-        } // if
+        }
 
         return itemAffixes.size();
-    } // getNumAffixes
+    }
 
     /**
      * This method should be overridden by subclasses and altered to more
@@ -298,16 +298,16 @@ public class Item implements Comparable<Item> {
      */
     public String getDescription() {
         return "You see " + StringHelper.aOrAn(name) + " here.";
-    } // getDescription
+    }
     
     public String getMaterial() {
         Random ran = new Random(name.hashCode());
         return new String[]{"cloth", "leather", "metal", "magical", "celestial", "ethereal"}[ran.nextInt(5)];
-    } // getMaterial
+    }
 
     public String getType() {
         return "Not your type.";
-    } // getType
+    }
 
     /**
      * This method is called when the owner (an Entity object) uses the Item.
@@ -315,7 +315,7 @@ public class Item implements Comparable<Item> {
      * unique benefits.
      */
     public void onUse() {
-    } // onUse
+    }
 
     /**
      * Method is called when the Item is removed from the Entity's inventory,
@@ -323,12 +323,12 @@ public class Item implements Comparable<Item> {
      * and so on.
      */
     public void onDrop() {
-    } // onDrop
+    }
 
     @Override
     public Item clone() {
         return null;
-    } // clone
+    }
 
     /**
      * Every Item can be broken down to its basic materials through the act of
@@ -336,7 +336,7 @@ public class Item implements Comparable<Item> {
      * to improve them.
      */
     public void salvage() {
-    } // salvage
+    }
 
     /**
      * Renders the Item's icon at x,y on the screen.
@@ -347,12 +347,12 @@ public class Item implements Comparable<Item> {
      */
     public void render(int x, int y) {
         icon.render(x, y);
-    } // render
+    }
 
     @Override
     public String toString() {
         return name;
-    } // toString
+    }
 
     /**
      * Compares this Item to another to see if they are equivalent.
@@ -366,21 +366,21 @@ public class Item implements Comparable<Item> {
         // ...have the same name
         if (!name.equals(item.getName())) {
             return -1;
-        } // if
+        }
 
         // ...have the same number of affixes (or none)
         if (getNumAffixes() != item.getNumAffixes()) {
             return -1;
-        } // if
+        }
         else {
             for (int i = 0; i < getNumAffixes(); i++) {
                 if (getItemAffixAt(i).compareTo(item.getItemAffixAt(i)) != 0) {
                     return -1;
-                } // if
-            } // for
-        } // else
+                }
+            }
+        }
 
         // Subclasses will override to add more constraints
         return 0;
-    } // compareTo
-} // Item
+    }
+}

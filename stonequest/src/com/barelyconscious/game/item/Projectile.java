@@ -56,7 +56,7 @@ public class Projectile extends Item {
 
         this.metal = metal;
         this.requiresBow = requiresBow;
-    } // constructor
+    }
 
     /**
      * Change the bow requirement for the Projectile
@@ -65,7 +65,7 @@ public class Projectile extends Item {
      */
     public void setRequiresBow(boolean bool) {
         requiresBow = bool;
-    } // setRequiresBow
+    }
 
     /**
      *
@@ -73,7 +73,7 @@ public class Projectile extends Item {
      */
     public boolean doesRequireBow() {
         return requiresBow;
-    } // doesRequireBow
+    }
 
     /**
      *
@@ -81,12 +81,12 @@ public class Projectile extends Item {
      */
     public ProjectileTip getMetal() {
         return metal;
-    } // getMetal
+    }
 
     @Override
     public String getDescription() {
         return "Fire at an enemy from a distance, dealing damage based on type of metal.";
-    } // getDescription
+    }
 
     /**
      * The compareTo functionality is used to compare two items to each other
@@ -101,18 +101,18 @@ public class Projectile extends Item {
     public int compareTo(Item item) {
         if (super.compareTo(item) < 0) {
             return -1;
-        } // if
+        }
 
         if (this.getMetal().compareTo(((Projectile) item).getMetal()) < 0) {
             return -1;
-        } // if
+        }
 
         if (this.requiresBow != ((Projectile) item).doesRequireBow()) {
             return -1;
-        } // if
+        }
 
         return 0;
-    } // compareTo
+    }
 
     /**
      * ProjectileTip inner class; every Projectile has a ProjectileTip which
@@ -128,51 +128,51 @@ public class Projectile extends Item {
             this.min = min;
             this.max = max;
             this.critChance = crit;
-        } // constructor
+        }
 
         public float getMin() {
             return min;
-        } // getMin
+        }
 
         public float getMax() {
             return max;
-        } // getMax
+        }
 
         public float getCrit() {
             return critChance;
-        } // getCrit
+        }
 
         @Override
         public int compareTo(ProjectileTip t) {
             if (this.getMin() != t.getMin()) {
                 return -1;
-            } // if
+            }
 
             if (this.getMax() != t.getMax()) {
                 return -1;
-            } // if
+            }
 
             if (this.getCrit() != t.getCrit()) {
                 return -1;
-            } // if
+            }
 
             return 0;
-        } // compareTo
+        }
 
         public static String metalToString(ProjectileTip projectileTip) {
             if (projectileTip == BRONZE_TIP) {
                 return "bronze";
-            } // if
+            }
             else if (projectileTip == IRON_TIP) {
                 return "iron";
-            } // else if
+            }
             else if (projectileTip == STEEL_TIP) {
                 return "steel";
-            } // else if
+            }
             else if (projectileTip == TITANIUM_TIP) {
                 return "titanium";
-            } // else if
+            }
             return "{ERR:UNDEF}";
-        } // metalToString
-    } // ProjectileTip inner class
-} // Projectile
+        }
+    }
+}

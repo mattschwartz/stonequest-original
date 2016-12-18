@@ -48,13 +48,13 @@ public class InterfaceDelegate {
 //    private InterfaceDelegate() {
 //        if (INSTANCE != null) {
 //            throw new IllegalStateException("Only one interface delegate may be active at runtime");
-//        } // if
-//    } // constructor
+//        }
+//    }
 //
 //    public void init(int gameWidth, int gameHeight) {
 //        if (inited) {
 //            throw new IllegalStateException("Already initialized!");
-//        } // if
+//        }
 //
 //        itemOnCursor = new ItemDraggable(null);
 //        isSalvageActive = false;
@@ -79,11 +79,11 @@ public class InterfaceDelegate {
 //        Game.screen.addForegroundComponent(salvageWindow);
 //        Game.screen.addForegroundComponent(upgradeItemWindow);
 //        inited = true;
-//    } // init
+//    }
 //
 //    public static InterfaceDelegate getInstance() {
 //        return INSTANCE;
-//    } // getInstance
+//    }
 //
 //    public void closeWindows() {
 //        upgradeItemWindow.hide();
@@ -92,7 +92,7 @@ public class InterfaceDelegate {
 //        brewingWindow.hide();
 //        journalWindow.hide();
 //        salvageWindow.hide();
-//    } // closeWindows
+//    }
 //
 //    /**
 //     * Toggles a window based on the Window object passed into this method.
@@ -103,31 +103,31 @@ public class InterfaceDelegate {
 //    public void toggleUI(Object w) {
 //        if (w instanceof UpgradeItemWindow) {
 //            upgradeItemWindow.toggleUI();
-//        } // if
+//        }
 //        else if (w instanceof InventoryWindow) {
 //            inventoryWindow.toggleUI();
-//        } // else if
+//        }
 //        else if (w instanceof CharacterWindow) {
 //            characterWindow.toggleUI();
-//        } // else if
+//        }
 //        else if (w instanceof BrewingWindow) {
 //            brewingWindow.toggleUI();
-//        } // else if
+//        }
 //        else if (w instanceof JournalWindow) {
 //            journalWindow.toggleUI();
-//        } // else if
+//        }
 //        else if (w instanceof SalvageWindow) {
 //            salvageWindow.toggleUI();
-//        } // else if
-//    } // toggleUI
+//        }
+//    }
 //
 //    public Player getPlayer() {
 //        return Game.getCurrentPlayer();
-//    } // getPlayer
+//    }
 //
 //    public Inventory getPlayerInventory() {
 //        return Game.getCurrentPlayer().getInventory();
-//    } // getPlayerInventory
+//    }
 //
 //    public Item putItemOnCursor(Item item) {
 //        Item oldItem = itemOnCursor.getItem();
@@ -135,14 +135,14 @@ public class InterfaceDelegate {
 //
 //        if (itemOnCursor.getItem() == null) {
 //            itemOnCursor.dispose();
-//        } // if
+//        }
 //        else if (oldItem == null) {
 //            itemOnCursor.enable();
 //            Game.screen.addAlwaysOnTopComponent(itemOnCursor);
-//        } // else if
+//        }
 //
 //        return oldItem;
-//    } // putItemOnCursor
+//    }
 //
 //    /**
 //     *
@@ -150,18 +150,18 @@ public class InterfaceDelegate {
 //     */
 //    public Item getItemOnCursor() {
 //        return itemOnCursor.getItem();
-//    } // getItemOnCursor
+//    }
 //
 //    public void setSalvageActive(boolean active) {
 //        isSalvageActive = active;
 //
 //        if (isSalvageActive) {
 //            Cursors.setCursor(Cursors.SALVAGE_ITEM_CURSOR);
-//        } // if
+//        }
 //        else {
 //            Cursors.setCursor(Cursors.DEFAULT_CURSOR);
-//        } // else
-//    } // setSalvageActive
+//        }
+//    }
 //
 //    /**
 //     *
@@ -170,15 +170,15 @@ public class InterfaceDelegate {
 //     */
 //    public boolean isSalvageActive() {
 //        return isSalvageActive;
-//    } // isSalvageActive
+//    }
 //
 //    public void setTooltipText(String tooltipText) {
 //        tooltipWindow.setText(tooltipText);
-//    } // setTooltipText
+//    }
 //
 //    public void clearTooltipText() {
 //        tooltipWindow.clearTooltipText();
-//    } // clearTooltipText
+//    }
 //
 //    /**
 //     * Resize the elements that comprise StoneQuest's interface based on the
@@ -197,9 +197,9 @@ public class InterfaceDelegate {
 //        salvageWindow.resize(artworkWindow.getSalvageButtonOffsX(), artworkWindow.getSalvageButtonOffsY());
 //        upgradeItemWindow.resize(artworkWindow.getX(), artworkWindow.getY(), artworkWindow.getUpgradeItemButtonOffsX(), artworkWindow.getUpgradeItemButtonOffsY());
 //        TextLog.INSTANCE.resize(artworkWindow.getTextLogOffsX(), artworkWindow.getTextLogOffsY(), artworkWindow.getTextLogWidth(), artworkWindow.getTextLogHeight());
-//    } // resize
+//    }
 //
 //    public int getVisibleHeight() {
 //        return artworkWindow.getY();
-//    } // getVisibleHeight
-} // InterfaceDelegate
+//    }
+}

@@ -17,4 +17,4 @@ import java.awt.Color;
 
 public class GUIHelper {
     public static final Color DEFAULT_FONT_COLOR = Color.lightGray;
-} // GUIHelper
+}

@@ -37,7 +37,7 @@ public class Potion extends Item {
     public Potion(String name, int duration, int sellValue, int stackSize, Entity owner, AttributeMod... affectedAttributes) {
         super(name, 0, sellValue, stackSize, DEFAULT_POTION_ICON, owner, affectedAttributes);
         this.effects = new PotionEffect(duration, name, owner, affectedAttributes);
-    } // constructor
+    }
 
     /**
      * Creates a new Potion with a supplied Item icon and the other following
@@ -55,7 +55,7 @@ public class Potion extends Item {
     public Potion(String name, int duration, int sellValue, int stackSize, UIElement itemIcon, Entity owner, PotionEffect effects) {
         super(name, 0, sellValue, stackSize, itemIcon, owner, effects.getAffectedAttributes());
         this.effects = effects;
-    } // constructor
+    }
 
     /**
      *
@@ -63,12 +63,12 @@ public class Potion extends Item {
      */
     public int getEffectsDuration() {
         return effects.getDuration();
-    } // getEffectsDuration
+    }
 
     @Override
     public String getDescription() {
         return "Quaff to temporarily increase your attribute levels. Lasts for " + effects.getDuration() + " turns.";
-    } // getDescription
+    }
 
     /**
      * When an Entity uses a Potion, it benefits from its effects and consumes
@@ -79,7 +79,7 @@ public class Potion extends Item {
     public void onUse() {
         effects.apply();
         adjustStackBy(-1);
-    } // onUse
+    }
 
     @Override
     public void salvage() {
@@ -87,5 +87,5 @@ public class Potion extends Item {
         // Create the salvage and add it to the owner's inventory
         // Remove 1 from the stack size
         adjustStackBy(-1);
-    } // salvage
-} // Potion
+    }
+}

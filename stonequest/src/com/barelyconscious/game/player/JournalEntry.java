@@ -36,7 +36,7 @@ public class JournalEntry {
         this.goldReward = goldReward;
         this.title = title;
         this.rewards = new ArrayList<Item>(Arrays.asList(rewards));
-    } // constructor
+    }
 
     /**
      * Journal entries have titles to be quickly identified by the player.
@@ -45,15 +45,15 @@ public class JournalEntry {
      */
     public String getTitle() {
         return title;
-    } // getTitle
+    }
     
     public boolean isComplete() {
         return complete;
-    } // isComplete
+    }
     
     public void completeJournalEntry() {
         complete = true;
-    } // completeJournalEntry
+    }
 
     /**
      * Journal entries have descriptions to give the player more knowledge about
@@ -63,5 +63,5 @@ public class JournalEntry {
      */
     public String getDescription() {
         return "This quest has no description. How mysterious.";
-    } // getDescription
-} // JournalEntry
+    }
+}

@@ -26,11 +26,11 @@ public class Animation {
         
         currentFrame = 0;
         nextFrame = this.frames.get(0).getDelay();
-    } // constructor
+    }
     
     public void addFrame(Frame frame) {
         frames.add(frame);
-    } // addFrame
+    }
     
     public void render() {
         if (--nextFrame <= 0) {
@@ -40,8 +40,8 @@ public class Animation {
                 currentFrame = 0;
             }
             nextFrame = frames.get(currentFrame).getDelay();
-        } // if
+        }
         
         frames.get(currentFrame).render();
-    } // render
+    }
 } // Animation

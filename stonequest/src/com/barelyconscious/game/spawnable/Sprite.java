@@ -54,7 +54,7 @@ public class Sprite {
 
         isVisible = false;
         hasBeenSeen = false;
-    } // constructor
+    }
 
     /**
      *
@@ -62,7 +62,7 @@ public class Sprite {
      */
     public int getX() {
         return x;
-    } // getX
+    }
 
     /**
      *
@@ -70,7 +70,7 @@ public class Sprite {
      */
     public int getY() {
         return y;
-    } // getY
+    }
 
     /**
      * Changes the x position of the Sprite to xPos.
@@ -79,7 +79,7 @@ public class Sprite {
      */
     public void setX(int xPos) {
         x = xPos;
-    } // setX
+    }
 
     /**
      * Changes the y position of the Sprite to xPos.
@@ -88,7 +88,7 @@ public class Sprite {
      */
     public void setY(int yPos) {
         y = yPos;
-    } // setY
+    }
 
     /**
      * Sets both the x and y coordinates of the Sprite simultaneously, for ease
@@ -100,7 +100,7 @@ public class Sprite {
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
-    } // setPosition
+    }
 
     /**
      * Sets both the last known x and y coordinates of the Sprite
@@ -112,7 +112,7 @@ public class Sprite {
     public void setLastKnownPosition(int x, int y) {
         lastKnownX = x;
         lastKnownY = y;
-    } // setLastKnownPosition
+    }
 
     /**
      * Adjusts the Sprite's position by xShift, yShift. Useful when the world
@@ -124,7 +124,7 @@ public class Sprite {
     public void shiftBy(int xShift, int yShift) {
         this.x += xShift;
         this.y += yShift;
-    } // shiftBy
+    }
 
     /**
      *
@@ -132,7 +132,7 @@ public class Sprite {
      */
     public int getLastKnownX() {
         return lastKnownX;
-    } // getlastKnownX
+    }
 
     /**
      *
@@ -140,7 +140,7 @@ public class Sprite {
      */
     public int getLastKnownY() {
         return lastKnownY;
-    } // getLastKnownY
+    }
 
     /**
      *
@@ -149,7 +149,7 @@ public class Sprite {
      */
     public boolean isVisible() {
         return isVisible;
-    } // isVisible
+    }
 
     /**
      * Changes the visibility of the Sprite to visible.
@@ -158,7 +158,7 @@ public class Sprite {
      */
     public void setVisible(boolean visible) {
         isVisible = visible;
-    } // setVisible
+    }
 
     /**
      *
@@ -167,7 +167,7 @@ public class Sprite {
      */
     public boolean hasBeenSeen() {
         return hasBeenSeen;
-    } // hasBeenSeen
+    }
 
     /**
      * Sets whether or not the Sprite has been seen by the player to beenSeen.
@@ -177,7 +177,7 @@ public class Sprite {
      */
     public void setHasBeenSeen(boolean beenSeen) {
         hasBeenSeen = beenSeen;
-    } // setHasBeenSeen
+    }
 
     /**
      *
@@ -185,7 +185,7 @@ public class Sprite {
      */
     public boolean hasCollision() {
         return hasCollision;
-    } // hasCollision
+    }
 
     /**
      *
@@ -193,7 +193,7 @@ public class Sprite {
      */
     public Faction getFaction() {
         return faction;
-    } // getFaction
+    }
 
     /**
      *
@@ -201,7 +201,7 @@ public class Sprite {
      */
     public String getName() {
         return name;
-    } // getName
+    }
 
     public LineElement getDescription() {
         LineElement lineElement;
@@ -209,14 +209,14 @@ public class Sprite {
         lineElement = LineElement.parseString("You see " + StringHelper.aOrAn(name) + " here.", name, TextLogHelper.TEXTLOG_DEFAULT_COLOR, TextLogHelper.TEXTLOG_ENTITY_LABEL_COLOR);
 
         return lineElement;
-    } // getDescription
+    }
 
     /**
      * Method to be overriden by subclasses. All activity which must occur
      * during a game tick should be done here.
      */
     public void tick() {
-    } // tick
+    }
 
     /**
      * Calling this method will cause the Sprite to be removed on the next game
@@ -224,7 +224,7 @@ public class Sprite {
      */
     public void remove() {
         destroy = true;
-    } // destroy
+    }
 
     /**
      *
@@ -232,7 +232,7 @@ public class Sprite {
      */
     public boolean shouldRemove() {
         return destroy;
-    } // shouldRemove
+    }
 
     /**
      * When one Sprite walks over another Sprite, it calls this function and
@@ -243,7 +243,7 @@ public class Sprite {
      * @param interactee the calling Sprite
      */
     public void onWalkOver(Sprite interactee) {
-    } // onWalkOver
+    }
 
     /**
      * When this Sprite attempts to interact with another Sprite, this method is
@@ -253,7 +253,7 @@ public class Sprite {
      * this Sprite
      */
     public void interact(Sprite interactee) {
-    } // interact
+    }
 
     /**
      * Renders the Sprite to the screen, given
@@ -264,11 +264,11 @@ public class Sprite {
     public void render(int xOffs, int yOffs) {
         if (isVisible) {
             spriteIcon.render(xOffs, yOffs);
-        } // if
+        }
         else if (hasBeenSeen) {
             spriteIcon.renderShaded(xOffs, yOffs);
-        } // else if
+        }
 
         // Otherwise, do not render
-    } // render
-} // Sprite
+    }
+}

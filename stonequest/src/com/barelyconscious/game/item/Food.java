@@ -54,7 +54,7 @@ public class Food extends Item {
     public Food(String name, int itemLevel, int sellValue, int stackSize, double healthChange, UIElement itemIcon, Entity owner) {
         super(name, itemLevel, sellValue, stackSize, itemIcon, owner, new AttributeMod(Entity.HEALTH_ATTRIBUTE, healthChange));
         this.changeInHealth = healthChange;
-    } // constructor
+    }
 
     /**
      *
@@ -62,12 +62,12 @@ public class Food extends Item {
      */
     public double getHealthChange() {
         return changeInHealth;
-    } // getHealthChange
+    }
 
     @Override
     public String getDescription() {
         return "Eat me.";
-    } // getDescription
+    }
 
     /**
      *
@@ -76,11 +76,11 @@ public class Food extends Item {
     public void onUse() {
         if (owner.getAttribute(Entity.HEALTH_ATTRIBUTE) + changeInHealth > owner.getMaxHealth()) {
             owner.changeHealthBy(owner.getMaxHealth() - owner.getCurrentHealth());
-        } // if
+        }
         else {
             owner.changeHealthBy(changeInHealth);
-        } // else
+        }
 
         adjustStackBy(-1);
-    } // onUse
-} // Food
+    }
+}

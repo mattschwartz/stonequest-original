@@ -20,11 +20,11 @@ public class LineElement {
     public List<CharacterElement> line = new ArrayList<CharacterElement>();
     
     public LineElement() {
-    } // constructor
+    }
     
     public LineElement(String msg) {
         addString(msg, TextLogHelper.TEXTLOG_DEFAULT_COLOR);
-    } // constructor
+    }
     
     public void add(CharacterElement ce) {
         line.add(ce);
@@ -32,21 +32,21 @@ public class LineElement {
     
     public void add(char c, int col) {
         line.add(new CharacterElement(c, col));
-    } // add
+    }
     
     public LineElement substring(int start, int end) {
         LineElement subLine = new LineElement();
         
         if (start < 0 || end < 0 || start > line.size() || end > line.size()) {
             return null;
-        } // if
+        }
         
         for (int i = start; i < end; i++) {
             subLine.add(line.get(i));
-        } // for
+        }
         
         return subLine;
-    } // substring
+    }
     
     public List<LineElement> split(int cols) {
         List<LineElement> broken = new ArrayList<LineElement>();
@@ -79,12 +79,12 @@ public class LineElement {
     public final void addString(String msg, int col) {
         for (char c : msg.toCharArray()) {
             line.add(new CharacterElement(c, col));
-        } // for
-    } // addString
+        }
+    }
     
     public static LineElement parseString(String msg, String match, int baseColor, int matchedTextColor) {
         return parseString(msg, new String[]{match}, baseColor, new int[]{matchedTextColor});
-    } // parseString
+    }
     
     public static LineElement parseString(String msg, String[] match, int baseColor, int[] matchedTextColor) {
         char c;
@@ -100,15 +100,15 @@ public class LineElement {
             if (c > (char)127) {                
                 for (char c2 : match[c-128].toCharArray()) {
                     line.add(c2, matchedTextColor[c-128]);
-                } // for
-            } // if
+                }
+            }
             else {
                 line.add(c, baseColor);
-            } // else
-        } // for
+            }
+        }
         
         return line;
-    } // parseString
+    }
 
     @Override
     public String toString() {
@@ -116,8 +116,8 @@ public class LineElement {
         
         for (CharacterElement c : line) {
             str += c;
-        } // for
+        }
         
         return str;
-    } // toString
-} // LineElement
+    }
+}

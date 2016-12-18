@@ -41,55 +41,55 @@ public class Interactable {
     private boolean enabled;
 
     public Interactable() {
-    } // constructor
+    }
 
     public Interactable(int xStart, int yStart, int width, int height) {
         region = new Rectangle(xStart, yStart, width, height);
-    } // constructor
+    }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
         mouseInFocus = false;
         mouseButtonDown = false;
-    } // setEnabled
+    }
 
     public boolean isEnabled() {
         return enabled;
-    } // isEnabled
+    }
 
     public boolean isMouseInFocus() {
         return mouseInFocus;
-    } // isMouseInFocus
+    }
 
     public boolean isMouseButtonDown() {
         return mouseButtonDown;
-    } // isMouseButtonDown
+    }
 
     public void addMouseListener(int zLevel) {
         InputHandler.INSTANCE.addMouseListener(this, zLevel);
         enabled = true;
-    } // addMouseListener
+    }
 
     public void removeMouseListener() {
         InputHandler.INSTANCE.removeMouseListener(this);
         enabled = false;
-    } // removeMouseListener
+    }
     
     public void addKeyListener() {
         InputHandler.INSTANCE.addKeyListener(this);
-    } // addKeyListener
+    }
     
     public void removeKeyListener() {
         InputHandler.INSTANCE.removeKeyListener(this);
-    } // removeKeyListener
+    }
     
     public void setFocus(boolean focus) {
         this.focus = focus;
-    } // setFocus
+    }
     
     public boolean hasFocus() {
         return focus;
-    } // hasFocus
+    }
     
     public void keyPressed(KeyEvent e) {
     }
@@ -110,7 +110,7 @@ public class Interactable {
      */
     public void setRegion(int xStart, int yStart, int width, int height) {
         region = new Rectangle(xStart, yStart, width, height);
-    } // setRegion
+    }
 
     /**
      * Determines whether or not a given point (specified by its x and y
@@ -122,38 +122,38 @@ public class Interactable {
      */
     public boolean contains(int x, int y) {
         return region.contains(x, y);
-    } // contains
+    }
 
     public void mouseEntered() {
         mouseInFocus = true;
-    } // mouseEntered
+    }
 
     public void mouseExited() {
         mouseInFocus = false;
         mouseButtonDown = false;
-    } // mouseExited
+    }
 
     public void mouseMoved(MouseEvent e) {
-    } // mouseMoved
+    }
 
     public void mouseClicked(MouseEvent e) {
         focus = true;
-    } // mouseClicked
+    }
 
     public void mousePressed(MouseEvent e) {
         mouseButtonDown = true;
-    } // mousePressed
+    }
 
     public void mouseReleased(MouseEvent e) {
         mouseButtonDown = false;
-    } // mouseReleased
+    }
 
     public void mouseDragged(MouseEvent e) {
-    } // mouseDragged
+    }
 
     public void mouseWheelUp() {
-    } // mouseWheelUp
+    }
 
     public void mouseWheelDown() {
-    } // mouseWheelDown
-} // Interactable
+    }
+}

@@ -33,41 +33,41 @@ public class QuestButton extends Button {
         callbackFunction = callback;
         super.width = QUEST_BUTTON_BACKGROUND.getWidth();
         super.height = QUEST_BUTTON_BACKGROUND.getHeight();
-    } // constructor
+    }
 
     public void setSelected(boolean isSelected) {
         buttonSelected = isSelected;
-    } // setSelected
+    }
 
     @Override
     public void render() {
         if (buttonSelected) {
             renderSelected();
-        } // if
+        }
 
         if (isMouseInFocus() || buttonSelected) {
             renderHighlighted();
-        } // if
+        }
         else {
             if (isEnabled()) {
                 QUEST_BUTTON_BACKGROUND.render(x, y);
-            } // if
+            }
             else {
                 QUEST_BUTTON_BACKGROUND.renderGrayscale(x, y);
-            } // else
-        } // else
+            }
+        }
 
         renderText();
-    } // render
+    }
 
     @Override
     protected void renderHighlighted() {
         QUEST_BUTTON_BACKGROUND.renderHighlighted(x, y);
-    } // renderHighlighted
+    }
 
     private void renderSelected() {
         QUEST_BUTTON_SELECTED.render(x, y);
-    } // renderSelected
+    }
 
     @Override
     protected void renderText() {
@@ -78,15 +78,15 @@ public class QuestButton extends Button {
             if (buttonSelected) {
                 questNumberOffsX = x + (width - FontService.getStringWidth(title, true, QUEST_NUMBER_FONT_SIZE)) / 2;
                 FontService.drawFont(title, QUEST_NUMBER_SELECTED_COLOR, true, QUEST_NUMBER_FONT_SIZE, questNumberOffsX, questNumberOffsY);
-            } // if
+            }
             else {
                 questNumberOffsX = x + (width - FontService.getStringWidth(title, false, QUEST_NUMBER_FONT_SIZE)) / 2;
                 FontService.drawFont(title, QUEST_NUMBER_ACTIVE_COLOR, false, QUEST_NUMBER_FONT_SIZE, questNumberOffsX, questNumberOffsY);
-            } // else
-        } // if
+            }
+        }
         else {
             questNumberOffsX = x + (width - FontService.getStringWidth(title, false, QUEST_NUMBER_FONT_SIZE)) / 2;
             FontService.drawFont(title, QUEST_NUMBER_INACTIVE_COLOR, false, QUEST_NUMBER_FONT_SIZE, questNumberOffsX, questNumberOffsY);
-        } // else
-    } // renderText
-} // QuestButton
+        }
+    }
+}

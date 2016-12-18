@@ -38,18 +38,18 @@ public class Cursors {
         if (image == null) {
             // error
             return null;
-        } // if
+        }
 
         Cursor c = toolkit.createCustomCursor(image, new Point(0,0), "img");
 
         return c;
-    } // createCursor
+    }
 
     public static void setCursor(Cursor newCursor) {
         if (SceneService.INSTANCE.getCursor() == newCursor) {
             return;
-        } // if
+        }
 
         SceneService.INSTANCE.setCursor(newCursor);
-    } // setCursor
-} // Cursors
+    }
+}

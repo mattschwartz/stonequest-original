@@ -24,7 +24,7 @@ public class Key extends Item {
     public Key(String name, int itemLevel, int sellValue, int lockId, Entity owner) {
         super(name, itemLevel, sellValue, 1, KEY_ICON, owner);
         LOCK_ID = lockId;
-    } // constructor
+    }
     
     /**
      * 
@@ -32,7 +32,7 @@ public class Key extends Item {
      */
     public int getLockId() {
         return LOCK_ID;
-    } // getLockId
+    }
 
     /**
      * Keys do not stack with each other
@@ -42,5 +42,5 @@ public class Key extends Item {
     @Override
     public int compareTo(Item item) {
         return -1;
-    } // compareTo
-} // Key
+    }
+}

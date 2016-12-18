@@ -31,7 +31,7 @@ public class Doodad extends Sprite {
 
         isLocked = locked;
         isOpen = false;
-    } // constructor
+    }
 
     /**
      *
@@ -39,7 +39,7 @@ public class Doodad extends Sprite {
      */
     public void setLocked(boolean newLockedValue) {
         isLocked = newLockedValue;
-    } // setLocked
+    }
 
     /**
      *
@@ -47,7 +47,7 @@ public class Doodad extends Sprite {
      */
     public boolean isLocked() {
         return isLocked;
-    } // isLocked
+    }
 
     /**
      * Change whether the Doodad is open or not
@@ -56,7 +56,7 @@ public class Doodad extends Sprite {
      */
     public void setOpen(boolean newOpenValue) {
         isOpen = newOpenValue;
-    } // setOpen
+    }
 
     /**
      *
@@ -64,11 +64,11 @@ public class Doodad extends Sprite {
      */
     public boolean isOpen() {
         return isOpen;
-    } // isOpen
+    }
 
     @Override
     public void interact(Sprite interactee) {
         isOpen = true;
 //        super.setTileId(spentTile);
-    } // interact
-} // Doodad
+    }
+}

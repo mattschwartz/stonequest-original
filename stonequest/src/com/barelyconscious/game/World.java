@@ -63,26 +63,26 @@ public class World implements Component, Service {
     private World() {
         if (INSTANCE != null) {
             throw new IllegalStateException("Only one world can be created at runtime."); 
-        } // if
+        }
         
         // debugger
         currentMap.generateAreaMap(256, 256, -1, 25, "Kud arajhi steppes");
-    } // constructor
+    }
 
     @Override
     public void start() {
         resize(SceneService.INSTANCE.getWidth(), SceneService.INSTANCE.getHeight());
-    } // start
+    }
 
     @Override
     public void stop() {
-    } // stop
+    }
 
     @Override
     public void restart() {
         stop();
         start();
-    } // restart
+    }
 
     /**
      * Resize the world with the given width and height: redetermine how many
@@ -100,7 +100,7 @@ public class World implements Component, Service {
         determineTileOffs();
 
         inputHandler.resize(0, 0, width, height);
-    } // resize
+    }
 
     /**
      * Determine, based on the screen width and height, the maximum number of
@@ -109,7 +109,7 @@ public class World implements Component, Service {
     private void determineNumTiles() {
         tilesWide = (int) Math.floor(screenWidth * 1.0 / SceneService.TILE_SIZE) + 1;
         tilesHigh = (int) Math.floor(screenHeight * 1.0 / SceneService.TILE_SIZE) + 1;
-    } // determineNumTiles
+    }
 
     /**
      * The player should be centered in the world, thus an offset of tiles must
@@ -119,15 +119,15 @@ public class World implements Component, Service {
         // Center the World around the Player's position within it
         tileOffsX = (tilesWide / 2) - player.getX();
         tileOffsY = (tilesHigh / 2) - player.getY();
-    } // determineOffs
+    }
 
     public int getTileOffsX() {
         return tileOffsX;
-    } // getTileOffsX
+    }
 
     public int getTileOffsY() {
         return tileOffsY;
-    } // getTileOffsY
+    }
 
     /**
      *
@@ -135,7 +135,7 @@ public class World implements Component, Service {
      */
     public int getTilesWide() {
         return tilesWide;
-    } // getTilesWide
+    }
 
     /**
      *
@@ -143,7 +143,7 @@ public class World implements Component, Service {
      */
     public int getTilesHigh() {
         return tilesHigh;
-    } // getTilesHigh
+    }
 
     /**
      *
@@ -152,11 +152,11 @@ public class World implements Component, Service {
     public void spawnSprite(Sprite sprite) {
         if (sprite instanceof Entity) {
             entityList.add((Entity) sprite);
-        } // if
+        }
         else if (sprite instanceof Loot) {
             lootList.add((Loot) sprite);
-        } // else if
-    } // spawnSprite
+        }
+    }
 
     public Sprite getSpriteAt(int x, int y) {
         if (player.getX() == x && player.getY() == y) {
@@ -166,17 +166,17 @@ public class World implements Component, Service {
         for (Entity entity : entityList) {
             if (entity.getX() == x && entity.getY() == y && entity.isVisible() && !entity.shouldRemove()) {
                 return entity;
-            } // if
-        } // for
+            }
+        }
 
         for (Loot loot : lootList) {
             if (loot.getX() == x && loot.getY() == y && loot.isVisible() && !loot.shouldRemove()) {
                 return loot;
-            } // if
-        } // for
+            }
+        }
 
         return null;
-    } // getSpriteAt
+    }
 
     /**
      * Returns the id of a tile at the provided coordinates, expected as the
@@ -192,15 +192,15 @@ public class World implements Component, Service {
         if (!currentMap.isTileVisibleAt(x, y)) {
             if (!currentMap.isTileRecentlySeenAt(x, y)) {
                 return null;
-            } // if
-        } // if
+            }
+        }
 
         return currentMap.getTileAt(x, y);
-    } // getTileAt
+    }
 
     public boolean isTileVisited(int x, int y) {
         return currentMap.isTileVisibleAt(x, y) || currentMap.isTileRecentlySeenAt(x, y);
-    } // isTileVisited
+    }
 
     /**
      *
@@ -210,7 +210,7 @@ public class World implements Component, Service {
      */
     public boolean isTileLit(int x, int y) {
         return currentMap.isTileVisibleAt(x, y);
-    } // isTileLit
+    }
 
     /**
      * Spawns a new Player at x,y within the world. There is only one player per
@@ -223,12 +223,12 @@ public class World implements Component, Service {
     public void spawnPlayer(Player player, int x, int y) {
         if (this.player != null) {
             return;
-        } // if
+        }
 
         this.player = player;
         this.player.setPosition(x, y);
         tick();
-    } // spawnPlayer
+    }
 
     /**
      *
@@ -236,7 +236,7 @@ public class World implements Component, Service {
      */
     public Player getPlayer() {
         return player;
-    } // getPlayer
+    }
 
     /**
      *
@@ -244,7 +244,7 @@ public class World implements Component, Service {
      */
     public int getPlayerX() {
         return player.getX();
-    } // getPlayerX
+    }
 
     /**
      *
@@ -252,7 +252,7 @@ public class World implements Component, Service {
      */
     public int getPlayerY() {
         return player.getY();
-    } // getPlayerY
+    }
 
     /**
      * Determines whether or not it is possible to move to the tile designated
@@ -267,17 +267,17 @@ public class World implements Component, Service {
         // Check map 
         if (!currentMap.canMove(x, y)) {
             return false;
-        } // if
+        }
 
         // Check entity list
         for (Entity entity : entityList) {
             if (entity.getX() == x && entity.getY() == y) {
                 return false;
-            } // if
-        } // for
+            }
+        }
 
         return true;
-    } // canMove
+    }
 
     /**
      * Game logic - this method is called when the user consumes one turn and
@@ -292,8 +292,8 @@ public class World implements Component, Service {
 
             if (sprite.shouldRemove()) {
                 entityList.remove(i);
-            } // if
-        } // for
+            }
+        }
 
         for (int i = 0; i < lootList.size(); i++) {
             sprite = lootList.get(i);
@@ -301,12 +301,12 @@ public class World implements Component, Service {
 
             if (sprite.shouldRemove()) {
                 lootList.remove(i);
-            } // if
-        } // for
+            }
+        }
 
         player.tick();
         determineTileOffs();
-    } // tick
+    }
 
     @Override
     public void render() {
@@ -324,7 +324,7 @@ public class World implements Component, Service {
         player.render((pX + offsX) * SceneService.TILE_SIZE, (pY + offsY) * SceneService.TILE_SIZE);
 
         inputHandler.render();
-    } // render
+    }
 
     private void renderLoot() {
         int lootX = 15;
@@ -336,7 +336,7 @@ public class World implements Component, Service {
         if (lootX > 0 && lootY > 0) {
 //            Tile.lootTile.render(screen, lootX * Common.TILE_SIZE, lootY * Common.TILE_SIZE);
         }
-    } // renderLoot
+    }
 
     private void renderEntities() {
         int x;
@@ -355,7 +355,7 @@ public class World implements Component, Service {
 
             entity.render(x, y);
         }
-    } // renderEntities
+    }
 
     // Functions from interface ################################################
     @Override
@@ -398,4 +398,4 @@ public class World implements Component, Service {
         // Never gets removed
         return false;
     }
-} // World
+}

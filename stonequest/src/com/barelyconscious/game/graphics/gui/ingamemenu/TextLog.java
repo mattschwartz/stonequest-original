@@ -31,36 +31,36 @@ public class TextLog extends TextArea implements Service {
     private TextLog() {
         if (INSTANCE != null) {
             throw new IllegalStateException("Only one TextLog can be created during runtime.");
-        } // if
-    } // constructor
+        }
+    }
 
     @Override
     public void start() {
         super.init(1, 1, 1, 1, true);
         append("\n\n\nWelcome to StoneQuest v0.7.0!\nPress ? to open the help menu.");
-    } // start
+    }
 
     @Override
     public void stop() {
-    } // stop
+    }
 
     @Override
     public void restart() {
         stop();
         start();
-    } // restart
+    }
 
     public void resize(int startX, int startY, int width, int height) {
         super.setWidth(width);
         super.setHeight(height);
         super.setX(startX);
         super.setY(startY);
-    } // resize
+    }
 
     @Override
     public void append(String text) {
         append(new LineElement(text));
-    } // append
+    }
 
     public void appendDamageMessage(Entity assailant, Entity target, double dmg, int type) {
         int[] matchColors = new int[4];
@@ -79,7 +79,7 @@ public class TextLog extends TextArea implements Service {
 
             msg = "You attack " + target.getName() + " for " + String.format("%.1f", dmg)
                     + " damage (" + EntityHelper.damageTypeToString(type) + ").";
-        } // if
+        }
         else {
             matches[0] = assailant.getName();
             matchColors[0] = TextLogHelper.TEXTLOG_ENTITY_LABEL_COLOR;
@@ -92,13 +92,13 @@ public class TextLog extends TextArea implements Service {
 
             msg = assailant.getName() + " attacks you for " + String.format("%.1f", dmg)
                     + " damage (" + EntityHelper.damageTypeToString(type) + ").";
-        } // else
+        }
         append(LineElement.parseString(msg, matches, TextLogHelper.TEXTLOG_DEFAULT_COLOR, matchColors));
-    } // appendDamageMessage
+    }
     
     public void appendDeathMessage(Entity deceased) {
         append(LineElement.parseString(deceased.getName() + " has been slain.", deceased.getName(), TextLogHelper.TEXTLOG_DEFAULT_COLOR, TextLogHelper.TEXTLOG_ENTITY_LABEL_COLOR));
-    } // appendDeathMessage
+    }
 
     public void append(LineElement message) {
         int lineCount;
@@ -107,22 +107,22 @@ public class TextLog extends TextArea implements Service {
         
         while (textLog.size() >= MAX_LINES) {
             textLog.remove(0);
-        } // while
+        }
 
         lineCount = textLog.size();
         startingLineOffset = lineCount - rows;
         scrollBar.setLineCounts(lineCount, startingLineOffset);
-    } // append
+    }
 
     public String toPlainText() {
         String str = "";
 
         for (LineElement line : textLog) {
             str += line + "\n";
-        } // for
+        }
 
         return str;
-    } // toPlainText
+    }
 
     @Override
     protected synchronized void renderText() {
@@ -134,7 +134,7 @@ public class TextLog extends TextArea implements Service {
         if (startingLineOffset + rows > textLog.size()) {
             startingLineOffset = textLog.size() - rows;
             scrollBar.setTopLine(startingLineOffset);
-        } // if
+        }
 
         if (startingLineOffset < 0) {
             startingLineOffset = 0;
@@ -148,6 +148,6 @@ public class TextLog extends TextArea implements Service {
             if (i >= rows) {
                 break;
             }
-        } // for
-    } // renderText
-} // TextLog
+        }
+    }
+}

@@ -29,7 +29,7 @@ public class MainMenu extends Menu {
     public MainMenu() {
         createWidgets();
         hide();
-    } // constructor
+    }
 
     private void createWidgets() {
         ButtonCallback newPlayerAction;
@@ -89,7 +89,7 @@ public class MainMenu extends Menu {
         addComponent(loadPlayerButton);
         addComponent(optionsButton);
         addComponent(quitGameButton);
-    } // createWidgets
+    }
 
     @Override
     public void resize(int newWidth, int newHeight) {
@@ -107,19 +107,19 @@ public class MainMenu extends Menu {
         
         quitGameButton.setPosition(0.5f, -75, 0.5f, 25.0f);
         quitGameButton.setSize(0.0f, 150.0f, 0.0f, 25.0f);
-    } // resize
+    }
 
     private void newPlayerEvent() {
         SceneService.INSTANCE.setMenu(SceneService.newPlayerMenu);
-    } // newPlayerEvent
+    }
 
     private void loadPlayerEvent() {
-    } // loadPlayerEvent
+    }
     
     private void optionsEvent() {
-    } // optionsEvent
+    }
 
     private void quitGameEvent() {
         Game.Stop();
-    } // quitGameEvent
-} // MainMenu
+    }
+}

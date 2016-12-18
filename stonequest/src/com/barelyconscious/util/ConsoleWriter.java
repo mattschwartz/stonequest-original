@@ -22,14 +22,14 @@ public class ConsoleWriter {
     public static void writeStr(String str) {
         if (verbosity >= VERBOSE_ALL) {
             System.out.println(" [INF] " + str);
-        } // if
-    } // writeStr
+        }
+    }
 
     public static void writeError(String str) {
         if (verbosity >= VERBOSE_LOW) {
             System.out.println(" [ERR] " + str);
-        } // if
-    } // writeError
+        }
+    }
 
-} // ConsoleWriter
+}
 

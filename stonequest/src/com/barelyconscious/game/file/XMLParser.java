@@ -17,13 +17,13 @@ import com.barelyconscious.game.item.*;
 
 public class XMLParser {
     private XMLParser() {
-    } // private constructor
+    }
     
     public static Item parseItem(String xmlPath) {
         return null;
-    } // parseItem
+    }
     
     public static Weapon parseWeapon(String xmlPath) {
         return null;
-    } // parseWeapon
-} // XMLParser
+    }
+}

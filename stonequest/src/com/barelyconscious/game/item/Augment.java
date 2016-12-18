@@ -18,5 +18,5 @@ import com.barelyconscious.game.spawnable.Entity;
 public class Augment extends Item {
     public Augment(String name, int itemLevel, Entity owner) {
         super(name, itemLevel, 0, 1, "", owner);
-    } // constructor
-} // Augment
+    }
+}

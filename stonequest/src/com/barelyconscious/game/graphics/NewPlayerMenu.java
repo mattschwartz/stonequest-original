@@ -28,7 +28,7 @@ public class NewPlayerMenu extends Menu {
     public NewPlayerMenu() {
         createWidgets();
         hide();
-    } // constructor
+    }
 
     private void createWidgets() {
         ButtonCallback backEvent;
@@ -67,7 +67,7 @@ public class NewPlayerMenu extends Menu {
         addComponent(playerNameTextField);
         addComponent(backButton);
         addComponent(startGameButton);
-    } // createWidgets
+    }
 
     @Override
     public void resize(int newWidth, int newHeight) {
@@ -84,12 +84,12 @@ public class NewPlayerMenu extends Menu {
 
         startGameButton.setSize(0.0f, 150.0f, 0.0f, 25.0f);
         startGameButton.setPosition(0.5f, 0.0f, 0.5f, 0.0f);
-    } // resize
+    }
 
     private void backButtonPressed() {
         SceneService.INSTANCE.setMenu(SceneService.mainMenu);
-    } // backButtonPressed
+    }
 
     private void startButtonPressed() {
-    } // startButtonPressed
-} // NewPlayerMenu
+    }
+}

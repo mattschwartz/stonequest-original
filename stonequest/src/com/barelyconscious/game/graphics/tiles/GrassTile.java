@@ -33,17 +33,17 @@ public class GrassTile extends Tile {
 
         if (random.nextInt(100) < ALT_1_PROBABILITY) {
             this.image = GRASS_TILE_ALT_1;
-        } // if
+        }
         else if (random.nextInt(100) < ALT_2_PROBABILITY) {
             this.image = GRASS_TILE_ALT_2;
-        } // else if
+        }
         else {
             this.image = GRASS_TILE_ALT_3;
-        } // else if
-    } // constructor
+        }
+    }
 
     @Override
     public String getDescription() {
         return "Hairy dirt.";
-    } // getDescription
-} // GrassTile
+    }
+}

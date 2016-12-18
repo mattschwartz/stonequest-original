@@ -31,7 +31,7 @@ public class Cauldron {
      */
     public Cauldron() {
         ingredients = new Item[MAX_INGREDIENTS];
-    } // constructor
+    }
 
     /**
      * Returns the Item (if any) at
@@ -44,7 +44,7 @@ public class Cauldron {
      */
     public Item getIngredient(int index) {
         return index < 0 || index >= MAX_INGREDIENTS ? null : ingredients[index];
-    } // getIngredient
+    }
 
     /**
      * Adds an Item at the first available Item slot in the Cauldron and returns
@@ -59,17 +59,17 @@ public class Cauldron {
     public boolean addIngredient(Item ingredient) {
         if (!isIngredient(ingredient)) {
             return false;
-        } // if
+        }
 
         for (int i = 0; i < MAX_INGREDIENTS; i++) {
             if (ingredients[i] == null) {
                 ingredients[i] = ingredient;
                 return true;
-            } // if
-        } // for
+            }
+        }
 
         return false;
-    } // addIngredient
+    }
 
     /**
      * Sets the Item slot, located at
@@ -88,23 +88,23 @@ public class Cauldron {
         Item oldItem;
         if (index < 0 || index >= MAX_INGREDIENTS) {
             return null;
-        } // if
+        }
         
         oldItem = ingredients[index];
         ingredients[index] = ingredient;
         return oldItem;
-    } // setIngredient
+    }
 
     public Item brew() {
         TextLog.INSTANCE.append("Bubbles be bubblin.");
         // Consume ingredients
         for (int i = 0; i < MAX_INGREDIENTS; i++) {
             ingredients[i] = null;
-        } // for
+        }
         
         Item item = new Item("Essence of Mind", 0, 155, 3, Item.ITEM_ROOT_FILE_PATH + "salvage/essenceOfMind.png", null);
         return  item;
-    } // brew
+    }
 
     /**
      * Determines if
@@ -117,5 +117,5 @@ public class Cauldron {
      */
     public boolean isIngredient(Item item) {
         return (item instanceof Salvage);
-    } // isIngredient
-} // Cauldron
+    }
+}

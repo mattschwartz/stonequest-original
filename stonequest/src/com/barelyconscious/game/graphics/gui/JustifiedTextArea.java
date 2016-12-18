@@ -37,7 +37,7 @@ public class JustifiedTextArea extends TextArea {
 
         leftJustifiedText = new ArrayList<String>();
         rightJustifiedText = new ArrayList<String>();
-    } // constructor
+    }
 
     @Override
     public void clearText() {
@@ -45,7 +45,7 @@ public class JustifiedTextArea extends TextArea {
         rightJustifiedText.clear();
         currentLine = 0;
         super.scrollBar.setLineCounts(0, 0);
-    } // clearText
+    }
 
     @Override
     public void resize(int startX, int startY) {
@@ -53,16 +53,16 @@ public class JustifiedTextArea extends TextArea {
 
         this.textOffsX = startX + MARGIN;
         this.textOffsY = startY + 12 + MARGIN;
-    } // resize
+    }
     
     public void setLine(int line, String leftText, String rightText) {
         if (line >= leftJustifiedText.size()) {
             return;
-        } // if
+        }
 
         leftJustifiedText.set(line, leftText);
         rightJustifiedText.set(line, rightText);
-    } // setLine
+    }
 
     public void appendLine(String leftText, String rightText) {
         leftJustifiedText.add(leftText);
@@ -70,7 +70,7 @@ public class JustifiedTextArea extends TextArea {
         currentLine++;
         startingLineOffset = 0;//currentLine - rows;
         super.scrollBar.setLineCounts(currentLine, startingLineOffset);
-    } // appendLine
+    }
 
     @Override
     protected void renderText() {
@@ -80,24 +80,24 @@ public class JustifiedTextArea extends TextArea {
         if (startingLineOffset + rows > leftJustifiedText.size()) {
             startingLineOffset = leftJustifiedText.size() - rows;
             scrollBar.setTopLine(startingLineOffset);
-        } // if
+        }
 
         if (startingLineOffset < 0) {
             startingLineOffset = 0;
-        } // if
+        }
 
         for (int i = startingLineOffset; i < leftJustifiedText.size(); i++) {
             if (!leftJustifiedText.get(i).equals("\n")) {
                 FontService.drawFont(leftJustifiedText.get(i), leftJustifiedTextColor, null, textOffsX, textOffsY + line * FontService.characterHeight);
                 rightJustifiedTextOffsX = x + width - FontService.getStringWidth(rightJustifiedText.get(i)) - MARGIN - 4;
                 FontService.drawFont(rightJustifiedText.get(i), rightJustifiedTextColor, null, rightJustifiedTextOffsX, textOffsY + line * FontService.characterHeight);
-            } // if
+            }
             
             line++;
 
             if (line >= super.rows) {
                 break;
-            } // if
-        } // for
-    } // renderText
-} // JustifiedTextArea
+            }
+        }
+    }
+}

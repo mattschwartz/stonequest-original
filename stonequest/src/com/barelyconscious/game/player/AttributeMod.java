@@ -32,14 +32,14 @@ public class AttributeMod implements Comparable<AttributeMod> {
     public AttributeMod(int id, double mod) {
         attributeId = id;
         modifierAmount = mod;
-    } // constructor
+    }
 
     /**
      * @return the attribute id
      */
     public int getAttributeId() {
         return attributeId;
-    } // getAttributeId
+    }
 
     /**
      *
@@ -47,7 +47,7 @@ public class AttributeMod implements Comparable<AttributeMod> {
      */
     public double getAttributeModifier() {
         return modifierAmount;
-    } // getAttributeModifier
+    }
 
     /**
      * Translates an attribute id into a String
@@ -57,7 +57,7 @@ public class AttributeMod implements Comparable<AttributeMod> {
     @Override
     public String toString() {
         return Entity.attributeIdToString(attributeId);
-    } // toString
+    }
 
     /**
      * Two AttributeMods are considered equal if both the attribute they modify
@@ -69,12 +69,12 @@ public class AttributeMod implements Comparable<AttributeMod> {
     public int compareTo(AttributeMod mod) {
         if (attributeId != mod.getAttributeId()) {
             return -1;
-        } // if
+        }
         
         if (modifierAmount != mod.getAttributeModifier()) {
             return -1;
-        } // if
+        }
         
         return 0;
-    } // compareTo
+    }
 }  // AttributeMod

@@ -28,72 +28,72 @@ public class Window extends Interactable implements Component {
     private boolean isVisible;
 
     public Window() {
-    } // constructor
+    }
 
     public void toggleUI() {
         isVisible = !isVisible;
 
         if (isVisible) {
             show();
-        } // if
+        }
         else {
             hide();
-        } // else
-    } // toggleUI
+        }
+    }
 
     public void show() {
         isVisible = true;
-    } // show
+    }
 
     public void hide() {
         isVisible = false;
-    } // hide
+    }
 
     public boolean isVisible() {
         return isVisible;
-    } // isVisible
+    }
 
     public void setVisible(boolean isVisible) {
         this.isVisible = isVisible;
-    } // setVisible
+    }
 
     @Override
     public int getX() {
         return windowOffsX;
-    } // getX
+    }
 
     @Override
     public int getY() {
         return windowOffsY;
-    } // getY
+    }
 
     @Override
     public void setX(int newX) {
         windowOffsX = Math.max(0, newX);
-    } // setX
+    }
 
     @Override
     public void setY(int newY) {
         windowOffsY = Math.max(0, newY);
-    } // setY
+    }
 
     @Override
     public int getWidth() {
         return width;
-    } // getWidth
+    }
 
     public void setWidth(int newWidth) {
         this.width = newWidth;
-    } // setWidth
+    }
 
     @Override
     public int getHeight() {
         return height;
-    } // getHeight
+    }
 
     public void setHeight(int newHeight) {
         this.height = newHeight;
-    } // setHeight
+    }
 
     /**
      * Renders the Window to the screen. This method does nothing and should be
@@ -103,7 +103,7 @@ public class Window extends Interactable implements Component {
      */
     @Override
     public void render() {
-    } // render
+    }
 
     /**
      * Unused function for Window components.
@@ -113,12 +113,12 @@ public class Window extends Interactable implements Component {
     @Override
     public boolean shouldRemove() {
         return false;
-    } // shouldRemove
+    }
 
     /**
      * Unused function for Window components.
      */
     @Override
     public void dispose() {
-    } // dispose
-} // Window
+    }
+}

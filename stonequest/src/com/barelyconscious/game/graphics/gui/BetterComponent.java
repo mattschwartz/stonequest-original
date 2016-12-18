@@ -70,7 +70,7 @@ public abstract class BetterComponent extends Interactable {
         y = (int) yStart;
         
         super.setRegion(x, y, this.width, this.height);
-    } // setPosition
+    }
     
     public void setSize(float absoluteX, float relativeX, float absoluteY, float relativeY) {
         float newWidth = SceneService.INSTANCE.getWidth() * absoluteX;
@@ -83,12 +83,12 @@ public abstract class BetterComponent extends Interactable {
         height = (int) newHeight;
         
         super.setRegion(x, y, this.width, this.height);
-    } // setSize
+    }
     
     public boolean shouldRemove() {
         return removeOnUpdate;
-    } // shouldRemove
+    }
     
     public void render() {
-    } // render
-} // BetterComponent
+    }
+}

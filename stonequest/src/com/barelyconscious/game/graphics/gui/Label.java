@@ -29,18 +29,18 @@ public class Label extends BetterComponent {
     public Label(String text) {
         this.text = text;
         loadImage();
-    } // constructor
+    }
 
     public Label(String text, int width, int height) {
         this(text);
         this.width = width;
         this.height = height;
-    } // constructor
+    }
 
     private void loadImage() {
         if (borderLeft != null) {
             return;
-        } // if
+        }
 
         int[] pixels;
         int subWidth = 4;
@@ -53,15 +53,15 @@ public class Label extends BetterComponent {
         borderRight = new UIElement(pixels, subWidth, subHeight);
         pixels = unparsedImage.getRGB(subWidth * 2, 0, subWidth, subHeight, null, 0, subWidth);
         borderRepeat = new UIElement(pixels, subWidth, subHeight);
-    } // loadImage
+    }
 
     public String getText() {
         return text;
-    } // getText
+    }
 
     public void setText(String text) {
         this.text = text;
-    } // setText
+    }
 
     @Override
     public void render() {
@@ -69,17 +69,17 @@ public class Label extends BetterComponent {
 
         for (int i = x + borderLeft.getWidth(); i < x + (width - borderRight.getWidth()); i += borderRepeat.getWidth()) {
             borderRepeat.render(i, y);
-        } // for
+        }
 
         borderRight.render(x + width - borderRight.getWidth(), y);
 
         renderText();
-    } // render
+    }
 
     private void renderText() {
         int offsX = x + Button.MARGIN + (width - Button.MARGIN * 2 - FontService.getStringWidth(text)) / 2;
         int offsY = y + FontService.characterHeight;
 
         FontService.drawFont(text, Color.white, offsX, offsY);
-    } // renderText
-} // Label
+    }
+}

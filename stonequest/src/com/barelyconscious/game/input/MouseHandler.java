@@ -34,28 +34,28 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
         // Should automatically be ordered when objects are added
         if (!interactableObjects.containsKey(zLevel)) {
             interactableObjects.put(zLevel, new ArrayList<Interactable>());
-        } // if
+        }
 
         if (!interactableObjects.get(zLevel).contains(interactableObject)) {
             interactableObjects.get(zLevel).add(interactableObject);
-        } // if
-    } // addInteractable 
+        }
+    }
 
     public void removeInteractable(Interactable interactableObject) {
         for (Integer zLevel : interactableObjects.keySet()) {
             if (interactableObjects.get(zLevel).contains(interactableObject)) {
                 interactableObjects.get(zLevel).remove(interactableObject);
-            } // if
-        } // for
-    } // removeInteractable
+            }
+        }
+    }
     
     public int getMouseX() {
         return mouseX;
-    } // getMouseX
+    }
     
     public int getMouseY() {
         return mouseY;
-    } // getMouseY
+    }
 
     /**
      * Find the first interactable object, sorted by zLevel and pass the mouse
@@ -77,19 +77,19 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
                 if (!interactable.isEnabled()) {
                     continue;
-                } // if
+                }
 
                 if (interactable.contains(e.getX(), e.getY())) {
                     if (!interactable.isMouseInFocus()) {
                         interactable.mouseEntered();
-                    } // if
+                    }
 
                     interactable.mouseClicked(e);
                     return;
-                } // if
-            } // for
-        } // for
-    } // mouseClicked
+                }
+            }
+        }
+    }
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -102,24 +102,24 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
                 if (!interactable.isEnabled()) {
                     continue;
-                } // if
+                }
 
                 if (interactable.contains(e.getX(), e.getY())) {
 
                     if (interactable.isMouseInFocus()) {
                         interactable.mouseEntered();
-                    } // if
+                    }
 
                     interactable.mousePressed(e);
 //                    return;
                     found = true;
-                } // if
+                }
                 else if (!found && !interactable.isMouseInFocus()) {
                     interactable.mouseExited();
-                } // else if
-            } // for
-        } // for
-    } // mousePressed
+                }
+            }
+        }
+    }
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -132,26 +132,26 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
                 if (!interactable.isEnabled()) {
                     continue;
-                } // if
+                }
 
                 interactable.mouseReleased(e);
 
                 if (interactable.contains(e.getX(), e.getY())) {
                     if (interactable.isMouseInFocus()) {
                         interactable.mouseEntered();
-                    } // if
+                    }
                     found = true;
                     break;
-                } // if
+                }
                 else if (!interactable.contains(e.getX(), e.getY())) {
                     interactable.mouseExited();
                 }
-            } // for
+            }
             if (found) {
                 break;
             }
-        } // for
-    } // mouseReleased
+        }
+    }
 
     @Override
     public void mouseMoved(MouseEvent e) {
@@ -168,26 +168,26 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
                     if (!interactable.isEnabled()) {
                         continue;
-                    } // if
+                    }
 
                     if (!found && interactable.contains(e.getX(), e.getY())) {
                         
                         if (!interactable.isMouseInFocus()) {
                             interactable.mouseEntered();
-                        } // if
+                        }
 
                         interactable.mouseMoved(e);
 
                     found = true;
-                    } // if
+                    }
                     else if (interactable.isMouseInFocus()) {
                         interactable.mouseExited();
-                    } // if
-                } // for
-            } // for
+                    }
+                }
+            }
         } catch (ConcurrentModificationException ex) {
         }
-    } // mouseMoved
+    }
 
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -201,24 +201,24 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
                 if (!interactable.isEnabled()) {
                     continue;
-                } // if
+                }
                 
                 if (!found && interactable.contains(e.getX(), e.getY())) {
 
                     if (!interactable.isMouseInFocus()) {
                         interactable.mouseEntered();
-                    } // if
+                    }
 
                     interactable.mouseDragged(e);
 
                     found = true;
-                } // if
+                }
                 else if (interactable.isMouseInFocus()) {
                     interactable.mouseExited();
-                } // if
-            } // for
-        } // for
-    } // mouseDragged
+                }
+            }
+        }
+    }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
@@ -229,27 +229,27 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
             if (!interactable.isEnabled()) {
                 continue;
-            } // if
+            }
             
             if (interactable.contains(e.getX(), e.getY())) {
                 if (e.getWheelRotation() < 0) {
                     interactable.mouseWheelUp();
-                } // if
+                }
 
                 if (e.getWheelRotation() > 0) {
                     interactable.mouseWheelDown();
-                } // if
+                }
                 return;
-            } // if
-        } // for
-    } // mouseWheelMoved
+            }
+        }
+    }
 
     // Unused ------------------------------------------------------------------
     @Override
     public void mouseEntered(MouseEvent e) {
-    } // mouseEntered
+    }
 
     @Override
     public void mouseExited(MouseEvent e) {
-    } // mouseExited
-} // MouseHandler
+    }
+}

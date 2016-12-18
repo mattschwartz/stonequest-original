@@ -43,13 +43,13 @@ public class BetterButton extends BetterComponent {
         height = DEFAULT_HEIGHT;
         loadImage();
         super.addMouseListener(Interactable.Z_BUTTON);
-    } // constructor
+    }
 
     public BetterButton(ButtonCallback callback, String text) {
         this(text);
         callbackFunction = callback;
         loadImage();
-    } // constructor
+    }
 
     private void loadImage() {
         int[] pixels;
@@ -63,7 +63,7 @@ public class BetterButton extends BetterComponent {
         borderRight = new UIElement(pixels, subWidth, subHeight);
         pixels = unparsedImage.getRGB(subWidth * 2, 0, subWidth, subHeight, null, 0, subWidth);
         borderRepeat = new UIElement(pixels, subWidth, subHeight);
-    } // loadImage
+    }
 
     public String getText() {
         return text;
@@ -75,44 +75,44 @@ public class BetterButton extends BetterComponent {
 
     public void setCallbackFunction(ButtonCallback callbackFunction) {
         this.callbackFunction = callbackFunction;
-    } // setCallbackFunction
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (!isEnabled()) {
             return;
-        } // if
+        }
 
         if (callbackFunction != null && e.getButton() == Interactable.MOUSE_LEFT_CLICK) {
             callbackFunction.action(this);
-        } // if
-    } // mouseClicked
+        }
+    }
 
     @Override
     public void mouseEntered() {
         if (!isEnabled()) {
             return;
-        } // if
+        }
 
         if (callbackFunction != null) {
             callbackFunction.hoverOverAction(this);
-        } // if
+        }
 
         super.mouseEntered();
-    } // mouseEntered
+    }
 
     @Override
     public void mouseExited() {
         if (!isEnabled()) {
             return;
-        } // if
+        }
 
         if (callbackFunction != null) {
             callbackFunction.hoverOverAction(null);
-        } // if
+        }
 
         super.mouseExited();
-    } // mouseExited
+    }
 
     @Override
     public void render() {
@@ -122,18 +122,18 @@ public class BetterButton extends BetterComponent {
         if (isMouseInFocus()) {
             renderHighlighted();
             return;
-        } // if
+        }
 
         if (isMouseButtonDown()) {
             xOffs++;
             yOffs++;
-        } // if
+        }
 
         borderLeft.render(xOffs, yOffs);
 
         for (int i = xOffs + borderLeft.getWidth(); i < xOffs + (width - borderRight.getWidth()); i += borderRepeat.getWidth()) {
             borderRepeat.render(i, yOffs);
-        } // for
+        }
 
         borderRight.render(xOffs + width - borderRight.getWidth(), yOffs);
 
@@ -141,8 +141,8 @@ public class BetterButton extends BetterComponent {
 
         if (hasBorder) {
             renderBorder();
-        } // if
-    } // render
+        }
+    }
     
     protected void renderHighlighted() {
         int xOffs = x;
@@ -151,24 +151,24 @@ public class BetterButton extends BetterComponent {
         if (isMouseButtonDown()) {
             xOffs++;
             yOffs++;
-        } // if
+        }
 
         borderLeft.renderHighlighted(xOffs, yOffs);
 
         for (int i = xOffs + borderLeft.getWidth(); i < xOffs + (width - borderRight.getWidth()); i += borderRepeat.getWidth()) {
             borderRepeat.renderHighlighted(i, yOffs);
-        } // for
+        }
 
         borderRight.renderHighlighted(xOffs + width - borderRight.getWidth(), yOffs);
 
         if (!StringHelper.isNullOrEmpty(text)) {
             renderText();
-        } // if
+        }
 
         if (hasBorder) {
             renderBorder();
-        } // if
-    } // renderHighlighted
+        }
+    }
 
     protected void renderText() {
         int offsX = x + MARGIN + (width - MARGIN * 2 - FontService.getStringWidth(text)) / 2;
@@ -178,11 +178,11 @@ public class BetterButton extends BetterComponent {
             offsX++;
             offsY++;
             FontService.drawFont(text, GUIHelper.DEFAULT_FONT_COLOR, offsX, offsY);
-        } // if
+        }
         else {
             FontService.drawFont(text, Color.white, offsX, offsY);
-        } // else
-    } // renderText
+        }
+    }
 
     private void renderBorder() {
         int xOffs = x;
@@ -196,13 +196,13 @@ public class BetterButton extends BetterComponent {
 
             ShapeDrawer.drawLine(borderHighlightColor, xOffs + width, yOffs, xOffs + width, yOffs + height);
             ShapeDrawer.drawLine(borderHighlightColor, xOffs, yOffs + height, xOffs + width, yOffs + height);
-        } // if
+        }
         else {
             ShapeDrawer.drawLine(borderHighlightColor, xOffs - 1, yOffs - 1, xOffs - 1, yOffs + height + 1);
             ShapeDrawer.drawLine(borderHighlightColor, xOffs, yOffs - 1, xOffs + width, yOffs - 1);
 
             ShapeDrawer.drawLine(borderShadowColor, xOffs + width, yOffs, xOffs + width, yOffs + height);
             ShapeDrawer.drawLine(borderShadowColor, xOffs, yOffs + height, xOffs + width, yOffs + height);
-        } // else
-    } // renderButton
-} // BetterButton
+        }
+    }
+}

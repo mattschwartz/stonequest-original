@@ -20,9 +20,9 @@ import com.barelyconscious.game.spawnable.Entity;
 public class Salvage extends Item {
     public Salvage() {
         super("", 1, 1, 1, "", null);
-    } // constructor
+    }
     
     public Salvage(String name, int itemLevel, int sellValue, int stackSize, String fileLocation, Entity owner, AttributeMod... itemAffixes) {
         super(name, itemLevel, sellValue, stackSize, name, owner, itemAffixes);
-    } // constructor
-} // Salvage
+    }
+}

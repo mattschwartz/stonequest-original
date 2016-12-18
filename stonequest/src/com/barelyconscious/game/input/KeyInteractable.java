@@ -23,4 +23,4 @@ public interface KeyInteractable {
     public void keyReleased(KeyEvent key);
 
     public void keyTyped(KeyEvent key);
-} // KeyInteractable
+}

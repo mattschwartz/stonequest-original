@@ -26,29 +26,29 @@ public class InterfaceWindowButton extends Button {
         super.setWidth(buttonImage.getWidth());
         super.setHeight(buttonImage.getHeight());
         this.buttonImage = buttonImage;
-    } // constructor
+    }
 
     @Override
     public void mouseExited() {
         super.mouseExited();
 //        InterfaceDelegate.getInstance().clearTooltipText();
-    } // mouseExited
+    }
 
     @Override
     public void render() {
         if (isMouseButtonDown()) {
             buttonImage.renderShaded(x, y);
-        } // if
+        }
         else if (isMouseInFocus()) {
             renderHighlighted();
-        } // if
+        }
         else {
             buttonImage.render(x, y);
-        } // else
-    } // render
+        }
+    }
 
     @Override
     protected void renderHighlighted() {
         buttonImage.renderHighlighted(x, y);
-    } // renderHighlighted
-} // InterfaceWindowButton
+    }
+}

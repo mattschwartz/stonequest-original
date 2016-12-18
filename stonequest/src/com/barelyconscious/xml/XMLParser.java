@@ -15,5 +15,5 @@ package com.barelyconscious.xml;
 
 public class XMLParser {
     private XMLParser() {
-    } // private constructor
-} // XMLParser
+    }
+}

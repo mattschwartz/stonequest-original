@@ -101,7 +101,7 @@ public class CharacterWindow extends Window implements ButtonAction {
         super.setRegion(getX(), getY(), getWidth(), getHeight());
         super.addMouseListener(Interactable.Z_BACKGROUND);
         hide();
-    } // constructor
+    }
 
     private void setAttributeMouseRegions() {
         attributesMouseRegion = new Rectangle(getX() + 43, getY() + 153, 280, 190);
@@ -115,7 +115,7 @@ public class CharacterWindow extends Window implements ButtonAction {
         holyMagicAttributeMouseRegion = new Rectangle(getX() + HOLY_MAGIC_ATTRIBUTE_OFFS_X, getY() + HOLY_MAGIC_ATTRIBUTE_OFFS_Y, ATTRIBUTE_HOVER_AREA_WIDTH, ATTRIBUTE_HOVER_AREA_HEIGHT);
         chaosMagicAttributeMouseRegion = new Rectangle(getX() + CHAOS_MAGIC_ATTRIBUTE_OFFS_X, getY() + CHAOS_MAGIC_ATTRIBUTE_OFFS_Y, ATTRIBUTE_HOVER_AREA_WIDTH, ATTRIBUTE_HOVER_AREA_HEIGHT);
         faithAttributeMouseRegion = new Rectangle(getX() + FAITH_ATTRIBUTE_OFFS_X, getY() + FAITH_ATTRIBUTE_OFFS_Y, ATTRIBUTE_HOVER_AREA_WIDTH, ATTRIBUTE_HOVER_AREA_HEIGHT);
-    } // setAttributeMouseRegions
+    }
 
     /**
      * Resize elements as necessary when the application is resized.
@@ -155,13 +155,13 @@ public class CharacterWindow extends Window implements ButtonAction {
         holyMagicAttributeMouseRegion = new Rectangle(getX() + HOLY_MAGIC_ATTRIBUTE_OFFS_X, getY() + HOLY_MAGIC_ATTRIBUTE_OFFS_Y, ATTRIBUTE_HOVER_AREA_WIDTH, ATTRIBUTE_HOVER_AREA_HEIGHT);
         chaosMagicAttributeMouseRegion = new Rectangle(getX() + CHAOS_MAGIC_ATTRIBUTE_OFFS_X, getY() + CHAOS_MAGIC_ATTRIBUTE_OFFS_Y, ATTRIBUTE_HOVER_AREA_WIDTH, ATTRIBUTE_HOVER_AREA_HEIGHT);
         faithAttributeMouseRegion = new Rectangle(getX() + FAITH_ATTRIBUTE_OFFS_X, getY() + FAITH_ATTRIBUTE_OFFS_Y, ATTRIBUTE_HOVER_AREA_WIDTH, ATTRIBUTE_HOVER_AREA_HEIGHT);
-    } // resize
+    }
 
     private void setComponentsEnabled(boolean enabled) {
         detailedStatsTextArea.setEnabled(enabled);
         attributeInformationTextArea.setEnabled(enabled);
         closeWindowButton.setEnabled(enabled);
-    } // setComponentsEnabled
+    }
 
     private void writeDetailedStats() {
         detailedStatsTextArea.clearText();
@@ -179,7 +179,7 @@ public class CharacterWindow extends Window implements ButtonAction {
         detailedStatsTextArea.appendLine("Current level", "" + World.INSTANCE.getPlayer().getLevel());
         detailedStatsTextArea.appendLine("Current experience", StringHelper.formatNumber(World.INSTANCE.getPlayer().getCurrentExperience()));
         detailedStatsTextArea.appendLine("Next level in", StringHelper.formatNumber(World.INSTANCE.getPlayer().getRequiredExperience()));
-    } // writeDetailedStats
+    }
 
     private void updateDetailedStats() {
         detailedStatsTextArea.setLine(0, "Melee damage", String.format("%.1f-%.1f", World.INSTANCE.getPlayer().getMinimumMagicDamage(), World.INSTANCE.getPlayer().getMaximumPhysicalDamage()));
@@ -195,7 +195,7 @@ public class CharacterWindow extends Window implements ButtonAction {
         detailedStatsTextArea.setLine(11, "Current level", "" + World.INSTANCE.getPlayer().getLevel());
         detailedStatsTextArea.setLine(12, "Current experience", StringHelper.formatNumber(World.INSTANCE.getPlayer().getCurrentExperience()));
         detailedStatsTextArea.setLine(13, "Next level in", StringHelper.formatNumber(World.INSTANCE.getPlayer().getRequiredExperience()));
-    } // updateDetailedStats
+    }
 
     private void writeAttributeInformation() {
         attributeInformationTextArea.clearText();
@@ -233,72 +233,72 @@ public class CharacterWindow extends Window implements ButtonAction {
                 break;
             default:
                 System.err.println("Unaccounted for: " + attributeHoverOver);
-        } // switch-case
-    } // writeAttributeInformation
+        }
+    }
 
     @Override
     public void mouseMoved(MouseEvent e) {
         attributeHoverOver = -1;
         if (!attributesMouseRegion.contains(e.getX(), e.getY())) {
             return;
-        } // if
+        }
 
         // Is mouse hovering over the hitpoints attribute?
         if (hitpointsAttributeMouseRegion.contains(e.getX(), e.getY())) {
             attributeHoverOver = Entity.HEALTH_ATTRIBUTE;
-        } // if
+        }
         else if (strengthAttributeMouseRegion.contains(e.getX(), e.getY())) {
             attributeHoverOver = Entity.STRENGTH_ATTRIBUTE;
-        } // else if
+        }
         else if (accuracyAttributeMouseRegion.contains(e.getX(), e.getY())) {
             attributeHoverOver = Entity.ACCURACY_ATTRIBUTE;
-        } // else if
+        }
         else if (defenseAttributeMouseRegion.contains(e.getX(), e.getY())) {
             attributeHoverOver = Entity.DEFENSE_ATTRIBUTE;
-        } // else if
+        }
         else if (agilityAttributeMouseRegion.contains(e.getX(), e.getY())) {
             attributeHoverOver = Entity.EVASION_ATTRIBUTE;
-        } // else if
+        }
         else if (fireMagicAttributeMouseRegion.contains(e.getX(), e.getY())) {
             attributeHoverOver = Entity.FIRE_MAGIC_ATTRIBUTE;
-        } // else if
+        }
         else if (frostMagicAttributeMouseRegion.contains(e.getX(), e.getY())) {
             attributeHoverOver = Entity.FROST_MAGIC_ATTRIBUTE;
-        } // else if
+        }
         else if (holyMagicAttributeMouseRegion.contains(e.getX(), e.getY())) {
             attributeHoverOver = Entity.HOLY_MAGIC_ATTRIBUTE;
-        } // else if
+        }
         else if (chaosMagicAttributeMouseRegion.contains(e.getX(), e.getY())) {
             attributeHoverOver = Entity.CHAOS_MAGIC_ATTRIBUTE;
-        } // else if
+        }
         else if (faithAttributeMouseRegion.contains(e.getX(), e.getY())) {
             attributeHoverOver = Entity.FAITH_ATTRIBUTE;
-        } // else if
-    } // mouseMoved
+        }
+    }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         attributeHoverOver = -1;
-    } // mouseDragged
+    }
 
     @Override
     public void mouseExited() {
         attributeHoverOver = -1;
         super.mouseExited();
-    } // mouseExited
+    }
 
     @Override
     public void show() {
         if (WindowManager.INVENTORY_WINDOW.isVisible()) {
             WindowManager.INVENTORY_WINDOW.hide();
-        } // if
+        }
 
         super.show();
         animationY = 0 - CHARACTER_WINDOW_BACKGROUND.getHeight();
         setComponentsEnabled(true);
         setEnabled(true);
         writeDetailedStats();
-    } // show
+    }
 
     @Override
     public final void hide() {
@@ -306,7 +306,7 @@ public class CharacterWindow extends Window implements ButtonAction {
         setComponentsEnabled(false);
         setEnabled(false);
         attributeHoverOver = -1;
-    } // hide
+    }
 
     @Override
     public void action(Button buttonPressed) {
@@ -315,29 +315,29 @@ public class CharacterWindow extends Window implements ButtonAction {
 
             if (buttonPressed == windowButton) {
                 hoverOverAction(buttonPressed);
-            } // if
-        } // if
-    } // action
+            }
+        }
+    }
 
     @Override
     public void hoverOverAction(Button caller) {
         if (caller == null) {
             WindowManager.INSTANCE.clearTooltipText();
             return;
-        } // if
+        }
 
         if (caller == windowButton) {
             if (isVisible()) {
                 WindowManager.INSTANCE.setTooltipText("Click to close\nthe Character\nWindow");
-            } // if
+            }
             else {
                 WindowManager.INSTANCE.setTooltipText("Click to open\nthe Character\nWindow");
-            } // else
-        } // if
+            }
+        }
         else if (caller == closeWindowButton) {
             WindowManager.INSTANCE.setTooltipText("Click to close\nthe Character\nWindow");
-        } // else if
-    } // hoverOverAction
+        }
+    }
 
     @Override
     public void render() {
@@ -345,7 +345,7 @@ public class CharacterWindow extends Window implements ButtonAction {
 
         if (!isVisible()) {
             return;
-        } // if
+        }
 
         animationY = Math.min(animationY + (int) (SceneService.INSTANCE.getHeight() * FALL_RATE), getY());
 
@@ -359,13 +359,13 @@ public class CharacterWindow extends Window implements ButtonAction {
             if (attributeHoverOver >= 0) {
                 writeAttributeInformation();
                 attributeInformationTextArea.render();
-            } // if
+            }
             else {
                 updateDetailedStats();
                 detailedStatsTextArea.render();
-            } // else
-        } // if
-    } // render
+            }
+        }
+    }
 
     /**
      * Draw the player's attributes to the on top of the background.
@@ -406,7 +406,7 @@ public class CharacterWindow extends Window implements ButtonAction {
 
         attributeValue = "100";// + (int)World.INSTANCE.getPlayer().getAttribute(Entity.FAITH);
         FontService.drawFont(attributeValue, PLAYER_NAME_TEXT_COLOR, null, textOffsX + FAITH_ATTRIBUTE_OFFS_X + (PLAYER_ATTRIBUTE_TEXT_AREA_WIDTH - FontService.getStringWidth(attributeValue)) / 2, textOffsY + FAITH_ATTRIBUTE_OFFS_Y);
-    } // renderPlayerAttributes
+    }
 
     private void renderSubtitleText() {
         int textOffsX;
@@ -421,13 +421,13 @@ public class CharacterWindow extends Window implements ButtonAction {
         // Render the attribute details title
         if (attributeHoverOver >= 0) {
             attributeDetailsTitle = Entity.attributeIdToString(attributeHoverOver);
-        } // if
+        }
         else {
             attributeDetailsTitle = "Details";
-        } // else
+        }
 
         textOffsX = getX() + DETAILS_TITLE_TEXT_OFFS_X + (DETAILS_TITLE_TEXT_WIDTH - FontService.getStringWidth(attributeDetailsTitle)) / 2;
         textOffsY = getY() + DETAILS_TITLE_TEXT_OFFS_Y + (DETAILS_TITLE_TEXT_HEIGHT - FontService.characterHeight) / 2;
         FontService.drawFont(attributeDetailsTitle, PLAYER_NAME_TEXT_COLOR, null, textOffsX, textOffsY);
-    } // renderPlayerName
-} // CharacterWindow
+    }
+}

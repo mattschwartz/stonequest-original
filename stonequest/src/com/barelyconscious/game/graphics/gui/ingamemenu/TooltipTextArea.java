@@ -36,8 +36,8 @@ public class TooltipTextArea extends TextArea {
         
         for (int i = 0; i < rows; i++) {
             lines[i] = "";
-        } // for
-    } // constructor
+        }
+    }
     
     @Override
     public void setText(String newText) {
@@ -46,14 +46,14 @@ public class TooltipTextArea extends TextArea {
         
         for (int i = 0; i < totalRows && i < textLines.length; i++) {
             lines[i] = textLines[i];
-        } // for
-    } // setText
+        }
+    }
     
     public void clearTooltipText() {
         for (int i = 0; i < totalRows; i++) {
             lines[i] = "";
-        } // for
-    } // clearTooltipText
+        }
+    }
     
     public void resize(int startX, int startY) {
         super.setX(startX);
@@ -61,7 +61,7 @@ public class TooltipTextArea extends TextArea {
         
         textOffsX = startX + MARGIN;
         textOffsY = startY + 12 + MARGIN;
-    } // resize
+    }
 
     @Override
     protected void renderText() {
@@ -71,6 +71,6 @@ public class TooltipTextArea extends TextArea {
         for (int i = 0; i < totalRows; i++) {
             offsX = textOffsX + (width - MARGIN * 2 - FontService.getStringWidth(lines[i])) / 2;
             FontService.drawFont(lines[i], textColor, null, offsX, offsY + FontService.characterHeight * i);
-        } // for
-    } // renderText
-} // TooltipTextArea
+        }
+    }
+}

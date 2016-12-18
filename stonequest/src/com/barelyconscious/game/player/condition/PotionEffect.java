@@ -18,7 +18,7 @@ public class PotionEffect extends Condition {
 
     public PotionEffect(int duration, String name, Entity affectedEntity, AttributeMod... affectedAttributes) {
         super(duration, Condition.BENEFIT_POTION_TYPE, name, affectedEntity, null, affectedAttributes);
-    } // constructor
+    }
 
     @Override
     public void apply() {
@@ -28,15 +28,15 @@ public class PotionEffect extends Condition {
         
         for (AttributeMod attributeMod : affectedAttributes) {
             applyMessage += Entity.attributeIdToString(attributeMod.getAttributeId()) + " (" + attributeMod.getAttributeModifier() + "), ";
-        } // for
+        }
         
         applyMessage = applyMessage.substring(0, applyMessage.length() - 2) + ".";
         
         System.out.println(applyMessage);
-    } // apply
+    }
 
     @Override
     public String getDescription() {
         return "A thick, glowing liquid that grants you additional power.";
-    } // getDescription
-} // PotionEffect
+    }
+}

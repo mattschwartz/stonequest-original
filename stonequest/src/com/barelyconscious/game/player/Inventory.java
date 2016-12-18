@@ -26,8 +26,8 @@ public class Inventory {
 
         for (int i = 0; i < NUM_INVENTORY_SLOTS; i++) {
             inventorySlots[i] = null;
-        } // for
-    } // constructor
+        }
+    }
 
     /**
      *
@@ -35,7 +35,7 @@ public class Inventory {
      */
     public int getGold() {
         return gold;
-    } // getGold
+    }
 
     /**
      * Adjusts the amount of gold being carried by the Entity by amount.
@@ -45,7 +45,7 @@ public class Inventory {
      */
     public void adjustGoldBy(int amount) {
         gold += amount;
-    } // adjustGoldBy
+    }
 
     /**
      * If index is out of bounds, returns null
@@ -56,20 +56,20 @@ public class Inventory {
     public Item getItem(int index) {
         if (index < 0 || index >= NUM_INVENTORY_SLOTS) {
             return null;
-        } // if
+        }
 
         return inventorySlots[index];
-    } // getItem
+    }
 
     public Item setItem(int index, Item item) {
         if (index < 0 || index >= NUM_INVENTORY_SLOTS) {
             return null;
-        } // if
+        }
         
         Item temp = getItem(index);
         inventorySlots[index] = item;
         return temp;
-    } // setItem
+    }
 
     /**
      *
@@ -80,7 +80,7 @@ public class Inventory {
         System.arraycopy(inventorySlots, 0, temp, 0, NUM_INVENTORY_SLOTS);
         
         return temp;
-    } // getItemList
+    }
 
     /**
      * Searches through the inventory for the Item based on the Item's compareTo
@@ -93,15 +93,15 @@ public class Inventory {
         for (int i = 0; i < NUM_INVENTORY_SLOTS; i++) {
             if (inventorySlots[i] == null) {
                 continue;
-            } // if
+            }
 
             if (inventorySlots[i].compareTo(item) == 0) {
                 return i;
-            } // if
-        } // for
+            }
+        }
 
         return -1;
-    } // contains
+    }
 
     /**
      * Adds an Item to the first available inventory slot
@@ -113,7 +113,7 @@ public class Inventory {
         
         if (item == null) {
             return false;
-        } // if
+        }
         
         slot = contains(item);
 
@@ -121,17 +121,17 @@ public class Inventory {
         if (slot >= 0) {
             inventorySlots[slot].adjustStackBy(item.getStackSize());
             return true;
-        } // if 
+        }
 
         for (int i = 0; i < NUM_INVENTORY_SLOTS; i++) {
             if (inventorySlots[i] == null) {
                 inventorySlots[i] = item;
                 return true;
-            } // if
-        } // for
+            }
+        }
 
         return false;
-    } // addItem
+    }
 
     public void addItemAt(int index, Item item) {
         int slot = contains(item);
@@ -139,10 +139,10 @@ public class Inventory {
         if (slot >= 0) {
             inventorySlots[slot].adjustStackBy(item.getStackSize());
             return;
-        } // if
+        }
 
         inventorySlots[index] = item;
-    } // addItemAt
+    }
 
     /**
      * Removes the specified Item from the inventory.
@@ -161,10 +161,10 @@ public class Inventory {
         if (slot >= 0) {
             inventorySlots[slot] = null;
             return item;
-        } // if
+        }
         
         return null;
-    } // removeItem
+    }
     
     public Item removeItem(int index) {
         Item oldItem = inventorySlots[index];
@@ -188,7 +188,7 @@ public class Inventory {
         // addItemToWorld(droppedItem); 
 
         inventorySlots[index] = null;
-    } // dropItem
+    }
 
     /**
      * Searches and removes item from the inventory and drops it on the ground.
@@ -205,5 +205,5 @@ public class Inventory {
         // addItemToWorld(droppedItem); 
 
         removeItem(item);
-    } // dropItem
-} // Inventory
+    }
+}

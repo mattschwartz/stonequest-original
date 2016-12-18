@@ -77,7 +77,7 @@ public class Entity extends Sprite {
         inventory = new Inventory();
         equippedItems = new Equippable[NUM_EQUIP_SLOTS];
         attributes = new double[NUM_ATTRIBUTES];
-    } // constructor
+    }
 
     public Entity(String name, int x, int y, UIElement entityIcon) {
         super(name, x, y, true, entityIcon);
@@ -85,7 +85,7 @@ public class Entity extends Sprite {
         equippedItems = new Equippable[NUM_EQUIP_SLOTS];
         attributes = new double[NUM_ATTRIBUTES];
         attributes[HEALTH_ATTRIBUTE] = totalHealth = 10;
-    } // constructor
+    }
 
     /**
      *
@@ -93,7 +93,7 @@ public class Entity extends Sprite {
      */
     public Inventory getInventory() {
         return inventory;
-    } // getInventory
+    }
 
     /**
      * Returns the value for the supplied attribute identifier.
@@ -105,10 +105,10 @@ public class Entity extends Sprite {
         if (id >= NUM_ATTRIBUTES) {
             System.err.println(" [ERROR] Attempted access to non-existent player attribute (" + id + ").");
             return -1;
-        } // if
+        }
 
         return Math.max(0, attributes[id]);
-    } // getAttribute
+    }
 
     /**
      * Adjusts the entity's attribute, as designated by the supplied attribute
@@ -121,10 +121,10 @@ public class Entity extends Sprite {
         if (attributeId < 0 || attributeId >= NUM_ATTRIBUTES) {
             System.err.println(" [ERROR] Attempted to adjust attribute (" + attributeId + ") that is not valid.");
             return;
-        } // if
+        }
 
         attributes[attributeId] = attributes[attributeId] + amount;
-    } // adjustAttribute
+    }
 
     /**
      * Change the health of the Entity by amount
@@ -136,16 +136,16 @@ public class Entity extends Sprite {
         if (attributes[HEALTH_ATTRIBUTE] < 0) {
             attributes[HEALTH_ATTRIBUTE] = 0;
             remove();
-        } // ifw
-    } // changeHealthBy
+        }
+    }
 
     public Equippable getEquippedItemAt(int slotId) {
         if (slotId >= NUM_EQUIP_SLOTS) {
             return null;
-        } // if
+        }
 
         return equippedItems[slotId];
-    } // getEquippedItemAt
+    }
 
     /**
      * Consumes an index in the equippable items array on the player by setting
@@ -159,10 +159,10 @@ public class Entity extends Sprite {
 
         if (equippedItems[slotId] != null) {
             System.err.println(" [NOTIFY] Attempting to equip " + equippableItem + " before unequipping: \"" + equippedItems[slotId] + "\"");
-        } // if
+        }
 
         equippedItems[slotId] = equippableItem;
-    } // equipItem
+    }
 
     /**
      * Removes an item from the player's equipped item slots by setting its
@@ -173,7 +173,7 @@ public class Entity extends Sprite {
      */
     public void unequipItem(int slotId) {
         equippedItems[slotId] = null;
-    } // unequipItem
+    }
 
     /**
      * Affects the Entity with a temporary effect which can be either beneficial
@@ -184,7 +184,7 @@ public class Entity extends Sprite {
      */
     public void affect(Condition condition) {
         conditions.add(condition);
-    } // affect
+    }
 
     /**
      * Removes a temporary effect from the list of effects that affect the
@@ -194,7 +194,7 @@ public class Entity extends Sprite {
      */
     public void dissolveCondiiton(Condition condition) {
         conditions.remove(condition);
-    } // dissolveCondition
+    }
 
     /**
      * Removes a temporary effect from the list of effects that affect the
@@ -205,10 +205,10 @@ public class Entity extends Sprite {
     public void dissolveCondition(int index) {
         if (index >= conditions.size()) {
             return;
-        } // if
+        }
 
         conditions.remove(index);
-    } // dissolveCondition
+    }
 
     /**
      *
@@ -216,7 +216,7 @@ public class Entity extends Sprite {
      */
     public int getNumConditions() {
         return conditions.size();
-    } // getNumConditions
+    }
 
     /**
      *
@@ -224,7 +224,7 @@ public class Entity extends Sprite {
      */
     public List<Condition> getConditions() {
         return conditions;
-    } // getConditions
+    }
 
     /**
      *
@@ -234,7 +234,7 @@ public class Entity extends Sprite {
      */
     public double getMinimumPhysicalDamage() {
         return 0;
-    } // getMinimumPhysicalDamage
+    }
 
     /**
      *
@@ -244,7 +244,7 @@ public class Entity extends Sprite {
      */
     public double getMaximumPhysicalDamage() {
         return 0;
-    } // getMaximumPhysicalDamage
+    }
 
     /**
      *
@@ -254,7 +254,7 @@ public class Entity extends Sprite {
      */
     public double getMinimumMagicDamage() {
         return 0;
-    } // getMinimumMagicDamage
+    }
 
     /**
      *
@@ -264,7 +264,7 @@ public class Entity extends Sprite {
      */
     public double getMaximumMagicDamage() {
         return 0;
-    } // getMaximumMagicDamage
+    }
 
     /**
      *
@@ -273,7 +273,7 @@ public class Entity extends Sprite {
      */
     public double getBonusFromStrength() {
         return 0;
-    } // getBonusFromStrength
+    }
 
     /**
      *
@@ -282,7 +282,7 @@ public class Entity extends Sprite {
      */
     public double getBonusFromAccuracy() {
         return 0;
-    } // getBonusFromAccuracy
+    }
 
     /**
      *
@@ -291,7 +291,7 @@ public class Entity extends Sprite {
      */
     public double getBonusFromDefense() {
         return 0;
-    } // getBonusFromDefense
+    }
 
     /**
      *
@@ -300,7 +300,7 @@ public class Entity extends Sprite {
      */
     public double getBonusFromEvasion() {
         return 0;
-    } // getBonusFromEvasion
+    }
 
     /**
      *
@@ -312,7 +312,7 @@ public class Entity extends Sprite {
      */
     public double getBonusFromElement(int elementId) {
         return 0;
-    } // getBonusFromElement
+    }
 
     /**
      *
@@ -320,7 +320,7 @@ public class Entity extends Sprite {
      */
     public int getLevel() {
         return level;
-    } // getLevel
+    }
 
     /**
      * Should only be set once per Entity
@@ -329,7 +329,7 @@ public class Entity extends Sprite {
      */
     public void setLevel(int level) {
         this.level = level;
-    } // setLevel
+    }
 
     /**
      * Used by subclasses when creating the entity.
@@ -339,7 +339,7 @@ public class Entity extends Sprite {
     protected void setHealth(float health) {
         attributes[HEALTH_ATTRIBUTE] = health;
         totalHealth = health;
-    } // setHealth
+    }
 
     /**
      *
@@ -347,7 +347,7 @@ public class Entity extends Sprite {
      */
     public double getMaxHealth() {
         return totalHealth;
-    } // getMaxHealth
+    }
 
     /**
      *
@@ -355,7 +355,7 @@ public class Entity extends Sprite {
      */
     public double getCurrentHealth() {
         return attributes[HEALTH_ATTRIBUTE];
-    } // getCurrentHealth
+    }
 
     /**
      * Set the reach of the Entity to r; the default value for the reach of
@@ -365,7 +365,7 @@ public class Entity extends Sprite {
      */
     public void setReach(int r) {
         reach = r;
-    } // setReach
+    }
 
     /**
      * How far an Entity can perform action() from another Entity
@@ -374,7 +374,7 @@ public class Entity extends Sprite {
      */
     public int getReach() {
         return reach;
-    } // getReach
+    }
 
     /**
      *
@@ -382,7 +382,7 @@ public class Entity extends Sprite {
      */
     public void setLightRadius(int newLightRadius) {
         lightRadius = newLightRadius;
-    } // setLightRadius
+    }
 
     /**
      *
@@ -390,7 +390,7 @@ public class Entity extends Sprite {
      */
     public int getLightRadius() {
         return lightRadius;
-    } // getLightRadius
+    }
 
     /**
      * Whatever the Entity needs to do on a game tick, including marking the
@@ -401,15 +401,15 @@ public class Entity extends Sprite {
         if (attributes[HEALTH_ATTRIBUTE] <= 0) {
             remove();
             return;
-        } // if
+        }
 
         /* Goes through the list of current temporary effects and calls their
          tick() function which handles whatever activities must be done every 
          game tick. */
         for (Condition condition : conditions) {
             condition.tick();
-        } // for
-    } // checkCanRemove
+        }
+    }
 
     /**
      * Removes the Entity from the world.
@@ -420,7 +420,7 @@ public class Entity extends Sprite {
         // loot table stuff here?
         TextLog.INSTANCE.appendDeathMessage(this);
         super.remove();
-    } // onDeath
+    }
 
     /**
      * Entities additionally have a health bar.
@@ -435,7 +435,7 @@ public class Entity extends Sprite {
 
         if (!isVisible) {
             return;
-        } // if
+        }
 
         int healthBarWidth = spriteIcon.getWidth() - 6;
         Color health = Color.GREEN;
@@ -447,7 +447,7 @@ public class Entity extends Sprite {
         ShapeDrawer.drawRectangle(Color.black, xOffs, yOffs, healthBarWidth + 2, 4);
         ShapeDrawer.fillRectangle(damagedHealth, xOffs + 1, yOffs + 1, healthBarWidth, 2);
         ShapeDrawer.fillRectangle(health, xOffs + 1, yOffs + 1, (int) (healthBarWidth * 1.0 * Math.min(1, attributes[HEALTH_ATTRIBUTE] / totalHealth)), 2);
-    } // render
+    }
 
     /* MOVEMENT ############################################################# */
     /**
@@ -461,13 +461,13 @@ public class Entity extends Sprite {
 
             if (sprite != null) {
                 interact(sprite);
-            } // if
+            }
 
             return;
-        } // if
+        }
 
         shiftBy(0, -1);
-    } // moveUp
+    }
 
     /**
      * Moves the Entity down on the Map one Tile.
@@ -480,13 +480,13 @@ public class Entity extends Sprite {
 
             if (sprite != null) {
                 interact(sprite);
-            } // if
+            }
 
             return;
-        } // if
+        }
 
         shiftBy(0, 1);
-    } // moveDown
+    }
 
     /**
      * Moves the Entity left on the Map one Tile.
@@ -499,13 +499,13 @@ public class Entity extends Sprite {
 
             if (sprite != null) {
                 interact(sprite);
-            } // if
+            }
 
             return;
-        } // if
+        }
 
         shiftBy(-1, 0);
-    } // moveLeft
+    }
 
     /**
      * Moves the Entity right on the Map one Tile.
@@ -518,13 +518,13 @@ public class Entity extends Sprite {
 
             if (sprite != null) {
                 interact(sprite);
-            } // if
+            }
 
             return;
-        } // if
+        }
 
         shiftBy(1, 0);
-    } // moveRight
+    }
 
     /**
      * Moves the Entity up and left in the world by one tile in both directions.
@@ -537,13 +537,13 @@ public class Entity extends Sprite {
 
             if (sprite != null) {
                 interact(sprite);
-            } // if
+            }
 
             return;
-        } // if
+        }
 
         shiftBy(-1, -1);
-    } // moveUpLeft
+    }
 
     /**
      * Moves the Entity up and right in the world by one tile in both
@@ -557,13 +557,13 @@ public class Entity extends Sprite {
 
             if (sprite != null) {
                 interact(sprite);
-            } // if
+            }
 
             return;
-        } // if
+        }
 
         shiftBy(1, -1);
-    } // moveUpRight
+    }
 
     /**
      * Moves the Entity down and left in the world by one tile in both
@@ -577,13 +577,13 @@ public class Entity extends Sprite {
 
             if (sprite != null) {
                 interact(sprite);
-            } // if
+            }
 
             return;
-        } // if
+        }
 
         shiftBy(-1, 1);
-    } // moveDownLeft
+    }
 
     /**
      * Moves the Entity down and right in the world by one tile in both
@@ -597,13 +597,13 @@ public class Entity extends Sprite {
 
             if (sprite != null) {
                 interact(sprite);
-            } // if
+            }
 
             return;
-        } // if
+        }
 
         shiftBy(1, 1);
-    } // moveDownRight
+    }
 
     /**
      * Returns a string describing the supplied attribute id integer.
@@ -635,8 +635,8 @@ public class Entity extends Sprite {
                 return "Faith";
             default:
                 return " {ERROR:" + id + "}";
-        } // switch-case
-    } // attributeIdToString
+        }
+    }
 
     public static String equipmentSlotToString(int slotId) {
         switch (slotId) {
@@ -662,6 +662,6 @@ public class Entity extends Sprite {
                 return "boots";
             default:
                 return "??";
-        } // switch
-    } // equipmentSlotToString
-} // Entity
+        }
+    }
+}

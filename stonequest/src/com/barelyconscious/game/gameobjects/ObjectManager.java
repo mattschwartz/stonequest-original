@@ -24,14 +24,14 @@ public class ObjectManager {
     private ObjectManager() {
         if (INSTANCE != null) {
             throw new IllegalStateException(this + " has already been instantiated.");
-        } // if
+        }
 
         gameObjects = new CopyOnWriteArrayList<GameObject>();
-    } // constructor
+    }
 
     public void spawnObject(GameObject object) {
         gameObjects.add(object);
-    } // spawnObject
+    }
 
     public void tick(UpdateEvent args) {
         for (GameObject o : gameObjects) {
@@ -40,8 +40,8 @@ public class ObjectManager {
             } else {
                 o.tick(args);
             }
-        } // for
-    } // tick
+        }
+    }
 
     /**
      * Performs a scene query, testing whether or not object1 can see object2
@@ -53,7 +53,7 @@ public class ObjectManager {
      */
     public boolean canSee(GameObject object1, GameObject object2) {
         return false;
-    } // canSee
+    }
 
     /**
      * Performs a scene query, testing whether or not object1 is within a
@@ -67,5 +67,5 @@ public class ObjectManager {
      */
     public boolean canReach(GameObject object1, GameObject object2, double reach) {
         return false;
-    } // canReach
-} // ObjectManager
+    }
+}

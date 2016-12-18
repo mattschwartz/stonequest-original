@@ -85,8 +85,8 @@ public class Condition {
         if (affectedAttributes != null) {
             this.affectedAttributes = new ArrayList<AttributeMod>();
             this.affectedAttributes.addAll(Arrays.asList(affectedAttributes));
-        } // if
-    } // constructor
+        }
+    }
 
     /**
      *
@@ -95,7 +95,7 @@ public class Condition {
      */
     public int getDuration() {
         return duration;
-    } // getDuration
+    }
 
     /**
      * Applies the Condition to an Entity, modifying any of its attributes or
@@ -106,8 +106,8 @@ public class Condition {
 
         for (AttributeMod attributeMod : affectedAttributes) {
             affectedEntity.adjustAttribute(attributeMod.getAttributeId(), attributeMod.getAttributeModifier());
-        } // for
-    } // apply
+        }
+    }
 
     /**
      * Removes the Condition from an Entity, restoring any modified values to
@@ -116,10 +116,10 @@ public class Condition {
     public void remove() {
         for (AttributeMod attributeMod : affectedAttributes) {
             affectedEntity.adjustAttribute(attributeMod.getAttributeId(), -attributeMod.getAttributeModifier());
-        } // for
+        }
 
         affectedEntity.dissolveCondiiton(this);
-    } // remove
+    }
 
     /**
      *
@@ -127,7 +127,7 @@ public class Condition {
      */
     public int getConditionType() {
         return conditionType;
-    } // getConditionType
+    }
 
     /**
      *
@@ -135,7 +135,7 @@ public class Condition {
      */
     public String getName() {
         return name;
-    } // getName
+    }
 
     /**
      * This method should be overridden by subclasses and altered to more
@@ -145,7 +145,7 @@ public class Condition {
      */
     public String getDescription() {
         return "A temporary effect that affects abilities.";
-    } // getDescription
+    }
 
     /**
      *
@@ -154,14 +154,14 @@ public class Condition {
     public AttributeMod[] getAffectedAttributes() {
         if (affectedAttributes == null) {
             return null;
-        } // if
+        }
 
         return affectedAttributes.toArray(new AttributeMod[]{});
-    } // getAffectedAttributes
+    }
 
     public void setAffectedEntity(Entity affectedEntity) {
         this.affectedEntity = affectedEntity;
-    } // setAffectedEntity
+    }
 
     /**
      * This method is called during a game tick and the Condition should perform
@@ -172,13 +172,13 @@ public class Condition {
 
         if (duration <= 0) {
             remove();
-        } // if
-    } // tick
+        }
+    }
 
     /**
      * Renders the Condition's icon to the screen for the Player.
      */
     public void render(int x, int y) {
         conditionIcon.render(x, y);
-    } // render
-} // Condition
+    }
+}

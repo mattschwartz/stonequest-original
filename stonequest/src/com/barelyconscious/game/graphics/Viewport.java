@@ -42,7 +42,7 @@ public class Viewport extends Canvas {
     private void createRaster() {
         view = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt) view.getRaster().getDataBuffer()).getData();
-    } // createRaster
+    }
 
     /**
      * Resizes the screen with the supplied new width and height.
@@ -55,11 +55,11 @@ public class Viewport extends Canvas {
         width = newWidth;
         height = newHeight;
         createRaster();
-    } // resize
+    }
 
     public void toggleUI() {
         showUI = !showUI;
-    } // toggleUI
+    }
 
     /**
      * Sets the current pixel at {x,y} to the color supplied by the call.
@@ -71,10 +71,10 @@ public class Viewport extends Canvas {
     public void setPixel(int color, int x, int y) {
         if (y < 0 || x + y * width >= pixels.length || x >= width) {
             return;
-        } // if
+        }
 
         pixels[x + y * width] = color;
-    } // setPixel
+    }
 
     /**
      * Returns the color at the supplied location.
@@ -85,7 +85,7 @@ public class Viewport extends Canvas {
      */
     public int getPixel(int x, int y) {
         return pixels[x + y * width];
-    } // getPixel
+    }
 
     /**
      * Resets the pixels on the screen to the BG color.
@@ -94,8 +94,8 @@ public class Viewport extends Canvas {
         if (pixels == null) return;
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = 0;
-        } // for
-    } // clear
+        }
+    }
 
     /**
      * This method is used for retrieving the Graphics2D object associated with
@@ -106,29 +106,29 @@ public class Viewport extends Canvas {
     @Override
     public Graphics2D getGraphics() {
         return view == null ? null : view.createGraphics();
-    } // getGraphics
+    }
 
     public void addComponent(BetterComponent c) {
         components.add(c);
-    } // addComponent
+    }
 
     public boolean removeComponent(BetterComponent c) {
         if (c == null) {
             return false;
-        } // if
+        }
 
         return components.remove(c);
-    } // removeComponent
+    }
     
     public void removeComponents() {
         components.clear();
-    } // removeComponents
+    }
     
     public void setComponentsEnabled(boolean enabled) {
         for (BetterComponent c : components) {
             c.setEnabled(enabled);
-        } // for
-    } // setComponentsEnabled
+        }
+    }
     
     /**
      * This method is called when the Viewport is to be drawn to the screen.
@@ -136,7 +136,7 @@ public class Viewport extends Canvas {
     public void render() {
         clear();
         renderView();
-    } // render
+    }
 
     protected void renderView() {
         BufferStrategy bs = getBufferStrategy();
@@ -144,11 +144,11 @@ public class Viewport extends Canvas {
             createBufferStrategy(3);
             requestFocus();
             return;
-        } // if
+        }
         
         if (showUI) {
             renderComponents();
-        } // if
+        }
         
         Graphics g = bs.getDrawGraphics();
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -157,16 +157,16 @@ public class Viewport extends Canvas {
 
         g.dispose();
         bs.show();
-    } // renderView
+    }
 
     protected void renderComponents() {
         for (BetterComponent c : components) {
             if (c.shouldRemove()) {
                 components.remove(c);
                 continue;
-            } // if
+            }
 
             c.render();
-        } // for
-    } // Components
-} // Viewport
+        }
+    }
+}

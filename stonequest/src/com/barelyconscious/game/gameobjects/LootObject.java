@@ -23,18 +23,18 @@ public class LootObject extends GameObject {
         this.item = item;
         super.position.x = x;
         super.position.y = y;
-    } // constructor
+    }
 
     public LootObject(Item item, Point position) {
         this.item = item;
         this.position = position;
-    } // constructor
+    }
 
     @Override
     public void spawnObject() {
-    } // spawnObject
+    }
 
     @Override
     public void tick(UpdateEvent args) {
-    } // tick
-} // LootObject
+    }
+}

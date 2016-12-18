@@ -30,10 +30,10 @@ public class Curse extends Condition {
     
     public Curse(int duration, String name, Entity affectedEntity, AttributeMod... affectedAttributes) {
         super(duration, Condition.DETRIMENT_CURSE_TYPE, name, affectedEntity, null, affectedAttributes);
-    } // constructor
+    }
 
     @Override
     public String getDescription() {
         return "A spiritual affliction that affects your attributes.";
-    } // getDescription
-} // Curse
+    }
+}

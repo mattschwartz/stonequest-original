@@ -38,11 +38,11 @@ public class WorldInputHandler extends Interactable {
         super.addMouseListener(Interactable.Z_WORLD);
 
         KeyMap.setDefaultKeyBindings();
-    } // constructor
+    }
 
     public void resize(int x, int y, int width, int height) {
         super.setRegion(x, y, width, height);
-    } // resize
+    }
 
     /**
      * When the user clicks the mouse, an action should be performed based on
@@ -63,24 +63,24 @@ public class WorldInputHandler extends Interactable {
                 if (sprite instanceof Player) {
                     TextLog.INSTANCE.append("You twiddle your thumbs.");
                     World.INSTANCE.tick();
-                } // if
+                }
                 else {
                     World.INSTANCE.getPlayer().moveTo(x, y);
-                } // else
-            } // if
+                }
+            }
             else if (World.INSTANCE.canMove(x, y) && World.INSTANCE.isTileVisited(x, y)) {
                 World.INSTANCE.getPlayer().moveTo(x, y);
-            } // else
-        } // if
+            }
+        }
         else if (e.getButton() == Interactable.MOUSE_RIGHT_CLICK) {
             if ((sprite = World.INSTANCE.getSpriteAt(x, y)) != null) {
                 TextLog.INSTANCE.append(sprite.getDescription());
-            } // if
+            }
             else if ((tile = World.INSTANCE.getTileAt(x, y)) != null) {
                 TextLog.INSTANCE.append(tile.getDescription());
-            } // else
-        } // else if
-    } // mouseClicked
+            }
+        }
+    }
 
     /**
      * Restores the mouse cursor when the user moves the cursor outside of the
@@ -90,7 +90,7 @@ public class WorldInputHandler extends Interactable {
     public void mouseExited() {
         super.mouseExited(); //To change body of generated methods, choose Tools | Templates.
         Cursors.setCursor(Cursors.DEFAULT_CURSOR);
-    } // mouseExited
+    }
 
     /**
      * Renders information gathered from user input to the screen.
@@ -98,7 +98,7 @@ public class WorldInputHandler extends Interactable {
      */
     public void render() {
         renderMouseLocation();
-    } // render
+    }
 
     /**
      * Renders information about where the mouse is hovering, such as what tile
@@ -119,7 +119,7 @@ public class WorldInputHandler extends Interactable {
 
         if (!isMouseInFocus()) {
             return;
-        } // if
+        }
 
         x = InputHandler.INSTANCE.getMouseX();
         y = InputHandler.INSTANCE.getMouseY();
@@ -136,28 +136,28 @@ public class WorldInputHandler extends Interactable {
                 mouseText = sprite.getName() + " (" + ((Player) sprite).getLevel() + ")";
 
                 Cursors.setCursor(Cursors.DEFAULT_CURSOR);
-            } // if
+            }
             else if (sprite instanceof Entity) {
                 ShapeDrawer.drawRectangle(ColorHelper.TILE_SELECT_CAN_MOVE, x, y, SceneService.TILE_SIZE, SceneService.TILE_SIZE);
 
                 mouseText = "Attack " + sprite.getName() + " (" + ((Entity) sprite).getLevel() + ")";
 
                 Cursors.setCursor(Cursors.ATTACK_ENTITY_CURSOR);
-            } // else if
+            }
             else if (sprite instanceof Loot) {
                 ShapeDrawer.drawRectangle(ColorHelper.TILE_SELECT_CAN_MOVE, x, y, SceneService.TILE_SIZE, SceneService.TILE_SIZE);
 
                 mouseText = "Pick up " + sprite.getName();
 
                 Cursors.setCursor(Cursors.LOOT_ITEM_CURSOR);
-            } // else if
+            }
 
             textOffsX = (World.INSTANCE.getWidth() - FontService.getStringWidth(mouseText)) / 2;
             ShapeDrawer.fillTransluscentRectangle(textOffsX - 5, 0, FontService.getStringWidth(mouseText) + 10, FontService.characterHeight + 5);
             FontService.drawFont(mouseText, Color.white, false, textOffsX, textOffsY);
 
             return;
-        } // if
+        }
 
         tile = World.INSTANCE.getTileAt(InputHandler.INSTANCE.getMouseX() / SceneService.TILE_SIZE - World.INSTANCE.getTileOffsX(), InputHandler.INSTANCE.getMouseY() / SceneService.TILE_SIZE - World.INSTANCE.getTileOffsY());
 
@@ -168,21 +168,21 @@ public class WorldInputHandler extends Interactable {
                 mouseText = tile.getName() + " - cannot move here";
 
                 Cursors.setCursor(Cursors.CANNOT_MOVE_HERE_CURSOR);
-            } // if 
+            }
             else {
                 ShapeDrawer.drawRectangle(ColorHelper.TILE_SELECT_CAN_MOVE, x, y, SceneService.TILE_SIZE, SceneService.TILE_SIZE);
 
                 mouseText = tile.getName() + " - click to walk";
 
                 Cursors.setCursor(Cursors.MOVE_HERE_CURSOR);
-            } // else
+            }
 
             textOffsX = (World.INSTANCE.getWidth() - FontService.getStringWidth(mouseText)) / 2;
             ShapeDrawer.fillTransluscentRectangle(textOffsX - 5, 0, FontService.getStringWidth(mouseText) + 10, FontService.characterHeight + 5);
             FontService.drawFont(mouseText, Color.white, false, textOffsX, textOffsY);
-        } // if
+        }
         else {
             Cursors.setCursor(Cursors.DEFAULT_CURSOR);
         }
-    } // renderMouseLocation
-} // WorldInputHandler
+    }
+}

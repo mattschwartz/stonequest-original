@@ -26,20 +26,20 @@ public class CloseWindowButton extends Button {
         super.setWidth(buttonImage.getWidth());
         super.setHeight(buttonImage.getHeight());
         this.buttonImage = buttonImage;
-    } // constructor
+    }
 
     @Override
     public void render() {
         if (isMouseButtonDown()) {
             renderMouseButtonDown();
-        } // if
+        }
         else if (isMouseInFocus()) {
             buttonImage.renderHighlighted(x, y);
-        } // else if
+        }
         else {
             buttonImage.render(x, y);
-        } // else
-    } // render
+        }
+    }
 
     private void renderMouseButtonDown() {
         int xOffs = x + 1;
@@ -47,4 +47,4 @@ public class CloseWindowButton extends Button {
 
         buttonImage.render(xOffs, yOffs);
     }
-} // CloseWindowButton
+}

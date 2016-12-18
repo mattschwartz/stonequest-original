@@ -15,4 +15,4 @@ package com.barelyconscious.game.item.salvage;
 
 public class Leather {
 
-} // Leather
+}

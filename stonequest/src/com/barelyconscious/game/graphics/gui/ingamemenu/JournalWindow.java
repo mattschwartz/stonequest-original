@@ -82,7 +82,7 @@ public class JournalWindow extends Window implements ButtonAction {
         super.setRegion(getX(), getY(), getWidth(), getHeight());
         super.addMouseListener(Interactable.Z_BACKGROUND);
         hide();
-    } // constructor
+    }
 
     private void createButtons() {
         closeWindowButton = new CloseWindowButton(this, WindowManager.INTERFACE_WINDOW_CLOSE_BUTTON);
@@ -98,7 +98,7 @@ public class JournalWindow extends Window implements ButtonAction {
         questButtons[7] = new QuestButton("8", this, -1, -1);
         questButtons[8] = new QuestButton("9", this, -1, -1);
         questButtons[9] = new QuestButton("10", this, -1, -1);
-    } // createQuestButtons
+    }
 
     private void resizeQuestButtons() {
         int i = 0;
@@ -110,9 +110,9 @@ public class JournalWindow extends Window implements ButtonAction {
                 questButtons[i].setX(getX() + QUEST_NUMBER_BUTTON_OFFS_X + questButtonStepX * x);
                 questButtons[i].setY(getY() + QUEST_NUMBER_BUTTON_OFFS_Y + questButtonStepY * y);
                 i++;
-            } // for
-        } // for
-    } // setUpQuestButtons
+            }
+        }
+    }
     
     private void createItemRewardSlots() {
         for (int i = 0; i < 5; i++) {
@@ -120,11 +120,11 @@ public class JournalWindow extends Window implements ButtonAction {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                } // mouseClicked
+                }
                 
             };
-        } // for
-    } // createItemRewardSlots
+        }
+    }
 
     /**
      * Disable or enable all buttons associated with the upgrade item window
@@ -138,18 +138,18 @@ public class JournalWindow extends Window implements ButtonAction {
         for (int i = 0; i < MAX_NUM_QUESTS; i++) {
             if (i < World.INSTANCE.getPlayer().journal.getNumEntries()) {
                 questButtons[i].setEnabled(enabled);
-            } // if
+            }
             else {
                 questButtons[i].setEnabled(false);
-            } // else
-        } // for
+            }
+        }
         
         for (int i = 0; i < 5; i++) {
             itemRewards[i].setEnabled(enabled);
-        } // for
+        }
 
         questDescriptionTextArea.setEnabled(enabled);
-    } // setAllButtonsEnabled
+    }
 
     /**
      * Resize elements as necessary when the application is resized.
@@ -182,7 +182,7 @@ public class JournalWindow extends Window implements ButtonAction {
         resizeQuestButtons();
 
         super.setRegion(getX(), getY(), getWidth(), getHeight());
-    } // resize
+    }
 
     /**
      * Given the new coordinates for the Upgrade Item window interface, all
@@ -197,13 +197,13 @@ public class JournalWindow extends Window implements ButtonAction {
     private void resizeButtons(int windowOffsX, int windowOffsY) {
         closeWindowButton.setX(windowOffsX + 16);
         closeWindowButton.setY(windowOffsY + 10);
-    } // resizeButtons
+    }
 
     @Override
     public void show() {
         if (WindowManager.UPGRADE_ITEM_WINDOW.isVisible()) {
             WindowManager.UPGRADE_ITEM_WINDOW.hide();
-        } // if
+        }
 
         super.show();
         animationY = 0 - JOURNAL_WINDOW_BACKGROUND.getHeight();
@@ -218,7 +218,7 @@ public class JournalWindow extends Window implements ButtonAction {
         setComponentsEnabled(false);
         setEnabled(false);
         super.removeMouseListener();
-    } // hide
+    }
 
     @Override
     public void action(Button buttonPressed) {
@@ -227,40 +227,40 @@ public class JournalWindow extends Window implements ButtonAction {
 
             if (buttonPressed == windowButton) {
                 hoverOverAction(buttonPressed);
-            } // if
-        } // if
+            }
+        }
         else {
             for (int i = 0; i < MAX_NUM_QUESTS; i++) {
                 if (buttonPressed == questButtons[i]) {
                     selectedQuest = i;
                     questButtons[i].setSelected(true);
-                } // if
+                }
                 else {
                     questButtons[i].setSelected(false);
-                } // else
-            } // for
-        } // else
-    } // action
+                }
+            }
+        }
+    }
 
     @Override
     public void hoverOverAction(Button caller) {
         if (caller == null) {
             WindowManager.INSTANCE.clearTooltipText();
             return;
-        } // if
+        }
 
         if (caller == windowButton) {
             if (isVisible()) {
                 WindowManager.INSTANCE.setTooltipText("Click to close\nyour Journal");
-            } // if
+            }
             else {
                 WindowManager.INSTANCE.setTooltipText("Click to view\nyour Journal");
-            } // else
-        } // if
+            }
+        }
         else if (caller == closeWindowButton) {
             WindowManager.INSTANCE.setTooltipText("Click to close\nyour Journal");
-        } // else if
-    } // hoverOverAction
+        }
+    }
 
     @Override
     public void render() {
@@ -268,7 +268,7 @@ public class JournalWindow extends Window implements ButtonAction {
 
         if (!isVisible()) {
             return;
-        } // if
+        }
 
         animationY = Math.min(animationY + (int) (SceneService.INSTANCE.getHeight() * FALL_RATE), getY());
 
@@ -280,11 +280,11 @@ public class JournalWindow extends Window implements ButtonAction {
 
             for (int i = 0; i < MAX_NUM_QUESTS; i++) {
                 questButtons[i].render();
-            } // for
+            }
 
             renderJournalEntry();
-        } // if
-    } // render
+        }
+    }
 
     private void renderJournalEntry() {
         int textOffsX;
@@ -295,7 +295,7 @@ public class JournalWindow extends Window implements ButtonAction {
         if (entry == null) {
             questDescriptionTextArea.setText("No entry selected.");
             return;
-        } // if
+        }
 
         text = entry.getTitle();
         textOffsX = getX() + QUEST_TITLE_TEXT_OFFS_X + (QUEST_TITLE_WIDTH - FontService.getStringWidth(text)) / 2;
@@ -310,14 +310,14 @@ public class JournalWindow extends Window implements ButtonAction {
         questDescriptionTextArea.setText(entry.getDescription());
 
         renderItemRewards(entry);
-    } // renderJournalEntry
+    }
 
     private void renderItemRewards(JournalEntry entry) {
         int i = 0;
         int x, y;
         if (entry.rewards == null) {
             return;
-        } // if
+        }
         
         x = getX() + QUEST_REWARD_ITEM_OFFS_X;
         y = getY() + QUEST_REWARD_ITEM_OFFS_Y;
@@ -330,6 +330,6 @@ public class JournalWindow extends Window implements ButtonAction {
             itemRewards[i].render();
             i++;
             x += QUEST_REWARD_ITEM_STEP_X;
-        } // for
-    } // renderItemRewards
-} // JournalWindow
+        }
+    }
+}

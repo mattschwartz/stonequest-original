@@ -24,18 +24,18 @@ public class EntityObject extends GameObject {
         this.entity = entity;
         super.position.x = x;
         super.position.y = y;
-    } // constructor
+    }
     
     public EntityObject(Entity entity, Point position) {
         this.entity = entity;
         super.position = position;
-    } // constructor
+    }
 
     @Override
     public void spawnObject() {
-    } // spawnObject
+    }
 
     @Override
     public void tick(UpdateEvent args) {
-    } // tick
-} // EntityObject
+    }
+}

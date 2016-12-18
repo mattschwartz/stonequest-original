@@ -19,5 +19,5 @@ import com.barelyconscious.game.spawnable.Entity;
 public class Ingredient extends Item {
     public Ingredient(String name, int itemLevel, int sellValue, int stackSize, String fileLocation, Entity owner, AttributeMod... itemAffixes) {
         super(name, itemLevel, sellValue, stackSize, name, owner, itemAffixes);
-    } // constructor
-} // Ingredient
+    }
+}

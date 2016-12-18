@@ -49,12 +49,12 @@ public class WindowManager implements Service {
     private WindowManager() {
         if (INSTANCE != null) {
             throw new IllegalStateException(this + " has already been instantiated.");
-        } // if
-    } // constructor
+        }
+    }
 
     public void resize(int newWidth, int newHeight) {
 
-    } // resize
+    }
 
     /**
      * Toggles a window based on the Window object passed into this method.
@@ -64,7 +64,7 @@ public class WindowManager implements Service {
      */
     public void toggleWindow(Window w) {
         w.toggleUI();
-    } // toggleWindow
+    }
 
     public void closeAllWindows() {
         BREWING_WINDOW.hide();
@@ -73,7 +73,7 @@ public class WindowManager implements Service {
         JOURNAL_WINDOW.hide();
         SALVAGE_WINDOW.hide();
         UPGRADE_ITEM_WINDOW.hide();
-    } // closeAllWindows
+    }
     
     /**
      * Create the Window buttons that, when pressed, will open the corresponding
@@ -81,13 +81,13 @@ public class WindowManager implements Service {
      */
     private void createWindowButtons() {
         
-    } // createWindowButtons
+    }
     
     public void setTooltipText(String text) {
-    } // setTooltipText
+    }
     
     public void clearTooltipText() {
-    } // clearTooltipText
+    }
 
     @Override
     public void start() {
@@ -108,15 +108,15 @@ public class WindowManager implements Service {
 //        SceneService.INSTANCE.addComponent(JOURNAL_WINDOW);
 //        SceneService.INSTANCE.addComponent(SALVAGE_WINDOW);
 //        SceneService.INSTANCE.addComponent(UPGRADE_ITEM_WINDOW);
-    } // start
+    }
 
     @Override
     public void stop() {
-    } // stop
+    }
 
     @Override
     public void restart() {
         stop();
         start();
-    } // restart
-} // WindowManager
+    }
+}

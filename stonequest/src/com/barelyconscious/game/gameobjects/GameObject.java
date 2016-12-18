@@ -20,15 +20,15 @@ public class GameObject {
     protected Point position;
     
     public GameObject() {
-    } // constructor
+    }
     
     public void spawnObject() {
-    } // spawnObject
+    }
     
     public void tick(UpdateEvent args) {
-    } // tick
+    }
     
     public boolean shouldRemove() {
         return removeOnUpdate;
-    } // shouldRemove
-} // GameObject
+    }
+}

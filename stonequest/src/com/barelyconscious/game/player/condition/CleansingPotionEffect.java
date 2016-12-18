@@ -19,7 +19,7 @@ public class CleansingPotionEffect extends PotionEffect {
 
     public CleansingPotionEffect(Entity affectedEntity) {
         super(0, "Cleansing Potion", affectedEntity);
-    } // constructor
+    }
 
     /**
      * Removes all curse Conditions from the Entity.
@@ -29,14 +29,14 @@ public class CleansingPotionEffect extends PotionEffect {
         for (Condition condition : affectedEntity.getConditions()) {
             if (condition.getConditionType() == Condition.DETRIMENT_CURSE_TYPE) {
                 condition.remove();
-            } // if
-        } // for
+            }
+        }
         
         System.out.println(name + " cleanses your afflictions.");
-    } // apply
+    }
 
     @Override
     public String getDescription() {
         return "A tasteless, smooth liquid believed to have the ability to rid the body of spiritual afflictions.";
-    } // getDescription
-} // CleansingPotionEffect
+    }
+}

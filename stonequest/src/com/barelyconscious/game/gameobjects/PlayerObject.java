@@ -22,18 +22,18 @@ public class PlayerObject extends GameObject {
     
     public PlayerObject(Player player, int x, int y) {
         this.player = player;
-    } // constructor
+    }
     
     public PlayerObject(Player player, Point position) {
         this.player = player;
         this.position = position;
-    } // constructor
+    }
     
     @Override
     public void spawnObject() {
-    } // spawnObject
+    }
     
     @Override
     public void tick(UpdateEvent args) {
-    } // tick
-} // PlayerObject
+    }
+}

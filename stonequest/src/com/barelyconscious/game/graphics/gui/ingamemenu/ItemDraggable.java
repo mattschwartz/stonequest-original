@@ -30,11 +30,11 @@ public class ItemDraggable extends Interactable implements Component {
     
     public ItemDraggable(Item item) {
         itemOnCursor = item;
-    } // constructor
+    }
     
     public Item getItem() {
         return itemOnCursor;
-    } // getItem
+    }
     
     public void setItem(Item item) {
         itemOnCursor = item;
@@ -51,7 +51,7 @@ public class ItemDraggable extends Interactable implements Component {
 //        }
 //        
 //        return oldItem;
-    } // setItem
+    }
 
     /**
      * User has relinquished hold of the Item; now we need to decide where to 
@@ -59,7 +59,7 @@ public class ItemDraggable extends Interactable implements Component {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-    } // mouseReleased
+    }
 
     @Override
     public void render() {
@@ -71,7 +71,7 @@ public class ItemDraggable extends Interactable implements Component {
         ShapeDrawer.fillTransluscentRectangle(x + 5, y + 5, ITEM_WIDTH, ITEM_HEIGHT);
         
         itemOnCursor.render(x, y);
-    } // render
+    }
 
     @Override
     public int getX() {
@@ -114,4 +114,4 @@ public class ItemDraggable extends Interactable implements Component {
     public boolean shouldRemove() {
         return destroy;
     }
-} // ItemDraggable
+}

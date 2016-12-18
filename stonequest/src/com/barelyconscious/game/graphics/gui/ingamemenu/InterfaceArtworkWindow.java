@@ -50,7 +50,7 @@ public class InterfaceArtworkWindow extends Window {
 
         setX(bottomLeftFrameOffsX);
         setY(bottomLeftFrameOffsY);
-    } // constructor
+    }
 
     /**
      * Loads the border from disk by locating subimages within the larger image.
@@ -69,7 +69,7 @@ public class InterfaceArtworkWindow extends Window {
 
         pixels = unparsedImage.getRGB(320, 0, 363, 112, null, 0, 363);
         bottomRightFrame = new UIElement(pixels, 363, 112);
-    } // loadBorder
+    }
 
     /**
      * Reposition and resize the elements as the game application is resized.
@@ -87,15 +87,15 @@ public class InterfaceArtworkWindow extends Window {
         textLogWidth = bottomRightFrameOffsX - textLogOffsX;
 
         setY(bottomLeftFrameOffsY);
-    } // resize
+    }
 
     public int getTextLogOffsX() {
         return textLogOffsX - 19;
-    } // getTextLogOffsX
+    }
 
     public int getTextLogOffsY() {
         return textLogOffsY + 6;
-    } // getTextLogOffsY
+    }
 
     /**
      * The text log needs to know this information and can easily get it here
@@ -105,67 +105,67 @@ public class InterfaceArtworkWindow extends Window {
      */
     public int getTextLogWidth() {
         return textLogWidth + 22;
-    } // getTextLogWidth
+    }
 
     public int getTextLogHeight() {
         return 100;
-    } // getTextLogHeight
+    }
 
     public int getTooltipOffsX() {
         return bottomRightFrameOffsX + 15;
-    } // getTooltipOffsX
+    }
 
     public int getTooltipOffsY() {
         return bottomRightFrameOffsY + 6;
-    } // getTooltipOffsY
+    }
 
     public int getInventoryButtonOffsX() {
         return bottomRightFrameOffsX + 195;
-    } // getInventoryButtonOffsX
+    }
 
     public int getInventoryButtonOffsY() {
         return bottomRightFrameOffsY + 20;
-    } // getInventoryButtonOffsY
+    }
 
     public int getCharacterButtonOffsX() {
         return bottomRightFrameOffsX + 244;
-    } // getCharacterButtonOffsX
+    }
 
     public int getCharacterButtonOffsY() {
         return bottomRightFrameOffsY + 20;
-    } // getCharacterButtonOffsY
+    }
 
     public int getUpgradeItemButtonOffsX() {
         return bottomRightFrameOffsX + 293;
-    } // getUpgradeItemButtonOffsX
+    }
 
     public int getUpgradeItemButtonOffsY() {
         return bottomRightFrameOffsY + 20;
-    } // getUpgradeItemButtonOffsY
+    }
 
     public int getJournalButtonOffsX() {
         return bottomRightFrameOffsX + 195;
-    } // getJournalButtonOffsX
+    }
 
     public int getJournalButtonOffsY() {
         return bottomRightFrameOffsY + 57;
-    } // getJournalButtonOffsY
+    }
 
     public int getSalvageButtonOffsX() {
         return bottomRightFrameOffsX + 244;
-    } // getSalvageButtonOffsX
+    }
 
     public int getSalvageButtonOffsY() {
         return bottomRightFrameOffsY + 57;
-    } // getSalvageButtonOffsY
+    }
 
     public int getBrewingButtonOffsX() {
         return bottomRightFrameOffsX + 293;
-    } // getBrewingButtonOffsX
+    }
 
     public int getBrewingButtonOffsY() {
         return bottomRightFrameOffsY + 57;
-    } // getBrewingButtonOffsY
+    }
 
     @Override
     public void render() {
@@ -173,9 +173,9 @@ public class InterfaceArtworkWindow extends Window {
 
         for (int i = textLogOffsX; i < textLogOffsX + textLogWidth; i += textLogBorderRepeatWidth) {
             textLogBorderRepeat.render(i, textLogOffsY);
-        } // for
+        }
 
         bottomLeftFrame.render(bottomLeftFrameOffsX, bottomLeftFrameOffsY);
         bottomRightFrame.render(bottomRightFrameOffsX, bottomRightFrameOffsY);
-    } // render
-} // InterfaceArtworkWindow
+    }
+}

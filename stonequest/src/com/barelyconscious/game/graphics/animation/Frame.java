@@ -44,21 +44,21 @@ public class Frame {
         if (frame == null) {
             System.err.println(" [ERR] Not sure how we got here, but (" + pathToFrame + ") was null.");
             System.exit(1);
-        } // if
+        }
         
         width = frame.getWidth();
         height = frame.getHeight();
         
         framePixels = frame.getRGB(0, 0, width, height, null, 0, width);
-    } // constructor
+    }
     
     public long getDelay() {
         return delay;
-    } // getDelay
+    }
     
     public void setDelay(long delay) {
         this.delay = delay;
-    } // setDelay
+    }
     
     public void render() {
         int pix;
@@ -69,10 +69,10 @@ public class Frame {
                 
                 if (pix == ColorHelper.TRANSPARENCY_MASK) {
                     continue;
-                } // if
+                }
                 
 //                screen.setPixel(pix, xOffs + x, yOffs + y);
-            } // for
-        } // for
-    } // render
+            }
+        }
+    }
 } // Frame

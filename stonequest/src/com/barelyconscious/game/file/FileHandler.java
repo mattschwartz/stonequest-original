@@ -24,17 +24,17 @@ public class FileHandler implements Service {
     private FileHandler() {
         if (INSTANCE != null) {
             throw new IllegalStateException("Only one instance per runtime.");
-        } // if
-    } // constructor
+        }
+    }
 
     public File getScreenshotDir() {
         File dir = new File(homeDirectory + delimiter + "screenshots");
         if (!dir.exists()) {
             dir.mkdirs();
-        } // if
+        }
 
         return dir;
-    } // getScreenshotDir
+    }
 
     @Override
     public void start() {
@@ -43,18 +43,18 @@ public class FileHandler implements Service {
         if (System.getProperty("os.name").contains("Windows")) {
             delimiter = '\\';
             homeDirectory += delimiter + "Documents";
-        } // if
+        }
 
         homeDirectory += delimiter + "barelyconscious" + delimiter + "StoneQuest" + delimiter;
-    } // start
+    }
 
     @Override
     public void stop() {
-    } // stop
+    }
 
     @Override
     public void restart() {
         start();
         stop();
-    } // restart
-} // FileHandler
+    }
+}
