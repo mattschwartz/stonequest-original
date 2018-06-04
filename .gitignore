@@ -219,4 +219,5 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-/stonequest/nbproject/private/
+/stonequest/nbproject/private/stonequest/out/
+stonequest/out/

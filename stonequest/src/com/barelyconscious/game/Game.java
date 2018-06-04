@@ -37,12 +37,7 @@ public class Game implements Runnable {
         startServices();
 
         // Generate 1000 random words 
-        new Thread() {
-            @Override
-            public void run() {
-                StringHelper.generateGibberish(1000);
-            }
-        }.start();
+        new Thread(() -> StringHelper.generateGibberish(1000)).start();
     }
 
     private void startServices() {

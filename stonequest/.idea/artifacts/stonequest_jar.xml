@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="stonequest:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/stonequest_jar</output-path>
+    <root id="archive" name="stonequest.jar">
+      <element id="module-output" name="stonequest" />
+      <element id="dir-copy" path="$PROJECT_DIR$/res" />
+    </root>
+  </artifact>
+</component>
