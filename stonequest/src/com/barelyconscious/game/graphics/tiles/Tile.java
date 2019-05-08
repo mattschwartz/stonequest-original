@@ -124,19 +124,26 @@ public class Tile {
         this.hasCollision = hasCollision;
         this.isVisible = isVisible;
         this.blocksSight = blocksSight;
-        
+
+        this.id = (byte) id;
+
         try {
             img = ImageIO.read(Game.class.getResourceAsStream(fileName));
         } catch (IOException ex) {
             System.err.println(" [ERR] Failed to load image (" + fileName + "): " + ex);
+            WIDTH = 0;
+            HEIGHT = 0;
+
+            tiles[id] = null;
+
+            return;
         } // catch
         
         WIDTH = img.getWidth();
         HEIGHT = img.getHeight();
         pixels = img.getRGB(0, 0, img.getWidth(), img.getHeight(), null, 0, img.getWidth());
-        this.id = (byte) id;
-        
-        tiles[this.id] = this;
+
+        tiles[id] = this;
     } // constructor
     
     // Loot tile
