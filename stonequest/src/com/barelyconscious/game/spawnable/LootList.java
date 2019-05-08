@@ -7,11 +7,12 @@
                         that was not written fully by yourself, or to remove 
                         credit from code that was not written fully by yourself.  
                         Please email stonequest.bcgames@gmail.com for issues or concerns.
-   * File Description:  
+   * File Description:  ArrayList to keep track of Loot objects currently in the world.
    ************************************************************************** */
 
 package com.barelyconscious.game.spawnable;
 
+import com.barelyconscious.game.item.Item;
 import java.util.ArrayList;
 
 public class LootList {
@@ -77,6 +78,18 @@ public class LootList {
         
         return list;
     } // getList
+    
+    public ArrayList getListAsItem(int x, int y) {
+        ArrayList<Item> list = new ArrayList();
+        
+        for (Loot e : this.list) {
+            if ( e != null && (e.getXPos() == x) && (e.getYPos() == y) ) {
+                list.add(e.getItem());
+            } // if
+        } // for
+        
+        return list;
+    } // getListAsItem
     
     /* Expensive operation */
     public Loot get(int x, int y) {

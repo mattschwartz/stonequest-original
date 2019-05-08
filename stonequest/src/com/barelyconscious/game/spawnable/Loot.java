@@ -6,48 +6,61 @@
                         this file.  You are not allowed to take credit for code
                         that was not written fully by yourself, or to remove 
                         credit from code that was not written fully by yourself.  
-                        Please email schwamat@gmail.com for issues or concerns.
-   * File Description:  
+                        Please email stonequest.bcgames@gmail.com for issues or concerns.
+   * File Description:  Loot are Items that exist in the World and can be interacted
+                        with by the Player either by walking over the Loot or by
+                        actively ineracting with it by pressing the pick up
+                        keybind.  
    ************************************************************************** */
 
 package com.barelyconscious.game.spawnable;
 
+import com.barelyconscious.game.Common;
 import com.barelyconscious.game.Game;
 import com.barelyconscious.game.graphics.LineElement;
 import com.barelyconscious.game.graphics.tiles.Tile;
 import com.barelyconscious.game.item.Item;
-import com.barelyconscious.game.item.Projectile;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Loot extends Sprite {
     private boolean removeOnWalk;
-    public Item item;
+    private Item item;
     
-    public Loot(Item item, int tileId, int x, int y) {
-        super(item.getDisplayName(), tileId);
+    /**
+     * Create a new Loot object with the following parameters
+     * @param item the Item that the Loot object is representing
+     * @param x the x location for the Loot object
+     * @param y the y location for the Loot object
+     */
+    public Loot(Item item, int x, int y) {
+        super(item.getDisplayName(), item.getTileId());
         super.setPosition(x, y);
         
         this.item = item;
     } // constructor
     
+    /**
+     * If true, the Loot object is removed when the Player steps on top of it
+     * @param removable the new value for the boolean that tests whether the Loot
+     * should be removed when the Player walks over it
+     */
     public void setRemovableOnWalkover(boolean removable) {
         removeOnWalk = removable;
     } // setRemovableOnWalkover
     
+    /**
+     * 
+     * @return the Item associated with the Loot object
+     */
     public Item getItem() {
         return item;
     } // getItem
 
-    @Override
-    public String getName() {
-        if (item instanceof Projectile) {
-            return item.getStackSize() + " " + super.getName();
-        } // if 
-        
-        return super.getName();
-    } // getDisplayName
-
+    /**
+     * 
+     * @return the Tile artwork for the Item based on its TileId
+     */
     @Override
     public Tile getTile() {
         return Tile.getTile(item.getTileId());
@@ -73,7 +86,7 @@ public class Loot extends Sprite {
                 message += "n";
             } // if
             
-            Game.textLog.writeFormattedString(message + " " + item.getDisplayName() + " here.", null, new LineElement(item.getDisplayName(), true, item.getRarityColor()));
+            Game.textLog.writeFormattedString(message + " " + item.getDisplayName() + " here.", Common.FONT_NULL_RGB, new LineElement(item.getDisplayName(), true, item.getRarityColor()));
         } // else
     } // checkCanRemove
     

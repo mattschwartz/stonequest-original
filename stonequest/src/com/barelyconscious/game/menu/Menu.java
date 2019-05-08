@@ -7,7 +7,9 @@
                         that was not written fully by yourself, or to remove 
                         credit from code that was not written fully by yourself.  
                         Please email stonequest.bcgames@gmail.com for issues or concerns.
-   * File Description:  
+   * File Description:  The Menu interface implemented bu Menu objects.  Menus are
+                        GUI components drawn to the Screen and allow for visual
+                        feedback for Player control.
    ************************************************************************** */
 
 package com.barelyconscious.game.menu;
@@ -18,25 +20,42 @@ public interface Menu {
     /**
      * This function should be called when the screen changes sizes in order to
      * change the location and size of the Menu.
-     * @param w
-     * @param h 
+     * @param newWidth the new width in pixels of the Screen
+     * @param newHeight the new height in pixels of the Screen
      */
-    public void resizeMenu(int w, int h);
+    public void resize(int newWidth, int newHeight);
     
-    public int getWidth();
+    /**
+     * 
+     * @return the width in pixels of the menu 
+     */
+    public int getPixelWidth();
     
-    public int getHeight();
+    /**
+     * 
+     * @return the height in pixels of the menu
+     */
+    public int getPixelHeight();
     
+    /**
+     * 
+     * @return the x offset for drawing the menu
+     */
     public int getOffsX();
     
-    public int getOffsY();
     /**
-     * Move the cursor up.  Implemented in subclasses.
+     * 
+     * @return the y offset for drawing the menu
+     */
+    public int getOffsY();
+    
+    /**
+     * Move the cursor up in the menu; implemented in subclasses.
      */
     public void moveUp();
     
     /**
-     * Move the cursor down.  Implemented in subclasses.
+     * Move the cursor down in the menu; implemented in subclasses.
      */
     public void moveDown();
     
@@ -45,23 +64,6 @@ public interface Menu {
      * subclasses.
      */
     public void select();
-    
-    /**
-     * Returns true if the menu is the currently active Menu.  Only one menu at
-     * a time may be active.
-     * @return 
-     */
-    public boolean isActive();
-    
-    /**
-     * Menu has gained focus.
-     */
-    public void setActive();
-    
-    /**
-     * Menu has lost focus.
-     */
-    public void clearFocus();
     
     /**
      * Draw the Menu to the screen.  Maybe add a "hidden"/"show" boolean to decide

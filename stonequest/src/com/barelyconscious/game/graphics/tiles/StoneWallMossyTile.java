@@ -14,6 +14,6 @@ package com.barelyconscious.game.graphics.tiles;
 
 public class StoneWallMossyTile extends Tile {
     public StoneWallMossyTile() {
-        super(MOSSY_STONEWALL_TILE_ID, "/tiles/world/stonewall_mossy.png", true, false, false);
+        super(MOSSY_STONEWALL_TILE_ID, "/tiles/world/stonewall_mossy.png", true, false, true);
     } // constructor 
 } // MossyStoneWallTile

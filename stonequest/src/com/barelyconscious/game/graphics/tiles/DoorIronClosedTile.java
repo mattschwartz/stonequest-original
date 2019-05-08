@@ -14,7 +14,7 @@ package com.barelyconscious.game.graphics.tiles;
 
 public class DoorIronClosedTile extends Tile {
     public DoorIronClosedTile() {
-        super(DOOR_IRON_CLOSED_TILE_ID, "/tiles/world/door_closed_iron.png", true, false, true);
+        super(DOOR_IRON_CLOSED_TILE_ID, "/tiles/world/doodads/nexuses/doors/iron_closed.png", true, false, true);
     } // constructor 
     
 } // DoorIronClosedTile

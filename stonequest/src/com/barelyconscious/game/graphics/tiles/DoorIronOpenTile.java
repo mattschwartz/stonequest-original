@@ -14,6 +14,6 @@ package com.barelyconscious.game.graphics.tiles;
 
 public class DoorIronOpenTile extends Tile {
     public DoorIronOpenTile() {
-        super(DOOR_IRON_OPEN_TILE_ID, "/tiles/world/door_open_iron.png", false, false, false);
+        super(DOOR_IRON_OPEN_TILE_ID, "/tiles/world/doodads/nexuses/doors/iron_open.png", false, false, false);
     } // constructor 
 } // DoorIronOpenTile

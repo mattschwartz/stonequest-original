@@ -14,6 +14,6 @@ package com.barelyconscious.game.graphics.tiles;
 
 public class DoorWoodenClosedTile extends Tile {
     public DoorWoodenClosedTile() {
-        super(DOOR_WOODEN_CLOSED_TILE_ID, "/tiles/world/door_closed_wood.png", true, false, true);
+        super(DOOR_WOODEN_CLOSED_TILE_ID, "/tiles/world/doodads/nexuses/doors/wooden_closed.png", true, false, true);
     } // constructor 
 } // DoorWoodenClosedTile

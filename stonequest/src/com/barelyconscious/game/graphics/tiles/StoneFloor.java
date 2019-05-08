@@ -12,8 +12,11 @@
 
 package com.barelyconscious.game.graphics.tiles;
 
+import java.awt.Color;
+
 public class StoneFloor extends Tile {
     public StoneFloor() {
         super(STONE_TILE_ID, "/tiles/world/stone_floor.png", false, false, false);
+        miniMapColor = new Color(204, 204, 204).getRGB();
     } // constructor
 } // StoneFloor

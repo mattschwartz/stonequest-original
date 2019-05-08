@@ -12,8 +12,13 @@
 
 package com.barelyconscious.game.graphics.tiles;
 
+import java.awt.Color;
+
 public class GrassTile extends Tile {
     public GrassTile() {
-        super(GRASS_TILE_ID, "/tiles/world/grass.png", false, false, false);
+        super("grass", GRASS_TILE_ID, "/tiles/world/grass.png", false, false, false);
+        miniMapColor = new Color(120, 120, 120).getRGB();
     } // constructor
+    
+    
 } // GrassTile

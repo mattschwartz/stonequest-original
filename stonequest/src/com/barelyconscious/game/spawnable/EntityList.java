@@ -6,8 +6,8 @@
                         this file.  You are not allowed to take credit for code
                         that was not written fully by yourself, or to remove 
                         credit from code that was not written fully by yourself.  
-                        Please email schwamat@gmail.com for issues or concerns.
-   * File Description:  
+                        Please email stonequest.bcgames@gmail.com for issues or concerns.
+   * File Description:  ArrayList to keep track of Entities currently in the world.
    ************************************************************************** */
 
 package com.barelyconscious.game.spawnable;

@@ -7,38 +7,79 @@
                      this file.  You are not allowed to take credit for code
                      that was not written fully by yourself, or to remove 
                      credit from code that was not written fully by yourself.  
-                     Please email schwamat@gmail.com for issues or concerns.
- * File description: 
+                     Please email stonequest.bcgames@gmail.com for issues or concerns.
+ * File description: The superclass which every Item must implement.  An item is
+                     an object that the player comes across in the game and 
+                     serves some purpose or functionality.  Example Items and their
+                     general purpose:
+                     Weapons and Armor: extend the attack abilities of the player
+                     Scrolls: provides a number of benefits and powers for the 
+                      player when consumed
+                     Potions: provide temporary changes in player attributes and
+                      can be beneficial or harmful
+               + int USE: option to use, wear, quaff, eat, etc the Item
+               + int EXAMINE: option to examine the item
+               + int DROP: option to drop the item
+               + int SALVAGE: option to salvage the item
+               + int NUM_OPTIONS: the number of available options
  **************************************************************************** */
 
 package com.barelyconscious.game.item;
 
 import com.barelyconscious.game.Common;
-import com.barelyconscious.game.player.StatBonus;
-import java.awt.Color;
+import com.barelyconscious.game.player.AttributeMod;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Item implements Comparable<Item> {
+    /* Various options the player has access to for each item */
     public static final int USE             = 0;
     public static final int EXAMINE         = 1;
     public static final int DROP            = 2;
     public static final int SALVAGE         = 3;
     public static final int NUM_OPTIONS     = 4;
     
-    public final int ITEM_NAME_MAX_LENGTH   = 45;
-    public final int MAX_STAT_AFFIXES       = 6;
+    /** The maximum number of attribute mods that can be present on a single
+        item. */
+    public final int MAX_STAT_AFFIXES       = 12;
     
-    protected int tileId; // used to draw the item's artwork to the screen
+    /** The id of the Tile that is drawn when the item's artwork is requested
+        in the game. */
+    protected int tileId; 
+    
+    /** The Item level associated with each item which determines whether certain 
+        attributes can occur on the item, how high the values can go as well as how
+        much vendors are willing to give for that item. */
     protected int itemLevel;
-    protected int sellValue;
-    protected int stackSize;
-    protected int numAffixes;
-    protected String itemName;
-    protected StatBonus[] itemAffixes = new StatBonus[MAX_STAT_AFFIXES];
     
+    /** The value in gold that vendors will give the player in exchange for the
+        item. */
+    protected int sellValue;
+    
+    /** How many items exist on top of each other. */
+    protected int stackSize;
+    
+    /** The name of the item visible to the player. */
+    protected String itemName;
+    
+    /** An array of AttributeMod's which are attribute mods; these bonuses affect
+        the player's attributes when the item is used. */
+    protected ArrayList<AttributeMod> itemAffixes;
+    
+    /** The RGB color value of the rarity of the item. */
     protected int rarityColorRGB;
     
+    /** Strings that are printed when the item is examined in the ToolTip menu
+        so the player knows which keybind does what. */
     protected String[] options = {"use", "examine", "drop", "salvage"};
+    
+    /** The keybinds for the various item options. */
     protected String[] keybinds = {"E", "X", "D", "S"};
+    
+    /** The text that is written to the TextLog when the player examines the
+        Item; many items change the description to something more descriptive
+        thus "Vendor fodder." is the default value if an Item is merely junk,
+        to be sold to a vendor in exchange for gold. */
     protected String itemDescription = "Vendor fodder.";
     
     /**
@@ -52,89 +93,116 @@ public class Item implements Comparable<Item> {
      * dropped to the ground
      * @param affixes 
      */
-    public Item(String name, int sellV, int stack, int tileId, StatBonus... affixes) {
+    public Item(String name, int sellV, int stack, int tileId, AttributeMod... affixes) {
         itemLevel   = 1;
         sellValue   = sellV;
-        numAffixes  = affixes.length;
-        rarityColorRGB = Common.COMMON_ITEM_COLOR_RGB;
+        rarityColorRGB = Common.ITEM_RARITY_COMMON_RGB;
         itemName    = name;
         stackSize   = stack;
         this.tileId = tileId;
         
-        System.arraycopy(affixes, 0, itemAffixes, 0, numAffixes);
+        itemAffixes = new ArrayList(Arrays.asList(affixes));
     } // constructor
     
     public Item(String name, int sellV, int id) {
         itemLevel   = 1;
         sellValue   = sellV;
-        numAffixes  = 0;
-        rarityColorRGB = Common.COMMON_ITEM_COLOR_RGB;
+        rarityColorRGB = Common.ITEM_RARITY_COMMON_RGB;
         itemName    = name;
         stackSize   = 1;
         tileId = id;
         itemAffixes = null;
     } // constructor
     
+    /**
+     * Changes the name visible to the player to name
+     * @param name the new name of the item
+     */
     public void setName(String name) {
         itemName = name;
     } // setName
     
+    /**
+     * Internal names are not visible to the player in any way (ideally); this may
+     * be replaced by item ids...
+     * @return the item's internal name
+     */
     public String getInternalName() {
         return itemName;
     } // getInternalName
     
-    public String getDisplayName() {
-        String name = itemName;
-        
-        if (name.length() > ITEM_NAME_MAX_LENGTH) {
-            return name.substring(0, ITEM_NAME_MAX_LENGTH - 2) + "..";
-        } // if
-        
-        return name;
-    } // getDisplayName
-
     /**
-     * Whenever the Item gets called, toString is what is called.  This should be
-     * set to whatever the player needs to know when the Item is consumed.
-     * @return 
+     * The name visible to the player; if the name of the item is too long for
+     * the inventory menu, it is truncated to fit
+     * @return the item's visible name
      */
-    @Override
-    public String toString() {
-        return getDisplayName();
-    } // toString
+    public String getDisplayName() {
+        return itemName;
+    } // getDisplayName
     
+    /**
+     * Set the stack size of the item to amount
+     * @param amount the new stack size of the item
+     */
     public void setStackSize(int amount) {
         stackSize = amount;
     } // setStackSize
     
+    /**
+     * Adjust the stack size of the item by amount; useful when a player drops
+     * or picks up one item
+     * @param amount the adjustment for the item stack size
+     */
     public void adjustStackBy(int amount) {
         stackSize += amount;
     } // adjustStackBy
     
+    /**
+     * 
+     * @return the stack size for the item
+     */
     public int getStackSize() {
         return stackSize;
     } // getStackSize
     
+    /**
+     * Change the sell value for the item; used when a player enchants an item,
+     * which can increase or decrease its worth to vendors
+     * @param sellV the new sell value of the item
+     */
     public void setSellValue(int sellV) {
         sellValue = sellV;
     } // setSellValue
     
+    /**
+     * 
+     * @return the item's vendor value in gold
+     */
     public int getSellValue() {
         return sellValue;
     } // getSellValue
     
+    /**
+     * 
+     * @return the id for the Tile that represents the item's artwork
+     */
     public int getTileId() {
         return tileId;
     } // getTileId
     
     /**
-     * This value should never be changed.  Method might be removed later.
-     * @param ilvl 
+     * Change the item level of the item; used when a player enchants the item,
+     * decreasing or increasing its worth and Item level
+     * @param ilvl the item's new item level
      */
     public void setItemLevel(int ilvl) {
         itemLevel = ilvl;
     } // setItemLevel
     
+    /**
+     * 
+     * @return the item's item level
+     */
     public int getItemLevel() {
         return itemLevel;
     } // getItemLevel
@@ -146,64 +214,121 @@ public class Item implements Comparable<Item> {
      * to remove the affix.
      * @param newAffix 
      */
-    public void addAffix(StatBonus newAffix) {
-        if (numAffixes == MAX_STAT_AFFIXES) {
-            return;
-        } // if
-        
-        itemAffixes[numAffixes++] = newAffix;
+    public void addAffix(AttributeMod newAffix) {
+        itemAffixes.add(newAffix);
     } // addAffix
     
     /**
-     * Remove an affix such as a curse, or possibly when failing at enchantment.
+     * Remove affix at index; used when a player fails enchanting, or when removing
+     * curses placed on the item
+     * @param index the index of the affix to be removed
      */
-    public void removeAffix() {
+    public void removeAffix(int index) {
         
     } // removeAffix
     
-    public StatBonus[] getAllAffixes() {
-        StatBonus[] affixList = new StatBonus[numAffixes];
-        System.arraycopy(itemAffixes, 0, affixList, 0, numAffixes);
+    /**
+     * Search through the list of AttributeMod's and remove the attribute mod equivalent 
+     * to attrMod if one exists; used when a player fails enchanting, or when removing
+     * curses placed on the item
+     * @param attrMod the attribute mod to search for and remove if found
+     */
+    public void removeAffix(AttributeMod attrMod) {
         
-        return affixList;
+    } // removeAffix
+    
+    /**
+     * Return a list of attribute mods in the form of an array of AttributeMod's
+     * @return the array of AttributeMod's
+     */
+    public AttributeMod[] getAllAffixes() {
+        return (AttributeMod[])itemAffixes.toArray();
     } // getAllAffixes
     
-    public StatBonus getAffixAt(int index) {
-        return itemAffixes[index];
+    /**
+     * Return a AttributeMod at index
+     * @param index the index to return
+     * @return the AttributeMod at index or null if index is larger than the number
+     * of attribute mods on the item
+     */
+    public AttributeMod getAffixAt(int index) {
+        if (index >= itemAffixes.size()) return null;
+        return itemAffixes.get(index);
     } // getAffixAt
     
+    /**
+     * 
+     * @return the number of attribute mods on the item
+     */
     public int getNumAffixes() {
-        return numAffixes;
+        return itemAffixes == null ? 0 : itemAffixes.size();
     } // getNumAffixes
     
     /**
-     * The rarity color of the item.  Currently only shows in the text log.
+     * Change the rarity RGB color value of the rarity associated with each item
      * @param rarity the new rarity
      */
     public void setRarityColor(int rarity) {
         rarityColorRGB = rarity;
     } // setRarityColor
     
+    /**
+     * 
+     * @return the RGB color value of the rarity of the item
+     */
     public int getRarityColor() {
         return rarityColorRGB;
     } // getRarityColor
     
+    /**
+     * Called to translate an integer (optionNum) into a String for display; 
+     * different Items call the "use" option different things to be more 
+     * descriptive as to what "using" the item will do; for instance, "eat"ing
+     * food
+     * @param optionNum the integer value of the requested option 
+     * @return the String representation of the option number
+     */
     public String getOptionText(int optionNum) {
         return options[optionNum];
     } // getOptionText
     
+    /**
+     * Return the key which should be pressed in order to activate the option
+     * @param optionNum the integer value for the option in question
+     * @return the keybind for that option
+     */
     public String getOptionKeybind(int optionNum) {
         return keybinds[optionNum];
     } // getOptionShortcutKey
     
-    public void setItemDescription(String desc) {
-        itemDescription = desc;
+    /**
+     * Change the Item's description, which is printed to the TextLog whenever
+     * the Item is examined
+     * @param newDescription the new item description text
+     */
+    public void setItemDescription(String newDescription) {
+        itemDescription = newDescription;
     } // setItemDescription
     
+    /**
+     * 
+     * @return the item's description text as a String
+     */
     public String getItemDescription() {
         return itemDescription;
     } // getItemDescription
+    
+    public void onUse() {
+        System.err.println(" [NOTIFY] This item has no use!  Is it junk?");
+    } // onUse
 
+    /**
+     * The compareTo functionality is used to compare two items to each
+     * other for stacking purposes when the Item is added to the player's 
+     * inventory; subclasses of Item compare other features 
+     * @param item the Item to compare to
+     * @return -1 if the Items are different and 0 if the two Items are identical
+     */
     @Override
     public int compareTo(Item item) {
         // Items names must be equal
@@ -224,7 +349,7 @@ public class Item implements Comparable<Item> {
         else {
             for (int j = 0; j < this.getNumAffixes(); j++) {
                 if (this.getAffixAt(j).getStatId() != item.getAffixAt(j).getStatId() &&
-                        this.getAffixAt(j).getStatMod() != this.getAffixAt(j).getStatMod()) {
+                        this.getAffixAt(j).getAttributeModifier() != this.getAffixAt(j).getAttributeModifier()) {
                     return -1;
                 } // if
             } // for

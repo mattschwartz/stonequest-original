@@ -12,8 +12,11 @@
 
 package com.barelyconscious.game.graphics.tiles;
 
+import java.awt.Color;
+
 public class StoneWallTile extends Tile {
     public StoneWallTile() {
-        super(STONE_WALL_TILE_ID, "/tiles/world/stonewall.png", true, false, true);
+        super(STONEWALL_TILE_ID, "/tiles/world/stonewall.png", true, false, true);
+        miniMapColor = new Color(65, 65, 65).getRGB();//new Color(120, 120, 120).getRGB();
     } // constructor
 } // StoneWallTile
