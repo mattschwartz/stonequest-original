@@ -1,70 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/Common.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/Game.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/Screen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/Sound$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/Sound.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/WorldFrame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/Font.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/Icon.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/LineElement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/Map.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/ScreenElement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/DoorIronClosedTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/DoorIronOpenTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/DoorWoodenClosedTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/DoorWoodenOpenTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/GrassTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/LootTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/PlayerTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/SewerRatTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/StoneFloor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/StoneWallMossyTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/StoneWallTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/Tile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/graphics/tiles/WaterTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/input/InputHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/input/KeyMap.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/item/Armor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/item/Food.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/item/Item.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/item/Potion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/item/Projectile$ProjectileTip.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/item/Projectile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/item/Scroll.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/item/Weapon.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/menu/AttributesMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/menu/BuffBar.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/menu/InventoryMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/menu/LootMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/menu/LootPickupMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/menu/Menu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/menu/TextLog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/menu/ToolTipMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/player/Inventory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/player/Player.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/player/StatBonus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/player/activeeffects/Buff.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/player/activeeffects/Curse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/player/activeeffects/Debuff.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/player/activeeffects/Poison.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/player/activeeffects/PotionEffect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/spawnable/Entity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/spawnable/EntityList.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/spawnable/Loot.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/spawnable/LootList.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/spawnable/Sprite.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/spawnable/doodad/Sprite.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/com/barelyconscious/game/spawnable/entities/SewerRatEntity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/icons/temporary_effects/curse_effect_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/icons/temporary_effects/poison_effect_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/StoneQuest/icons/temporary_effects/potion_effect_icon.png" beforeDir="false" />
-    </list>
+    <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,8 +17,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/barelyconscious/game/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1498">
-              <caret line="135" selection-start-line="135" selection-end-line="135" />
+            <state relative-caret-position="1414">
+              <caret line="102" selection-start-line="102" selection-end-line="102" />
             </state>
           </provider>
         </entry>
@@ -89,19 +26,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/barelyconscious/game/Screen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="114" column="2" selection-start-line="114" selection-start-column="2" selection-end-line="114" selection-end-column="2" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1087#1088#0" expanded="true" />
-                <element signature="e#1121#1122#0" expanded="true" />
-                <element signature="e#1629#1630#0" expanded="true" />
-                <element signature="e#1657#1658#0" expanded="true" />
-                <element signature="e#1898#1899#0" expanded="true" />
-                <element signature="e#1927#1928#0" expanded="true" />
-                <element signature="e#2113#2114#0" expanded="true" />
-                <element signature="e#2156#2157#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="210">
+              <caret line="32" column="2" selection-start-line="32" selection-start-column="2" selection-end-line="32" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -109,8 +35,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="818">
-              <caret line="224" column="4" selection-start-line="224" selection-start-column="4" selection-end-line="224" selection-end-column="4" />
+            <state relative-caret-position="174">
+              <caret line="178" column="9" selection-start-line="178" selection-start-column="9" selection-end-line="178" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -150,7 +76,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -167,6 +92,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -219,7 +145,6 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5f083c91-094d-4eb3-9ac1-b83f236ae878" name="Default Changelist" comment="" />
       <created>1557278753839</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -230,7 +155,7 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1888298" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19042553" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -257,33 +182,22 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/barelyconscious/game/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1498">
-          <caret line="135" selection-start-line="135" selection-end-line="135" />
+        <state relative-caret-position="1414">
+          <caret line="102" selection-start-line="102" selection-end-line="102" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/barelyconscious/game/Screen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="114" column="2" selection-start-line="114" selection-start-column="2" selection-end-line="114" selection-end-column="2" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1087#1088#0" expanded="true" />
-            <element signature="e#1121#1122#0" expanded="true" />
-            <element signature="e#1629#1630#0" expanded="true" />
-            <element signature="e#1657#1658#0" expanded="true" />
-            <element signature="e#1898#1899#0" expanded="true" />
-            <element signature="e#1927#1928#0" expanded="true" />
-            <element signature="e#2113#2114#0" expanded="true" />
-            <element signature="e#2156#2157#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="210">
+          <caret line="32" column="2" selection-start-line="32" selection-start-column="2" selection-end-line="32" selection-end-column="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="818">
-          <caret line="224" column="4" selection-start-line="224" selection-start-column="4" selection-end-line="224" selection-end-column="4" />
+        <state relative-caret-position="174">
+          <caret line="178" column="9" selection-start-line="178" selection-start-column="9" selection-end-line="178" selection-end-column="9" />
         </state>
       </provider>
     </entry>
