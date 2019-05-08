@@ -20,14 +20,14 @@ public interface Service {
      * Starts the service. Should be called only once at the start of the
      * application unless the service needs to be restarted.
      */
-    public void start();
+    void start();
 
     /**
      * Stops the service. Should be called to shut down the service, such as
      * when the player wishes to terminate the application or when the service
      * needs to be restarted.
      */
-    public void stop();
+    void stop();
 
     /**
      * Restarts the service. Should be called only if the service is behaving
@@ -35,5 +35,5 @@ public interface Service {
      * Also useful for changing settings without having to restart the
      * application.
      */
-    public void restart();
+    void restart();
 }

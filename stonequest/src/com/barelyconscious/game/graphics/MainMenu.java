@@ -120,6 +120,6 @@ public class MainMenu extends Menu {
     }
 
     private void quitGameEvent() {
-        Game.Stop();
+        Game.stop();
     }
 }

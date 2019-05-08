@@ -25,13 +25,13 @@ public class Game implements Runnable {
     private SceneService sceneService;
     private boolean running = false;
     // dbg
-    public static long frametime;
-    public static int frames2;
+    private static long frametime;
+    private static int frames2;
 
     /**
      * Initializes the game window and all of its components.
      */
-    public void initGame() {
+    private void initGame() {
         sceneService = SceneService.INSTANCE;
 
         startServices();
@@ -47,9 +47,9 @@ public class Game implements Runnable {
     }
 
     /**
-     * Start the game's main running thread.
+     * start the game's main running thread.
      */
-    private void Start() {
+    private void start() {
         running = true;
         new Thread(this).start();
     }
@@ -57,7 +57,7 @@ public class Game implements Runnable {
     /**
      * Called when the player quits the game.
      */
-    public static void Stop() {
+    public static void stop() {
         System.err.println("saving data");
         System.exit(0);
     }
@@ -79,10 +79,10 @@ public class Game implements Runnable {
                 Thread.sleep(2);
             } catch (InterruptedException e) {
                 ConsoleWriter.writeError("Fatal error in run(): " + e);
-                System.exit(1);
+                break;
             }
 
-            frames++;
+            ++frames;
 
             start = System.nanoTime();
             sceneService.render();
@@ -106,9 +106,9 @@ public class Game implements Runnable {
      *
      * @param args unused
      */
-    public static void main(String[] args) throws InterruptedException {
-        Game game = new Game();
-        game.Start();
+    public static void main(String[] args) {
+        final Game game = new Game();
+        game.start();
     }
 
     /* 
