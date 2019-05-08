@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<item  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="item.xsd"
+    baseName="Cloth Robe" 
+    fileLocation="chest/clothRobe.png" 
+    itemType="armor"
+    itemLevel="1"> 
+    
+    <!-- Attribute only present on equippable items -->
+    <equippable slot="chest" />
+    <salvagesInto material="cloth" quantity="[2, 4]" />
+    <salvagesInto material="magical" quantity="[1, 2]" />
+    
+    <dropRate common="0.70" magic="0.15" rare="0.10" unique="0.05" />
+    
+    <attributes>
+        <armor value="15" />
+        <strength value="21" />
+        <hitpoints value="10" />
+    </attributes>
+</item>

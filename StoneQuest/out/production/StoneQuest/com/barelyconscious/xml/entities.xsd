@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+
+<!-- Reference
+
+http://arianne.cvs.sf.net/viewvc/arianne/stendhal/data/conf/creatures.xsd?view=markup
+
+-->
+
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    
+    <!-- Define simple types -->
+    <xs:element name="description" type="xs:string" />
+    <xs:element name="experience" type="xs:double" />
+    <xs:element name="faction" type="xs:integer" />
+
+    <!-- Simple types for complex type, attributes -->
+    <xs:element name="health" />
+    <xs:element name="strength" />
+    <xs:element name="accuracy" />
+    <xs:element name="defense" />
+    <xs:element name="evasion" />
+    <xs:element name="fireMagicBonus" />
+    <xs:element name="frostMagicBonus" />
+    <xs:element name="holyMagicBonus" />
+    <xs:element name="chaosMagicBonus" />
+    <xs:element name="faithMagicBonus" />
+
+    <xs:attribute name="value" type="xs:double" />
+    <xs:attribute name="quantity" type="xs:string" />
+    <xs:attribute name="probability" type="xs:double" />
+    
+    <!-- Definition of complex types -->
+    <xs:element name="attributes">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="health" />
+                <xs:element ref="strength" />
+                <xs:element ref="accuracy" />
+                <xs:element ref="defense" />
+                <xs:element ref="evasion" />
+                <xs:element ref="fireMagicBonus" />
+                <xs:element ref="frostMagicBonus" />
+                <xs:element ref="holyMagicBonus" />
+                <xs:element ref="chaosMagicBonus" />
+                <xs:element ref="faithMagicBonus" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- Item element -->
+    <xs:element name="item">
+        <xs:complexType>
+            <xs:attribute name="type" type="xs:string" />
+            <xs:attribute name="id" type="xs:integer" />
+            <xs:attribute name="level" type="xs:double" />
+            <xs:attribute ref="quantity" />
+            <xs:attribute ref="probability" />
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- Drop element, defined as any numer of Item elements -->
+    <xs:element name="drop">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="item" maxOccurs="unbounded" />
+            </xs:sequence>
+            
+            <xs:attribute ref="quantity" />
+            <xs:attribute ref="probability" />
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- LootTable element, defined as any number of Drop elements -->
+    <xs:element name="lootTable">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="drop" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- Each entity has a class -->
+    <xs:element name="class">
+        <xs:complexType>
+            <xs:attribute name="style" type="xs:string" />
+            <xs:attribute name="damageType" type="xs:string" />
+            <xs:attribute name="tileId" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- A single entity definition -->
+    <xs:element name="entity">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="class" />
+                <xs:element ref="description" />
+                <xs:element ref="experience" />
+                <xs:element ref="faction" />
+                <xs:element ref="attributes" />
+            </xs:sequence>
+            
+            <xs:attribute name="id" type="xs:integer" />
+            <xs:attribute name="name" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- Encompasses many entity definitions -->
+    <xs:element name="entities">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="entity" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
