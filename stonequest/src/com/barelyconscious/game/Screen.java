@@ -370,8 +370,8 @@ public class Screen extends Canvas {
         if (showUI) {
             renderInterface();
 
-            Font.drawMessage(this, "Frame time: " + (Game.frametime / 1000000) + "ms", Color.white.getRGB(), false, 0, Font.CHAR_HEIGHT * 16);
-            Font.drawMessage(this, "fps: " + Game.frames2, Color.white.getRGB(), false, 0, Font.CHAR_HEIGHT * 17);
+            Font.drawMessage(this, "Frame time: " + (Game.frametime / 1000000) + "ms", Color.white.getRGB(), false, Font.CHAR_WIDTH * 65, Font.CHAR_HEIGHT * 47);
+            Font.drawMessage(this, "fps: " + Game.frames2, Color.white.getRGB(), false, Font.CHAR_WIDTH * 65, Font.CHAR_HEIGHT * 48);
         } // if
 
 //        animation();

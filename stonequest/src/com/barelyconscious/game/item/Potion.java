@@ -49,6 +49,13 @@ public class Potion extends Item {
 
         options[USE] = "quaff";
     } // constructor
+    public Potion(String name, int sellV, int stack, int tileId, PotionEffect effects) {
+        super(name, sellV, stack, tileId);
+        super.setItemDescription("" + effects);
+        this.effects = effects;
+
+        options[USE] = "quaff";
+    } // constructor
 
     public PotionEffect getEffects() {
         return effects;

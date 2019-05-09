@@ -51,6 +51,8 @@ public class BuffBar extends Interactable {
     private final int BUFF_SCALE = 2;
     private final Player player;
 
+    private final int YO_THERE_IS_THIS_VALUE_IDK_WHAT_IT_MEANS_BUT_ITS_20_NOW = 20;
+
     public BuffBar() {
         xOffs = 0;
         yOffs = 0;
@@ -63,7 +65,7 @@ public class BuffBar extends Interactable {
     public void resize(int w, int h) {
         xOffs = Game.miniMap.getOffsX();
         yOffs = Game.miniMap.getOffsY();
-        width = (Common.TILE_SIZE * BUFF_SCALE) * 10;
+        width = (YO_THERE_IS_THIS_VALUE_IDK_WHAT_IT_MEANS_BUT_ITS_20_NOW* BUFF_SCALE) * 10;
         height = Game.miniMap.getPixelHeight();
 
         buffPopoutOffsX = xOffs - ACTIVE_EFFECT_POPOUT_WIDTH;
@@ -135,7 +137,7 @@ public class BuffBar extends Interactable {
     private void renderDebuffs(Screen screen) {
         int x;
         int y;
-        int iconSize = Common.TILE_SIZE * BUFF_SCALE;
+        int iconSize = YO_THERE_IS_THIS_VALUE_IDK_WHAT_IT_MEANS_BUT_ITS_20_NOW * BUFF_SCALE;
         String duration;
 
         for (int i = 0; i < player.getNumDebuffs(); i++) {
@@ -163,7 +165,7 @@ public class BuffBar extends Interactable {
     } // renderDebuffs
 
     private void renderBuffs(Screen screen) {
-        int iconSize = Common.TILE_SIZE * BUFF_SCALE;
+        int iconSize = YO_THERE_IS_THIS_VALUE_IDK_WHAT_IT_MEANS_BUT_ITS_20_NOW * BUFF_SCALE;
         String duration;
         Buff buff;
 

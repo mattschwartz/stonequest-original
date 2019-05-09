@@ -26,7 +26,7 @@ public abstract class Common {
     /**
      * The width and height (tiles are square) of each Tile.
      */
-    public static final int TILE_SIZE = 20;
+    public static final int TILE_SIZE = 32;
     /**
      * The scale of the game. This value is not used and will probably be removed
      */

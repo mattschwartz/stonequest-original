@@ -121,12 +121,12 @@ public class UIElement {
      * @param imageFile the name of the file location of the UIElement
      */
     public UIElement(String imageFile) {
-        System.err.print(" [NOTIFY] Loading image \"" + trim(imageFile) + "\"...");
+        System.out.print(" [NOTIFY] Loading image \"" + trim(imageFile) + "\"...");
         BufferedImage img = loadImage(imageFile);
         width = img.getWidth();
         height = img.getHeight();
         pixels = img.getRGB(0, 0, width, height, null, 0, width);
-        System.err.println("done.");
+        System.out.println("done.");
     } // constructor
 
     /**

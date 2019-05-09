@@ -83,6 +83,11 @@ public class Tile {
     public static final int GRASS_TILE_2_ID = 38;
     public static final int FOG_TILE_ID = 39;
     public static final int GRASS_TILE_3_ID = 40;
+    public static final int ANTIMAGIC_POTION_TILE_ID = 41;
+
+    public static final int HELMET_CLOTH_TILE_ID = 42;
+    public static final int CHEST_CLOTH_TILE_ID = 43;
+
     // World tiles
     private static Tile[] tiles = new Tile[256]; // holds the classes for all tiles
     public static Tile grassTile = new GrassTile();
@@ -107,12 +112,14 @@ public class Tile {
     public static Tile goldCoinStackTile = new Tile(GOLD_LOOT_STACK_TILE_ID, "/tiles/loot/gold_coin_stack.png");
     public static Tile armorChestIronTile = new Tile(CHEST_IRON_TILE_ID, "/tiles/loot/armor/chest/iron.png");
     public static Tile armorChestLeatherTile = new Tile(CHEST_LEATHER_TILE_ID, "/tiles/loot/armor/chest/leather.png");
+    public static Tile armorChestClothTile = new Tile(CHEST_CLOTH_TILE_ID, "/tiles/loot/armor/chest/clothRobe.png");
     public static Tile armorGreavesIronTile = new Tile(GREAVES_IRON_TILE_ID, "/tiles/loot/armor/greaves/iron.png");
     public static Tile armorGreavesLeatherTile = new Tile(GREAVES_LEATHER_TILE_ID, "/tiles/loot/armor/greaves/leather.png");
     public static Tile armorBootsIronTile = new Tile(BOOTS_IRON_TILE_ID, "/tiles/loot/armor/boots/iron.png");
     public static Tile armorBootsLeatherTile = new Tile(BOOTS_LEATHER_TILE_ID, "/tiles/loot/armor/boots/leather.png");
     public static Tile armorHelmetIronTile = new Tile(HELMET_IRON_TILE_ID, "/tiles/loot/armor/helmet/iron.png");
     public static Tile armorHelmetLeatherTile = new Tile(HELMET_LEATHER_TILE_ID, "/tiles/loot/armor/helmet/leather.png");
+    public static Tile armorHelmetClothTile = new Tile(HELMET_CLOTH_TILE_ID, "/tiles/loot/armor/helmet/clothHat.png");
     public static Tile armorBeltIronTile = new Tile(BELT_IRON_TILE_ID, "/tiles/loot/armor/belt/iron.png");
     public static Tile armorBeltLeatherTile = new Tile(BELT_LEATHER_TILE_ID, "/tiles/loot/armor/belt/leather.png");
     public static Tile armorEarringTile = new Tile(EARRING_TILE_ID, "/tiles/loot/armor/jewelry/earring.png");
@@ -123,6 +130,7 @@ public class Tile {
     public static Tile swordTileId = new Tile(MAINHAND_SWORD_TILE_ID, "/tiles/loot/weapons/sword.png");
     public static Tile foodTile = new Tile(FOOD_TILE_ID, "/tiles/loot/food.png");
     public static Tile potionTile = new Tile(POTION_TILE_ID, "/tiles/loot/potion.png");
+    public static Tile antimagicPotionTile = new Tile(ANTIMAGIC_POTION_TILE_ID, "/tiles/loot/antimagic_potion.png");
     public static Tile scrollTile = new Tile(SCROLL_TILE_ID, "/tiles/loot/scroll.png");
     public static Tile arrowTile = new Tile(ARROW_TILE_ID, "/tiles/loot/projectile.png");
     public static Tile glassBottleTile = new Tile(GLASS_BOTTLE_TILE_ID, "/tiles/loot/glass_bottle.png");
@@ -159,7 +167,7 @@ public class Tile {
 
         try {
             img = ImageIO.read(Game.class.getResourceAsStream(fileName));
-        } catch (IOException ex) {
+        } catch (IOException | IllegalArgumentException ex) {
             System.err.println(" [ERR] Failed to load image (" + fileName + "): " + ex);
         } // catch
 
@@ -180,7 +188,7 @@ public class Tile {
 
         try {
             img = ImageIO.read(Game.class.getResourceAsStream(fileName));
-        } catch (IOException ex) {
+        } catch (IOException | IllegalArgumentException ex) {
             System.err.println(" [ERR] Failed to load image (" + fileName + "): " + ex);
         } // catch
 

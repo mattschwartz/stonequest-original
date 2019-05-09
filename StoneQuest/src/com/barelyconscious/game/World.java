@@ -66,9 +66,9 @@ public class World extends Interactable {
         log = Game.textLog;
 
         // debug stuff - will be removed soon
-        addEntity(new SewerRatEntity(this, 1, 40, 20));
-        addEntity(new SewerRatEntity(this, 1, 80, 20));
-        addEntity(new SewerRatEntity(this, 1, 60, 20));
+        addEntity(new SewerRatEntity(this, 1, 64, 32));
+        addEntity(new SewerRatEntity(this, 1, 96, 32));
+        addEntity(new SewerRatEntity(this, 1, 32, 32));
         Container chest = new Container("Chest", Tile.CONTAINER_CHEST_CLOSED_TILE_ID, Tile.CONTAINER_CHEST_OPEN_TILE_ID, 40, 0);
         ArrayList<Item> itemlist = new ArrayList();
         Item i1 = new Item("some arrows", 259, Tile.ARROW_TILE_ID);
@@ -109,13 +109,13 @@ public class World extends Interactable {
         if ((playerY % Common.TILE_SIZE) > (Common.TILE_SIZE / 2)) {
             playerY += Common.TILE_SIZE - (playerY % Common.TILE_SIZE);
         } else {
-            playerY -= playerY % 20;
+            playerY -= playerY % Common.TILE_SIZE;
         } // if-else
 
         if ((playerX % Common.TILE_SIZE) > (Common.TILE_SIZE / 2)) {
             playerX += Common.TILE_SIZE - (playerX % Common.TILE_SIZE);
         } else {
-            playerX -= playerX % 20;
+            playerX -= playerX % Common.TILE_SIZE;
         } // if-else
 
         /* Redefine the mouse zone because a resize might change the size of
@@ -434,6 +434,7 @@ public class World extends Interactable {
 
         // debug
         if (isRanged) {
+            System.err.println("Yo. Ranged dont mean nothin do it??");
             deltaY *= 20;
             deltaX *= 20;
         }

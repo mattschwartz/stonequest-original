@@ -72,14 +72,6 @@ public class Game implements Runnable {
     public static long frametime;
     public static int frames2;
 
-    // For applet version of the game
-//    @Override
-//    public void init() {
-//        Game game = new Game();
-//        game.Start();
-//        game.initGame();
-//        game.run();
-//    }
     /**
      * Initializes the game window.
      */
@@ -88,8 +80,6 @@ public class Game implements Runnable {
 
         width = 1280;
         height = 700;
-//        width = 1600;
-//        height = 900;
 
         screen = new Screen(width, height);
         window.add(screen);
@@ -295,8 +285,8 @@ public class Game implements Runnable {
     } // main
 
     public static void disposableFunctionToAddStuffToThePlayersInventory() {
-        Armor lHelm = new Armor("Leather Helmet", 2567, 15, Player.HELM_SLOT_ID, Tile.HELMET_LEATHER_TILE_ID, new AttributeMod(Player.ACCURACY, -11), new AttributeMod(Player.FIRE_MAGIC_BONUS, 54), new AttributeMod(Player.HOLY_MAGIC_BONUS, 22), new AttributeMod(Player.DEFENSE, 25), new AttributeMod(Player.HITPOINTS, 12), new AttributeMod(Player.AGILITY, 5), new AttributeMod(Player.DEFENSE, 200));
-        Armor lChest = new Armor("Leather Chest", 1500, 27, Player.CHEST_SLOT_ID, Tile.CHEST_LEATHER_TILE_ID);
+        Armor lHelm = new Armor("Leather Helmet", 2567, 15, Player.HELM_SLOT_ID, Tile.HELMET_CLOTH_TILE_ID, new AttributeMod(Player.ACCURACY, -11), new AttributeMod(Player.FIRE_MAGIC_BONUS, 54), new AttributeMod(Player.HOLY_MAGIC_BONUS, 22), new AttributeMod(Player.DEFENSE, 25), new AttributeMod(Player.HITPOINTS, 12), new AttributeMod(Player.AGILITY, 5), new AttributeMod(Player.DEFENSE, 200));
+        Armor lChest = new Armor("Leather Chest", 1500, 27, Player.CHEST_SLOT_ID, Tile.CHEST_CLOTH_TILE_ID);
         Armor lGreaves = new Armor("Leather Greaves", 220, 15, Player.GREAVES_SLOT_ID, Tile.GREAVES_LEATHER_TILE_ID);
         Armor lboots = new Armor("Leather Boots", 1789, 10, Player.BOOTS_SLOT_ID, Tile.BOOTS_LEATHER_TILE_ID);
         Armor lBelt = new Armor("Leather Belt", 1677, 11, Player.BELT_SLOT_ID, Tile.BELT_LEATHER_TILE_ID);
@@ -313,7 +303,7 @@ public class Game implements Runnable {
         Potion healthPotion = new Potion("Potion of Might", 2990, 1, new StatPotionEffect("Potion of Might", 129, new AttributeMod(Player.HITPOINTS, 21), new AttributeMod(Player.STRENGTH, 15)));
         Potion newPotion = new Potion("Potion of Awesome", 159, 3, new StatPotionEffect("Potion of Awesome", 300, new AttributeMod(Player.DEFENSE, 12), new AttributeMod(Player.STRENGTH, 3)));
         Potion pootion = new Potion("Potion of Pi", 1, 5, new StatPotionEffect("Potion of Pi", 95, new AttributeMod(Player.DEFENSE, 12), new AttributeMod(Player.STRENGTH, 3), new AttributeMod(Player.AGILITY, 15), new AttributeMod(Player.DEFENSE, 55), new AttributeMod(Player.FIRE_MAGIC_BONUS, 180)));
-        Potion antiMagicPotion = new Potion("Antimagic Potion", 1589, 2, new AntimagicPotionEffect("Antimagic Potion"));
+        Potion antiMagicPotion = new Potion("Antimagic Potion", 1589, 2, Tile.ANTIMAGIC_POTION_TILE_ID, new AntimagicPotionEffect("Antimagic Potion"));
         Potion antivenomPotion = new Potion("Antivenom", 18890, 3, new AntitoxinPotionEffect("Antivenom"));
 
         Curse curse = new Curse("Curse of Evilness", 299, new AttributeMod(Player.ACCURACY, 15), new AttributeMod(Player.DEFENSE, 5));
