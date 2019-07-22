@@ -116,28 +116,28 @@ public class Entity extends Sprite {
     } // getHealthPoints
     
     /**
-     * Moves the Entity up on the Map one Tile.
+     * Moves the Entity up on the GameMap one Tile.
      */
     public void moveUp() {
         changePositionBy(0, -1);
     } // moveUp
     
     /**
-     * Moves the Entity down on the Map one Tile.
+     * Moves the Entity down on the GameMap one Tile.
      */
     public void moveDown() {
         changePositionBy(0, 1);
     } // moveDown
     
     /**
-     * Moves the Entity left on the Map one Tile.
+     * Moves the Entity left on the GameMap one Tile.
      */
     public void moveLeft() {
         changePositionBy(-1, 0);
     } // moveLeft
     
     /**
-     * Moves the Entity right on the Map one Tile.
+     * Moves the Entity right on the GameMap one Tile.
      */
     public void moveRight() {
         changePositionBy(1, 0);

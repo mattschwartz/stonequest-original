@@ -453,7 +453,7 @@ public class InventoryMenu extends Interactable {
         String text;
         
         // Draw the player's amount of gold
-        text = "$" + Common.formatNumber(playerInventory.gold);
+        text = "$" + Common.formatNumber(playerInventory.getGold());
         x = xOffs + GOLD_OFFS_X + (GOLD_BAR_WIDTH - text.length() * Font.CHAR_WIDTH);
         y = yOffs + GOLD_OFFS_Y + (GOLD_BAR_HEIGHT - Font.CHAR_HEIGHT) / 2;
         

@@ -47,7 +47,7 @@ public class Screen extends Canvas {
      */
     public Screen(int w, int h) {
         resizeScreen(w, h);
-//        testanimation();
+        testanimation();
     } // constructor
     Animation anim1;
 
@@ -364,7 +364,7 @@ public class Screen extends Canvas {
             return;
         } // if
 
-        Game.map.renderBackground(this);
+        Game.gameMap.renderBackground(this);
         Game.world.render(this);
 
         if (showUI) {

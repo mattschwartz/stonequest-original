@@ -120,8 +120,8 @@ public abstract class KeyMap {
     } // isFocusKey
     
     /**
-     * Sets the key map to one of the preset maps defined as final integers
-     * @param map the new preset map
+     * Sets the key gameMap to one of the preset maps defined as final integers
+     * @param map the new preset gameMap
      */
     public static void changeMapping(int map) {
         if (map == MODERN_MAPPING) {

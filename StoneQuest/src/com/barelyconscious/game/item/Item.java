@@ -348,7 +348,7 @@ public class Item implements Comparable<Item> {
         // and the same affixes
         else {
             for (int j = 0; j < this.getNumAffixes(); j++) {
-                if (this.getAffixAt(j).getStatId() != item.getAffixAt(j).getStatId() &&
+                if (this.getAffixAt(j).getAttributeId() != item.getAffixAt(j).getAttributeId() &&
                         this.getAffixAt(j).getAttributeModifier() != this.getAffixAt(j).getAttributeModifier()) {
                     return -1;
                 } // if

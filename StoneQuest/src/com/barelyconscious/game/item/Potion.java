@@ -78,11 +78,11 @@ public class Potion extends Item {
     @Override
     public void onUse() {
         if (effects.getPotionType() == PotionEffect.STATBUFF) {
-            StatPotionEffect neweffects = new StatPotionEffect(effects.getDisplayName(), effects.getDurationInTicks(), ((StatPotionEffect) effects).getAffixesAsArray());
-            neweffects.onApplication();
+            StatPotionEffect neweffects = new StatPotionEffect(effects.getDurationInTicks(), effects.getDisplayName(), ((StatPotionEffect) effects).getAffixesAsArray());
+            neweffects.onApplied();
         } // if
         else {
-            effects.onApplication();
+            effects.onApplied();
         } // else
 
         if (--stackSize <= 0) {

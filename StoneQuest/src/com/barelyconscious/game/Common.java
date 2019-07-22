@@ -45,7 +45,7 @@ public abstract class Common {
      * component
      */
     public static int themeForegroundColor = new Color(255, 255, 0).getRGB();
-    // Tile colors for the mini map
+    // Tile colors for the mini gameMap
     /**
      * The RGB color value for loot objects that appear on the minimap.
      */
@@ -361,7 +361,7 @@ public abstract class Common {
      * Performs a weighted randomized letter generator where the weights are based on each letter's rough percent
      * frequency
      *
-     * @param charMap a map containing characters and the corresponding character's frequency
+     * @param charMap a gameMap containing characters and the corresponding character's frequency
      * @return a weighted random character
      */
     private static char getWeightedRandomCharacter(Map<Character, Double> charMap) {

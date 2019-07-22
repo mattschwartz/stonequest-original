@@ -67,8 +67,8 @@ public class LootList {
         return list[index];
     } // get
     
-    public ArrayList getList(int x, int y) {
-        ArrayList<Loot> list = new ArrayList();
+    public ArrayList<Loot> getList(int x, int y) {
+        ArrayList<Loot> list = new ArrayList<>();
         
         for (Loot e : this.list) {
             if ( e != null && (e.getXPos() == x) && (e.getYPos() == y) ) {
@@ -79,8 +79,8 @@ public class LootList {
         return list;
     } // getList
     
-    public ArrayList getListAsItem(int x, int y) {
-        ArrayList<Item> list = new ArrayList();
+    public ArrayList<Item> getListAsItem(int x, int y) {
+        ArrayList<Item> list = new ArrayList<>();
         
         for (Loot e : this.list) {
             if ( e != null && (e.getXPos() == x) && (e.getYPos() == y) ) {

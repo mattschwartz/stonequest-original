@@ -30,7 +30,7 @@
  *                     bleed - Entities struck by bleed-causing weapons will bleed
  *                             out, dealing physical damage over time.
  *               teleporting - Entities struck by teleporting weapons will occasionally
- *                             be transported to another Tile on the Map.
+ *                             be transported to another Tile on the GameMap.
  *                   Weapon types: different types of weapons have type-specific
  *                   benefits and are not considered an augment:
  *                     heavy - Heavy weapons have a chance to Stun an Entity, 
@@ -175,7 +175,7 @@ public class Weapon extends Item {
         isEquipped = true;
         
         for (AttributeMod mod : itemAffixes) {
-            Game.player.setTemporaryAttribute(mod.getStatId(), mod.getAttributeModifier());
+            Game.player.setTemporaryAttribute(mod.getAttributeId(), mod.getAttributeModifier());
         } // for
     } // equip
     
@@ -188,7 +188,7 @@ public class Weapon extends Item {
         isEquipped = false;
         
         for (AttributeMod mod : itemAffixes) {
-            Game.player.setTemporaryAttribute(mod.getStatId(), -mod.getAttributeModifier());
+            Game.player.setTemporaryAttribute(mod.getAttributeId(), -mod.getAttributeModifier());
         } // for
     } // unequip
 

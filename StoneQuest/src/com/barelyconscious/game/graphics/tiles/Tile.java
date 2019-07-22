@@ -39,7 +39,7 @@ public class Tile {
 
     private final int TRANSPARENT_COLOR = -65281; // precomputed rgb of 255,0,255
     private final int TRANSLUSCENT_COLOR = new Color(125, 0, 125).getRGB();
-    // World tile ids - part of the world map
+    // World tile ids - part of the world gameMap
     public static final int GRASS_TILE_ID = 0;
     public static final int STONE_TILE_ID = 1;
     public static final int STONEWALL_TILE_ID = 2;
@@ -347,7 +347,7 @@ public class Tile {
     } // renderShadedTile
 
     /**
-     * Used to draw the mini map by getting a tile's average RGB color value
+     * Used to draw the mini gameMap by getting a tile's average RGB color value
      *
      * @param tileid the Tile id for which the average RGB color value is desired
      * @return the average RGB color value
@@ -357,7 +357,7 @@ public class Tile {
     } // getMiniMapColor
 
     /**
-     * Used to draw the mini map by getting a shaded tile's average RGB color value
+     * Used to draw the mini gameMap by getting a shaded tile's average RGB color value
      *
      * @param tileid the Tile id for which the average RGB color value is desired
      * @return the average RGB color value

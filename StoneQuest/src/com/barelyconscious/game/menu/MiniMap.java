@@ -10,7 +10,7 @@
  *                    Please email stonequest.bcgames@gmail.com for issues or 
  *                    concerns.
  * File Description:  Draws the current World in a smaller frame so that the
- *                    user can get a broad overview of the area.  Draws the Map
+ *                    user can get a broad overview of the area.  Draws the GameMap
  *                    tiles as well as all Entities, Loot and Doodads uncovered
  *                    by the user.
  ************************************************************************** */
@@ -21,7 +21,7 @@ import com.barelyconscious.game.Game;
 import com.barelyconscious.game.Screen;
 import com.barelyconscious.game.graphics.Font;
 import com.barelyconscious.game.graphics.UIElement;
-import com.barelyconscious.game.graphics.Map;
+import com.barelyconscious.game.graphics.GameMap;
 import com.barelyconscious.game.graphics.tiles.Tile;
 import com.barelyconscious.game.input.Interactable;
 import com.barelyconscious.game.spawnable.Container;
@@ -104,22 +104,22 @@ public class MiniMap extends Interactable {
     } // mouseMoved
 
     public void render(Screen screen) {
-        int xPos = Game.world.getPlayerX() / Common.TILE_SIZE + Game.map.getXStart();
-        int yPos = Game.world.getPlayerY() / Common.TILE_SIZE + Game.map.getYStart();
+        int xPos = Game.world.getPlayerX() / Common.TILE_SIZE + Game.gameMap.getXStart();
+        int yPos = Game.world.getPlayerY() / Common.TILE_SIZE + Game.gameMap.getYStart();
 
-        mapStartX = Game.map.getXStart() - MINIMAP_VIEW_WIDTH / 6 + Game.screen.getScreenWidth() / 40;//Game.map.getXStart() - (pixelWidth / 2) / tileScale + (Game.screen.getScreenWidth() / Common.TILE_SIZE) / 2 - Game.player.getLightRadius() - tileScale;
-        mapStartY = Game.map.getYStart() - ((MINIMAP_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2) / tileScale + (Game.screen.getScreenHeight() / Common.TILE_SIZE) / 2 - Game.player.getLightRadius() / 2;
+        mapStartX = Game.gameMap.getXStart() - MINIMAP_VIEW_WIDTH / 6 + Game.screen.getScreenWidth() / 40;//Game.gameMap.getXStart() - (pixelWidth / 2) / tileScale + (Game.screen.getScreenWidth() / Common.TILE_SIZE) / 2 - Game.player.getLightRadius() - tileScale;
+        mapStartY = Game.gameMap.getYStart() - ((MINIMAP_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2) / tileScale + (Game.screen.getScreenHeight() / Common.TILE_SIZE) / 2 - Game.player.getLightRadius() / 2;
 
         /* Draw the world tiles */
         renderTiles(screen);
 
-        /* Draw Loot objects to the map */
+        /* Draw Loot objects to the gameMap */
         renderLoot(screen);
 
-        /* Draw Doodad objects to the map */
+        /* Draw Doodad objects to the gameMap */
         renderDoodads(screen);
 
-        /* Draw Entities to the map */
+        /* Draw Entities to the gameMap */
         renderEntities(screen);
 
         xPos -= mapStartX;
@@ -132,7 +132,7 @@ public class MiniMap extends Interactable {
         xPos += 12;
         yPos -= 4;
 
-        /* Draw the title of the Zone as the title for the mini map */
+        /* Draw the title of the Zone as the title for the mini gameMap */
         UIElement.MINIMAP_FRAME.render(screen, xOffs, yOffs);
         screen.fillRectangle(Common.MINIMAP_PLAYER_TILE_RGB, xOffs + xPos,
                 yOffs + yPos + Font.CHAR_HEIGHT, tileScale, tileScale);
@@ -142,14 +142,14 @@ public class MiniMap extends Interactable {
     } // render
 
     private void renderText(Screen screen) {
-        String zoneName = Game.map.getZoneName();
-        String zoneLevel = "" + Game.map.getZoneLevel();
-        String remainingElites = "2" + Game.map.getRemainingElites();
+        String zoneName = Game.gameMap.getZoneName();
+        String zoneLevel = "" + Game.gameMap.getZoneLevel();
+        String remainingElites = "2" + Game.gameMap.getRemainingElites();
 
         // Render the name of the zone to the minimap
         Font.drawOutlinedMessage(screen, zoneName, Common.FONT_WHITE_RGB, true, xOffs + ZONE_NAME_OFFS_X
-                + (ZONE_NAMEBAR_WIDTH - zoneName.length() * Font.CHAR_WIDTH) / 2, yOffs + ZONE_NAME_OFFS_Y
-                + (ZONE_NAMEBAR_HEIGHT - Font.CHAR_HEIGHT) / 2);
+            + (ZONE_NAMEBAR_WIDTH - zoneName.length() * Font.CHAR_WIDTH) / 2, yOffs + ZONE_NAME_OFFS_Y
+            + (ZONE_NAMEBAR_HEIGHT - Font.CHAR_HEIGHT) / 2);
 
         // Render the level of the zone to the minimap
         Font.drawOutlinedMessage(screen, zoneLevel, Common.themeForegroundColor, false, xOffs + ZONE_LEVEL_OFFS_X
@@ -172,12 +172,12 @@ public class MiniMap extends Interactable {
 
         for (int x = 0, mapX = mapStartX; x < miniMapWidth; x++, mapX++) {
             for (int y = 0, mapY = mapStartY; y < miniMapHeight; y++, mapY++) {
-                tileId = Game.map.getTileIdAt(mapX, mapY);
+                tileId = Game.gameMap.getTileIdAt(mapX, mapY);
 
-                if ((tileId & Map.IS_VISIBLE) >> 8 == 1) {
+                if ((tileId & GameMap.IS_VISIBLE) >> 8 == 1) {
                     tileRGB = Tile.getTile((byte) tileId).getMiniMapColor();
                 } // if
-                else if ((tileId & Map.RECENTLY_SEEN) >> 9 == 1) {
+                else if ((tileId & GameMap.RECENTLY_SEEN) >> 9 == 1) {
                     tileRGB = Tile.getTile((byte) tileId).getMiniMapColorShaded();
                 } // else if
                 else {
@@ -224,8 +224,8 @@ public class MiniMap extends Interactable {
                 continue;
             } // else
 
-            xPos = xPos / Common.TILE_SIZE + Game.map.getXStart();
-            yPos = yPos / Common.TILE_SIZE + Game.map.getYStart();
+            xPos = xPos / Common.TILE_SIZE + Game.gameMap.getXStart();
+            yPos = yPos / Common.TILE_SIZE + Game.gameMap.getYStart();
 
             xPos -= mapStartX;
             yPos -= mapStartY;
@@ -255,7 +255,7 @@ public class MiniMap extends Interactable {
     private void renderLoot(Screen screen) {
         int xPos;
         int yPos;
-        LootList lootList = Game.world.getLootList();
+        LootList lootList = Game.world.getLootItems();
 
         for (int i = 0; i < lootList.size(); i++) {
             if (lootList.get(i).isVisible()) {
@@ -266,8 +266,8 @@ public class MiniMap extends Interactable {
                 continue;
             } // else
 
-            xPos = xPos / Common.TILE_SIZE + Game.map.getXStart();
-            yPos = yPos / Common.TILE_SIZE + Game.map.getYStart();
+            xPos = xPos / Common.TILE_SIZE + Game.gameMap.getXStart();
+            yPos = yPos / Common.TILE_SIZE + Game.gameMap.getYStart();
 
             xPos -= mapStartX;
             yPos -= mapStartY;
@@ -279,7 +279,7 @@ public class MiniMap extends Interactable {
             xPos += 12;
             yPos -= 4;
 
-            /* If the object is out of range, don't draw it to the map*/
+            /* If the object is out of range, don't draw it to the gameMap*/
             if (xPos < 0 || yPos < 0 || xPos >= screen.getScreenWidth()
                     || yPos >= screen.getScreenHeight()) {
                 continue;
@@ -298,7 +298,7 @@ public class MiniMap extends Interactable {
     private void renderDoodads(Screen screen) {
         int xPos;
         int yPos;
-        ArrayList<Doodad> doodadList = Game.world.getDoodadList();
+        ArrayList<Doodad> doodadList = Game.world.getDoodads();
 
         for (Doodad doodad : doodadList) {
             if (doodad.isVisible()) {
@@ -309,8 +309,8 @@ public class MiniMap extends Interactable {
                 continue;
             } // else
 
-            xPos = xPos / Common.TILE_SIZE + Game.map.getXStart();
-            yPos = yPos / Common.TILE_SIZE + Game.map.getYStart();
+            xPos = xPos / Common.TILE_SIZE + Game.gameMap.getXStart();
+            yPos = yPos / Common.TILE_SIZE + Game.gameMap.getYStart();
 
             xPos -= mapStartX;
             yPos -= mapStartY;
@@ -322,7 +322,7 @@ public class MiniMap extends Interactable {
             xPos += 12;
             yPos -= 4;
 
-            /* If the object is out of range, don't draw it to the map*/
+            /* If the object is out of range, don't draw it to the gameMap*/
             if (xPos < 0 || yPos < 0 || xPos >= screen.getScreenWidth()
                     || yPos >= screen.getScreenHeight()) {
                 continue;

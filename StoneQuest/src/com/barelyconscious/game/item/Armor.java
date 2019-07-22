@@ -123,7 +123,7 @@ public class Armor extends Item {
         isEquipped = true;
 
         for (AttributeMod mod : itemAffixes) {
-            Game.player.setTemporaryAttribute(mod.getStatId(), mod.getAttributeModifier());
+            Game.player.setTemporaryAttribute(mod.getAttributeId(), mod.getAttributeModifier());
         } // for
     } // equip
 
@@ -135,7 +135,7 @@ public class Armor extends Item {
         isEquipped = false;
 
         for (AttributeMod mod : itemAffixes) {
-            Game.player.setTemporaryAttribute(mod.getStatId(), -mod.getAttributeModifier());
+            Game.player.setTemporaryAttribute(mod.getAttributeId(), -mod.getAttributeModifier());
         } // for
     } // unequip
 

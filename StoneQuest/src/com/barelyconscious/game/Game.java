@@ -20,7 +20,7 @@ import com.barelyconscious.game.player.Inventory;
 import com.barelyconscious.game.menu.TextLog;
 import com.barelyconscious.game.menu.InventoryMenu;
 import com.barelyconscious.game.graphics.LineElement;
-import com.barelyconscious.game.graphics.Map;
+import com.barelyconscious.game.graphics.GameMap;
 import com.barelyconscious.game.graphics.tiles.Tile;
 import com.barelyconscious.game.input.MouseHandler;
 import com.barelyconscious.game.item.Armor;
@@ -63,7 +63,7 @@ public class Game implements Runnable {
     public static InventoryMenu invenMenu;
     public static LootPickupMenu lootWindow;
     public static World world;
-    public static Map map;
+    public static GameMap gameMap;
     public static MiniMap miniMap;
     public static KeyHandler keyHandler;
     public static MouseHandler mouseHandler;
@@ -87,7 +87,7 @@ public class Game implements Runnable {
         player = new Player();
         inventory = new Inventory();
 
-        map = new Map(1024, 1024, width, height);
+        gameMap = new GameMap(1024, 1024, width, height);
         world = new World();
         miniMap = new MiniMap();
 
@@ -300,9 +300,9 @@ public class Game implements Runnable {
 
         Food apple = new Food("Apple", 0, 1, Tile.FOOD_TILE_ID, 99f);
         Food apple2 = new Food("Apple", 0, 2, Tile.FOOD_TILE_ID, 99f);
-        Potion healthPotion = new Potion("Potion of Might", 2990, 1, new StatPotionEffect("Potion of Might", 129, new AttributeMod(Player.HITPOINTS, 21), new AttributeMod(Player.STRENGTH, 15)));
-        Potion newPotion = new Potion("Potion of Awesome", 159, 3, new StatPotionEffect("Potion of Awesome", 300, new AttributeMod(Player.DEFENSE, 12), new AttributeMod(Player.STRENGTH, 3)));
-        Potion pootion = new Potion("Potion of Pi", 1, 5, new StatPotionEffect("Potion of Pi", 95, new AttributeMod(Player.DEFENSE, 12), new AttributeMod(Player.STRENGTH, 3), new AttributeMod(Player.AGILITY, 15), new AttributeMod(Player.DEFENSE, 55), new AttributeMod(Player.FIRE_MAGIC_BONUS, 180)));
+        Potion healthPotion = new Potion("Potion of Might", 2990, 1, new StatPotionEffect(129,"Potion of Might", new AttributeMod(Player.HITPOINTS, 21), new AttributeMod(Player.STRENGTH, 15)));
+        Potion newPotion = new Potion("Potion of Awesome", 159, 3, new StatPotionEffect(300, "Potion of Awesome", new AttributeMod(Player.DEFENSE, 12), new AttributeMod(Player.STRENGTH, 3)));
+        Potion pootion = new Potion("Potion of Pi", 1, 5, new StatPotionEffect(95, "Potion of Pi", new AttributeMod(Player.DEFENSE, 12), new AttributeMod(Player.STRENGTH, 3), new AttributeMod(Player.AGILITY, 15), new AttributeMod(Player.DEFENSE, 55), new AttributeMod(Player.FIRE_MAGIC_BONUS, 180)));
         Potion antiMagicPotion = new Potion("Antimagic Potion", 1589, 2, Tile.ANTIMAGIC_POTION_TILE_ID, new AntimagicPotionEffect("Antimagic Potion"));
         Potion antivenomPotion = new Potion("Antivenom", 18890, 3, new AntitoxinPotionEffect("Antivenom"));
 

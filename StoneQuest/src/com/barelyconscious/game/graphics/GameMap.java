@@ -1,5 +1,5 @@
 /* *****************************************************************************
-   * File Name:         Map.java
+   * File Name:         GameMap.java
    * Author:            Matt Schwartz
    * Date Created:      01.04.2013
    * Redistribution:    You are free to use, reuse, and edit any of the text in
@@ -7,11 +7,11 @@
                         that was not written fully by yourself, or to remove 
                         credit from code that was not written fully by yourself.  
                         Please email stonequest.bcgames@gmail.com for issues or concerns.
-   * File Description:  Contains the data for the current map as a flattened 2D
+   * File Description:  Contains the data for the current gameMap as a flattened 2D
                         integer array of tile ids.  The Screen calls renderBackground()
                         to draw the Tiles to the screen as well as perform lighting
-                        for the map.  Each map is generated randomly based on some
-                        seed so that the same random map can be generated repeatedly.
+                        for the gameMap.  Each gameMap is generated randomly based on some
+                        seed so that the same random gameMap can be generated repeatedly.
                         
    ************************************************************************** */
 
@@ -23,7 +23,7 @@ import com.barelyconscious.game.Screen;
 import com.barelyconscious.game.graphics.tiles.Tile;
 import java.util.Random;
 
-public class Map {
+public class GameMap {
     public final static int IS_VISIBLE = 256;           // 0b10000000
     public final static int RECENTLY_SEEN = 512;        // 0b100000000
     public final static int UNLIGHT_ON_REFRESH = 1024;  // 0b1000000000
@@ -40,7 +40,7 @@ public class Map {
     private int remainingElites;
     private String zoneName;
     
-    public Map(int tileWidth, int tileHeight, int pixelWidth, int pixelHeight) {
+    public GameMap(int tileWidth, int tileHeight, int pixelWidth, int pixelHeight) {
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
         
@@ -49,9 +49,9 @@ public class Map {
     } // constructor
     
     /**
-     * Randomly generates a Map for the world based on some seed so that the
-     * same Map can be generated repeatedly and at any point and in any portion
-     * of the Map.
+     * Randomly generates a GameMap for the world based on some seed so that the
+     * same GameMap can be generated repeatedly and at any point and in any portion
+     * of the GameMap.
      * @param seed 
      */
     public void generateAreaMap(int seed, int level, String name) {
@@ -59,7 +59,7 @@ public class Map {
         zoneLevel = level;
         zoneName = name;
         
-        // Decides how big the map is when it is generated.
+        // Decides how big the gameMap is when it is generated.
         map = new int[tileWidth * tileHeight];
         
         for (int x = 0; x < tileWidth; x++) {
@@ -83,7 +83,7 @@ public class Map {
     
     /**
      * 
-     * @return the number of tiles wide of the current map
+     * @return the number of tiles wide of the current gameMap
      */
     public int getTileWidth() {
         return tileWidth;
@@ -91,7 +91,7 @@ public class Map {
     
     /**
      * 
-     * @return the number of tiles high of the current map
+     * @return the number of tiles high of the current gameMap
      */
     public int getTileHeight() {
         return tileHeight;
@@ -99,7 +99,7 @@ public class Map {
     
     /**
      * 
-     * @return the map offset in the x direction for drawing
+     * @return the gameMap offset in the x direction for drawing
      */
     public int getXStart() {
         return xStart;
@@ -107,7 +107,7 @@ public class Map {
     
     /**
      * 
-     * @return the map offset in the y direction for drawing
+     * @return the gameMap offset in the y direction for drawing
      */
     public int getYStart() {
         return yStart;
@@ -132,7 +132,7 @@ public class Map {
         } // for
         
         /*
-         * Iterate over each tile in the map; if the tile's UNLIGHT_ON_REFRESH
+         * Iterate over each tile in the gameMap; if the tile's UNLIGHT_ON_REFRESH
          * flag (0x400) is set, the tile was recently seen but needs to be unlit 
          * in case the player moved; if the tile's RECENTLY_SEEN flag (0x200) is 
          * set, the tile has recently been seen by the player but is currently 
@@ -200,7 +200,7 @@ public class Map {
         circularizeLight(Game.world.getPlayerX() / Common.TILE_SIZE + xStart, 
                 Game.world.getPlayerY() / Common.TILE_SIZE + yStart, Game.player.getLightRadius());
         
-        /* Iterate over each tile in the map; if the Tile's IS_VISIBLE flag (0x100)
+        /* Iterate over each tile in the gameMap; if the Tile's IS_VISIBLE flag (0x100)
             is set, the Tile has been marked visible and should be drawn to the
             screen; the Tile should then be marked RECENTLY_SEEN and UNLIGHT_ON_REFRESH
             for later passes */
@@ -907,8 +907,8 @@ public class Map {
     } // circularizeLight
     
     /**
-     * Moves the map by xShift, yShift when the player moves.  This only changes
-     * where the map starts being drawn to the screen.
+     * Moves the gameMap by xShift, yShift when the player moves.  This only changes
+     * where the gameMap starts being drawn to the screen.
      * @param xShift
      * @param yShift 
      */
@@ -919,7 +919,7 @@ public class Map {
     
     /**
      * The level of the current level determines the level of the monsters in
-     * the map as well as items that drop for the player; higher levels mean
+     * the gameMap as well as items that drop for the player; higher levels mean
      * higher difficulty; this should not be changed after the zone is loaded
      * in.
      * @return the level of the current zone
@@ -979,7 +979,7 @@ public class Map {
      * 
      * @param xPos the x coordinate of the requested Tile
      * @param yPos the y coordinate of the requested Tile
-     * @return the tile ID of the map at xPos, yPos
+     * @return the tile ID of the gameMap at xPos, yPos
      */
     public int getTileIdAt(int xPos, int yPos) {
         if (xPos < 0 || yPos < 0 || xPos >= tileWidth || yPos >= tileHeight) {
@@ -1027,7 +1027,7 @@ public class Map {
         
         if (xPos < 0 || yPos < 0 || xPos >= tileWidth || yPos >= tileHeight)
             return false;
-        return ((map[xPos + yPos * tileWidth] & ~0xFF) & Map.IS_VISIBLE) >> 8 == 1;
+        return ((map[xPos + yPos * tileWidth] & ~0xFF) & GameMap.IS_VISIBLE) >> 8 == 1;
     }
 
     public boolean isTileRecentlySeenAt(int xPos, int yPos) {
@@ -1039,6 +1039,6 @@ public class Map {
         
         if (xPos < 0 || yPos < 0 || xPos >= tileWidth || yPos >= tileHeight)
             return false;
-        return ((map[xPos + yPos * tileWidth] & ~0xFF) & Map.RECENTLY_SEEN) >> 9 == 1;
+        return ((map[xPos + yPos * tileWidth] & ~0xFF) & GameMap.RECENTLY_SEEN) >> 9 == 1;
     }
-} // Map
+} // GameMap

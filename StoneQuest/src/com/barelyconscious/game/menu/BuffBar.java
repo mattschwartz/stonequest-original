@@ -302,7 +302,7 @@ public class BuffBar extends Interactable {
         } // for
 
         for (int i = 0; i < debuff.getNumAffectedAttributes(); i++) {
-            string = Player.idToString(debuff.getAffectedAttributeAt(i).getStatId());
+            string = Player.idToString(debuff.getAffectedAttributeAt(i).getAttributeId());
             x = tooltipOffsX + 2;
             y = tooltipOffsY + 2 + (i + 3) * (Font.CHAR_HEIGHT + 2);
 
@@ -454,7 +454,7 @@ public class BuffBar extends Interactable {
         } // for
 
         for (int i = 0; i < potionBuff.getNumAffixes(); i++) {
-            string = Player.idToString(potionBuff.getAffectedAttributeAt(i).getStatId());
+            string = Player.idToString(potionBuff.getAffectedAttributeAt(i).getAttributeId());
             x = tooltipOffsX + 2;
             y = tooltipOffsY + 2 + (i + 3) * (Font.CHAR_HEIGHT + 2);
 

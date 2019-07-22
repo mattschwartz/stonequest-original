@@ -26,7 +26,6 @@ import com.barelyconscious.game.item.Potion;
 import com.barelyconscious.game.Common;
 import com.barelyconscious.game.Game;
 import com.barelyconscious.game.player.activeeffects.Poison;
-import com.barelyconscious.game.player.activeeffects.Curse;
 import com.barelyconscious.game.player.activeeffects.Debuff;
 import com.barelyconscious.game.graphics.LineElement;
 import com.barelyconscious.game.graphics.tiles.Tile;
@@ -36,6 +35,7 @@ import com.barelyconscious.game.player.activeeffects.Buff;
 import com.barelyconscious.game.spawnable.Sprite;
 import com.barelyconscious.game.spawnable.Entity;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Entity {
     /* Player attribute constants */
@@ -161,7 +161,7 @@ public class Player extends Entity {
     } // getUnspentAttributePoints
 
     /**
-     * Sets the level of statId to the new attribute value; if statId does not exist, no changes are made
+     * Sets the level of attributeId to the new attribute value; if attributeId does not exist, no changes are made
      *
      * @param attributeId the id of the attribute to be set
      * @param newAttributeValue the new value for the attribute
@@ -481,7 +481,7 @@ public class Player extends Entity {
         /* Add any attribute bonuses granted by the Item */
         for (int i = 0; i < numItemAffixes; i++) {
             affix = item.getAffixAt(i);
-            playerAttributes[affix.getStatId()] += affix.getAttributeModifier();
+            playerAttributes[affix.getAttributeId()] += affix.getAttributeModifier();
         } // for
     } // equipItem
 
@@ -519,7 +519,7 @@ public class Player extends Entity {
         /* Adjust attribute amounts accordingly */
         for (int i = 0; i < numItemAffixes; i++) {
             affix = item.getAffixAt(i);
-            playerAttributes[affix.getStatId()] -= affix.getAttributeModifier();
+            playerAttributes[affix.getAttributeId()] -= affix.getAttributeModifier();
         } // for
     } // unequipItem
 
@@ -582,7 +582,7 @@ public class Player extends Entity {
 //            
 //            for (int i = 0; i < numAffixes; i++) {
 //                affix = activePotion.getAffixAt(i);
-//                playerAttributes[affix.getStatId()] -= affix.getAttributeModifier();
+//                playerAttributes[affix.getAttributeId()] -= affix.getAttributeModifier();
 //            } // for
 //        } // if
 //        
@@ -598,7 +598,7 @@ public class Player extends Entity {
 //        
 //        for (int i = 0; i < numAffixes; i++) {
 //            affix = activePotion.getAffixAt(i);
-//            playerAttributes[affix.getStatId()] += affix.getAttributeModifier();
+//            playerAttributes[affix.getAttributeId()] += affix.getAttributeModifier();
 //        } // for
     } // quaff
 
@@ -614,7 +614,7 @@ public class Player extends Entity {
         // Adjust any player affixes the scroll has
         for (int i = 0; i < scr.getNumAffixes(); i++) {
             affix = scr.getAffixAt(i);
-            playerAttributes[affix.getStatId()] += affix.getAttributeModifier();
+            playerAttributes[affix.getAttributeId()] += affix.getAttributeModifier();
         } // for
 
         scr.extraEffects();
@@ -648,7 +648,11 @@ public class Player extends Entity {
     public void removeBuff(Buff buff) {
         buffs.remove(buff);
     } // removeBuff
-    
+
+    public List<Debuff> getDebuffs() {
+        return debuffs;
+    }
+
     public int getNumBuffs() {
         return buffs.size();
     } // getNumBuffs
@@ -684,7 +688,7 @@ public class Player extends Entity {
 //
 //            for (int i = 0; i < numAffixes; i++) {
 //                affix = ((Curse) debuff).getAffectedAttributeAt(i);
-//                playerAttributes[affix.getStatId()] -= affix.getAttributeModifier();
+//                playerAttributes[affix.getAttributeId()] -= affix.getAttributeModifier();
 //            } // for-i
 //        } // if
 //        else if (debuff instanceof Poison) {
@@ -717,7 +721,7 @@ public class Player extends Entity {
 //
 //            for (int i = 0; i < numAffixes; i++) {
 //                affix = ((Curse) debuff).getAffectedAttributeAt(i);
-//                playerAttributes[affix.getStatId()] += affix.getAttributeModifier();
+//                playerAttributes[affix.getAttributeId()] += affix.getAttributeModifier();
 //            } // for
 //        } // if
 //        else if (debuff instanceof Poison) {

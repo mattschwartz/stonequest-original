@@ -5,8 +5,8 @@
  * Date created:     02.23.2013
  * Redistribution:   You are free to use, reuse, and edit any of the text in
  *                   this file.  You are not allowed to take credit for code
- *                   that was not written fully by yourself, or to remove 
- *                   credit from code that was not written fully by yourself.  
+ *                   that was not written fully by yourself, or to remove
+ *                   credit from code that was not written fully by yourself.
  *                   Please email stonequest.bcgames@gmail.com for issues or concerns.
  * File description: Draws characters defined in FONT_SHEET to the screen
  **************************************************************************** */
@@ -14,6 +14,7 @@ package com.barelyconscious.game.graphics;
 
 import com.barelyconscious.game.Common;
 import com.barelyconscious.game.Screen;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
@@ -53,27 +54,23 @@ public class Font {
      * by the text log to draw lines that have dynamically colored and formatted
      * charaters.
      *
-     * @param scr the screen to draw to
+     * @param scr     the screen to draw to
      * @param element the
-     * @param xStart x starting coordinate
-     * @param yStart y starting coordinate
+     * @param xStart  x starting coordinate
+     * @param yStart  y starting coordinate
      */
     public static void drawFormattedMessage(Screen scr, ScreenElement element, int xStart, int yStart) {
         int pix;
         int xPos;
         int yPos;
 
-        if (element == null) {
+        // Invalid request or Unrecognized character
+        if (element == null || chars.indexOf(element.getElement()) == -1) {
             return;
-        } // if
+        }
 
         xPos = (chars.indexOf(element.getElement()) % SHEET_WIDTH) * CHAR_WIDTH;
         yPos = (chars.indexOf(element.getElement()) / SHEET_WIDTH) * CHAR_HEIGHT;
-
-        // Unrecognized character
-        if (xPos < 0 || yPos < 0) {
-            return;
-        } // if
 
         // Draw the character
         for (int x = xPos, xx = 0; x < (xPos + CHAR_WIDTH); x++, xx++) {
@@ -82,86 +79,100 @@ public class Font {
 //                        pix = pixels[x + (y + 2) * CHAR_WIDTH];
 //                    } else {
                 pix = pixels[x + y * img.getWidth()];
-//                    } // else
+//                    }
 
                 if (pix == TRANSPARENT_COLOR) {
                     if (element.getElement() == 'j') {
                         scr.setPixel(element.getColor(), xStart + xx, yStart + yy + 1);
-                    } // if
-                    
-                    else if (element.getElement() == 'g' || element.getElement() == 'p'
-                            || element.getElement() == 'q'
-                            || element.getElement() == 'y') {
+                    } else if (element.getElement() == 'g' || element.getElement() == 'p'
+                        || element.getElement() == 'q'
+                        || element.getElement() == 'y') {
                         scr.setPixel(element.getColor(), xStart + xx, yStart + yy + 2);
-                    } // else if
-                    
-                    else {
+                    } else {
                         scr.setPixel(element.getColor(), xStart + xx, yStart + yy);
-                    } // else
-                } // if
-            } // for
-        } // for
-    } // drawMessage
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Draw a uniformly colored and formatted message to the screen
      *
-     * @param scr the screen to draw the message to
-     * @param msg the message to be drawn
-     * @param color the RGB color value of the message
-     * @param bold if true, the message will be drawn using a bolded character
-     * sheet
+     * @param scr    the screen to draw the message to
+     * @param msg    the message to be drawn
+     * @param color  the RGB color value of the message
+     * @param isBold if true, the message will be drawn using a bolded character
+     *               sheet
      * @param xStart the x coordinate where the message should start drawing
      * @param yStart the y coordinate where the message should start drawing
      */
-    public static void drawMessage(Screen scr, String msg, int color, boolean bold, int xStart, int yStart) {
-        int pix;
-        int xPos;
-        int yPos;
-
-        if (msg == null) {
+    public static void drawMessage(
+        final Screen scr,
+        final String msg,
+        final int color,
+        final boolean isBold,
+        final int xStart,
+        final int yStart
+    ) {
+        if (msg == null || msg.isEmpty()) {
             return;
-        } // if
+        }
 
-        for (int i = 0; i < msg.length(); i++) {
-            xPos = (chars.indexOf(msg.charAt(i)) % SHEET_WIDTH) * CHAR_WIDTH;
-            yPos = (chars.indexOf(msg.charAt(i)) / SHEET_WIDTH) * CHAR_HEIGHT;
+        for (int i = 0; i < msg.length(); ++i) {
+            final char charAt = msg.charAt(i);
 
-            // new line
-            if (msg.charAt(i) == '\n') {
-                drawMessage(scr, msg.substring(i + 1), color, bold, xStart, yStart + CHAR_HEIGHT);
+            // If new line, draw everything else on a new line
+            if (charAt == '\n') {
+                drawMessage(scr, msg.substring(i + 1), color, isBold, xStart, yStart + CHAR_HEIGHT);
                 return;
-            } // if
+            }
 
-            // Unrecognized character
-            if (xPos < 0 || yPos < 0) {
-                continue;
-            } // if
+            drawCharacterAt(i, scr, charAt, color, isBold, xStart, yStart);
+        }
+    }
 
-            // Draw the character
-            for (int x = xPos, xx = 0; x < (xPos + CHAR_WIDTH); x++, xx++) {
-                for (int y = yPos, yy = 0; y < (yPos + CHAR_HEIGHT); y++, yy++) {
-//                    if (bold) {
-//                        pix = pixels[x + (y + 2) * CHAR_WIDTH];
-//                    } else {
+    private static void drawCharacterAt(
+        final int i,
+        final Screen scr,
+        final char charAt,
+        final int color,
+        final boolean isBold,
+        final int xStart,
+        final int yStart
+    ) {
+        // Unrecognized character
+        if (chars.indexOf(charAt) == -1) {
+            return;
+        }
+
+        int xPos = (chars.indexOf(charAt) % SHEET_WIDTH) * CHAR_WIDTH;
+        int yPos = (chars.indexOf(charAt) / SHEET_WIDTH) * CHAR_HEIGHT;
+
+
+        // Draw the character pixel by pixel
+        for (int x = xPos, xx = 0; x < (xPos + CHAR_WIDTH); x++, xx++) {
+            for (int y = yPos, yy = 0; y < (yPos + CHAR_HEIGHT); y++, yy++) {
+                final int pix;
+
+                if (isBold) {
+                    pix = pixels[x + (y + 2) * CHAR_WIDTH];
+                } else {
                     pix = pixels[x + y * img.getWidth()];
-//                    } // else
+                }
 
-                    if (pix == TRANSPARENT_COLOR) {
-                        if (msg.charAt(i) == 'j') {
-                            scr.setPixel(color, xStart + xx + i * CHAR_WIDTH, yStart + yy + 1);
-                        } // if
-                        else if (msg.charAt(i) == 'g' || msg.charAt(i) == 'p' || msg.charAt(i) == 'q' || msg.charAt(i) == 'y' || msg.charAt(i) == ',') {
-                            scr.setPixel(color, xStart + xx + i * CHAR_WIDTH, yStart + yy + 2);
-                        } // else if
-                        else {
-                            scr.setPixel(color, xStart + xx + i * CHAR_WIDTH, yStart + yy);
-                        } // else
-                    } // if
-                } // for
-            } // for
-        } // for
-    } // drawMessage
+                if (pix == TRANSPARENT_COLOR) {
+                    if (charAt == 'j') {
+                        scr.setPixel(color, xStart + xx + i * CHAR_WIDTH, yStart + yy + 1);
+                    } else if (charAt == 'g' || charAt == 'p' || charAt == 'q' || charAt == 'y' || charAt == ',') {
+                        scr.setPixel(color, xStart + xx + i * CHAR_WIDTH, yStart + yy + 2);
+                    } else {
+                        scr.setPixel(color, xStart + xx + i * CHAR_WIDTH, yStart + yy);
+                    }
+                }
+            }
+        }
+    }
 
     public static void drawOutlinedMessage(Screen scr, String msg, int color, boolean bold, int xStart, int yStart) {
         drawMessage(scr, msg, Common.THEME_BG_COLOR_RGB, bold, xStart - 1, yStart);
@@ -170,4 +181,4 @@ public class Font {
         drawMessage(scr, msg, Common.THEME_BG_COLOR_RGB, bold, xStart, yStart + 1);
         drawMessage(scr, msg, color, bold, xStart, yStart);
     }
-} // Font
+}
