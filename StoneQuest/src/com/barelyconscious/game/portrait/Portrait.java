@@ -210,7 +210,7 @@ public class Portrait {
     } // renderText
 
     private void renderDamageBar(Screen screen, int xStart, int yStart) {
-        double percentHealth = (int) entity.getHealthPoints() * 1.0 / (int) entity.getMaxHealth();
+        double percentHealth = (int) entity.getCurrentHealth() * 1.0 / (int) entity.getMaxHealth();
         int damageBarLength = (int) (healthBarWidth * Math.min(1, 1 - percentHealth));
 
         healthBar.render(screen, xStart + healthBarOffsX, yStart + healthBarOffsY);

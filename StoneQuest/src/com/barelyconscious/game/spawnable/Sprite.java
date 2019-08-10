@@ -161,7 +161,7 @@ abstract public class Sprite {
     } // getIcon
     
     /**
-     * Whatever needs to happen for a subclass on game update.  This method is
+     * Whatever needs to happen for a subclass on game onUpdate.  This method is
      * implemented in subclasses only.  Implementing subclasses should test if
      * the Sprite ought to be removed and then remove it.
      */

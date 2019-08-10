@@ -13,8 +13,11 @@ import com.barelyconscious.game.player.Player
 import com.barelyconscious.game.portrait.Portrait
 import com.barelyconscious.game.spawnable.*
 import com.barelyconscious.game.spawnable.entities.SewerRatEntity
+import java.time.Clock
 
-class World : Interactable() {
+class World(
+    private val clock: Clock
+) : Interactable() {
 
     var playerX: Int = 0
     var playerY: Int = 0
@@ -321,7 +324,7 @@ class World : Interactable() {
     }
 
     /**
-     * Contains everything that needs to update when the player performs an
+     * Contains everything that needs to onUpdate when the player performs an
      * action, such as moving entities, decreasing buff timers, etc. Each Sprite
      * implements a tick() function which is called to perform whatever updates
      * it needs to.
@@ -341,7 +344,7 @@ class World : Interactable() {
 
             lootItems.get(i).tick()
         }
-        mouseLastMoved = System.currentTimeMillis()
+        mouseLastMoved = clock.millis()
     }
 
     /**
@@ -484,8 +487,8 @@ class World : Interactable() {
                 entities.get(i).tile.render(screen, x, y)
 
                 // Draw health bar underneath entities if they are damaged
-                if (entities.get(i).healthPoints != entities.get(i).maxHealth) {
-                    healthBarLength = (entities.get(i).healthPoints / entities.get(i).maxHealth * Common.TILE_SIZE).toInt()
+                if (entities.get(i).currentHealth != entities.get(i).maxHealth) {
+                    healthBarLength = (entities.get(i).currentHealth / entities.get(i).maxHealth * Common.TILE_SIZE).toInt()
 
                     screen.drawRectangle(Common.THEME_BG_COLOR_RGB, x - 1, y + Common.TILE_SIZE - 2, Common.TILE_SIZE + 1, 3)
                     screen.drawRectangle(Common.ENTITY_DAMAGED_HEALTH_RGB, x, y + Common.TILE_SIZE - 1, Common.TILE_SIZE - 1, 1)
@@ -632,7 +635,7 @@ class World : Interactable() {
         }
 
         // If mouse is left hovering for at least 1 second
-        if (System.currentTimeMillis() - mouseLastMoved > 1000) {
+        if (clock.millis() - mouseLastMoved > 1000) {
             msg = "right click for more info"
             //            msgY -= Font.CHAR_HEIGHT;
         }

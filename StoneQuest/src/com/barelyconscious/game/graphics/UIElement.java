@@ -127,7 +127,7 @@ public class UIElement {
         height = img.getHeight();
         pixels = img.getRGB(0, 0, width, height, null, 0, width);
         System.out.println("done.");
-    } // constructor
+    }
 
     /**
      * Loads an image from file location iconFile into a BufferedImage which it then returns
@@ -146,13 +146,13 @@ public class UIElement {
         }
 
         return img;
-    } // constructor
+    }
     
     private static String trim(String string) {
         String parts[] = string.split("/");
         
         return parts[parts.length - 1];
-    } // trim
+    }
 
     /**
      * Draw the UIElement to the screen at xStart,yStart
@@ -173,16 +173,16 @@ public class UIElement {
                 }
                 if (pix == TRANSPARENT_COLOR) {
                     continue;
-                } // if
+                }
                 
                 else if (pix == THEME_REPLACEMENT_COLOR) {
                     pix = Common.themeForegroundColor;
                 }
 
                 screen.setPixel(pix, xStart + x, yStart + y);
-            } // for
-        } // for
-    } // render
+            }
+        }
+    }
 
     /**
      * Draw the UIElement to the screen at xStart,yStart
@@ -204,7 +204,7 @@ public class UIElement {
 
                 if (pix == TRANSPARENT_COLOR) {
                     continue;
-                } // if
+                }
 
                 if (r > g && r > b) {
                     g = b = r;
@@ -217,9 +217,9 @@ public class UIElement {
                 pix = (r << 16) + (g << 8) + b;
 
                 screen.setPixel(pix, xStart + x, yStart + y);
-            } // for
-        } // for
-    } // renderGrayscale
+            }
+        }
+    }
 
     /**
      * Draw the UIElement to the screen at xStart,yStart
@@ -238,11 +238,11 @@ public class UIElement {
 
                 if (pix == TRANSPARENT_COLOR) {
                     continue;
-                } // if
+                }
                 
                 else if (pix == THEME_REPLACEMENT_COLOR) {
                     pix = Common.themeForegroundColor;
-                } // else if
+                }
                 
                 r = (pix >> 16) & mask;
                 g = (pix >> 8) & mask;
@@ -259,9 +259,9 @@ public class UIElement {
                 pix = (r << 16) + (g << 8) + b;
 
                 screen.setPixel(pix, xStart + x, yStart + y);
-            } // for
-        } // for
-    } // renderHighlighted
+            }
+        }
+    }
 
     public void renderScaled(Screen scr, int xStart, int yStart, int scale) {
         int pix;
@@ -275,16 +275,16 @@ public class UIElement {
 
 //                if (pix == TRANSPARENT_COLOR) {
 //                    continue;
-//                } // if
+//                }
 
                 if (pix == THEME_REPLACEMENT_COLOR) {
                     pix = Common.themeForegroundColor;
-                } // if
+                }
 
                 raster[x][y] = pix;
-            } // for
-        } // for
+            }
+        }
 
         scr.scale(xStart, yStart, raster, scale);
-    } // render
-} // UIElement
+    }
+}

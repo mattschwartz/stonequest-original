@@ -26,13 +26,16 @@ class SewerRatEntity(
     private val criticalDamageMultiplier: Double = 25.0
 
     init {
-        super.setLevel(level)
-        super.setHealthPoints(10f * (level * 0.76f))
+        super.level = level
+        super.maxHealth = 10.0 * (level * 0.76)
+
         super.setPosition(x, y)
         super.setLastKnownPosition(Integer.MIN_VALUE, Int.MIN_VALUE)
     }
 
     override fun tick() {
+        val reach = 1 // todo this was never really used
+
         val playerX: Int = world.playerX
         val playerY: Int = world.playerY
         var xDir: Int = (playerX - xPos) shr 31

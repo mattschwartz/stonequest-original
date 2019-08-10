@@ -16,6 +16,10 @@ class Inventory {
     var gold: Int = 0
         private set
 
+    fun containsLike(pred: (Item) -> Boolean): Boolean {
+        return inventorySlots.any(pred)
+    }
+
     /**
      * Adds item to the player's Inventory; if the item being added is gold, it
      * is added to the variable representing the amount of gold that a player

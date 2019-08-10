@@ -305,5 +305,5 @@
 //            Font.drawMessage(screen, attributesMenuListBuffer[i], bg, false, xOffs + 2, yOffs + 3 + i * Font.CHAR_HEIGHT);
 //        } // for
 //        
-//    } // update
+//    } // onUpdate
 //} // AttributesMenu

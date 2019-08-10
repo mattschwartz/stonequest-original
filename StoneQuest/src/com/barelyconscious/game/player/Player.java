@@ -755,7 +755,7 @@ public class Player extends Entity {
     } // getCurseList
 
     @Override
-    public double getHealthPoints() {
+    public double getCurrentHealth() {
         return playerAttributes[HITPOINTS_CURRENT];
     } // getHealthPoints
 

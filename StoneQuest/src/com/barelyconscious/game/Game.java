@@ -44,6 +44,7 @@ import com.barelyconscious.game.player.activeeffects.Poison;
 import com.barelyconscious.game.player.activeeffects.StatPotionEffect;
 import com.barelyconscious.game.spawnable.Loot;
 import java.awt.Dimension;
+import java.time.Clock;
 import javax.swing.JFrame;
 
 public class Game implements Runnable {
@@ -75,7 +76,7 @@ public class Game implements Runnable {
     /**
      * Initializes the game window.
      */
-    public void initGame() {
+    public void initGame(final Clock clock) {
         Common.generateGibberish(1000);
 
         width = 1280;
@@ -88,7 +89,7 @@ public class Game implements Runnable {
         inventory = new Inventory();
 
         gameMap = new GameMap(1024, 1024, width, height);
-        world = new World();
+        world = new World(clock);
         miniMap = new MiniMap();
 
         buffBar = new BuffBar();
@@ -196,7 +197,9 @@ public class Game implements Runnable {
         int frames = 0;
         long lastTimer2 = System.currentTimeMillis();
 
-        initGame();
+        final Clock utcClock = Clock.systemUTC();
+
+        initGame(utcClock);
         writeWelcomeMessage();
         long end, start;
 
