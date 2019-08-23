@@ -2,17 +2,18 @@
  * Project:           StoneQuest
  * File Name:         MouseHandler.java
  * Author:            Matt Schwartz
- * Date Created:      03.14.2013 
+ * Date Created:      03.14.2013
  * Redistribution:    You are free to use, reuse, and edit any of the text in
  *                    this file.  You are not allowed to take credit for code
- *                    that was not written fully by yourself, or to remove 
- *                    credit from code that was not written fully by yourself.  
+ *                    that was not written fully by yourself, or to remove
+ *                    credit from code that was not written fully by yourself.
  *                    Please email stonequest.bcgames@gmail.com for issues or concerns.
- * File Description:  
+ * File Description:
  ************************************************************************** */
 package com.barelyconscious.game.input;
 
-import com.barelyconscious.game.Game;
+import com.barelyconscious.game.menu.TextLog;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -38,12 +39,18 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
      */
     private ArrayList<Interactable> hoverableAreas = new ArrayList();
 
+    private final TextLog textLog;
+
+    public MouseHandler(final TextLog textLog) {
+        this.textLog = textLog;
+    }
+
     /**
      * Registers a Mouse zone that will be called when the user presses a mouse
      * button within that zone.
      *
      * @param clickable the class that will receive actions when the user
-     * presses a mouse button
+     *                  presses a mouse button
      */
     public void registerClickableListener(Interactable clickable) {
         if (clickableAreas.contains(clickable)) {
@@ -62,7 +69,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
      * mouse over the hoverable area.
      *
      * @param hoverable the class that will receive actions when the user moves
-     * his or her mouse over the designated Mouse zone
+     *                  his or her mouse over the designated Mouse zone
      */
     public void registerHoverableListener(Interactable hoverable) {
         if (hoverableAreas.contains(hoverable)) {
@@ -108,13 +115,13 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         if (e.getWheelRotation() < 0) {
-            Game.textLog.moveUp();
-            Game.textLog.moveUp();
+            textLog.moveUp();
+            textLog.moveUp();
         } // if
 
         if (e.getWheelRotation() > 0) {
-            Game.textLog.moveDown();
-            Game.textLog.moveDown();
+            textLog.moveDown();
+            textLog.moveDown();
         } // if
     } // mouseWheelMoved
 

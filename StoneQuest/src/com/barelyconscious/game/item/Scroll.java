@@ -23,6 +23,7 @@ import com.barelyconscious.game.Common;
 import com.barelyconscious.game.Game;
 import com.barelyconscious.game.Sound;
 import com.barelyconscious.game.graphics.tiles.Tile;
+import com.barelyconscious.game.menu.TextLog;
 import com.barelyconscious.game.player.AttributeMod;
 import com.barelyconscious.game.spawnable.entities.SewerRatEntity;
 
@@ -31,6 +32,7 @@ public class Scroll extends Item {
     private String scrollName;
     private int scrollId;
     private boolean isIdentified;
+    private final TextLog textLog;
 
     /**
      * Creates a new Scroll with the following parameters
@@ -43,10 +45,17 @@ public class Scroll extends Item {
      * name and stats should be obfuscated or not
      * @param effects AttributeMod effects if any; most Scrolls do not provide attribute mods when consumed
      */
-    public Scroll(String scrollName, int sellV, int scrollid, AttributeMod... effects) {
+    public Scroll(
+        String scrollName,
+        int sellV,
+        int scrollid,
+        final TextLog textLog,
+        AttributeMod... effects
+    ) {
         super(scrollName, sellV, 1, Tile.SCROLL_TILE_ID, effects);
         this.scrollName = scrollName;
         this.scrollId = scrollid;
+        this.textLog = textLog;
 
         /* Check if the Scroll has been seen by the player before, obfuscating
          its stats and name if so */
@@ -79,10 +88,30 @@ public class Scroll extends Item {
      */
     public void extraEffects() {
         // does nothing by default
-        Game.world.addEntity(new SewerRatEntity(Game.world, 800, Game.world.getPlayerX() - 20, Game.world.getPlayerY()));
-        Game.world.addEntity(new SewerRatEntity(Game.world, 800, Game.world.getPlayerX() + 20, Game.world.getPlayerY()));
-        Game.world.addEntity(new SewerRatEntity(Game.world, 800, Game.world.getPlayerX(), Game.world.getPlayerY() - 20));
-        Game.world.addEntity(new SewerRatEntity(Game.world, 800, Game.world.getPlayerX(), Game.world.getPlayerY() + 20));
+        Game.world.addEntity(new SewerRatEntity(
+            Game.world,
+            800,
+            Game.world.getPlayerX() - 20,
+            Game.world.getPlayerY(),
+            textLog));
+        Game.world.addEntity(new SewerRatEntity(
+            Game.world,
+            800,
+            Game.world.getPlayerX() + 20,
+            Game.world.getPlayerY(),
+            textLog));
+        Game.world.addEntity(new SewerRatEntity(
+            Game.world,
+            800,
+            Game.world.getPlayerX(),
+            Game.world.getPlayerY() - 20,
+            textLog));
+        Game.world.addEntity(new SewerRatEntity(
+            Game.world,
+            800,
+            Game.world.getPlayerX(),
+            Game.world.getPlayerY() + 20,
+            textLog));
     } // extraEffects
 
     /* Picks 2-4 gibberish words based on the name of the scroll */
@@ -142,12 +171,12 @@ public class Scroll extends Item {
 
     @Override
     public void onUse() {
-        Game.textLog.writeFormattedString("The scroll crumbles to dust...", Common.FONT_NULL_RGB);
+        textLog.writeFormattedString("The scroll crumbles to dust...", Common.FONT_NULL_RGB);
         
         
         extraEffects();
         identifyScroll();
-        Game.textLog.writeFormattedString("It was a " + getDisplayName() + "!", Common.FONT_NULL_RGB);
+        textLog.writeFormattedString("It was a " + getDisplayName() + "!", Common.FONT_NULL_RGB);
         
         Sound.READ_SCROLL.play();
         

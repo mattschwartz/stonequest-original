@@ -23,8 +23,11 @@ import com.barelyconscious.game.graphics.ScreenElement;
 import com.barelyconscious.game.input.Interactable;
 import com.barelyconscious.game.input.KeyMap;
 import com.barelyconscious.game.item.Item;
+import com.barelyconscious.gui.IRenderable;
+import com.barelyconscious.gui.IWidget;
 
-public class TextLog extends Interactable implements Menu {
+public class TextLog extends Interactable
+    implements Menu, IWidget, IRenderable {
 
     private int xOffs;
     private int yOffs = 0;

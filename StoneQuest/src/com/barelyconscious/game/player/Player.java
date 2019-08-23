@@ -24,7 +24,6 @@ package com.barelyconscious.game.player;
 
 import com.barelyconscious.game.item.Potion;
 import com.barelyconscious.game.Common;
-import com.barelyconscious.game.Game;
 import com.barelyconscious.game.player.activeeffects.Poison;
 import com.barelyconscious.game.player.activeeffects.Debuff;
 import com.barelyconscious.game.graphics.LineElement;
@@ -123,7 +122,7 @@ public class Player extends Entity {
      * A list of all armor slots on the Player and the Items that are currently equipped in those slots, if any.
      */
     private Item[] equippedArmorSlots = new Item[10];
-    private final TextLog TEXT_LOG;
+    private final TextLog textLog;
     private Potion activePotion;
     private Poison[] poisons = new Poison[5];
     private ArrayList<Debuff> debuffs = new ArrayList();
@@ -134,12 +133,13 @@ public class Player extends Entity {
     /**
      * Creates a new Player; only one should be instantiated per runtime
      *
-     * @param log the Player class often finds it necessary to write information to the TextLog
+     * @param textLog the Player class often finds it necessary to write information to the TextLog
      */
-    public Player() {
+    public Player(final TextLog textLog) {
         super(playerName, Tile.PLAYER_TILE_ID);
+        this.textLog = textLog;
+
         setStartingAttributes();
-        TEXT_LOG = Game.textLog;
         elementCastSchool = FIRE_MAGIC_BONUS; // testing
         levelUp();
     } // constructor
@@ -374,7 +374,7 @@ public class Player extends Entity {
             attackDamage = (Math.random() * 3) + 0.1f;
             ((Entity) spr).changeHealthBy(-attackDamage);
 
-            TEXT_LOG.writeFormattedString(String.format("You hit %s for %.1f physical.",
+            textLog.writeFormattedString(String.format("You hit %s for %.1f physical.",
                     spr.getDisplayName(), attackDamage), Common.FONT_DAMAGE_TEXT_RGB,
                     new LineElement(spr.getDisplayName(), true,
                     Common.FONT_ENTITY_LABEL_RGB));
@@ -387,14 +387,13 @@ public class Player extends Entity {
     /**
      * Changes the health of the player by
      *
-     * @param amount. If the amount falls below 0, the player dies and the game is over.
-     * @param amount
+     * @param amount If the amount falls below 0, the player dies and the game is over.
      */
     @Override
     public void changeHealthBy(double amount) {
         playerAttributes[HITPOINTS_CURRENT] += amount;
         if (playerAttributes[HITPOINTS_CURRENT] <= 0) {
-//            TEXT_LOG.writeFormattedString("You have died.", null);
+//            textLog.writeFormattedString("You have died.", null);
 //            Game.stop();
         } // if
     } // takeDamage
@@ -620,7 +619,7 @@ public class Player extends Entity {
         scr.extraEffects();
 
         scr.identifyScroll();
-        TEXT_LOG.writeFormattedString("It was a " + scr.getDisplayName() + "!", Common.FONT_NULL_RGB);
+        textLog.writeFormattedString("It was a " + scr.getDisplayName() + "!", Common.FONT_NULL_RGB);
     } // read
     
     public void applyBuff(Buff buff) {
@@ -785,7 +784,7 @@ public class Player extends Entity {
 //                playerAttributes[HITPOINTS_CURRENT] -= poisons[i].getTickDamage();
 //
 //                // Inform the player how much health was lost and to what
-//                TEXT_LOG.writeFormattedString(poisons[i].toString(), Common.FONT_DAMAGE_TEXT_RGB,
+//                textLog.writeFormattedString(poisons[i].toString(), Common.FONT_DAMAGE_TEXT_RGB,
 //                        new LineElement(poisons[i].getDisplayName(), true,
 //                        Common.FONT_POISON_LABEL_RGB));
 //            }  // if

@@ -28,9 +28,13 @@ import com.barelyconscious.game.spawnable.Container;
 import com.barelyconscious.game.spawnable.Doodad;
 import com.barelyconscious.game.spawnable.EntityList;
 import com.barelyconscious.game.spawnable.LootList;
+import com.barelyconscious.gui.IRenderable;
+import com.barelyconscious.gui.IWidget;
+
 import java.util.ArrayList;
 
-public class MiniMap extends Interactable {
+public class MiniMap extends Interactable
+    implements IWidget, IRenderable {
 
     private final int ZONE_LEVEL_OFFS_X = 291;
     private final int ZONE_LEVEL_OFFS_Y = 35;
@@ -61,7 +65,8 @@ public class MiniMap extends Interactable {
     private boolean showZoneLevelIdentifier = false;
     private boolean showRemainingElitesIdentifier = false;
 
-    public void resizeMenu(int width, int height) {
+    @Override
+    public void resize(int width, int height) {
         xOffs = width - MINIMAP_FRAME_WIDTH;
         yOffs = 1;
         

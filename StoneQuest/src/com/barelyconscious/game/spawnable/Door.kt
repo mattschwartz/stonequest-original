@@ -5,12 +5,14 @@ import com.barelyconscious.game.Game
 import com.barelyconscious.game.graphics.tiles.Tile
 import com.barelyconscious.game.item.Item
 import com.barelyconscious.game.item.Key
+import com.barelyconscious.game.menu.TextLog
 
 class Door(
     displayName: String,
     x: Int,
     y: Int,
-    private val lockId: Int
+    private val lockId: Int,
+    private val textLog: TextLog
 ) : Doodad(displayName, Tile.DOOR_IRON_CLOSED_TILE_ID, Tile.DOOR_IRON_OPEN_TILE_ID, x, y) {
 
     /**
@@ -25,10 +27,10 @@ class Door(
 
         return if (playerHasKey) {
             interact()
-            Game.textLog.writeFormattedString("You open the door.", Common.FONT_NULL_RGB)
+            textLog.writeFormattedString("You open the door.", Common.FONT_NULL_RGB)
             true
         } else {
-            Game.textLog.writeFormattedString("The door is locked.", Common.FONT_NULL_RGB)
+            textLog.writeFormattedString("The door is locked.", Common.FONT_NULL_RGB)
             false
         }
     }

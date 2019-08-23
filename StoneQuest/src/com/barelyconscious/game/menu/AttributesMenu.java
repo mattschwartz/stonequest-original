@@ -20,9 +20,13 @@ import com.barelyconscious.game.graphics.Font;
 import com.barelyconscious.game.graphics.UIElement;
 import com.barelyconscious.game.input.Interactable;
 import com.barelyconscious.game.player.Player;
+import com.barelyconscious.gui.IRenderable;
+import com.barelyconscious.gui.IWidget;
+
 import java.awt.Color;
 
-public class AttributesMenu extends Interactable {
+public class AttributesMenu extends Interactable
+    implements IWidget, IRenderable {
 
     private final int ATTRIBUTES_FRAME_WIDTH = 185;
     private final int ATTRIBUTES_FRAME_HEIGHT = 164;
@@ -54,9 +58,16 @@ public class AttributesMenu extends Interactable {
     private boolean highlightDetailsButton = false;
     private boolean showDetailsPage = false;
 
+    private final MiniMap miniMap;
+
+    public AttributesMenu(final MiniMap miniMap) {
+        this.miniMap = miniMap;
+    }
+
+    @Override
     public void resize(int width, int height) {
         xOffs = width - ATTRIBUTES_FRAME_WIDTH;
-        yOffs = Game.miniMap.getOffsY() + Game.miniMap.getPixelHeight() + Common.TILE_SIZE;
+        yOffs = miniMap.getOffsY() + miniMap.getPixelHeight() + Common.TILE_SIZE;
         defineMouseZone(xOffs, yOffs, ATTRIBUTES_FRAME_WIDTH, ATTRIBUTES_FRAME_HEIGHT);
     } // resize
 

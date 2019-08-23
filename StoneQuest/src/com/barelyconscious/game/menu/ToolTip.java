@@ -27,7 +27,13 @@ import com.barelyconscious.game.player.AttributeMod;
 
 public class ToolTip {
 
-    public static void render(Screen screen, int xStart, int yStart, boolean centered, String... message) {
+    private final MiniMap miniMap;
+
+    public ToolTip(final MiniMap miniMap) {
+        this.miniMap = miniMap;
+    }
+
+    public void render(Screen screen, int xStart, int yStart, boolean centered, String... message) {
         int height = (message.length) * Font.CHAR_HEIGHT;
         int width = 0;
 
@@ -53,7 +59,7 @@ public class ToolTip {
         } // for
     } // render
 
-    public static void renderItem(Screen screen, Item item, int xStart, int yStart, boolean centered) {
+    public void renderItem(Screen screen, Item item, int xStart, int yStart, boolean centered) {
         int height;
         int width = item.getDisplayName().length();
         String message[] = new String[item.getNumAffixes() + 2];
@@ -126,15 +132,15 @@ public class ToolTip {
         } // for
     } // renderItem
 
-    public static void renderItem(Screen screen, Item item) {
-        int xStart = Game.getGameWidth() - Font.CHAR_WIDTH * 2 - Game.miniMap.getPixelWidth() + 1;
-        int yStart = Game.miniMap.getPixelHeight();
+    public void renderItem(Screen screen, Item item) {
+        int xStart = Game.getGameWidth() - Font.CHAR_WIDTH * 2 - miniMap.getPixelWidth() + 1;
+        int yStart = miniMap.getPixelHeight();
         renderItem(screen, item, xStart, yStart, false);
     } // renderItem
 
-    public static void render(Screen screen, String... message) {
-        int xStart = Game.getGameWidth() - Font.CHAR_WIDTH * 2 - Game.miniMap.getPixelWidth() + 1;
-        int yStart = Game.miniMap.getPixelHeight() + Font.CHAR_HEIGHT * 2 + 1;
+    public void render(Screen screen, String... message) {
+        int xStart = Game.getGameWidth() - Font.CHAR_WIDTH * 2 - miniMap.getPixelWidth() + 1;
+        int yStart = miniMap.getPixelHeight() + Font.CHAR_HEIGHT * 2 + 1;
         render(screen, xStart, yStart, false, message);
     } // renderItem
 } // ToolTip

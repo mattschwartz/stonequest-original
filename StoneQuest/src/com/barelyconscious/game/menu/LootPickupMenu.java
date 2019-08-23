@@ -25,21 +25,37 @@ import com.barelyconscious.game.input.Interactable;
 import com.barelyconscious.game.input.KeyMap;
 import com.barelyconscious.game.input.MouseHandler;
 import com.barelyconscious.game.item.Item;
+import com.barelyconscious.gui.IWidget;
+
 import java.util.ArrayList;
 
-public class LootPickupMenu extends Interactable implements Menu {
+public class LootPickupMenu extends Interactable
+    implements Menu, IWidget {
+
     private int xOffs;
     private int yOffs;
     private int menuLineWidth;
     private int menuLineHeight;
     private int selectedLoot;
     private int itemListLineStart;
-    
+
     private ArrayList<Item> itemList = null;
-    
+
+    private final ToolTipMenu toolTipMenu;
+    private final TextLog textLog;
+
+    public LootPickupMenu(
+        final ToolTipMenu toolTipMenu,
+        final TextLog textLog
+    ) {
+        this.toolTipMenu = toolTipMenu;
+        this.textLog = textLog;
+    }
+
     /**
      * Adjust offset variables for the Menu based on the new width and height of
      * the Game window
+     *
      * @param w the new width of the game window
      * @param h the new height of the game window
      */
@@ -47,22 +63,21 @@ public class LootPickupMenu extends Interactable implements Menu {
     public void resize(int w, int h) {
         menuLineWidth = 49;
         menuLineHeight = 18;
-        
+
         xOffs = (w - menuLineWidth * Font.CHAR_WIDTH) / 2;
         yOffs = 4;
-        
+
         defineMouseZone(xOffs, yOffs, menuLineWidth * Font.CHAR_WIDTH, menuLineHeight * Common.TILE_SIZE);
     } // resize
-    
+
     public void setPosition(int x, int y) {
         xOffs = x;
         yOffs = y;
-        
+
         defineMouseZone(xOffs, yOffs, menuLineWidth * Font.CHAR_WIDTH, menuLineHeight * Common.TILE_SIZE);
     } // setPosition
 
     /**
-     * 
      * @return the width of the Menu in pixels
      */
     @Override
@@ -71,7 +86,6 @@ public class LootPickupMenu extends Interactable implements Menu {
     } // getPixelWidth
 
     /**
-     * 
      * @return the height of the Menu in pixels
      */
     @Override
@@ -80,7 +94,6 @@ public class LootPickupMenu extends Interactable implements Menu {
     } // getPixelHeight
 
     /**
-     * 
      * @return the x offset of the Menu
      */
     @Override
@@ -89,7 +102,6 @@ public class LootPickupMenu extends Interactable implements Menu {
     } // getOffsX
 
     /**
-     * 
      * @return the y offset of the Menu
      */
     @Override
@@ -105,14 +117,14 @@ public class LootPickupMenu extends Interactable implements Menu {
     @Override
     public void moveUp() {
         selectedLoot--;
-        
+
         if (selectedLoot < 0) {
             itemListLineStart--;
-            
+
             if (itemListLineStart < 0) {
                 itemListLineStart = 0;
             } // if
-            
+
             selectedLoot++;
         } // if
     } // moveUp
@@ -157,13 +169,13 @@ public class LootPickupMenu extends Interactable implements Menu {
                 clearFocus();
             } // if
         } // if
-        
+
         Game.world.tick();
     } // select
-    
+
     public void examineItem() {
         Item item = itemList.get(selectedLoot + itemListLineStart);
-        Game.textLog.writeFormattedString(item.getItemDescription(), Common.FONT_NULL_RGB);
+        textLog.writeFormattedString(item.getItemDescription(), Common.FONT_NULL_RGB);
     } // examineItem
 
     @Override
@@ -176,9 +188,9 @@ public class LootPickupMenu extends Interactable implements Menu {
         if (!mouseInFocus(x, y)) {
             return;
         } // if
-        
+
         selectedLoot = (y - Font.CHAR_HEIGHT) / Common.TILE_SIZE;
-        
+
         if (selectedLoot >= itemList.size()) {
             selectedLoot = itemList.size() - 1;
         } // if
@@ -189,11 +201,11 @@ public class LootPickupMenu extends Interactable implements Menu {
         if (!mouseInFocus(x, y)) {
             return;
         } // if
-        
+
         if (button == MouseHandler.LEFT_CLICK) {
             select();
         } // if
-        
+
         else if (button == MouseHandler.RIGHT_CLICK) {
             examineItem();
         } // else if
@@ -212,23 +224,23 @@ public class LootPickupMenu extends Interactable implements Menu {
         int moveUp = KeyMap.getKeyCode(KeyMap.Key.MENU_MOVE_UP);
         int moveDown = KeyMap.getKeyCode(KeyMap.Key.MENU_MOVE_DOWN);
         int clear = KeyMap.getKeyCode(KeyMap.Key.CLEAR_FOCUS);
-        
+
         if (key == clear) {
             clearFocus();
         } // if
-        
+
         else if (key == selectItem || key == selectItemAlt) {
             select();
         } // if
-        
+
         else if (key == examineItem) {
             examineItem();
         } // else if
-        
+
         else if (key == moveUp) {
             moveUp();
         } // else if
-        
+
         else if (key == moveDown) {
             moveDown();
         } // else if
@@ -254,10 +266,11 @@ public class LootPickupMenu extends Interactable implements Menu {
         itemList = null;
         super.clearFocus();
     } // clearFocus
-    
+
     /**
      * Sets the item list to what needs to be drawn to the loot window
-     * @param newItemList 
+     *
+     * @param newItemList
      */
     public void setItemList(ArrayList<Item> newItemList) {
         itemList = newItemList;
@@ -266,80 +279,81 @@ public class LootPickupMenu extends Interactable implements Menu {
     /**
      * Draws the Menu to the Screen if the loot window is active; if not, nothing
      * is drawn and this function returns immediately
+     *
      * @param screen the Screen to draw the Menu to
      */
     @Override
     public void render(Screen screen) {
-        if (!isActive() || itemList == null ) {
-            Game.toolTipMenu.clearFocus();
+        if (!isActive() || itemList == null) {
+            toolTipMenu.clearFocus();
             clearFocus();
             return;
         } // if
-        
+
         // Render the aesthetically pleasing frame
         renderFrame(screen);
-        
+
         // Render the list of item names along with their icon
         renderList(screen);
-        
+
         // Render tooltip for the item
 //        renderToolTip(screen);
     } // render
-    
+
     private void renderFrame(Screen screen) {
         /* Draw a filled rectangle representing the background for the loot pickup
             menu to make it easier for the user to see the Items in the window */
-        screen.fillRectangle(Common.THEME_BG_COLOR_RGB, xOffs, yOffs, menuLineWidth * 
-                Font.CHAR_WIDTH, Font.CHAR_HEIGHT + menuLineHeight * Common.TILE_SIZE);
-        
+        screen.fillRectangle(Common.THEME_BG_COLOR_RGB, xOffs, yOffs, menuLineWidth *
+            Font.CHAR_WIDTH, Font.CHAR_HEIGHT + menuLineHeight * Common.TILE_SIZE);
+
         /* Draw a border around the loo menu for aesthetics */
-        screen.drawRectangle(Common.themeForegroundColor, xOffs, yOffs, menuLineWidth * 
-                Font.CHAR_WIDTH, Font.CHAR_HEIGHT + menuLineHeight * Common.TILE_SIZE);
+        screen.drawRectangle(Common.themeForegroundColor, xOffs, yOffs, menuLineWidth *
+            Font.CHAR_WIDTH, Font.CHAR_HEIGHT + menuLineHeight * Common.TILE_SIZE);
         
         /* Draw a filled rectangle at the top of the Menu, representing a title 
             bar for aesthetics */
-        screen.fillRectangle(Common.themeForegroundColor, xOffs, yOffs, 
-                menuLineWidth * Font.CHAR_WIDTH, Font.CHAR_HEIGHT);
-        
+        screen.fillRectangle(Common.themeForegroundColor, xOffs, yOffs,
+            menuLineWidth * Font.CHAR_WIDTH, Font.CHAR_HEIGHT);
+
         /* Draws the title for the loot window */
-        Font.drawMessage(screen, Common.centerString("Take What", " ", menuLineWidth), 
-                Common.THEME_BG_COLOR_RGB, true, xOffs, yOffs);
-        
+        Font.drawMessage(screen, Common.centerString("Take What", " ", menuLineWidth),
+            Common.THEME_BG_COLOR_RGB, true, xOffs, yOffs);
+
         /* Draw a highlight bar around the selected Item */
-        screen.fillRectangle(Common.themeForegroundColor, xOffs, yOffs + Font.CHAR_HEIGHT + 
-                selectedLoot * Common.TILE_SIZE + 5, menuLineWidth * Font.CHAR_WIDTH, 
-                Font.CHAR_HEIGHT);
+        screen.fillRectangle(Common.themeForegroundColor, xOffs, yOffs + Font.CHAR_HEIGHT +
+                selectedLoot * Common.TILE_SIZE + 5, menuLineWidth * Font.CHAR_WIDTH,
+            Font.CHAR_HEIGHT);
     } // renderFrame
-    
+
     private void renderList(Screen screen) {
         /* If the list given is an Item list instead of a loot list, draw it to the
             window */
         for (int i = itemListLineStart; i < itemListLineStart + menuLineHeight && i < itemList.size(); i++) {
 
             /* Draw the artwork for the loot object */
-            Tile.getTile(itemList.get(i).getTileId()).render(screen, xOffs, 
-                    yOffs + Font.CHAR_HEIGHT + (i-itemListLineStart) * Common.TILE_SIZE);
+            Tile.getTile(itemList.get(i).getTileId()).render(screen, xOffs,
+                yOffs + Font.CHAR_HEIGHT + (i - itemListLineStart) * Common.TILE_SIZE);
 
-            if ((i-itemListLineStart) == selectedLoot) {
+            if ((i - itemListLineStart) == selectedLoot) {
                 /* Draw the display name for the loot object */
-                Font.drawMessage(screen, "" + itemList.get(i).getDisplayName(), Common.THEME_BG_COLOR_RGB, 
-                        false, xOffs + Common.TILE_SIZE + 2, yOffs + Font.CHAR_HEIGHT + 
-                        (i-itemListLineStart) * Common.TILE_SIZE + 5);
+                Font.drawMessage(screen, "" + itemList.get(i).getDisplayName(), Common.THEME_BG_COLOR_RGB,
+                    false, xOffs + Common.TILE_SIZE + 2, yOffs + Font.CHAR_HEIGHT +
+                        (i - itemListLineStart) * Common.TILE_SIZE + 5);
                 continue;
             } // if
 
             /* Draw the display name for the loot object */
-            Font.drawMessage(screen, "" + itemList.get(i).getDisplayName(), Common.themeForegroundColor, 
-                    false, xOffs + Common.TILE_SIZE + 2, yOffs + Font.CHAR_HEIGHT + 
-                    (i-itemListLineStart) * Common.TILE_SIZE + 5);
+            Font.drawMessage(screen, "" + itemList.get(i).getDisplayName(), Common.themeForegroundColor,
+                false, xOffs + Common.TILE_SIZE + 2, yOffs + Font.CHAR_HEIGHT +
+                    (i - itemListLineStart) * Common.TILE_SIZE + 5);
         } // for
     } // renderList
-    
+
     private void renderToolTip(Screen screen) {
         /* Draw the tooltip for the currently selected item */
-        Game.toolTipMenu.setItem(itemList.get(selectedLoot + itemListLineStart));
-        
-        Game.toolTipMenu.setActive();
-        Game.toolTipMenu.render(screen);
+        toolTipMenu.setItem(itemList.get(selectedLoot + itemListLineStart));
+
+        toolTipMenu.setActive();
+        toolTipMenu.render(screen);
     } // renderToolTip
 } // LootPickupMenu

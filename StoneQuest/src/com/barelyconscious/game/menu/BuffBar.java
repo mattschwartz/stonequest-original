@@ -4,8 +4,8 @@
  * Date Created:      03.10.2013
  * Redistribution:    You are free to use, reuse, and edit any of the text in
  *                    this file.  You are not allowed to take credit for code
- *                    that was not written fully by yourself, or to remove 
- *                    credit from code that was not written fully by yourself.  
+ *                    that was not written fully by yourself, or to remove
+ *                    credit from code that was not written fully by yourself.
  *                    Please email schwamat@gmail.com for issues or concerns.
  * File Description:  In charge of drawing any active effects to the screen.
  **************************************************************************** */
@@ -25,10 +25,14 @@ import com.barelyconscious.game.player.activeeffects.Debuff;
 import com.barelyconscious.game.player.activeeffects.Poison;
 import com.barelyconscious.game.player.activeeffects.PotionEffect;
 import com.barelyconscious.game.player.activeeffects.StatPotionEffect;
+import com.barelyconscious.gui.IRenderable;
+import com.barelyconscious.gui.IWidget;
+
 import java.awt.Color;
 import java.util.ArrayList;
 
-public class BuffBar extends Interactable {
+public class BuffBar extends Interactable
+    implements IWidget, IRenderable {
 
     private final int ACTIVE_EFFECT_POPOUT_WIDTH = 26;
     private final int ACTIVE_EFFECT_POPOUT_HEIGHT = 87;
@@ -53,20 +57,25 @@ public class BuffBar extends Interactable {
 
     private final int YO_THERE_IS_THIS_VALUE_IDK_WHAT_IT_MEANS_BUT_ITS_20_NOW = 20;
 
-    public BuffBar() {
+    private final MiniMap miniMap;
+
+    public BuffBar(final MiniMap miniMap) {
+        this.miniMap = miniMap;
+
         xOffs = 0;
         yOffs = 0;
 
         player = Game.player;
-        xOffs = Game.miniMap.getOffsX();
-        yOffs = Game.miniMap.getOffsY();
+        xOffs = miniMap.getOffsX();
+        yOffs = miniMap.getOffsY();
     } // constructor
 
+    @Override
     public void resize(int w, int h) {
-        xOffs = Game.miniMap.getOffsX();
-        yOffs = Game.miniMap.getOffsY();
-        width = (YO_THERE_IS_THIS_VALUE_IDK_WHAT_IT_MEANS_BUT_ITS_20_NOW* BUFF_SCALE) * 10;
-        height = Game.miniMap.getPixelHeight();
+        xOffs = miniMap.getOffsX();
+        yOffs = miniMap.getOffsY();
+        width = (YO_THERE_IS_THIS_VALUE_IDK_WHAT_IT_MEANS_BUT_ITS_20_NOW * BUFF_SCALE) * 10;
+        height = miniMap.getPixelHeight();
 
         buffPopoutOffsX = xOffs - ACTIVE_EFFECT_POPOUT_WIDTH;
         buffPopoutOffsY = yOffs + 6;
@@ -151,15 +160,15 @@ public class BuffBar extends Interactable {
                 UIElement.ACTIVE_EFFECT_BACKGROUND_FRAME.renderHighlighted(screen, x, y);
                 debuff.getDebuffIcon().renderHighlighted(screen, x, y);
                 Font.drawOutlinedMessage(screen, duration, Common.FONT_WHITE_RGB, false,
-                        x + (iconSize - duration.length() * Font.CHAR_WIDTH) / 2,
-                        y + iconSize + 4);
+                    x + (iconSize - duration.length() * Font.CHAR_WIDTH) / 2,
+                    y + iconSize + 4);
             } // if
             else {
                 UIElement.ACTIVE_EFFECT_BACKGROUND_FRAME.render(screen, x, y);
                 debuff.getDebuffIcon().render(screen, x, y);
                 Font.drawOutlinedMessage(screen, duration, Common.themeForegroundColor, false,
-                        x + (iconSize - duration.length() * Font.CHAR_WIDTH) / 2,
-                        y + iconSize + 4);
+                    x + (iconSize - duration.length() * Font.CHAR_WIDTH) / 2,
+                    y + iconSize + 4);
             } // else
         } // for
     } // renderDebuffs
@@ -177,15 +186,15 @@ public class BuffBar extends Interactable {
                 UIElement.ACTIVE_EFFECT_BACKGROUND_FRAME.renderHighlighted(screen, buffOffsX, buffOffsY);
                 buff.getBuffIcon().renderHighlighted(screen, buffOffsX, buffOffsY);
                 Font.drawOutlinedMessage(screen, duration, Common.FONT_WHITE_RGB, false,
-                        buffOffsX + (iconSize - duration.length() * Font.CHAR_WIDTH) / 2,
-                        buffOffsY + iconSize + 4);
+                    buffOffsX + (iconSize - duration.length() * Font.CHAR_WIDTH) / 2,
+                    buffOffsY + iconSize + 4);
             } // if
             else {
                 UIElement.ACTIVE_EFFECT_BACKGROUND_FRAME.render(screen, buffOffsX, buffOffsY);
                 buff.getBuffIcon().render(screen, buffOffsX, buffOffsY);
                 Font.drawOutlinedMessage(screen, duration, Common.themeForegroundColor, false,
-                        buffOffsX + (iconSize - duration.length() * Font.CHAR_WIDTH) / 2,
-                        buffOffsY + iconSize + 4);
+                    buffOffsX + (iconSize - duration.length() * Font.CHAR_WIDTH) / 2,
+                    buffOffsY + iconSize + 4);
             } // else
         } // for
     } // renderBuffs
@@ -207,7 +216,7 @@ public class BuffBar extends Interactable {
 
             // Draw the drop down arrow
             arrowOffsX = Math.max(debuffOffsX - (ACTIVE_EFFECT_BACKGROUND_FRAME_WIDTH + 2) * (selectedDebuff) + 1, Math.min(mouseX, maxArrowOffsX));
-            
+
             arrowOffsY = debuffOffsY + ACTIVE_EFFECT_BACKGROUND_FRAME_HEIGHT - 2;
             tooltipOffsY = arrowOffsY + 6;
 
@@ -218,15 +227,15 @@ public class BuffBar extends Interactable {
                 renderTooltipPoison(screen, tooltipOffsY);
             } // else
         } // if
-        else if ( (buff = Game.player.getBuffAt(selectedBuff)) != null) {
+        else if ((buff = Game.player.getBuffAt(selectedBuff)) != null) {
             maxArrowOffsX = buffOffsX - (ACTIVE_EFFECT_BACKGROUND_FRAME_WIDTH + 2) * (selectedBuff - 1) - 14;
 
             // Draw the drop down arrow
             arrowOffsX = Math.max(buffOffsX - (ACTIVE_EFFECT_BACKGROUND_FRAME_WIDTH + 2) * (selectedBuff) + 1, Math.min(mouseX, maxArrowOffsX));
-            
+
             arrowOffsY = buffOffsY + ACTIVE_EFFECT_BACKGROUND_FRAME_HEIGHT - 2;
             tooltipOffsY = arrowOffsY + 6;
-            
+
             if (buff instanceof PotionEffect) {
                 renderTooltipPotion(screen, tooltipOffsY);
             } // if
@@ -286,7 +295,7 @@ public class BuffBar extends Interactable {
             tooltipOffsX--;
         } // while
 
-        screen.fillRectangle(new Color(33, 33, 33).getRGB(), tooltipOffsX-1, tooltipOffsY-1, tooltipWidth+3, tooltipHeight+3);
+        screen.fillRectangle(new Color(33, 33, 33).getRGB(), tooltipOffsX - 1, tooltipOffsY - 1, tooltipWidth + 3, tooltipHeight + 3);
         screen.drawRectangle(new Color(183, 183, 183).getRGB(), tooltipOffsX, tooltipOffsY, tooltipWidth, tooltipHeight);
 
         for (int i = 0; i < 3; i++) {
@@ -340,7 +349,7 @@ public class BuffBar extends Interactable {
         } // while
 
         // Draw the actual tooltip
-        screen.fillRectangle(new Color(33, 33, 33).getRGB(), tooltipOffsX-1, tooltipOffsY-1, tooltipWidth+3, tooltipHeight+3);
+        screen.fillRectangle(new Color(33, 33, 33).getRGB(), tooltipOffsX - 1, tooltipOffsY - 1, tooltipWidth + 3, tooltipHeight + 3);
         screen.drawRectangle(new Color(183, 183, 183).getRGB(), tooltipOffsX, tooltipOffsY, tooltipWidth, tooltipHeight);
 
         // Write the name of the curse
@@ -430,7 +439,7 @@ public class BuffBar extends Interactable {
         } // if
 
         tooltipWidth *= Font.CHAR_WIDTH;
-        tooltipHeight = (potionBuff.getNumAffixes() + 3) * (Font.CHAR_HEIGHT + 2)+2;
+        tooltipHeight = (potionBuff.getNumAffixes() + 3) * (Font.CHAR_HEIGHT + 2) + 2;
 
         // Make sure the tooltip does not extend past the frame - it will look displeasing
         while (tooltipOffsX + tooltipWidth > debuffOffsX + ACTIVE_EFFECT_BACKGROUND_FRAME_WIDTH) {
@@ -438,11 +447,12 @@ public class BuffBar extends Interactable {
         } // while
 
         // Draw the actual tooltip
-        screen.fillRectangle(new Color(33, 33, 33).getRGB(), tooltipOffsX-1, tooltipOffsY-1, tooltipWidth+3, tooltipHeight+3);
+        screen.fillRectangle(new Color(33, 33, 33).getRGB(), tooltipOffsX - 1, tooltipOffsY - 1, tooltipWidth + 3, tooltipHeight + 3);
         screen.drawRectangle(new Color(183, 183, 183).getRGB(), tooltipOffsX, tooltipOffsY, tooltipWidth, tooltipHeight);
 
         for (int i = 0; i < description.size(); i++) {
-            x = tooltipOffsX + 2 + (tooltipWidth - description.get(i).length() * Font.CHAR_WIDTH) / 2;;
+            x = tooltipOffsX + 2 + (tooltipWidth - description.get(i).length() * Font.CHAR_WIDTH) / 2;
+            ;
             y = tooltipOffsY + 2 + i * (Font.CHAR_HEIGHT + 2);
 
             if (i == 0) {

@@ -4,9 +4,12 @@ import com.barelyconscious.game.Common
 import com.barelyconscious.game.Game
 import com.barelyconscious.game.Sound
 import com.barelyconscious.game.item.*
+import com.barelyconscious.game.menu.TextLog
 import com.barelyconscious.game.spawnable.Loot
 
-class Inventory {
+class Inventory(
+    private val textLog: TextLog
+) {
 
     companion object {
         private const val MAX_INVENTORY_SLOTS: Int = 43
@@ -132,6 +135,7 @@ class Inventory {
                 item.internalName,
                 item.sellValue,
                 item.scrollId,
+                textLog,
                 *item.allAffixes
             )
             else -> Item(
@@ -142,7 +146,7 @@ class Inventory {
         }
 
         droppedItem.rarityColor = item.rarityColor
-        val droppedLoot = Loot(droppedItem, Game.world.playerX, Game.world.playerY)
+        val droppedLoot = Loot(droppedItem, Game.world.playerX, Game.world.playerY, textLog)
         Game.world.addLoot(droppedLoot)
     }
 
@@ -153,7 +157,7 @@ class Inventory {
                 "[ERR:examineItem()] Attempting to access item at [$index]. Max is $MAX_INVENTORY_SLOTS"
             )
         } else {
-            Game.textLog.writeFormattedString(item.itemDescription, Common.FONT_NULL_RGB)
+            textLog.writeFormattedString(item.itemDescription, Common.FONT_NULL_RGB)
         }
     }
 
@@ -164,7 +168,7 @@ class Inventory {
      * @param index the index location of the Item within the Player's inventory
      */
     fun salvageItem(index: Int) {
-        Game.textLog.writeFormattedString("Salvaging is not yet implemented.", Common.FONT_DEFAULT_RGB)
+        textLog.writeFormattedString("Salvaging is not yet implemented.", Common.FONT_DEFAULT_RGB)
     }
 
     /**

@@ -5,10 +5,10 @@
  * Date created:     04.20.2013
  * Redistribution:   You are free to use, reuse, and edit any of the text in
  *                   this file.  You are not allowed to take credit for code
- *                   that was not written fully by yourself, or to remove 
- *                   credit from code that was not written fully by yourself.  
+ *                   that was not written fully by yourself, or to remove
+ *                   credit from code that was not written fully by yourself.
  *                   Please email stonequest.bcgames@gmail.com for issues or concerns.
- * File description: 
+ * File description:
  **************************************************************************** */
 package com.barelyconscious.game.menu;
 
@@ -30,17 +30,21 @@ import com.barelyconscious.game.item.Weapon;
 import com.barelyconscious.game.player.AttributeMod;
 import com.barelyconscious.game.player.Inventory;
 import com.barelyconscious.game.player.activeeffects.PotionEffect;
+import com.barelyconscious.gui.IRenderable;
+import com.barelyconscious.gui.IWidget;
+
 import java.awt.Color;
 
-public class InventoryMenu extends Interactable {
-    
+public class InventoryMenu extends Interactable
+    implements IWidget, IRenderable {
+
     // Inventory bag selector
     private final int BAG_OFFS_X = 0;
     private final int BAG_OFFS_Y = 18;
     private final int BAG_SLOT_WIDTH = 20;
     private final int BAG_SLOT_HEIGHT = 20;
     private final int BAG_SELECT_NOTIFY_WIDTH = 76;
-    
+
     private final int INVENTORY_FRAME_WIDTH = 202;
     private final int INVENTORY_FRAME_HEIGHT = 140;
     private final int INVENTORY_FRAME_OFFS_X = 20;
@@ -56,7 +60,7 @@ public class InventoryMenu extends Interactable {
     private final int GOLD_OFFS_Y = INVENTORY_FRAME_OFFS_Y + 118;
     private final int GOLD_BAR_WIDTH = 59;
     private final int GOLD_BAR_HEIGHT = 22;
-    
+
     // Item info frame top - used for the name of the item
     private final int ITEM_INFO_FRAME_WIDTH = 200;
     private final int ITEM_INFO_FRAME_HEIGHT = 32;
@@ -65,23 +69,23 @@ public class InventoryMenu extends Interactable {
     private final int ITEM_DESCRIPTION_OFFS_X = ITEM_INFO_TITLE_OFFS_X;
     private final int ITEM_DESCRIPTION_OFFS_Y = ITEM_INFO_TITLE_OFFS_Y + ITEM_INFO_FRAME_HEIGHT - 2;
     private final int ITEM_DESCRIPTION_WIDTH = 177;
-    
+
     // Item info frame bottom - used for the type of item
     private final int ITEM_TYPE_OFFS_X = 10;
     private final int ITEM_TYPE_OFFS_Y = 7;
     private final int ITEM_TYPE_FRAME_WIDTH = 180;
     private final int ITEM_TYPE_FRAME_HEIGHT = 22;
-    
+
     private final int INVENTORY_BORDER_COLOR = new Color(183, 183, 183).getRGB();
     private final int INVENTORY_BACKGROUND_COLOR = new Color(33, 33, 33).getRGB();
-    
+
     private int currentSelectedBag = 0;
-    
+
     private boolean hasFocus = false;
-    
-    
+
+
     private int bagSlot = 0;
-    
+
     private int xOffs;
     private int yOffs;
     private int inventoryWidth;
@@ -118,9 +122,10 @@ public class InventoryMenu extends Interactable {
     /**
      * Reposition the InventoryMenu stays in the same relative location.
      *
-     * @param width the width of the Game
+     * @param width  the width of the Game
      * @param height the height of the Game
      */
+    @Override
     public void resize(int width, int height) {
         xOffs = width - (INVENTORY_FRAME_WIDTH + BAG_SLOT_WIDTH) - 1;
 //        yOffs = Game.textLog.getOffsY() - Game.textLog.getPixelHeight() - INVENTORY_FRAME_HEIGHT;//height - Game.textLog.getPixelHeight() - inventoryHeight - Font.CHAR_HEIGHT * 2 - Common.TILE_SIZE+10;
@@ -140,25 +145,25 @@ public class InventoryMenu extends Interactable {
     public void mouseMoved(int x, int y) {
         int xPos = x - xOffs;
         int yPos = y - yOffs;
-        
+
         selectedItem = 9;
         currentSelectedBag = bagSlot;
         hasFocus = true;
-        
+
         // Check if cursor is hovering over a bag slot
         if ((xPos >= BAG_OFFS_X && xPos < BAG_OFFS_X + BAG_SLOT_WIDTH)
-                && (yPos >= BAG_OFFS_Y && yPos <= BAG_OFFS_Y + MAX_NUM_BAG_SLOTS * (BAG_SLOT_HEIGHT + 1))) {
+            && (yPos >= BAG_OFFS_Y && yPos <= BAG_OFFS_Y + MAX_NUM_BAG_SLOTS * (BAG_SLOT_HEIGHT + 1))) {
             currentSelectedBag = (yPos - BAG_OFFS_Y) / (BAG_SLOT_HEIGHT + 1);
         } // if
-        
+
         // Check if cursor is hovering over an item slot
-        if ( (xPos >= ITEM_SLOT_OFFS_X && xPos < ITEM_SLOT_OFFS_X + (ITEM_SLOT_WIDTH + 3) * NUM_ITEM_SLOTS_ROW)
-                && (yPos >= ITEM_SLOT_OFFS_Y && yPos <= ITEM_SLOT_OFFS_Y + (ITEM_SLOT_HEIGHT + 3) * NUM_ITEM_SLOTS_COL) ) {
+        if ((xPos >= ITEM_SLOT_OFFS_X && xPos < ITEM_SLOT_OFFS_X + (ITEM_SLOT_WIDTH + 3) * NUM_ITEM_SLOTS_ROW)
+            && (yPos >= ITEM_SLOT_OFFS_Y && yPos <= ITEM_SLOT_OFFS_Y + (ITEM_SLOT_HEIGHT + 3) * NUM_ITEM_SLOTS_COL)) {
             selectedItem = (xPos - ITEM_SLOT_OFFS_X) / (ITEM_SLOT_WIDTH + 3);
             selectedItem += ((yPos - ITEM_SLOT_OFFS_Y) / (ITEM_SLOT_HEIGHT + 3)) * NUM_ITEM_SLOTS_ROW;
         } // if
 
-        
+
 //        int xLocation = x - xOffs;
 //        int yLocation = y - yOffs;
 //        int inventoryTabWidth = Common.TILE_SIZE;
@@ -229,19 +234,19 @@ public class InventoryMenu extends Interactable {
      * clicked.
      *
      * @param button left or right button on the mouse
-     * @param x the x-coordinate where the mouse is clicked
-     * @param y the y-coordinate where the mouse is clicked
+     * @param x      the x-coordinate where the mouse is clicked
+     * @param y      the y-coordinate where the mouse is clicked
      */
     @Override
     public void mouseClicked(int button, int x, int y) {
         if (bagSlot != currentSelectedBag) {
             bagSlot = currentSelectedBag;
         } // if
-        
+
         if (selectedItem < 9) {
             parentCallback(0);
         } // if
-        
+
 //        Item item;
 //
 //        if (inventoryTabHoverOver) {
@@ -313,8 +318,8 @@ public class InventoryMenu extends Interactable {
     /**
      * Allows the pop-up menu to let the super class know what option the user has clicked via
      *
-     * @ret.
      * @param ret the integer value of the option number returned from the pop- up menu
+     * @ret.
      */
     @Override
     public void parentCallback(int ret) {
@@ -356,23 +361,24 @@ public class InventoryMenu extends Interactable {
         // Defines mouse zone for full-sized Inventory frame
         defineMouseZone(xOffs, yOffs, inventoryWidth, inventoryHeight);
     } // expandInventory
-    
+
     public void animation(Screen screen, long time) {
     } // animation
 
     /**
-     * Draws the inventory frame to the screen 
-     * @param screen 
+     * Draws the inventory frame to the screen
+     *
+     * @param screen
      */
     public void render(Screen screen) {
         UIElement.INVENTORY_FRAME.render(screen, xOffs + INVENTORY_FRAME_OFFS_X, yOffs + INVENTORY_FRAME_OFFS_Y);
-        
+
         renderBagSlots(screen);
         renderText(screen);
         renderItems(screen);
         renderItemInfo(screen);
     } // render
-    
+
     private void renderItems(Screen screen) {
         int x;
         int y;
@@ -380,32 +386,32 @@ public class InventoryMenu extends Interactable {
         int itemSlot;
         String itemStack;
         Item item;
-        
+
         for (int i = 0; i < 8; i++) {
             itemSlot = (i + bagSlot * 8);
             x = xOffs + ITEM_SLOT_OFFS_X + (itemSlot % NUM_ITEM_SLOTS_ROW) * (ITEM_SLOT_WIDTH + slotOffset);
-            y = yOffs + ITEM_SLOT_OFFS_Y + (int)Math.ceil((i / NUM_ITEM_SLOTS_ROW)) * (ITEM_SLOT_HEIGHT + slotOffset);
-            
+            y = yOffs + ITEM_SLOT_OFFS_Y + (int) Math.ceil((i / NUM_ITEM_SLOTS_ROW)) * (ITEM_SLOT_HEIGHT + slotOffset);
+
             if (selectedItem == i) {
                 UIElement.INVENTORY_ITEM_SELECT_HIGHLIGHT.renderHighlighted(screen, x, y);
             } // if
-            
-            if ( (item = playerInventory.getItemAt((i + bagSlot * 8))) == null) {
+
+            if ((item = playerInventory.getItemAt((i + bagSlot * 8))) == null) {
                 continue;
             } // if
-            
+
             if (item instanceof Armor) {
                 if (((Armor) item).isEquipped()) {
                     Font.drawOutlinedMessage(screen, "E", Common.FONT_WHITE_RGB, false, x + ITEM_SLOT_WIDTH - Font.CHAR_WIDTH - 5, y + 7);
                 } // if
             } // if
-            
+
             if (item instanceof Weapon) {
                 if (((Weapon) item).isEquipped()) {
                     Font.drawOutlinedMessage(screen, "E", Common.FONT_WHITE_RGB, false, x + ITEM_SLOT_WIDTH - Font.CHAR_WIDTH - 5, y + 7);
                 } // if
             } // if
-            
+
             Tile.getTile(item.getTileId()).render(screen, x + (ITEM_SLOT_WIDTH - Common.TILE_SIZE) / 2, y + (ITEM_SLOT_HEIGHT - Common.TILE_SIZE) / 2);
             if (item.getStackSize() > 1) {
                 itemStack = "" + item.getStackSize();
@@ -414,20 +420,21 @@ public class InventoryMenu extends Interactable {
 //            Tile.getTile(item.getTileId()).renderScaled(screen, x, y, 2);
         }
     }
-    
+
     /**
      * Render the bag slot icons that appear on the left side of the Inventory frame
+     *
      * @param screen the screen to draw to
      */
     private void renderBagSlots(Screen screen) {
         int x;
         int y;
         int slotOffset = 1;
-        
+
         for (int i = 0; i < MAX_NUM_BAG_SLOTS; i++) {
             x = xOffs + BAG_OFFS_X - slotOffset;
             y = yOffs + BAG_OFFS_Y + i * (BAG_SLOT_HEIGHT + slotOffset);
-            
+
             if (i == currentSelectedBag || i == bagSlot) {
                 UIElement.INVENTORY_BAG_SELECT_ELEMENT.renderHighlighted(screen, x, y);
                 if (i != bagSlot) {
@@ -438,12 +445,13 @@ public class InventoryMenu extends Interactable {
                 UIElement.INVENTORY_BAG_SELECT_ELEMENT.render(screen, x, y);
             } // else
         } // for
-        
-        
+
+
     } // renderBagSlots
-    
+
     /**
      * Render elements that require text to be drawn on top of the inventory to @screen.
+     *
      * @param screen the screen to draw the elements to
      */
     private void renderText(Screen screen) {
@@ -451,12 +459,12 @@ public class InventoryMenu extends Interactable {
         int y;
         int slotOffset = 1;
         String text;
-        
+
         // Draw the player's amount of gold
         text = "$" + Common.formatNumber(playerInventory.getGold());
         x = xOffs + GOLD_OFFS_X + (GOLD_BAR_WIDTH - text.length() * Font.CHAR_WIDTH);
         y = yOffs + GOLD_OFFS_Y + (GOLD_BAR_HEIGHT - Font.CHAR_HEIGHT) / 2;
-        
+
         Font.drawOutlinedMessage(screen, text, Common.GOLD_AMOUNT_TEXT_RGB, false, x, y);
 
         // Render bag identifying numbers
@@ -476,28 +484,28 @@ public class InventoryMenu extends Interactable {
 //            } // else
 //        } // for
     } // renderText
-    
+
     private void renderItemInfo(Screen screen) {
         int x;
         int y;
         String title;
         Item item;
-        
+
         if (!hasFocus || selectedItem > 7) {
             return;
         } // if
-        
+
         item = playerInventory.getItemAt(selectedItem + bagSlot * 8);
-        
+
         if (item == null) {
             return;
         } // if
-        
+
         x = xOffs + ITEM_INFO_TITLE_OFFS_X;
         y = yOffs + ITEM_INFO_TITLE_OFFS_Y;
-        
+
         title = item.getDisplayName();
-        
+
         if (title.length() <= 20) {
             UIElement.INVENTORY_ITEM_INFO_FRAME_TOP.render(screen, x, y);
 
@@ -505,44 +513,44 @@ public class InventoryMenu extends Interactable {
             y += (ITEM_INFO_FRAME_HEIGHT - Font.CHAR_HEIGHT - 7) / 2;
             Font.drawMessage(screen, title, Common.themeForegroundColor, false, x, y);
         } // if
-        
+
         else {
             title = title.substring(0, 20);
             UIElement.INVENTORY_ITEM_INFO_FRAME_TOP.render(screen, x, y);
 
             x += (ITEM_INFO_FRAME_WIDTH - title.length() * Font.CHAR_WIDTH) / 2;
-            y += (ITEM_INFO_FRAME_HEIGHT - Font.CHAR_HEIGHT*2 - 7) / 2;
-            
+            y += (ITEM_INFO_FRAME_HEIGHT - Font.CHAR_HEIGHT * 2 - 7) / 2;
+
             Font.drawMessage(screen, title, Common.themeForegroundColor, false, x, y);
-            
+
             title = item.getDisplayName().substring(20);
 
             x = xOffs + ITEM_INFO_TITLE_OFFS_X + (ITEM_INFO_FRAME_WIDTH - title.length() * Font.CHAR_WIDTH) / 2;
             y += Font.CHAR_HEIGHT;
-            
+
             Font.drawMessage(screen, title, Common.themeForegroundColor, false, x, y);
         } // else
-        
+
         // Render item stats 
         renderItemStats(screen, item);
     } // renderItemInfo
-    
+
     private void renderItemStats(Screen screen, Item item) {
         int x;
         int y;
         int itemDescriptionHeight;
         String msg;
         AttributeMod mod;
-        
+
         x = xOffs + ITEM_DESCRIPTION_OFFS_X + (ITEM_INFO_FRAME_WIDTH - ITEM_DESCRIPTION_WIDTH) / 2;
         y = yOffs + ITEM_DESCRIPTION_OFFS_Y;
-        itemDescriptionHeight =  item.getNumAffixes() * (Font.CHAR_HEIGHT + 2) + 4;
-        
+        itemDescriptionHeight = item.getNumAffixes() * (Font.CHAR_HEIGHT + 2) + 4;
+
         screen.fillRectangle(INVENTORY_BACKGROUND_COLOR, x, y, ITEM_DESCRIPTION_WIDTH, itemDescriptionHeight);
         screen.drawRectangle(INVENTORY_BORDER_COLOR, x, y, ITEM_DESCRIPTION_WIDTH, itemDescriptionHeight);
-        
+
         y += 3;
-        
+
         renderItemType(screen, item, itemDescriptionHeight);
 
         for (int i = 0; i < item.getNumAffixes(); i++) {
@@ -563,95 +571,95 @@ public class InventoryMenu extends Interactable {
                 } // else
             }
         } // for
-    
+
     } // renderItemStats
-    
+
     private void renderItemType(Screen screen, Item item, int yStart) {
         int x = xOffs + ITEM_DESCRIPTION_OFFS_X;
-        int y = yOffs + ITEM_DESCRIPTION_OFFS_Y + yStart-1;
+        int y = yOffs + ITEM_DESCRIPTION_OFFS_Y + yStart - 1;
         String msg = "";
-        
+
         UIElement.INVENTORY_ITEM_INFO_FRAME_BOTTOM.render(screen, x, y);
-        
+
         // Render item type
         if (item instanceof Weapon) {
             msg = "weapon";
-            Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X+2, y 
-                    + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2-2);
+            Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X + 2, y
+                + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
             msg = ((Weapon) item).weaponTypeToString(((Weapon) item).getWeaponType());
-            Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X-2 
-                    + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y 
-                    + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2-2);
+            Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X - 2
+                + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
+                + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
         } // if
         else if (item instanceof Armor) {
             msg = "armor";
             Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X + 2, y
-                    + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
+                + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
             msg = Armor.armorTypeToString(((Armor) item).getArmorType());
             Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X - 2
-                    + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
-                    + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
+                + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
+                + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
         } // else if
         else if (item instanceof Potion) {
             if (((Potion) item).getEffects().getPotionType() == PotionEffect.STATBUFF) {
                 msg = "Lasts for " + ((Potion) item).getEffects().getDurationInTicks() + " turns";
                 Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X - 2
-                        + (ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH) / 2, y + ITEM_TYPE_OFFS_Y
-                        + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
+                    + (ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH) / 2, y + ITEM_TYPE_OFFS_Y
+                    + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
             } // if
             else if (((Potion) item).getEffects().getPotionType() == PotionEffect.ANTIMAGIC) {
                 msg = "Cleanse afflictions";
                 Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X - 2
-                        + (ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH) / 2, y + ITEM_TYPE_OFFS_Y
-                        + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
+                    + (ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH) / 2, y + ITEM_TYPE_OFFS_Y
+                    + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
             } // else if
             else if (((Potion) item).getEffects().getPotionType() == PotionEffect.ANTITOXIN) {
                 msg = "Cure infections";
                 Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X - 2
-                        + (ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH) / 2, y + ITEM_TYPE_OFFS_Y
-                        + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
+                    + (ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH) / 2, y + ITEM_TYPE_OFFS_Y
+                    + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
             } // else if
         } // else if
         else if (item instanceof Projectile) {
             msg = "projectile";
-            Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X+2, y 
-                    + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2-2);
-            
+            Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X + 2, y
+                + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
+
             msg = "" + item;
             Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X - 2
-                    + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
-                    + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
+                + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
+                + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
         } // else if
         else if (item instanceof Food) {
             msg = "food";
             Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X - 2
-                    + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
-                    + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
+                + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
+                + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
         } // else if
         else if (item instanceof Scroll) {
             if (!Game.player.isScrollIdentified(((Scroll) item).getScrollId())) {
                 msg = "unidentified ";
             }
             msg += "scroll";
-            Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X+2, y 
-                    + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2-2);
+            Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X + 2, y
+                + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
         } // else if
         else if (item instanceof Key) {
             msg += "key";
-            Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X+2, y 
-                    + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2-2);
-            
+            Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X + 2, y
+                + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
+
             msg = "unlock doors";
             Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X - 2
-                    + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
-                    + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
+                + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
+                + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
         } // else if
         else {
             msg = "junk";
             Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X - 2
-                    + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
-                    + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
+                + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
+                + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
         } // else
-        
+
     } // renderItemType
 } // InventoryMenu

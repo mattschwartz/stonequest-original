@@ -8,6 +8,7 @@ import com.barelyconscious.game.World
 import com.barelyconscious.game.graphics.LineElement
 import com.barelyconscious.game.graphics.tiles.Tile
 import com.barelyconscious.game.item.Item
+import com.barelyconscious.game.menu.TextLog
 import com.barelyconscious.game.spawnable.Entity
 import com.barelyconscious.game.spawnable.Loot
 import java.time.Clock
@@ -17,7 +18,8 @@ class SewerRatEntity(
     world: World,
     level: Int,
     x: Int,
-    y: Int
+    y: Int,
+    private val textLog: TextLog
 ) : Entity("Sewer Rat", Tile.SEWER_RAT_TILE_ID) {
 
     private val minimumDamage: Double = 0.75 * (1 + (level * 1.05))
@@ -75,7 +77,7 @@ class SewerRatEntity(
         val rand = Random(Clock.systemUTC().millis())
         val amount = (rand.nextInt(1400) + 1) * level
 
-        Game.textLog.writeFormattedString(
+        textLog.writeFormattedString(
             "$displayName has been murdered brutally. Its family mourns.",
             Common.FONT_NULL_RGB,
             LineElement(displayName, true, Common.FONT_ENTITY_LABEL_RGB)
@@ -87,7 +89,7 @@ class SewerRatEntity(
             Tile.GOLD_LOOT_STACK_TILE_ID
         }
 
-        drop = Loot(Item("gold", 0, amount, goldTileId), xPos, yPos)
+        drop = Loot(Item("gold", 0, amount, goldTileId), xPos, yPos, textLog)
         drop.isVisible = true
         drop.setRemovableOnWalkover(true)
 
@@ -101,7 +103,7 @@ class SewerRatEntity(
 
         // non-entity specific stuff that should be dealt with another way but who's keepin score?
         Game.player.changeHealthBy(-hit)
-        Game.textLog.writeFormattedString("$displayName hits you for ${Math.ceil(hit).toInt()} physical",
+        textLog.writeFormattedString("$displayName hits you for ${Math.ceil(hit).toInt()} physical",
             Common.FONT_DAMAGE_TEXT_RGB,
             LineElement(displayName, true, Common.FONT_ENTITY_LABEL_RGB))
         Sound.CHICKEN_CLUCK.play()

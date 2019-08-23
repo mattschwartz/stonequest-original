@@ -5,8 +5,8 @@
  * Date created:     07.01.2012
  * Redistribution:   You are free to use, reuse, and edit any of the text in
  *                   this file.  You are not allowed to take credit for code
- *                   that was not written fully by yourself, or to remove 
- *                   credit from code that was not written fully by yourself.  
+ *                   that was not written fully by yourself, or to remove
+ *                   credit from code that was not written fully by yourself.
  *                   Please email stonequest.bcgames@gmail.com for issues or concerns.
  * File description: The game's main, running thread.  In control of rendering
  *                   data to the screen and performing animations as well as keeping
@@ -43,35 +43,31 @@ import com.barelyconscious.game.player.activeeffects.Curse;
 import com.barelyconscious.game.player.activeeffects.Poison;
 import com.barelyconscious.game.player.activeeffects.StatPotionEffect;
 import com.barelyconscious.game.spawnable.Loot;
+import com.barelyconscious.services.WindowManager;
+
 import java.awt.Dimension;
 import java.time.Clock;
 import javax.swing.JFrame;
 
 public class Game implements Runnable {
 
-    private final JFrame window = new JFrame();
     private boolean running = false;
-    private final static String GAME_TITLE = "StoneQuest";
-    private final static String GAME_VERSION = "0.6.9";
     // Cross-project classes
     public static Screen screen;
-    public static TextLog textLog;
     public static Player player;
-    public static BuffBar buffBar;
-    public static AttributesMenu attributesMenu;
-    public static ToolTipMenu toolTipMenu;
     public static Inventory inventory;
-    public static InventoryMenu invenMenu;
-    public static LootPickupMenu lootWindow;
     public static World world;
     public static GameMap gameMap;
-    public static MiniMap miniMap;
     public static KeyHandler keyHandler;
     public static MouseHandler mouseHandler;
     private static int width;
     private static int height;
     public static long frametime;
     public static int frames2;
+
+    private static WindowManager windowManager;
+
+    private static final TextLog textLog = new TextLog(45, 50, 100);
 
     /**
      * Initializes the game window.
@@ -83,95 +79,89 @@ public class Game implements Runnable {
         height = 700;
 
         screen = new Screen(width, height);
-        window.add(screen);
-        textLog = new TextLog(45, 50, 100);
-        player = new Player();
-        inventory = new Inventory();
+
+        keyHandler = new KeyHandler();
+        mouseHandler = new MouseHandler(textLog);
+
+        windowManager = new WindowManager(
+            keyHandler,
+            mouseHandler,
+            new JFrame());
+        windowManager.setView(screen);
+
+        player = new Player(textLog);
 
         gameMap = new GameMap(1024, 1024, width, height);
-        world = new World(clock);
-        miniMap = new MiniMap();
 
-        buffBar = new BuffBar();
-        toolTipMenu = new ToolTipMenu(player);
-        attributesMenu = new AttributesMenu();
-        lootWindow = new LootPickupMenu();
-        invenMenu = new InventoryMenu();
-        keyHandler = new KeyHandler();
-        mouseHandler = new MouseHandler();
+        final MiniMap miniMap = new MiniMap();
+        final ToolTipMenu toolTipMenu = new ToolTipMenu(player);
+        final LootPickupMenu lootPickupMenu = new LootPickupMenu(toolTipMenu, textLog);
 
-        window.setTitle(GAME_TITLE);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-//        window.setUndecorated(true); // Makes the frame go bye-bye
+        inventory = new Inventory(textLog);
+
+        world = new World(
+            player,
+            textLog,
+            gameMap,
+            toolTipMenu,
+            lootPickupMenu,
+            mouseHandler,
+            clock
+        );
+
+        final BuffBar buffBar = new BuffBar(miniMap);
+        final AttributesMenu attributesMenu = new AttributesMenu(miniMap);
+        final InventoryMenu invenMenu = new InventoryMenu();
+
+        windowManager.addWidget(buffBar);
+        windowManager.addWidget(toolTipMenu);
+        windowManager.addWidget(lootPickupMenu);
+        windowManager.addWidget(attributesMenu);
+        windowManager.addWidget(invenMenu);
+        windowManager.addWidget(textLog);
+        windowManager.addWidget(miniMap);
+
+        screen.addRenderable(buffBar);
+        screen.addRenderable(miniMap);
+        screen.addRenderable(invenMenu);
+        screen.addRenderable(attributesMenu);
+        screen.addRenderable(textLog);
 
         onResize(width, height);
 
-        window.setVisible(true);
-        window.addKeyListener(keyHandler);
         screen.addMouseListener(mouseHandler);
         screen.addMouseMotionListener(mouseHandler);
         screen.addMouseWheelListener(mouseHandler);
 
-        window.setFocusTraversalKeysEnabled(false);
-
-        registerClickableAreas();
-        registerHoverableAreas();
-        registerKeyListeners();
+        mouseHandler.registerClickableListener(world);
+        windowManager.registerClickableAreas();
+        mouseHandler.registerHoverableListener(world);
+        windowManager.registerHoverableAreas();
+        windowManager.registerKeyListeners();
 
         Common.setThemeForeground(Common.THEME_PASTEL_GREEN);
 
         // debug stuff
         disposableFunctionToAddStuffToThePlayersInventory();
-        world.addLoot(new Loot(new Item("Superior Belt of Pants Holding", 39202, Tile.BELT_IRON_TILE_ID), 0, 0));
+        world.addLoot(new Loot(new Item("Superior Belt of Pants Holding", 39202, Tile.BELT_IRON_TILE_ID), 0, 0, textLog));
     } // init
 
     /**
      * Resizes the game's window as well as all game components
      *
-     * @param width the number of tiles wide
+     * @param width  the number of tiles wide
      * @param height the number of tiles high
      */
     public void onResize(int width, int height) {
-        window.setMinimumSize(new Dimension(width, height));
-        window.pack();
+        windowManager.resize(width, height);
 
         screen.resizeScreen(width, height);
 
         width = screen.getWidth();
         height = screen.getHeight();
 
-        lootWindow.resize(width, height);
-        toolTipMenu.resize(width, height);
-        textLog.resize(width, height);
-        miniMap.resizeMenu(width, height);
-        buffBar.resize(width, height);
-        attributesMenu.resize(width, height);
         world.resize(width, height);
-        invenMenu.resize(width, height);
-        window.setLocationRelativeTo(null);
     } // resize
-
-    private void registerClickableAreas() {
-        mouseHandler.registerClickableListener(world);
-        mouseHandler.registerClickableListener(attributesMenu);
-        mouseHandler.registerClickableListener(invenMenu);
-//        mouseHandler.registerClickableListener(lootWindow);
-    } // registerClickableAreas
-
-    private void registerHoverableAreas() {
-        mouseHandler.registerHoverableListener(world);
-        mouseHandler.registerHoverableListener(attributesMenu);
-        mouseHandler.registerHoverableListener(invenMenu);
-//        mouseHandler.registerHoverableListener(lootWindow);
-    } // registerHoverableAreas
-
-    private void registerKeyListeners() {
-        keyHandler.registerKeyInputListener(attributesMenu);
-        keyHandler.registerKeyInputListener(invenMenu);
-        keyHandler.registerKeyInputListener(textLog);
-//        mouseHandler.registerHoverableListener(lootWindow);
-    } // registerKeyListeners
 
     /**
      * Start the game's main running thread.
@@ -200,7 +190,7 @@ public class Game implements Runnable {
         final Clock utcClock = Clock.systemUTC();
 
         initGame(utcClock);
-        writeWelcomeMessage();
+        windowManager.writeWelcomeMessage();
         long end, start;
 
         while (running) {
@@ -226,12 +216,7 @@ public class Game implements Runnable {
                 frames = 0;
             } // if
 
-            if (!window.hasFocus()) {
-                window.requestFocusInWindow();
-            } // if
-            else {
-                // frame has focus
-            } // else
+            windowManager.update();
         } // while
     } // run
 
@@ -253,17 +238,6 @@ public class Game implements Runnable {
         return height;
     } // getPixelHeight
 
-    private void writeWelcomeMessage() {
-        // Write a welcome message to the text log
-        textLog.writeFormattedString("Welcome to " + GAME_TITLE + " v"
-                + GAME_VERSION + "!", Common.FONT_NULL_RGB, new LineElement(
-                GAME_TITLE + " v" + GAME_VERSION, true,
-                Common.themeForegroundColor));
-
-        textLog.writeFormattedString("Press ? for help and instructions.",
-                Common.FONT_NULL_RGB);
-    } // writeWelcomeMessage
-
     /**
      * Self-explanatory
      *
@@ -272,7 +246,7 @@ public class Game implements Runnable {
     public static void main(String[] args) throws InterruptedException {
         Game game = new Game();
         game.Start();
-        
+
 
 //        while (true) {
 //            Common.setThemeForeground(Common.THEME_PASTEL_GREEN);
@@ -303,7 +277,7 @@ public class Game implements Runnable {
 
         Food apple = new Food("Apple", 0, 1, Tile.FOOD_TILE_ID, 99f);
         Food apple2 = new Food("Apple", 0, 2, Tile.FOOD_TILE_ID, 99f);
-        Potion healthPotion = new Potion("Potion of Might", 2990, 1, new StatPotionEffect(129,"Potion of Might", new AttributeMod(Player.HITPOINTS, 21), new AttributeMod(Player.STRENGTH, 15)));
+        Potion healthPotion = new Potion("Potion of Might", 2990, 1, new StatPotionEffect(129, "Potion of Might", new AttributeMod(Player.HITPOINTS, 21), new AttributeMod(Player.STRENGTH, 15)));
         Potion newPotion = new Potion("Potion of Awesome", 159, 3, new StatPotionEffect(300, "Potion of Awesome", new AttributeMod(Player.DEFENSE, 12), new AttributeMod(Player.STRENGTH, 3)));
         Potion pootion = new Potion("Potion of Pi", 1, 5, new StatPotionEffect(95, "Potion of Pi", new AttributeMod(Player.DEFENSE, 12), new AttributeMod(Player.STRENGTH, 3), new AttributeMod(Player.AGILITY, 15), new AttributeMod(Player.DEFENSE, 55), new AttributeMod(Player.FIRE_MAGIC_BONUS, 180)));
         Potion antiMagicPotion = new Potion("Antimagic Potion", 1589, 2, Tile.ANTIMAGIC_POTION_TILE_ID, new AntimagicPotionEffect("Antimagic Potion"));
@@ -314,13 +288,13 @@ public class Game implements Runnable {
         Curse curse3 = new Curse("Curse of Evilness", 1335, new AttributeMod(Player.AGILITY, 155), new AttributeMod(Player.DEFENSE, 25));
         Curse curse4 = new Curse("Curse of Evilness", 1240, new AttributeMod(Player.AGILITY, 16), new AttributeMod(Player.DEFENSE, 15));
 
-        Poison poi = new Poison("Snake Venom", 69, 1.5f, 7);
-        Poison poi2 = new Poison("Spider Bite", 24, 0.5f, 6);
+        Poison poi = new Poison("Snake Venom", 69, 1.5f, 7, textLog);
+        Poison poi2 = new Poison("Spider Bite", 24, 0.5f, 6, textLog);
 
         Projectile someBronzeArrows = new Projectile("Bronze-tipped Arrows", 255, 15, Tile.ARROW_TILE_ID, true, Projectile.BRONZE_TIP);
 
-        Scroll scr1 = new Scroll("Invisibility", 258, 1, new AttributeMod(Player.ACCURACY, 255f));
-        
+        Scroll scr1 = new Scroll("Invisibility", 258, 1, textLog, new AttributeMod(Player.ACCURACY, 255f));
+
         Key key = new Key("Key, bitches", 255, 1);
 
         inventory.addItem(scr1);
@@ -352,8 +326,8 @@ public class Game implements Runnable {
         inventory.addItem(bERing);
 
         inventory.addItem(someBronzeArrows);
-        
-        Game.world.addLoot(new Loot(key, 80, 100));
+
+        Game.world.addLoot(new Loot(key, 80, 100, textLog));
     }
     /* 
      // closing down the window makes sense as a method, so here are

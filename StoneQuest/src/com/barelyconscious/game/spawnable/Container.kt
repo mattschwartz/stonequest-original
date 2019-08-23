@@ -3,13 +3,17 @@ package com.barelyconscious.game.spawnable
 import com.barelyconscious.game.Common
 import com.barelyconscious.game.Game
 import com.barelyconscious.game.item.Item
+import com.barelyconscious.game.menu.LootPickupMenu
+import com.barelyconscious.game.menu.TextLog
 
 class Container(
     displayName: String,
     initialTileId: Int,
     spentTileId: Int,
     x: Int,
-    y: Int
+    y: Int,
+    private val textLog: TextLog,
+    private val lootWindow: LootPickupMenu
 ) : Doodad(displayName, initialTileId, spentTileId, x, y) {
 
     private val itemList: ArrayList<Item> = ArrayList();
@@ -24,18 +28,18 @@ class Container(
 
     override fun interact() {
         if (itemList.isEmpty()) {
-            Game.textLog.writeFormattedString(
+            textLog.writeFormattedString(
                 "The $displayName is empty.",
                 Common.FONT_NULL_RGB
             )
         } else {
-            Game.textLog.writeFormattedString(
+            textLog.writeFormattedString(
                 "You open the $displayName.",
                 Common.FONT_NULL_RGB
             )
 
-            Game.lootWindow.setItemList(itemList)
-            Game.lootWindow.setActive()
+            lootWindow.setItemList(itemList)
+            lootWindow.setActive()
         }
 
         super.interact()

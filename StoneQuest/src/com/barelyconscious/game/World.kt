@@ -4,11 +4,14 @@ import com.barelyconscious.game.graphics.Font
 import com.barelyconscious.game.graphics.GameMap
 import com.barelyconscious.game.graphics.tiles.Tile
 import com.barelyconscious.game.input.Interactable
+import com.barelyconscious.game.input.KeyHandler
 import com.barelyconscious.game.input.KeyMap
 import com.barelyconscious.game.input.MouseHandler
 import com.barelyconscious.game.item.Item
+import com.barelyconscious.game.menu.LootPickupMenu
 import com.barelyconscious.game.menu.PopupMenu
 import com.barelyconscious.game.menu.TextLog
+import com.barelyconscious.game.menu.ToolTipMenu
 import com.barelyconscious.game.player.Player
 import com.barelyconscious.game.portrait.Portrait
 import com.barelyconscious.game.spawnable.*
@@ -16,6 +19,12 @@ import com.barelyconscious.game.spawnable.entities.SewerRatEntity
 import java.time.Clock
 
 class World(
+    private val player: Player,
+    private val textLog: TextLog,
+    private val gameMap: GameMap,
+    private val toolTipMenu: ToolTipMenu,
+    private val lootWindow: LootPickupMenu,
+    private val mouseHandler: MouseHandler,
     private val clock: Clock
 ) : Interactable() {
 
@@ -25,9 +34,6 @@ class World(
     val entities: EntityList = EntityList()
     val lootItems: LootList = LootList()
     val doodads: ArrayList<Doodad> = arrayListOf()
-    private val player: Player = Game.player
-    private val log: TextLog = Game.textLog
-    private val gameMap: GameMap = Game.gameMap
     private var popup: PopupMenu? = null
 
     init {
@@ -40,7 +46,7 @@ class World(
 
     public fun resize(width: Int, height: Int) {
         playerX = width / 2
-        playerY = (Game.textLog.offsY - Game.textLog.pixelHeight) / 2
+        playerY = (textLog.offsY - textLog.pixelHeight) / 2
 
         if ((playerY % Common.TILE_SIZE) > (Common.TILE_SIZE / 2)) {
             playerY += Common.TILE_SIZE - (playerY % Common.TILE_SIZE)
@@ -56,14 +62,14 @@ class World(
 
         defineMouseZone(0,
             0,
-            Game.toolTipMenu.offsX,
-            Game.textLog.offsY - Game.textLog.pixelHeight
+            toolTipMenu.offsX,
+            textLog.offsY - textLog.pixelHeight
         )
     }
 
     override fun mouseMoved(x: Int, y: Int) {
-        if (Game.lootWindow.isActive) {
-            Game.lootWindow.mouseMoved(x, y)
+        if (lootWindow.isActive) {
+            lootWindow.mouseMoved(x, y)
             clearFocus()
         } else {
             setActive()
@@ -72,8 +78,8 @@ class World(
     }
 
     override fun mouseClicked(button: Int, x: Int, y: Int) {
-//        if (Game.lootWindow.isActive()) {
-//            Game.lootWindow.mouseClicked(button, x, y);
+//        if (lootWindow.isActive()) {
+//            lootWindow.mouseClicked(button, x, y);
 //            clearFocus();
 //            return;
 //        }
@@ -98,13 +104,13 @@ class World(
     }
 
     override fun disableMouse() {
-        Game.mouseHandler.removeHoverableListener(this)
-        Game.mouseHandler.removeClickableListener(this)
+        mouseHandler.removeHoverableListener(this)
+        mouseHandler.removeClickableListener(this)
     }
 
     override fun enableMouse() {
-        Game.mouseHandler.registerHoverableListener(this)
-        Game.mouseHandler.registerClickableListener(this)
+        mouseHandler.registerHoverableListener(this)
+        mouseHandler.registerClickableListener(this)
         popup = null
     }
 
@@ -127,16 +133,16 @@ class World(
         val pickupItem: Int = KeyMap.getKeyCode(KeyMap.Key.PICKUP_ITEM)
         val waitTurnKey: Int = KeyMap.getKeyCode(KeyMap.Key.PLAYER_SKIP_TURN)
 
-        if (Game.lootWindow.isActive) {
-            Game.lootWindow.keyPressed(key)
+        if (lootWindow.isActive) {
+            lootWindow.keyPressed(key)
             clearFocus()
             return
         }
 
         when (key) {
             'T'.toInt() -> {
-                Game.player.levelUp()
-                Game.player.addPointToAttribute(Player.DEFENSE)
+                player.levelUp()
+                player.addPointToAttribute(Player.DEFENSE)
             }
             moveLeft, moveLeftAlt -> move(false, -1, 0)
             moveRight, moveRightAlt -> move(false, 1, 0)
@@ -167,7 +173,7 @@ class World(
     }
 
     public fun addLoot(item: Item, x: Int, y: Int) {
-        addLoot(Loot(item, x, y))
+        addLoot(Loot(item, x, y, textLog))
     }
 
     public fun addLoot(loot: Loot) =
@@ -199,12 +205,12 @@ class World(
         val lootPile = lootItems.getList(playerX, playerY) ?: arrayListOf()
 
         if (lootPile.isEmpty()) {
-            log.writeFormattedString("There is nothing to pick up.", Common.FONT_NULL_RGB)
+            textLog.writeFormattedString("There is nothing to pick up.", Common.FONT_NULL_RGB)
         } else {
             if (lootPile.size > 1) {
-                Game.lootWindow.setPosition(mouseX, mouseY)
-                Game.lootWindow.setItemList(lootItems.getListAsItem(playerX, playerY))
-                Game.lootWindow.setActive()
+                lootWindow.setPosition(mouseX, mouseY)
+                lootWindow.setItemList(lootItems.getListAsItem(playerX, playerY))
+                lootWindow.setActive()
             } else {
                 player.interactWith(lootPile[0])
             }
@@ -214,7 +220,7 @@ class World(
     }
 
     public fun waitTurn() {
-        log.writeFormattedString("You twiddle your thumbs.", Common.FONT_NULL_RGB)
+        textLog.writeFormattedString("You twiddle your thumbs.", Common.FONT_NULL_RGB)
         tick()
     }
 
@@ -254,7 +260,7 @@ class World(
             loot = lootItems.getList(playerX, playerY)
 
             if (loot != null) {
-                // Print all the loot on this tile to the log for the player to see
+                // Print all the loot on this tile to the textLog for the player to see
                 for (i in loot.indices) {
                     loot[i].onWalkOver()
                 }
@@ -425,7 +431,7 @@ class World(
         // Lastly, render the player to the screen on top of all other Tiles
         player.tile.render(screen, playerX, playerY)
 
-        Game.lootWindow.render(screen)
+        lootWindow.render(screen)
     }
 
     /**
@@ -587,7 +593,7 @@ class World(
      * @param screen the screen to draw to
      */
     private fun renderMouseLocation(screen: Screen) {
-        if (!isActive || Game.lootWindow.isActive) {
+        if (!isActive || lootWindow.isActive) {
             clearFocus()
             return
         }
@@ -644,7 +650,7 @@ class World(
             msgY = mouseY + Common.TILE_SIZE
         }
 
-        if (mouseY >= Game.screen.screenHeight - Common.TILE_SIZE) {
+        if (mouseY >= screen.screenHeight - Common.TILE_SIZE) {
             mouseY -= Common.TILE_SIZE
         }
 
@@ -658,16 +664,18 @@ class World(
     }
 
     private fun testInitializeEntities() {
-        addEntity(SewerRatEntity(this, 1, 64, 32))
-        addEntity(SewerRatEntity(this, 1, 96, 32))
-        addEntity(SewerRatEntity(this, 1, 32, 32))
+        addEntity(SewerRatEntity(this, 1, 64, 32, textLog))
+        addEntity(SewerRatEntity(this, 1, 96, 32, textLog))
+        addEntity(SewerRatEntity(this, 1, 32, 32, textLog))
 
         val chest = Container(
             "Chest",
             Tile.CONTAINER_CHEST_CLOSED_TILE_ID,
             Tile.CONTAINER_CHEST_OPEN_TILE_ID,
             40,
-            0
+            0,
+            textLog,
+            lootWindow
         )
         val items: ArrayList<Item> = arrayListOf(
             Item("some arrows", 259, Tile.ARROW_TILE_ID),

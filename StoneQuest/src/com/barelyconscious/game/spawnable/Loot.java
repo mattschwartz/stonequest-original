@@ -20,12 +20,15 @@ import com.barelyconscious.game.Game;
 import com.barelyconscious.game.graphics.LineElement;
 import com.barelyconscious.game.graphics.tiles.Tile;
 import com.barelyconscious.game.item.Item;
+import com.barelyconscious.game.menu.TextLog;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Loot extends Sprite {
     private boolean removeOnWalk;
     private Item item;
+    private final TextLog textLog;
     
     /**
      * Create a new Loot object with the following parameters
@@ -33,11 +36,12 @@ public class Loot extends Sprite {
      * @param x the x location for the Loot object
      * @param y the y location for the Loot object
      */
-    public Loot(Item item, int x, int y) {
+    public Loot(Item item, int x, int y, final TextLog textLog) {
         super(item.getDisplayName(), item.getTileId());
         super.setPosition(x, y);
         
         this.item = item;
+        this.textLog = textLog;
     } // constructor
     
     /**
@@ -86,7 +90,7 @@ public class Loot extends Sprite {
                 message += "n";
             } // if
             
-            Game.textLog.writeFormattedString(message + " " + item.getDisplayName() + " here.", Common.FONT_NULL_RGB, new LineElement(item.getDisplayName(), true, item.getRarityColor()));
+            textLog.writeFormattedString(message + " " + item.getDisplayName() + " here.", Common.FONT_NULL_RGB, new LineElement(item.getDisplayName(), true, item.getRarityColor()));
         } // else
     } // checkCanRemove
     
@@ -97,7 +101,7 @@ public class Loot extends Sprite {
     @Override
     public void interact() {
         Game.inventory.addItem(item);
-        Game.textLog.writeLootMessage(item);
+        textLog.writeLootMessage(item);
 //        Sound.LOOT_ITEM.play();
         remove();
     } // interact

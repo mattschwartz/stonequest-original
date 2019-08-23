@@ -23,12 +23,16 @@ package com.barelyconscious.game;
 import com.barelyconscious.game.graphics.Font;
 import com.barelyconscious.game.graphics.animation.Animation;
 import com.barelyconscious.game.graphics.animation.Frame;
+import com.barelyconscious.gui.IRenderable;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Screen extends Canvas {
 
@@ -384,16 +388,20 @@ public class Screen extends Canvas {
         bs.show();
     } // renderSprites
 
+
+    private final List<IRenderable> renderables = new ArrayList<>();
+    public void addRenderable(final IRenderable renderable) {
+        renderables.add(renderable);
+    }
+
     /**
      * Render all visible Menus to the screen on top of the background.
      */
     private void renderInterface() {
         Game.world.renderPortraits(this);
-        Game.buffBar.render(this);
-        Game.miniMap.render(this);
-        Game.invenMenu.render(this);
-        Game.attributesMenu.render(this);
-        Game.textLog.render(this);
+
+        renderables.forEach(t -> t.render(this));
+
         Game.world.renderZoneInfo(this);
     } // renderInterface
 

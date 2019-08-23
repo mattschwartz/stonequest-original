@@ -15,7 +15,6 @@
 package com.barelyconscious.game.menu;
 
 import com.barelyconscious.game.Common;
-import com.barelyconscious.game.Game;
 import com.barelyconscious.game.Screen;
 import com.barelyconscious.game.graphics.Font;
 import com.barelyconscious.game.graphics.tiles.Tile;
@@ -29,8 +28,11 @@ import com.barelyconscious.game.item.Weapon;
 import com.barelyconscious.game.player.Player;
 import com.barelyconscious.game.player.AttributeMod;
 import com.barelyconscious.game.player.activeeffects.PotionEffect;
+import com.barelyconscious.gui.IWidget;
 
-public class ToolTipMenu extends Interactable implements Menu {
+public class ToolTipMenu extends Interactable
+    implements Menu, IWidget {
+
     private int xOffs;
     private int yOffs;
     private int menuLineWidth;
@@ -39,15 +41,15 @@ public class ToolTipMenu extends Interactable implements Menu {
     private String[] toolTipMenuListBuffer;
     private Item itemToDisplay;
     
-    private final Player PLAYER;
-    
+    private final Player player;
+
     /**
      * Creates a new ToolTipMenu for drawing contextual Menus based on the active
      * Menu
      * @param player required for displaying the current Player's attributes
      */
-    public ToolTipMenu(Player player) {
-        PLAYER = player;
+    public ToolTipMenu(final Player player) {
+        this.player = player;
     } // constructor
     
     /**
@@ -169,7 +171,7 @@ public class ToolTipMenu extends Interactable implements Menu {
                 } // if-else
                 
                 if (itemToDisplay instanceof Scroll && 
-                        !(PLAYER.isScrollIdentified( ((Scroll)itemToDisplay).getScrollId())) ) {
+                        !(player.isScrollIdentified( ((Scroll)itemToDisplay).getScrollId())) ) {
                     toolTipMenuListBuffer[lineNum++] = Common.centerString("???", " ", menuLineWidth);
                 } // if
                 else {
@@ -201,7 +203,7 @@ public class ToolTipMenu extends Interactable implements Menu {
         } // else if
         
         if (itemToDisplay instanceof Scroll) {
-            if (PLAYER.isScrollIdentified(((Scroll)itemToDisplay).getScrollId())) {
+            if (player.isScrollIdentified(((Scroll)itemToDisplay).getScrollId())) {
 //                ((Scroll)itemToDisplay).printAdditionalEffects(lineNum++);
             } // if
         } // if
@@ -237,19 +239,19 @@ public class ToolTipMenu extends Interactable implements Menu {
         int lineNum = 0;
         toolTipMenuListBuffer = new String[menuLineHeight];
         
-        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Magic Damage", String.format("%.1f-%.1f", PLAYER.getMinMagicDamage(), PLAYER.getMaxMagicDamage()), menuLineWidth);
-        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Critical Strike Chance", String.format("%.1f%%", PLAYER.getCritChance()), menuLineWidth);
-        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Physical Damage Reduction", String.format("%.1f%%", PLAYER.getPhysicalDamageReduction()), menuLineWidth);
-        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Evade Chance", String.format("%.1f%%", PLAYER.getEvadeChance()), menuLineWidth);
-        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Fire Magic Bonus", String.format("%.1f%%", PLAYER.getBonusToElement(Player.FIRE_MAGIC_CURRENT)), menuLineWidth);
-        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Frost Magic Bonus", String.format("%.1f%%", PLAYER.getBonusToElement(Player.FROST_MAGIC_CURRENT)), menuLineWidth);
-        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Chaos Magic Bonus", String.format("%.1f%%", PLAYER.getBonusToElement(Player.CHAOS_MAGIC_CURRENT)), menuLineWidth);
-        toolTipMenuListBuffer[lineNum] = Common.alignToSides("Holy Magic Bonus", String.format("%.1f%%", PLAYER.getBonusToElement(Player.HOLY_MAGIC_CURRENT)), menuLineWidth);
+        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Magic Damage", String.format("%.1f-%.1f", player.getMinMagicDamage(), player.getMaxMagicDamage()), menuLineWidth);
+        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Critical Strike Chance", String.format("%.1f%%", player.getCritChance()), menuLineWidth);
+        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Physical Damage Reduction", String.format("%.1f%%", player.getPhysicalDamageReduction()), menuLineWidth);
+        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Evade Chance", String.format("%.1f%%", player.getEvadeChance()), menuLineWidth);
+        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Fire Magic Bonus", String.format("%.1f%%", player.getBonusToElement(Player.FIRE_MAGIC_CURRENT)), menuLineWidth);
+        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Frost Magic Bonus", String.format("%.1f%%", player.getBonusToElement(Player.FROST_MAGIC_CURRENT)), menuLineWidth);
+        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Chaos Magic Bonus", String.format("%.1f%%", player.getBonusToElement(Player.CHAOS_MAGIC_CURRENT)), menuLineWidth);
+        toolTipMenuListBuffer[lineNum] = Common.alignToSides("Holy Magic Bonus", String.format("%.1f%%", player.getBonusToElement(Player.HOLY_MAGIC_CURRENT)), menuLineWidth);
         
         lineNum = menuLineHeight - 2;
         
-        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Magic School", "" + Player.idToString(PLAYER.getSchoolOfMagic()), menuLineWidth);
-        toolTipMenuListBuffer[lineNum] = Common.alignToSides("Bonus Armor", "" + PLAYER.getBonusArmor(), menuLineWidth);
+        toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Magic School", "" + Player.idToString(player.getSchoolOfMagic()), menuLineWidth);
+        toolTipMenuListBuffer[lineNum] = Common.alignToSides("Bonus Armor", "" + player.getBonusArmor(), menuLineWidth);
     } // drawStatsToolTip
 
     /**
@@ -290,10 +292,10 @@ public class ToolTipMenu extends Interactable implements Menu {
                 Font.drawMessage(screen, toolTipMenuListBuffer[i], fg, false, xOffs, lineNum);
             } // for
             
-            /* Don't draw the Item option text if the loot window is active */
-            if (Game.lootWindow.isActive()) {
-                return;
-            } // if
+//            /* Don't draw the Item option text if the loot window is active */
+//            if (lootWindow.isActive()) {
+//                return;
+//            } // if
 
             /* Adds a foreground colored bar at the bottom of the contextual Menu
                 for aesthetics, where information common to all Items are drawn.  The
