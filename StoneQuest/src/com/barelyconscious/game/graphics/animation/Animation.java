@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          StoneQuest
- * File name:        Animation.java
+ * File displayName:        Animation.java
  * Author:           Matt Schwartz
  * Date created:     06.10.2013
  * Redistribution:   You are free to use, reuse, and edit any of the text in

@@ -11,15 +11,19 @@ import com.barelyconscious.game.item.Item
 import com.barelyconscious.game.menu.TextLog
 import com.barelyconscious.game.spawnable.Entity
 import com.barelyconscious.game.spawnable.Loot
+import com.barelyconscious.services.messaging.MessageSystem
+import com.barelyconscious.services.messaging.logs.TextLogMessageData
+import com.barelyconscious.services.messaging.logs.TextLogWriterService
 import java.time.Clock
 import java.util.*
+import kotlin.math.abs
+import kotlin.math.ceil
 
 class SewerRatEntity(
-    world: World,
     level: Int,
     x: Int,
     y: Int,
-    private val textLog: TextLog
+    private val messageSystem: MessageSystem
 ) : Entity("Sewer Rat", Tile.SEWER_RAT_TILE_ID) {
 
     private val minimumDamage: Double = 0.75 * (1 + (level * 1.05))
@@ -44,8 +48,8 @@ class SewerRatEntity(
         var yDir: Int = (playerY - yPos) shr 31
         val r: Int = reach * Common.TILE_SIZE
 
-        if ((Math.abs(playerX - xPos) <= r && (playerY - yPos) == 0)
-            || (Math.abs(playerY - yPos) <= r && (playerX - xPos) == 0)) {
+        if ((abs(playerX - xPos) <= r && (playerY - yPos) == 0)
+            || (abs(playerY - yPos) <= r && (playerX - xPos) == 0)) {
             interact()
             return
         }
@@ -73,25 +77,18 @@ class SewerRatEntity(
 
     override fun remove() {
         val drop: Loot
-        val goldTileId: Int
         val rand = Random(Clock.systemUTC().millis())
         val amount = (rand.nextInt(1400) + 1) * level
 
-        textLog.writeFormattedString(
-            "$displayName has been murdered brutally. Its family mourns.",
-            Common.FONT_NULL_RGB,
-            LineElement(displayName, true, Common.FONT_ENTITY_LABEL_RGB)
-        )
+        messageSystem.sendMessage(
+            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogMessageData("$displayName has been murdered brutally. Its family mourns.")
+                .with(LineElement(displayName, true, Common.FONT_ENTITY_LABEL_RGB)),
+            this)
 
-        goldTileId = if (amount == 1) {
-            Tile.GOLD_LOOT_SINGLE_TILE_ID
-        } else {
-            Tile.GOLD_LOOT_STACK_TILE_ID
-        }
-
-        drop = Loot(Item("gold", 0, amount, goldTileId), xPos, yPos, textLog)
+        drop = Loot(Item.createGoldItem(amount), xPos, yPos, messageSystem)
         drop.isVisible = true
-        drop.setRemovableOnWalkover(true)
+        drop.removableOnWalkover = true
 
         world.addLoot(drop)
 
@@ -103,9 +100,13 @@ class SewerRatEntity(
 
         // non-entity specific stuff that should be dealt with another way but who's keepin score?
         Game.player.changeHealthBy(-hit)
-        textLog.writeFormattedString("$displayName hits you for ${Math.ceil(hit).toInt()} physical",
-            Common.FONT_DAMAGE_TEXT_RGB,
-            LineElement(displayName, true, Common.FONT_ENTITY_LABEL_RGB))
+        messageSystem.sendMessage(
+            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogMessageData("$displayName hits you for ${ceil(hit).toInt()} physical")
+                .with(LineElement(displayName, true, Common.FONT_ENTITY_LABEL_RGB)),
+            this
+        )
+
         Sound.CHICKEN_CLUCK.play()
     }
 

@@ -4,7 +4,6 @@ import com.barelyconscious.game.graphics.Font
 import com.barelyconscious.game.graphics.GameMap
 import com.barelyconscious.game.graphics.tiles.Tile
 import com.barelyconscious.game.input.Interactable
-import com.barelyconscious.game.input.KeyHandler
 import com.barelyconscious.game.input.KeyMap
 import com.barelyconscious.game.input.MouseHandler
 import com.barelyconscious.game.item.Item
@@ -16,6 +15,9 @@ import com.barelyconscious.game.player.Player
 import com.barelyconscious.game.portrait.Portrait
 import com.barelyconscious.game.spawnable.*
 import com.barelyconscious.game.spawnable.entities.SewerRatEntity
+import com.barelyconscious.services.messaging.MessageSystem
+import com.barelyconscious.services.messaging.logs.TextLogMessageData
+import com.barelyconscious.services.messaging.logs.TextLogWriterService
 import java.time.Clock
 
 class World(
@@ -25,6 +27,8 @@ class World(
     private val toolTipMenu: ToolTipMenu,
     private val lootWindow: LootPickupMenu,
     private val mouseHandler: MouseHandler,
+
+    private val messageSystem: MessageSystem,
     private val clock: Clock
 ) : Interactable() {
 
@@ -40,11 +44,11 @@ class World(
         testInitializeEntities()
     }
 
-    public fun generateMap(depth: Int) {
+    private fun generateMap(depth: Int) {
         gameMap.generateAreaMap(depth, 25, "Kud Aradji Steppes")
     }
 
-    public fun resize(width: Int, height: Int) {
+    fun resize(width: Int, height: Int) {
         playerX = width / 2
         playerY = (textLog.offsY - textLog.pixelHeight) / 2
 
@@ -149,7 +153,7 @@ class World(
             moveUp, moveUpAlt -> move(false, 0, -1)
             moveDown, moveDownAlt -> move(false, 0, 1)
             pickupItem -> {
-                println("pickin up shit")
+                println("picking up shit")
                 pickUpItem()
             }
             waitTurnKey -> waitTurn()
@@ -160,38 +164,38 @@ class World(
     /**
      * todo might be taken out
      */
-    public fun displayZoneInfo() {
+    fun displayZoneInfo() {
         displayInfo = !displayInfo
     }
 
-    public fun addEntity(entity: Entity) {
+    fun addEntity(entity: Entity) {
         entities.add(entity)
     }
 
-    public fun removeEntity(entity: Entity) {
+    fun removeEntity(entity: Entity) {
         entities.remove(entity)
     }
 
-    public fun addLoot(item: Item, x: Int, y: Int) {
-        addLoot(Loot(item, x, y, textLog))
+    fun addLoot(item: Item, x: Int, y: Int) {
+        addLoot(Loot(item, x, y, messageSystem))
     }
 
-    public fun addLoot(loot: Loot) =
+    fun addLoot(loot: Loot) =
         lootItems.add(loot)
 
-    public fun removeLoot(loot: Loot) =
+    fun removeLoot(loot: Loot): Loot? =
         lootItems.remove(loot)
 
-    public fun addDoodad(doodad: Doodad) =
+    fun addDoodad(doodad: Doodad) =
         doodads.add(doodad)
 
-    public fun removeDoodad(doodad: Doodad) =
+    fun removeDoodad(doodad: Doodad) =
         doodads.remove(doodad)
 
-    public fun getEntityAt(x: Int, y: Int): Entity? =
+    fun getEntityAt(x: Int, y: Int): Entity? =
         entities.get(x, y)
 
-    public fun getLootAt(x: Int, y: Int): Loot? {
+    fun getLootAt(x: Int, y: Int): Loot? {
         val list: List<Loot> = lootItems.getList(x, y)
 
         return if (list.isEmpty()) {
@@ -201,11 +205,11 @@ class World(
         }
     }
 
-    public fun pickUpItem() {
+    fun pickUpItem() {
         val lootPile = lootItems.getList(playerX, playerY) ?: arrayListOf()
 
         if (lootPile.isEmpty()) {
-            textLog.writeFormattedString("There is nothing to pick up.", Common.FONT_NULL_RGB)
+            writeLog("There is nothing to pick up.")
         } else {
             if (lootPile.size > 1) {
                 lootWindow.setPosition(mouseX, mouseY)
@@ -219,8 +223,9 @@ class World(
         tick()
     }
 
-    public fun waitTurn() {
-        textLog.writeFormattedString("You twiddle your thumbs.", Common.FONT_NULL_RGB)
+
+    fun waitTurn() {
+        writeLog("You twiddle your thumbs.")
         tick()
     }
 
@@ -230,10 +235,10 @@ class World(
      * direction supplied.
      *
      * @param isRanged unused
-     * @param deltaX the change in x of the player's location
-     * @param deltaY the change in y of the player's location
+     * @param dx the change in x of the player's location
+     * @param dy the change in y of the player's location
      */
-    public fun move(isRanged: Boolean, dx: Int, dy: Int) {
+    fun move(isRanged: Boolean, dx: Int, dy: Int) {
         // Hopefully this will be taken care of in a better fashion
         val entity: Entity?
         val loot: java.util.ArrayList<Loot>?
@@ -309,7 +314,7 @@ class World(
      * @param y
      * @return
      */
-    public fun canMove(x: Int, y: Int): Boolean {
+    fun canMove(x: Int, y: Int): Boolean {
         var doodadBlocking = true
 
         // Entity blocking path?
@@ -335,7 +340,7 @@ class World(
      * implements a tick() function which is called to perform whatever updates
      * it needs to.
      */
-    public fun tick() {
+    fun tick() {
         player.tick()
 
         for (i in 0 until entities.size()) {
@@ -359,7 +364,7 @@ class World(
      * @screen.
      * @param screen the screen to render to
      */
-    public fun render(screen: Screen) {
+    fun render(screen: Screen) {
 //        renderZoneInfo(screen);
         renderSprites(screen)
         renderMouseLocation(screen)
@@ -378,7 +383,7 @@ class World(
      * @screen.
      * @param screen the screen that the zone information is drawn to
      */
-    public fun renderZoneInfo(screen: Screen) {
+    fun renderZoneInfo(screen: Screen) {
         if (!displayInfo) {
             return
         }
@@ -418,7 +423,7 @@ class World(
      *
      * @param screen
      */
-    public fun renderSprites(screen: Screen) {
+    fun renderSprites(screen: Screen) {
         // Draw doodads to the screen
         renderDoodads(screen)
 
@@ -567,7 +572,7 @@ class World(
      *
      * @param screen the screen to draw to
      */
-    public fun renderPortraits(screen: Screen) {
+    fun renderPortraits(screen: Screen) {
         val playerPortraitOffsX = 1
         val playerPortraitOffsY = 1
         val entityPortraitOffsY: Int
@@ -664,9 +669,9 @@ class World(
     }
 
     private fun testInitializeEntities() {
-        addEntity(SewerRatEntity(this, 1, 64, 32, textLog))
-        addEntity(SewerRatEntity(this, 1, 96, 32, textLog))
-        addEntity(SewerRatEntity(this, 1, 32, 32, textLog))
+        addEntity(SewerRatEntity(1, 64, 32, messageSystem))
+        addEntity(SewerRatEntity(1, 96, 32, messageSystem))
+        addEntity(SewerRatEntity(1, 32, 32, messageSystem))
 
         val chest = Container(
             "Chest",
@@ -674,19 +679,70 @@ class World(
             Tile.CONTAINER_CHEST_OPEN_TILE_ID,
             40,
             0,
-            textLog,
+            messageSystem,
             lootWindow
         )
         val items: ArrayList<Item> = arrayListOf(
-            Item("some arrows", 259, Tile.ARROW_TILE_ID),
-            Item("bootsies", 259, Tile.BOOTS_IRON_TILE_ID),
-            Item("potions 1", 259, Tile.POTION_TILE_ID),
-            Item("potion2 ", 259, Tile.POTION_TILE_ID),
-            Item("poooootion", 259, Tile.POTION_TILE_ID)
+            Item(
+                displayName = "some arrows",
+                itemLevel = 259,
+                rarityColorRgb = -1,
+                itemDescription = "Vendor fodder",
+                itemAffixes = mutableListOf(),
+                sellValue = 99,
+                stackSize = 1,
+                tileId = Tile.ARROW_TILE_ID
+            ),
+            Item(
+                displayName = "bootsies",
+                itemLevel = 259,
+                rarityColorRgb = -1,
+                itemDescription = "Vendor fodder",
+                itemAffixes = mutableListOf(),
+                sellValue = 99,
+                stackSize = 1,
+                tileId = Tile.BOOTS_IRON_TILE_ID
+            ),
+            Item(
+                displayName = "potions 1",
+                itemLevel = 259,
+                rarityColorRgb = -1,
+                itemDescription = "Vendor fodder",
+                itemAffixes = mutableListOf(),
+                sellValue = 99,
+                stackSize = 1,
+                tileId = Tile.POTION_TILE_ID
+            ),
+            Item(
+                displayName = "potion2 ",
+                itemLevel = 259,
+                rarityColorRgb = -1,
+                itemDescription = "Vendor fodder",
+                itemAffixes = mutableListOf(),
+                sellValue = 99,
+                stackSize = 1,
+                tileId = Tile.POTION_TILE_ID
+            ),
+            Item(
+                displayName = "poooootion",
+                itemLevel = 259,
+                rarityColorRgb = -1,
+                itemDescription = "Vendor fodder",
+                itemAffixes = mutableListOf(),
+                sellValue = 99,
+                stackSize = 1,
+                tileId = Tile.POTION_TILE_ID
+            )
         )
 
         chest.setContents(items)
         addDoodad(chest)
         generateMap(154879)
     }
+
+    private fun writeLog(message: String) =
+        messageSystem.sendMessage(
+            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogMessageData(message),
+            this)
 }

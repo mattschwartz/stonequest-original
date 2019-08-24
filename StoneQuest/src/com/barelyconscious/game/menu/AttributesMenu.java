@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          StoneQuest
- * File name:        AttributesMenu.java
+ * File displayName:        AttributesMenu.java
  * Author:           Matt Schwartz
  * Date created:     04.21.2013
  * Redistribution:   You are free to use, reuse, and edit any of the text in
@@ -285,14 +285,14 @@ public class AttributesMenu extends Interactable
         int points = Game.player.getUnspentAttributePoints();
         String string = "";
 
-        // Show name of the stat that the player is hovering over
+        // Show displayName of the stat that the player is hovering over
         if (selectedStat >= 0) {
             // If the player has attributes to spend, add text to inform the player of that in the message
             if (points > 0) {
                 string = "click to add a point to ";
             } // if
 
-            // Get the name of the stat
+            // Get the displayName of the stat
             string += "" + Player.idToString(selectedStat);
 
             x = xOffs + ATTRIBUTES_FRAME_WIDTH - string.length() * Font.CHAR_WIDTH - 1;

@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          StoneQuest
- * File name:        Interactable.java
+ * File displayName:        Interactable.java
  * Author:           Matt Schwartz
  * Date created:     04.20.2013
  * Redistribution:   You are free to use, reuse, and edit any of the text in

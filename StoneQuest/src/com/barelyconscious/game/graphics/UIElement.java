@@ -118,7 +118,7 @@ public class UIElement {
      * Opens the file containing the image representing the UIElement, loading its data into the pixels array, reporting any
      * errors
      *
-     * @param imageFile the name of the file location of the UIElement
+     * @param imageFile the displayName of the file location of the UIElement
      */
     public UIElement(String imageFile) {
         System.out.print(" [NOTIFY] Loading image \"" + trim(imageFile) + "\"...");

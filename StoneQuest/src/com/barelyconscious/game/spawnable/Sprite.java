@@ -31,7 +31,7 @@ abstract public class Sprite {
     
     /**
      * Create a Sprite with the following parameters
-     * @param displayname the name visible to the player of the Sprite
+     * @param displayname the displayName visible to the player of the Sprite
      * @param tileId the tile id of the artwork for the Sprite
      */
     public Sprite(String displayname, int tileId) {
@@ -137,12 +137,12 @@ abstract public class Sprite {
     } // changePositionBy
     
     /**
-     * Returns the name of the Sprite.
+     * Returns the displayName of the Sprite.
      * @return 
      */
     public String getDisplayName() {
         return displayName;
-    } // getName
+    } // getDisplayName
     
     /**
      * Change the current tile id to tileId

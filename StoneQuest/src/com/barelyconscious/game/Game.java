@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          StoneQuest
- * File name:        Game.java
+ * File displayName:        Game.java
  * Author:           Matt Schwartz
  * Date created:     07.01.2012
  * Redistribution:   You are free to use, reuse, and edit any of the text in

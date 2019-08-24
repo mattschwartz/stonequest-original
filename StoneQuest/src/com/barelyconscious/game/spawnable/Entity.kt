@@ -5,7 +5,7 @@ import com.barelyconscious.game.Sound
 
 /**
  * Creates a new Entity with the following parameters
- * @param displayName the name of the Entity
+ * @param displayName the displayName of the Entity
  * @param tileId the id of the artwork for the Entity
  */
 abstract class Entity(

@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          Roguelike2.0
- * File name:        Armor.java
+ * File displayName:        Armor.java
  * Author:           Matt Schwartz
  * Date created:     07.09.2012 
  * Redistribution:   You are free to use, reuse, and edit any of the text in
@@ -35,7 +35,7 @@ import com.barelyconscious.game.Game;
 import com.barelyconscious.game.player.Player;
 import com.barelyconscious.game.player.AttributeMod;
 
-public class Armor extends Item {
+public class Armor2 extends Item {
 
     private int slotId;
     private int bonusArmor;
@@ -44,7 +44,7 @@ public class Armor extends Item {
     /**
      * Create a new piece of armor wearable by the player with the following parameters:
      *
-     * @param name the name of the armor displayable to the player
+     * @param name the displayName of the armor displayable to the player
      * @param sellV the value vendors place on the armor. When a player sells Items to the shop, this is the amount of
      * gold credited to them in return
      * @param armor any amount of bonus armor afforded by the Item
@@ -148,7 +148,7 @@ public class Armor extends Item {
     } // isEquipped
 
     /**
-     * Returns the name associated with a given equipment slot ID as a String
+     * Returns the displayName associated with a given equipment slot ID as a String
      *
      * @param armorId the slot id of a piece of armor
      * @return

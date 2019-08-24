@@ -1,6 +1,6 @@
 ///* *****************************************************************************
 // * Project:          Roguelike2.0
-// * File name:        InventoryMenu.java
+// * File displayName:        InventoryMenu.java
 // * Author:           Matt Schwartz
 // * Date created:     07.07.2012 
 // * Redistribution:   You are free to use, reuse, and edit any of the text in

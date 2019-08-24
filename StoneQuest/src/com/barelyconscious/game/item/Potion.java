@@ -1,6 +1,6 @@
  /* *****************************************************************************
  * Project:          Roguelike2.0
- * File name:        Potion.java
+ * File displayName:        Potion.java
  * Author:           Matt Schwartz
  * Date created:     07.10.2012 
  * Redistribution:   You are free to use, reuse, and edit any of the text in
@@ -34,7 +34,7 @@ public class Potion extends Item {
     /**
      * Create a new potion with the following parameters
      *
-     * @param name the name of the potion, visible to the player
+     * @param name the displayName of the potion, visible to the player
      * @param sellV the amount in gold that a player will receive in exchange for the Item
      * @param stack the amount of Items in one stack
      * @param dur the duration in ticks if the potion is STATBUFF

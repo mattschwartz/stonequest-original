@@ -1,10 +1,10 @@
 package com.barelyconscious.game.spawnable
 
-import com.barelyconscious.game.Common
-import com.barelyconscious.game.Game
 import com.barelyconscious.game.item.Item
 import com.barelyconscious.game.menu.LootPickupMenu
-import com.barelyconscious.game.menu.TextLog
+import com.barelyconscious.services.messaging.MessageSystem
+import com.barelyconscious.services.messaging.logs.TextLogMessageData
+import com.barelyconscious.services.messaging.logs.TextLogWriterService
 
 class Container(
     displayName: String,
@@ -12,11 +12,11 @@ class Container(
     spentTileId: Int,
     x: Int,
     y: Int,
-    private val textLog: TextLog,
+    private val messageSystem: MessageSystem,
     private val lootWindow: LootPickupMenu
 ) : Doodad(displayName, initialTileId, spentTileId, x, y) {
 
-    private val itemList: ArrayList<Item> = ArrayList();
+    private val itemList: ArrayList<Item> = ArrayList()
 
     /**
      * Fill the contents of the container with loot
@@ -28,15 +28,18 @@ class Container(
 
     override fun interact() {
         if (itemList.isEmpty()) {
-            textLog.writeFormattedString(
-                "The $displayName is empty.",
-                Common.FONT_NULL_RGB
+            messageSystem.sendMessage(
+                TextLogWriterService.LOG_EVENT_CODE,
+                TextLogMessageData("The $displayName is empty."),
+                this
             )
         } else {
-            textLog.writeFormattedString(
-                "You open the $displayName.",
-                Common.FONT_NULL_RGB
+            messageSystem.sendMessage(
+                TextLogWriterService.LOG_EVENT_CODE,
+                TextLogMessageData("You open the $displayName."),
+                this
             )
+
 
             lootWindow.setItemList(itemList)
             lootWindow.setActive()

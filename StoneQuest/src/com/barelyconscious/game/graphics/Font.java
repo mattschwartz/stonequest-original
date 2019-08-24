@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          StoneQuest
- * File name:        Font.java
+ * File displayName:        Font.java
  * Author:           Matt Schwartz
  * Date created:     02.23.2013
  * Redistribution:   You are free to use, reuse, and edit any of the text in

@@ -5,7 +5,7 @@ import com.barelyconscious.game.player.AttributeMod
 
 /**
  * Creates a new Curse with the following parameters
- * @param name the name of the Curse
+ * @param name the displayName of the Curse
  * @param dur how long the Curse lasts
  * @param attributeMods an array of affected attributes
  */

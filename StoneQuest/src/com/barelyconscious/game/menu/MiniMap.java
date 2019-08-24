@@ -151,7 +151,7 @@ public class MiniMap extends Interactable
         String zoneLevel = "" + Game.gameMap.getZoneLevel();
         String remainingElites = "2" + Game.gameMap.getRemainingElites();
 
-        // Render the name of the zone to the minimap
+        // Render the displayName of the zone to the minimap
         Font.drawOutlinedMessage(screen, zoneName, Common.FONT_WHITE_RGB, true, xOffs + ZONE_NAME_OFFS_X
             + (ZONE_NAMEBAR_WIDTH - zoneName.length() * Font.CHAR_WIDTH) / 2, yOffs + ZONE_NAME_OFFS_Y
             + (ZONE_NAMEBAR_HEIGHT - Font.CHAR_HEIGHT) / 2);

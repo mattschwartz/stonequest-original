@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          Roguelike2.0
- * File name:        Weapon.java
+ * File displayName:        Weapon.java
  * Author:           Matt Schwartz
  * Date created:     07.27.2012
  * Redistribution:   You are free to use, reuse, and edit any of the text in
@@ -68,7 +68,7 @@ public class Weapon extends Item {
     /**
      * Creates a new Weapon with the following parameters
      *
-     * @param name the name visible to the Player of the Weapon
+     * @param name the displayName visible to the Player of the Weapon
      * @param sellV the value in gold that vendors will give to the player in exchange for the Weapon
      * @param min the minimum damage before multipliers that the Weapon can deal
      * @param max the maximum damage before multipliers that the Weapon can deal

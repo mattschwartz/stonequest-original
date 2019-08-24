@@ -96,7 +96,7 @@ class Inventory(
                 item.bonusArmor,
                 item.armorType,
                 item.tileId,
-                *item.allAffixes
+                item.getItemAffixes()
             )
             is Weapon -> Weapon(
                 item.displayName,

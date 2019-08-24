@@ -9,7 +9,7 @@ import com.barelyconscious.game.menu.TextLog
 /**
  * Create a new Poison with the following parameters
  *
- * @param name the name visible to the player of the Poison
+ * @param name the displayName visible to the player of the Poison
  * @param dur how long the Poison lasts before it is removed
  * @param tickDamage the amount of damage dealt to the Player every freq tick
  * @param damageFrequency how often the Poison deals damage to the Player

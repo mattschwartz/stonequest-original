@@ -1,5 +1,8 @@
 package com.barelyconscious.services.messaging
 
+import com.barelyconscious.services.messaging.data.IMessageData
+import com.barelyconscious.services.messaging.data.MessageResponse
+
 class MessageSystem {
 
     companion object {
@@ -11,11 +14,11 @@ class MessageSystem {
 
     /**
      * key: string - the event code to which one or more observers has subscribed
-     * value: List<MessageObserver> - all observers for this event code
+     * value: List<IMessageObserver> - all observers for this event code
      */
-    private val observers: MutableMap<String, MutableList<MessageObserver>> = mutableMapOf()
+    private val observers: MutableMap<String, MutableList<IMessageObserver>> = mutableMapOf()
 
-    fun subscribe(eventCode: String, receiver: MessageObserver) {
+    fun subscribe(eventCode: String, receiver: IMessageObserver) {
         if (!observers.containsKey(eventCode)) {
             observers[eventCode] = arrayListOf(receiver)
         } else {
@@ -24,10 +27,9 @@ class MessageSystem {
     }
 
     // Send the message asynchronously
-    fun sendMessage(msg: Message) {
-        observers[msg.eventCode]!!.forEach { it.alert(msg) }
-
-        observers[ANY_EVENT_CODE]!!.forEach { it.alert(msg) }
+    fun sendMessage(eventCode: String, data: IMessageData, sender: Any) {
+        observers[eventCode]
+            ?.forEach { it.alert(eventCode, data, sender) }
     }
 
     /**
@@ -39,22 +41,15 @@ class MessageSystem {
      * @param exceptForType the type of observers normally listening into the eventCode which
      * will be deaf to the message sent
      */
-    fun sendMessage(msg: Message, exceptForType: Class<MessageObserver>) {
-        observers[msg.eventCode]
-            ?.filter { it::class == exceptForType }
-            ?.forEach { it.alert(msg) }
-        observers[ANY_EVENT_CODE]
-            ?.filter { it::class == exceptForType }
-            ?.forEach { it.alert(msg) }
-
-
-        // todo rethink this whatsense
-//        throw NotImplementedError()
-        // todo let's determine how often this method is used. if it's often enough,
-        //  consider changing underlying data type to list, instead of event-code based
-        //  then the observers would each need to be able to understand how to accept
-        //  their messages. so doing it in this means decouples them when they don't care
-        //  hmm well
+    fun sendMessage(
+        eventCode: String,
+        data: IMessageData,
+        sender: Any,
+        exceptForType: Class<IMessageObserver>
+    ) {
+        observers[eventCode]
+            ?.filter { it::class != exceptForType }
+            ?.forEach { it.alert(eventCode, data, sender) }
     }
 
     /**
@@ -66,14 +61,12 @@ class MessageSystem {
      * @return the list of responses from each observer of the specified type
      */
     fun sendMessageImmediate(
-        msg: Message
-    ): List<MessageResponse> {
-        val receivers: MutableList<MessageObserver> = observers[msg.eventCode]
-            ?: return mutableListOf()
-        receivers.addAll(observers[ANY_EVENT_CODE] ?: listOf())
-
-        return receivers
-            .map { it.alert(msg) }
-            .toList()
-    }
+        eventCode: String,
+        data: IMessageData,
+        sender: Any
+    ): List<MessageResponse> =
+        observers[eventCode]
+            ?.map { it.alert(eventCode, data, sender) }
+            ?.toList()
+            ?: listOf()
 }

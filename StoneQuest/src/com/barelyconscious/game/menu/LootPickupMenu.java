@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          StoneQuest
- * File name:        LootPickupMenu.java
+ * File displayName:        LootPickupMenu.java
  * Author:           Matt Schwartz
  * Date created:     03.11.2013
  * Redistribution:   You are free to use, reuse, and edit any of the text in
@@ -335,14 +335,14 @@ public class LootPickupMenu extends Interactable
                 yOffs + Font.CHAR_HEIGHT + (i - itemListLineStart) * Common.TILE_SIZE);
 
             if ((i - itemListLineStart) == selectedLoot) {
-                /* Draw the display name for the loot object */
+                /* Draw the display displayName for the loot object */
                 Font.drawMessage(screen, "" + itemList.get(i).getDisplayName(), Common.THEME_BG_COLOR_RGB,
                     false, xOffs + Common.TILE_SIZE + 2, yOffs + Font.CHAR_HEIGHT +
                         (i - itemListLineStart) * Common.TILE_SIZE + 5);
                 continue;
             } // if
 
-            /* Draw the display name for the loot object */
+            /* Draw the display displayName for the loot object */
             Font.drawMessage(screen, "" + itemList.get(i).getDisplayName(), Common.themeForegroundColor,
                 false, xOffs + Common.TILE_SIZE + 2, yOffs + Font.CHAR_HEIGHT +
                     (i - itemListLineStart) * Common.TILE_SIZE + 5);

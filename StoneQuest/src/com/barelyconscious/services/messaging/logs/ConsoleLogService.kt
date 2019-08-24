@@ -1,19 +1,25 @@
 package com.barelyconscious.services.messaging.logs
 
-import com.barelyconscious.services.messaging.Message
-import com.barelyconscious.services.messaging.MessageObserver
-import com.barelyconscious.services.messaging.MessageResponse
+import com.barelyconscious.services.messaging.IMessageObserver
+import com.barelyconscious.services.messaging.data.IMessageData
+import com.barelyconscious.services.messaging.data.MessageResponse
 import java.time.Clock
 
+class ConsoleLogService(private val clock: Clock) : IMessageObserver() {
 
-class ConsoleLogService(private val clock: Clock) : MessageObserver() {
+    override fun alert(eventCode: String, data: IMessageData, sender: Any): MessageResponse {
+        val level: LogLevel
+        val message: String
 
-    override fun alert(msg: Message): MessageResponse {
-        val data: ConsoleMessageData? = msg.data as? ConsoleMessageData
-
-        if (data != null) {
-            write("[${msg.messenger}]: ${data.message}", data.level)
+        if (data is LogMessageData) {
+            message = data.message
+            level = data.logLevel
+        } else {
+            level = LogLevel.INFO
+            message = data.toString()
         }
+
+        write("$sender says: $message", level)
 
         return MessageResponse.ok()
     }

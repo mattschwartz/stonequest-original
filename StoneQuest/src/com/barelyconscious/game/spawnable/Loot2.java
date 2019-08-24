@@ -25,7 +25,7 @@ import com.barelyconscious.game.menu.TextLog;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Loot extends Sprite {
+public class Loot2 extends Sprite {
     private boolean removeOnWalk;
     private Item item;
     private final TextLog textLog;
@@ -36,7 +36,7 @@ public class Loot extends Sprite {
      * @param x the x location for the Loot object
      * @param y the y location for the Loot object
      */
-    public Loot(Item item, int x, int y, final TextLog textLog) {
+    public Loot2(Item item, int x, int y, final TextLog textLog) {
         super(item.getDisplayName(), item.getTileId());
         super.setPosition(x, y);
         

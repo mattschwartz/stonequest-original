@@ -7,7 +7,7 @@ class EventHandler {
     /**
      * Add an event listener for the specified eventName.
      *
-     * @param eventName the name of the event to start listening to
+     * @param eventName the displayName of the event to start listening to
      * @param listener the [IEventListener] which will be notified of events for the eventName
      */
     fun attachEventListener(eventName: String, listener: IEventListener) {

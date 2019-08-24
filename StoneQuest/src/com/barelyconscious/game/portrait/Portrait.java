@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          StoneQuest
- * File name:        Portrait.java
+ * File displayName:        Portrait.java
  * Author:           Matt Schwartz
  * Date created:     04.18.2013
  * Redistribution:   You are free to use, reuse, and edit any of the text in
@@ -183,7 +183,7 @@ public class Portrait {
 
     private void renderText(Screen screen, int xStart, int yStart) {
         String message;
-        // Player name
+        // Player displayName
         message = entity.getDisplayName();
 
         if (message.length() > 20) {

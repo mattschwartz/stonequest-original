@@ -938,7 +938,7 @@ public class GameMap {
     
     /**
      * This function is used to identify zones for the player.
-     * @return the name of the currently loaded zone
+     * @return the displayName of the currently loaded zone
      */
     public String getZoneName() {
         return zoneName;

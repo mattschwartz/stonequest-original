@@ -37,7 +37,7 @@ public class Projectile extends Item {
     /**
      * Create a new Projectile Item type with the following parameters
      *
-     * @param name the name of the Projectile visible to the player
+     * @param name the displayName of the Projectile visible to the player
      * @param sellValue the value in gold vendors are willing to give the player in exchange for the item
      * @param stack the stack size of the Projectile
      * @param tileId each type of Projectile has corresponding artwork that is drawn to the Screen when the Item is in

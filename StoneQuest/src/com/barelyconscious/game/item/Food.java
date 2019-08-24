@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          Roguelike2.0
- * File name:        Food.java
+ * File displayName:        Food.java
  * Author:           Matt Schwartz
  * Date created:     07.10.2012 
  * Redistribution:   You are free to use, reuse, and edit any of the text in
@@ -43,7 +43,7 @@ public class Food extends Item {
     /**
      * Creates a new food item with the following parameters
      *
-     * @param name the name of the food that is visible to the player
+     * @param name the displayName of the food that is visible to the player
      * @param sellV the value in gold vendors will give to the player in exchange for the item
      * @param stackSize the initial stack size of the food item
      * @param tileId the id of the Tile that is drawn if the item needs to be drawn to the screen

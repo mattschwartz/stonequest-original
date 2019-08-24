@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          Roguelike2.0
- * File name:        Item.java
+ * File displayName:        Item.java
  * Author:           Matt Schwartz
  * Date created:     07.04.2012 
  * Redistribution:   You are free to use, reuse, and edit any of the text in
@@ -31,7 +31,7 @@ import com.barelyconscious.game.player.AttributeMod;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Item implements Comparable<Item> {
+public class Item_2 implements Comparable<Item> {
     /* Various options the player has access to for each item */
     public static final int USE             = 0;
     public static final int EXAMINE         = 1;
@@ -59,7 +59,7 @@ public class Item implements Comparable<Item> {
     /** How many items exist on top of each other. */
     protected int stackSize;
     
-    /** The name of the item visible to the player. */
+    /** The displayName of the item visible to the player. */
     protected String itemName;
     
     /** An array of AttributeMod's which are attribute mods; these bonuses affect
@@ -85,7 +85,7 @@ public class Item implements Comparable<Item> {
     /**
      * Constructor for creating an item.  Called from within subclasses of more
      * specific item types.
-     * @param name the name of the item
+     * @param name the displayName of the item
      * @param sellV the value a player can expect when selling the item to a
      * vendor
      * @param stack the amount of items in the item stack
@@ -115,8 +115,8 @@ public class Item implements Comparable<Item> {
     } // constructor
     
     /**
-     * Changes the name visible to the player to name
-     * @param name the new name of the item
+     * Changes the displayName visible to the player to displayName
+     * @param name the new displayName of the item
      */
     public void setName(String name) {
         itemName = name;
@@ -125,16 +125,16 @@ public class Item implements Comparable<Item> {
     /**
      * Internal names are not visible to the player in any way (ideally); this may
      * be replaced by item ids...
-     * @return the item's internal name
+     * @return the item's internal displayName
      */
     public String getInternalName() {
         return itemName;
     } // getInternalName
     
     /**
-     * The name visible to the player; if the name of the item is too long for
+     * The displayName visible to the player; if the displayName of the item is too long for
      * the inventory menu, it is truncated to fit
-     * @return the item's visible name
+     * @return the item's visible displayName
      */
     public String getDisplayName() {
         return itemName;

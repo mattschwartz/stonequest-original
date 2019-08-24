@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          Roguelike2.0
- * File name:        Scroll.java
+ * File displayName:        Scroll.java
  * Author:           Matt Schwartz
  * Date created:     12.24.2012 
  * Redistribution:   You are free to use, reuse, and edit any of the text in
@@ -37,12 +37,12 @@ public class Scroll extends Item {
     /**
      * Creates a new Scroll with the following parameters
      *
-     * @param scrollName the name of the scroll which is only visible to the player if the Scroll has been read
+     * @param scrollName the displayName of the scroll which is only visible to the player if the Scroll has been read
      * previously
      * @param sellV the value in gold vendors will give in exchange for the Scroll
      * @param scrollid the internal id of the Scroll, which is unique to each Scroll. The player holds an array of
      * Scroll ids in order to keep track of Scrolls the player has previously read before to determine if the Scroll's
-     * name and stats should be obfuscated or not
+     * displayName and stats should be obfuscated or not
      * @param effects AttributeMod effects if any; most Scrolls do not provide attribute mods when consumed
      */
     public Scroll(
@@ -58,7 +58,7 @@ public class Scroll extends Item {
         this.textLog = textLog;
 
         /* Check if the Scroll has been seen by the player before, obfuscating
-         its stats and name if so */
+         its stats and displayName if so */
         isIdentified = !Game.player.isScrollIdentified(scrollId);
 
         if (isIdentified) {
@@ -114,13 +114,13 @@ public class Scroll extends Item {
             textLog));
     } // extraEffects
 
-    /* Picks 2-4 gibberish words based on the name of the scroll */
+    /* Picks 2-4 gibberish words based on the displayName of the scroll */
     private String obfuscateName() {
         String str = "";
         int numOfWords;
         int hash = Math.abs(getInternalName().hashCode());
 
-        // Get the name's hashcode, % last digit & positive % max 3 + 2 
+        // Get the displayName's hashcode, % last digit & positive % max 3 + 2
         numOfWords = (((hash % 10) & 15) % 4) + 2;
         // Create numOfWords number of unintelligible words
         for (int i = 0; i < numOfWords; i++) {
@@ -134,7 +134,7 @@ public class Scroll extends Item {
 
     /**
      *
-     * @return the actual name of the Scroll
+     * @return the actual displayName of the Scroll
      */
     @Override
     public String getInternalName() {
@@ -142,10 +142,10 @@ public class Scroll extends Item {
     } // getInternalName
 
     /**
-     * If the Scroll has not been identified by the Player, the name returned and thus seen by the Player is obfuscated
+     * If the Scroll has not been identified by the Player, the displayName returned and thus seen by the Player is obfuscated
      * by concatenation of gibberish words
      *
-     * @return the name of the Scroll visible to the player
+     * @return the displayName of the Scroll visible to the player
      */
     @Override
     public String getDisplayName() {

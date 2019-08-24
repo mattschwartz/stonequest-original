@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          Roguelike2.0
- * File name:        KeyMap.java
+ * File displayName:        KeyMap.java
  * Author:           Matt Schwartz
  * Date created:     07.06.2012 
  * Redistribution:   You are free to use = reuse = and edit any of the text in

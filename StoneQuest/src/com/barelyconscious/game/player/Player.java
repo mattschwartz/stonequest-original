@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          Roguelike2.0
- * File name:        Player.java
+ * File displayName:        Player.java
  * Author:           Matt Schwartz
  * Date created:     07.05.2012 
  * Redistribution:   You are free to use, reuse, and edit any of the text in
@@ -911,7 +911,7 @@ public class Player extends Entity {
         return bonusArmor;
     } // getBonusArmor
 
-    /* Returns the name associated with a given stat ID as a String */
+    /* Returns the displayName associated with a given stat ID as a String */
     public static String idToString(int statId) {
         switch (statId) {
             case HITPOINTS:

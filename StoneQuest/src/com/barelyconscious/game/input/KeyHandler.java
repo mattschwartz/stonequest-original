@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          Roguelike2.0
- * File name:        KeyHandler.java
+ * File displayName:        KeyHandler.java
  * Author:           Matt Schwartz
  * Date created:     07.06.2012 
  * Redistribution:   You are free to use, reuse, and edit any of the text in

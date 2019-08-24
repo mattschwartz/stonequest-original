@@ -337,7 +337,7 @@ public class BuffBar extends Interactable
 
         tooltipOffsX = debuffOffsX - (ACTIVE_EFFECT_BACKGROUND_FRAME_WIDTH + 2) * (selectedDebuff);
 
-        // Add the name of the poison
+        // Add the displayName of the poison
         title = debuff.getDisplayName();
         tooltipWidth = 27 * Font.CHAR_WIDTH + 2;
 
@@ -352,7 +352,7 @@ public class BuffBar extends Interactable
         screen.fillRectangle(new Color(33, 33, 33).getRGB(), tooltipOffsX - 1, tooltipOffsY - 1, tooltipWidth + 3, tooltipHeight + 3);
         screen.drawRectangle(new Color(183, 183, 183).getRGB(), tooltipOffsX, tooltipOffsY, tooltipWidth, tooltipHeight);
 
-        // Write the name of the curse
+        // Write the displayName of the curse
         Font.drawMessage(screen, title, Common.FONT_WHITE_RGB, false, tooltipOffsX + (tooltipWidth - title.length() * Font.CHAR_WIDTH) / 2, tooltipOffsY + 2);
 
         // Write the affected stats and their values
@@ -418,7 +418,7 @@ public class BuffBar extends Interactable
 
         tooltipOffsX = buffOffsX - (ACTIVE_EFFECT_BACKGROUND_FRAME_WIDTH + 2) * (selectedDebuff);
 
-        // Add the name of the potion
+        // Add the displayName of the potion
         string = potionBuff.getDisplayName();
         description.add(string);
         tooltipWidth = string.length();

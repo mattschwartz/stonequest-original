@@ -1,6 +1,6 @@
 /* *****************************************************************************
  * Project:          StoneQuest
- * File name:        InventoryMenu.java
+ * File displayName:        InventoryMenu.java
  * Author:           Matt Schwartz
  * Date created:     04.20.2013
  * Redistribution:   You are free to use, reuse, and edit any of the text in
@@ -61,7 +61,7 @@ public class InventoryMenu extends Interactable
     private final int GOLD_BAR_WIDTH = 59;
     private final int GOLD_BAR_HEIGHT = 22;
 
-    // Item info frame top - used for the name of the item
+    // Item info frame top - used for the displayName of the item
     private final int ITEM_INFO_FRAME_WIDTH = 200;
     private final int ITEM_INFO_FRAME_HEIGHT = 32;
     private final int ITEM_INFO_TITLE_OFFS_X = INVENTORY_FRAME_OFFS_X - ITEM_INFO_FRAME_WIDTH - BAG_SLOT_WIDTH - 2;//INVENTORY_FRAME_OFFS_X + 2;

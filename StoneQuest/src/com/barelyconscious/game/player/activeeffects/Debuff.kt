@@ -6,7 +6,7 @@ import com.barelyconscious.game.player.AttributeMod
 
 /**
  * Create a new Debuff with the following parameters
- * @param displayName the name visible to the player of the debuff
+ * @param displayName the displayName visible to the player of the debuff
  * @param duration how long the debuff lasts before it dissolves
  * @param affectedAttributes an array of attributes that are affected
  * for the duration of the Debuff
