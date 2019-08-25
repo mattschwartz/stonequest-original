@@ -19,35 +19,24 @@ import com.barelyconscious.game.player.Player;
 import com.barelyconscious.game.player.Inventory;
 import com.barelyconscious.game.menu.TextLog;
 import com.barelyconscious.game.menu.InventoryMenu;
-import com.barelyconscious.game.graphics.LineElement;
 import com.barelyconscious.game.graphics.GameMap;
 import com.barelyconscious.game.graphics.tiles.Tile;
 import com.barelyconscious.game.input.MouseHandler;
-import com.barelyconscious.game.item.Armor;
-import com.barelyconscious.game.item.Food;
 import com.barelyconscious.game.item.Item;
-import com.barelyconscious.game.item.Key;
-import com.barelyconscious.game.item.Potion;
-import com.barelyconscious.game.item.Projectile;
-import com.barelyconscious.game.item.Scroll;
-import com.barelyconscious.game.item.Weapon;
 import com.barelyconscious.game.menu.AttributesMenu;
 import com.barelyconscious.game.menu.BuffBar;
 import com.barelyconscious.game.menu.LootPickupMenu;
 import com.barelyconscious.game.menu.MiniMap;
 import com.barelyconscious.game.menu.ToolTipMenu;
-import com.barelyconscious.game.player.AttributeMod;
-import com.barelyconscious.game.player.activeeffects.AntimagicPotionEffect;
-import com.barelyconscious.game.player.activeeffects.AntitoxinPotionEffect;
-import com.barelyconscious.game.player.activeeffects.Curse;
-import com.barelyconscious.game.player.activeeffects.Poison;
-import com.barelyconscious.game.player.activeeffects.StatPotionEffect;
 import com.barelyconscious.game.spawnable.Loot;
 import com.barelyconscious.services.WindowManager;
+import com.barelyconscious.services.messaging.MessageSystem;
 
-import java.awt.Dimension;
 import java.time.Clock;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+
+import static com.barelyconscious.game.MainKt.createTestSubjects;
 
 public class Game implements Runnable {
 
@@ -66,6 +55,7 @@ public class Game implements Runnable {
     public static int frames2;
 
     private static WindowManager windowManager;
+    private static MessageSystem messageSystem;
 
     private static final TextLog textLog = new TextLog(45, 50, 100);
 
@@ -97,7 +87,8 @@ public class Game implements Runnable {
         final ToolTipMenu toolTipMenu = new ToolTipMenu(player);
         final LootPickupMenu lootPickupMenu = new LootPickupMenu(toolTipMenu, textLog);
 
-        inventory = new Inventory(textLog);
+        inventory = new Inventory(messageSystem);
+        messageSystem = new MessageSystem();
 
         world = new World(
             player,
@@ -106,6 +97,7 @@ public class Game implements Runnable {
             toolTipMenu,
             lootPickupMenu,
             mouseHandler,
+            messageSystem,
             clock
         );
 
@@ -142,8 +134,18 @@ public class Game implements Runnable {
         Common.setThemeForeground(Common.THEME_PASTEL_GREEN);
 
         // debug stuff
-        disposableFunctionToAddStuffToThePlayersInventory();
-        world.addLoot(new Loot(new Item("Superior Belt of Pants Holding", 39202, Tile.BELT_IRON_TILE_ID), 0, 0, textLog));
+        createTestSubjects(player, inventory, messageSystem);
+        final Item fake = new Item(
+            "Superior Belt of Pants Holding",
+            39202,
+            1,
+            "A description",
+            new ArrayList<>(),
+            0,
+            1,
+            Tile.BELT_IRON_TILE_ID
+        );
+        world.addLoot(new Loot(fake, 0, 0, messageSystem));
     } // init
 
     /**
@@ -261,74 +263,6 @@ public class Game implements Runnable {
 //        Sound.RAIN.loop();
     } // main
 
-    public static void disposableFunctionToAddStuffToThePlayersInventory() {
-        Armor lHelm = new Armor("Leather Helmet", 2567, 15, Player.HELM_SLOT_ID, Tile.HELMET_CLOTH_TILE_ID, new AttributeMod(Player.ACCURACY, -11), new AttributeMod(Player.FIRE_MAGIC_BONUS, 54), new AttributeMod(Player.HOLY_MAGIC_BONUS, 22), new AttributeMod(Player.DEFENSE, 25), new AttributeMod(Player.HITPOINTS, 12), new AttributeMod(Player.AGILITY, 5), new AttributeMod(Player.DEFENSE, 200));
-        Armor lChest = new Armor("Leather Chest", 1500, 27, Player.CHEST_SLOT_ID, Tile.CHEST_CLOTH_TILE_ID);
-        Armor lGreaves = new Armor("Leather Greaves", 220, 15, Player.GREAVES_SLOT_ID, Tile.GREAVES_LEATHER_TILE_ID);
-        Armor lboots = new Armor("Leather Boots", 1789, 10, Player.BOOTS_SLOT_ID, Tile.BOOTS_LEATHER_TILE_ID);
-        Armor lBelt = new Armor("Leather Belt", 1677, 11, Player.BELT_SLOT_ID, Tile.BELT_LEATHER_TILE_ID);
-        Armor lShield = new Armor("Wooden Shield", 1500, 55, Player.OFF_HAND_SLOT_ID, Tile.OFFHAND_SHIELD_WOOD_TILE_ID);
-        Weapon wSword = new Weapon("Wooden Sword", 1358, 1, 4, Tile.MAINHAND_SWORD_TILE_ID);
-        Armor bNeck = new Armor("Epic Awesome SLJ Necklace", 256888, 0, Player.NECK_SLOT_ID, Tile.NECKLACE_TILE_ID, new AttributeMod(Player.HITPOINTS, 200));
-        Armor bRing = new Armor("Lousy Piece of Boring Ring", 0, 0, Player.RING_SLOT_ID, Tile.RING_TILE_ID);
-        Armor bERing = new Armor("Broken Earring", 0, 0, Player.EARRING_SLOT_ID, Tile.EARRING_TILE_ID);
-
-        lChest.setRarityColor(Common.ITEM_RARITY_RARE_RGB);
-
-        Food apple = new Food("Apple", 0, 1, Tile.FOOD_TILE_ID, 99f);
-        Food apple2 = new Food("Apple", 0, 2, Tile.FOOD_TILE_ID, 99f);
-        Potion healthPotion = new Potion("Potion of Might", 2990, 1, new StatPotionEffect(129, "Potion of Might", new AttributeMod(Player.HITPOINTS, 21), new AttributeMod(Player.STRENGTH, 15)));
-        Potion newPotion = new Potion("Potion of Awesome", 159, 3, new StatPotionEffect(300, "Potion of Awesome", new AttributeMod(Player.DEFENSE, 12), new AttributeMod(Player.STRENGTH, 3)));
-        Potion pootion = new Potion("Potion of Pi", 1, 5, new StatPotionEffect(95, "Potion of Pi", new AttributeMod(Player.DEFENSE, 12), new AttributeMod(Player.STRENGTH, 3), new AttributeMod(Player.AGILITY, 15), new AttributeMod(Player.DEFENSE, 55), new AttributeMod(Player.FIRE_MAGIC_BONUS, 180)));
-        Potion antiMagicPotion = new Potion("Antimagic Potion", 1589, 2, Tile.ANTIMAGIC_POTION_TILE_ID, new AntimagicPotionEffect("Antimagic Potion"));
-        Potion antivenomPotion = new Potion("Antivenom", 18890, 3, new AntitoxinPotionEffect("Antivenom"));
-
-        Curse curse = new Curse("Curse of Evilness", 299, new AttributeMod(Player.ACCURACY, 15), new AttributeMod(Player.DEFENSE, 5));
-        Curse curse2 = new Curse("Curse of Evilness", 1000, new AttributeMod(Player.AGILITY, 15), new AttributeMod(Player.DEFENSE, 5));
-        Curse curse3 = new Curse("Curse of Evilness", 1335, new AttributeMod(Player.AGILITY, 155), new AttributeMod(Player.DEFENSE, 25));
-        Curse curse4 = new Curse("Curse of Evilness", 1240, new AttributeMod(Player.AGILITY, 16), new AttributeMod(Player.DEFENSE, 15));
-
-        Poison poi = new Poison("Snake Venom", 69, 1.5f, 7, textLog);
-        Poison poi2 = new Poison("Spider Bite", 24, 0.5f, 6, textLog);
-
-        Projectile someBronzeArrows = new Projectile("Bronze-tipped Arrows", 255, 15, Tile.ARROW_TILE_ID, true, Projectile.BRONZE_TIP);
-
-        Scroll scr1 = new Scroll("Invisibility", 258, 1, textLog, new AttributeMod(Player.ACCURACY, 255f));
-
-        Key key = new Key("Key, bitches", 255, 1);
-
-        inventory.addItem(scr1);
-
-        player.applyDebuff(poi);
-        player.applyDebuff(curse);
-        player.applyDebuff(curse2);
-        player.applyDebuff(curse3);
-        player.applyDebuff(curse4);
-        player.applyDebuff(poi2);
-
-        inventory.addItem(apple);
-        inventory.addItem(healthPotion);
-        inventory.addItem(apple2);
-        inventory.addItem(newPotion);
-        inventory.addItem(pootion);
-        inventory.addItem(antiMagicPotion);
-        inventory.addItem(antivenomPotion);
-
-        inventory.addItem(lHelm);
-        inventory.addItem(lChest);
-        inventory.addItem(lGreaves);
-        inventory.addItem(lboots);
-        inventory.addItem(lBelt);
-        inventory.addItem(lShield);
-        inventory.addItem(wSword);
-        inventory.addItem(bNeck);
-        inventory.addItem(bRing);
-        inventory.addItem(bERing);
-
-        inventory.addItem(someBronzeArrows);
-
-        Game.world.addLoot(new Loot(key, 80, 100, textLog));
-    }
     /* 
      // closing down the window makes sense as a method, so here are
      // the salient parts of what happens with the JFrame extending class ..

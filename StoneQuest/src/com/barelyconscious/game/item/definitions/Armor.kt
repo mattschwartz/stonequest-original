@@ -1,6 +1,8 @@
-package com.barelyconscious.game.item
+package com.barelyconscious.game.item.definitions
 
 import com.barelyconscious.game.Game
+import com.barelyconscious.game.item.Item
+import com.barelyconscious.game.item.OptionsKey
 import com.barelyconscious.game.player.AttributeMod
 import com.barelyconscious.game.player.Player
 
@@ -35,7 +37,15 @@ class Armor(
     tileId
 ) {
 
-    private var isEquipped = false
+    var isEquipped: Boolean = false
+    set(value) {
+        field = value
+        optionsDescriptions[OptionsKey.USE] = if (isEquipped) {
+            "unequip"
+        } else {
+            "equip"
+        }
+    }
 
     companion object {
         fun armorIdToString(armorSlotId: Int) = when (armorSlotId) {
@@ -62,15 +72,6 @@ class Armor(
             Player.RING_SLOT_ID -> "ring"
             Player.BOOTS_SLOT_ID -> "boots"
             else -> "ground fodder"
-        }
-    }
-
-    fun setEquipped(equipped: Boolean) {
-        isEquipped = equipped
-        optionsDescriptions[OptionsKey.USE] = if (isEquipped) {
-            "unequip"
-        } else {
-            "equip"
         }
     }
 

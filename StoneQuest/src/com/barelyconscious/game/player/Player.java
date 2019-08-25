@@ -22,8 +22,8 @@
  **************************************************************************** */
 package com.barelyconscious.game.player;
 
-import com.barelyconscious.game.item.Potion;
 import com.barelyconscious.game.Common;
+import com.barelyconscious.game.item.definitions.*;
 import com.barelyconscious.game.player.activeeffects.Poison;
 import com.barelyconscious.game.player.activeeffects.Debuff;
 import com.barelyconscious.game.graphics.LineElement;
@@ -33,6 +33,7 @@ import com.barelyconscious.game.menu.TextLog;
 import com.barelyconscious.game.player.activeeffects.Buff;
 import com.barelyconscious.game.spawnable.Sprite;
 import com.barelyconscious.game.spawnable.Entity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,7 +128,7 @@ public class Player extends Entity {
     private Poison[] poisons = new Poison[5];
     private ArrayList<Debuff> debuffs = new ArrayList();
     private ArrayList<Buff> buffs = new ArrayList();
-    
+
     private ArrayList identifiedScrolls = new ArrayList<Integer>();
 
     /**
@@ -142,62 +143,58 @@ public class Player extends Entity {
         setStartingAttributes();
         elementCastSchool = FIRE_MAGIC_BONUS; // testing
         levelUp();
-    } // constructor
+    }
 
     /**
-     *
      * @return the current amount of experience accumulated by the Player since the previous level up
      */
     public int getCurrentExp() {
         return curExperience;
-    } // getCurrentExp
+    }
 
     /**
-     *
      * @return the unspent attribute points the Player can spend to increase the levels of his or her skills
      */
     public int getUnspentAttributePoints() {
         return attributePoints;
-    } // getUnspentAttributePoints
+    }
 
     /**
      * Sets the level of attributeId to the new attribute value; if attributeId does not exist, no changes are made
      *
-     * @param attributeId the id of the attribute to be set
+     * @param attributeId       the id of the attribute to be set
      * @param newAttributeValue the new value for the attribute
      */
     public void setAttribute(int attributeId, int newAttributeValue) {
         if (attributeId < HITPOINTS || attributeId > HOLY_MAGIC_CURRENT) {
             System.err.println(" [ERR_Player] Attempted to set value of attribute: "
-                    + attributeId + " to " + newAttributeValue);
+                + attributeId + " to " + newAttributeValue);
             return;
-        } // if
+        }
 
         playerAttributes[attributeId] = newAttributeValue;
-    } // setAttribute
+    }
 
     /**
-     *
      * @param attributeId the id of the attribute desired
      * @return the value of the attribute ad attributeId
      */
     public double getAttribute(int attributeId) {
         if (attributeId < HITPOINTS || attributeId > CHAOS_MAGIC_CURRENT) {
             System.err.println(" [ERR_Player] Attempted to get value of attribute: "
-                    + attributeId);
+                + attributeId);
             return -1;
-        } // if
+        }
 
         return playerAttributes[attributeId];
-    } // getAttribute
+    }
 
     /**
-     *
      * @return the school of magic the Player is using to cast his or her basic spells
      */
     public int getSchoolOfMagic() {
         return elementCastSchool;
-    } // getSchoolOfMagic
+    }
 
     /**
      * Adds scrollId to the list of Scroll ids identified by the Player for future reference when the Player encounters
@@ -207,23 +204,22 @@ public class Player extends Entity {
      */
     public void addScrollToIdentifieds(int scrollId) {
         identifiedScrolls.add(scrollId);
-    } // addScrollToIdentifieds
+    }
 
     /**
-     *
      * @param scrollId the id to check against the list of previously identified Scrolls
      * @return true if the Scroll has been previously seen by the Player
      */
     public boolean isScrollIdentified(int scrollId) {
         return identifiedScrolls.contains(scrollId);
-    } // isScrollIdentified
+    }
 
     /**
      * Checks if a point can be allocated to Attribute,
      *
-     * @statId, returning true if a point can be added and false if not.
      * @param statId the Attribute to add a point to
      * @return true if a point can be allocated to
+     * @statId, returning true if a point can be added and false if not.
      * @statId
      */
     public boolean canAddPointToAttribute(int statId) {
@@ -231,7 +227,7 @@ public class Player extends Entity {
             return attributePoints >= 3;
         }
         return attributePoints > 0;
-    } // canAddPointToAttribute
+    }
 
     /**
      * Spends a point, if any are available, on the attribute to raise it by one level
@@ -244,12 +240,12 @@ public class Player extends Entity {
         // Stat has hit the level cap
         if (statId > HITPOINTS && playerAttributes[statId] >= STAT_LEVEL_CAP) {
             return;
-        } // if
+        }
 
         // Not enough attribute points
         if (attributePoints < 1) {
             return;
-        } // if
+        }
 
         // Player has selected +All Elements
         if (statId == PLUS_ALL_MAGIC_BONUS) {
@@ -257,25 +253,25 @@ public class Player extends Entity {
             // Must have 3 attribute points
             if (attributePoints < 3) {
                 return;
-            } // if
+            }
 
             for (int i = FIRE_MAGIC_BONUS; i <= HOLY_MAGIC_BONUS; i++) {
                 if (playerAttributes[i + 10] == STAT_LEVEL_CAP) {
                     elementsAtCap++;
                     continue;
-                } // if
+                }
 
                 playerAttributes[i]++;
                 playerAttributes[i + 10]++;
-            } // for
+            }
 
             // All elements are at cap
             if (elementsAtCap == 4) {
                 return;
-            } // if
+            }
 
             attributePoints -= 3;
-        } // if
+        }
         // Player has selected a different stat
         else {
             // Raise the current level in that stat by 1 as well
@@ -283,11 +279,11 @@ public class Player extends Entity {
             playerAttributes[statId + 10]++;
 
             attributePoints--;
-        } // else
+        }
 
         // Finally, increase the stat level by one
         playerAttributes[statId]++;
-    } // addPointToAttribute
+    }
 
     /**
      * Starting attributes for the Player when a new game is made.
@@ -303,7 +299,7 @@ public class Player extends Entity {
         playerAttributes[7] = playerAttributes[17] = 1;
         playerAttributes[8] = playerAttributes[18] = 1;
         playerAttributes[9] = 0;
-    } // setDefaultStats
+    }
 
     /* Causes all current stat levels to stabalize by 1 point, 
      either up (regen life) or down (stat potions) */
@@ -311,36 +307,35 @@ public class Player extends Entity {
         for (int i = ACCURACY_CURRENT; i <= HOLY_MAGIC_CURRENT; i++) {
             if (playerAttributes[i] == playerAttributes[i - 10]) {
                 continue;
-            } // if
+            }
 
             if (playerAttributes[i] < playerAttributes[i - 10]) {
                 playerAttributes[i]++;
-            } // if
-            else {
+            } else {
                 playerAttributes[i]--;
-            } // else
-        } // for
-    } // normalizeStats
+            }
+        }
+    }
 
     /**
      * Temporarily alters the value of
      *
+     * @param attribute the int value of the attribute to be changed, should be given as a base stat value instead of
+     *                  the current value
+     * @param modifier  the amount that the attribute should change by; this value will be directly added to the current
+     *                  attribute's level
      * @attribute by
      * @modifier.
-     * @param attribute the int value of the attribute to be changed, should be given as a base stat value instead of
-     * the current value
-     * @param modifier the amount that the attribute should change by; this value will be directly added to the current
-     * attribute's level
      */
     public void setTemporaryAttribute(int attribute, double modifier) {
         // Make sure attribute is going to modify the current value of the attribute, not the
         // level of the attribute
         if (attribute < PLUS_ALL_MAGIC_BONUS) {
             attribute += 10;
-        } // if
-        
+        }
+
         playerAttributes[attribute] += modifier;
-    } // setTemporaryAttribute
+    }
 
     /**
      * Whenever a Player levels up, this function is called to increase the level of the Player and increment the amount
@@ -354,10 +349,10 @@ public class Player extends Entity {
          hitpoints level */
         if (playerAttributes[HITPOINTS_CURRENT] < playerAttributes[HITPOINTS]) {
             playerAttributes[HITPOINTS_CURRENT]++;
-        } // if
+        }
 
         attributePoints += 5;
-    } // levelUp
+    }
 
     /**
      * Interact with a Sprite, attacking a hostile entities and opening dialogue with nonhostile entities; or
@@ -375,14 +370,15 @@ public class Player extends Entity {
             ((Entity) spr).changeHealthBy(-attackDamage);
 
             textLog.writeFormattedString(String.format("You hit %s for %.1f physical.",
-                    spr.getDisplayName(), attackDamage), Common.FONT_DAMAGE_TEXT_RGB,
-                    new LineElement(spr.getDisplayName(), true,
+                spr.getDisplayName(), attackDamage), Common.FONT_DAMAGE_TEXT_RGB,
+                new LineElement(spr.getDisplayName(), true,
                     Common.FONT_ENTITY_LABEL_RGB));
-        } // if
-        /* If Sprite is a Loot object or Doodad */ else {
+        }
+        /* If Sprite is a Loot object or Doodad */
+        else {
             spr.interact();
-        } // if
-    } // interactWith
+        }
+    }
 
     /**
      * Changes the health of the player by
@@ -395,8 +391,8 @@ public class Player extends Entity {
         if (playerAttributes[HITPOINTS_CURRENT] <= 0) {
 //            textLog.writeFormattedString("You have died.", null);
 //            Game.stop();
-        } // if
-    } // takeDamage
+        }
+    }
 
     /**
      * Checks if the Player is currently wearing armor at armorSlot
@@ -406,19 +402,21 @@ public class Player extends Entity {
      */
     public boolean isArmorSlotEquipped(int armorSlot) {
         return equippedArmorSlots[armorSlot] != null;
-    } // isArmorSlotEquipped
+    }
 
     public void equip(int slotId, Item item) {
         if (equippedArmorSlots[slotId] != null) {
-            System.err.println(" [NOTIFY] Attempting to equip " + item + " before unequipping: \"" + equippedArmorSlots[slotId] + "\"");
-        } // if
+            unequip(slotId);
+        }
 
         equippedArmorSlots[slotId] = item;
-    } // equip
+        item.getItemAffixes().forEach(t ->
+            setTemporaryAttribute(t.getAttributeId(), t.getAttributeModifier()));
+    }
 
     public void unequip(int slotId) {
-        equippedArmorSlots[slotId] = null;
-    } // unequip
+        unequipItem(equippedArmorSlots[slotId]);
+    }
 
     /**
      * Equip an Item; either a Weapon or a piece of Armor
@@ -426,63 +424,32 @@ public class Player extends Entity {
      * @param item the Item to equip
      */
     public void equipItem(Item item) {
-        int numItemAffixes = item.getNumAffixes();
-        int armorSlot;
-
-        Armor armor;
-        Weapon weapon;
-        AttributeMod affix;
-
-        /* If Item to equip is a piece of Armor */
         if (item instanceof Armor) {
-            armor = (Armor) item;
+            final Armor armor = (Armor) item;
+            final int armorSlot = armor.getSlotId();
 
-            /* If the Item attempting to equip is already worn by the Player,
-             unequip it and return */
-            if (armor.isEquipped()) {
-                unequipItem(armor);
-                return;
-            } // if
-
-            armorSlot = armor.getArmorType();
-
-            /* If Player is already wearing a piece of that Armor, take it off
-             before equipping the new piece of Armor */
             if (equippedArmorSlots[armorSlot] != null) {
                 unequipItem(equippedArmorSlots[armorSlot]);
-            } // if
+            }
 
             armor.setEquipped(true);
             equippedArmorSlots[armorSlot] = armor;
 
             bonusArmor += armor.getBonusArmor();
-        } // if
-        /* If Item to equip is a Weapon */ else if (item instanceof Weapon) {
-            weapon = (Weapon) item;
+        } else if (item instanceof Weapon) {
+            final Weapon weapon = (Weapon) item;
 
-            /* If the Item attempting to equip is already worn by the Player,
-             unequip it and return */
-            if (weapon.isEquipped()) {
-                unequipItem(weapon);
-                return;
-            } // if
-
-            /* If Player is already weilding a Weapon, take it off
-             before equipping the new Weapon */
             if (equippedArmorSlots[MAIN_HAND_SLOT_ID] != null) {
                 unequipItem(item);
-            } // if
+            }
 
             weapon.setEquipped(true);
             equippedArmorSlots[MAIN_HAND_SLOT_ID] = weapon;
-        } // else if
+        }
 
-        /* Add any attribute bonuses granted by the Item */
-        for (int i = 0; i < numItemAffixes; i++) {
-            affix = item.getAffixAt(i);
-            playerAttributes[affix.getAttributeId()] += affix.getAttributeModifier();
-        } // for
-    } // equipItem
+        item.getItemAffixes().forEach(t ->
+            setTemporaryAttribute(t.getAttributeId(), t.getAttributeModifier()));
+    }
 
     /**
      * Unequip the Item from the Player
@@ -490,37 +457,26 @@ public class Player extends Entity {
      * @param item the Item to unequip
      */
     public void unequipItem(Item item) {
-        int numItemAffixes = item.getNumAffixes();
-
-        Armor armor;
-        Weapon weapon;
-        AttributeMod affix;
-
-        /* If the Item to unequip is a piece of Armor */
         if (item instanceof Armor) {
-            armor = (Armor) item;
+            final Armor armor = (Armor) item;
 
             armor.setEquipped(false);
-            equippedArmorSlots[armor.getArmorType()] = null;
+            equippedArmorSlots[armor.getSlotId()] = null;
 
             bonusArmor -= armor.getBonusArmor();
-        } // if
-        /* If the Item to unequip is a Weapon */ else if (item instanceof Weapon) {
-            weapon = (Weapon) item;
+        } else if (item instanceof Weapon) {
+            final Weapon weapon = (Weapon) item;
 
             weapon.setEquipped(false);
             equippedArmorSlots[MAIN_HAND_SLOT_ID] = null;
 
             minBonusFromWeapon = 0f;
             maxBonusFromWeapon = 0f;
-        } // else if
+        }
 
-        /* Adjust attribute amounts accordingly */
-        for (int i = 0; i < numItemAffixes; i++) {
-            affix = item.getAffixAt(i);
-            playerAttributes[affix.getAttributeId()] -= affix.getAttributeModifier();
-        } // for
-    } // unequipItem
+        item.getItemAffixes().forEach(t ->
+            setTemporaryAttribute(t.getAttributeId(), -t.getAttributeModifier()));
+    }
 
     /**
      * Eat some food, acquiring its nutrients
@@ -528,19 +484,24 @@ public class Player extends Entity {
      * @param food the food to eat
      */
     public void eat(Food food) {
-        double plusHealth = food.getHealthChange();
+        double plusHealth = food.getChangeInHealth();
+
+        // Don't adjust health if it's above max
+        if (getAttribute(HITPOINTS_CURRENT) > playerAttributes[HITPOINTS]) {
+            return;
+        }
 
         /* If Player health is already at maximum, don't increase it further */
         if (getAttribute(HITPOINTS_CURRENT) > playerAttributes[HITPOINTS]) {
             return;
-        } // if
+        }
 
         if (playerAttributes[HITPOINTS_CURRENT] + plusHealth > playerAttributes[HITPOINTS]) {
             plusHealth = playerAttributes[HITPOINTS] - playerAttributes[HITPOINTS_CURRENT];
-        } // if
+        }
 
         playerAttributes[HITPOINTS_CURRENT] += plusHealth;
-    } // eat
+    }
 
     /**
      * Drink a Potion, gaining its benefits (good or bad) for the duration of the Potion
@@ -557,11 +518,11 @@ public class Player extends Entity {
 //            for (int i = 0; i < currentNumDebuffs; i++) {
 //                if (debuffList[i] instanceof Curse) {
 //                    removeDebuffAt(i--);
-//                } // if
-//            } // for
+//                }
+//            }
 //            
 //            return;
-//        } // if
+//        }
 //        
 //        /* Player has quaffed an antivenom potion which removes all Poison effects
 //            on the Player */
@@ -569,11 +530,11 @@ public class Player extends Entity {
 //            for (int i = 0; i < currentNumDebuffs; i++) {
 //                if (debuffList[i] instanceof Poison) {
 //                    removeDebuffAt(i--);
-//                } // if
-//            } // for
+//                }
+//            }
 //            
 //            return;
-//        } // else if
+//        }
 //        
 //        /* Potion is a stat buff potion */
 //        else if (activePotion != null) {
@@ -582,15 +543,15 @@ public class Player extends Entity {
 //            for (int i = 0; i < numAffixes; i++) {
 //                affix = activePotion.getAffixAt(i);
 //                playerAttributes[affix.getAttributeId()] -= affix.getAttributeModifier();
-//            } // for
-//        } // if
+//            }
+//        }
 //        
 //        /* When a Potion's effects end, quaff is called with a null argument
 //            for some reason */
 //        if (pot == null) {
 //            activePotion = null;
 //            return;
-//        } // if
+//        }
 //        
 //        activePotion = pot;
 //        numAffixes = activePotion.getNumAffixes();
@@ -598,30 +559,27 @@ public class Player extends Entity {
 //        for (int i = 0; i < numAffixes; i++) {
 //            affix = activePotion.getAffixAt(i);
 //            playerAttributes[affix.getAttributeId()] += affix.getAttributeModifier();
-//        } // for
-    } // quaff
+//        }
+    }
 
     /**
      * Read a Scroll, acquiring its benefits and any extra abilities it possesses as well as adding it to the list of
      * identified Scrolls
      *
-     * @param scr
+     * @param scroll
      */
-    public void read(Scroll scr) {
-        AttributeMod affix;
+    public void read(final Scroll scroll) {
+        scroll.getItemAffixes().forEach(t ->
+            setTemporaryAttribute(t.getAttributeId(), t.getAttributeModifier()));
 
-        // Adjust any player affixes the scroll has
-        for (int i = 0; i < scr.getNumAffixes(); i++) {
-            affix = scr.getAffixAt(i);
-            playerAttributes[affix.getAttributeId()] += affix.getAttributeModifier();
-        } // for
+        scroll.extraEffects();
 
-        scr.extraEffects();
+        scroll.identifyScroll();
+        textLog.writeFormattedString(
+            "It was a " + scroll.getDisplayName() + "!",
+            Common.FONT_NULL_RGB);
+    }
 
-        scr.identifyScroll();
-        textLog.writeFormattedString("It was a " + scr.getDisplayName() + "!", Common.FONT_NULL_RGB);
-    } // read
-    
     public void applyBuff(Buff buff) {
         // Only one potion can be applied at any one time, and subsequent potions will override
         // previous potion effects
@@ -629,24 +587,24 @@ public class Player extends Entity {
             for (int i = 0; i < buffs.size(); i++) {
                 if (buffs.get(i).getBuffType() == Buff.POTION) {
                     buffs.remove(i);
-                } // if
-            } // for
-        } // if
-        
+                }
+            }
+        }
+
         buffs.add(buff);
-    } // applyBuff
-    
+    }
+
     public void removeBuffAt(int index) {
         if (index < 0 || index >= buffs.size()) {
             return;
-        } // if
-        
+        }
+
         buffs.remove(index);
-    } // removeBuffAt
-    
+    }
+
     public void removeBuff(Buff buff) {
         buffs.remove(buff);
-    } // removeBuff
+    }
 
     public List<Debuff> getDebuffs() {
         return debuffs;
@@ -654,11 +612,11 @@ public class Player extends Entity {
 
     public int getNumBuffs() {
         return buffs.size();
-    } // getNumBuffs
-    
+    }
+
     public Buff getBuffAt(int index) {
         return index < 0 || index >= buffs.size() ? null : buffs.get(index);
-    } // getBuffAt
+    }
 
     /**
      * Add debuff to the list of current afflictions on the Player
@@ -676,10 +634,10 @@ public class Player extends Entity {
 //            for (int i = 0; i < debuffs.size() - 1; i++) {
 //                if (debuffs.get(i).getDuration() < debuffs.get(i + 1).getDuration()) {
 //                    dimCurseIndex = i;
-//                } // if
-//            } // for
+//                }
+//            }
 //            removeDebuffAt(dimCurseIndex);
-//        } // if
+//        }
 //
 //        if (debuff instanceof Curse) {
 //
@@ -688,14 +646,14 @@ public class Player extends Entity {
 //            for (int i = 0; i < numAffixes; i++) {
 //                affix = ((Curse) debuff).getAffectedAttributeAt(i);
 //                playerAttributes[affix.getAttributeId()] -= affix.getAttributeModifier();
-//            } // for-i
-//        } // if
+//            }
+//        }
 //        else if (debuff instanceof Poison) {
 //            poisons[poisonCount++] = (Poison) debuff;
-//        } // else if
+//        }
 
         debuffs.add(debuff);
-    } // applyDebuff
+    }
 
     /**
      * Remove a debuff at index from the list of afflictions on the Player
@@ -707,13 +665,13 @@ public class Player extends Entity {
 
 //        if (debuff == null) {
 //            return;
-//        } // if
+//        }
 //
 //        currentNumDebuffs--;
 //
 //        for (int i = index; i < debuffs.length - 1; i++) {
 //            debuffs[i] = debuffs[i + 1];
-//        } // for
+//        }
 //
 //        if (debuff instanceof Curse) {
 //            numAffixes = ((Curse) debuff).getNumAffectedAttributes();
@@ -721,47 +679,45 @@ public class Player extends Entity {
 //            for (int i = 0; i < numAffixes; i++) {
 //                affix = ((Curse) debuff).getAffectedAttributeAt(i);
 //                playerAttributes[affix.getAttributeId()] += affix.getAttributeModifier();
-//            } // for
-//        } // if
+//            }
+//        }
 //        else if (debuff instanceof Poison) {
 //            poisonCount--;
 //
 //            for (int i = index; i < poisons.length - 1; i++) {
 //                poisons[i] = poisons[i + 1];
-//            } // for
-//        } // else if
-    } // removeDebuffAt
-    
+//            }
+//        }
+    }
+
     public void removeDebuff(Debuff debuff) {
         debuffs.remove(debuff);
-    } // removeDebuff
+    }
 
     /**
-     *
      * @return the number of afflictions and infections on the Player
      */
     public int getNumDebuffs() {
         return debuffs.size();
-    } // getNumDebuffs
+    }
 
     /**
-     *
      * @param index the index of the desired debuff
      * @return the debuff located at index
      */
     public Debuff getDebuffAt(int index) {
         return index < 0 || index >= debuffs.size() ? null : debuffs.get(index);
-    } // getCurseList
+    }
 
     @Override
     public double getCurrentHealth() {
         return playerAttributes[HITPOINTS_CURRENT];
-    } // getHealthPoints
+    }
 
     @Override
     public double getMaxHealth() {
         return playerAttributes[HITPOINTS];
-    } // getMaxHealth
+    }
 
     /**
      * Updates the Player class when the Game ticks; debuff effects have their durations decreased; buffs have their
@@ -771,13 +727,13 @@ public class Player extends Entity {
     public void tick() {
         for (int i = 0; i < debuffs.size(); i++) {
             debuffs.get(i).tick();
-        } // for
-        
+        }
+
         for (int i = 0; i < buffs.size(); i++) {
             buffs.get(i).tick();
-        } // for
-        
-        
+        }
+
+
         // Damage-over-time effects; aka poison
 //        for (int i = 0; i < poisonCount; i++) {
 //            if (poisons[i].nextTick()) {
@@ -787,8 +743,8 @@ public class Player extends Entity {
 //                textLog.writeFormattedString(poisons[i].toString(), Common.FONT_DAMAGE_TEXT_RGB,
 //                        new LineElement(poisons[i].getDisplayName(), true,
 //                        Common.FONT_POISON_LABEL_RGB));
-//            }  // if
-//        } // for
+//            }
+//        }
 //
 //        // Decrease afflicted curses' durations
 //        for (int i = 0; i < currentNumDebuffs; i++) {
@@ -798,8 +754,8 @@ public class Player extends Entity {
 //            if (debuffs[i].getDuration() == 0) {
 //                removeDebuffAt(i);
 //                i--;
-//            } // if
-//        } // for
+//            }
+//        }
 
 //        if (activePotion != null) {
 //            // Decrease potion duration
@@ -808,9 +764,9 @@ public class Player extends Entity {
 //            if (activePotion.getDurationInTicks() == 0) {
 //                quaff(null);
 //                activePotion = null;
-//            } // if
-//        } // if
-    } // tick
+//            }
+//        }
+    }
 
     /* XP FORMULA NOT FINAL
      Simple formula to determine the amount of experience needed to 
@@ -818,7 +774,7 @@ public class Player extends Entity {
      know how much XP he/she must get to reach the next level */
     public int getExperienceReq(int level) {
         return (int) (Math.ceil(level * Math.sqrt(Math.pow(level, 3))));
-    } // getExperienceReq
+    }
 
     /* FORMULA NOT FINAL
      Returns the minimum damage necessary for the combat calculator. 
@@ -828,8 +784,8 @@ public class Player extends Entity {
      * Attack level */
     public double getMinPhysicalDamage() {
         return (getLevel() + ((getLevel() + 1) * .075)) + getStrengthBonus()
-                + (equippedArmorSlots[MAIN_HAND_SLOT_ID] == null ? 0 : ((Weapon) equippedArmorSlots[MAIN_HAND_SLOT_ID]).getMinDamageBonus());
-    } // getMinPhysicalDamage
+            + (equippedArmorSlots[MAIN_HAND_SLOT_ID] == null ? 0 : ((Weapon) equippedArmorSlots[MAIN_HAND_SLOT_ID]).getMinDamageBonus());
+    }
 
     /* FORMULA NOT FINAL 
      Returns the maximum damage necessary for the combat calculator.
@@ -839,8 +795,8 @@ public class Player extends Entity {
      * Strength level */
     public double getMaxPhysicalDamage() {
         return (getLevel() + ((getLevel() + 1) * 1.2)) + getStrengthBonus()
-                + (equippedArmorSlots[MAIN_HAND_SLOT_ID] == null ? 0 : ((Weapon) equippedArmorSlots[MAIN_HAND_SLOT_ID]).getMaxDamageBonus());
-    } // getMaxPhysicalDamage
+            + (equippedArmorSlots[MAIN_HAND_SLOT_ID] == null ? 0 : ((Weapon) equippedArmorSlots[MAIN_HAND_SLOT_ID]).getMaxDamageBonus());
+    }
 
     /* FORMULA NOT FINAL 
      Calculates and returns the minimum magical damage bound.
@@ -848,13 +804,13 @@ public class Player extends Entity {
      by the magic element being cast */
     public double getMinMagicDamage() {
         return getLevel() * (getBonusToElement(elementCastSchool) * 0.01f + 1f);
-    } // getMinMagicDamage
+    }
 
     /* FORMULA NOT FINAL 
      Calculates and returns the maximum magical damage bound*/
     public double getMaxMagicDamage() {
         return (getLevel() + ((getLevel() + 1) * 1.25)) * (getBonusToElement(elementCastSchool) * 0.01f + 1f);
-    } // getMaxMagicDamage
+    }
 
     /* FORMULA NOT FINAL 
      Strength increases the PLAYER_ICON's maximum hit */
@@ -862,7 +818,7 @@ public class Player extends Entity {
         double strengthBonus = (getAttribute(STRENGTH_CURRENT) * 1.26);
 
         return strengthBonus > 0 ? strengthBonus : 0f;
-    } // getStrengthBonus
+    }
 
     /* FORMULA NOT FINAL
      Returns the PLAYER_ICON's chance to critically hit, as a percentage
@@ -872,7 +828,7 @@ public class Player extends Entity {
         double critChance = (1f / (34.91f / (getAttribute(ACCURACY_CURRENT) * 10f)));
 
         return critChance > 0 ? critChance : 0f;
-    } // getCritChance
+    }
 
     /* FORMULA NOT FINAL 
      Returns the PLAYER_ICON's physical damage reduction, as a percentage
@@ -884,7 +840,7 @@ public class Player extends Entity {
         double defenseBonus = (1f / (13.72f / (getAttribute(DEFENSE_CURRENT) * 10f)));
 
         return defenseBonus > 0 ? defenseBonus : 0;
-    } // getPhysicalDamageReduction
+    }
 
     /* FORMULA NOT FINAL
      Returns the PLAYER_ICON's chance to evade incoming physical attacks in the
@@ -895,7 +851,7 @@ public class Player extends Entity {
         double evadeChance = (1f / (45.3491f / (getAttribute(AGILITY_CURRENT) * 10f)));
 
         return evadeChance > 0 ? evadeChance : 0;
-    } // getEvadeChance
+    }
 
     /* FORMULA NOT FINAL 
      Returns the PLAYER_ICON's resistance to a particular element, given as
@@ -905,11 +861,11 @@ public class Player extends Entity {
      is in the form of a percentage */
     public double getBonusToElement(int element) {
         return (1f / (11.147f / (getAttribute(element) * 10f)));
-    } // getBonusToElement
+    }
 
     public int getBonusArmor() {
         return bonusArmor;
-    } // getBonusArmor
+    }
 
     /* Returns the displayName associated with a given stat ID as a String */
     public static String idToString(int statId) {
@@ -949,6 +905,6 @@ public class Player extends Entity {
 
             default:
                 return " [NOTIFY] Attempting to parse id (" + statId + ") that was invalid.";
-        } // switch
-    } // idToString
-} // Player
+        }
+    }
+}

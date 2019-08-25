@@ -7,17 +7,17 @@ class StatPotionEffect(
     duration: Int,
     displayName: String,
     vararg affixes: AttributeMod
-) : PotionEffect(duration, displayName, PotionEffect.STATBUFF) {
+) : PotionEffect(duration, displayName, STATBUFF) {
 
     private val affixes: List<AttributeMod> = affixes.toList()
 
-    public fun getNumAffixes(): Int =
+    fun getNumAffixes(): Int =
         affixes.size
 
-    public fun getAffectedAttributeAt(index: Int) =
+    fun getAffectedAttributeAt(index: Int) =
         affixes[index]
 
-    public fun getAffixesAsArray(): Array<AttributeMod> =
+    fun getAffixesAsArray(): Array<AttributeMod> =
         affixes.toTypedArray()
 
     override fun onApplied() {

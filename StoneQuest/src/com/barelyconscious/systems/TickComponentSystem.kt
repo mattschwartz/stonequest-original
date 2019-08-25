@@ -1,8 +1,9 @@
 package com.barelyconscious.systems
 
 import com.barelyconscious.components.IComponent
-import com.barelyconscious.services.messaging.Message
+import com.barelyconscious.services.messaging.data.IMessageData
 import com.barelyconscious.services.messaging.MessageSystem
+import com.barelyconscious.services.messaging.data.EmptyMessageData
 
 class HealthPointsComponent(
     var currentHealthPoints: Int
@@ -46,8 +47,7 @@ class TemporaryEffectsComponentSystem(
         forEach(TemporaryEffectComponent::class.java) { entity, component ->
             component.update()
 
-            val damageMessage = Message("ENTITY_DAMAGED", null, this)
-            messageSystem.sendMessage(damageMessage)
+            messageSystem.sendMessage("ENTITY_DAMAGED", EmptyMessageData(), this)
 
             if (component.remainingTicks <= 0) {
                 entityManager.removeComponent(entity, component)

@@ -11,12 +11,12 @@ enum class OptionsKey {
 }
 
 open class Item(
-    val displayName: String,
+    displayName: String,
     val itemLevel: Int,
-    val rarityColorRgb: Int,
-    val itemDescription: String,
+    var rarityColorRgb: Int,
+    open val itemDescription: String,
 
-    private val itemAffixes: MutableList<AttributeMod>,
+    protected open val itemAffixes: ArrayList<AttributeMod>,
 
     // todo these should be managed elsewise:
     val sellValue: Int,
@@ -24,13 +24,27 @@ open class Item(
     val tileId: Int
 ) {
 
+    constructor(other: Item) : this(
+        other.displayName,
+        other.itemLevel,
+        other.rarityColorRgb,
+        other.itemDescription,
+        other.itemAffixes,
+        other.sellValue,
+        other.stackSize,
+        other.tileId
+    )
+
+    open var displayName: String = displayName
+        protected set
+
     companion object {
         fun createGoldItem(goldAmount: Int) = Item(
             "gold",
             0,
             -1,
             "Glittery golden gold!",
-            mutableListOf(),
+            arrayListOf(),
             0,
             goldAmount,
             if (goldAmount == 1) {

@@ -21,7 +21,7 @@ class LineElement(
     constructor(item: Item) : this(
         "[${item.displayName}]",
         true,
-        item.rarityColor
+        item.rarityColorRgb
     )
 
     /**

@@ -3,8 +3,6 @@ package com.barelyconscious.game.spawnable
 import com.barelyconscious.game.Common
 import com.barelyconscious.game.Game
 import com.barelyconscious.game.graphics.tiles.Tile
-import com.barelyconscious.game.item.Item
-import com.barelyconscious.game.item.Key
 import com.barelyconscious.game.menu.TextLog
 
 class Door(

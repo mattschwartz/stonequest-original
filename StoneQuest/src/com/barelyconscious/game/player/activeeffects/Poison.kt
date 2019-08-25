@@ -5,6 +5,9 @@ import com.barelyconscious.game.Game
 import com.barelyconscious.game.graphics.LineElement
 import com.barelyconscious.game.graphics.UIElement
 import com.barelyconscious.game.menu.TextLog
+import com.barelyconscious.services.messaging.MessageSystem
+import com.barelyconscious.services.messaging.logs.TextLogMessageData
+import com.barelyconscious.services.messaging.logs.TextLogWriterService
 
 /**
  * Create a new Poison with the following parameters
@@ -19,7 +22,7 @@ class Poison(
     dur: Int,
     val tickDamage: Double,
     val damageFrequency: Int,
-    private val textLog: TextLog
+    private val messageSystem: MessageSystem
 ) : Debuff(name, dur, Debuff.TOXIN, UIElement.POISON_ICON) {
 
     private var tick: Int = damageFrequency
@@ -29,7 +32,7 @@ class Poison(
      *
      * @return true if the poison is to deal damage to the player on this tick
      */
-    public fun nextTick(): Boolean = if (--tick <= 0) {
+    fun nextTick(): Boolean = if (--tick <= 0) {
         tick = damageFrequency
         true
     } else {
@@ -39,11 +42,12 @@ class Poison(
     override fun tick() {
         if (nextTick()) {
             Game.player.changeHealthBy(-tickDamage)
-            textLog.writeFormattedString(
-                toString(),
-                Common.FONT_DAMAGE_TEXT_RGB,
-                LineElement(displayName, true, Common.FONT_POISON_LABEL_RGB)
-            )
+
+            messageSystem.sendMessage(
+                TextLogWriterService.LOG_EVENT_CODE,
+                TextLogMessageData(toString())
+                    .with(LineElement(displayName, true, Common.FONT_POISON_LABEL_RGB)),
+                this)
         }
 
         super.tick()

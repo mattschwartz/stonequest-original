@@ -4,11 +4,18 @@ import com.barelyconscious.game.Common
 import com.barelyconscious.game.Game
 import com.barelyconscious.game.Sound
 import com.barelyconscious.game.item.*
+import com.barelyconscious.game.item.definitions.Armor
+import com.barelyconscious.game.item.definitions.Scroll
+import com.barelyconscious.game.item.definitions.Weapon
 import com.barelyconscious.game.menu.TextLog
 import com.barelyconscious.game.spawnable.Loot
+import com.barelyconscious.services.messaging.MessageSystem
+import com.barelyconscious.services.messaging.logs.TextLogMessageData
+import com.barelyconscious.services.messaging.logs.TextLogWriterService
 
 class Inventory(
-    private val textLog: TextLog
+//    private val textLog: TextLog,
+    private val messageSystem: MessageSystem
 ) {
 
     companion object {
@@ -94,9 +101,10 @@ class Inventory(
                 item.displayName,
                 item.sellValue,
                 item.bonusArmor,
-                item.armorType,
+                item.slotId,
                 item.tileId,
-                item.getItemAffixes()
+                item.getItemAffixes().toMutableList(),
+                item.itemLevel
             )
             is Weapon -> Weapon(
                 item.displayName,
@@ -104,7 +112,8 @@ class Inventory(
                 item.minDamageBonus,
                 item.maxDamageBonus,
                 item.tileId,
-                *item.allAffixes
+                item.getItemAffixes().toMutableList(),
+                item.itemLevel
             )
             is Food -> Food(
                 item.displayName,
@@ -132,21 +141,17 @@ class Inventory(
                 )
             }
             is Scroll -> Scroll(
-                item.internalName,
+                item.scrollName,
                 item.sellValue,
                 item.scrollId,
-                textLog,
-                *item.allAffixes
+                messageSystem,
+                item.getItemAffixes().toMutableList()
             )
-            else -> Item(
-                item.displayName,
-                item.sellValue,
-                item.tileId
-            )
+            else -> Item(item)
         }
 
-        droppedItem.rarityColor = item.rarityColor
-        val droppedLoot = Loot(droppedItem, Game.world.playerX, Game.world.playerY, textLog)
+        droppedItem.rarityColorRgb = item.rarityColorRgb
+        val droppedLoot = Loot(droppedItem, Game.world.playerX, Game.world.playerY, messageSystem)
         Game.world.addLoot(droppedLoot)
     }
 
@@ -157,7 +162,10 @@ class Inventory(
                 "[ERR:examineItem()] Attempting to access item at [$index]. Max is $MAX_INVENTORY_SLOTS"
             )
         } else {
-            textLog.writeFormattedString(item.itemDescription, Common.FONT_NULL_RGB)
+            messageSystem.sendMessage(
+                TextLogWriterService.LOG_EVENT_CODE,
+                TextLogMessageData(item.itemDescription),
+                this)
         }
     }
 
@@ -168,7 +176,10 @@ class Inventory(
      * @param index the index location of the Item within the Player's inventory
      */
     fun salvageItem(index: Int) {
-        textLog.writeFormattedString("Salvaging is not yet implemented.", Common.FONT_DEFAULT_RGB)
+        messageSystem.sendMessage(
+            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogMessageData("Salvaging NYI"),
+            this)
     }
 
     /**

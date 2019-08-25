@@ -16,13 +16,9 @@ import com.barelyconscious.game.Common;
 import com.barelyconscious.game.Game;
 import com.barelyconscious.game.Screen;
 import com.barelyconscious.game.graphics.Font;
-import com.barelyconscious.game.item.Armor;
-import com.barelyconscious.game.item.Food;
+import com.barelyconscious.game.item.definitions.Armor;
 import com.barelyconscious.game.item.Item;
-import com.barelyconscious.game.item.Potion;
-import com.barelyconscious.game.item.Projectile;
 import com.barelyconscious.game.item.Scroll;
-import com.barelyconscious.game.item.Weapon;
 import com.barelyconscious.game.player.AttributeMod;
 
 public class ToolTip {

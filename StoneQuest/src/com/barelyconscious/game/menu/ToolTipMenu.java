@@ -19,12 +19,10 @@ import com.barelyconscious.game.Screen;
 import com.barelyconscious.game.graphics.Font;
 import com.barelyconscious.game.graphics.tiles.Tile;
 import com.barelyconscious.game.input.Interactable;
-import com.barelyconscious.game.item.Armor;
+import com.barelyconscious.game.item.definitions.Armor;
 import com.barelyconscious.game.item.Item;
-import com.barelyconscious.game.item.Potion;
-import com.barelyconscious.game.item.Projectile;
-import com.barelyconscious.game.item.Scroll;
-import com.barelyconscious.game.item.Weapon;
+import com.barelyconscious.game.item.definitions.Scroll;
+import com.barelyconscious.game.item.definitions.Weapon;
 import com.barelyconscious.game.player.Player;
 import com.barelyconscious.game.player.AttributeMod;
 import com.barelyconscious.game.player.activeeffects.PotionEffect;
@@ -170,7 +168,7 @@ public class ToolTipMenu extends Interactable
                     statmod = "+";
                 } // if-else
                 
-                if (itemToDisplay instanceof Scroll && 
+                if (itemToDisplay instanceof Scroll &&
                         !(player.isScrollIdentified( ((Scroll)itemToDisplay).getScrollId())) ) {
                     toolTipMenuListBuffer[lineNum++] = Common.centerString("???", " ", menuLineWidth);
                 } // if
