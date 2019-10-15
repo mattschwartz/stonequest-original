@@ -19,14 +19,16 @@ import com.barelyconscious.game.Screen;
 import com.barelyconscious.game.graphics.Font;
 import com.barelyconscious.game.graphics.tiles.Tile;
 import com.barelyconscious.game.input.Interactable;
-import com.barelyconscious.game.item.definitions.Armor;
 import com.barelyconscious.game.item.Item;
-import com.barelyconscious.game.item.definitions.Scroll;
-import com.barelyconscious.game.item.definitions.Weapon;
-import com.barelyconscious.game.player.Player;
+import com.barelyconscious.game.item.OptionsKey;
+import com.barelyconscious.game.item.definitions.*;
 import com.barelyconscious.game.player.AttributeMod;
+import com.barelyconscious.game.player.Player;
 import com.barelyconscious.game.player.activeeffects.PotionEffect;
 import com.barelyconscious.gui.IWidget;
+
+import java.util.List;
+import java.util.Map;
 
 public class ToolTipMenu extends Interactable
     implements Menu, IWidget {
@@ -48,7 +50,7 @@ public class ToolTipMenu extends Interactable
      */
     public ToolTipMenu(final Player player) {
         this.player = player;
-    } // constructor
+    }
     
     /**
      * Resizes the ToolTipMenu and alters positioning as necessary based on the
@@ -62,7 +64,7 @@ public class ToolTipMenu extends Interactable
         menuLineHeight = 28;
         xOffs = w - menuLineWidth * Font.CHAR_WIDTH - 15;
         yOffs = 4;
-    } // resize
+    }
 
     /**
      * 
@@ -71,7 +73,7 @@ public class ToolTipMenu extends Interactable
     @Override
     public int getPixelWidth() {
         return menuLineWidth * Font.CHAR_WIDTH;
-    } // getPixelWidth
+    }
 
     /**
      * 
@@ -80,7 +82,7 @@ public class ToolTipMenu extends Interactable
     @Override
     public int getPixelHeight() {
         return menuLineHeight * Font.CHAR_HEIGHT;
-    } // getPixelHeight
+    }
 
     /**
      * 
@@ -89,7 +91,7 @@ public class ToolTipMenu extends Interactable
     @Override
     public int getOffsX() {
         return xOffs;
-    } // getOffsX
+    }
 
     /**
      * 
@@ -98,7 +100,7 @@ public class ToolTipMenu extends Interactable
     @Override
     public int getOffsY() {
         return yOffs;
-    } // getOffsY
+    }
     
     /**
      * Function is not used by this Menu.
@@ -106,7 +108,7 @@ public class ToolTipMenu extends Interactable
     @Override
     public void moveUp() {
         // unused
-    } // moveUp
+    }
 
     /**
      * Function is not used by this Menu.
@@ -114,7 +116,7 @@ public class ToolTipMenu extends Interactable
     @Override
     public void moveDown() {
         // unused
-    } // moveDown
+    }
 
     /**
      * Function is not used by this Menu.
@@ -122,7 +124,7 @@ public class ToolTipMenu extends Interactable
     @Override
     public void select() {
         // unused
-    } // select
+    }
 
     /**
      * Removes focus from the Menu so that it is no longer drawn to the Screen.
@@ -131,7 +133,7 @@ public class ToolTipMenu extends Interactable
     public void clearFocus() {
         toolTipMenuListBuffer = new String[menuLineHeight];
         super.clearFocus();
-    } // clearFocus
+    }
     
     /**
      * Sets the item to be drawn in the tooltip to item.
@@ -139,7 +141,7 @@ public class ToolTipMenu extends Interactable
      */
     public void setItem(Item item) {
         itemToDisplay = item; 
-   } // setItem
+   }
     
     /**
      * If ToolTipMenu was called to draw the tooltip for a particular item, this
@@ -158,75 +160,82 @@ public class ToolTipMenu extends Interactable
         }
         
         // Draw item affixes, if any
-        if (itemToDisplay.getNumAffixes() > 0) {
+
+        final List<AttributeMod> itemAffixes = itemToDisplay.getItemAffixes();
+        if (!itemAffixes.isEmpty()) {
             toolTipMenuListBuffer[lineNum++] = Common.centerString("Item Stats", "-", menuLineWidth);
-            for (int i = 0; i < itemToDisplay.getNumAffixes(); i++) {
-                stat = itemToDisplay.getAffixAt(i);
-                if (stat.getAttributeModifier() < 0) {
-                    statmod = "-";
+
+            for (final AttributeMod mod : itemAffixes) {
+                String statMod;
+
+                if (mod.getAttributeModifier() < 0) {
+                    statMod = "-";
                 } else {
-                    statmod = "+";
-                } // if-else
-                
+                    statMod = "+";
+                }
+
                 if (itemToDisplay instanceof Scroll &&
-                        !(player.isScrollIdentified( ((Scroll)itemToDisplay).getScrollId())) ) {
+                    !(player.isScrollIdentified( ((Scroll)itemToDisplay).getScrollId())) ) {
                     toolTipMenuListBuffer[lineNum++] = Common.centerString("???", " ", menuLineWidth);
-                } // if
+                }
                 else {
-                    statmod += (int)stat.getAttributeModifier();
-                    toolTipMenuListBuffer[lineNum++] = Common.alignToSides("" + stat, statmod, menuLineWidth);
-                } // else
-            } // for
-        } // if
+                    statMod += (int)mod.getAttributeModifier();
+                    toolTipMenuListBuffer[lineNum++] = Common.alignToSides("" + mod, statMod, menuLineWidth);
+                }
+            }
+        }
         
         if (itemToDisplay instanceof Armor) {
             toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Bonus Armor:", "" + 
                     "+" + ((Armor)itemToDisplay).getBonusArmor(), menuLineWidth);
-        } // if
+        }
         
         else if (itemToDisplay instanceof Weapon) {
             toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Damage:", 
                     String.format("%.0f-%.0f", ((Weapon)itemToDisplay).getMinDamageBonus(), 
                     ((Weapon)itemToDisplay).getMaxDamageBonus()), menuLineWidth);
-        } // else if
+        }
         
         else if (itemToDisplay instanceof Projectile) {
             toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Damage:", 
-                    String.format("%.0f-%.0f", ((Projectile)itemToDisplay).getMetal().getMin(), 
-                    ((Projectile)itemToDisplay).getMetal().getMax()), menuLineWidth);
+                    String.format("%.0f-%.0f", ((Projectile)itemToDisplay).getMetal().getMinDamage(),
+                    ((Projectile)itemToDisplay).getMetal().getMaxDamage()), menuLineWidth);
             
             toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Crit:", 
-                    (int)((Projectile)itemToDisplay).getMetal().getCrit() + "%", 
+                    (int)((Projectile)itemToDisplay).getMetal().getCritChance() + "%",
                     menuLineWidth);
-        } // else if
+        }
         
         if (itemToDisplay instanceof Scroll) {
             if (player.isScrollIdentified(((Scroll)itemToDisplay).getScrollId())) {
 //                ((Scroll)itemToDisplay).printAdditionalEffects(lineNum++);
-            } // if
-        } // if
+            }
+        }
         
         lineNum = menuLineHeight - 4;
-        toolTipMenuListBuffer[lineNum++] = Common.rarityIdToString(itemToDisplay.getRarityColor()) + " item.";
+        toolTipMenuListBuffer[lineNum++] = Common.rarityIdToString(itemToDisplay.getRarityColorRgb()) + " item.";
         
-        if ( (itemToDisplay instanceof Projectile) && ((Projectile)itemToDisplay).doesRequireBow() ) {
+        if ( (itemToDisplay instanceof Projectile) && ((Projectile)itemToDisplay).getRequireBow() ) {
             toolTipMenuListBuffer[lineNum - 2] = "Requires bow to use.";
-        } // if
+        }
         
-        else if ( (itemToDisplay instanceof Potion) && 
+        else if ( (itemToDisplay instanceof Potion) &&
                 ((Potion)itemToDisplay).getEffects().getPotionType() == PotionEffect.STATBUFF) {
             toolTipMenuListBuffer[lineNum - 2] = "Effects last for " + ((Potion)itemToDisplay).getEffects().getDurationInTicks() + " turns.";
-        } // else if
+        }
         
         toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Sell Value:", "" + itemToDisplay.getSellValue(), menuLineWidth);
         toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Item Level:", "" + itemToDisplay.getItemLevel(), menuLineWidth);
-        
-        optionsText = "";
-        for (int i = Item.USE; i <= Item.SALVAGE; i++) {
-            optionsText += "[" + itemToDisplay.getOptionKeybind(i) + ": " + itemToDisplay.getOptionText(i) + "]";
-        } // for
+
+        StringBuilder optionsTextBuilder = new StringBuilder();
+        for (final Map.Entry<OptionsKey, String> optionsDescriptions : itemToDisplay.getOptions().entrySet()) {
+            optionsTextBuilder.append("[").append(optionsDescriptions.getValue()).append("] ");
+
+        }
+        optionsText = optionsTextBuilder.toString();
+
         toolTipMenuListBuffer[lineNum] = Common.centerString(optionsText, " ", menuLineWidth);
-    } // drawItemToolTip
+    }
     
     /**
      * If the player has focused on the AttributesMenu for the game, the tooltip
@@ -250,7 +259,7 @@ public class ToolTipMenu extends Interactable
         
         toolTipMenuListBuffer[lineNum++] = Common.alignToSides("Magic School", "" + Player.idToString(player.getSchoolOfMagic()), menuLineWidth);
         toolTipMenuListBuffer[lineNum] = Common.alignToSides("Bonus Armor", "" + player.getBonusArmor(), menuLineWidth);
-    } // drawStatsToolTip
+    }
 
     /**
      * Draws the ToolTipMenu to the screen only if it has focus; this function 
@@ -266,7 +275,7 @@ public class ToolTipMenu extends Interactable
         /* If the Menu is not active, don't draw anything */
         if (!isActive()) {
             return;
-        } // if
+        }
         
         /* Draw the background and title bar for the ToolTipMenu */
         screen.fillRectangle(bg, xOffs, yOffs, menuLineWidth * Font.CHAR_WIDTH, menuLineHeight * Font.CHAR_HEIGHT);
@@ -288,12 +297,12 @@ public class ToolTipMenu extends Interactable
             for (int i = 0; i <= menuLineHeight - 4; i++) {
                 lineNum += Font.CHAR_HEIGHT;
                 Font.drawMessage(screen, toolTipMenuListBuffer[i], fg, false, xOffs, lineNum);
-            } // for
+            }
             
 //            /* Don't draw the Item option text if the loot window is active */
 //            if (lootWindow.isActive()) {
 //                return;
-//            } // if
+//            }
 
             /* Adds a foreground colored bar at the bottom of the contextual Menu
                 for aesthetics, where information common to all Items are drawn.  The
@@ -306,12 +315,12 @@ public class ToolTipMenu extends Interactable
             for (int i = menuLineHeight - 3; i < menuLineHeight; i++) {
                 lineNum += Font.CHAR_HEIGHT;
                 Font.drawMessage(screen, toolTipMenuListBuffer[i], bg, false, xOffs, lineNum);
-            } // for
+            }
             
             screen.fillRectangle(bg, xOffs - Common.TILE_SIZE - 3, yOffs, Common.TILE_SIZE + 1, Common.TILE_SIZE + 1);
             screen.drawRectangle(fg, xOffs - Common.TILE_SIZE - 3, yOffs, Common.TILE_SIZE + 1, Common.TILE_SIZE + 1);
             Tile.getTile(itemToDisplay.getTileId()).render(screen, xOffs - Common.TILE_SIZE - 2, yOffs + 1);
-        } // if
+        }
         
         /* Draw the contextual Menu for the player's advanced attribute information */
         else {
@@ -333,14 +342,14 @@ public class ToolTipMenu extends Interactable
             for (int i = 0; i <= menuLineHeight - 3; i++) {
                 lineNum += Font.CHAR_HEIGHT;
                 Font.drawMessage(screen, toolTipMenuListBuffer[i], fg, false, xOffs, lineNum);
-            } // for
+            }
 
             /* Draw the lower lines of the menu as the background theme color for
                 aesthetics */
             for (int i = menuLineHeight - 2; i < menuLineHeight; i++) {
                 lineNum += Font.CHAR_HEIGHT;
                 Font.drawMessage(screen, toolTipMenuListBuffer[i], bg, false, xOffs, lineNum);
-            } // for
-        } // if-else
-    } // render
-} // ToolTipMenu
+            }
+        }
+    }
+}

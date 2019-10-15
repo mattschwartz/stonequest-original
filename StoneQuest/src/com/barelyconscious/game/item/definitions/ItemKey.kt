@@ -11,7 +11,7 @@ class ItemKey(
     1,
     1,
     "A key.",
-    mutableListOf(),
+    arrayListOf(),
     1,
     1,
     Tile.KEY_TILE_ID

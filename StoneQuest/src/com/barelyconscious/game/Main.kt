@@ -25,7 +25,7 @@ fun createTestSubjects(
         15,
         Player.HELM_SLOT_ID,
         Tile.HELMET_CLOTH_TILE_ID,
-        mutableListOf(
+        arrayListOf(
             AttributeMod(Player.ACCURACY, -11.0),
             AttributeMod(Player.FIRE_MAGIC_BONUS, 54.0),
             AttributeMod(Player.HOLY_MAGIC_BONUS, 22.0),
@@ -37,15 +37,15 @@ fun createTestSubjects(
         1
     )
 
-    val lChest = Armor("Leather Chest", 1500, 27, Player.CHEST_SLOT_ID, Tile.CHEST_CLOTH_TILE_ID, mutableListOf(), 1)
-    val lGreaves = Armor("Leather Greaves", 220, 15, Player.GREAVES_SLOT_ID, Tile.GREAVES_LEATHER_TILE_ID, mutableListOf(), 1)
-    val lboots = Armor("Leather Boots", 1789, 10, Player.BOOTS_SLOT_ID, Tile.BOOTS_LEATHER_TILE_ID, mutableListOf(), 1)
-    val lBelt = Armor("Leather Belt", 1677, 11, Player.BELT_SLOT_ID, Tile.BELT_LEATHER_TILE_ID, mutableListOf(), 1)
-    val lShield = Armor("Wooden Shield", 1500, 55, Player.OFF_HAND_SLOT_ID, Tile.OFFHAND_SHIELD_WOOD_TILE_ID, mutableListOf(), 1)
-    val wSword = Weapon("Wooden Sword", 1358, 1.0, 4.0, Tile.MAINHAND_SWORD_TILE_ID, mutableListOf(), 1)
-    val bNeck = Armor("Epic Awesome SLJ Necklace", 256888, 0, Player.NECK_SLOT_ID, Tile.NECKLACE_TILE_ID, mutableListOf(AttributeMod(Player.HITPOINTS, 200.0)), 1)
-    val bRing = Armor("Lousy Piece of Boring Ring", 0, 0, Player.RING_SLOT_ID, Tile.RING_TILE_ID, mutableListOf(), 1)
-    val bERing = Armor("Broken Earring", 0, 0, Player.EARRING_SLOT_ID, Tile.EARRING_TILE_ID, mutableListOf(), 1)
+    val lChest = Armor("Leather Chest", 1500, 27, Player.CHEST_SLOT_ID, Tile.CHEST_CLOTH_TILE_ID, arrayListOf(), 1)
+    val lGreaves = Armor("Leather Greaves", 220, 15, Player.GREAVES_SLOT_ID, Tile.GREAVES_LEATHER_TILE_ID, arrayListOf(), 1)
+    val lboots = Armor("Leather Boots", 1789, 10, Player.BOOTS_SLOT_ID, Tile.BOOTS_LEATHER_TILE_ID, arrayListOf(), 1)
+    val lBelt = Armor("Leather Belt", 1677, 11, Player.BELT_SLOT_ID, Tile.BELT_LEATHER_TILE_ID, arrayListOf(), 1)
+    val lShield = Armor("Wooden Shield", 1500, 55, Player.OFF_HAND_SLOT_ID, Tile.OFFHAND_SHIELD_WOOD_TILE_ID, arrayListOf(), 1)
+    val wSword = Weapon("Wooden Sword", 1358, 1.0, 4.0, Tile.MAINHAND_SWORD_TILE_ID, arrayListOf(), 1)
+    val bNeck = Armor("Epic Awesome SLJ Necklace", 256888, 0, Player.NECK_SLOT_ID, Tile.NECKLACE_TILE_ID, arrayListOf(AttributeMod(Player.HITPOINTS, 200.0)), 1)
+    val bRing = Armor("Lousy Piece of Boring Ring", 0, 0, Player.RING_SLOT_ID, Tile.RING_TILE_ID, arrayListOf(), 1)
+    val bERing = Armor("Broken Earring", 0, 0, Player.EARRING_SLOT_ID, Tile.EARRING_TILE_ID, arrayListOf(), 1)
 
     lChest.rarityColorRgb = Common.ITEM_RARITY_RARE_RGB
 
@@ -54,8 +54,17 @@ fun createTestSubjects(
     val healthPotion = Potion("Potion of Might", 2990, 1, StatPotionEffect(129, "Potion of Might", AttributeMod(Player.HITPOINTS, 21.0), AttributeMod(Player.STRENGTH, 15.0)))
     val newPotion = Potion("Potion of Awesome", 159, 3, StatPotionEffect(300, "Potion of Awesome", AttributeMod(Player.DEFENSE, 12.0), AttributeMod(Player.STRENGTH, 3.0)))
     val pootion = Potion("Potion of Pi", 1, 5, StatPotionEffect(95, "Potion of Pi", AttributeMod(Player.DEFENSE, 12.0), AttributeMod(Player.STRENGTH, 3.0), AttributeMod(Player.AGILITY, 15.0), AttributeMod(Player.DEFENSE, 55.0), AttributeMod(Player.FIRE_MAGIC_BONUS, 180.0)))
-    val antiMagicPotion = Potion("Antimagic Potion", 1589, 2, Tile.ANTIMAGIC_POTION_TILE_ID, AntimagicPotionEffect("Antimagic Potion"))
-    val antivenomPotion = Potion("Antivenom", 18890, 3, AntitoxinPotionEffect("Antivenom"))
+    val antiMagicPotion = Potion(
+        "Antimagic Potion",
+        1589,
+        2,
+        AntimagicPotionEffect("Antimagic Potion"),
+        Tile.ANTIMAGIC_POTION_TILE_ID)
+    val antivenomPotion = Potion(
+        "Antivenom",
+        18890,
+        3,
+        AntitoxinPotionEffect("Antivenom"))
 
     val curse = Curse("Curse of Evilness", 299, AttributeMod(Player.ACCURACY, 15.0), AttributeMod(Player.DEFENSE, 5.0))
     val curse2 = Curse("Curse of Evilness", 1000, AttributeMod(Player.AGILITY, 15.0), AttributeMod(Player.DEFENSE, 5.0))
@@ -67,7 +76,7 @@ fun createTestSubjects(
 
     val someBronzeArrows = Projectile("Bronze-tipped Arrows", 255, 15, Tile.ARROW_TILE_ID, true, Projectile.BRONZE_TIP)
 
-    val scr1 = Scroll("Invisibility", 258, 1, messageSystem, mutableListOf(AttributeMod(Player.ACCURACY, 255.0)))
+    val scr1 = Scroll("Invisibility", 258, 1, messageSystem, arrayListOf(AttributeMod(Player.ACCURACY, 255.0)))
 
     val key = ItemKey("Key, bitches", 255)
 

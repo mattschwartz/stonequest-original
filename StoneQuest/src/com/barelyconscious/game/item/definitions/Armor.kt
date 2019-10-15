@@ -24,7 +24,7 @@ class Armor(
     val bonusArmor: Int,
     val slotId: Int,
     tileId: Int,
-    itemAffixes: MutableList<AttributeMod>,
+    itemAffixes: ArrayList<AttributeMod>,
     itemLevel: Int
 ) : Item(
     displayName,

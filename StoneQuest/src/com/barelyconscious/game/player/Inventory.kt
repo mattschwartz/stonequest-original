@@ -1,13 +1,9 @@
 package com.barelyconscious.game.player
 
-import com.barelyconscious.game.Common
 import com.barelyconscious.game.Game
 import com.barelyconscious.game.Sound
-import com.barelyconscious.game.item.*
-import com.barelyconscious.game.item.definitions.Armor
-import com.barelyconscious.game.item.definitions.Scroll
-import com.barelyconscious.game.item.definitions.Weapon
-import com.barelyconscious.game.menu.TextLog
+import com.barelyconscious.game.item.Item
+import com.barelyconscious.game.item.definitions.*
 import com.barelyconscious.game.spawnable.Loot
 import com.barelyconscious.services.messaging.MessageSystem
 import com.barelyconscious.services.messaging.logs.TextLogMessageData
@@ -103,7 +99,7 @@ class Inventory(
                 item.bonusArmor,
                 item.slotId,
                 item.tileId,
-                item.getItemAffixes().toMutableList(),
+                item.getItemAffixes().toMutableList() as ArrayList<AttributeMod>,
                 item.itemLevel
             )
             is Weapon -> Weapon(
@@ -112,15 +108,14 @@ class Inventory(
                 item.minDamageBonus,
                 item.maxDamageBonus,
                 item.tileId,
-                item.getItemAffixes().toMutableList(),
+                item.getItemAffixes().toMutableList() as ArrayList<AttributeMod>,
                 item.itemLevel
             )
             is Food -> Food(
                 item.displayName,
                 item.sellValue,
                 1,
-                item.tileId,
-                item.healthChange
+                item.changeInHealth
             )
             is Potion -> Potion(
                 item.displayName,
@@ -136,7 +131,7 @@ class Inventory(
                     item.sellValue,
                     item.stackSize + 1, // todo wat
                     item.tileId,
-                    item.doesRequireBow(),
+                    item.requireBow,
                     item.metal
                 )
             }
@@ -145,7 +140,7 @@ class Inventory(
                 item.sellValue,
                 item.scrollId,
                 messageSystem,
-                item.getItemAffixes().toMutableList()
+                item.getItemAffixes().toMutableList() as ArrayList<AttributeMod>
             )
             else -> Item(item)
         }

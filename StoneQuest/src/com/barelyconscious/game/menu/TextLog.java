@@ -158,7 +158,7 @@ public class TextLog extends Interactable
 
         for (char c : messagePart3.toLowerCase().toCharArray()) {
             textLogBuffer[xPos++][NEW_MESSAGE_LINE] =
-                    new ScreenElement(c, true, item.getRarityColor());
+                    new ScreenElement(c, true, item.getRarityColorRgb());
         } // for
 
         writePlainLine(".", xPos, NEW_MESSAGE_LINE);

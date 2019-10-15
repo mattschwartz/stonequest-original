@@ -19,16 +19,15 @@ import com.barelyconscious.game.graphics.Font;
 import com.barelyconscious.game.graphics.UIElement;
 import com.barelyconscious.game.graphics.tiles.Tile;
 import com.barelyconscious.game.input.Interactable;
-import com.barelyconscious.game.item.definitions.Armor;
 import com.barelyconscious.game.item.Item;
-import com.barelyconscious.game.item.Scroll;
+import com.barelyconscious.game.item.definitions.*;
 import com.barelyconscious.game.player.AttributeMod;
 import com.barelyconscious.game.player.Inventory;
 import com.barelyconscious.game.player.activeeffects.PotionEffect;
 import com.barelyconscious.gui.IRenderable;
 import com.barelyconscious.gui.IWidget;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class InventoryMenu extends Interactable
     implements IWidget, IRenderable {
@@ -539,7 +538,7 @@ public class InventoryMenu extends Interactable
 
         x = xOffs + ITEM_DESCRIPTION_OFFS_X + (ITEM_INFO_FRAME_WIDTH - ITEM_DESCRIPTION_WIDTH) / 2;
         y = yOffs + ITEM_DESCRIPTION_OFFS_Y;
-        itemDescriptionHeight = item.getNumAffixes() * (Font.CHAR_HEIGHT + 2) + 4;
+        itemDescriptionHeight = item.getItemAffixes().size() * (Font.CHAR_HEIGHT + 2) + 4;
 
         screen.fillRectangle(INVENTORY_BACKGROUND_COLOR, x, y, ITEM_DESCRIPTION_WIDTH, itemDescriptionHeight);
         screen.drawRectangle(INVENTORY_BORDER_COLOR, x, y, ITEM_DESCRIPTION_WIDTH, itemDescriptionHeight);
@@ -548,8 +547,8 @@ public class InventoryMenu extends Interactable
 
         renderItemType(screen, item, itemDescriptionHeight);
 
-        for (int i = 0; i < item.getNumAffixes(); i++) {
-            mod = item.getAffixAt(i);
+        for (int i = 0; i < item.getItemAffixes().size(); i++) {
+            mod = item.getItemAffixes().get(i);
             msg = "" + (int) mod.getAttributeModifier();
 
             if (item instanceof Scroll && !Game.player.isScrollIdentified(((Scroll) item).getScrollId())) {
@@ -590,7 +589,7 @@ public class InventoryMenu extends Interactable
             msg = "armor";
             Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X + 2, y
                 + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
-            msg = Armor.armorTypeToString(((Armor) item).getArmorType());
+            msg = Armor.Companion.armorIdToString(((Armor) item).getSlotId());
             Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X - 2
                 + ITEM_TYPE_FRAME_WIDTH - msg.length() * Font.CHAR_WIDTH, y + ITEM_TYPE_OFFS_Y
                 + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
@@ -639,7 +638,7 @@ public class InventoryMenu extends Interactable
             Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X + 2, y
                 + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);
         } // else if
-        else if (item instanceof Key) {
+        else if (item instanceof ItemKey) {
             msg += "key";
             Font.drawMessage(screen, msg, Common.themeForegroundColor, false, x + ITEM_TYPE_OFFS_X + 2, y
                 + ITEM_TYPE_OFFS_Y + (ITEM_TYPE_FRAME_HEIGHT - Font.CHAR_HEIGHT) / 2 - 2);

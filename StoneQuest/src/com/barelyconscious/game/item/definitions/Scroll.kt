@@ -28,7 +28,7 @@ class Scroll(
     sellValue: Int,
     val scrollId: Int,
     private val messageSystem: MessageSystem,
-    itemAffixes: MutableList<AttributeMod>
+    itemAffixes: ArrayList<AttributeMod>
 ) : Item(
     scrollName,
     1,

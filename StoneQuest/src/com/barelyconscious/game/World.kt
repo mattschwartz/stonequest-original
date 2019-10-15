@@ -688,7 +688,7 @@ class World(
                 itemLevel = 259,
                 rarityColorRgb = -1,
                 itemDescription = "Vendor fodder",
-                itemAffixes = mutableListOf(),
+                itemAffixes = arrayListOf(),
                 sellValue = 99,
                 stackSize = 1,
                 tileId = Tile.ARROW_TILE_ID
@@ -698,7 +698,7 @@ class World(
                 itemLevel = 259,
                 rarityColorRgb = -1,
                 itemDescription = "Vendor fodder",
-                itemAffixes = mutableListOf(),
+                itemAffixes = arrayListOf(),
                 sellValue = 99,
                 stackSize = 1,
                 tileId = Tile.BOOTS_IRON_TILE_ID
@@ -708,7 +708,7 @@ class World(
                 itemLevel = 259,
                 rarityColorRgb = -1,
                 itemDescription = "Vendor fodder",
-                itemAffixes = mutableListOf(),
+                itemAffixes = arrayListOf(),
                 sellValue = 99,
                 stackSize = 1,
                 tileId = Tile.POTION_TILE_ID
@@ -718,7 +718,7 @@ class World(
                 itemLevel = 259,
                 rarityColorRgb = -1,
                 itemDescription = "Vendor fodder",
-                itemAffixes = mutableListOf(),
+                itemAffixes = arrayListOf(),
                 sellValue = 99,
                 stackSize = 1,
                 tileId = Tile.POTION_TILE_ID
@@ -728,7 +728,7 @@ class World(
                 itemLevel = 259,
                 rarityColorRgb = -1,
                 itemDescription = "Vendor fodder",
-                itemAffixes = mutableListOf(),
+                itemAffixes = arrayListOf(),
                 sellValue = 99,
                 stackSize = 1,
                 tileId = Tile.POTION_TILE_ID

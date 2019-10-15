@@ -14,27 +14,21 @@
  **************************************************************************** */
 package com.barelyconscious.game;
 
-import com.barelyconscious.game.input.KeyHandler;
-import com.barelyconscious.game.player.Player;
-import com.barelyconscious.game.player.Inventory;
-import com.barelyconscious.game.menu.TextLog;
-import com.barelyconscious.game.menu.InventoryMenu;
 import com.barelyconscious.game.graphics.GameMap;
 import com.barelyconscious.game.graphics.tiles.Tile;
+import com.barelyconscious.game.input.KeyHandler;
 import com.barelyconscious.game.input.MouseHandler;
 import com.barelyconscious.game.item.Item;
-import com.barelyconscious.game.menu.AttributesMenu;
-import com.barelyconscious.game.menu.BuffBar;
-import com.barelyconscious.game.menu.LootPickupMenu;
-import com.barelyconscious.game.menu.MiniMap;
-import com.barelyconscious.game.menu.ToolTipMenu;
+import com.barelyconscious.game.menu.*;
+import com.barelyconscious.game.player.Inventory;
+import com.barelyconscious.game.player.Player;
 import com.barelyconscious.game.spawnable.Loot;
 import com.barelyconscious.services.WindowManager;
 import com.barelyconscious.services.messaging.MessageSystem;
 
+import javax.swing.*;
 import java.time.Clock;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 
 import static com.barelyconscious.game.MainKt.createTestSubjects;
 
@@ -87,8 +81,8 @@ public class Game implements Runnable {
         final ToolTipMenu toolTipMenu = new ToolTipMenu(player);
         final LootPickupMenu lootPickupMenu = new LootPickupMenu(toolTipMenu, textLog);
 
-        inventory = new Inventory(messageSystem);
         messageSystem = new MessageSystem();
+        inventory = new Inventory(messageSystem);
 
         world = new World(
             player,

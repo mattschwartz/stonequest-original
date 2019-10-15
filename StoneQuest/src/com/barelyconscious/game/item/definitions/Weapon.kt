@@ -22,7 +22,7 @@ class Weapon(
     val minDamageBonus: Double,
     val maxDamageBonus: Double,
     tileId: Int,
-    itemAffixes: MutableList<AttributeMod>,
+    itemAffixes: ArrayList<AttributeMod>,
     itemLevel: Int
 ) : Item(
     displayName,

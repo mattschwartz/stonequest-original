@@ -72,11 +72,11 @@ open class Item(
     /**
      * Returns the list of option strings for interacting with this item.
      */
-    fun getOptions() = listOf(
-        optionsDescriptions[OptionsKey.USE],
-        optionsDescriptions[OptionsKey.EXAMINE],
-        optionsDescriptions[OptionsKey.DROP],
-        optionsDescriptions[OptionsKey.SALVAGE]
+    fun getOptions(): Map<OptionsKey, String> = mapOf(
+        Pair(OptionsKey.USE, optionsDescriptions[OptionsKey.USE]!!),
+        Pair(OptionsKey.EXAMINE, optionsDescriptions[OptionsKey.EXAMINE]!!),
+        Pair(OptionsKey.DROP, optionsDescriptions[OptionsKey.DROP]!!),
+        Pair(OptionsKey.SALVAGE, optionsDescriptions[OptionsKey.SALVAGE]!!)
     )
 
     open fun onUse() {

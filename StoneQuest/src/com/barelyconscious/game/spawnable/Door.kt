@@ -3,6 +3,7 @@ package com.barelyconscious.game.spawnable
 import com.barelyconscious.game.Common
 import com.barelyconscious.game.Game
 import com.barelyconscious.game.graphics.tiles.Tile
+import com.barelyconscious.game.item.definitions.ItemKey
 import com.barelyconscious.game.menu.TextLog
 
 class Door(
@@ -20,7 +21,7 @@ class Door(
      */
     fun openDoor(): Boolean {
         val playerHasKey = Game.inventory.containsLike {
-            it is Key && it.lockId == lockId
+            it is ItemKey && it.lockId == lockId
         }
 
         return if (playerHasKey) {
