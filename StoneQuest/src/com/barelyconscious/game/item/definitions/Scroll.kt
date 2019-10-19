@@ -2,11 +2,13 @@ package com.barelyconscious.game.item.definitions
 
 import com.barelyconscious.game.Common
 import com.barelyconscious.game.Game
-import com.barelyconscious.game.Sound
 import com.barelyconscious.game.graphics.tiles.Tile
 import com.barelyconscious.game.item.Item
 import com.barelyconscious.game.item.OptionsKey
 import com.barelyconscious.game.player.AttributeMod
+import com.barelyconscious.services.SoundMessageData
+import com.barelyconscious.services.SoundService
+import com.barelyconscious.services.audio.PlayableSound
 import com.barelyconscious.services.messaging.MessageSystem
 import com.barelyconscious.services.messaging.logs.TextLogMessageData
 import com.barelyconscious.services.messaging.logs.TextLogWriterService
@@ -65,9 +67,11 @@ class Scroll(
         messageSystem.sendMessage(
             TextLogWriterService.LOG_EVENT_CODE,
             TextLogMessageData("It was a $scrollName!"),
-            this
-        )
-        Sound.READ_SCROLL.play()
+            this)
+        messageSystem.sendMessage(
+            SoundService.PLAY_SOUND,
+            SoundMessageData(PlayableSound.READ_SCROLL),
+            this)
 
         // todo handle elsewhere
         if (--stackSize <= 0) {

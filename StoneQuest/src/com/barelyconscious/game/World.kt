@@ -15,6 +15,7 @@ import com.barelyconscious.game.player.Player
 import com.barelyconscious.game.portrait.Portrait
 import com.barelyconscious.game.spawnable.*
 import com.barelyconscious.game.spawnable.entities.SewerRatEntity
+import com.barelyconscious.services.WindowManager
 import com.barelyconscious.services.messaging.MessageSystem
 import com.barelyconscious.services.messaging.logs.TextLogMessageData
 import com.barelyconscious.services.messaging.logs.TextLogWriterService
@@ -22,12 +23,12 @@ import java.time.Clock
 
 class World(
     private val player: Player,
-    private val textLog: TextLog,
     private val gameMap: GameMap,
     private val toolTipMenu: ToolTipMenu,
     private val lootWindow: LootPickupMenu,
     private val mouseHandler: MouseHandler,
 
+    private val windowManager: WindowManager,
     private val messageSystem: MessageSystem,
     private val clock: Clock
 ) : Interactable() {
@@ -49,8 +50,17 @@ class World(
     }
 
     fun resize(width: Int, height: Int) {
+        val textLog = windowManager.findWidget(TextLog::class)
+            .firstOrNull() as? TextLog
+
+        val viewingHeight = if (textLog != null) {
+            textLog.offsY - textLog.pixelHeight
+        } else {
+            height
+        }
+
         playerX = width / 2
-        playerY = (textLog.offsY - textLog.pixelHeight) / 2
+        playerY = viewingHeight / 2
 
         if ((playerY % Common.TILE_SIZE) > (Common.TILE_SIZE / 2)) {
             playerY += Common.TILE_SIZE - (playerY % Common.TILE_SIZE)
@@ -67,7 +77,7 @@ class World(
         defineMouseZone(0,
             0,
             toolTipMenu.offsX,
-            textLog.offsY - textLog.pixelHeight
+            viewingHeight
         )
     }
 

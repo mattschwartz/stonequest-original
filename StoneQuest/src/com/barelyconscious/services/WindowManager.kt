@@ -8,8 +8,12 @@ import com.barelyconscious.game.input.KeyHandler
 import com.barelyconscious.game.input.MouseHandler
 import com.barelyconscious.game.menu.TextLog
 import com.barelyconscious.gui.IWidget
+import com.barelyconscious.services.messaging.MessageSystem
+import com.barelyconscious.services.messaging.logs.TextLogMessageData
+import com.barelyconscious.services.messaging.logs.TextLogWriterService
 import java.awt.Dimension
 import javax.swing.JFrame
+import kotlin.reflect.KClass
 
 const val GAME_TITLE: String = "StoneQuest"
 const val GAME_VERSION: String = "0.6.9"
@@ -17,7 +21,8 @@ const val GAME_VERSION: String = "0.6.9"
 class WindowManager(
     private val keyHandler: KeyHandler,
     private val mouseHandler: MouseHandler,
-    private val window: JFrame
+    private val window: JFrame,
+    private val messageSystem: MessageSystem
 ) {
 
     private val widgets: MutableList<IWidget> = mutableListOf()
@@ -36,6 +41,10 @@ class WindowManager(
     fun addWidget(widget: IWidget) = widgets.add(widget)
 
     fun removeWidget(widget: IWidget) = widgets.remove(widget)
+
+    fun findWidget(widgetType: KClass<*>): List<IWidget> {
+        return widgets.filter { it::class == widgetType }
+    }
 
     fun resize(width: Int, height: Int) {
         window.minimumSize = Dimension(width, height)
@@ -59,16 +68,22 @@ class WindowManager(
     }
 
     // todo turn into observer or pubsub
+    //  or move to composer
     fun writeWelcomeMessage() {
-        val textLog = widgets.first { it is TextLog } as TextLog
+        messageSystem.sendMessage(
+            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogMessageData("Welcome to $GAME_TITLE v$GAME_VERSION")
+                .with(LineElement(
+                    "$GAME_TITLE v$GAME_VERSION",
+                    true,
+                    Common.themeForegroundColor
+                )),
+            this)
 
-        textLog.writeFormattedString("Welcome to " + GAME_TITLE + " v"
-            + GAME_VERSION + "!", Common.FONT_NULL_RGB, LineElement(
-            "$GAME_TITLE v$GAME_VERSION", true,
-            Common.themeForegroundColor))
-
-        textLog.writeFormattedString("Press ? for help and instructions.",
-            Common.FONT_NULL_RGB)
+        messageSystem.sendMessage(
+            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogMessageData("Press ? for help and instructions."),
+            this)
     }
 
     // todo probably move these elsewhere?

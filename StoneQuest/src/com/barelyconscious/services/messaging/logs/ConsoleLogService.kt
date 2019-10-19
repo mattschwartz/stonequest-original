@@ -5,7 +5,7 @@ import com.barelyconscious.services.messaging.data.IMessageData
 import com.barelyconscious.services.messaging.data.MessageResponse
 import java.time.Clock
 
-class ConsoleLogService(private val clock: Clock) : IMessageObserver() {
+class ConsoleLogService(private val clock: Clock) : IMessageObserver {
 
     override fun alert(eventCode: String, data: IMessageData, sender: Any): MessageResponse {
         val level: LogLevel

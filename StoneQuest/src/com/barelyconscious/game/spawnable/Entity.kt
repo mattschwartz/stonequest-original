@@ -1,7 +1,10 @@
 package com.barelyconscious.game.spawnable
 
 import com.barelyconscious.game.Game
-import com.barelyconscious.game.Sound
+import com.barelyconscious.services.SoundMessageData
+import com.barelyconscious.services.SoundService
+import com.barelyconscious.services.audio.PlayableSound
+import com.barelyconscious.services.messaging.MessageSystem
 
 /**
  * Creates a new Entity with the following parameters
@@ -10,7 +13,8 @@ import com.barelyconscious.game.Sound
  */
 abstract class Entity(
     displayName: String,
-    tileId: Int
+    tileId: Int,
+    protected val messageSystem: MessageSystem
 ) : Sprite(displayName, tileId) {
 
     var level: Int = 0
@@ -32,10 +36,12 @@ abstract class Entity(
         displayName: String,
         tileId: Int,
         x: Int,
-        y: Int
+        y: Int,
+        messageSystem: MessageSystem
     ) : this(
         displayName,
-        tileId
+        tileId,
+        messageSystem
     ) {
         super.setCollision(true)
         super.setPosition(x, y)
@@ -63,7 +69,10 @@ abstract class Entity(
      * Removes the Entity from the world.
      */
     override fun remove() {
-        Sound.ENTITY_DEATH.play()
+        messageSystem.sendMessage(
+            SoundService.PLAY_SOUND,
+            SoundMessageData(PlayableSound.ENTITY_DEATH),
+            this)
         Game.world.removeEntity(this)
     }
 }

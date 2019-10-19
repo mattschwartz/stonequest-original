@@ -1,7 +1,9 @@
 package com.barelyconscious.services.messaging
 
+import com.barelyconscious.services.messaging.data.EmptyMessageData
 import com.barelyconscious.services.messaging.data.IMessageData
 import com.barelyconscious.services.messaging.data.MessageResponse
+import com.barelyconscious.services.messaging.data.ResponseCode
 
 class MessageSystem {
 
@@ -28,8 +30,27 @@ class MessageSystem {
 
     // Send the message asynchronously
     fun sendMessage(eventCode: String, data: IMessageData, sender: Any) {
-        observers[eventCode]
-            ?.forEach { it.alert(eventCode, data, sender) }
+        observers[eventCode]?.forEach {
+            val response = try {
+                it.alert(eventCode, data, sender)
+            } catch (e: Exception) {
+                MessageResponse.failed(e)
+            }
+
+            println("[DBG] [EVT=$eventCode] Sending message from ${sender::class.simpleName} to ${it::class.simpleName}: $data. Response=$response")
+        }
+    }
+
+    fun sendAlert(eventCode: String, sender: Any) {
+        observers[eventCode]?.forEach {
+            val response = try {
+                it.alert(eventCode, EmptyMessageData.instance, sender)
+            } catch (e: Exception) {
+                MessageResponse.failed(e)
+            }
+
+            println("[DBG] [EVT=$eventCode] Alert sent to ${it::class.simpleName}. Response=$response")
+        }
     }
 
     /**

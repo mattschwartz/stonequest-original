@@ -23,6 +23,7 @@ import com.barelyconscious.game.menu.*;
 import com.barelyconscious.game.player.Inventory;
 import com.barelyconscious.game.player.Player;
 import com.barelyconscious.game.spawnable.Loot;
+import com.barelyconscious.services.SystemsComposer;
 import com.barelyconscious.services.WindowManager;
 import com.barelyconscious.services.messaging.MessageSystem;
 
@@ -51,7 +52,7 @@ public class Game implements Runnable {
     private static WindowManager windowManager;
     private static MessageSystem messageSystem;
 
-    private static final TextLog textLog = new TextLog(45, 50, 100);
+    private final SystemsComposer composer = new SystemsComposer();
 
     /**
      * Initializes the game window.
@@ -62,35 +63,36 @@ public class Game implements Runnable {
         width = 1280;
         height = 700;
 
+        messageSystem = composer.compose();
         screen = new Screen(width, height);
 
         keyHandler = new KeyHandler();
-        mouseHandler = new MouseHandler(textLog);
+        mouseHandler = new MouseHandler(messageSystem);
 
         windowManager = new WindowManager(
             keyHandler,
             mouseHandler,
-            new JFrame());
+            new JFrame(),
+            messageSystem);
         windowManager.setView(screen);
 
-        player = new Player(textLog);
+        player = new Player(messageSystem);
 
         gameMap = new GameMap(1024, 1024, width, height);
 
         final MiniMap miniMap = new MiniMap();
         final ToolTipMenu toolTipMenu = new ToolTipMenu(player);
-        final LootPickupMenu lootPickupMenu = new LootPickupMenu(toolTipMenu, textLog);
+        final LootPickupMenu lootPickupMenu = new LootPickupMenu(toolTipMenu, messageSystem);
 
-        messageSystem = new MessageSystem();
         inventory = new Inventory(messageSystem);
 
         world = new World(
             player,
-            textLog,
             gameMap,
             toolTipMenu,
             lootPickupMenu,
             mouseHandler,
+            windowManager,
             messageSystem,
             clock
         );
@@ -104,14 +106,13 @@ public class Game implements Runnable {
         windowManager.addWidget(lootPickupMenu);
         windowManager.addWidget(attributesMenu);
         windowManager.addWidget(invenMenu);
-        windowManager.addWidget(textLog);
         windowManager.addWidget(miniMap);
+        windowManager.addWidget(composer.getTextLog());
 
         screen.addRenderable(buffBar);
         screen.addRenderable(miniMap);
         screen.addRenderable(invenMenu);
         screen.addRenderable(attributesMenu);
-        screen.addRenderable(textLog);
 
         onResize(width, height);
 

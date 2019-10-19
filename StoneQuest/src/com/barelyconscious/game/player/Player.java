@@ -33,8 +33,12 @@ import com.barelyconscious.game.menu.TextLog;
 import com.barelyconscious.game.player.activeeffects.Buff;
 import com.barelyconscious.game.spawnable.Sprite;
 import com.barelyconscious.game.spawnable.Entity;
+import com.barelyconscious.services.messaging.MessageSystem;
+import com.barelyconscious.services.messaging.logs.TextLogMessageData;
+import com.barelyconscious.services.messaging.logs.TextLogWriterService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Player extends Entity {
@@ -123,7 +127,6 @@ public class Player extends Entity {
      * A list of all armor slots on the Player and the Items that are currently equipped in those slots, if any.
      */
     private Item[] equippedArmorSlots = new Item[10];
-    private final TextLog textLog;
     private Potion activePotion;
     private Poison[] poisons = new Poison[5];
     private ArrayList<Debuff> debuffs = new ArrayList();
@@ -133,12 +136,9 @@ public class Player extends Entity {
 
     /**
      * Creates a new Player; only one should be instantiated per runtime
-     *
-     * @param textLog the Player class often finds it necessary to write information to the TextLog
      */
-    public Player(final TextLog textLog) {
-        super(playerName, Tile.PLAYER_TILE_ID);
-        this.textLog = textLog;
+    public Player(final MessageSystem messageSystem) {
+        super(playerName, Tile.PLAYER_TILE_ID, messageSystem);
 
         setStartingAttributes();
         elementCastSchool = FIRE_MAGIC_BONUS; // testing
@@ -358,25 +358,31 @@ public class Player extends Entity {
      * Interact with a Sprite, attacking a hostile entities and opening dialogue with nonhostile entities; or
      * interacting with Loot
      *
-     * @param spr the Sprite to interact with
+     * @param entity the Sprite to interact with
      */
     @Override
-    public void interactWith(Sprite spr) {
+    public void interactWith(Sprite entity) {
         double attackDamage;
 
         /* If Sprite is an Entity */
-        if (spr instanceof Entity) {
+        if (entity instanceof Entity) {
             attackDamage = (Math.random() * 3) + 0.1f;
-            ((Entity) spr).changeHealthBy(-attackDamage);
+            ((Entity) entity).changeHealthBy(-attackDamage);
 
-            textLog.writeFormattedString(String.format("You hit %s for %.1f physical.",
-                spr.getDisplayName(), attackDamage), Common.FONT_DAMAGE_TEXT_RGB,
-                new LineElement(spr.getDisplayName(), true,
-                    Common.FONT_ENTITY_LABEL_RGB));
+            final String message = String.format(
+                "You hit %s for %.1f physical.",
+                entity.getDisplayName(),
+                attackDamage);
+
+            getMessageSystem().sendMessage(
+                TextLogWriterService.LOG_EVENT_CODE,
+                new TextLogMessageData(message)
+                    .with(new LineElement(entity.getDisplayName(), true, Common.FONT_ENTITY_LABEL_RGB)),
+                this);
         }
         /* If Sprite is a Loot object or Doodad */
         else {
-            spr.interact();
+            entity.interact();
         }
     }
 
@@ -575,9 +581,12 @@ public class Player extends Entity {
         scroll.extraEffects();
 
         scroll.identifyScroll();
-        textLog.writeFormattedString(
-            "It was a " + scroll.getDisplayName() + "!",
-            Common.FONT_NULL_RGB);
+
+
+        getMessageSystem().sendMessage(
+            TextLogWriterService.LOG_EVENT_CODE,
+            new TextLogMessageData("It was a " + scroll.getDisplayName() + "!"),
+            this);
     }
 
     public void applyBuff(Buff buff) {

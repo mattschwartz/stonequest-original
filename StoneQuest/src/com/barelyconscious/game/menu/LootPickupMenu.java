@@ -26,6 +26,10 @@ import com.barelyconscious.game.input.KeyMap;
 import com.barelyconscious.game.input.MouseHandler;
 import com.barelyconscious.game.item.Item;
 import com.barelyconscious.gui.IWidget;
+import com.barelyconscious.services.messaging.MessageSystem;
+import com.barelyconscious.services.messaging.logs.TextLogItemData;
+import com.barelyconscious.services.messaging.logs.TextLogMessageData;
+import com.barelyconscious.services.messaging.logs.TextLogWriterService;
 
 import java.util.ArrayList;
 
@@ -42,14 +46,14 @@ public class LootPickupMenu extends Interactable
     private ArrayList<Item> itemList = null;
 
     private final ToolTipMenu toolTipMenu;
-    private final TextLog textLog;
+    private final MessageSystem messageSystem;
 
     public LootPickupMenu(
         final ToolTipMenu toolTipMenu,
-        final TextLog textLog
+        final MessageSystem messageSystem
     ) {
         this.toolTipMenu = toolTipMenu;
-        this.textLog = textLog;
+        this.messageSystem = messageSystem;
     }
 
     /**
@@ -175,7 +179,11 @@ public class LootPickupMenu extends Interactable
 
     public void examineItem() {
         Item item = itemList.get(selectedLoot + itemListLineStart);
-        textLog.writeFormattedString(item.getItemDescription(), Common.FONT_NULL_RGB);
+
+        messageSystem.sendMessage(
+            TextLogWriterService.LOG_EVENT_CODE,
+            new TextLogItemData(item),
+            this);
     } // examineItem
 
     @Override

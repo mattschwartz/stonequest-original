@@ -3,14 +3,14 @@ package com.barelyconscious.game.spawnable.entities
 import com.barelyconscious.game.Common
 import com.barelyconscious.game.Game
 import com.barelyconscious.game.Game.world
-import com.barelyconscious.game.Sound
-import com.barelyconscious.game.World
 import com.barelyconscious.game.graphics.LineElement
 import com.barelyconscious.game.graphics.tiles.Tile
 import com.barelyconscious.game.item.Item
-import com.barelyconscious.game.menu.TextLog
 import com.barelyconscious.game.spawnable.Entity
 import com.barelyconscious.game.spawnable.Loot
+import com.barelyconscious.services.SoundMessageData
+import com.barelyconscious.services.SoundService
+import com.barelyconscious.services.audio.PlayableSound
 import com.barelyconscious.services.messaging.MessageSystem
 import com.barelyconscious.services.messaging.logs.TextLogMessageData
 import com.barelyconscious.services.messaging.logs.TextLogWriterService
@@ -23,8 +23,8 @@ class SewerRatEntity(
     level: Int,
     x: Int,
     y: Int,
-    private val messageSystem: MessageSystem
-) : Entity("Sewer Rat", Tile.SEWER_RAT_TILE_ID) {
+    messageSystem: MessageSystem
+) : Entity("Sewer Rat", Tile.SEWER_RAT_TILE_ID, messageSystem) {
 
     private val minimumDamage: Double = 0.75 * (1 + (level * 1.05))
     private val maximumDamage: Double = 1.99 * (1 + (level * 1.55))
@@ -107,7 +107,10 @@ class SewerRatEntity(
             this
         )
 
-        Sound.CHICKEN_CLUCK.play()
+        messageSystem.sendMessage(
+            SoundService.PLAY_SOUND,
+            SoundMessageData(PlayableSound.CHICKEN_CLUCK),
+            this)
     }
 
     private fun calculateHit(): Double {

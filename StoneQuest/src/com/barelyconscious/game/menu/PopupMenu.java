@@ -16,7 +16,6 @@ package com.barelyconscious.game.menu;
 import com.barelyconscious.game.Common;
 import com.barelyconscious.game.Game;
 import com.barelyconscious.game.Screen;
-import com.barelyconscious.game.Sound;
 import com.barelyconscious.game.graphics.Font;
 import com.barelyconscious.game.input.Interactable;
 import com.barelyconscious.game.input.MouseHandler;

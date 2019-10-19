@@ -12,6 +12,8 @@ data class TextLogMessageData(
     val lineElements: MutableList<LineElement> = mutableListOf()
 ) : IMessageData {
 
+    constructor(text: String) : this(text, mutableListOf())
+
     fun with(vararg lineElements: LineElement): TextLogMessageData {
         this.lineElements.addAll(lineElements)
         return this
@@ -27,10 +29,12 @@ data class TextLogItemData(
  */
 class TextLogWriterService(
     private val textLog: TextLog
-) : IMessageObserver() {
+) : IMessageObserver {
 
     companion object {
         const val LOG_EVENT_CODE = "stonequest/TextLogWriter/LOG_EVENT_CODE"
+        const val LOG_SCROLL_UP = "stonequest/TextLogWriter/LOG_SCROLL_UP"
+        const val LOG_SCROLL_DOWN = "stonequest/TextLogWriter/LOG_SCROLL_DOWN"
     }
 
     override fun alert(

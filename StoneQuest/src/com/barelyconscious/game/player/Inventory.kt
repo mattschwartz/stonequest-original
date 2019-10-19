@@ -1,10 +1,12 @@
 package com.barelyconscious.game.player
 
 import com.barelyconscious.game.Game
-import com.barelyconscious.game.Sound
 import com.barelyconscious.game.item.Item
 import com.barelyconscious.game.item.definitions.*
 import com.barelyconscious.game.spawnable.Loot
+import com.barelyconscious.services.SoundMessageData
+import com.barelyconscious.services.SoundService
+import com.barelyconscious.services.audio.PlayableSound
 import com.barelyconscious.services.messaging.MessageSystem
 import com.barelyconscious.services.messaging.logs.TextLogMessageData
 import com.barelyconscious.services.messaging.logs.TextLogWriterService
@@ -40,7 +42,12 @@ class Inventory(
     fun addItem(item: Item): Boolean {
         if (item.displayName == "gold") {
             gold += item.stackSize
-            Sound.LOOT_COINS.play()
+
+            messageSystem.sendMessage(
+                SoundService.PLAY_SOUND,
+                SoundMessageData(PlayableSound.LOOT_COINS),
+                this)
+
             return true
         }
 

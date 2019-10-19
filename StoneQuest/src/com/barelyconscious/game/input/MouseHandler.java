@@ -13,6 +13,8 @@
 package com.barelyconscious.game.input;
 
 import com.barelyconscious.game.menu.TextLog;
+import com.barelyconscious.services.messaging.MessageSystem;
+import com.barelyconscious.services.messaging.logs.TextLogWriterService;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -23,8 +25,8 @@ import java.util.ArrayList;
 
 public class MouseHandler implements MouseListener, MouseMotionListener, MouseWheelListener {
 
-    public static final byte NO_CLICK = 0; // 0b0000
-    public static final byte CLICK = 1; // 0b0001
+    public static final byte NO_CLICK = 0;
+    public static final byte CLICK = 1;
     public static final byte LEFT_CLICK = MouseEvent.BUTTON1;
     public static final byte MIDDLE_CLICK = MouseEvent.BUTTON2;
     public static final byte RIGHT_CLICK = MouseEvent.BUTTON3;
@@ -39,10 +41,10 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
      */
     private ArrayList<Interactable> hoverableAreas = new ArrayList();
 
-    private final TextLog textLog;
+    private final MessageSystem messageSystem;
 
-    public MouseHandler(final TextLog textLog) {
-        this.textLog = textLog;
+    public MouseHandler(final MessageSystem messageSystem) {
+        this.messageSystem = messageSystem;
     }
 
     /**
@@ -55,14 +57,14 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     public void registerClickableListener(Interactable clickable) {
         if (clickableAreas.contains(clickable)) {
             return;
-        } // if
+        }
 
         clickableAreas.add(clickable);
-    } // registerClickableListener
+    }
 
     public void removeClickableListener(Interactable toRemove) {
         clickableAreas.remove(toRemove);
-    } // removeClickableListener
+    }
 
     /**
      * Registers a Mouse zone that will be called when the user moves his or her
@@ -74,14 +76,14 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     public void registerHoverableListener(Interactable hoverable) {
         if (hoverableAreas.contains(hoverable)) {
             return;
-        } // if
+        }
 
         hoverableAreas.add(hoverable);
-    } // registerHoverableListener
+    }
 
     public void removeHoverableListener(Interactable toRemove) {
         hoverableAreas.remove(toRemove);
-    } // removeHoverableListener
+    }
 
     @Override
     public void mousePressed(MouseEvent me) {
@@ -92,9 +94,9 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
             if (clickable.mouseInFocus(me.getX(), me.getY())) {
                 clickable.mouseClicked(me.getButton(), me.getX(), me.getY());
-            } // if
-        } // for
-    } // mousePressed
+            }
+        }
+    }
 
     @Override
     public void mouseMoved(MouseEvent e) {
@@ -105,27 +107,25 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
 
             if (hoverable.mouseInFocus(e.getX(), e.getY())) {
                 hoverable.mouseMoved(e.getX(), e.getY());
-            } // if
-            else {
+            } else {
                 hoverable.mouseExited();
-            } // else
-        } // for
-    } // mouseMoved
+            }
+        }
+    }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         if (e.getWheelRotation() < 0) {
-            textLog.moveUp();
-            textLog.moveUp();
-        } // if
+            messageSystem.sendAlert(TextLogWriterService.LOG_SCROLL_UP, this);
+            messageSystem.sendAlert(TextLogWriterService.LOG_SCROLL_UP, this);
+        }
 
         if (e.getWheelRotation() > 0) {
-            textLog.moveDown();
-            textLog.moveDown();
-        } // if
-    } // mouseWheelMoved
+            messageSystem.sendAlert(TextLogWriterService.LOG_SCROLL_DOWN, this);
+            messageSystem.sendAlert(TextLogWriterService.LOG_SCROLL_DOWN, this);
+        }
+    }
 
-    // unused functions ------------------------------------------
     @Override
     public void mouseClicked(MouseEvent me) {
     }
@@ -145,4 +145,4 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     @Override
     public void mouseDragged(MouseEvent me) {
     }
-} // MouseHandler
+}

@@ -8,6 +8,8 @@ class MessageResponse(val responseData: Any?, val responseCode: ResponseCode) {
         fun ok() = MessageResponse(null, ResponseCode.OK)
 
         fun failed(e: Exception) = MessageResponse(e, ResponseCode.FAILED)
+
+        fun failed(msg: String) = MessageResponse(msg, ResponseCode.FAILED)
     }
 }
 
