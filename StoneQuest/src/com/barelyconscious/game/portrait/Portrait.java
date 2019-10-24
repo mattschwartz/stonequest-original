@@ -45,8 +45,8 @@ public class Portrait {
     private final int UF_PLAYER_LEVEL_BAR_HEIGHT = UF_PLAYER_NAMEBAR_HEIGHT;
     private final int UF_PLAYER_FRAME_WIDTH = 291;
     private final int UF_PLAYER_FRAME_HEIGHT = 62;
-    private final int UF_PLAYER_ICON_OFFS_X = 8;
-    private final int UF_PLAYER_ICON_OFFS_Y = 8;
+    private final int UF_PLAYER_ICON_OFFS_X = 12;
+    private final int UF_PLAYER_ICON_OFFS_Y = 12;
     private final UIElement UF_PLAYER_HEALTHBAR = UIElement.UNITFRAME_PLAYER_HEALTHBAR;
     // Entity variables
     private final int UF_ENTITY_FRAME_WIDTH = 238;
@@ -59,8 +59,8 @@ public class Portrait {
     private final int UF_ENTITY_NAMEBAR_OFFS_Y = 16;
     private final int UF_ENTITY_NAMEBAR_WIDTH = 171;
     private final int UF_ENTITY_NAMEBAR_HEIGHT = 18;
-    private final int UF_ENTITY_ICON_OFFS_X = 7;
-    private final int UF_ENTITY_ICON_OFFS_Y = 7;
+    private final int UF_ENTITY_ICON_OFFS_X = 0;
+    private final int UF_ENTITY_ICON_OFFS_Y = 0;
     private final int UF_ENTITY_LEVEL_BAR_WIDTH = 30;
     private final int UF_ENTITY_LEVEL_BAR_HEIGHT = UF_ENTITY_NAMEBAR_HEIGHT;
     private final int UF_ENTITY_LEVEL_OFFS_X = 208;
@@ -164,7 +164,6 @@ public class Portrait {
         int scale = 1;
 
         if (entityType == PLAYER) {
-            scale = 2;
             UIElement.UNITFRAME_PLAYER.render(screen, xStart, yStart);
         } // else if
         else if (entityType == ELITE) {

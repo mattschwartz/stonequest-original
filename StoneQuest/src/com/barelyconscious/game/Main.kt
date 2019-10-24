@@ -51,20 +51,22 @@ fun createTestSubjects(
 
     val apple = Food("Apple", 0, 1, 99.0)
     val apple2 = Food("Apple", 0, 2, 99.0)
-    val healthPotion = Potion("Potion of Might", 2990, 1, StatPotionEffect(129, "Potion of Might", AttributeMod(Player.HITPOINTS, 21.0), AttributeMod(Player.STRENGTH, 15.0)))
-    val newPotion = Potion("Potion of Awesome", 159, 3, StatPotionEffect(300, "Potion of Awesome", AttributeMod(Player.DEFENSE, 12.0), AttributeMod(Player.STRENGTH, 3.0)))
-    val pootion = Potion("Potion of Pi", 1, 5, StatPotionEffect(95, "Potion of Pi", AttributeMod(Player.DEFENSE, 12.0), AttributeMod(Player.STRENGTH, 3.0), AttributeMod(Player.AGILITY, 15.0), AttributeMod(Player.DEFENSE, 55.0), AttributeMod(Player.FIRE_MAGIC_BONUS, 180.0)))
+    val healthPotion = Potion("Potion of Might", 2990, 1, StatPotionEffect(129, "Potion of Might", AttributeMod(Player.HITPOINTS, 21.0), AttributeMod(Player.STRENGTH, 15.0)), messageSystem)
+    val newPotion = Potion("Potion of Awesome", 159, 3, StatPotionEffect(300, "Potion of Awesome", AttributeMod(Player.DEFENSE, 12.0), AttributeMod(Player.STRENGTH, 3.0)), messageSystem)
+    val pootion = Potion("Potion of Pi", 1, 5, StatPotionEffect(95, "Potion of Pi", AttributeMod(Player.DEFENSE, 12.0), AttributeMod(Player.STRENGTH, 3.0), AttributeMod(Player.AGILITY, 15.0), AttributeMod(Player.DEFENSE, 55.0), AttributeMod(Player.FIRE_MAGIC_BONUS, 180.0)), messageSystem)
     val antiMagicPotion = Potion(
         "Antimagic Potion",
         1589,
         2,
         AntimagicPotionEffect("Antimagic Potion"),
+        messageSystem,
         Tile.ANTIMAGIC_POTION_TILE_ID)
     val antivenomPotion = Potion(
         "Antivenom",
         18890,
         3,
-        AntitoxinPotionEffect("Antivenom"))
+        AntitoxinPotionEffect("Antivenom"),
+        messageSystem)
 
     val curse = Curse("Curse of Evilness", 299, AttributeMod(Player.ACCURACY, 15.0), AttributeMod(Player.DEFENSE, 5.0))
     val curse2 = Curse("Curse of Evilness", 1000, AttributeMod(Player.AGILITY, 15.0), AttributeMod(Player.DEFENSE, 5.0))

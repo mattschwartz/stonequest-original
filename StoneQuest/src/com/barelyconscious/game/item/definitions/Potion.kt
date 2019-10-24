@@ -7,6 +7,10 @@ import com.barelyconscious.game.item.OptionsKey
 import com.barelyconscious.game.player.AttributeMod
 import com.barelyconscious.game.player.activeeffects.PotionEffect
 import com.barelyconscious.game.player.activeeffects.StatPotionEffect
+import com.barelyconscious.services.SoundService
+import com.barelyconscious.services.audio.PlayableSound
+import com.barelyconscious.services.messaging.MessageSystem
+import com.barelyconscious.services.messaging.data.SoundMessageData
 
 /**
  * Create a new potion with the following parameters
@@ -24,6 +28,7 @@ class Potion(
     sellValue: Int,
     stackSize: Int,
     val effects: PotionEffect,
+    private val messageSystem: MessageSystem,
     tileId: Int = Tile.POTION_TILE_ID
 ) : Item(
     displayName,
@@ -50,6 +55,11 @@ class Potion(
         }
 
     override fun onUse() {
+        messageSystem.sendMessage(
+            SoundService.PLAY_SOUND,
+            SoundMessageData(PlayableSound.DRINK_POTION),
+            this)
+
         if (effects is StatPotionEffect) {
             val newEffects = StatPotionEffect(
                 effects.durationInTicks,

@@ -4,10 +4,10 @@ import com.barelyconscious.game.Game
 import com.barelyconscious.game.item.Item
 import com.barelyconscious.game.item.definitions.*
 import com.barelyconscious.game.spawnable.Loot
-import com.barelyconscious.services.SoundMessageData
 import com.barelyconscious.services.SoundService
 import com.barelyconscious.services.audio.PlayableSound
 import com.barelyconscious.services.messaging.MessageSystem
+import com.barelyconscious.services.messaging.data.SoundMessageData
 import com.barelyconscious.services.messaging.logs.TextLogMessageData
 import com.barelyconscious.services.messaging.logs.TextLogWriterService
 
@@ -128,7 +128,8 @@ class Inventory(
                 item.displayName,
                 item.sellValue,
                 1,
-                item.effects
+                item.effects,
+                messageSystem
             )
             is Projectile -> {
                 removeItemAt(index)

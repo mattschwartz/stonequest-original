@@ -17,8 +17,8 @@ class SystemsComposer {
         messageSystem.subscribe(MessageSystem.ANY_EVENT_CODE, ConsoleLogService(localClock))
         messageSystem.subscribe(
             TextLogWriterService.LOG_EVENT_CODE,
-            TextLogWriterService(textLog)
-        )
+            TextLogWriterService(textLog))
+
         messageSystem.subscribe(
             SoundService.PLAY_SOUND,
             SoundService())

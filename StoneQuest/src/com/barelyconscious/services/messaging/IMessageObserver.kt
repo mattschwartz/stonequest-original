@@ -5,5 +5,5 @@ import com.barelyconscious.services.messaging.data.MessageResponse
 
 interface IMessageObserver {
 
-    abstract fun alert(eventCode: String, data: IMessageData, sender: Any): MessageResponse
+    fun alert(eventCode: String, data: IMessageData, sender: Any): MessageResponse
 }

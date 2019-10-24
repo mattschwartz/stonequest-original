@@ -11,7 +11,7 @@ class MessageSystem {
         /**
          * A special eventCode which is interpreted as "any"
          */
-        public const val ANY_EVENT_CODE: String = "*"
+        const val ANY_EVENT_CODE: String = "*"
     }
 
     /**

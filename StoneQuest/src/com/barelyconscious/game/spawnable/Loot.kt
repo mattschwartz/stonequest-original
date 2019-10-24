@@ -3,10 +3,10 @@ package com.barelyconscious.game.spawnable
 import com.barelyconscious.game.Game
 import com.barelyconscious.game.graphics.LineElement
 import com.barelyconscious.game.item.Item
-import com.barelyconscious.services.SoundMessageData
 import com.barelyconscious.services.SoundService
 import com.barelyconscious.services.audio.PlayableSound
 import com.barelyconscious.services.messaging.MessageSystem
+import com.barelyconscious.services.messaging.data.SoundMessageData
 import com.barelyconscious.services.messaging.logs.TextLogItemData
 import com.barelyconscious.services.messaging.logs.TextLogMessageData
 import com.barelyconscious.services.messaging.logs.TextLogWriterService

@@ -1,7 +1,7 @@
 package com.barelyconscious.systems
 
 import com.barelyconscious.components.IComponent
-import com.barelyconscious.entities.Entity
+import com.barelyconscious.entities.AEntity
 
 abstract class AComponentSystem(protected val entityManager: EntityManager) {
 
@@ -10,7 +10,7 @@ abstract class AComponentSystem(protected val entityManager: EntityManager) {
     @Suppress("UNCHECKED_CAST")
     protected fun <TComponent : IComponent> forEach(
         componentType: Class<TComponent>,
-        action: (Entity, TComponent) -> Unit
+        action: (AEntity, TComponent) -> Unit
     ) {
         entityManager.getEntityList().forEach { entity ->
             entity.components

@@ -29,12 +29,17 @@ class DeathComponentSystem(
 }
 
 class TemporaryEffectComponent(
-    var remainingTicks: Int,
-    private val duration: Int
+     duration: Int
 ) : IComponent {
 
-    fun update() {}
+    var remainingTicks = duration
+
+    fun update() {
+        --remainingTicks
+    }
 }
+
+
 
 class TemporaryEffectsComponentSystem(
     entityManager: EntityManager,

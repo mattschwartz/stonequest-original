@@ -94,25 +94,25 @@ public class Game implements Runnable {
             mouseHandler,
             windowManager,
             messageSystem,
-            clock
-        );
+            clock);
 
         final BuffBar buffBar = new BuffBar(miniMap);
         final AttributesMenu attributesMenu = new AttributesMenu(miniMap);
         final InventoryMenu invenMenu = new InventoryMenu();
 
-        windowManager.addWidget(buffBar);
         windowManager.addWidget(toolTipMenu);
         windowManager.addWidget(lootPickupMenu);
         windowManager.addWidget(attributesMenu);
         windowManager.addWidget(invenMenu);
         windowManager.addWidget(miniMap);
+        windowManager.addWidget(buffBar);
         windowManager.addWidget(composer.getTextLog());
 
-        screen.addRenderable(buffBar);
         screen.addRenderable(miniMap);
+        screen.addRenderable(buffBar);
         screen.addRenderable(invenMenu);
         screen.addRenderable(attributesMenu);
+        screen.addRenderable(composer.getTextLog());
 
         onResize(width, height);
 

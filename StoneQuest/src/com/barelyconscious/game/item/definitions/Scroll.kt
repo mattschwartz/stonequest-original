@@ -6,10 +6,10 @@ import com.barelyconscious.game.graphics.tiles.Tile
 import com.barelyconscious.game.item.Item
 import com.barelyconscious.game.item.OptionsKey
 import com.barelyconscious.game.player.AttributeMod
-import com.barelyconscious.services.SoundMessageData
 import com.barelyconscious.services.SoundService
 import com.barelyconscious.services.audio.PlayableSound
 import com.barelyconscious.services.messaging.MessageSystem
+import com.barelyconscious.services.messaging.data.SoundMessageData
 import com.barelyconscious.services.messaging.logs.TextLogMessageData
 import com.barelyconscious.services.messaging.logs.TextLogWriterService
 import kotlin.math.abs

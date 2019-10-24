@@ -1,44 +1,44 @@
 package com.barelyconscious.systems
 
 import com.barelyconscious.components.IComponent
-import com.barelyconscious.entities.Entity
+import com.barelyconscious.entities.AEntity
 
 class EntityManager {
 
-    private val entities: MutableList<Entity> = mutableListOf()
+    private val AEntities: MutableList<AEntity> = mutableListOf()
 
-    fun getEntityList(): List<Entity> {
-        return entities.toList()
+    fun getEntityList(): List<AEntity> {
+        return AEntities.toList()
     }
 
-    fun addEntity(entity: Entity) {
-        entities.add(entity)
+    fun addEntity(AEntity: AEntity) {
+        AEntities.add(AEntity)
     }
 
     /**
      * Adds the component to the entity. Will also add the entity to the list of
      * known entities if it does not already exist.
      *
-     * @param entity the entity to which the component will be added
+     * @param AEntity the entity to which the component will be added
      * @param component the component to add
      */
-    fun addComponent(entity: Entity, component: IComponent) {
-        val match: Entity? = entities.find { it == entity }
+    fun addComponent(AEntity: AEntity, component: IComponent) {
+        val match: AEntity? = AEntities.find { it == AEntity }
 
         if (match == null) {
-            entity.components.add(component)
-            entities.add(entity)
+            AEntity.components.add(component)
+            AEntities.add(AEntity)
         } else {
             match.components.add(component)
         }
     }
 
-    fun removeEntity(entityToRemove: Entity) {
-        entities.remove(entityToRemove)
+    fun removeEntity(AEntityToRemove: AEntity) {
+        AEntities.remove(AEntityToRemove)
     }
 
-    fun removeComponent(entity: Entity, componentToRemove: IComponent) {
-        val match: Entity = entities.find { it == entity }
+    fun removeComponent(AEntity: AEntity, componentToRemove: IComponent) {
+        val match: AEntity = AEntities.find { it == AEntity }
             ?: return
 
         match.components.remove(componentToRemove)

@@ -52,10 +52,10 @@ public class BuffBar extends Interactable
     private int yOffs;
     private int selectedDebuff = -1;
     private int selectedBuff = -1;
-    private final int BUFF_SCALE = 2;
+    private final int BUFF_SCALE = 1;
     private final Player player;
 
-    private final int YO_THERE_IS_THIS_VALUE_IDK_WHAT_IT_MEANS_BUT_ITS_20_NOW = 20;
+    private final int iconSpacingX = 42;
 
     private final MiniMap miniMap;
 
@@ -74,7 +74,7 @@ public class BuffBar extends Interactable
     public void resize(int w, int h) {
         xOffs = miniMap.getOffsX();
         yOffs = miniMap.getOffsY();
-        width = (YO_THERE_IS_THIS_VALUE_IDK_WHAT_IT_MEANS_BUT_ITS_20_NOW * BUFF_SCALE) * 10;
+        width = (iconSpacingX * BUFF_SCALE) * 10;
         height = miniMap.getPixelHeight();
 
         buffPopoutOffsX = xOffs - ACTIVE_EFFECT_POPOUT_WIDTH;
@@ -146,7 +146,7 @@ public class BuffBar extends Interactable
     private void renderDebuffs(Screen screen) {
         int x;
         int y;
-        int iconSize = YO_THERE_IS_THIS_VALUE_IDK_WHAT_IT_MEANS_BUT_ITS_20_NOW * BUFF_SCALE;
+        int iconSize = iconSpacingX * BUFF_SCALE;
         String duration;
 
         for (int i = 0; i < player.getNumDebuffs(); i++) {
@@ -174,7 +174,7 @@ public class BuffBar extends Interactable
     } // renderDebuffs
 
     private void renderBuffs(Screen screen) {
-        int iconSize = YO_THERE_IS_THIS_VALUE_IDK_WHAT_IT_MEANS_BUT_ITS_20_NOW * BUFF_SCALE;
+        int iconSize = iconSpacingX * BUFF_SCALE;
         String duration;
         Buff buff;
 
