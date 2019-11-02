@@ -1,18 +1,19 @@
 package com.barelyconscious.systems
 
-import com.barelyconscious.components.IComponent
+import com.barelyconscious.components.AComponent
 import com.barelyconscious.entities.AEntity
+import kotlin.reflect.KClass
 
 class EntityManager {
 
-    private val AEntities: MutableList<AEntity> = mutableListOf()
+    private val entities: MutableList<AEntity> = mutableListOf()
 
     fun getEntityList(): List<AEntity> {
-        return AEntities.toList()
+        return entities.toList()
     }
 
     fun addEntity(AEntity: AEntity) {
-        AEntities.add(AEntity)
+        entities.add(AEntity)
     }
 
     /**
@@ -22,25 +23,40 @@ class EntityManager {
      * @param AEntity the entity to which the component will be added
      * @param component the component to add
      */
-    fun addComponent(AEntity: AEntity, component: IComponent) {
-        val match: AEntity? = AEntities.find { it == AEntity }
+    fun addComponent(AEntity: AEntity, component: AComponent) {
+        val match: AEntity? = entities.find { it == AEntity }
 
         if (match == null) {
             AEntity.components.add(component)
-            AEntities.add(AEntity)
+            entities.add(AEntity)
         } else {
             match.components.add(component)
         }
     }
 
     fun removeEntity(AEntityToRemove: AEntity) {
-        AEntities.remove(AEntityToRemove)
+        entities.remove(AEntityToRemove)
     }
 
-    fun removeComponent(AEntity: AEntity, componentToRemove: IComponent) {
-        val match: AEntity = AEntities.find { it == AEntity }
+    fun removeComponent(AEntity: AEntity, componentToRemove: AComponent) {
+        val match: AEntity = entities.find { it == AEntity }
             ?: return
 
         match.components.remove(componentToRemove)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <TComponent : AComponent> getSingleComponent(
+        entity: AEntity,
+        componentType: KClass<TComponent>
+    ): TComponent {
+        val matchedComponents = entity.components.filter { it::class == componentType }
+
+        if (matchedComponents.size != 1) {
+            // todo get better exception
+            throw Exception()
+        }
+
+        return matchedComponents.single() as TComponent
     }
 }
