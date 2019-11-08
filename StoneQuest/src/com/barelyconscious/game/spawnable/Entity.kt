@@ -2,9 +2,9 @@ package com.barelyconscious.game.spawnable
 
 import com.barelyconscious.game.Game
 import com.barelyconscious.services.SoundService
-import com.barelyconscious.services.audio.PlayableSound
-import com.barelyconscious.services.messaging.MessageSystem
-import com.barelyconscious.services.messaging.data.SoundMessageData
+import com.barelyconscious.systems.audio.PlayableSound
+import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.systems.messaging.data.SoundMessageData
 
 /**
  * Creates a new Entity with the following parameters

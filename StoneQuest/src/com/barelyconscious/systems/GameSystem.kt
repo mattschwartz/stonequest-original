@@ -1,12 +1,10 @@
-package com.barelyconscious.services
+package com.barelyconscious.systems
 
 import com.barelyconscious.components.IComponent
 import com.barelyconscious.entities.AEntity
-import com.barelyconscious.systems.AComponentSystem
-import com.barelyconscious.systems.EntityManager
 
-class GameManager(
-    private val entityManager: EntityManager,
+class GameSystem(
+    private val entitySystem: EntitySystem,
     private val componentSystems: MutableList<AComponentSystem>
 ) {
 
@@ -41,7 +39,7 @@ class GameManager(
      */
     fun addEntity(AEntity: AEntity) {
         preUpdateCommands.add {
-            entityManager.addEntity(AEntity)
+            entitySystem.addEntity(AEntity)
         }
     }
 
@@ -53,7 +51,7 @@ class GameManager(
      */
     fun addComponent(AEntity: AEntity, component: IComponent) {
         preUpdateCommands.add {
-            entityManager.addComponent(AEntity, component)
+            entitySystem.addComponent(AEntity, component)
         }
     }
 
@@ -64,7 +62,7 @@ class GameManager(
      */
     fun removeEntity(AEntityToRemove: AEntity) {
         postUpdateCommands.add {
-            entityManager.removeEntity(AEntityToRemove)
+            entitySystem.removeEntity(AEntityToRemove)
         }
     }
 
@@ -76,7 +74,7 @@ class GameManager(
      */
     fun removeComponent(AEntity: AEntity, componentToRemove: IComponent) {
         postUpdateCommands.add {
-            entityManager.removeComponent(AEntity, componentToRemove)
+            entitySystem.removeComponent(AEntity, componentToRemove)
         }
     }
 }

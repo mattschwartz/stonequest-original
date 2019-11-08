@@ -1,10 +1,10 @@
 package com.barelyconscious.systems
 
-import com.barelyconscious.components.AComponent
+import com.barelyconscious.components.IComponent
 import com.barelyconscious.entities.AEntity
 import kotlin.reflect.KClass
 
-class EntityManager {
+class EntitySystem {
 
     private val entities: MutableList<AEntity> = mutableListOf()
 
@@ -20,15 +20,15 @@ class EntityManager {
      * Adds the component to the entity. Will also add the entity to the list of
      * known entities if it does not already exist.
      *
-     * @param AEntity the entity to which the component will be added
+     * @param entity the entity to which the component will be added
      * @param component the component to add
      */
-    fun addComponent(AEntity: AEntity, component: AComponent) {
-        val match: AEntity? = entities.find { it == AEntity }
+    fun addComponent(entity: AEntity, component: IComponent) {
+        val match: AEntity? = entities.find { it == entity }
 
         if (match == null) {
-            AEntity.components.add(component)
-            entities.add(AEntity)
+            entity.components.add(component)
+            entities.add(entity)
         } else {
             match.components.add(component)
         }
@@ -38,7 +38,7 @@ class EntityManager {
         entities.remove(AEntityToRemove)
     }
 
-    fun removeComponent(AEntity: AEntity, componentToRemove: AComponent) {
+    fun removeComponent(AEntity: AEntity, componentToRemove: IComponent) {
         val match: AEntity = entities.find { it == AEntity }
             ?: return
 
@@ -46,7 +46,7 @@ class EntityManager {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <TComponent : AComponent> getSingleComponent(
+    fun <TComponent : IComponent> getSingleComponent(
         entity: AEntity,
         componentType: KClass<TComponent>
     ): TComponent {

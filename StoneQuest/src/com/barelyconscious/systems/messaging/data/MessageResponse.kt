@@ -1,6 +1,4 @@
-package com.barelyconscious.services.messaging.data
-
-enum class ResponseCode { OK, FAILED, }
+package com.barelyconscious.systems.messaging.data
 
 class MessageResponse(val responseData: Any?, val responseCode: ResponseCode) {
 

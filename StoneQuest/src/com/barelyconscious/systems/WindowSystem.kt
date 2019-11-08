@@ -1,4 +1,4 @@
-package com.barelyconscious.services
+package com.barelyconscious.systems
 
 import com.barelyconscious.game.Common
 import com.barelyconscious.game.Screen
@@ -6,11 +6,10 @@ import com.barelyconscious.game.graphics.LineElement
 import com.barelyconscious.game.input.Interactable
 import com.barelyconscious.game.input.KeyHandler
 import com.barelyconscious.game.input.MouseHandler
-import com.barelyconscious.game.menu.TextLog
 import com.barelyconscious.gui.IWidget
-import com.barelyconscious.services.messaging.MessageSystem
-import com.barelyconscious.services.messaging.logs.TextLogMessageData
-import com.barelyconscious.services.messaging.logs.TextLogWriterService
+import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.services.TextLogMessageData
+import com.barelyconscious.services.TextLogWriterService
 import java.awt.Dimension
 import javax.swing.JFrame
 import kotlin.reflect.KClass

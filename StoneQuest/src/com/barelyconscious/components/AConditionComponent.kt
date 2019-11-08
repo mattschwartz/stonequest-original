@@ -1,14 +1,14 @@
 package com.barelyconscious.components
 
 import com.barelyconscious.entities.AEntity
-import com.barelyconscious.systems.EntityManager
+import com.barelyconscious.systems.EntitySystem
 
 abstract class ATickComponent : IComponent {
 
     /**
      * Called each game tick.
      */
-    abstract fun onTick(entityManager: EntityManager, entity: AEntity)
+    abstract fun onTick(entitySystem: EntitySystem, entity: AEntity)
 }
 
 /**
@@ -21,17 +21,17 @@ abstract class AConditionComponent(val durationInTicks: Int) : ATickComponent() 
     /**
      * Called when the condition is first applied.
      */
-    abstract fun onApply(entityManager: EntityManager, entity: AEntity)
+    abstract fun onApply(entitySystem: EntitySystem, entity: AEntity)
 
     /**
      * Called when the condition expires or is removed.
      */
-    abstract fun onRemove(entityManager: EntityManager, entity: AEntity)
+    abstract fun onRemove(entitySystem: EntitySystem, entity: AEntity)
 
-    override fun onTick(entityManager: EntityManager, entity: AEntity) {
+    override fun onTick(entitySystem: EntitySystem, entity: AEntity) {
         --ticksRemaining
         if (ticksRemaining <= 0) {
-            onRemove(entityManager, entity)
+            onRemove(entitySystem, entity)
         }
     }
 }
@@ -52,16 +52,16 @@ class StatPotionConditionComponent : AConditionComponent(125) {
     private val hitpointsComponent = HitpointsAttributeComponent(25.0)
     private val defenseComponent = DefenseAttributeComponent(-5.0)
 
-    override fun onApply(entityManager: EntityManager, entity: AEntity) {
-        entityManager.addComponent(entity, agilityComponent)
-        entityManager.addComponent(entity, hitpointsComponent)
-        entityManager.addComponent(entity, defenseComponent)
+    override fun onApply(entitySystem: EntitySystem, entity: AEntity) {
+        entitySystem.addComponent(entity, agilityComponent)
+        entitySystem.addComponent(entity, hitpointsComponent)
+        entitySystem.addComponent(entity, defenseComponent)
     }
 
-    override fun onRemove(entityManager: EntityManager, entity: AEntity) {
-        entityManager.removeComponent(entity, agilityComponent)
-        entityManager.removeComponent(entity, hitpointsComponent)
-        entityManager.removeComponent(entity, defenseComponent)
+    override fun onRemove(entitySystem: EntitySystem, entity: AEntity) {
+        entitySystem.removeComponent(entity, agilityComponent)
+        entitySystem.removeComponent(entity, hitpointsComponent)
+        entitySystem.removeComponent(entity, defenseComponent)
     }
 
 }

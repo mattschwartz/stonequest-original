@@ -1,0 +1,54 @@
+{
+    "__type": "PlayerEntity",
+    "name": "casssiius",
+    "components": [
+        {
+            "__type": "LevelComponent",
+            "value": 1
+        },
+        {
+            "__type": "HitpointsAttributeComponent",
+            "value": 1
+        },
+        {
+            "__type": "ExperienceComponent",
+            "value": 0
+        },
+        {
+            "__type": "DamageComponent",
+            "value": 0
+        },
+        {
+            "__type": "InventoryComponent",
+            "items": [
+                {
+                    "itemId": "potion_strength_vitriolic", // name: Vitriolic Strength Potion 
+                    "stackSize": 8
+                },
+                {
+                    "itemId": "scroll_invisibility_minor",
+                    "stackSize": 2
+                }
+            ]
+        },
+        {
+            "__type": "TemporaryAttributeComponent",
+            "attribute": "Strength",
+            "value": 10,
+            "duration": 120
+        },
+        {
+            "__type": "EquippedAttributeComponent",
+            "attribute": "Hitpoints",
+            "value": 25
+        },
+        {
+            "__type": "OnHitComponent",
+            "damageType": "Fire",
+            "minDamage": 15,
+            "maxDamage": 50,
+            "procChance": 0.25,
+            "internalCooldown": 50
+        }
+    ]
+}

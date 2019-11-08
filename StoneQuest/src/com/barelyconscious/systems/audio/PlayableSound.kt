@@ -1,10 +1,9 @@
-package com.barelyconscious.services.audio
+package com.barelyconscious.systems.audio
 
 import java.applet.Applet
 import java.applet.AudioClip
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import java.util.concurrent.Future
 
 class PlayableSound private constructor(soundFilePath: String) {
 

@@ -1,11 +1,11 @@
 package com.barelyconscious.components
 
-import com.barelyconscious.entities.Attribute
+import com.barelyconscious.entities.EntityAttribute
 
 /**
  * Attribute modifier component found on equipped gear.
  */
 class EquippedAttributeComponent(
-    attribute: Attribute,
+    entityAttribute: EntityAttribute,
     value: Double
-) : AAttributeComponent(attribute, value)
+) : AAttributeComponent(entityAttribute, value)

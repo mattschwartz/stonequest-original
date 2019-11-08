@@ -8,9 +8,9 @@ import com.barelyconscious.game.player.AttributeMod
 import com.barelyconscious.game.player.activeeffects.PotionEffect
 import com.barelyconscious.game.player.activeeffects.StatPotionEffect
 import com.barelyconscious.services.SoundService
-import com.barelyconscious.services.audio.PlayableSound
-import com.barelyconscious.services.messaging.MessageSystem
-import com.barelyconscious.services.messaging.data.SoundMessageData
+import com.barelyconscious.systems.audio.PlayableSound
+import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.systems.messaging.data.SoundMessageData
 
 /**
  * Create a new potion with the following parameters

@@ -3,15 +3,15 @@ package com.barelyconscious.services
 import com.barelyconscious.components.InventoryComponent
 import com.barelyconscious.entities.AEntity
 import com.barelyconscious.entities.items.AItem
-import com.barelyconscious.services.messaging.IMessageObserver
-import com.barelyconscious.services.messaging.data.IMessageData
-import com.barelyconscious.services.messaging.data.MessageResponse
-import com.barelyconscious.systems.EntityManager
+import com.barelyconscious.systems.messaging.IMessageObserver
+import com.barelyconscious.systems.messaging.data.IMessageData
+import com.barelyconscious.systems.messaging.data.MessageResponse
+import com.barelyconscious.systems.EntitySystem
 
 class NewItemMessageData(val entity: AEntity, val item: AItem) : IMessageData
 class ItemSlotMessageData(val entity: AEntity, val itemSlot: Int) : IMessageData
 
-class InventoryService(private val entityManager: EntityManager) : IMessageObserver {
+class InventoryService(private val entitySystem: EntitySystem) : IMessageObserver {
 
     companion object {
         const val ADD_ITEM = "stonequest/InventorySystem/ADD_ITEM"
@@ -55,7 +55,7 @@ class InventoryService(private val entityManager: EntityManager) : IMessageObser
      * See [InventoryComponent.addItem]
      */
     private fun addItem(data: NewItemMessageData): Int {
-        val inventoryComponent = entityManager.getSingleComponent(data.entity, InventoryComponent::class)
+        val inventoryComponent = entitySystem.getSingleComponent(data.entity, InventoryComponent::class)
 
         return inventoryComponent.addItem(data.item)
     }
@@ -64,7 +64,7 @@ class InventoryService(private val entityManager: EntityManager) : IMessageObser
      * See [InventoryComponent.removeItem]
      */
     private fun removeItem(data: ItemSlotMessageData): AItem? {
-        val inventoryComponent = entityManager.getSingleComponent(data.entity, InventoryComponent::class)
+        val inventoryComponent = entitySystem.getSingleComponent(data.entity, InventoryComponent::class)
 
         return inventoryComponent.removeItem(data.itemSlot)
     }
@@ -73,16 +73,16 @@ class InventoryService(private val entityManager: EntityManager) : IMessageObser
      * See [InventoryComponent.useItem]
      */
     private fun useItem(data: ItemSlotMessageData): Boolean {
-        val inventoryComponent = entityManager.getSingleComponent(data.entity, InventoryComponent::class)
+        val inventoryComponent = entitySystem.getSingleComponent(data.entity, InventoryComponent::class)
 
-        return inventoryComponent.useItem(entityManager, data.itemSlot)
+        return inventoryComponent.useItem(entitySystem, data.entity, data.itemSlot)
     }
 
     /**
      * See [InventoryComponent.getItemDetails]
      */
     private fun getItemDetails(data: ItemSlotMessageData): AItem? {
-        val inventoryComponent = entityManager.getSingleComponent(data.entity, InventoryComponent::class)
+        val inventoryComponent = entitySystem.getSingleComponent(data.entity, InventoryComponent::class)
 
         return inventoryComponent.getItemDetails(data.itemSlot)
     }

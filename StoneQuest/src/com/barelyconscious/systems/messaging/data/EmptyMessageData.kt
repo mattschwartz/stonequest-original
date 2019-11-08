@@ -1,6 +1,4 @@
-package com.barelyconscious.services.messaging.data
-
-interface IMessageData
+package com.barelyconscious.systems.messaging.data
 
 class EmptyMessageData : IMessageData {
 

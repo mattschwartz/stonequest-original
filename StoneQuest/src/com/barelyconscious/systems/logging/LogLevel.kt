@@ -1,4 +1,4 @@
-package com.barelyconscious.services.messaging.logs
+package com.barelyconscious.systems.logging
 
 enum class LogLevel {
     DEBUG,

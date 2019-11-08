@@ -1,6 +1,6 @@
 package com.barelyconscious.entities
 
-enum class Attribute {
+enum class EntityAttribute {
 
     /**
      * Represents the health of the player; if it goes to 0, the Player dies.

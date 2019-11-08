@@ -4,10 +4,9 @@ import com.barelyconscious.game.Common
 import com.barelyconscious.game.Game
 import com.barelyconscious.game.graphics.LineElement
 import com.barelyconscious.game.graphics.UIElement
-import com.barelyconscious.game.menu.TextLog
-import com.barelyconscious.services.messaging.MessageSystem
-import com.barelyconscious.services.messaging.logs.TextLogMessageData
-import com.barelyconscious.services.messaging.logs.TextLogWriterService
+import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.services.TextLogMessageData
+import com.barelyconscious.services.TextLogWriterService
 
 /**
  * Create a new Poison with the following parameters

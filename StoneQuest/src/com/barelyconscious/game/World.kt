@@ -15,10 +15,10 @@ import com.barelyconscious.game.player.Player
 import com.barelyconscious.game.portrait.Portrait
 import com.barelyconscious.game.spawnable.*
 import com.barelyconscious.game.spawnable.entities.SewerRatEntity
-import com.barelyconscious.services.WindowManager
-import com.barelyconscious.services.messaging.MessageSystem
-import com.barelyconscious.services.messaging.logs.TextLogMessageData
-import com.barelyconscious.services.messaging.logs.TextLogWriterService
+import com.barelyconscious.systems.WindowManager
+import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.services.TextLogMessageData
+import com.barelyconscious.services.TextLogWriterService
 import java.time.Clock
 
 class World(

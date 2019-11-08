@@ -29,16 +29,14 @@ import com.barelyconscious.game.player.activeeffects.Debuff;
 import com.barelyconscious.game.graphics.LineElement;
 import com.barelyconscious.game.graphics.tiles.Tile;
 import com.barelyconscious.game.item.*;
-import com.barelyconscious.game.menu.TextLog;
 import com.barelyconscious.game.player.activeeffects.Buff;
 import com.barelyconscious.game.spawnable.Sprite;
 import com.barelyconscious.game.spawnable.Entity;
-import com.barelyconscious.services.messaging.MessageSystem;
-import com.barelyconscious.services.messaging.logs.TextLogMessageData;
-import com.barelyconscious.services.messaging.logs.TextLogWriterService;
+import com.barelyconscious.systems.messaging.MessageSystem;
+import com.barelyconscious.services.TextLogMessageData;
+import com.barelyconscious.services.TextLogWriterService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Player extends Entity {

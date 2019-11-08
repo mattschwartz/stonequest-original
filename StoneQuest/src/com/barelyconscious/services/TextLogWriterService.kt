@@ -1,11 +1,11 @@
-package com.barelyconscious.services.messaging.logs
+package com.barelyconscious.services
 
 import com.barelyconscious.game.graphics.LineElement
 import com.barelyconscious.game.item.Item
 import com.barelyconscious.game.menu.TextLog
-import com.barelyconscious.services.messaging.IMessageObserver
-import com.barelyconscious.services.messaging.data.IMessageData
-import com.barelyconscious.services.messaging.data.MessageResponse
+import com.barelyconscious.systems.messaging.IMessageObserver
+import com.barelyconscious.systems.messaging.data.IMessageData
+import com.barelyconscious.systems.messaging.data.MessageResponse
 
 data class TextLogMessageData(
     val text: String,

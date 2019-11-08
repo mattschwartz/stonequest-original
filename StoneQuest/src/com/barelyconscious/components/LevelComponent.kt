@@ -1,5 +1,3 @@
 package com.barelyconscious.components
 
-class LevelComponent(
-    val value: Int
-) : IComponent
+class LevelComponent(val value: Int) : IComponent

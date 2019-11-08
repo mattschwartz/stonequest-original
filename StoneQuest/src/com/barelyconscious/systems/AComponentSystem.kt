@@ -3,7 +3,7 @@ package com.barelyconscious.systems
 import com.barelyconscious.components.IComponent
 import com.barelyconscious.entities.AEntity
 
-abstract class AComponentSystem(protected val entityManager: EntityManager) {
+abstract class AComponentSystem(protected val entitySystem: EntitySystem) {
 
     abstract fun onUpdate()
 
@@ -12,7 +12,7 @@ abstract class AComponentSystem(protected val entityManager: EntityManager) {
         componentType: Class<TComponent>,
         action: (AEntity, TComponent) -> Unit
     ) {
-        entityManager.getEntityList().forEach { entity ->
+        entitySystem.getEntityList().forEach { entity ->
             entity.components
                 .filter { it::class == componentType }
                 .forEach { component ->

@@ -1,10 +1,11 @@
-package com.barelyconscious.services
+package com.barelyconscious.systems
 
 import com.barelyconscious.game.menu.TextLog
-import com.barelyconscious.services.messaging.MessageSystem
-import com.barelyconscious.services.messaging.logs.ConsoleLogService
-import com.barelyconscious.services.messaging.logs.TextLogWriterService
-import com.barelyconscious.systems.EntityManager
+import com.barelyconscious.services.InventoryService
+import com.barelyconscious.services.SoundService
+import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.services.ConsoleLogService
+import com.barelyconscious.services.TextLogWriterService
 import java.time.Clock
 
 class SystemsComposer {
@@ -14,7 +15,7 @@ class SystemsComposer {
     fun compose(): MessageSystem {
         val localClock = Clock.systemDefaultZone()
         val messageSystem = MessageSystem()
-        val entityManager = EntityManager()
+        val entityManager = EntitySystem()
 
         messageSystem.subscribe(MessageSystem.ANY_EVENT_CODE, ConsoleLogService(localClock))
         messageSystem.subscribe(

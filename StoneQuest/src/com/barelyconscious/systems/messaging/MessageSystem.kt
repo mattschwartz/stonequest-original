@@ -1,9 +1,8 @@
-package com.barelyconscious.services.messaging
+package com.barelyconscious.systems.messaging
 
-import com.barelyconscious.services.messaging.data.EmptyMessageData
-import com.barelyconscious.services.messaging.data.IMessageData
-import com.barelyconscious.services.messaging.data.MessageResponse
-import com.barelyconscious.services.messaging.data.ResponseCode
+import com.barelyconscious.systems.messaging.data.EmptyMessageData
+import com.barelyconscious.systems.messaging.data.IMessageData
+import com.barelyconscious.systems.messaging.data.MessageResponse
 
 class MessageSystem {
 

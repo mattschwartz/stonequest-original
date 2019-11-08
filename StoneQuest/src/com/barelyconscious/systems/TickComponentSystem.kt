@@ -1,9 +1,8 @@
 package com.barelyconscious.systems
 
 import com.barelyconscious.components.IComponent
-import com.barelyconscious.services.messaging.data.IMessageData
-import com.barelyconscious.services.messaging.MessageSystem
-import com.barelyconscious.services.messaging.data.EmptyMessageData
+import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.systems.messaging.data.EmptyMessageData
 
 class HealthPointsComponent(
     var currentHealthPoints: Int
@@ -16,13 +15,13 @@ class MoveComponent : IComponent {
 }
 
 class DeathComponentSystem(
-    entityManager: EntityManager
-) : AComponentSystem(entityManager) {
+    entitySystem: EntitySystem
+) : AComponentSystem(entitySystem) {
 
     override fun onUpdate() {
         forEach(HealthPointsComponent::class.java) { entity, healthPointsComponent ->
             if (healthPointsComponent.currentHealthPoints <= 0) {
-                entityManager.removeEntity(entity)
+                entitySystem.removeEntity(entity)
             }
         }
     }
@@ -42,9 +41,9 @@ class TemporaryEffectComponent(
 
 
 class TemporaryEffectsComponentSystem(
-    entityManager: EntityManager,
+    entitySystem: EntitySystem,
     private val messageSystem: MessageSystem
-) : AComponentSystem(entityManager) {
+) : AComponentSystem(entitySystem) {
 
     override fun onUpdate() {
         // Get all components that have a temporary effect component and apply
@@ -55,7 +54,7 @@ class TemporaryEffectsComponentSystem(
             messageSystem.sendMessage("ENTITY_DAMAGED", EmptyMessageData(), this)
 
             if (component.remainingTicks <= 0) {
-                entityManager.removeComponent(entity, component)
+                entitySystem.removeComponent(entity, component)
             }
         }
     }

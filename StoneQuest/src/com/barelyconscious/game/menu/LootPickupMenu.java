@@ -26,10 +26,9 @@ import com.barelyconscious.game.input.KeyMap;
 import com.barelyconscious.game.input.MouseHandler;
 import com.barelyconscious.game.item.Item;
 import com.barelyconscious.gui.IWidget;
-import com.barelyconscious.services.messaging.MessageSystem;
-import com.barelyconscious.services.messaging.logs.TextLogItemData;
-import com.barelyconscious.services.messaging.logs.TextLogMessageData;
-import com.barelyconscious.services.messaging.logs.TextLogWriterService;
+import com.barelyconscious.systems.messaging.MessageSystem;
+import com.barelyconscious.services.TextLogItemData;
+import com.barelyconscious.services.TextLogWriterService;
 
 import java.util.ArrayList;
 

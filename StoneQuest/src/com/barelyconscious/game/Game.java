@@ -23,9 +23,9 @@ import com.barelyconscious.game.menu.*;
 import com.barelyconscious.game.player.Inventory;
 import com.barelyconscious.game.player.Player;
 import com.barelyconscious.game.spawnable.Loot;
-import com.barelyconscious.services.SystemsComposer;
-import com.barelyconscious.services.WindowManager;
-import com.barelyconscious.services.messaging.MessageSystem;
+import com.barelyconscious.systems.SystemsComposer;
+import com.barelyconscious.systems.WindowManager;
+import com.barelyconscious.systems.messaging.MessageSystem;
 
 import javax.swing.*;
 import java.time.Clock;

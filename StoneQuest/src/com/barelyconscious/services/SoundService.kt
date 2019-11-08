@@ -1,9 +1,9 @@
 package com.barelyconscious.services
 
-import com.barelyconscious.services.messaging.IMessageObserver
-import com.barelyconscious.services.messaging.data.IMessageData
-import com.barelyconscious.services.messaging.data.MessageResponse
-import com.barelyconscious.services.messaging.data.SoundMessageData
+import com.barelyconscious.systems.messaging.IMessageObserver
+import com.barelyconscious.systems.messaging.data.IMessageData
+import com.barelyconscious.systems.messaging.data.MessageResponse
+import com.barelyconscious.systems.messaging.data.SoundMessageData
 
 class SoundService : IMessageObserver {
 

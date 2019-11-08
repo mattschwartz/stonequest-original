@@ -1,6 +1,6 @@
-package com.barelyconscious.services.messaging
+package com.barelyconscious.systems.messaging
 
-import com.barelyconscious.services.messaging.data.IMessageData
+import com.barelyconscious.systems.messaging.data.IMessageData
 
 abstract class AMessenger(
     private val messageSystem: MessageSystem

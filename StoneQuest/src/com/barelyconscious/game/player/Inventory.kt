@@ -5,11 +5,11 @@ import com.barelyconscious.game.item.Item
 import com.barelyconscious.game.item.definitions.*
 import com.barelyconscious.game.spawnable.Loot
 import com.barelyconscious.services.SoundService
-import com.barelyconscious.services.audio.PlayableSound
-import com.barelyconscious.services.messaging.MessageSystem
-import com.barelyconscious.services.messaging.data.SoundMessageData
-import com.barelyconscious.services.messaging.logs.TextLogMessageData
-import com.barelyconscious.services.messaging.logs.TextLogWriterService
+import com.barelyconscious.systems.audio.PlayableSound
+import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.systems.messaging.data.SoundMessageData
+import com.barelyconscious.services.TextLogMessageData
+import com.barelyconscious.services.TextLogWriterService
 
 class Inventory(
 //    private val textLog: TextLog,

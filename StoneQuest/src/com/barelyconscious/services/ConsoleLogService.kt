@@ -1,8 +1,10 @@
-package com.barelyconscious.services.messaging.logs
+package com.barelyconscious.services
 
-import com.barelyconscious.services.messaging.IMessageObserver
-import com.barelyconscious.services.messaging.data.IMessageData
-import com.barelyconscious.services.messaging.data.MessageResponse
+import com.barelyconscious.systems.messaging.IMessageObserver
+import com.barelyconscious.systems.messaging.data.IMessageData
+import com.barelyconscious.systems.messaging.data.MessageResponse
+import com.barelyconscious.systems.logging.LogLevel
+import com.barelyconscious.systems.messaging.data.LogMessageData
 import java.time.Clock
 
 class ConsoleLogService(private val clock: Clock) : IMessageObserver {

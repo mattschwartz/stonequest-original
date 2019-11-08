@@ -2,9 +2,9 @@ package com.barelyconscious.components
 
 import com.barelyconscious.entities.AEntity
 import com.barelyconscious.entities.items.AItem
-import com.barelyconscious.systems.EntityManager
+import com.barelyconscious.systems.EntitySystem
 
-class InventoryComponent(entity: AEntity) : AComponent(entity) {
+class InventoryComponent : IComponent {
 
     companion object {
         const val MAX_ITEM_SLOTS = 28
@@ -40,13 +40,13 @@ class InventoryComponent(entity: AEntity) : AComponent(entity) {
         return null
     }
 
-    fun useItem(entityManager: EntityManager, inventorySlot: Int): Boolean {
+    fun useItem(entitySystem: EntitySystem, entity: AEntity, inventorySlot: Int): Boolean {
         val item = getItemDetails(inventorySlot)
 
         return if (item == null) {
             false
         } else {
-            item.onUse(entityManager, entity)
+            item.onUse(entitySystem, entity)
             true
         }
     }

@@ -12,9 +12,8 @@
  ************************************************************************** */
 package com.barelyconscious.game.input;
 
-import com.barelyconscious.game.menu.TextLog;
-import com.barelyconscious.services.messaging.MessageSystem;
-import com.barelyconscious.services.messaging.logs.TextLogWriterService;
+import com.barelyconscious.systems.messaging.MessageSystem;
+import com.barelyconscious.services.TextLogWriterService;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

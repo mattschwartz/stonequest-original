@@ -2,9 +2,9 @@ package com.barelyconscious.game.spawnable
 
 import com.barelyconscious.game.item.Item
 import com.barelyconscious.game.menu.LootPickupMenu
-import com.barelyconscious.services.messaging.MessageSystem
-import com.barelyconscious.services.messaging.logs.TextLogMessageData
-import com.barelyconscious.services.messaging.logs.TextLogWriterService
+import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.services.TextLogMessageData
+import com.barelyconscious.services.TextLogWriterService
 
 class Container(
     displayName: String,
