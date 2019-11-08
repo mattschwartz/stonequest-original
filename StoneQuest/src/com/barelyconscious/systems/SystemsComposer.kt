@@ -14,7 +14,7 @@ class SystemsComposer {
     fun compose(): MessageSystem {
         val localClock = Clock.systemDefaultZone()
         val messageSystem = MessageSystem()
-        val entityManager = EntitySystem()
+        val entitySystem = EntitySystem()
 
         messageSystem.subscribe(MessageSystem.ANY_EVENT_CODE, ConsoleLogService(localClock))
         messageSystem.subscribe(
@@ -27,7 +27,7 @@ class SystemsComposer {
 
         subscribeInventoryService(
             messageSystem,
-            InventoryService(entityManager))
+            InventoryService(messageSystem, entitySystem))
 
         return messageSystem
     }

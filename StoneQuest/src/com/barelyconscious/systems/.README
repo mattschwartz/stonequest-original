@@ -1,0 +1,5 @@
+You're going to forget, so:
+
+Services listen to and process messages (i.e., MessageObserver)
+
+Systems enact component behavior

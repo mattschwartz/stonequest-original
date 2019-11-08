@@ -1,8 +1,11 @@
 package com.barelyconscious.components
 
 import com.barelyconscious.entities.AEntity
-import com.barelyconscious.entities.items.AItem
+import com.barelyconscious.entities.items.AUsableItem
+import com.barelyconscious.entities.items.IItem
 import com.barelyconscious.systems.EntitySystem
+import com.barelyconscious.systems.MessageSystem
+import javax.imageio.metadata.IIOInvalidTreeException
 
 class InventoryComponent : IComponent {
 
@@ -10,7 +13,7 @@ class InventoryComponent : IComponent {
         const val MAX_ITEM_SLOTS = 28
     }
 
-    private val inventoryItems: MutableList<AItem> = mutableListOf()
+    private val inventoryItems: MutableList<IItem> = mutableListOf()
 
     /**
      * Attempts to add the item to the inventory. Will not add if inventory is full.
@@ -18,7 +21,7 @@ class InventoryComponent : IComponent {
      * @param item the item to add to the inventory
      * @return index of the Item in the inventory if added, or -1 if inventory is full
      */
-    fun addItem(item: AItem): Int {
+    fun addItem(item: IItem): Int {
         if (inventoryItems.size >= MAX_ITEM_SLOTS) {
             return -1
         }
@@ -33,25 +36,29 @@ class InventoryComponent : IComponent {
      * @param inventorySlot the location of the item to remove
      * @return the item removed or null if no item exists at that inventory slot
      */
-    fun removeItem(inventorySlot: Int): AItem? {
+    fun removeItem(inventorySlot: Int): IItem? {
         if (inventorySlot >= 0 && inventorySlot < inventoryItems.size) {
             return inventoryItems.removeAt(inventorySlot)
         }
         return null
     }
 
-    fun useItem(entitySystem: EntitySystem, entity: AEntity, inventorySlot: Int): Boolean {
+    fun removeItem(item: IItem) {
+        inventoryItems.remove(item)
+    }
+
+    fun useItem(messageSystem: MessageSystem, entity: AEntity, inventorySlot: Int): Boolean {
         val item = getItemDetails(inventorySlot)
 
-        return if (item == null) {
+        return if (item == null || item !is AUsableItem) {
             false
         } else {
-            item.onUse(entitySystem, entity)
+            item.onUse(messageSystem, entity)
             true
         }
     }
 
-    fun getItemDetails(inventorySlot: Int): AItem? {
+    fun getItemDetails(inventorySlot: Int): IItem? {
         if (inventorySlot >= 0 && inventorySlot < inventoryItems.size) {
             return inventoryItems[inventorySlot]
         }

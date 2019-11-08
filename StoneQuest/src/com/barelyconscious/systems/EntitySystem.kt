@@ -34,12 +34,12 @@ class EntitySystem {
         }
     }
 
-    fun removeEntity(AEntityToRemove: AEntity) {
-        entities.remove(AEntityToRemove)
+    fun removeEntity(entity: AEntity) {
+        entities.remove(entity)
     }
 
-    fun removeComponent(AEntity: AEntity, componentToRemove: IComponent) {
-        val match: AEntity = entities.find { it == AEntity }
+    fun removeComponent(entity: AEntity, componentToRemove: IComponent) {
+        val match: AEntity = entities.find { it == entity }
             ?: return
 
         match.components.remove(componentToRemove)

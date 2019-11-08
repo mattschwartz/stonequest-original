@@ -1,0 +1,15 @@
+{
+    "__type": "AUsableItem",
+    "itemId": "potion_hitpoints_minor",
+    "displayName": "Minor health potion",
+    "itemDescription": "Restores a small amount of health.",
+    "itemLevel": 1,
+    "itemRarity": "COMMON",
+    "components": [
+        {
+            // Restores health by reducing the amount of damage an entity has taken
+            "__type": "DamageComponent",
+            "value": -5
+        }
+    ]
+}

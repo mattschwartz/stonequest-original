@@ -1,0 +1,8 @@
+{
+    "__type": "AUsableItem",
+    "itemId": "potion_poison_curing",
+    "displayName": "Curing Potion",
+    "itemDescription": "Cures you of all poisons when imbibed.",
+    "itemLevel": 1,
+    "itemRarity": "COMMON"
+}

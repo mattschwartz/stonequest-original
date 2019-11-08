@@ -1,0 +1,22 @@
+{
+    "__type": "AUsableItem",
+    "itemId": "potion_strength_vitriolic",
+    "displayName": "Vitriolic Strength Potion",
+    "itemDescription": "Grants the imbiber immense strength for 50 seconds and reduces hitpoints for 200 seconds. Can be fatal.",
+    "itemLevel": 100,
+    "itemRarity": "EPIC",
+    "components": [
+        {
+            "__type": "TemporaryAttributeComponent",
+            "value": 500,
+            "attribute": "Strength",
+            "duration": 50
+        },
+        {
+            "__type": "TemporaryAttributeComponent",
+            "value": -10,
+            "attribute": "Hitpoints",
+            "duration": 200
+        }
+    ]
+}
