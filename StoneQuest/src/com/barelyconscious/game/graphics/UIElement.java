@@ -15,13 +15,14 @@ package com.barelyconscious.game.graphics;
 import com.barelyconscious.game.Common;
 import com.barelyconscious.game.Game;
 import com.barelyconscious.game.Screen;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class UIElement {
-    
+
     private final int THEME_REPLACEMENT_COLOR = new Color(13, 13, 13).getRGB();
 
     /**
@@ -62,25 +63,25 @@ public class UIElement {
     public static final UIElement CHAOS_MAGIC_ICON = new UIElement("/GUI/icons/skill_icons/chaos_magic_icon.png");
     public static final UIElement ALL_MAGIC_ICON = new UIElement("/GUI/icons/skill_icons/all_magic_icon.png");
     public static final UIElement CLOSE_BUTTON_ICON = new UIElement("/GUI/icons/close_button.png");
-    
+
     // GUI elements - buffs and debuffs
     public static final UIElement BUFF_BAR_POPOUT = new UIElement("/GUI/buffbar/buff_frame_popout.png");
     public static final UIElement DEBUFF_BAR_POPOUT = new UIElement("/GUI/buffbar/debuff_frame_popout.png");
     public static final UIElement ACTIVE_EFFECT_BACKGROUND_FRAME = new UIElement("/GUI/buffbar/active_effect_background_frame.png");
     public static final UIElement DROP_DOWN_ARROW = new UIElement("/GUI/drop_down_notify/drop_down_arrow.png");
-    
+
     // GUI elements - the minimap
     public static final UIElement MINIMAP_FRAME = new UIElement("/GUI/minimap.png");
     public static final UIElement MINIMAP_ZONE_LEVEL_IDENTIFIER_TAB = new UIElement("/GUI/minimap_zone_level_identifier_tab.png");
     public static final UIElement MINIMAP_REMAINING_ELITES_IDENTIFIER_TAB = new UIElement("/GUI/minimap_remaining_elites_identifier_tab.png");
-    
+
     // GUI elements - unit frames
     public static final UIElement UNITFRAME_PLAYER = new UIElement("/GUI/unitframe_player.png");
     public static final UIElement UNITFRAME_PLAYER_HEALTHBAR = new UIElement("/GUI/unitframe_player_healthbar.png");
     public static final UIElement UNITFRAME_ENTITY_HEALTHBAR = new UIElement("/GUI/unitframe_entity_healthbar.png");
     public static final UIElement UNITFRAME_ENTITY = new UIElement("/GUI/unitframe_entity.png");
     public static final UIElement UNITFRAME_ELITE = new UIElement("/GUI/unitframe_elite.png");
-    
+
     // GUI elements - Inventory Frame
     public static final UIElement INVENTORY_FRAME = new UIElement("/GUI/inventory/inventory_frame.png");
     public static final UIElement INVENTORY_ITEM_INFO_FRAME_TOP = new UIElement("/GUI/inventory/inventory_item_info_frame_top.png");
@@ -88,14 +89,14 @@ public class UIElement {
     public static final UIElement INVENTORY_ITEM_SELECT_HIGHLIGHT = new UIElement("/GUI/inventory/item_select_highlight.png");
     public static final UIElement INVENTORY_BAG_SELECT_ELEMENT = new UIElement("/GUI/inventory/inventory_bag_select_element.png");
     public static final UIElement INVENTORY_BAG_SELECT_NOTIFY = new UIElement("/GUI/inventory/open_bag_notify.png");
-    
+
     // GUI elements - Attributes Frame
     public static final UIElement ATTRIBUTES_FRAME = new UIElement("/GUI/attributes/stats_frame.png");
     public static final UIElement ATTRIBUTES_HIGHLIGHTED_DETAILS_BUTTON = new UIElement("/GUI/attributes/details_button_highlight.png");
     public static final UIElement ATTRIBUTES_HIGHLIGHTED_STAT = new UIElement("/GUI/attributes/selected_stat_highlight.png");
     public static final UIElement ATTRIBUTES_DETAILS_PAGE_VISIBLE = new UIElement("/GUI/attributes/details_page_visible.png");
     public static final UIElement ATTRIBUTES_DETAILS_PAGE_NOT_VISIBLE = new UIElement("/GUI/attributes/details_page_not_visible.png");
-    
+
     /**
      * The RGB color value of the transparent color 255,0,255 which is used to provide transparency when drawing the
      * UIElement.
@@ -147,10 +148,10 @@ public class UIElement {
 
         return img;
     }
-    
+
     private static String trim(String string) {
         String parts[] = string.split("/");
-        
+
         return parts[parts.length - 1];
     }
 
@@ -167,19 +168,23 @@ public class UIElement {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 try {
-                pix = pixels[x + y * width];
+                    pix = pixels[x + y * width];
                 } catch (ArrayIndexOutOfBoundsException e) {
                     continue;
                 }
                 if (pix == TRANSPARENT_COLOR) {
                     continue;
-                }
-                
-                else if (pix == THEME_REPLACEMENT_COLOR) {
+                } else if (pix == THEME_REPLACEMENT_COLOR) {
                     pix = Common.themeForegroundColor;
                 }
 
-                screen.setPixel(pix, xStart + x, yStart + y);
+                int xValue = xStart + x;
+                int yValue = yStart + y;
+
+                if (xValue >= 0 && xValue < screen.getScreenWidth()
+                    && yValue >= 0 && yValue < screen.getScreenHeight()) {
+                    screen.setPixel(pix, xStart + x, yStart + y);
+                }
             }
         }
     }
@@ -238,12 +243,10 @@ public class UIElement {
 
                 if (pix == TRANSPARENT_COLOR) {
                     continue;
-                }
-                
-                else if (pix == THEME_REPLACEMENT_COLOR) {
+                } else if (pix == THEME_REPLACEMENT_COLOR) {
                     pix = Common.themeForegroundColor;
                 }
-                
+
                 r = (pix >> 16) & mask;
                 g = (pix >> 8) & mask;
                 b = pix & mask;

@@ -123,7 +123,7 @@ public class InventoryMenu extends Interactable
     public void resize(int width, int height) {
         xOffs = width - (INVENTORY_FRAME_WIDTH + BAG_SLOT_WIDTH) - 1;
 //        yOffs = Game.textLog.getOffsY() - Game.textLog.getPixelHeight() - INVENTORY_FRAME_HEIGHT;//height - Game.textLog.getPixelHeight() - inventoryHeight - Font.CHAR_HEIGHT * 2 - Common.TILE_SIZE+10;
-        yOffs = height - INVENTORY_FRAME_HEIGHT;
+        yOffs = height - INVENTORY_FRAME_HEIGHT - 80;
 
         defineMouseZone(xOffs, yOffs, INVENTORY_FRAME_WIDTH + BAG_SLOT_WIDTH, INVENTORY_FRAME_HEIGHT);
     } // resize
@@ -393,6 +393,8 @@ public class InventoryMenu extends Interactable
             if ((item = playerInventory.getItemAt((i + bagSlot * 8))) == null) {
                 continue;
             } // if
+            
+            Tile.getTile(item.getTileId()).render(screen, x + (ITEM_SLOT_WIDTH - Common.TILE_SIZE) / 2, y + (ITEM_SLOT_HEIGHT - Common.TILE_SIZE) / 2);
 
             if (item instanceof Armor) {
                 if (((Armor) item).isEquipped()) {
@@ -406,7 +408,6 @@ public class InventoryMenu extends Interactable
                 } // if
             } // if
 
-            Tile.getTile(item.getTileId()).render(screen, x + (ITEM_SLOT_WIDTH - Common.TILE_SIZE) / 2, y + (ITEM_SLOT_HEIGHT - Common.TILE_SIZE) / 2);
             if (item.getStackSize() > 1) {
                 itemStack = "" + item.getStackSize();
                 Font.drawOutlinedMessage(screen, itemStack, Common.FONT_WHITE_RGB, false, x + ITEM_SLOT_WIDTH - itemStack.length() * Font.CHAR_WIDTH - 5, y + ITEM_SLOT_HEIGHT - Font.CHAR_HEIGHT - 5);
