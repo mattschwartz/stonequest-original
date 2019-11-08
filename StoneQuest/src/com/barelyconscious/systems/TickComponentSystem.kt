@@ -1,7 +1,6 @@
 package com.barelyconscious.systems
 
 import com.barelyconscious.components.IComponent
-import com.barelyconscious.systems.messaging.MessageSystem
 import com.barelyconscious.systems.messaging.data.EmptyMessageData
 
 class HealthPointsComponent(

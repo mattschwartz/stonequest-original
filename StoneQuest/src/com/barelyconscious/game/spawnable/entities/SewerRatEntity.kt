@@ -10,7 +10,7 @@ import com.barelyconscious.game.spawnable.Entity
 import com.barelyconscious.game.spawnable.Loot
 import com.barelyconscious.services.SoundService
 import com.barelyconscious.systems.audio.PlayableSound
-import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.systems.MessageSystem
 import com.barelyconscious.systems.messaging.data.SoundMessageData
 import com.barelyconscious.services.TextLogMessageData
 import com.barelyconscious.services.TextLogWriterService

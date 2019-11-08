@@ -26,7 +26,7 @@ import com.barelyconscious.game.input.KeyMap;
 import com.barelyconscious.game.input.MouseHandler;
 import com.barelyconscious.game.item.Item;
 import com.barelyconscious.gui.IWidget;
-import com.barelyconscious.systems.messaging.MessageSystem;
+import com.barelyconscious.systems.MessageSystem;
 import com.barelyconscious.services.TextLogItemData;
 import com.barelyconscious.services.TextLogWriterService;
 

@@ -3,7 +3,7 @@ package com.barelyconscious.game.spawnable
 import com.barelyconscious.game.Game
 import com.barelyconscious.services.SoundService
 import com.barelyconscious.systems.audio.PlayableSound
-import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.systems.MessageSystem
 import com.barelyconscious.systems.messaging.data.SoundMessageData
 
 /**

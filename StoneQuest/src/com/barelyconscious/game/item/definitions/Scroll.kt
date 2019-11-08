@@ -8,7 +8,7 @@ import com.barelyconscious.game.item.OptionsKey
 import com.barelyconscious.game.player.AttributeMod
 import com.barelyconscious.services.SoundService
 import com.barelyconscious.systems.audio.PlayableSound
-import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.systems.MessageSystem
 import com.barelyconscious.systems.messaging.data.SoundMessageData
 import com.barelyconscious.services.TextLogMessageData
 import com.barelyconscious.services.TextLogWriterService

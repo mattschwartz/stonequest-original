@@ -8,7 +8,7 @@ import com.barelyconscious.game.player.Player
 import com.barelyconscious.game.player.activeeffects.*
 import com.barelyconscious.game.spawnable.Loot
 import com.barelyconscious.systems.SystemsComposer
-import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.systems.MessageSystem
 
 fun main() {
     val messageSystem = SystemsComposer().compose()

@@ -3,7 +3,6 @@ package com.barelyconscious.systems
 import com.barelyconscious.game.menu.TextLog
 import com.barelyconscious.services.InventoryService
 import com.barelyconscious.services.SoundService
-import com.barelyconscious.systems.messaging.MessageSystem
 import com.barelyconscious.services.ConsoleLogService
 import com.barelyconscious.services.TextLogWriterService
 import java.time.Clock

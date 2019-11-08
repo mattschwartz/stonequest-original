@@ -7,7 +7,6 @@ import com.barelyconscious.game.input.Interactable
 import com.barelyconscious.game.input.KeyHandler
 import com.barelyconscious.game.input.MouseHandler
 import com.barelyconscious.gui.IWidget
-import com.barelyconscious.systems.messaging.MessageSystem
 import com.barelyconscious.services.TextLogMessageData
 import com.barelyconscious.services.TextLogWriterService
 import java.awt.Dimension

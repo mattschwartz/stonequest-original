@@ -12,7 +12,7 @@
  ************************************************************************** */
 package com.barelyconscious.game.input;
 
-import com.barelyconscious.systems.messaging.MessageSystem;
+import com.barelyconscious.systems.MessageSystem;
 import com.barelyconscious.services.TextLogWriterService;
 
 import java.awt.event.MouseEvent;

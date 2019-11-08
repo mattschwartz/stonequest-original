@@ -16,7 +16,7 @@ import com.barelyconscious.game.portrait.Portrait
 import com.barelyconscious.game.spawnable.*
 import com.barelyconscious.game.spawnable.entities.SewerRatEntity
 import com.barelyconscious.systems.WindowManager
-import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.systems.MessageSystem
 import com.barelyconscious.services.TextLogMessageData
 import com.barelyconscious.services.TextLogWriterService
 import java.time.Clock

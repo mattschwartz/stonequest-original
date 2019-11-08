@@ -2,7 +2,7 @@ package com.barelyconscious.game.spawnable
 
 import com.barelyconscious.game.item.Item
 import com.barelyconscious.game.menu.LootPickupMenu
-import com.barelyconscious.systems.messaging.MessageSystem
+import com.barelyconscious.systems.MessageSystem
 import com.barelyconscious.services.TextLogMessageData
 import com.barelyconscious.services.TextLogWriterService
 

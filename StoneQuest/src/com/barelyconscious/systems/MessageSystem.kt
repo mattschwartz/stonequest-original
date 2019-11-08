@@ -1,5 +1,6 @@
-package com.barelyconscious.systems.messaging
+package com.barelyconscious.systems
 
+import com.barelyconscious.systems.messaging.IMessageObserver
 import com.barelyconscious.systems.messaging.data.EmptyMessageData
 import com.barelyconscious.systems.messaging.data.IMessageData
 import com.barelyconscious.systems.messaging.data.MessageResponse

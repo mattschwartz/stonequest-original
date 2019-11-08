@@ -32,7 +32,7 @@ import com.barelyconscious.game.item.*;
 import com.barelyconscious.game.player.activeeffects.Buff;
 import com.barelyconscious.game.spawnable.Sprite;
 import com.barelyconscious.game.spawnable.Entity;
-import com.barelyconscious.systems.messaging.MessageSystem;
+import com.barelyconscious.systems.MessageSystem;
 import com.barelyconscious.services.TextLogMessageData;
 import com.barelyconscious.services.TextLogWriterService;
 
