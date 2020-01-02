@@ -57,7 +57,7 @@ class Scroll(
         Game.player.addScrollToIdentifieds(scrollId)
 
         messageSystem.sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             TextLogMessageData("The scroll crumbles to dust..."),
             this
         )
@@ -65,7 +65,7 @@ class Scroll(
         extraEffects()
         identifyScroll()
         messageSystem.sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             TextLogMessageData("It was a $scrollName!"),
             this)
         messageSystem.sendMessage(

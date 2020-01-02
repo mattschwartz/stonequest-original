@@ -66,14 +66,13 @@ class EquipmentService(
         val equipmentSlot = data.equipmentItem.slotId
         val equippedItem = doll.getEquippedItem(equipmentSlot)
 
-        return if (equippedItem != null) {
-            return if (inventoryComponent.addItem(equippedItem) == -1) {
-                MessageResponse.failed("Inventory is full")
-            } else {
-                doll.unequipItem(entitySystem, data.entity, equippedItem)
-                MessageResponse.ok()
-            }
+        return if (equippedItem == null) {
+            // Nothing equipped
+            MessageResponse.ok()
+        } else if (inventoryComponent.addItem(equippedItem) == -1) {
+            MessageResponse.failed("Inventory is full")
         } else {
+            doll.unequipItem(entitySystem, data.entity, equippedItem)
             MessageResponse.ok()
         }
     }

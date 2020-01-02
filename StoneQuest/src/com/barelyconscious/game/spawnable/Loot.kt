@@ -31,7 +31,7 @@ class Loot(
         }
 
         messageSystem.sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             TextLogMessageData("There is $article $displayName here.")
                 .with(LineElement(displayName, true, item.rarityColorRgb)),
             this
@@ -41,7 +41,7 @@ class Loot(
     override fun interact() {
         Game.inventory.addItem(item)
         messageSystem.sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             TextLogItemData(item),
             this
         )

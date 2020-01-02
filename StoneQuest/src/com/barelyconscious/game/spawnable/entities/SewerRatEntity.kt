@@ -81,7 +81,7 @@ class SewerRatEntity(
         val amount = (rand.nextInt(1400) + 1) * level
 
         messageSystem.sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             TextLogMessageData("$displayName has been murdered brutally. Its family mourns.")
                 .with(LineElement(displayName, true, Common.FONT_ENTITY_LABEL_RGB)),
             this)
@@ -101,7 +101,7 @@ class SewerRatEntity(
         // non-entity specific stuff that should be dealt with another way but who's keepin score?
         Game.player.changeHealthBy(-hit)
         messageSystem.sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             TextLogMessageData("$displayName hits you for ${ceil(hit).toInt()} physical")
                 .with(LineElement(displayName, true, Common.FONT_ENTITY_LABEL_RGB)),
             this

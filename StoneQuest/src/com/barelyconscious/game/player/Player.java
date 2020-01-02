@@ -2,22 +2,22 @@
  * Project:          Roguelike2.0
  * File displayName:        Player.java
  * Author:           Matt Schwartz
- * Date created:     07.05.2012 
+ * Date created:     07.05.2012
  * Redistribution:   You are free to use, reuse, and edit any of the text in
  this file.  You are not allowed to take credit for code
- that was not written fully by yourself, or to remove 
- credit from code that was not written fully by yourself.  
+ that was not written fully by yourself, or to remove
+ credit from code that was not written fully by yourself.
  Please email stonequest.bcgames@gmail.com for issues or concerns.
- * File description: The Player class represents the user in the world.  All of 
- the user's attributes, known Scroll id's, afflicions, 
+ * File description: The Player class represents the user in the world.  All of
+ the user's attributes, known Scroll id's, afflicions,
  infections and buffs are recorded here.
-                     
+
  * TODO:             Remove the extra data structure to keep track of Poisons
  and Potion effects.  Poisons are Debuffs and should be grouped
- with Curses and other Debuffs and handled that way.  Also 
+ with Curses and other Debuffs and handled that way.  Also
  shouldn't have to keep track of a Potion effect.  Just adjust
  the Player's current stats according to the effects of the
- Potion when it is first quaffed and readjust the Player 
+ Potion when it is first quaffed and readjust the Player
  attributes when the Potion ends... or something
  **************************************************************************** */
 package com.barelyconscious.game.player;
@@ -299,7 +299,7 @@ public class Player extends Entity {
         playerAttributes[9] = 0;
     }
 
-    /* Causes all current stat levels to stabalize by 1 point, 
+    /* Causes all current stat levels to stabalize by 1 point,
      either up (regen life) or down (stat potions) */
     public void normalizeStats() {
         for (int i = ACCURACY_CURRENT; i <= HOLY_MAGIC_CURRENT; i++) {
@@ -373,7 +373,7 @@ public class Player extends Entity {
                 attackDamage);
 
             getMessageSystem().sendMessage(
-                TextLogWriterService.LOG_EVENT_CODE,
+                TextLogWriterService.LOG_WRITE_TEXT,
                 new TextLogMessageData(message)
                     .with(new LineElement(entity.getDisplayName(), true, Common.FONT_ENTITY_LABEL_RGB)),
                 this);
@@ -515,7 +515,7 @@ public class Player extends Entity {
     public void quaff(Potion pot) {
 //        int numAffixes;
 //        AttributeMod affix;
-//        
+//
 //        /* Player has drunk an antimagic potion which removes at least one
 //            curse effect from the player */
 //        if (pot != null && pot.getPotionType() == Potion.ANTIMAGIC) {
@@ -524,10 +524,10 @@ public class Player extends Entity {
 //                    removeDebuffAt(i--);
 //                }
 //            }
-//            
+//
 //            return;
 //        }
-//        
+//
 //        /* Player has quaffed an antivenom potion which removes all Poison effects
 //            on the Player */
 //        else if (pot != null && pot.getPotionType() == Potion.ANTIVENOM) {
@@ -536,30 +536,30 @@ public class Player extends Entity {
 //                    removeDebuffAt(i--);
 //                }
 //            }
-//            
+//
 //            return;
 //        }
-//        
+//
 //        /* Potion is a stat buff potion */
 //        else if (activePotion != null) {
 //            numAffixes = activePotion.getNumAffixes();
-//            
+//
 //            for (int i = 0; i < numAffixes; i++) {
 //                affix = activePotion.getAffixAt(i);
 //                playerAttributes[affix.getAttributeId()] -= affix.getAttributeModifier();
 //            }
 //        }
-//        
+//
 //        /* When a Potion's effects end, quaff is called with a null argument
 //            for some reason */
 //        if (pot == null) {
 //            activePotion = null;
 //            return;
 //        }
-//        
+//
 //        activePotion = pot;
 //        numAffixes = activePotion.getNumAffixes();
-//        
+//
 //        for (int i = 0; i < numAffixes; i++) {
 //            affix = activePotion.getAffixAt(i);
 //            playerAttributes[affix.getAttributeId()] += affix.getAttributeModifier();
@@ -582,7 +582,7 @@ public class Player extends Entity {
 
 
         getMessageSystem().sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             new TextLogMessageData("It was a " + scroll.getDisplayName() + "!"),
             this);
     }
@@ -776,7 +776,7 @@ public class Player extends Entity {
     }
 
     /* XP FORMULA NOT FINAL
-     Simple formula to determine the amount of experience needed to 
+     Simple formula to determine the amount of experience needed to
      reach the level given in the parameters.  Used to let the PLAYER_ICON
      know how much XP he/she must get to reach the next level */
     public int getExperienceReq(int level) {
@@ -784,7 +784,7 @@ public class Player extends Entity {
     }
 
     /* FORMULA NOT FINAL
-     Returns the minimum damage necessary for the combat calculator. 
+     Returns the minimum damage necessary for the combat calculator.
      Minimum damage is based on:
      * Level
      * Weapon damage range (Lower-bound) (NYI)
@@ -794,7 +794,7 @@ public class Player extends Entity {
             + (equippedArmorSlots[MAIN_HAND_SLOT_ID] == null ? 0 : ((Weapon) equippedArmorSlots[MAIN_HAND_SLOT_ID]).getMinDamageBonus());
     }
 
-    /* FORMULA NOT FINAL 
+    /* FORMULA NOT FINAL
      Returns the maximum damage necessary for the combat calculator.
      Maximum damage is based on:
      * Level
@@ -805,7 +805,7 @@ public class Player extends Entity {
             + (equippedArmorSlots[MAIN_HAND_SLOT_ID] == null ? 0 : ((Weapon) equippedArmorSlots[MAIN_HAND_SLOT_ID]).getMaxDamageBonus());
     }
 
-    /* FORMULA NOT FINAL 
+    /* FORMULA NOT FINAL
      Calculates and returns the minimum magical damage bound.
      Magical damage is based solely on the PLAYER_ICON's level and is increased
      by the magic element being cast */
@@ -813,13 +813,13 @@ public class Player extends Entity {
         return getLevel() * (getBonusToElement(elementCastSchool) * 0.01f + 1f);
     }
 
-    /* FORMULA NOT FINAL 
+    /* FORMULA NOT FINAL
      Calculates and returns the maximum magical damage bound*/
     public double getMaxMagicDamage() {
         return (getLevel() + ((getLevel() + 1) * 1.25)) * (getBonusToElement(elementCastSchool) * 0.01f + 1f);
     }
 
-    /* FORMULA NOT FINAL 
+    /* FORMULA NOT FINAL
      Strength increases the PLAYER_ICON's maximum hit */
     public double getStrengthBonus() {
         double strengthBonus = (getAttribute(STRENGTH_CURRENT) * 1.26);
@@ -837,11 +837,11 @@ public class Player extends Entity {
         return critChance > 0 ? critChance : 0f;
     }
 
-    /* FORMULA NOT FINAL 
+    /* FORMULA NOT FINAL
      Returns the PLAYER_ICON's physical damage reduction, as a percentage
      Physical damage reduction reduces the PLAYER_ICON's damage taken from
      physical attacks by a direct percentage.  Physical damage reduction
-     is based on Defense, with each point of Defense having less of an 
+     is based on Defense, with each point of Defense having less of an
      effect the higher level the PLAYER_ICON is */
     public double getPhysicalDamageReduction() {
         double defenseBonus = (1f / (13.72f / (getAttribute(DEFENSE_CURRENT) * 10f)));
@@ -852,7 +852,7 @@ public class Player extends Entity {
     /* FORMULA NOT FINAL
      Returns the PLAYER_ICON's chance to evade incoming physical attacks in the
      form of a percentage.  Evade chance is based on a PLAYER_ICON's Agility
-     level, and each point of Agility is worth less the higher level the 
+     level, and each point of Agility is worth less the higher level the
      PLAYER_ICON is. */
     public double getEvadeChance() {
         double evadeChance = (1f / (45.3491f / (getAttribute(AGILITY_CURRENT) * 10f)));
@@ -860,7 +860,7 @@ public class Player extends Entity {
         return evadeChance > 0 ? evadeChance : 0;
     }
 
-    /* FORMULA NOT FINAL 
+    /* FORMULA NOT FINAL
      Returns the PLAYER_ICON's resistance to a particular element, given as
      the parameter.  Each type of resistance is weighed the same, differing
      only based on the resistance's level.  Each point in an element has

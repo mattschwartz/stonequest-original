@@ -29,13 +29,13 @@ class Container(
     override fun interact() {
         if (itemList.isEmpty()) {
             messageSystem.sendMessage(
-                TextLogWriterService.LOG_EVENT_CODE,
+                TextLogWriterService.LOG_WRITE_TEXT,
                 TextLogMessageData("The $displayName is empty."),
                 this
             )
         } else {
             messageSystem.sendMessage(
-                TextLogWriterService.LOG_EVENT_CODE,
+                TextLogWriterService.LOG_WRITE_TEXT,
                 TextLogMessageData("You open the $displayName."),
                 this
             )

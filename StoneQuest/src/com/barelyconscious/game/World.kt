@@ -752,7 +752,7 @@ class World(
 
     private fun writeLog(message: String) =
         messageSystem.sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             TextLogMessageData(message),
             this)
 }

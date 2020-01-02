@@ -5,8 +5,8 @@
  * Date created:     03.11.2013
  * Redistribution:   You are free to use, reuse, and edit any of the text in
                      this file.  You are not allowed to take credit for code
-                     that was not written fully by yourself, or to remove 
-                     credit from code that was not written fully by yourself.  
+                     that was not written fully by yourself, or to remove
+                     credit from code that was not written fully by yourself.
                      Please email stonequest.bcgames@gmail.com for issues or concerns.
  * File description: Displays a list of loot underneath the player.  Shows when
                      the player presses the loot-pickup button and more than one
@@ -180,7 +180,7 @@ public class LootPickupMenu extends Interactable
         Item item = itemList.get(selectedLoot + itemListLineStart);
 
         messageSystem.sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             new TextLogItemData(item),
             this);
     } // examineItem
@@ -316,8 +316,8 @@ public class LootPickupMenu extends Interactable
         /* Draw a border around the loo menu for aesthetics */
         screen.drawRectangle(Common.themeForegroundColor, xOffs, yOffs, menuLineWidth *
             Font.CHAR_WIDTH, Font.CHAR_HEIGHT + menuLineHeight * Common.TILE_SIZE);
-        
-        /* Draw a filled rectangle at the top of the Menu, representing a title 
+
+        /* Draw a filled rectangle at the top of the Menu, representing a title
             bar for aesthetics */
         screen.fillRectangle(Common.themeForegroundColor, xOffs, yOffs,
             menuLineWidth * Font.CHAR_WIDTH, Font.CHAR_HEIGHT);

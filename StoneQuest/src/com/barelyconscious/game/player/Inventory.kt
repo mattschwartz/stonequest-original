@@ -166,7 +166,7 @@ class Inventory(
             )
         } else {
             messageSystem.sendMessage(
-                TextLogWriterService.LOG_EVENT_CODE,
+                TextLogWriterService.LOG_WRITE_TEXT,
                 TextLogMessageData(item.itemDescription),
                 this)
         }
@@ -180,7 +180,7 @@ class Inventory(
      */
     fun salvageItem(index: Int) {
         messageSystem.sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             TextLogMessageData("Salvaging NYI"),
             this)
     }

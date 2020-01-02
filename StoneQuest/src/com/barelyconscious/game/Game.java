@@ -26,12 +26,13 @@ import com.barelyconscious.game.spawnable.Loot;
 import com.barelyconscious.systems.SystemsComposer;
 import com.barelyconscious.systems.WindowManager;
 import com.barelyconscious.systems.MessageSystem;
+import sun.plugin2.message.Message;
 
 import javax.swing.*;
 import java.time.Clock;
 import java.util.ArrayList;
 
-import static com.barelyconscious.game.MainKt.createTestSubjects;
+import static com.barelyconscious.game.CreateItemsKt.createTestSubjects;
 
 public class Game implements Runnable {
 
@@ -52,7 +53,7 @@ public class Game implements Runnable {
     private static WindowManager windowManager;
     private static MessageSystem messageSystem;
 
-    private final SystemsComposer composer = new SystemsComposer();
+    private final SystemsComposer composer = SystemsComposer.Companion.getINSTANCE();
 
     /**
      * Initializes the game window.
@@ -63,7 +64,7 @@ public class Game implements Runnable {
         width = 1280;
         height = 700;
 
-        messageSystem = composer.compose();
+//        messageSystem = composer.getDependency(MessageSystem.class);
         screen = new Screen(width, height);
 
         keyHandler = new KeyHandler();
@@ -106,13 +107,13 @@ public class Game implements Runnable {
         windowManager.addWidget(invenMenu);
         windowManager.addWidget(miniMap);
         windowManager.addWidget(buffBar);
-        windowManager.addWidget(composer.getTextLog());
+//        windowManager.addWidget(composer.getTextLog());
 
         screen.addRenderable(miniMap);
         screen.addRenderable(buffBar);
         screen.addRenderable(invenMenu);
         screen.addRenderable(attributesMenu);
-        screen.addRenderable(composer.getTextLog());
+//        screen.addRenderable(composer.getTextLog());
 
         onResize(width, height);
 
@@ -258,7 +259,7 @@ public class Game implements Runnable {
 //        Sound.RAIN.loop();
     } // main
 
-    /* 
+    /*
      // closing down the window makes sense as a method, so here are
      // the salient parts of what happens with the JFrame extending class ..
 

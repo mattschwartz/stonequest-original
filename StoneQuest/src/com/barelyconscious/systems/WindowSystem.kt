@@ -69,7 +69,7 @@ class WindowManager(
     //  or move to composer
     fun writeWelcomeMessage() {
         messageSystem.sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             TextLogMessageData("Welcome to $GAME_TITLE v$GAME_VERSION")
                 .with(LineElement(
                     "$GAME_TITLE v$GAME_VERSION",
@@ -79,7 +79,7 @@ class WindowManager(
             this)
 
         messageSystem.sendMessage(
-            TextLogWriterService.LOG_EVENT_CODE,
+            TextLogWriterService.LOG_WRITE_TEXT,
             TextLogMessageData("Press ? for help and instructions."),
             this)
     }

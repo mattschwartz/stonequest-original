@@ -43,7 +43,7 @@ class Poison(
             Game.player.changeHealthBy(-tickDamage)
 
             messageSystem.sendMessage(
-                TextLogWriterService.LOG_EVENT_CODE,
+                TextLogWriterService.LOG_WRITE_TEXT,
                 TextLogMessageData(toString())
                     .with(LineElement(displayName, true, Common.FONT_POISON_LABEL_RGB)),
                 this)

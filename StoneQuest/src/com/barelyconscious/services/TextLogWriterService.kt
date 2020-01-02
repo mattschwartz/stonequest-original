@@ -32,7 +32,7 @@ class TextLogWriterService(
 ) : IMessageObserver {
 
     companion object {
-        const val LOG_EVENT_CODE = "stonequest/TextLogWriter/LOG_EVENT_CODE"
+        const val LOG_WRITE_TEXT = "stonequest/TextLogWriter/LOG_WRITE_TEXT"
         const val LOG_SCROLL_UP = "stonequest/TextLogWriter/LOG_SCROLL_UP"
         const val LOG_SCROLL_DOWN = "stonequest/TextLogWriter/LOG_SCROLL_DOWN"
     }
