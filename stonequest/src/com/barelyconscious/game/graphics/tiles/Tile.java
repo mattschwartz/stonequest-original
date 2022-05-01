@@ -91,7 +91,7 @@ public class Tile {
     public static Tile grassTile = new Tile("grass", GRASS_TILE_ID, "/gfx/tiles/world/environment/ground/grass.png", false, false, false);
     public static Tile grassTile2 = new Tile("grass", GRASS_TILE_2_ID, "/gfx/tiles/world/environment/ground/grass2.png", false, false, false);
     public static Tile grassTile3 = new Tile("grass", GRASS_TILE_3_ID, "/gfx/tiles/world/environment/ground/grass3.png", false, false, false);
-    public static Tile stoneWall = new Tile("stone wall", STONEWALL_TILE_ID, "/gfx/tiles/world/environment/walls/stoneWall.png", false, false, false);
+    public static Tile stoneWall = new Tile("stone wall", STONEWALL_TILE_ID, "/gfx/tiles/world/environment/walls/stoneWall.png", true, false, true);
     public static Tile treeStumpTile = new Tile("Tree stump", TREE_STUMP_TILE_ID, "/gfx/tiles/world/environment/walls/treeStump.png", true, false, false);
     public static Tile waterTile = new WaterTile();
     public static Tile lootTile = new Tile(LOOT_TILE_ID, "/gfx/tiles/sprites/items/lootIcon.png");
