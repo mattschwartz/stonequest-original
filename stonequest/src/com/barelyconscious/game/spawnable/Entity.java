@@ -74,6 +74,7 @@ public class Entity extends Sprite {
         inventory = new Inventory();
         equippedItems = new Equippable[NUM_EQUIP_SLOTS];
         attributes = new double[NUM_ATTRIBUTES];
+        attributes[HEALTH_ATTRIBUTE] = totalHealth = 10;
     } // constructor
 
     public Entity(String name, int x, int y, UIElement entityIcon) {

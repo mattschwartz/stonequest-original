@@ -40,7 +40,7 @@ public abstract class Common {
      * The background "theme" for the game. Most graphical features in the game make use of this color to paint its
      * component
      */
-    public static final int THEME_BG_COLOR_RGB = new Color(15, 15, 15).getRGB();
+    public static final int THEME_BG_COLOR_RGB = new Color(33, 33, 33).getRGB();
     /**
      * The foreground "theme" for the game. Most graphical features in the game make use of this color to paint its
      * component

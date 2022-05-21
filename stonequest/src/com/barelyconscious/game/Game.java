@@ -114,12 +114,12 @@ public class Game implements Runnable {
 //        DialogPane dpane = new DialogPane(500, 195, "Tip - Movement in StoneQuest", "Movement is tile-based and can be accomplished one of three ways:\n\n-The WASD keys\n-The arrow keys or\n-Clicking on a tile\n\nYou can turn off tips like these in the Options menu");
 //        screen.addAlwaysOnTopComponent(dpane);
         
-//        int x, y;
-//        for (int i = 0; i < 75; i++) {
-//            x = (int)(Math.random() * 150);
-//            y = (int)(Math.random() * 150);
-//            world.spawnSprite(new SewerRatEntity((int)(Math.random() * 15)+1, x, y));
-//        }
+        int x, y;
+        for (int i = 0; i < 12; i++) {
+            x = (int)(Math.random() * 150);
+            y = (int)(Math.random() * 150);
+            world.spawnSprite(new SewerRatEntity(1, x, y));
+        }
         
         
         Armor clothRobe = new Armor("Cloth robe", 1, 69, 12, Entity.CHEST_SLOT_ID, Item.ITEM_ROOT_FILE_PATH + "armor/chest/clothRobe.png", world.getPlayer(), new AttributeMod(Entity.HEALTH_ATTRIBUTE, 43.5), new AttributeMod(Entity.STRENGTH_ATTRIBUTE, 22));

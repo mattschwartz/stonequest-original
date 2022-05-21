@@ -298,21 +298,28 @@ public class Tile {
                     continue;
                 } // if
 
-                // Darkens the tile by 25%
-                r = (pix >> 16) & mask;
-                g = (pix >> 8) & mask;
-                b = pix & mask;
-
-                r = (int) (r * 0.75);
-                g = (int) (g * 0.75);
-                b = (int) (b * 0.75);
-
-                pix = (r << 16) + (g << 8) + b;
-
-                scr.setPixel(pix, xStart + x, yStart + y);
+                scr.setPixel(grayscale(pix), xStart + x, yStart + y);
             } // for
         } // for
     } // renderShadedTile
+
+    private int grayscale(int pix) {
+        int mask = 0xff;
+        int r = (pix >> 16) & mask;
+        int g = (pix >> 8) & mask;
+        int b = pix & mask;
+
+        final int maxColor;
+        if (r > g) {
+            maxColor = r;
+        } else {
+            maxColor = Math.max(g, b);
+        }
+
+        r = g = b = maxColor;
+
+        return (r << 16) + (g << 8) + b;
+    }
 
     /**
      * Used to draw the mini map by getting a tile's average RGB color value
