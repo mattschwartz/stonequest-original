@@ -124,7 +124,7 @@ public class Game implements Runnable {
         
         Armor clothRobe = new Armor("Cloth robe", 1, 69, 12, Entity.CHEST_SLOT_ID, Item.ITEM_ROOT_FILE_PATH + "armor/chest/clothRobe.png", world.getPlayer(), new AttributeMod(Entity.HEALTH_ATTRIBUTE, 43.5), new AttributeMod(Entity.STRENGTH_ATTRIBUTE, 22));
         Armor clothHat = new Armor("Cloth hat", 1, 69, 12, Entity.HELMET_SLOT_ID, Item.ITEM_ROOT_FILE_PATH + "armor/helmet/clothHat.png", world.getPlayer(), new AttributeMod(Entity.HEALTH_ATTRIBUTE, 43.5), new AttributeMod(Entity.STRENGTH_ATTRIBUTE, 22));
-//        Item leatherBikini = new Armor("Leather Bikini", 1, 69, 12, Entity.CHEST_SLOT_ID, Item.ITEM_ROOT_FILE_PATH + "armor/chest/leatherBikini.png", world.getPlayer());
+        Item leatherBikini = new Armor("Leather Bikini", 1, 69, 12, Entity.CHEST_SLOT_ID, Item.ITEM_ROOT_FILE_PATH + "armor/chest/leatherBikini.png", world.getPlayer());
         Item ironShield = new Armor("Iron shield", 1, 100, 55, Entity.OFF_HAND_SLOT_ID, Item.ITEM_ROOT_FILE_PATH + "armor/shield/ironShield.png", world.getPlayer());
         Item essenceOfMind = new Item("Essence of Mind", 0, 155, 3, Item.ITEM_ROOT_FILE_PATH + "salvage/essenceOfMind.png", world.getPlayer()) {
 
@@ -136,7 +136,7 @@ public class Game implements Runnable {
         };
         world.getPlayer().getInventory().addItem(clothRobe);
         world.getPlayer().getInventory().addItem(clothHat);
-//        world.getPlayer().getInventory().addItem(leatherBikini);
+        world.getPlayer().getInventory().addItem(leatherBikini);
         world.getPlayer().getInventory().addItem(ironShield);
         world.getPlayer().getInventory().addItem(essenceOfMind);
     } // init

@@ -58,15 +58,15 @@ public class World implements Components {
     public World(int width, int height) {
         currentMap = new Map(this, 256, 256, screenWidth, screenHeight);
         inputHandler = new WorldInputHandler(this, 0, 0, width, height);
-        entityList = new ArrayList<Entity>();
-        lootList = new ArrayList<Loot2>();
+        entityList = new ArrayList<>();
+        lootList = new ArrayList<>();
 
         tilesWide = 0;
         tilesHigh = 0;
         tileOffsX = 0;
         tileOffsY = 0;
         currentMap.generateAreaMap(-1, 25, "Kud arajhi steppes");
-    } // constructor
+    }
 
     /**
      * Resize the world with the given width and height: redetermine how many
@@ -84,7 +84,7 @@ public class World implements Components {
         determineTileOffs();
 
         inputHandler.resize(0, 0, width, height);
-    } // resize
+    }
 
     /**
      * Determine, based on the screen width and height, the maximum number of
@@ -93,7 +93,7 @@ public class World implements Components {
     private void determineNumTiles() {
         tilesWide = (int) Math.floor(screenWidth * 1.0 / Common.TILE_SIZE) + 1;
         tilesHigh = (int) Math.floor(screenHeight * 1.0 / Common.TILE_SIZE) + 1;
-    } // determineNumTiles
+    }
 
     /**
      * The player should be centered in the world, thus an offset of tiles must
@@ -103,46 +103,34 @@ public class World implements Components {
         // Center the World around the Player's position within it
         tileOffsX = (tilesWide / 2) - player.getX();
         tileOffsY = (tilesHigh / 2) - player.getY();
-    } // determineOffs
+    }
 
     public int getTileOffsX() {
         return tileOffsX;
-    } // getTileOffsX
+    }
 
     public int getTileOffsY() {
         return tileOffsY;
-    } // getTileOffsY
+    }
 
-    /**
-     *
-     * @return the number of tiles in a row
-     */
     public int getTilesWide() {
         return tilesWide;
-    } // getTilesWide
+    }
 
-    /**
-     *
-     * @return the number of tiles in a column
-     */
     public int getTilesHigh() {
         return tilesHigh;
-    } // getTilesHigh
+    }
 
-    /**
-     *
-     * @param sprite
-     */
     public void spawnSprite(Sprite sprite) {
         if (sprite instanceof Entity) {
             entityList.add((Entity) sprite);
-        } // if
+        }
         else if (sprite instanceof Loot2) {
             lootList.add((Loot2) sprite);
-        } // else if
+        }
 
         tick();
-    } // spawnSprite
+    }
 
     public Sprite getSpriteAt(int x, int y) {
         if (player.getX() == x && player.getY() == y) {
@@ -152,17 +140,17 @@ public class World implements Components {
         for (Entity entity : entityList) {
             if (entity.getX() == x && entity.getY() == y && entity.isVisible() && !entity.shouldRemove()) {
                 return entity;
-            } // if
-        } // for
+            }
+        }
 
         for (Loot2 loot : lootList) {
             if (loot.getX() == x && loot.getY() == y && loot.isVisible() && !loot.shouldRemove()) {
                 return loot;
-            } // if
-        } // for
+            }
+        }
 
         return null;
-    } // getSpriteAt
+    }
 
     /**
      * Returns the id of a tile at the provided coordinates, expected as the
