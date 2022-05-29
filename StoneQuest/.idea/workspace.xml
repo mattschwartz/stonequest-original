@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Hero.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/Component.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/ScreenComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/PhysicsComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/StoneQuest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/StoneQuest.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/AEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/AEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Actor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Actor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Component.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/PhysicsComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Player.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/RenderComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Stats.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Stats.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/shape/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/shape/Vector.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,62 +27,24 @@
     <option name="testRunner" value="GRADLE" />
     <option name="delegatedBuild" value="true" />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/barelyconscious/game/Game.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3486">
-              <caret line="250" selection-start-line="250" selection-end-line="250" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/barelyconscious/game/Screen.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="121" column="15" selection-start-line="121" selection-start-column="15" selection-end-line="121" selection-end-column="15" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="imports" expanded="true" />
-                <element signature="e#2134#2146#0" expanded="true" />
-                <element signature="e#2215#2227#0" expanded="true" />
-                <element signature="e#2297#2309#0" expanded="true" />
-                <element signature="e#2808#2809#0" expanded="true" />
-                <element signature="e#2840#2841#0" expanded="true" />
-                <element signature="e#5348#5349#0" expanded="true" />
-                <element signature="e#5381#5382#0" expanded="true" />
-                <element signature="e#5508#5509#0" expanded="true" />
-                <element signature="e#5542#5543#0" expanded="true" />
-                <element signature="e#6269#6270#0" expanded="true" />
-                <element signature="e#6313#6314#0" expanded="true" />
-                <element signature="e#14660#14661#0" expanded="true" />
-                <element signature="e#14703#14704#0" expanded="true" />
-                <element signature="e#14785#14786#0" expanded="true" />
-                <element signature="e#14828#14829#0" expanded="true" />
-                <element signature="e#14911#14912#0" expanded="true" />
-                <element signature="e#14955#14956#0" expanded="true" />
-                <element signature="e#15035#15036#0" expanded="true" />
-                <element signature="e#15079#15080#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="193" column="13" selection-start-line="193" selection-start-column="13" selection-end-line="193" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -75,6 +52,9 @@
         <option value="$PROJECT_DIR$/../.gitignore" />
       </list>
     </option>
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="4xjkkva4" />
   </component>
   <component name="ProjectConfigurationFiles">
     <option name="files">
@@ -92,7 +72,10 @@
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="29oTOUqDxRjbxjsB6blcDEQJ9aZ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -118,51 +101,132 @@
       </pane>
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/My life backup [09022013]/My life backup [09022013]/Projects/Java/StoneQuest 0.6.9" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.1632107" />
+    <property name="project.structure.side.proportion" value="0.33139536" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test/resources" />
+      <recent name="$PROJECT_DIR$/test" />
+      <recent name="$PROJECT_DIR$/res.test" />
+      <recent name="$PROJECT_DIR$/tst" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.barelyconscious.game.entity" />
+      <recent name="com.barelyconscious.game" />
+    </key>
   </component>
-  <component name="RunManager">
-    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.Game" />
+  <component name="RunManager" selected="JUnit.EngineTest.tick_withPhysicsComponent_shouldUpdatePhysics">
+    <configuration name="EngineTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="StoneQuest" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.barelyconscious.game.*" />
+          <option name="PATTERN" value="com.barelyconscious.game.entity.components.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="com.barelyconscious.game.entity" />
+      <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.entity.EngineTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EngineTest.f" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="StoneQuest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.barelyconscious.game.entity.components.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.barelyconscious.game.entity" />
+      <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.entity.EngineTest" />
+      <option name="METHOD_NAME" value="f" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EngineTest.tick_" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="StoneQuest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.barelyconscious.game.entity.components.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.barelyconscious.game.entity" />
+      <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.entity.EngineTest" />
+      <option name="METHOD_NAME" value="tick_" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EngineTest.tick_withPhysicsComponent_shouldUpdatePhysics" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="StoneQuest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.barelyconscious.game.entity.components.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.barelyconscious.game.entity" />
+      <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.entity.EngineTest" />
+      <option name="METHOD_NAME" value="tick_withPhysicsComponent_shouldUpdatePhysics" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WorldsModuleTest.provides_withInvalidInstanceKey_should__" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="StoneQuest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.barelyconscious.game.entity.components.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.barelyconscious.game.module" />
+      <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.module.WorldsModuleTest" />
+      <option name="METHOD_NAME" value="provides_withInvalidInstanceKey_should__" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Game" />
+        <item itemvalue="JUnit.EngineTest.tick_withPhysicsComponent_shouldUpdatePhysics" />
+        <item itemvalue="JUnit.EngineTest.tick_" />
+        <item itemvalue="JUnit.EngineTest" />
+        <item itemvalue="JUnit.EngineTest.f" />
+        <item itemvalue="JUnit.WorldsModuleTest.provides_withInvalidInstanceKey_should__" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="6fbb400a-350d-415e-a5d6-2585fa994c5e" name="Default Changelist" comment="" />
       <created>1557279277647</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
