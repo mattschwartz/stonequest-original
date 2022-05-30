@@ -65,13 +65,13 @@ public final class GameRunner {
         aPlayer.addComponent(new BoxColliderComponent(aPlayer, true, true, new Box(0, 32, 0, 32)));
 
         aPlayer.getComponent(MoveComponent.class)
-                .addForce(Vector.RIGHT, 320f);
+            .addForce(Vector.RIGHT, 320f);
 
         world.spawnActor(aPlayer);
 
         val aRat = new AEntity(
             "Sewer Rat",
-            new Vector(264f, 200f),
+            new Vector(264f, 208f),
             1,
             0,
             10,

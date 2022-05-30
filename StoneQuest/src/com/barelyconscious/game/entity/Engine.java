@@ -2,6 +2,7 @@ package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.physics.Physics;
+import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.log4j.Log4j2;
 
 import java.time.Clock;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+@SuppressWarnings("UnstableApiUsage")
 @Log4j2
 public final class Engine {
 
@@ -17,6 +19,8 @@ public final class Engine {
     private final World world;
     private final Screen screen;
     private final Clock clock;
+
+    private final RateLimiter rateLimiter;
 
     private long lastTick;
     private final Physics physics;
@@ -42,13 +46,14 @@ public final class Engine {
         this.physics = physics;
         this.clock = clock;
         this.lastTick = clock.millis();
+        rateLimiter = RateLimiter.create(30);
     }
-
 
     public void start() {
         isRunning = true;
 
         while (isRunning) {
+            rateLimiter.acquire();
             tick();
         }
         System.out.println("Game no longer running");
