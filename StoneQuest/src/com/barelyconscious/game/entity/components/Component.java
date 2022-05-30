@@ -29,9 +29,9 @@ public abstract class Component {
     public void update(EventArgs eventArgs) {
     }
 
-    public void render(final RenderContext renderContext) {
+    public void render(EventArgs eventArgs, RenderContext renderContext) {
     }
 
-    public void guiRender(final RenderContext renderContext) {
+    public void guiRender(EventArgs eventArgs, RenderContext renderContext) {
     }
 }

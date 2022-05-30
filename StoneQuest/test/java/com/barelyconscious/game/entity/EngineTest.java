@@ -1,6 +1,6 @@
 package com.barelyconscious.game.entity;
 
-import com.barelyconscious.game.entity.components.PhysicsComponent;
+import com.barelyconscious.game.entity.components.BoxColliderComponent;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.physics.Physics;
 import com.google.common.collect.Lists;
@@ -59,7 +59,7 @@ public class EngineTest {
     void tick_withPhysicsComponent_shouldUpdatePhysics() {
         Actor actor_withPhysicsComponent = mock(Actor.class);
 
-        PhysicsComponent mockPhysicsComponent = mock(PhysicsComponent.class);
+        BoxColliderComponent mockPhysicsComponent = mock(BoxColliderComponent.class);
         when(actor_withPhysicsComponent.isEnabled()).thenReturn(true);
         when(actor_withPhysicsComponent.isDestroying()).thenReturn(false);
         when(actor_withPhysicsComponent.getComponents()).thenReturn(

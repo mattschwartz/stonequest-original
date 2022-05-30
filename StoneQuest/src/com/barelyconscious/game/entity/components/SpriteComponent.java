@@ -1,6 +1,7 @@
 package com.barelyconscious.game.entity.components;
 
 import com.barelyconscious.game.entity.Actor;
+import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
@@ -39,7 +40,7 @@ public final class SpriteComponent extends Component {
     }
 
     @Override
-    public void render(final RenderContext renderContext) {
+    public void render(final EventArgs eventArgs, final RenderContext renderContext) {
         final Vector position = getParent().transform;
 
         renderContext.render(

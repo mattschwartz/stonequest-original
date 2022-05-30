@@ -74,15 +74,16 @@ public final class Engine {
         final List<Component> componentsToUpdate = new ArrayList<>();
         final List<Actor> actorsToRemove = new ArrayList<>();
 
+        // todo: NOTE that this behavior is giving destroying actors 1 final tick
+        //  might want to check here in case of bug...
         for (final Actor actor : world.getActors()) {
             if (actor.isDestroying()) {
                 actorsToRemove.add(actor);
-                // todo: NOTE that this behavior is giving destroying actors 1 final tick
-                //  might want to check here in case of bug...
             }
             if (!actor.isEnabled()) {
                 continue;
             }
+
             for (final Component c : actor.getComponents()) {
                 if (c.isEnabled()) {
                     componentsToUpdate.add(c);
@@ -93,8 +94,8 @@ public final class Engine {
         physics.updatePhysics(eventArgs, world.getActors());
 
         update(eventArgs, componentsToUpdate);
-        updateScreen(componentsToUpdate);
-        updateGui(componentsToUpdate);
+        updateScreen(eventArgs, componentsToUpdate);
+        updateGui(eventArgs, componentsToUpdate);
 
         actorsToRemove.forEach(world::removeActor);
     }
@@ -106,34 +107,19 @@ public final class Engine {
         updateComponents.forEach(t -> t.update(eventArgs));
     }
 
-    private void updateScreen(final List<Component> components) {
+    private void updateScreen(final EventArgs eventArgs, final List<Component> components) {
         screen.clear();
 
         final RenderContext renderContext = screen.createRenderContext();
 
-        components.forEach(t -> {
-                if (isActorInView(screen.getCamera(), t.getParent())) {
-                    t.render(renderContext);
-                }
-            });
+        components.forEach(t -> t.render(eventArgs, renderContext));
         screen.render(renderContext);
     }
 
-    private void updateGui(final List<Component> components) {
+    private void updateGui(final EventArgs eventArgs, final List<Component> components) {
         final RenderContext renderContext = screen.createRenderContext();
 
-        components.forEach(t -> {
-                if (isActorInView(screen.getCamera(), t.getParent())) {
-                    t.guiRender(renderContext);
-                }
-            });
+        components.forEach(t -> t.guiRender(eventArgs, renderContext));
         screen.render(renderContext);
-    }
-
-    private boolean isActorInView(
-        final Camera camera,
-        final Actor actor
-    ) {
-        return camera.getWorldBounds().contains(actor.transform);
     }
 }

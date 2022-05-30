@@ -13,6 +13,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * A thing which can be spawned into the game world.
+ *
+ * todo: components' inheritance is messy
  */
 @Log4j2
 public class Actor {

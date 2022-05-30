@@ -1,6 +1,7 @@
 package com.barelyconscious.game.entity.graphics;
 
 import com.barelyconscious.game.entity.Camera;
+import com.barelyconscious.game.shape.Box;
 import lombok.Getter;
 
 import java.awt.*;
@@ -78,7 +79,7 @@ public class RenderContext {
         final int x = startX - camera.getViewX();
         final int y = startY - camera.getViewY();
 
-        if (inBounds(startX, startY)) {
+        if (inBounds(startX, startY, width, height)) {
             graphics.setColor(DEBUG_COLOR);
             graphics.drawRect(
                 x,
@@ -108,7 +109,7 @@ public class RenderContext {
         final int x = xStart - camera.getViewX();
         final int y = yStart - camera.getViewY();
 
-        if (inBounds(xStart, yStart)) {
+        if (inBounds(xStart, yStart, width, height)) {
             graphics.drawImage(image, x, y, width, height, null);
         }
     }
@@ -122,8 +123,8 @@ public class RenderContext {
         }
     }
 
-    // todo: will not render partial views where x starts outside, but part of that image should still be drawn
-    private boolean inBounds(final int xStart, int yStart) {
-        return camera.getWorldBounds().contains(xStart, yStart);
+    private boolean inBounds(final int xStart, final int yStart, final int width, final int height) {
+        return camera.getWorldBounds()
+            .intersects(new Box(xStart, xStart + width, yStart, yStart + height));
     }
 }
