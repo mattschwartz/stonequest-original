@@ -8,7 +8,7 @@ import com.barelyconscious.game.shape.Vector;
 /**
  * A component that can render Sprites to a Screen.
  */
-public final class SpriteComponent extends ScreenComponent {
+public final class SpriteComponent extends Component {
 
     public final Sprite sprite;
 

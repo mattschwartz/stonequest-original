@@ -25,6 +25,13 @@ public final class Stats {
     private final Map<StatName, Float> stats;
 
     /**
+     * Creates Stats with default values.
+     */
+    public Stats() {
+        this(new HashMap<>());
+    }
+
+    /**
      * Creates a Stats object with every stat in StatName. Overrides may be
      * supplied to set the value of any/all stats.
      *

@@ -1,9 +1,17 @@
 package com.barelyconscious.game.entity.resources;
 
+import com.barelyconscious.game.GameRunner;
 import com.barelyconscious.game.entity.Sprite;
+import com.barelyconscious.game.exception.MissingResourceException;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class Resources {
 
@@ -14,7 +22,17 @@ public final class Resources {
             return loadedSprites.get(resource);
         }
 
-        final Sprite sprite = new Sprite(null, 0, 0);
+        final Image spriteImage;
+        try {
+            final InputStream inputStream = Objects.requireNonNull(GameRunner.class.getClassLoader()
+                    .getResource(resource.filepath))
+                .openStream();
+            spriteImage = ImageIO.read(inputStream);
+        } catch (final Exception e) {
+            throw new MissingResourceException("Failed to load resource: " + resource, e);
+        }
+
+        final Sprite sprite = new Sprite(spriteImage, 32, 32);
 
         loadedSprites.put(resource, sprite);
 

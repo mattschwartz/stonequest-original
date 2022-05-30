@@ -64,6 +64,7 @@ public class RenderContext {
         }
     }
 
+    // todo: will not render partial views where x starts outside, but part of that image should still be drawn
     private boolean inBounds(final int xStart, int yStart) {
         return (xStart >= camera.getViewX()
             && xStart < camera.getViewX() + camera.getViewWidth())

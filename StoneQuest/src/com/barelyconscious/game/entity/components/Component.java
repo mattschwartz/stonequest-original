@@ -2,6 +2,7 @@ package com.barelyconscious.game.entity.components;
 
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.RenderContext;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +23,15 @@ public abstract class Component {
         this.parent = parent;
     }
 
-    public abstract void physicsUpdate(EventArgs eventArgs);
+    public void physicsUpdate(EventArgs eventArgs) {
+    }
 
-    public abstract void update(EventArgs eventArgs);
+    public void update(EventArgs eventArgs) {
+    }
+
+    public void render(final RenderContext renderContext) {
+    }
+
+    public void guiRender(final RenderContext renderContext) {
+    }
 }

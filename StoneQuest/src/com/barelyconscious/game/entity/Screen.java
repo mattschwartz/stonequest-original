@@ -1,5 +1,6 @@
 package com.barelyconscious.game.entity;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -22,6 +23,10 @@ public final class Screen {
             width,
             height,
             BufferedImage.TYPE_INT_ARGB);
+    }
+
+    public void addToFrame(final JFrame frame) {
+        frame.add(canvas);
     }
 
     public Camera getCamera() {

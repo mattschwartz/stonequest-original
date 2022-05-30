@@ -1,7 +1,6 @@
 package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.components.Component;
-import com.barelyconscious.game.entity.components.ScreenComponent;
 import com.barelyconscious.game.physics.Physics;
 import lombok.extern.log4j.Log4j2;
 
@@ -22,6 +21,8 @@ public final class Engine {
     private long lastTick;
     private final Physics physics;
 
+    private boolean isRunning = false;
+
     public Engine(
         final GameInstance gameInstance,
         final World world,
@@ -41,6 +42,20 @@ public final class Engine {
         this.physics = physics;
         this.clock = clock;
         this.lastTick = clock.millis();
+    }
+
+
+    public void start() {
+        isRunning = true;
+
+        while (isRunning) {
+            tick();
+        }
+        System.out.println("Game no longer running");
+    }
+
+    public void stop() {
+        isRunning = false;
     }
 
     public void tick() {
@@ -87,10 +102,7 @@ public final class Engine {
     private void updateScreen(final List<Component> components) {
         final RenderContext renderContext = screen.createRenderContext();
 
-        components.stream()
-            .filter(t -> t instanceof ScreenComponent)
-            .map(t -> (ScreenComponent) t)
-            .forEach(t -> {
+        components.forEach(t -> {
                 if (isActorInView(screen.getCamera(), t.getParent())) {
                     t.render(renderContext);
                 }
@@ -101,10 +113,7 @@ public final class Engine {
     private void updateGui(final List<Component> components) {
         final RenderContext renderContext = screen.createRenderContext();
 
-        components.stream()
-            .filter(t -> t instanceof ScreenComponent)
-            .map(t -> (ScreenComponent) t)
-            .forEach(t -> {
+        components.forEach(t -> {
                 if (isActorInView(screen.getCamera(), t.getParent())) {
                     t.guiRender(renderContext);
                 }

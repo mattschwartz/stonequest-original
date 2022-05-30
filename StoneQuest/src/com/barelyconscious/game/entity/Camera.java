@@ -12,6 +12,7 @@ public final class Camera {
     public Camera(final int viewWidth, final int viewHeight) {
         this.viewWidth = viewWidth;
         this.viewHeight = viewHeight;
+        this.transform = new Vector(0, 0);
     }
 
     public void resize(final int newWidth, final int newHeight) {

@@ -16,7 +16,7 @@ public final class MoveComponent extends PhysicsComponent {
         this.moveSpeed = moveSpeed;
     }
 
-    private Vector forceVector;
+    private Vector forceVector = Vector.ZERO;
 
     /**
      * @param direction the direction to apply impulse
