@@ -4,7 +4,6 @@ import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.components.BoxColliderComponent;
 import com.barelyconscious.game.entity.components.ColliderComponent;
-import com.barelyconscious.game.physics.CollisionData;
 import com.barelyconscious.game.entity.components.MoveComponent;
 import com.barelyconscious.game.shape.Vector;
 
@@ -25,7 +24,6 @@ public final class Physics {
 
             moveComponent.physicsUpdate(eventArgs);
 
-            final Vector prevLocation = actor.transform;
             final Vector desiredLocation = moveComponent.getDesiredLocation();
 
             // actor did not move
@@ -33,18 +31,16 @@ public final class Physics {
                 continue;
             }
 
-            actor.transform = desiredLocation;
-
             final boolean didMove;
-            final ColliderComponent collider = actor.getComponent(BoxColliderComponent.class);
+            final BoxColliderComponent collider = actor.getComponent(BoxColliderComponent.class);
             if (collider != null) {
-                didMove = tryMove(actor, collider, actors);
+                didMove = tryMove(actor, desiredLocation, collider, actors);
             } else {
                 didMove = true;
             }
 
-            if (!didMove) {
-                actor.transform = prevLocation;
+            if (didMove) {
+                actor.transform = desiredLocation;
             }
         }
     }
@@ -54,7 +50,12 @@ public final class Physics {
      *
      * @return false if the actor did not move
      */
-    private boolean tryMove(final Actor actor, final ColliderComponent collider, final List<Actor> physicsActors) {
+    private boolean tryMove(
+        final Actor actor,
+        final Vector desiredLocation,
+        final BoxColliderComponent collider,
+        final List<Actor> physicsActors
+    ) {
         boolean didMove = true;
         for (final Actor otherActor : physicsActors) {
             // No collisions against disabled/destroying actors
@@ -64,7 +65,7 @@ public final class Physics {
 
             final ColliderComponent other = otherActor.getComponent(BoxColliderComponent.class);
             if (other != null && other.isEnabled()) {
-                if (collider.intersects(other)) {
+                if (collider.intersects(desiredLocation, other)) {
                     final CollisionData col = new CollisionData(
                         other.isBlocksMovement(),
                         other.isFiresOverlapEvents(),

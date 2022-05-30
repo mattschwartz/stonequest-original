@@ -4,8 +4,10 @@ import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.physics.Physics;
+import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.log4j.Log4j2;
+import lombok.val;
 
 import java.time.Clock;
 import java.util.ArrayList;
@@ -51,18 +53,55 @@ public final class Engine {
         rateLimiter = RateLimiter.create(30);
     }
 
+    private final RateLimiter guiFramerate = RateLimiter.create(30);
+
     public void start() {
         isRunning = true;
 
+        final Thread gameLogicThread = new Thread(() -> {
+            while (isRunning) {
+                rateLimiter.acquire();
+                tick();
+            }
+        });
+        gameLogicThread.start();
+
         while (isRunning) {
-            rateLimiter.acquire();
-            tick();
+            guiFramerate.acquire();
+            renderTick();
         }
+
+        try {
+            gameLogicThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Game no longer running");
     }
 
     public void stop() {
         isRunning = false;
+    }
+
+    public void renderTick() {
+        screen.clear();
+        final RenderContext renderContext = screen.createRenderContext();
+
+        for (final Actor actor : world.getActors()) {
+            if (!actor.isEnabled() || actor.isDestroying()) {
+                continue;
+            }
+
+            for (final Component c : actor.getComponents()) {
+                if (c.isEnabled()) {
+                    c.render(null, renderContext);
+                    c.guiRender(null, renderContext);
+                }
+            }
+        }
+
+        screen.render(renderContext);
     }
 
     public void tick() {
@@ -73,6 +112,8 @@ public final class Engine {
 
         final List<Component> componentsToUpdate = new ArrayList<>();
         final List<Actor> actorsToRemove = new ArrayList<>();
+
+        final Stopwatch sw = Stopwatch.createStarted();
 
         // todo: NOTE that this behavior is giving destroying actors 1 final tick
         //  might want to check here in case of bug...
@@ -91,13 +132,20 @@ public final class Engine {
             }
         }
 
-        physics.updatePhysics(eventArgs, world.getActors());
+        final long physicsTimeMs = measure(() -> physics.updatePhysics(eventArgs, world.getActors()));
+        final long updateTimeMs = measure(() -> update(eventArgs, componentsToUpdate));
 
-        update(eventArgs, componentsToUpdate);
-        updateScreen(eventArgs, componentsToUpdate);
-        updateGui(eventArgs, componentsToUpdate);
 
         actorsToRemove.forEach(world::removeActor);
+
+        final long totalFrameTime = sw.elapsed().toMillis();
+        System.out.println("Time={ Frame: " + totalFrameTime + ", Phys: " + physicsTimeMs + ", Update: " + updateTimeMs + " }");
+    }
+
+    private long measure(Runnable r) {
+        final Stopwatch sw = Stopwatch.createStarted();
+        r.run();
+        return sw.elapsed().toMillis();
     }
 
     private void update(
@@ -105,21 +153,5 @@ public final class Engine {
         final List<Component> updateComponents
     ) {
         updateComponents.forEach(t -> t.update(eventArgs));
-    }
-
-    private void updateScreen(final EventArgs eventArgs, final List<Component> components) {
-        screen.clear();
-
-        final RenderContext renderContext = screen.createRenderContext();
-
-        components.forEach(t -> t.render(eventArgs, renderContext));
-        screen.render(renderContext);
-    }
-
-    private void updateGui(final EventArgs eventArgs, final List<Component> components) {
-        final RenderContext renderContext = screen.createRenderContext();
-
-        components.forEach(t -> t.guiRender(eventArgs, renderContext));
-        screen.render(renderContext);
     }
 }

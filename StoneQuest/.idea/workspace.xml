@@ -4,15 +4,9 @@
     <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Actor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Actor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Engine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/BoxColliderComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/BoxColliderComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/Component.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MoveComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MoveComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/PhysicsComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/SpriteComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/SpriteComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/graphics/RenderContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/graphics/RenderContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/java/com/barelyconscious/game/entity/EngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/java/com/barelyconscious/game/entity/EngineTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/Physics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/Physics.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,6 +124,19 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.GameRunner">
+    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.Game" />
+      <module name="StoneQuest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.barelyconscious.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="GameRunner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.GameRunner" />
       <module name="StoneQuest" />
@@ -154,22 +161,6 @@
       <option name="PACKAGE_NAME" value="com.barelyconscious.game.entity" />
       <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.entity.EngineTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="EngineTest.f" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="StoneQuest" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.barelyconscious.game.entity.components.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.barelyconscious.game.entity" />
-      <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.entity.EngineTest" />
-      <option name="METHOD_NAME" value="f" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -209,10 +200,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.GameRunner" />
+        <item itemvalue="Application.Game" />
         <item itemvalue="JUnit.EngineTest.tick_withPhysicsComponent_shouldUpdatePhysics" />
         <item itemvalue="JUnit.EngineTest.tick_" />
         <item itemvalue="JUnit.EngineTest" />
-        <item itemvalue="JUnit.EngineTest.f" />
       </list>
     </recent_temporary>
   </component>

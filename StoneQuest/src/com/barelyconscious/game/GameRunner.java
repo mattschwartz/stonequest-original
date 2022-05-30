@@ -54,7 +54,7 @@ public final class GameRunner {
     private static void _populateTestWorld(final World world, final Screen screen) {
         val aPlayer = new Hero(
             "Hero1",
-            new Vector(280, 200),
+            new Vector(200, 200),
             3,
             9f,
             15f,
@@ -68,7 +68,7 @@ public final class GameRunner {
         aPlayer.addComponent(new BoxColliderComponent(aPlayer, true, true, new Box(0, 32, 0, 32)));
 
         aPlayer.getComponent(MoveComponent.class)
-            .addForce(Vector.LEFT, 300f);
+            .addForce(Vector.RIGHT, 300f);
 
         world.spawnActor(aPlayer);
 
@@ -84,7 +84,6 @@ public final class GameRunner {
             new Stats());
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
         aRat.addComponent(new SpriteComponent(aRat, Resources.loadSprite(ResourceSprites.SEWER_RAT)));
-        aRat.setEnabled(false);
 
         world.spawnActor(aRat);
     }

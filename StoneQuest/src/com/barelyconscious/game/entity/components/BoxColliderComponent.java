@@ -39,6 +39,30 @@ public class BoxColliderComponent extends ColliderComponent {
         );
     }
 
+    public boolean intersects(final Vector myPosition, final ColliderComponent other) {
+        if (other instanceof BoxColliderComponent) {
+            final Box otherBounds = ((BoxColliderComponent) other).bounds;
+
+            final Vector otherPosition = other.getParent().transform;
+
+            final Box positionBounds = new Box(
+                bounds.left + (int) myPosition.x,
+                bounds.right + (int) myPosition.x,
+                bounds.top + (int) myPosition.y,
+                bounds.bottom + (int) myPosition.y);
+            final Box otherPositionBounds = new Box(
+                otherBounds.left + (int) otherPosition.x,
+                otherBounds.right + (int) otherPosition.x,
+                otherBounds.top + (int) otherPosition.y,
+                otherBounds.bottom + (int) otherPosition.y);
+
+            return positionBounds.intersects(otherPositionBounds);
+        } else {
+            // todo: ignoring non-box shapes...
+            return false;
+        }
+    }
+
     @Override
     public boolean intersects(final ColliderComponent other) {
         if (other instanceof BoxColliderComponent) {
