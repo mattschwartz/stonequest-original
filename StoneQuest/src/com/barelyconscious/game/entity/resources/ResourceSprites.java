@@ -2,7 +2,7 @@ package com.barelyconscious.game.entity.resources;
 
 public enum ResourceSprites {
 
-    PLAYER("tiles/entities/player.png"),
+    PLAYER("sprites/player_sprite.png"),
     SEWER_RAT("tiles/entities/sewer_rat.png"),
     SCROLL("tiles/loot/scroll.png"),
     POTION("tiles/loot/potion.png");

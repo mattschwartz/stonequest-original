@@ -60,13 +60,28 @@ public final class GameRunner {
             new Stats(),
             144f,
             new Inventory(28));
-        aPlayer.addComponent(new MoveComponent(aPlayer, 32f));
+        aPlayer.addComponent(new MoveComponent(aPlayer, 1f));
         aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.loadSprite(ResourceSprites.PLAYER)));
-        aPlayer.addComponent(new BoxColliderComponent(aPlayer, true, true, new Box(0, 0, 32, 32)));
+        aPlayer.addComponent(new BoxColliderComponent(aPlayer, true, true, new Box(0, 32, 0, 32)));
 
         aPlayer.getComponent(MoveComponent.class)
-                .addForce(Vector.RIGHT, 10f);
+                .addForce(Vector.RIGHT, 320f);
 
         world.spawnActor(aPlayer);
+
+        val aRat = new AEntity(
+            "Sewer Rat",
+            new Vector(264f, 200f),
+            1,
+            0,
+            10,
+            10,
+            0,
+            0,
+            new Stats());
+        aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
+        aRat.addComponent(new SpriteComponent(aRat, Resources.loadSprite(ResourceSprites.SEWER_RAT)));
+
+        world.spawnActor(aRat);
     }
 }

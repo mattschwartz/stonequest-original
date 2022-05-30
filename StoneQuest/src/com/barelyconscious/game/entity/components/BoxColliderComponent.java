@@ -2,6 +2,7 @@ package com.barelyconscious.game.entity.components;
 
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.RenderContext;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
@@ -25,6 +26,17 @@ public class BoxColliderComponent extends ColliderComponent {
         checkArgument(bounds != null, "bounds is null");
 
         this.bounds = bounds;
+    }
+
+    @Override
+    public void render(final RenderContext renderContext) {
+        final Vector location = getParent().transform;
+        renderContext.debugRenderBox(
+            (int) location.x + bounds.left,
+            (int) location.y + bounds.top,
+            bounds.right,
+            bounds.bottom
+        );
     }
 
     @Override

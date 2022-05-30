@@ -100,6 +100,8 @@ public final class Engine {
     }
 
     private void updateScreen(final List<Component> components) {
+        screen.clear();
+
         final RenderContext renderContext = screen.createRenderContext();
 
         components.forEach(t -> {

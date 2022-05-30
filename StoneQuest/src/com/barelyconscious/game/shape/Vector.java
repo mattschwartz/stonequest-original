@@ -1,8 +1,10 @@
 package com.barelyconscious.game.shape;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @EqualsAndHashCode
+@ToString
 public final class Vector {
 
     public static final Vector ZERO = new Vector(0, 0);
@@ -24,16 +26,23 @@ public final class Vector {
     }
 
     public Vector unitVector() {
-        float sqSum = (x * x) + (y * y);
-        if (sqSum == 0) {
+        final float magnitude = magnitude();
+        if (magnitude == 0) {
             return new Vector(0, 0);
         }
-
-        float magnitude = (float) Math.sqrt(sqSum);
 
         return new Vector(
             x / magnitude,
             y / magnitude);
+    }
+
+    public float magnitude() {
+        float sqSum = (x * x) + (y * y);
+        if (sqSum == 0) {
+            return 0;
+        }
+
+        return (float) Math.sqrt(sqSum);
     }
 
     public Vector mult(final float amt) {

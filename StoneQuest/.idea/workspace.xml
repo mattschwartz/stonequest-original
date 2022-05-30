@@ -2,21 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/res/Worlds.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/Worlds.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Engine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/RenderContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/RenderContext.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Screen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Screen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Stats.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Stats.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/Component.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/BoxColliderComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/BoxColliderComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MoveComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MoveComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/ScreenComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/SpriteComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/SpriteComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/ResourceSprites.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/ResourceSprites.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/Resources.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/Resources.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/module/WorldsModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/module/WorldsModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/Physics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/Physics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/shape/Box.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/shape/Box.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/shape/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/shape/Vector.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -263,9 +259,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/SpriteComponent.java</url>
-          <line>26</line>
-          <option name="timeStamp" value="7" />
+          <url>file://$PROJECT_DIR$/src/com/barelyconscious/game/physics/Physics.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

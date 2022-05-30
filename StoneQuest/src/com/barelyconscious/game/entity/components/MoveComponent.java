@@ -32,11 +32,15 @@ public final class MoveComponent extends PhysicsComponent {
         return desiredLocation;
     }
 
+    private static final Float e = 1f;
+
+    // todo - move speed isn't being applied
     @Override
     public void physicsUpdate(final EventArgs eventArgs) {
         // no force need be applied
-        if (Vector.ZERO.equals(forceVector)) {
+        if (Vector.ZERO.equals(forceVector) || forceVector.magnitude() <= e) {
             desiredLocation = getParent().transform;
+            forceVector = Vector.ZERO;
             return;
         }
 
@@ -44,10 +48,10 @@ public final class MoveComponent extends PhysicsComponent {
         final Vector startPos = getParent().transform;
         final Vector endPos = startPos.plus(forceVector);
 
-        final float dx = (endPos.x - startPos.x) * eventArgs.deltaTime;
-        final float dy = (endPos.y - startPos.y) * eventArgs.deltaTime;
+        final float dx = (endPos.x - startPos.x) * eventArgs.deltaTime * moveSpeed;
+        final float dy = (endPos.y - startPos.y) * eventArgs.deltaTime * moveSpeed;
 
         desiredLocation = new Vector(startPos.x + dx, startPos.y + dy);
-        forceVector = forceVector.minus(desiredLocation);
+        forceVector = forceVector.minus(new Vector(dx, dy));
     }
 }

@@ -15,6 +15,19 @@ public class RenderContext {
         this.camera = camera;
     }
 
+    private static final Color DEBUG_COLOR = Color.red;
+
+    public void debugRenderBox(final int startX, final int startY, final int width, final int height) {
+        final Color prev = graphics2D.getColor();
+        graphics2D.setColor(DEBUG_COLOR);
+        graphics2D.drawRect(
+            startX + camera.getViewX(),
+            startY + camera.getViewY(),
+            width,
+            height);
+        graphics2D.setColor(prev);
+    }
+
     /**
      * Renders an image to the screen with the given coordinates and size.
      *

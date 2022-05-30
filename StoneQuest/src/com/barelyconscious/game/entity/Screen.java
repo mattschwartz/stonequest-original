@@ -1,5 +1,7 @@
 package com.barelyconscious.game.entity;
 
+import lombok.val;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -52,6 +54,13 @@ public final class Screen {
         }
     }
 
+    public synchronized void clear() {
+        val g = viewport.createGraphics();
+        g.setColor(Color.black);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.dispose();
+    }
+
     public synchronized RenderContext createRenderContext() {
         return new RenderContext(viewport.createGraphics(), camera);
     }
@@ -71,6 +80,7 @@ public final class Screen {
             }
 
             final Graphics bufferGraphics = bufferStrategy.getDrawGraphics();
+            bufferGraphics.setColor(Color.black);
             bufferGraphics.fillRect(0, 0, getWidth(), getHeight());
             bufferGraphics.drawImage(viewport,
                 0, 0,
