@@ -1,5 +1,7 @@
-package com.barelyconscious.game.entity;
+package com.barelyconscious.game.physics;
 
+import com.barelyconscious.game.entity.Actor;
+import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.components.ColliderComponent;
 import com.barelyconscious.game.physics.CollisionData;
 import com.barelyconscious.game.entity.components.MoveComponent;
@@ -10,16 +12,11 @@ import java.util.Objects;
 
 public final class Physics {
 
-    /**
-     * Runs the physics engine.
-     *
-     * @param physicsActors actors with physics components that need updating
-     */
     public void updatePhysics(
         final EventArgs eventArgs,
-        final List<Actor> physicsActors
+        final List<Actor> actors
     ) {
-        for (final Actor actor : physicsActors) {
+        for (final Actor actor : actors) {
             final MoveComponent moveComponent = actor.getComponent(MoveComponent.class);
             if (moveComponent == null) {
                 continue;
@@ -37,7 +34,7 @@ public final class Physics {
             final boolean didMove;
             final ColliderComponent collider = actor.getComponent(ColliderComponent.class);
             if (collider != null) {
-                didMove = tryMove(collider, physicsActors);
+                didMove = tryMove(collider, actors);
             } else {
                 didMove = true;
             }

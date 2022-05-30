@@ -1,4 +1,4 @@
-package com.barelyconscious.game.physics;
+package com.barelyconscious.game.entity.components;
 
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.components.Component;
@@ -9,8 +9,6 @@ public abstract class PhysicsComponent extends Component {
     public PhysicsComponent(final Actor parent) {
         super(parent);
     }
-
-    public abstract void physicsUpdate(EventArgs eventArgs);
 
     @Override
     public void update(EventArgs eventArgs) {

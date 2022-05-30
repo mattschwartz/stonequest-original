@@ -4,14 +4,28 @@ import com.barelyconscious.game.entity.components.BoxColliderComponent;
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.components.HealthComponent;
 import com.barelyconscious.game.entity.components.MoveComponent;
+import com.barelyconscious.game.entity.item.Item;
+import com.barelyconscious.game.entity.item.ItemRequirement;
+import com.barelyconscious.game.entity.resources.ResourceSprites;
+import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.physics.CollisionData;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
+import com.google.common.collect.Lists;
 import lombok.val;
 
 public final class GameInstance {
 
-    public void _testSpawnActors() {
+    public Item _testCreateItem() {
+        return new Item(
+            1,
+            1,
+            "Potion",
+            "A mysterious potion",
+            Resources.loadSprite(ResourceSprites.POTION),
+            Lists.newArrayList(
+                new ItemRequirement.ItemRequirementLevel(1)
+            ));
     }
 
     private Actor _testCreateBulletActor() {
@@ -49,9 +63,4 @@ public final class GameInstance {
 
         return aBullet;
     }
-
-    public int getX() {
-        return -1;
-    }
-
 }

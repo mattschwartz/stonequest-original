@@ -2,7 +2,6 @@ package com.barelyconscious.game.entity.components;
 
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
-import com.barelyconscious.game.physics.PhysicsComponent;
 import com.barelyconscious.game.shape.Vector;
 
 public final class MoveComponent extends PhysicsComponent {

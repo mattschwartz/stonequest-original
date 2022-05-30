@@ -1,7 +1,7 @@
 package com.barelyconscious.game.module;
 
 import com.barelyconscious.game.entity.GameInstance;
-import com.barelyconscious.game.entity.Physics;
+import com.barelyconscious.game.physics.Physics;
 import com.barelyconscious.game.entity.Screen;
 import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.exception.InvalidGameConfigurationException;

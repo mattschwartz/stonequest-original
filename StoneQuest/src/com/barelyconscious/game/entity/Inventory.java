@@ -1,5 +1,7 @@
 package com.barelyconscious.game.entity;
 
+import com.barelyconscious.game.entity.item.Item;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

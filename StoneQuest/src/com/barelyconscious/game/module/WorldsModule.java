@@ -1,7 +1,7 @@
 package com.barelyconscious.game.module;
 
 import com.barelyconscious.game.entity.GameInstance;
-import com.barelyconscious.game.entity.Physics;
+import com.barelyconscious.game.physics.Physics;
 import com.barelyconscious.game.entity.Screen;
 import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.exception.InvalidGameConfigurationException;
@@ -12,9 +12,6 @@ import com.google.inject.name.Names;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Named;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.Properties;

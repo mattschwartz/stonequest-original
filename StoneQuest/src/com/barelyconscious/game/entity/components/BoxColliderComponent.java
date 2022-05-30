@@ -52,8 +52,4 @@ public class BoxColliderComponent extends ColliderComponent {
             return false;
         }
     }
-
-    @Override
-    public void physicsUpdate(EventArgs eventArgs) {
-    }
 }

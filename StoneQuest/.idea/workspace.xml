@@ -2,21 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Hero.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/Component.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/ScreenComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/PhysicsComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/StoneQuest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/StoneQuest.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/item/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/AEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/AEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Actor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Actor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Component.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/PhysicsComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Player.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/RenderComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Stats.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Stats.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/shape/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/shape/Vector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/SaveGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/SaveGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Engine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/GameInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/GameInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Item.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Physics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/Physics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/BoxColliderComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/BoxColliderComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/ColliderComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/ColliderComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/Component.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MoveComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MoveComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/module/WorldsModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/module/WorldsModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/PhysicsComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/PhysicsComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/java/com/barelyconscious/game/entity/EngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/java/com/barelyconscious/game/entity/EngineTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tst/com/barelyconscious/game/module/WorldsModuleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tst/com/barelyconscious/game/module/WorldsModuleTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

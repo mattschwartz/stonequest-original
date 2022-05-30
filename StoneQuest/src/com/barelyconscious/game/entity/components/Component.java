@@ -22,5 +22,7 @@ public abstract class Component {
         this.parent = parent;
     }
 
+    public abstract void physicsUpdate(EventArgs eventArgs);
+
     public abstract void update(EventArgs eventArgs);
 }

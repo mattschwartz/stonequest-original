@@ -2,7 +2,7 @@ package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.components.ScreenComponent;
-import com.barelyconscious.game.physics.PhysicsComponent;
+import com.barelyconscious.game.physics.Physics;
 import lombok.extern.log4j.Log4j2;
 
 import java.time.Clock;
@@ -49,10 +49,7 @@ public final class Engine {
         lastTick = now;
         final EventArgs eventArgs = new EventArgs(deltaTime * 0.001f);
 
-        final List<PhysicsComponent> physicsComponents = new ArrayList<>();
-        final List<Component> updateComponents = new ArrayList<>();
-        final List<ScreenComponent> screenComponents = new ArrayList<>();
-
+        final List<Component> componentsToUpdate = new ArrayList<>();
         final List<Actor> actorsToRemove = new ArrayList<>();
 
         for (final Actor actor : world.getActors()) {
@@ -64,23 +61,18 @@ public final class Engine {
             if (!actor.isEnabled()) {
                 continue;
             }
-
-            for (final Component component : actor.getComponents()) {
-                updateComponents.add(component);
-
-                if (component instanceof PhysicsComponent) {
-                    physicsComponents.add((PhysicsComponent) component);
-                } else if (component instanceof ScreenComponent) {
-                    screenComponents.add((ScreenComponent) component);
+            for (final Component c : actor.getComponents()) {
+                if (c.isEnabled()) {
+                    componentsToUpdate.add(c);
                 }
             }
         }
 
         physics.updatePhysics(eventArgs, world.getActors());
 
-        update(eventArgs, updateComponents);
-        updateScreen(screenComponents);
-        updateGui(screenComponents);
+        update(eventArgs, componentsToUpdate);
+        updateScreen(componentsToUpdate);
+        updateGui(componentsToUpdate);
 
         actorsToRemove.forEach(world::removeActor);
     }
@@ -92,25 +84,31 @@ public final class Engine {
         updateComponents.forEach(t -> t.update(eventArgs));
     }
 
-    private void updateScreen(final List<ScreenComponent> screenComponents) {
+    private void updateScreen(final List<Component> components) {
         final RenderContext renderContext = screen.createRenderContext();
 
-        screenComponents.forEach(t -> {
-            if (isActorInView(screen.getCamera(), t.getParent())) {
-                t.render(renderContext);
-            }
-        });
+        components.stream()
+            .filter(t -> t instanceof ScreenComponent)
+            .map(t -> (ScreenComponent) t)
+            .forEach(t -> {
+                if (isActorInView(screen.getCamera(), t.getParent())) {
+                    t.render(renderContext);
+                }
+            });
         screen.render(renderContext);
     }
 
-    private void updateGui(final List<ScreenComponent> screenComponents) {
+    private void updateGui(final List<Component> components) {
         final RenderContext renderContext = screen.createRenderContext();
 
-        screenComponents.forEach(t -> {
-            if (isActorInView(screen.getCamera(), t.getParent())) {
-                t.guiRender(renderContext);
-            }
-        });
+        components.stream()
+            .filter(t -> t instanceof ScreenComponent)
+            .map(t -> (ScreenComponent) t)
+            .forEach(t -> {
+                if (isActorInView(screen.getCamera(), t.getParent())) {
+                    t.guiRender(renderContext);
+                }
+            });
         screen.render(renderContext);
     }
 
