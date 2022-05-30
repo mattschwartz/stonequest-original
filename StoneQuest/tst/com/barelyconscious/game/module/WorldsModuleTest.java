@@ -2,7 +2,7 @@ package com.barelyconscious.game.module;
 
 import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.physics.Physics;
-import com.barelyconscious.game.entity.Screen;
+import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.exception.InvalidGameConfigurationException;
 import com.google.inject.Guice;

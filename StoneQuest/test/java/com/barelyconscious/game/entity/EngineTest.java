@@ -1,6 +1,7 @@
 package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.components.PhysicsComponent;
+import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.physics.Physics;
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;

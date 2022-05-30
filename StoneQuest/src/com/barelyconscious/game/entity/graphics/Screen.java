@@ -1,5 +1,6 @@
-package com.barelyconscious.game.entity;
+package com.barelyconscious.game.entity.graphics;
 
+import com.barelyconscious.game.entity.Camera;
 import lombok.val;
 
 import javax.swing.*;
@@ -9,7 +10,7 @@ import java.awt.image.BufferedImage;
 
 public final class Screen {
 
-    public final Camera camera;
+    private final Camera camera;
     private final Canvas canvas;
     private BufferedImage viewport;
 
@@ -61,8 +62,20 @@ public final class Screen {
         g.dispose();
     }
 
+    /**
+     * Creates a RenderContext that can be used by components to render to the screen.
+     * @return the new render context
+     */
     public synchronized RenderContext createRenderContext() {
-        return new RenderContext(viewport.createGraphics(), camera);
+        BufferStrategy bs = canvas.getBufferStrategy();
+
+        if (bs == null) {
+            canvas.createBufferStrategy(3);
+            canvas.requestFocus();
+            bs = canvas.getBufferStrategy();
+        }
+
+        return new RenderContext(bs, camera);
     }
 
     /**
@@ -72,24 +85,27 @@ public final class Screen {
      */
     public synchronized void render(final RenderContext renderContext) {
         synchronized (this) {
-            final BufferStrategy bufferStrategy = canvas.getBufferStrategy();
-            if (bufferStrategy == null) {
-                canvas.createBufferStrategy(3);
-                canvas.requestFocus();
-                return;
-            }
+            final BufferStrategy bufferStrategy = renderContext.getBufferStrategy();
+            Graphics2D g = null;
 
-            final Graphics bufferGraphics = bufferStrategy.getDrawGraphics();
-            bufferGraphics.setColor(Color.black);
-            bufferGraphics.fillRect(0, 0, getWidth(), getHeight());
-            bufferGraphics.drawImage(viewport,
-                0, 0,
-                getWidth(), getHeight(),
-                null);
+            do {
+                try {
+                    g = (Graphics2D) bufferStrategy
+                        .getDrawGraphics();
+                    g.drawImage(
+                        renderContext.getRenderedImage(),
+                        0, 0,
+                        getWidth(), getHeight(),
+                        null);
+                } finally {
+                    if (g != null) {
+                        g.dispose();
+                    }
+                }
+                bufferStrategy.show();
+            } while (bufferStrategy.contentsLost());
 
-            bufferGraphics.dispose();
             renderContext.dispose();
-            bufferStrategy.show();
         }
     }
 }

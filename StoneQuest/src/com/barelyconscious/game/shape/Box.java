@@ -21,8 +21,8 @@ public final class Box implements Shape {
     }
 
     public boolean contains(final int x, final int y) {
-        return (x > left && x < right)
-            && (y > top && y < bottom);
+        return (x >= left && x <= right)
+            && (y >= top && y <= bottom);
     }
 
     public boolean contains(final Vector point) {
