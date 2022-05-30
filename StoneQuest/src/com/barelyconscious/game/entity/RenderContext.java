@@ -5,7 +5,7 @@ import java.awt.*;
 public class RenderContext {
 
     private final Graphics2D graphics2D;
-    private final Camera camera;
+    public final Camera camera;
 
     public RenderContext(
         final Graphics2D graphics2D,
@@ -19,13 +19,19 @@ public class RenderContext {
 
     public void debugRenderBox(final int startX, final int startY, final int width, final int height) {
         final Color prev = graphics2D.getColor();
-        graphics2D.setColor(DEBUG_COLOR);
-        graphics2D.drawRect(
-            startX + camera.getViewX(),
-            startY + camera.getViewY(),
-            width,
-            height);
-        graphics2D.setColor(prev);
+
+        final int x = startX - camera.getViewX();
+        final int y = startY - camera.getViewY();
+
+        if (inBounds(startX, startY)) {
+            graphics2D.setColor(DEBUG_COLOR);
+            graphics2D.drawRect(
+                x,
+                y,
+                width,
+                height);
+            graphics2D.setColor(prev);
+        }
     }
 
     /**
@@ -36,16 +42,16 @@ public class RenderContext {
      */
     public void render(
         final Image image,
-        int xStart,
-        int yStart,
+        final int xStart,
+        final int yStart,
         final int width,
         final int height
     ) {
-        xStart += camera.getViewX();
-        yStart += camera.getViewY();
+        final int x = xStart - camera.getViewX();
+        final int y = yStart - camera.getViewY();
 
         if (inBounds(xStart, yStart)) {
-            graphics2D.drawImage(image, xStart, yStart, width, height, null);
+            graphics2D.drawImage(image, x, y, width, height, null);
         }
     }
 
@@ -79,10 +85,6 @@ public class RenderContext {
 
     // todo: will not render partial views where x starts outside, but part of that image should still be drawn
     private boolean inBounds(final int xStart, int yStart) {
-        return (xStart >= camera.getViewX()
-            && xStart < camera.getViewX() + camera.getViewWidth())
-
-            && (yStart >= camera.getViewY()
-            && yStart < camera.getViewY() + camera.getViewHeight());
+        return camera.getWorldBounds().contains(xStart, yStart);
     }
 }

@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public final class Screen {
 
-    private final Camera camera;
+    public final Camera camera;
     private final Canvas canvas;
     private BufferedImage viewport;
 

@@ -1,5 +1,6 @@
 package com.barelyconscious.game.entity;
 
+import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 
 public final class Camera {
@@ -18,6 +19,15 @@ public final class Camera {
     public void resize(final int newWidth, final int newHeight) {
         viewWidth = newWidth;
         viewHeight = newHeight;
+    }
+
+    public Box getWorldBounds() {
+        return new Box(
+            (int) transform.x,
+            (int) transform.x + viewWidth,
+            (int) transform.y,
+            (int) transform.y + viewHeight
+        );
     }
 
     public int getViewX() {

@@ -19,4 +19,13 @@ public final class Box implements Shape {
             return false;
         }
     }
+
+    public boolean contains(final int x, final int y) {
+        return (x > left && x < right)
+            && (y > top && y < bottom);
+    }
+
+    public boolean contains(final Vector point) {
+        return this.contains((int) point.x, (int) point.y);
+    }
 }

@@ -132,10 +132,6 @@ public final class Engine {
         final Camera camera,
         final Actor actor
     ) {
-        final float xPos = actor.transform.x;
-        final float yPos = actor.transform.y;
-
-        return xPos >= camera.getViewX() && xPos < camera.getViewX() + camera.getViewWidth()
-            && yPos >= camera.getViewY() && yPos < camera.getViewY() + camera.getViewHeight();
+        return camera.getWorldBounds().contains(actor.transform);
     }
 }

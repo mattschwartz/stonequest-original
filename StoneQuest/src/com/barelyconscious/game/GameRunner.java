@@ -2,6 +2,7 @@ package com.barelyconscious.game;
 
 import com.barelyconscious.game.entity.*;
 import com.barelyconscious.game.entity.World;
+import com.barelyconscious.game.entity.Screen;
 import com.barelyconscious.game.entity.components.BoxColliderComponent;
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.components.MoveComponent;
@@ -28,7 +29,8 @@ public final class GameRunner {
 
         final JFrame frame = injector.getInstance(JFrame.class);
         final World world = injector.getInstance(World.class);
-        _populateTestWorld(world);
+        final Screen screen = injector.getInstance(Screen.class);
+        _populateTestWorld(world, screen);
         final Engine engine = injector.getInstance(Engine.class);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +50,7 @@ public final class GameRunner {
         System.out.println("");
     }
 
-    private static void _populateTestWorld(final World world) {
+    private static void _populateTestWorld(final World world, final Screen screen) {
         val aPlayer = new Hero(
             "Hero1",
             new Vector(200, 200),
