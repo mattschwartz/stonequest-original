@@ -2,10 +2,13 @@ package com.barelyconscious.game.module;
 
 import com.barelyconscious.game.entity.Engine;
 import com.barelyconscious.game.entity.GameInstance;
+import com.barelyconscious.game.entity.input.MouseInputHandler;
+import com.barelyconscious.game.entity.playercontroller.PlayerController;
 import com.barelyconscious.game.physics.Physics;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.exception.InvalidGameConfigurationException;
+import com.google.common.util.concurrent.RateLimiter;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -106,9 +109,18 @@ public class WorldsModule extends AbstractModule {
         @Named(DEFAULT_WORLD_NAMED) final World world,
         final Screen screen,
         final Physics physics,
-        final Clock clock
+        final Clock clock,
+        @Named("game.maxFramesPerSecond") final long fps,
+        @Named("game.maxUpdatesPerSecond") final long ups
     ) {
-        return new Engine(gameInstance, world, screen, physics, clock);
+        return new Engine(
+            gameInstance,
+            world,
+            screen,
+            physics,
+            clock,
+            RateLimiter.create(ups),
+            RateLimiter.create(fps));
     }
 
     @Singleton
@@ -119,8 +131,14 @@ public class WorldsModule extends AbstractModule {
 
     @Singleton
     @Provides
-    GameInstance providesGameInstance() {
-        return new GameInstance();
+    GameInstance providesGameInstance(final World world, final PlayerController playerController) {
+        return GameInstance.createInstance(world, playerController);
+    }
+
+    @Singleton
+    @Provides
+    PlayerController providesPlayerController(final MouseInputHandler mouseInputHandler) {
+        return new PlayerController(mouseInputHandler);
     }
 
     @Singleton
@@ -133,9 +151,20 @@ public class WorldsModule extends AbstractModule {
     @Provides
     Screen providesScreen(
         @Named("window.width") final int screenWidth,
-        @Named("window.height") final int screenHeight
+        @Named("window.height") final int screenHeight,
+        final MouseInputHandler mouseInputHandler
     ) {
-        return new Screen(screenWidth, screenHeight);
+        final Canvas canvas = new Canvas();
+        canvas.setSize(screenWidth, screenHeight);
+        canvas.addMouseListener(mouseInputHandler);
+        canvas.addMouseMotionListener(mouseInputHandler);
+        return new Screen(canvas, screenWidth, screenHeight);
+    }
+
+    @Singleton
+    @Provides
+    MouseInputHandler providesMouseInputHandler() {
+        return new MouseInputHandler();
     }
 
     @Singleton

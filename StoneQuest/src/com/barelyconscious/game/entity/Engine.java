@@ -4,10 +4,8 @@ import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.physics.Physics;
-import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.log4j.Log4j2;
-import lombok.val;
 
 import java.time.Clock;
 import java.util.ArrayList;
@@ -24,9 +22,11 @@ public final class Engine {
     private final Screen screen;
     private final Clock clock;
 
-    private final RateLimiter rateLimiter;
+    private final RateLimiter upsLimiter;
+    private final RateLimiter fpsLimiter;
 
     private long lastTick;
+    private long lastRenderTick;
     private final Physics physics;
 
     private boolean isRunning = false;
@@ -36,44 +36,51 @@ public final class Engine {
         final World world,
         final Screen screen,
         final Physics physics,
-        final Clock clock
+        final Clock clock,
+        final RateLimiter ups,
+        final RateLimiter fps
     ) {
         checkArgument(gameInstance != null, "gameInstance is null");
         checkArgument(world != null, "world is null");
         checkArgument(screen != null, "screen is null");
         checkArgument(physics != null, "physics is null");
         checkArgument(clock != null, "clock is null");
+        checkArgument(ups != null, "ups is null");
+        checkArgument(fps != null, "fps is null");
 
         this.gameInstance = gameInstance;
         this.world = world;
         this.screen = screen;
         this.physics = physics;
         this.clock = clock;
-        this.lastTick = clock.millis();
-        rateLimiter = RateLimiter.create(30);
-    }
+        this.upsLimiter = ups;
+        this.fpsLimiter = fps;
 
-    private final RateLimiter guiFramerate = RateLimiter.create(30);
+        gameInstance.setCamera(screen.getCamera());
+    }
 
     public void start() {
         isRunning = true;
+        this.lastTick = clock.millis();
+        this.lastRenderTick = clock.millis();
 
-        final Thread gameLogicThread = new Thread(() -> {
+        final Thread threadUpdate = new Thread(() -> {
             while (isRunning) {
-                rateLimiter.acquire();
+                upsLimiter.acquire();
                 tick();
             }
         });
-        gameLogicThread.start();
+        threadUpdate.start();
 
         while (isRunning) {
-            guiFramerate.acquire();
+            fpsLimiter.acquire();
             renderTick();
         }
 
         try {
-            gameLogicThread.join();
+            threadUpdate.join(5000);
         } catch (InterruptedException e) {
+            System.err.println("Thread was interrupted after game stop");
             e.printStackTrace();
         }
 
@@ -85,6 +92,11 @@ public final class Engine {
     }
 
     public void renderTick() {
+        final long now = clock.millis();
+        final long deltaTime = now - lastRenderTick;
+        lastRenderTick = now;
+        final EventArgs eventArgs = new EventArgs(deltaTime * 0.001f);
+
         screen.clear();
         final RenderContext renderContext = screen.createRenderContext();
 
@@ -94,9 +106,9 @@ public final class Engine {
             }
 
             for (final Component c : actor.getComponents()) {
-                if (c.isEnabled()) {
-                    c.render(null, renderContext);
-                    c.guiRender(null, renderContext);
+                if (c.isRenderEnabled()) {
+                    c.render(eventArgs, renderContext);
+                    c.guiRender(eventArgs, renderContext);
                 }
             }
         }
@@ -113,13 +125,10 @@ public final class Engine {
         final List<Component> componentsToUpdate = new ArrayList<>();
         final List<Actor> actorsToRemove = new ArrayList<>();
 
-        final Stopwatch sw = Stopwatch.createStarted();
-
-        // todo: NOTE that this behavior is giving destroying actors 1 final tick
-        //  might want to check here in case of bug...
         for (final Actor actor : world.getActors()) {
             if (actor.isDestroying()) {
                 actorsToRemove.add(actor);
+                continue;
             }
             if (!actor.isEnabled()) {
                 continue;
@@ -132,20 +141,10 @@ public final class Engine {
             }
         }
 
-        final long physicsTimeMs = measure(() -> physics.updatePhysics(eventArgs, world.getActors()));
-        final long updateTimeMs = measure(() -> update(eventArgs, componentsToUpdate));
-
+        physics.updatePhysics(eventArgs, world.getActors());
+        update(eventArgs, componentsToUpdate);
 
         actorsToRemove.forEach(world::removeActor);
-
-        final long totalFrameTime = sw.elapsed().toMillis();
-        System.out.println("Time={ Frame: " + totalFrameTime + ", Phys: " + physicsTimeMs + ", Update: " + updateTimeMs + " }");
-    }
-
-    private long measure(Runnable r) {
-        final Stopwatch sw = Stopwatch.createStarted();
-        r.run();
-        return sw.elapsed().toMillis();
     }
 
     private void update(

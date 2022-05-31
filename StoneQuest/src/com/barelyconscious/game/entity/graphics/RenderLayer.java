@@ -15,6 +15,7 @@ public enum RenderLayer {
     DOODADS(1),
     ENTITIES(2),
     SKY(100),
+    GUI(1000),
 
     _DEBUG(Integer.MAX_VALUE);
 

@@ -30,6 +30,10 @@ public class BoxColliderComponent extends ColliderComponent {
 
     @Override
     public void render(final EventArgs eventArgs, final RenderContext renderContext) {
+        if (!eventArgs._debugMode) {
+            return;
+        }
+
         final Vector location = getParent().transform;
         renderContext.debugRenderBox(
             (int) location.x + bounds.left,

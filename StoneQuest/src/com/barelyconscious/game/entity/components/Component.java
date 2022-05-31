@@ -15,6 +15,10 @@ public abstract class Component {
     private boolean isEnabled = true;
 
     @Getter
+    @Setter
+    private boolean isRenderEnabled = true;
+
+    @Getter
     private final Actor parent;
 
     public Component(final Actor parent) {

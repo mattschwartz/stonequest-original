@@ -10,6 +10,9 @@ import com.barelyconscious.game.shape.Vector;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * todo: collision events trigger kinda weird right now.
+ */
 public final class Physics {
 
     public void updatePhysics(
@@ -74,13 +77,13 @@ public final class Physics {
 
                     if (other.isBlocksMovement()) {
                         collider.delegateOnHit.call(col);
-                        other.delegateOnHit.call(col);
+//                        other.delegateOnHit.call(col);
 
                         didMove = false;
                     }
                     if (other.isFiresOverlapEvents()) {
                         collider.delegateOnOverlap.call(col);
-                        other.delegateOnOverlap.call(col);
+//                        other.delegateOnOverlap.call(col);
                     }
                 }
             }

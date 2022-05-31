@@ -2,6 +2,7 @@ package com.barelyconscious.game.entity.graphics;
 
 import com.barelyconscious.game.entity.Camera;
 import com.barelyconscious.game.shape.Box;
+import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
 
 import java.awt.*;
@@ -42,8 +43,8 @@ public class RenderContext {
 
         for (final RenderLayer layer : RenderLayer.values()) {
             final BufferedImage renderedImage = new BufferedImage(
-                camera.getViewWidth(),
-                camera.getViewHeight(),
+                camera.getScreenWidth(),
+                camera.getScreenHeight(),
                 BufferedImage.TYPE_INT_ARGB);
             renderByLayer.put(layer,
                 renderedImage);
@@ -56,13 +57,13 @@ public class RenderContext {
      */
     BufferedImage getRenderedImage() {
         final BufferedImage renderedImage = new BufferedImage(
-            camera.getViewWidth(),
-            camera.getViewHeight(),
+            camera.getScreenWidth(),
+            camera.getScreenHeight(),
             BufferedImage.TYPE_INT_ARGB);
 
         final Graphics g = renderedImage.createGraphics();
         for (final RenderLayer layer : RenderLayer.values()) {
-            g.drawImage(renderByLayer.get(layer), 0, 0, camera.getViewWidth(), camera.getViewHeight(), null);
+            g.drawImage(renderByLayer.get(layer), 0, 0, camera.getScreenWidth(), camera.getScreenHeight(), null);
         }
         g.dispose();
 
@@ -72,18 +73,16 @@ public class RenderContext {
     /**
      * Draws a box to the debug layer using the default debug color.
      */
-    public void debugRenderBox(final int startX, final int startY, final int width, final int height) {
+    public void debugRenderBox(final int worldX, final int worldY, final int width, final int height) {
         final Graphics graphics = graphicsByLayer.get(RenderLayer._DEBUG);
         final Color prev = graphics.getColor();
 
-        final int x = startX - camera.getViewX();
-        final int y = startY - camera.getViewY();
-
-        if (inBounds(startX, startY, width, height)) {
+        final Vector screenPos = camera.worldToScreenPos(worldX, worldY);
+        if (inBounds(worldX, worldY, width, height)) {
             graphics.setColor(DEBUG_COLOR);
             graphics.drawRect(
-                x,
-                y,
+                (int) screenPos.x,
+                (int) screenPos.y,
                 width,
                 height);
             graphics.setColor(prev);
@@ -93,24 +92,48 @@ public class RenderContext {
     /**
      * Renders an image to the screen with the given coordinates and size.
      *
-     * @param xStart the top-left corner of the image
-     * @param yStart the top-left corner of the image
+     * @param worldX the top-left corner of the image
+     * @param worldY the top-left corner of the image
      */
     public void render(
         final Image image,
-        final int xStart,
-        final int yStart,
+        final int worldX,
+        final int worldY,
         final int width,
         final int height,
         final RenderLayer layer
     ) {
         final Graphics graphics = graphicsByLayer.get(layer);
+        final Vector screenPos = camera.worldToScreenPos(worldX, worldY);
 
-        final int x = xStart - camera.getViewX();
-        final int y = yStart - camera.getViewY();
+        if (inBounds(worldX, worldY, width, height)) {
+            graphics.drawImage(image, (int) screenPos.x, (int) screenPos.y, width, height, null);
+        }
+    }
 
-        if (inBounds(xStart, yStart, width, height)) {
-            graphics.drawImage(image, x, y, width, height, null);
+    public void renderRect(
+        final Color color,
+        final boolean fill,
+        final int worldX,
+        final int worldY,
+        final int width,
+        final int height,
+        final RenderLayer layer
+    ) {
+        final Graphics g = graphicsByLayer.get(layer);
+
+        if (inBounds(worldX, worldY, width, height)) {
+            final Color prev = g.getColor();
+            final Vector screenPos = camera.worldToScreenPos(worldX, worldY);
+
+            g.setColor(color);
+            if (fill) {
+                g.fillRect((int)screenPos.x, (int)screenPos.y, width, height);
+            } else {
+                g.drawRect((int)screenPos.x, (int)screenPos.y, width, height);
+            }
+
+            g.setColor(prev);
         }
     }
 
@@ -123,8 +146,8 @@ public class RenderContext {
         }
     }
 
-    private boolean inBounds(final int xStart, final int yStart, final int width, final int height) {
+    private boolean inBounds(final int worldX, final int worldY, final int width, final int height) {
         return camera.getWorldBounds()
-            .intersects(new Box(xStart, xStart + width, yStart, yStart + height));
+            .intersects(new Box(worldX, worldX + width, worldY, worldY + height));
     }
 }

@@ -31,7 +31,7 @@ public class HealthComponent extends Component {
     }
 
     public void adjustHealth(final float delta) {
-        currentHealth = UMath.clampf(currentHealth - delta, 0, maxHealth);
+        currentHealth = UMath.clampf(currentHealth + delta, 0, maxHealth);
         delegateOnHealthChanged.call(new HealthComponent.HealthChangedEvent(delta, currentHealth, maxHealth));
     }
 

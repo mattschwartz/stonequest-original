@@ -1,66 +1,44 @@
 package com.barelyconscious.game.entity;
 
-import com.barelyconscious.game.entity.components.BoxColliderComponent;
-import com.barelyconscious.game.entity.components.Component;
-import com.barelyconscious.game.entity.components.HealthComponent;
-import com.barelyconscious.game.entity.components.MoveComponent;
-import com.barelyconscious.game.entity.item.Item;
-import com.barelyconscious.game.entity.item.ItemRequirement;
-import com.barelyconscious.game.entity.resources.ResourceSprites;
-import com.barelyconscious.game.entity.resources.Resources;
-import com.barelyconscious.game.physics.CollisionData;
-import com.barelyconscious.game.shape.Box;
-import com.barelyconscious.game.shape.Vector;
-import com.google.common.collect.Lists;
-import lombok.val;
+import com.barelyconscious.game.entity.playercontroller.PlayerController;
+import lombok.Getter;
+import lombok.Setter;
 
 public final class GameInstance {
 
-    public Item _testCreateItem() {
-        return new Item(
-            1,
-            1,
-            "Potion",
-            "A mysterious potion",
-            Resources.loadSprite(ResourceSprites.POTION),
-            Lists.newArrayList(
-                new ItemRequirement.ItemRequirementLevel(1)
-            ));
+    @Getter
+    private static GameInstance instance;
+
+    // todo: ewwwwwwwuh
+    public static GameInstance createInstance(final World world, final PlayerController playerController) {
+        if (instance == null) {
+            instance = new GameInstance(world, playerController);
+        }
+
+        return instance;
     }
 
-    private Actor _testCreateBulletActor() {
-        val aBullet = new Actor(new Vector(0, 0));
+    @Getter
+    private World world;
 
-        val bulletCollider = new BoxColliderComponent(
-            aBullet,
-            false, true,
-            new Box(0, 10, 0, 10));
+    @Getter
+    @Setter
+    private PlayerController playerController;
 
-        aBullet.addComponent(bulletCollider);
+    @Getter
+    @Setter
+    private Camera camera;
 
-        final float bulletDamage = 14f;
+    private GameInstance(final World world, final PlayerController playerController) {
+        this.world = world;
+        this.playerController = playerController;
+    }
 
-        // damage the other actor and destroy the bullet object
-        bulletCollider.delegateOnHit.bindDelegate((data) -> {
-            val actorHit = data.hit;
-            val healthComponent = actorHit.getComponent(HealthComponent.class);
-            if (healthComponent != null) {
-                healthComponent.adjustHealth(-bulletDamage);
-            }
+    public void changeWorld(final World world) {
+        this.world.unloadWorld();
 
-            // bullet actor has done its job. time to go bye-bye
-            data.causedByActor.destroy();
+        world.loadWorld();
 
-            return null;
-        });
-
-        val moveComponent = new MoveComponent(aBullet, 144f);
-        aBullet.addComponent(moveComponent);
-
-        // spawn it with some initial velocity
-        val bulletDirection = Vector.UP;
-        moveComponent.addForce(bulletDirection, 144f);
-
-        return aBullet;
+        this.world = world;
     }
 }

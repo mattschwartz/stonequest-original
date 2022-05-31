@@ -30,19 +30,33 @@ public final class Camera {
         );
     }
 
-    public int getViewX() {
+    public int getWorldX() {
         return (int) transform.x;
     }
 
-    public int getViewY() {
+    public int getWorldY() {
         return (int) transform.y;
     }
 
-    public int getViewWidth() {
+    public int getScreenWidth() {
         return viewWidth;
     }
 
-    public int getViewHeight() {
+    public int getScreenHeight() {
         return viewHeight;
+    }
+
+    public Vector worldToScreenPos(final float worldX, final float worldY) {
+        return new Vector(
+            worldX - transform.x,
+            worldY - transform.y);
+    }
+
+    public Vector worldToScreenPos(final Vector worldPos) {
+        return worldToScreenPos(worldPos.x, worldPos.y);
+    }
+
+    public Vector screenToWorldPos(final Vector screenPos) {
+        return transform.plus(screenPos);
     }
 }

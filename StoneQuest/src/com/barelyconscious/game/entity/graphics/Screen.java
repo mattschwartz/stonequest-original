@@ -15,10 +15,11 @@ public final class Screen {
     private BufferedImage viewport;
 
     public Screen(
+        final Canvas canvas,
         final int width,
         final int height
     ) {
-        this.canvas = new Canvas();
+        this.canvas = canvas;
         this.canvas.setSize(width, height);
         this.camera = new Camera(width, height);
 
@@ -92,6 +93,8 @@ public final class Screen {
                 try {
                     g = (Graphics2D) bufferStrategy
                         .getDrawGraphics();
+                    g.setColor(Color.black);
+                    g.fillRect(0, 0, getWidth(), getHeight());
                     g.drawImage(
                         renderContext.getRenderedImage(),
                         0, 0,

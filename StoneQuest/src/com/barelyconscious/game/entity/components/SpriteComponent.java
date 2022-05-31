@@ -6,6 +6,7 @@ import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.Sprite;
+import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 
 /**
@@ -37,6 +38,13 @@ public final class SpriteComponent extends Component {
         super(parent);
         this.sprite = sprite;
         this.renderLayer = renderLayer;
+    }
+
+    public Box getBounds() {
+        final Vector worldPos = getParent().transform;
+        return new Box(
+            (int) worldPos.x, (int) worldPos.x + sprite.width,
+            (int) worldPos.y, (int) worldPos.y + sprite.height);
     }
 
     @Override

@@ -2,11 +2,9 @@ package com.barelyconscious.game;
 
 import com.barelyconscious.game.entity.*;
 import com.barelyconscious.game.entity.World;
+import com.barelyconscious.game.entity.components.*;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
-import com.barelyconscious.game.entity.components.BoxColliderComponent;
-import com.barelyconscious.game.entity.components.MoveComponent;
-import com.barelyconscious.game.entity.components.SpriteComponent;
 import com.barelyconscious.game.entity.resources.ResourceSprites;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.module.WorldsModule;
@@ -66,9 +64,10 @@ public final class GameRunner {
         aPlayer.addComponent(new MoveComponent(aPlayer, 1f));
         aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.loadSprite(ResourceSprites.PLAYER)));
         aPlayer.addComponent(new BoxColliderComponent(aPlayer, true, true, new Box(0, 32, 0, 32)));
+        aPlayer.addComponent(new HealthBarComponent(aPlayer));
 
         aPlayer.getComponent(MoveComponent.class)
-            .addForce(Vector.RIGHT, 300f);
+            .addForce(Vector.RIGHT, 25f);
 
         world.spawnActor(aPlayer);
 
@@ -84,8 +83,40 @@ public final class GameRunner {
             new Stats());
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
         aRat.addComponent(new SpriteComponent(aRat, Resources.loadSprite(ResourceSprites.SEWER_RAT)));
+        aRat.addComponent(new HealthBarComponent(aRat));
+        aRat.addComponent(new DestroyOnDeathComponent(aRat, 5));
+        aRat.addComponent(new PlayerVisibilityComponent(aRat));
 
         world.spawnActor(aRat);
+
+        val aBullet = new Actor("Bullet", new Vector(264f, 100f));
+        aBullet.addComponent(new MoveComponent(aBullet, 2f));
+        aBullet.addComponent(new BoxColliderComponent(aBullet, false, true, new Box(0, 32, 0, 32)));
+        aBullet.addComponent(new SpriteComponent(aBullet, Resources.loadSprite(ResourceSprites.POTION)));
+
+        aBullet.getComponent(BoxColliderComponent.class)
+            .delegateOnOverlap.bindDelegate((col) -> {
+                if (col.causedByActor != aBullet) {
+                    return null;
+                }
+
+                final Actor hit = col.hit;
+
+                final HealthComponent health = hit.getComponent(HealthComponent.class);
+                if (health != null && health.isEnabled()) {
+                    health.adjustHealth(-6);
+                }
+
+                screen.getCamera().transform = screen.getCamera().transform.plus(0, 45);
+
+                aBullet.destroy();
+                return null;
+            });
+
+        aBullet.getComponent(MoveComponent.class)
+            .addForce(Vector.DOWN, 100f);
+
+        world.spawnActor(aBullet);
     }
 
     private static final Random RANDOM = new Random(100L);
@@ -107,6 +138,7 @@ public final class GameRunner {
                 }
 
                 aTile.addComponent(new SpriteComponent(aTile, Resources.loadSprite(rSprite), RenderLayer.GROUND));
+                aTile.addComponent(new HideOnMouseOverComponent(aTile, new Box(0, 32, 0, 32)));
                 world.spawnActor(aTile);
             }
         }

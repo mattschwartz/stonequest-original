@@ -7,6 +7,8 @@ public final class EventArgs {
      */
     public final float deltaTime;
 
+    public final boolean _debugMode = false;
+
     public EventArgs(final float deltaTime) {
         this.deltaTime = deltaTime;
     }
