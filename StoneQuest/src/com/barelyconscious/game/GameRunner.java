@@ -7,6 +7,7 @@ import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.gui.GuiCanvas;
 import com.barelyconscious.game.entity.gui.HeroQuickbarPanel;
 import com.barelyconscious.game.entity.gui.Widget;
+import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
 import com.barelyconscious.game.entity.resources.Resources;
@@ -33,7 +34,8 @@ public final class GameRunner {
         final World world = injector.getInstance(World.class);
         final Screen screen = injector.getInstance(Screen.class);
         final MouseInputHandler mouseInputHandler = injector.getInstance(MouseInputHandler.class);
-        _createMap(world, mouseInputHandler);
+        final KeyInputHandler keyInputHandler = injector.getInstance(KeyInputHandler.class);
+        _createMap(world, mouseInputHandler, keyInputHandler, screen.getCamera());
         _populateTestWorld(world, screen);
         final Engine engine = injector.getInstance(Engine.class);
 
@@ -79,7 +81,7 @@ public final class GameRunner {
 
         world.spawnActor(heroNicnole);
         aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
-                .alignLeft(0.33f)
+            .alignLeft(0.33f)
             .alignTop(1)
             .paddingTop(-120)
             .height(94)
@@ -196,7 +198,12 @@ public final class GameRunner {
 
     private static final Random RANDOM = new Random(100L);
 
-    private static void _createMap(final World world, final MouseInputHandler mouseInputHandler) {
+    private static void _createMap(
+        final World world,
+        final MouseInputHandler mouseInputHandler,
+        final KeyInputHandler keyInputHandler,
+        final Camera camera
+    ) {
         for (int x = 0; x < 25; ++x) {
             for (int y = 0; y < 25; ++y) {
                 final int grassTileId = RANDOM.nextInt(3);
@@ -221,5 +228,43 @@ public final class GameRunner {
                 world.spawnActor(aTile);
             }
         }
+
+        val aCamera = new Actor(camera.transform);
+
+        class TranslateMoveComponent extends Component {
+            public TranslateMoveComponent() {
+                super(aCamera);
+            }
+
+            private Vector desiredLocation = camera.transform;
+
+            public void translate(final Vector delta) {
+                desiredLocation = desiredLocation.plus(delta);
+            }
+
+            @Override
+            public void update(EventArgs eventArgs) {
+                camera.transform = desiredLocation;
+            }
+        }
+
+        final TranslateMoveComponent cameraMoveComponent = new TranslateMoveComponent();
+        aCamera.addComponent(cameraMoveComponent);
+        keyInputHandler.onKeyTyped.bindDelegate(keyEvent -> {
+            if (keyEvent.getKeyChar() == 'd') {
+                cameraMoveComponent.translate(Vector.RIGHT.mult(100f));
+            }
+            if (keyEvent.getKeyChar() == 'a') {
+                cameraMoveComponent.translate(Vector.LEFT.mult(100f));
+            }
+            if (keyEvent.getKeyChar() == 'w') {
+                cameraMoveComponent.translate(Vector.UP.mult(100f));
+            }
+            if (keyEvent.getKeyChar() == 's') {
+                cameraMoveComponent.translate(Vector.DOWN.mult(100f));
+            }
+            return null;
+        });
+        world.spawnActor(aCamera);
     }
 }

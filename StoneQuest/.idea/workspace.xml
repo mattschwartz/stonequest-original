@@ -4,9 +4,8 @@
     <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/HeroQuickbarPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/HeroQuickbarPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/Widget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/Widget.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/SpriteWidget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/SpriteWidget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MoveComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MoveComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/playercontroller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/playercontroller/PlayerController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,9 +250,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/BackgroundPanelWidget.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="56" />
+          <url>file://$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MoveComponent.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="64" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
