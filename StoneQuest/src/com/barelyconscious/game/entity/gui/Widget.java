@@ -46,7 +46,7 @@ public abstract class Widget {
     @Getter
     private final Anchor anchor;
 
-    private final List<Widget> widgets;
+    protected final List<Widget> widgets;
 
     protected Box screenBounds;
 
@@ -69,8 +69,8 @@ public abstract class Widget {
     }
 
     public final void render(final EventArgs eventArgs, final RenderContext renderContext) {
+        this.widgets.forEach(t -> t.render(eventArgs, renderContext));
         this.onRender(eventArgs, renderContext);
-        this.widgets.forEach(t -> t.onRender(eventArgs, renderContext));
     }
 
     protected abstract void onRender(final EventArgs eventArgs, final RenderContext renderContext);

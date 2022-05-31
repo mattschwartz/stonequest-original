@@ -9,7 +9,6 @@ import com.barelyconscious.game.entity.gui.widgets.ProgressBarWidget;
 import com.barelyconscious.game.entity.gui.widgets.SpriteWidget;
 import com.barelyconscious.game.entity.gui.widgets.TextFieldWidget;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
-import com.barelyconscious.game.shape.Vector;
 
 import java.awt.*;
 
@@ -29,11 +28,13 @@ public class HeroQuickbarPanel extends Widget {
             .build(),
             ResourceSprite.PLAYER));
         addWidget(new TextFieldWidget(Anchor.builder()
-            .paddingTop(-16)
+            .alignTop(1)
+            .paddingTop(-10)
+                .paddingLeft(6)
             .height(14)
             .width(64)
             .build(),
-            "Mr Hero #1"));
+            hero.name));
         addWidget(new ProgressBarWidget(Anchor.builder()
             .paddingTop(64)
             .height(8)

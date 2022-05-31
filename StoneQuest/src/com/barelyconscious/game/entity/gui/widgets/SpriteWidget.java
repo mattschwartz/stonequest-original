@@ -9,6 +9,8 @@ import com.barelyconscious.game.entity.resources.ResourceSprite;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.shape.Box;
 
+import java.awt.*;
+
 public class SpriteWidget extends Widget {
 
     private Sprite sprite;
@@ -17,6 +19,12 @@ public class SpriteWidget extends Widget {
     public SpriteWidget(final Anchor anchor, final ResourceSprite rSprite) {
         super(anchor);
         this.rSprite = rSprite;
+
+        addWidget(new BackgroundPanelWidget(Anchor.builder()
+            .width(anchor.width)
+            .height(anchor.height)
+            .build(),
+            Color.BLACK));
     }
 
     @Override

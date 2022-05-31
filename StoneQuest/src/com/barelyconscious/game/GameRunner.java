@@ -58,11 +58,66 @@ public final class GameRunner {
     }
 
     private static void _initTest(final World world, final Screen screen) {
+        val aGui = new GuiCanvas(screen);
+        world.spawnActor(aGui);
+
+        val heroNicnole = new Hero(
+            "Nicnole",
+            new Vector(200, 264),
+            3,
+            8f,
+            9f,
+            14,
+            16,
+            new Stats(),
+            144f,
+            new Inventory(28));
+        heroNicnole.addComponent(new MoveComponent(heroNicnole, 1f));
+        heroNicnole.addComponent(new SpriteComponent(heroNicnole, Resources.getSprite(ResourceSprite.PLAYER)));
+        heroNicnole.addComponent(new BoxColliderComponent(heroNicnole, true, true, new Box(0, 32, 0, 32)));
+        heroNicnole.addComponent(new HealthBarComponent(heroNicnole));
+
+        world.spawnActor(heroNicnole);
+        aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
+                .alignLeft(0.33f)
+            .alignTop(1)
+            .paddingTop(-120)
+            .height(94)
+            .width(400)
+            .build(),
+            heroNicnole));
+
+        val heroJohn = new Hero(
+            "John",
+            new Vector(186, 299),
+            3,
+            11f,
+            11f,
+            6,
+            24,
+            new Stats(),
+            144f,
+            new Inventory(28));
+        heroJohn.addComponent(new MoveComponent(heroJohn, 1f));
+        heroJohn.addComponent(new SpriteComponent(heroJohn, Resources.getSprite(ResourceSprite.PLAYER)));
+        heroJohn.addComponent(new BoxColliderComponent(heroJohn, true, true, new Box(0, 32, 0, 32)));
+        heroJohn.addComponent(new HealthBarComponent(heroJohn));
+
+        world.spawnActor(heroJohn);
+        aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
+            .alignLeft(0.67f)
+            .alignTop(1)
+            .paddingTop(-120)
+            .height(94)
+            .width(400)
+            .build(),
+            heroJohn));
+        world.spawnActor(aGui);
     }
 
     private static void _populateTestWorld(final World world, final Screen screen) {
         val aPlayer = new Hero(
-            "Hero1",
+            "Paul",
             new Vector(200, 200),
             3,
             9f,
@@ -86,7 +141,7 @@ public final class GameRunner {
         aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
             .alignTop(1)
             .paddingTop(-120)
-            .height(120)
+            .height(94)
             .width(400)
             .build(),
             aPlayer));
@@ -106,7 +161,7 @@ public final class GameRunner {
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
         aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprite.SEWER_RAT)));
         aRat.addComponent(new HealthBarComponent(aRat));
-        aRat.addComponent(new DestroyOnDeathComponent(aRat, 5));
+        aRat.addComponent(new DestroyOnDeathComponent(aRat, 0));
         aRat.addComponent(new PlayerVisibilityComponent(aRat));
 
         world.spawnActor(aRat);
@@ -128,8 +183,6 @@ public final class GameRunner {
                 if (health != null && health.isEnabled()) {
                     health.adjustHealth(-6);
                 }
-
-                screen.getCamera().transform = screen.getCamera().transform.plus(0, 45);
 
                 aBullet.destroy();
                 return null;
