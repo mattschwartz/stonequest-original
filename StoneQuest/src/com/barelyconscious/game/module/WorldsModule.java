@@ -68,7 +68,9 @@ public class WorldsModule extends AbstractModule {
         @Named("window.height") final int screenHeight,
         @Named("window.title") final String windowTitle,
         @Named("version") final String version,
-        final Screen screen
+        final Screen screen,
+        final MouseInputHandler mouseInputHandler,
+        final KeyInputHandler keyInputHandler
     ) {
         final JFrame frame = new JFrame();
         frame.setMinimumSize(new Dimension(screenWidth, screenHeight));
@@ -99,6 +101,11 @@ public class WorldsModule extends AbstractModule {
         });
 
         frame.pack();
+
+        screen.getCanvas().addMouseListener(mouseInputHandler);
+        screen.getCanvas().addMouseMotionListener(mouseInputHandler);
+
+        screen.getCanvas().addKeyListener(keyInputHandler);
 
         return frame;
     }
@@ -155,18 +162,10 @@ public class WorldsModule extends AbstractModule {
     @Provides
     Screen providesScreen(
         @Named("window.width") final int screenWidth,
-        @Named("window.height") final int screenHeight,
-        final MouseInputHandler mouseInputHandler,
-        final KeyInputHandler keyInputHandler
+        @Named("window.height") final int screenHeight
     ) {
         final Canvas canvas = new Canvas();
         canvas.setSize(screenWidth, screenHeight);
-
-        canvas.addMouseListener(mouseInputHandler);
-        canvas.addMouseMotionListener(mouseInputHandler);
-
-        canvas.addKeyListener(keyInputHandler);
-
         return new Screen(canvas, screenWidth, screenHeight);
     }
 

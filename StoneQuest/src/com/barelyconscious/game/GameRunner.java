@@ -3,10 +3,12 @@ package com.barelyconscious.game;
 import com.barelyconscious.game.entity.*;
 import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.entity.components.*;
-import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
+import com.barelyconscious.game.entity.gui.GuiCanvas;
+import com.barelyconscious.game.entity.gui.HeroQuickbarPanel;
+import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
-import com.barelyconscious.game.entity.resources.ResourceSprites;
+import com.barelyconscious.game.entity.resources.ResourceSprite;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.entity.tile.Tile;
 import com.barelyconscious.game.module.WorldsModule;
@@ -45,11 +47,17 @@ public final class GameRunner {
             }
         });
 
+        _initTest(world, screen);
+
+        frame.requestFocus();
 
         engine.start();
         System.out.println("Saving game...");
         System.out.println("Cleaning up...");
         System.out.println("");
+    }
+
+    private static void _initTest(final World world, final Screen screen) {
     }
 
     private static void _populateTestWorld(final World world, final Screen screen) {
@@ -65,7 +73,7 @@ public final class GameRunner {
             144f,
             new Inventory(28));
         aPlayer.addComponent(new MoveComponent(aPlayer, 1f));
-        aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.getSprite(ResourceSprites.PLAYER)));
+        aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.getSprite(ResourceSprite.PLAYER)));
         aPlayer.addComponent(new BoxColliderComponent(aPlayer, true, true, new Box(0, 32, 0, 32)));
         aPlayer.addComponent(new HealthBarComponent(aPlayer));
 
@@ -73,6 +81,17 @@ public final class GameRunner {
             .addForce(Vector.RIGHT, 25f);
 
         world.spawnActor(aPlayer);
+        val aGui = new GuiCanvas(screen);
+
+        aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
+            .alignTop(1)
+            .paddingTop(-120)
+            .height(120)
+            .width(400)
+            .build(),
+            aPlayer));
+
+        world.spawnActor(aGui);
 
         val aRat = new AEntity(
             "Sewer Rat",
@@ -85,7 +104,7 @@ public final class GameRunner {
             0,
             new Stats());
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
-        aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprites.SEWER_RAT)));
+        aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprite.SEWER_RAT)));
         aRat.addComponent(new HealthBarComponent(aRat));
         aRat.addComponent(new DestroyOnDeathComponent(aRat, 5));
         aRat.addComponent(new PlayerVisibilityComponent(aRat));
@@ -95,7 +114,7 @@ public final class GameRunner {
         val aBullet = new Actor("Bullet", new Vector(264f, 100f));
         aBullet.addComponent(new MoveComponent(aBullet, 2f));
         aBullet.addComponent(new BoxColliderComponent(aBullet, false, true, new Box(0, 32, 0, 32)));
-        aBullet.addComponent(new SpriteComponent(aBullet, Resources.getSprite(ResourceSprites.POTION)));
+        aBullet.addComponent(new SpriteComponent(aBullet, Resources.getSprite(ResourceSprite.POTION)));
 
         aBullet.getComponent(BoxColliderComponent.class)
             .delegateOnOverlap.bindDelegate((col) -> {
@@ -128,13 +147,13 @@ public final class GameRunner {
         for (int x = 0; x < 25; ++x) {
             for (int y = 0; y < 25; ++y) {
                 final int grassTileId = RANDOM.nextInt(3);
-                ResourceSprites rSprite;
+                ResourceSprite rSprite;
                 if (grassTileId == 0) {
-                    rSprite = ResourceSprites.GRASS_1;
+                    rSprite = ResourceSprite.GRASS_1;
                 } else if (grassTileId == 1) {
-                    rSprite = ResourceSprites.GRASS_2;
+                    rSprite = ResourceSprite.GRASS_2;
                 } else {
-                    rSprite = ResourceSprites.GRASS_3;
+                    rSprite = ResourceSprite.GRASS_3;
                 }
 
                 val aTile = new TileActor(new Vector(x * rSprite.width, y * rSprite.height), new Tile(

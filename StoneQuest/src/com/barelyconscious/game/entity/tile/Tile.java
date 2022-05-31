@@ -1,6 +1,6 @@
 package com.barelyconscious.game.entity.tile;
 
-import com.barelyconscious.game.entity.resources.ResourceSprites;
+import com.barelyconscious.game.entity.resources.ResourceSprite;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,7 +14,7 @@ public class Tile {
 
     private final int tileId;
     private final String name;
-    private final ResourceSprites spriteResource;
+    private final ResourceSprite spriteResource;
     private final boolean blocksMovement;
     private final boolean blocksSight;
 }

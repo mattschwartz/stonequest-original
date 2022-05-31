@@ -1,6 +1,9 @@
 package com.barelyconscious.game.entity.graphics;
 
+import com.barelyconscious.game.delegate.Delegate;
 import com.barelyconscious.game.entity.Camera;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.val;
 
 import javax.swing.*;
@@ -10,7 +13,18 @@ import java.awt.image.BufferedImage;
 
 public final class Screen {
 
+    public final Delegate<ResizeEvent> onResize = new Delegate<>();
+
+    @AllArgsConstructor
+    public static final class ResizeEvent {
+        public final int prevWidth;
+        public final int prevHeight;
+        public final int newWidth;
+        public final int newHeight;
+    }
+
     private final Camera camera;
+    @Getter
     private final Canvas canvas;
     private BufferedImage viewport;
 
@@ -47,12 +61,17 @@ public final class Screen {
 
     public synchronized void resizeScreen(final int newWidth, final int newHeight) {
         synchronized (this) {
+            final int prevWidth = getWidth();
+            final int prevHeight = getHeight();
+
             canvas.setSize(newWidth, newHeight);
             viewport = new BufferedImage(
                 newWidth,
                 newHeight,
                 BufferedImage.TYPE_INT_ARGB);
             camera.resize(newWidth, newHeight);
+
+            onResize.call(new ResizeEvent(prevWidth, prevHeight, newWidth, newHeight));
         }
     }
 

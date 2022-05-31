@@ -1,14 +1,24 @@
 package com.barelyconscious.game.shape;
 
-import lombok.AllArgsConstructor;
 import lombok.ToString;
 
-@AllArgsConstructor
 @ToString
 public final class Box implements Shape {
 
-    public int left, right;
-    public int top, bottom;
+    public final int left, right;
+    public final int top, bottom;
+
+    public final int width;
+    public final int height;
+
+    public Box(int left, int right, int top, int bottom) {
+        this.left = left;
+        this.right = right;
+        this.top = top;
+        this.bottom = bottom;
+        this.width = right - left;
+        this.height = bottom - top;
+    }
 
     public Box plus(final Vector v) {
         return new Box(

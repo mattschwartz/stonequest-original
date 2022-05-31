@@ -14,8 +14,8 @@ import java.util.Map;
 /**
  * An accessor for drawing to the screen. Components can render to specific layers which the
  * RenderContext will collapse into a single image to be drawn to the screen.
- *
- *
+ * <p>
+ * <p>
  * TODO(idea): commit draws to an internal buffer of instructions which the Screen can interpret
  *  and determine how best to apply these draws to the canvas. Can help abstract away the underlying
  *  rendering implementation as well.
@@ -111,6 +111,46 @@ public class RenderContext {
         }
     }
 
+    public void renderGui(
+        final Image image,
+        final Box screenBounds
+    ) {
+        final Graphics g = graphicsByLayer.get(RenderLayer.GUI);
+        g.drawImage(image, screenBounds.left, screenBounds.top, screenBounds.width, screenBounds.height, null);
+    }
+
+
+    public void renderGuiRect(
+        final Color color,
+        final boolean fill,
+        final Box screenBounds
+    ) {
+        this.renderGuiRect(color, fill, screenBounds.left, screenBounds.top,
+            screenBounds.width, screenBounds.height);
+    }
+
+    public void renderGuiRect(
+        final Color color,
+        final boolean fill,
+        final int screenX,
+        final int screenY,
+        final int width,
+        final int height
+    ) {
+        final Graphics g = graphicsByLayer.get(RenderLayer.GUI);
+
+        final Color prev = g.getColor();
+
+        g.setColor(color);
+        if (fill) {
+            g.fillRect(screenX, screenY, width, height);
+        } else {
+            g.drawRect(screenX, screenY, width, height);
+        }
+
+        g.setColor(prev);
+    }
+
     public void renderRect(
         final Color color,
         final boolean fill,
@@ -128,9 +168,9 @@ public class RenderContext {
 
             g.setColor(color);
             if (fill) {
-                g.fillRect((int)screenPos.x, (int)screenPos.y, width, height);
+                g.fillRect((int) screenPos.x, (int) screenPos.y, width, height);
             } else {
-                g.drawRect((int)screenPos.x, (int)screenPos.y, width, height);
+                g.drawRect((int) screenPos.x, (int) screenPos.y, width, height);
             }
 
             g.setColor(prev);
@@ -153,6 +193,7 @@ public class RenderContext {
     }
 
     private boolean isDisposing = false;
+
     void dispose() {
         if (!isDisposing) {
             graphicsByLayer.values().forEach(Graphics::dispose);

@@ -13,9 +13,24 @@ import java.util.Objects;
 
 public final class Resources {
 
-    private static final Map<ResourceSprites, Sprite> loadedSprites = new HashMap<>();
+    private static final Map<ResourceSprite, Sprite> loadedSprites = new HashMap<>();
 
-    public static Sprite getSprite(final ResourceSprites resource) {
+    public static Sprite createSprite(final ResourceSprite res, final int width, final int height) {
+
+        final Image spriteImage;
+        try {
+            final InputStream inputStream = Objects.requireNonNull(GameRunner.class.getClassLoader()
+                    .getResource(res.filepath))
+                .openStream();
+            spriteImage = ImageIO.read(inputStream);
+        } catch (final Exception e) {
+            throw new MissingResourceException("Failed to load res: " + res, e);
+        }
+
+        return new Sprite(spriteImage, width, height);
+    }
+
+    public static Sprite getSprite(final ResourceSprite resource) {
         if (loadedSprites.containsKey(resource)) {
             return loadedSprites.get(resource);
         }
