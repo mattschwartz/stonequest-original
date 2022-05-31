@@ -5,8 +5,10 @@ import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.entity.components.*;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
+import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.resources.ResourceSprites;
 import com.barelyconscious.game.entity.resources.Resources;
+import com.barelyconscious.game.entity.tile.Tile;
 import com.barelyconscious.game.module.WorldsModule;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
@@ -28,7 +30,8 @@ public final class GameRunner {
         final JFrame frame = injector.getInstance(JFrame.class);
         final World world = injector.getInstance(World.class);
         final Screen screen = injector.getInstance(Screen.class);
-        _createMap(world);
+        final MouseInputHandler mouseInputHandler = injector.getInstance(MouseInputHandler.class);
+        _createMap(world, mouseInputHandler);
         _populateTestWorld(world, screen);
         final Engine engine = injector.getInstance(Engine.class);
 
@@ -62,7 +65,7 @@ public final class GameRunner {
             144f,
             new Inventory(28));
         aPlayer.addComponent(new MoveComponent(aPlayer, 1f));
-        aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.loadSprite(ResourceSprites.PLAYER)));
+        aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.getSprite(ResourceSprites.PLAYER)));
         aPlayer.addComponent(new BoxColliderComponent(aPlayer, true, true, new Box(0, 32, 0, 32)));
         aPlayer.addComponent(new HealthBarComponent(aPlayer));
 
@@ -82,7 +85,7 @@ public final class GameRunner {
             0,
             new Stats());
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
-        aRat.addComponent(new SpriteComponent(aRat, Resources.loadSprite(ResourceSprites.SEWER_RAT)));
+        aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprites.SEWER_RAT)));
         aRat.addComponent(new HealthBarComponent(aRat));
         aRat.addComponent(new DestroyOnDeathComponent(aRat, 5));
         aRat.addComponent(new PlayerVisibilityComponent(aRat));
@@ -92,7 +95,7 @@ public final class GameRunner {
         val aBullet = new Actor("Bullet", new Vector(264f, 100f));
         aBullet.addComponent(new MoveComponent(aBullet, 2f));
         aBullet.addComponent(new BoxColliderComponent(aBullet, false, true, new Box(0, 32, 0, 32)));
-        aBullet.addComponent(new SpriteComponent(aBullet, Resources.loadSprite(ResourceSprites.POTION)));
+        aBullet.addComponent(new SpriteComponent(aBullet, Resources.getSprite(ResourceSprites.POTION)));
 
         aBullet.getComponent(BoxColliderComponent.class)
             .delegateOnOverlap.bindDelegate((col) -> {
@@ -121,12 +124,9 @@ public final class GameRunner {
 
     private static final Random RANDOM = new Random(100L);
 
-    private static void _createMap(final World world) {
-        for (int x = 0; x < 75; ++x) {
-            for (int y = 0; y < 75; ++y) {
-                val aTile = new Actor(
-                    new Vector(x * 32f, y * 32f));
-
+    private static void _createMap(final World world, final MouseInputHandler mouseInputHandler) {
+        for (int x = 0; x < 25; ++x) {
+            for (int y = 0; y < 25; ++y) {
                 final int grassTileId = RANDOM.nextInt(3);
                 ResourceSprites rSprite;
                 if (grassTileId == 0) {
@@ -137,8 +137,15 @@ public final class GameRunner {
                     rSprite = ResourceSprites.GRASS_3;
                 }
 
-                aTile.addComponent(new SpriteComponent(aTile, Resources.loadSprite(rSprite), RenderLayer.GROUND));
-                aTile.addComponent(new HideOnMouseOverComponent(aTile, new Box(0, 32, 0, 32)));
+                val aTile = new TileActor(new Vector(x * rSprite.width, y * rSprite.height), new Tile(
+                    0,
+                    "Grass",
+                    rSprite,
+                    false,
+                    false),
+                    rSprite.width,
+                    rSprite.height,
+                    mouseInputHandler);
                 world.spawnActor(aTile);
             }
         }

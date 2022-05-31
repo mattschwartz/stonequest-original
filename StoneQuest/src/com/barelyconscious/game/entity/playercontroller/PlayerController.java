@@ -1,13 +1,13 @@
 package com.barelyconscious.game.entity.playercontroller;
 
 import com.barelyconscious.game.entity.GameInstance;
+import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
-import lombok.NonNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 /**
@@ -30,11 +30,38 @@ public class PlayerController {
     @Nullable
     private Vector mouseClickedWorldPos;
 
-    public PlayerController(final MouseInputHandler inputHandler) {
-        inputHandler.onMouseClicked.bindDelegate(this::onMouseClicked);
-        inputHandler.onMouseMoved.bindDelegate(this::onMouseMoved);
-        inputHandler.onMouseReleased.bindDelegate(this::onMouseReleased);
-        inputHandler.onMouseExited.bindDelegate(this::onMouseExited);
+    public PlayerController(final MouseInputHandler mouseHandler, final KeyInputHandler keyHandler) {
+        mouseHandler.onMouseClicked.bindDelegate(this::onMouseClicked);
+        mouseHandler.onMouseMoved.bindDelegate(this::onMouseMoved);
+        mouseHandler.onMouseReleased.bindDelegate(this::onMouseReleased);
+        mouseHandler.onMouseExited.bindDelegate(this::onMouseExited);
+
+        keyHandler.onKeyTyped.bindDelegate(this::onKeyTyped);
+    }
+
+    // todo(p0) - since this is moving camera outside of game updates, movement is choppy
+    private final float moveSpeed = 32f;
+    private Void onKeyTyped(KeyEvent keyEvent) {
+        Vector translate = Vector.ZERO;
+
+        if (keyEvent.getKeyChar() == 'd') {
+            translate = translate.plus(moveSpeed, 0);
+        }
+        if (keyEvent.getKeyChar() == 'a') {
+            translate = translate.plus(-moveSpeed, 0);
+        }
+        if (keyEvent.getKeyChar() == 'w') {
+            translate = translate.plus(0, -moveSpeed);
+        }
+        if (keyEvent.getKeyChar() == 's') {
+            translate = translate.plus(0, moveSpeed);
+        }
+
+        final Vector cameraWorldPos = GameInstance.getInstance().getCamera()
+            .transform;
+        GameInstance.getInstance().getCamera().transform = cameraWorldPos.plus(translate);
+
+        return null;
     }
 
     private Void onMouseExited(MouseEvent mouseEvent) {

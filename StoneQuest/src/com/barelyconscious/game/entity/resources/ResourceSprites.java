@@ -2,18 +2,22 @@ package com.barelyconscious.game.entity.resources;
 
 public enum ResourceSprites {
 
-    PLAYER("sprites/player_sprite.png"),
-    SEWER_RAT("tiles/entities/sewer_rat.png"),
-    SCROLL("tiles/loot/scroll.png"),
-    POTION("tiles/loot/potion.png"),
+    PLAYER("sprites/player_sprite.png", 32, 32),
+    SEWER_RAT("tiles/entities/sewer_rat.png", 32, 32),
+    SCROLL("tiles/loot/scroll.png", 32, 32),
+    POTION("tiles/loot/potion.png", 32, 32),
 
-    GRASS_1("tiles/world/grass.png"),
-    GRASS_2("tiles/world/grass_2.png"),
-    GRASS_3("tiles/world/grass_3.png");
+    GRASS_1("tiles/world/grass.png", 32, 32),
+    GRASS_2("tiles/world/grass_2.png", 32, 32),
+    GRASS_3("tiles/world/grass_3.png", 32, 32);
 
     public final String filepath;
+    public final int width;
+    public final int height;
 
-    ResourceSprites(final String filepath) {
+    ResourceSprites(final String filepath, final int width, final int height) {
         this.filepath = filepath;
+        this.width = width;
+        this.height = height;
     }
 }

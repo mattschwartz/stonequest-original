@@ -6,8 +6,6 @@ import com.barelyconscious.game.exception.MissingResourceException;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +15,7 @@ public final class Resources {
 
     private static final Map<ResourceSprites, Sprite> loadedSprites = new HashMap<>();
 
-    public static Sprite loadSprite(final ResourceSprites resource) {
+    public static Sprite getSprite(final ResourceSprites resource) {
         if (loadedSprites.containsKey(resource)) {
             return loadedSprites.get(resource);
         }
@@ -32,7 +30,7 @@ public final class Resources {
             throw new MissingResourceException("Failed to load resource: " + resource, e);
         }
 
-        final Sprite sprite = new Sprite(spriteImage, 32, 32);
+        final Sprite sprite = new Sprite(spriteImage, resource.width, resource.height);
 
         loadedSprites.put(resource, sprite);
 

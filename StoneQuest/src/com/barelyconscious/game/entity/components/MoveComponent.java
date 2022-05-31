@@ -48,8 +48,8 @@ public final class MoveComponent extends Component {
         final Vector startPos = getParent().transform;
         final Vector endPos = startPos.plus(forceVector);
 
-        final float dx = (endPos.x - startPos.x) * eventArgs.deltaTime * moveSpeed;
-        final float dy = (endPos.y - startPos.y) * eventArgs.deltaTime * moveSpeed;
+        final float dx = (endPos.x - startPos.x) * eventArgs.getDeltaTime() * moveSpeed;
+        final float dy = (endPos.y - startPos.y) * eventArgs.getDeltaTime() * moveSpeed;
 
         desiredLocation = new Vector(startPos.x + dx, startPos.y + dy);
         forceVector = forceVector.minus(new Vector(dx, dy));

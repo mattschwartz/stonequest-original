@@ -10,6 +10,9 @@ public final class GameInstance {
     private static GameInstance instance;
 
     // todo: ewwwwwwwuh
+    //  can maybe pass these through event args?
+    //  should probable introduce a new component that handles configuring the delegates instead of player controller
+    //  and that can be capture somewhere in engine where game instance is known
     public static GameInstance createInstance(final World world, final PlayerController playerController) {
         if (instance == null) {
             instance = new GameInstance(world, playerController);

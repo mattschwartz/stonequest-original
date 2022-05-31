@@ -10,6 +10,14 @@ public final class Box implements Shape {
     public int left, right;
     public int top, bottom;
 
+    public Box plus(final Vector v) {
+        return new Box(
+            (int) v.x + left,
+            (int) v.x + right,
+            (int) v.y + top,
+            (int) v.y + bottom);
+    }
+
     public boolean intersects(final Shape other) {
         if (other instanceof Box) {
             final Box otherBox = (Box) other;
@@ -21,8 +29,8 @@ public final class Box implements Shape {
     }
 
     public boolean contains(final int x, final int y) {
-        return (x >= left && x <= right)
-            && (y >= top && y <= bottom);
+        return (x >= left && x < right)
+            && (y >= top && y < bottom);
     }
 
     public boolean contains(final Vector point) {

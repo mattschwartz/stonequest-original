@@ -137,6 +137,21 @@ public class RenderContext {
         }
     }
 
+    public void renderString(
+        final String message,
+        final Color color,
+        final int screenX,
+        final int screenY,
+        final RenderLayer layer
+    ) {
+        final Graphics g = graphicsByLayer.get(layer);
+
+        final Color prev = g.getColor();
+        g.setColor(color);
+        g.drawString(message, screenX, screenY);
+        g.setColor(prev);
+    }
+
     private boolean isDisposing = false;
     void dispose() {
         if (!isDisposing) {

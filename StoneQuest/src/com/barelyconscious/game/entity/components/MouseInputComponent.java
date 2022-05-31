@@ -1,21 +1,12 @@
 package com.barelyconscious.game.entity.components;
 
-import com.barelyconscious.game.delegate.Delegate;
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
-import com.barelyconscious.game.entity.input.MouseEvent;
 import com.barelyconscious.game.shape.Vector;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class MouseInputComponent extends Component {
-
-    public final Delegate<MouseEvent> delegateOnMouseEntered;
-    public final Delegate<MouseEvent> delegateOnMouseExited;
-    public final Delegate<MouseEvent> delegateOnMouseOver;
-    public final Delegate<MouseEvent> delegateOnMouseDown;
-    public final Delegate<MouseEvent> delegateOnMouseUp;
-    public final Delegate<MouseEvent> delegateOnMouseClicked;
 
     private final int width;
     private final int height;
@@ -26,13 +17,6 @@ public class MouseInputComponent extends Component {
         checkArgument(height < 0, "height is < 0");
         this.width = width;
         this.height = height;
-
-        this.delegateOnMouseEntered = new Delegate<>();
-        this.delegateOnMouseExited = new Delegate<>();
-        this.delegateOnMouseOver = new Delegate<>();
-        this.delegateOnMouseDown = new Delegate<>();
-        this.delegateOnMouseUp = new Delegate<>();
-        this.delegateOnMouseClicked = new Delegate<>();
     }
 
     public boolean contains(final int mouseX, final int mouseY) {

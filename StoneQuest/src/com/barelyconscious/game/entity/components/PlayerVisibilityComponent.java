@@ -36,14 +36,14 @@ public class PlayerVisibilityComponent extends Component {
     @Override
     public void update(EventArgs eventArgs) {
         if (isHiding) {
-            _debugHideTimeRemaining -= eventArgs.deltaTime;
+            _debugHideTimeRemaining -= eventArgs.getDeltaTime();
             if (_debugHideTimeRemaining <= 0) {
                 isHiding = false;
                 _debugHideTimeRemaining = _debugTogglePeriod;
                 getSpriteComponent().setRenderEnabled(true);
             }
         } else {
-            _debugHideTimeRemaining -= eventArgs.deltaTime;
+            _debugHideTimeRemaining -= eventArgs.getDeltaTime();
             if (_debugHideTimeRemaining <= 0) {
                 isHiding = true;
                 _debugHideTimeRemaining = _debugTogglePeriod;

@@ -91,12 +91,18 @@ public final class Engine {
         isRunning = false;
     }
 
-    public void renderTick() {
+    private EventArgs buildEventArgs() {
         final long now = clock.millis();
         final long deltaTime = now - lastRenderTick;
         lastRenderTick = now;
-        final EventArgs eventArgs = new EventArgs(deltaTime * 0.001f);
+        return new EventArgs(
+            deltaTime * 0.001f,
+            gameInstance.getPlayerController().getMouseScreenPos(),
+            gameInstance.getPlayerController().getMouseWorldPos());
+    }
 
+    public void renderTick() {
+        final EventArgs eventArgs = buildEventArgs();
         screen.clear();
         final RenderContext renderContext = screen.createRenderContext();
 
@@ -117,11 +123,7 @@ public final class Engine {
     }
 
     public void tick() {
-        final long now = clock.millis();
-        final long deltaTime = now - lastTick;
-        lastTick = now;
-        final EventArgs eventArgs = new EventArgs(deltaTime * 0.001f);
-
+        final EventArgs eventArgs = buildEventArgs();
         final List<Component> componentsToUpdate = new ArrayList<>();
         final List<Actor> actorsToRemove = new ArrayList<>();
 

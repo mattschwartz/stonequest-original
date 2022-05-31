@@ -3,6 +3,8 @@ package com.barelyconscious.game.entity;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 
+import javax.annotation.Nullable;
+
 public final class Camera {
 
     public Vector transform;
@@ -52,11 +54,19 @@ public final class Camera {
             worldY - transform.y);
     }
 
+    @Nullable
     public Vector worldToScreenPos(final Vector worldPos) {
+        if (worldPos == null) {
+            return null;
+        }
         return worldToScreenPos(worldPos.x, worldPos.y);
     }
 
+    @Nullable
     public Vector screenToWorldPos(final Vector screenPos) {
+        if (screenPos == null) {
+            return null;
+        }
         return transform.plus(screenPos);
     }
 }

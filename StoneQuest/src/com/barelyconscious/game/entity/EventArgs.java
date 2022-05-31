@@ -1,15 +1,20 @@
 package com.barelyconscious.game.entity;
 
+import com.barelyconscious.game.shape.Vector;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public final class EventArgs {
 
     /**
      * Time in seconds since last update.
      */
-    public final float deltaTime;
+    private final float deltaTime;
 
-    public final boolean _debugMode = false;
+    private final Vector mouseScreenPos;
+    private final Vector mouseWorldPos;
 
-    public EventArgs(final float deltaTime) {
-        this.deltaTime = deltaTime;
-    }
+    public static final boolean IS_DEBUG = false;
 }

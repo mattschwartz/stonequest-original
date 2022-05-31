@@ -2,6 +2,7 @@ package com.barelyconscious.game.module;
 
 import com.barelyconscious.game.entity.Engine;
 import com.barelyconscious.game.entity.GameInstance;
+import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.playercontroller.PlayerController;
 import com.barelyconscious.game.physics.Physics;
@@ -55,8 +56,8 @@ public class WorldsModule extends AbstractModule {
         } catch (final Exception ex) {
             throw new InvalidGameConfigurationException(String.format(
                 "Failed while trying to load properties from filepath='%s': %s",
-                    propertiesFilepath,
-                    ex.getMessage()));
+                propertiesFilepath,
+                ex.getMessage()));
         }
     }
 
@@ -137,8 +138,11 @@ public class WorldsModule extends AbstractModule {
 
     @Singleton
     @Provides
-    PlayerController providesPlayerController(final MouseInputHandler mouseInputHandler) {
-        return new PlayerController(mouseInputHandler);
+    PlayerController providesPlayerController(
+        final MouseInputHandler mouseInputHandler,
+        final KeyInputHandler keyInputHandler
+    ) {
+        return new PlayerController(mouseInputHandler, keyInputHandler);
     }
 
     @Singleton
@@ -152,12 +156,17 @@ public class WorldsModule extends AbstractModule {
     Screen providesScreen(
         @Named("window.width") final int screenWidth,
         @Named("window.height") final int screenHeight,
-        final MouseInputHandler mouseInputHandler
+        final MouseInputHandler mouseInputHandler,
+        final KeyInputHandler keyInputHandler
     ) {
         final Canvas canvas = new Canvas();
         canvas.setSize(screenWidth, screenHeight);
+
         canvas.addMouseListener(mouseInputHandler);
         canvas.addMouseMotionListener(mouseInputHandler);
+
+        canvas.addKeyListener(keyInputHandler);
+
         return new Screen(canvas, screenWidth, screenHeight);
     }
 
@@ -165,6 +174,12 @@ public class WorldsModule extends AbstractModule {
     @Provides
     MouseInputHandler providesMouseInputHandler() {
         return new MouseInputHandler();
+    }
+
+    @Singleton
+    @Provides
+    KeyInputHandler providesKeyInputHandler() {
+        return new KeyInputHandler();
     }
 
     @Singleton

@@ -30,7 +30,7 @@ public class BoxColliderComponent extends ColliderComponent {
 
     @Override
     public void render(final EventArgs eventArgs, final RenderContext renderContext) {
-        if (!eventArgs._debugMode) {
+        if (!eventArgs.IS_DEBUG) {
             return;
         }
 
