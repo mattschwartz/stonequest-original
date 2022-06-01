@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
+import java.util.Random;
 
 public class FloatingTextWidget extends Widget {
 
@@ -67,6 +68,11 @@ public class FloatingTextWidget extends Widget {
 
     private boolean started = false;
 
+    private static final Random RANDOM = new Random(1L);
+
+    private final int maxJitterX = 32;
+    private final int maxJitterY = 32;
+
     public void beginFloating(final String text) {
         if (started) {
             return;
@@ -74,8 +80,8 @@ public class FloatingTextWidget extends Widget {
         this.text = text;
 
         state.isFloating = true;
-        state.offsX = 0;
-        state.offsY = 0;
+        state.offsX = RANDOM.nextInt(maxJitterX * 2) - maxJitterX;
+        state.offsY = -RANDOM.nextInt(maxJitterY);
         state.remainingTime = durationMs;
         started = true;
     }

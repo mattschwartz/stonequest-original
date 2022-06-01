@@ -76,8 +76,8 @@ public class HeroQuickbarPanel extends Widget {
         hero.getComponent(HealthComponent.class)
             .delegateOnValueChanged.bindDelegate(e -> {
                 final FloatingTextWidget wFtext = new FloatingTextWidget(Anchor.builder()
-                    .alignTop(0.5f)
-                    .alignLeft(0.5f)
+                    .alignTop(0.67f)
+                    .alignLeft(0.4f)
                     .build(),
                     Vector.UP,
                     0.2f,
