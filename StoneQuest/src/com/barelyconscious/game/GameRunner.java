@@ -5,9 +5,7 @@ import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.entity.components.*;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.Screen;
-import com.barelyconscious.game.entity.gui.GuiCanvas;
-import com.barelyconscious.game.entity.gui.HeroQuickbarPanel;
-import com.barelyconscious.game.entity.gui.Widget;
+import com.barelyconscious.game.entity.gui.*;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
@@ -84,12 +82,9 @@ public final class GameRunner {
         heroNicnole.addComponent(new HealthBarComponent(heroNicnole));
 
         world.spawnActor(heroNicnole);
-        aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
-            .alignLeft(0.33f)
-            .alignTop(1)
-            .paddingTop(-164)
-            .height(94)
-            .width(400)
+        aGui.addWidget(new HeroQuickbarPanel(LayoutData.builder()
+            .anchor(new VDim(0.33f, 1, 0, -164))
+            .size(new VDim(0, 0, 400, 94))
             .build(),
             heroNicnole));
 
@@ -110,12 +105,9 @@ public final class GameRunner {
         heroJohn.addComponent(new HealthBarComponent(heroJohn));
 
         world.spawnActor(heroJohn);
-        aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
-            .alignLeft(0.67f)
-            .alignTop(1)
-            .paddingTop(-164)
-            .height(94)
-            .width(400)
+        aGui.addWidget(new HeroQuickbarPanel(LayoutData.builder()
+            .anchor(new VDim(0.67f, 1, 0, -164))
+            .size(new VDim(0, 0, 400, 94))
             .build(),
             heroJohn));
         world.spawnActor(aGui);
@@ -147,11 +139,9 @@ public final class GameRunner {
 
         val aGui = new GuiCanvas(screen);
 
-        aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
-            .alignTop(1)
-            .paddingTop(-164)
-            .height(94)
-            .width(400)
+        aGui.addWidget(new HeroQuickbarPanel(LayoutData.builder()
+            .anchor(new VDim(0, 1, 0, -164))
+            .size(new VDim(0, 0, 400, 94))
             .build(),
             aPlayer));
 

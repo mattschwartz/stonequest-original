@@ -32,14 +32,14 @@ public final class Physics {
         final List<Actor> actors
     ) {
         for (final Actor actor : actors) {
-            final MoveComponent moveComponent = actor.getComponent(MoveComponent.class);
-            if (moveComponent == null) {
+            final MoveComponent move = actor.getComponent(MoveComponent.class);
+            if (move == null) {
                 continue;
             }
 
-            moveComponent.physicsUpdate(eventArgs);
+            move.physicsUpdate(eventArgs);
 
-            final Vector desiredLocation = moveComponent.getDesiredLocation();
+            final Vector desiredLocation = move.getDesiredLocation();
 
             // actor did not move
             if (Objects.equals(actor.transform, desiredLocation)) {
@@ -49,7 +49,8 @@ public final class Physics {
             final boolean didMove;
             final BoxColliderComponent collider = actor.getComponent(BoxColliderComponent.class);
             if (collider != null) {
-                didMove = tryMove(actor, desiredLocation, collider, actors);
+                didMove = tryMove(actor, desiredLocation,
+                    move.getForceVector(), collider, actors, eventArgs);
             } else {
                 didMove = true;
             }
@@ -68,8 +69,10 @@ public final class Physics {
     private boolean tryMove(
         final Actor actor,
         final Vector desiredLocation,
+        final Vector forceVector,
         final BoxColliderComponent collider,
-        final List<Actor> physicsActors
+        final List<Actor> physicsActors,
+        final EventArgs eventArgs
     ) {
         boolean didMove = true;
         for (final Actor otherActor : physicsActors) {
@@ -85,7 +88,9 @@ public final class Physics {
                         other.isBlocksMovement(),
                         other.isFiresOverlapEvents(),
                         other.getParent(),
-                        collider.getParent());
+                        collider.getParent(),
+                        forceVector,
+                        eventArgs);
 
                     if (other.isBlocksMovement()) {
                         collider.delegateOnHit.call(col);

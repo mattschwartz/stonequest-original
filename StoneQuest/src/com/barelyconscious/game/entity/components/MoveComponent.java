@@ -4,6 +4,7 @@ import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.shape.Vector;
 import com.barelyconscious.util.UMath;
+import lombok.Getter;
 
 public class MoveComponent extends Component {
 
@@ -17,6 +18,7 @@ public class MoveComponent extends Component {
         this.moveSpeed = moveSpeed;
     }
 
+    @Getter
     private Vector forceVector = Vector.ZERO;
 
     /**
@@ -27,7 +29,7 @@ public class MoveComponent extends Component {
         forceVector = UMath.min(
             forceVector.plus(direction.unitVector().multiply(force)),
             direction.unitVector().multiply(moveSpeed));
-        getParent().facing = direction;
+        getParent().facing = forceVector.unitVector();
     }
 
     private Vector desiredLocation;

@@ -18,11 +18,13 @@ public class HealthBarComponent extends Component {
     private final int width;
     private final int height;
 
+    private final boolean hideWhenFull;
+
     /**
      * creates a standard health bar component that appears under entities.
      */
     public HealthBarComponent(final Actor parent) {
-        this(parent, 0, 34, 32, 4);
+        this(parent, 0, 34, 32, 4, true);
     }
 
     public HealthBarComponent(
@@ -30,13 +32,15 @@ public class HealthBarComponent extends Component {
         final int xOffs,
         final int yOffs,
         final int width,
-        final int height
+        final int height,
+        final boolean hideWhenFull
     ) {
         super(parent);
         this.xOffs = xOffs;
         this.yOffs = yOffs;
         this.width = width;
         this.height = height;
+        this.hideWhenFull = hideWhenFull;
     }
 
     @Override

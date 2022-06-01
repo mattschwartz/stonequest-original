@@ -20,12 +20,15 @@ public final class Box implements Shape {
         this.height = bottom - top;
     }
 
-    public Box plus(final Vector v) {
+    /**
+     * @return a new box with values offset by the supplied position.
+     */
+    public Box boxAtPosition(final Vector position) {
         return new Box(
-            (int) v.x + left,
-            (int) v.x + right,
-            (int) v.y + top,
-            (int) v.y + bottom);
+            (int) position.x + left,
+            (int) position.x + right,
+            (int) position.y + top,
+            (int) position.y + bottom);
     }
 
     public boolean intersects(final Shape other) {

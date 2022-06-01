@@ -4,8 +4,20 @@
     <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/TileActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/TileActor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/HealthBarComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/HealthBarComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MoveComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MoveComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/HeroQuickbarPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/HeroQuickbarPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/Widget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/Widget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/BackgroundPanelWidget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/BackgroundPanelWidget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/FloatingTextWidget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/FloatingTextWidget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/ProgressBarWidget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/ProgressBarWidget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/SpriteWidget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/SpriteWidget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/TextFieldWidget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/TextFieldWidget.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/playercontroller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/playercontroller/PlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/CollisionData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/CollisionData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/Physics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/physics/Physics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/shape/Box.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/shape/Box.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/util/UMath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/util/UMath.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,6 +133,9 @@
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.barelyconscious.game.entity" />
       <recent name="com.barelyconscious.game" />
+    </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="com.barelyconscious.game.entity.gui" />
     </key>
   </component>
   <component name="RunManager" selected="Application.GameRunner">

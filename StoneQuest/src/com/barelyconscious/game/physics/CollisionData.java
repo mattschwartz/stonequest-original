@@ -1,6 +1,8 @@
 package com.barelyconscious.game.physics;
 
 import com.barelyconscious.game.entity.Actor;
+import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.shape.Vector;
 import lombok.AllArgsConstructor;
 
 /**
@@ -28,4 +30,14 @@ public final class CollisionData {
      * The actor instigating the collision.
      */
     public final Actor causedByActor;
+
+    /**
+     * The amount of force imparted by the causedByActor.
+     */
+    public final Vector forceVector;
+
+    /**
+     * Data about the tick.
+     */
+    public EventArgs eventArgs;
 }

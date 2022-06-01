@@ -2,7 +2,11 @@ package com.barelyconscious.util;
 
 import com.barelyconscious.game.shape.Vector;
 
+import java.util.Random;
+
 public final class UMath {
+
+    public static final Random RANDOM = new Random(1L);
 
     public static Vector min(final Vector lhs, final Vector rhs) {
         if (rhs.magnitude() < lhs.magnitude()) {

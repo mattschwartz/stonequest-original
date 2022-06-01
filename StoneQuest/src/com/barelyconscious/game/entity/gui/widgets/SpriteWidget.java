@@ -3,6 +3,7 @@ package com.barelyconscious.game.entity.gui.widgets;
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.Sprite;
 import com.barelyconscious.game.entity.graphics.RenderContext;
+import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.entity.resources.ResourceGUI;
 import com.barelyconscious.game.entity.resources.Resources;
@@ -16,8 +17,8 @@ public class SpriteWidget extends Widget {
     @Setter
     private boolean renderGrayscale = false;
 
-    public SpriteWidget(final Anchor anchor, final ResourceGUI rSprite) {
-        super(anchor);
+    public SpriteWidget(final LayoutData layout, final ResourceGUI rSprite) {
+        super(layout);
         this.rSprite = rSprite;
     }
 

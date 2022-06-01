@@ -56,7 +56,7 @@ public class TileActor extends Actor implements Interactable {
             if (camera != null) {
                 final Vector screenPos = camera.worldToScreenPos(transform);
                 if (screenPos != null) {
-                    return mouseCaptureBounds.plus(screenPos).contains(screenX, screenY);
+                    return mouseCaptureBounds.boxAtPosition(screenPos).contains(screenX, screenY);
                 }
             }
         }
@@ -98,7 +98,7 @@ public class TileActor extends Actor implements Interactable {
             if (isMouseOver && eventArgs.getMouseScreenPos() != null) {
                 final Vector screenPos = renderContext.camera.worldToScreenPos(transform);
 
-                final Box b = mouseCaptureBounds.plus(screenPos);
+                final Box b = mouseCaptureBounds.boxAtPosition(screenPos);
 
                 final Vector renderPos = new Vector(
                     b.left,

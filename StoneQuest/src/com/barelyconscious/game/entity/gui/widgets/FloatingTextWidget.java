@@ -3,6 +3,7 @@ package com.barelyconscious.game.entity.gui.widgets;
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
+import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
@@ -31,12 +32,12 @@ public class FloatingTextWidget extends Widget {
     private Color textColor;
 
     public FloatingTextWidget(
-        final Anchor anchor,
+        final LayoutData layoutData,
         final Vector direction,
         final float durationMs,
         final Color textColor
     ) {
-        super(anchor);
+        super(layoutData);
         this.direction = direction;
         this.durationMs = durationMs;
         this.textColor = textColor;
@@ -93,7 +94,7 @@ public class FloatingTextWidget extends Widget {
         state.tick(eventArgs.getDeltaTime());
 
         if (state.isFloating) {
-            final Box pos = screenBounds.plus(new Vector(
+            final Box pos = screenBounds.boxAtPosition(new Vector(
                 state.offsX, state.offsY));
 
             renderContext.renderString(

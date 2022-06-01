@@ -10,6 +10,7 @@ import com.barelyconscious.game.entity.resources.ResourceSprite;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
+import com.barelyconscious.util.UMath;
 import lombok.Getter;
 import lombok.val;
 
@@ -138,13 +139,8 @@ public class PlayerController {
 
                     final HealthComponent health = hit.getComponent(HealthComponent.class);
                     if (health != null && health.isEnabled()) {
-                        health.adjust(-0.4f);
+                        health.adjust(UMath.RANDOM.nextFloat() * -3);
                     }
-
-//                    final MoveComponent move = hit.getComponent(MoveComponent.class);
-//                    if (move != null && move.isEnabled()) {
-//                        move.addForce(facing, 64);
-//                    }
 
                     aBullet.destroy();
                     return null;
