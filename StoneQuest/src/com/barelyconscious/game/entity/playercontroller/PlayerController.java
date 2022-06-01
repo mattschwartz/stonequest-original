@@ -58,6 +58,13 @@ public class PlayerController {
         if (keyEvent.getKeyChar() == KeyEvent.VK_3) {
             GameInstance.getInstance().setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
         }
+
+        if (keyEvent.getKeyChar() == KeyEvent.VK_F) {
+            GameInstance.getInstance()
+                .getHeroSelected()
+                .getComponent(HealthComponent.class)
+                .adjust(1.2f);
+        }
         return null;
     }
 

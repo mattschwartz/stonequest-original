@@ -75,13 +75,22 @@ public class HeroQuickbarPanel extends Widget {
 
         hero.getComponent(HealthComponent.class)
             .delegateOnValueChanged.bindDelegate(e -> {
+                final Color textColor;
+                if (e.delta > 0) {
+                    textColor = Color.GREEN;
+                } else if (e.delta < 0) {
+                    textColor = Color.RED;
+                } else  {
+                    return null;
+                }
+
                 final FloatingTextWidget wFtext = new FloatingTextWidget(Anchor.builder()
                     .alignTop(0.67f)
                     .alignLeft(0.4f)
                     .build(),
                     Vector.UP,
                     0.2f,
-                    Color.RED);
+                    textColor);
                 spriteWidget.addWidget(wFtext);
                 wFtext.resize(spriteWidget.screenBounds);
 
