@@ -27,6 +27,7 @@ public class MoveComponent extends Component {
         forceVector = UMath.min(
             forceVector.plus(direction.unitVector().multiply(force)),
             direction.unitVector().multiply(moveSpeed));
+        getParent().facing = direction;
     }
 
     private Vector desiredLocation;
