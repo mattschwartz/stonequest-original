@@ -45,7 +45,7 @@ public final class Vector {
         return (float) Math.sqrt(sqSum);
     }
 
-    public Vector mult(final float amt) {
+    public Vector multiply(final float amt) {
         return new Vector(
             x * amt,
             y * amt);

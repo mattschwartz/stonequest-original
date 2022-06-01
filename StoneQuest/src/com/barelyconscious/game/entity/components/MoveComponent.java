@@ -23,7 +23,7 @@ public class MoveComponent extends Component {
      * @param force     the force to apply in respective direction
      */
     public void addForce(final Vector direction, final float force) {
-        forceVector = forceVector.plus(direction.unitVector().mult(force));
+        forceVector = forceVector.plus(direction.unitVector().multiply(force));
     }
 
     private Vector desiredLocation;

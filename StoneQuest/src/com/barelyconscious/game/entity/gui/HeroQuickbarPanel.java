@@ -6,12 +6,10 @@ import com.barelyconscious.game.entity.Hero;
 import com.barelyconscious.game.entity.components.HealthComponent;
 import com.barelyconscious.game.entity.components.PowerComponent;
 import com.barelyconscious.game.entity.graphics.RenderContext;
-import com.barelyconscious.game.entity.gui.widgets.BackgroundPanelWidget;
-import com.barelyconscious.game.entity.gui.widgets.ProgressBarWidget;
-import com.barelyconscious.game.entity.gui.widgets.SpriteWidget;
-import com.barelyconscious.game.entity.gui.widgets.TextFieldWidget;
+import com.barelyconscious.game.entity.gui.widgets.*;
 import com.barelyconscious.game.entity.resources.ResourceGUI;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
+import com.barelyconscious.game.shape.Vector;
 
 import java.awt.*;
 import java.util.Objects;
@@ -66,7 +64,7 @@ public class HeroQuickbarPanel extends Widget {
             new Color(0, 0, 0, 0),
             new Color(106, 190, 48)));
         addWidget(new ProgressBarWidget(Anchor.builder()
-            .paddingTop(99+17+6)
+            .paddingTop(99 + 17 + 6)
             .paddingLeft(9)
             .height(7)
             .width(102)
@@ -74,6 +72,22 @@ public class HeroQuickbarPanel extends Widget {
             hero.getComponent(PowerComponent.class),
             new Color(0, 0, 0, 0),
             new Color(91, 110, 225)));
+
+        hero.getComponent(HealthComponent.class)
+            .delegateOnValueChanged.bindDelegate(e -> {
+                final FloatingTextWidget wFtext = new FloatingTextWidget(Anchor.builder()
+                    .alignTop(0.5f)
+                    .alignLeft(0.5f)
+                    .build(),
+                    Vector.UP,
+                    0.2f,
+                    Color.RED);
+                spriteWidget.addWidget(wFtext);
+                wFtext.resize(spriteWidget.screenBounds);
+
+                wFtext.beginFloating(String.format("%.1f", e.delta));
+                return null;
+            });
     }
 
     @Override

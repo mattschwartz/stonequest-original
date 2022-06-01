@@ -261,16 +261,16 @@ public final class GameRunner {
         aCamera.addComponent(cameraMoveComponent);
         keyInputHandler.onKeyTyped.bindDelegate(keyEvent -> {
             if (keyEvent.getKeyChar() == 'd') {
-                cameraMoveComponent.translate(Vector.RIGHT.mult(100f));
+                cameraMoveComponent.translate(Vector.RIGHT.multiply(100f));
             }
             if (keyEvent.getKeyChar() == 'a') {
-                cameraMoveComponent.translate(Vector.LEFT.mult(100f));
+                cameraMoveComponent.translate(Vector.LEFT.multiply(100f));
             }
             if (keyEvent.getKeyChar() == 'w') {
-                cameraMoveComponent.translate(Vector.UP.mult(100f));
+                cameraMoveComponent.translate(Vector.UP.multiply(100f));
             }
             if (keyEvent.getKeyChar() == 's') {
-                cameraMoveComponent.translate(Vector.DOWN.mult(100f));
+                cameraMoveComponent.translate(Vector.DOWN.multiply(100f));
             }
             return null;
         });

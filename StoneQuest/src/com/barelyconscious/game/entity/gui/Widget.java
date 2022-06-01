@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Widget {
 
@@ -49,6 +50,10 @@ public abstract class Widget {
     private boolean isEnabled = true;
 
     @Getter
+    @Setter
+    private boolean isRemoving = false;
+
+    @Getter
     private final Anchor anchor;
 
     protected final List<Widget> widgets;
@@ -57,7 +62,7 @@ public abstract class Widget {
 
     public Widget(final Anchor anchor) {
         this.anchor = anchor;
-        this.widgets = new ArrayList<>();
+        this.widgets = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -78,10 +83,18 @@ public abstract class Widget {
     }
 
     public final void render(final EventArgs eventArgs, final RenderContext renderContext) {
-        this.widgets.stream()
-            .filter(Widget::isEnabled)
-            .forEach(t -> t.render(eventArgs, renderContext));
+        final List<Widget> toRemove = new ArrayList<>();
+
+        for (final Widget w : widgets) {
+            if (w.isRemoving) {
+                toRemove.add(w);
+            } else if (w.isEnabled) {
+                w.render(eventArgs, renderContext);
+            }
+        }
+
         this.onRender(eventArgs, renderContext);
+        widgets.removeAll(toRemove);
     }
 
     protected abstract void onRender(final EventArgs eventArgs, final RenderContext renderContext);
