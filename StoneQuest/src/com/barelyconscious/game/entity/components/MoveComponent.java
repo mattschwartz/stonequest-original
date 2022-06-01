@@ -3,6 +3,7 @@ package com.barelyconscious.game.entity.components;
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.shape.Vector;
+import com.barelyconscious.util.UMath;
 
 public class MoveComponent extends Component {
 
@@ -23,7 +24,9 @@ public class MoveComponent extends Component {
      * @param force     the force to apply in respective direction
      */
     public void addForce(final Vector direction, final float force) {
-        forceVector = forceVector.plus(direction.unitVector().multiply(force));
+        forceVector = UMath.min(
+            forceVector.plus(direction.unitVector().multiply(force)),
+            direction.unitVector().multiply(moveSpeed));
     }
 
     private Vector desiredLocation;

@@ -1,6 +1,16 @@
 package com.barelyconscious.util;
 
+import com.barelyconscious.game.shape.Vector;
+
 public final class UMath {
+
+    public static Vector min(final Vector lhs, final Vector rhs) {
+        if (rhs.magnitude() < lhs.magnitude()) {
+            return rhs;
+        }
+
+        return lhs;
+    }
 
     public static int clamp(final int value, final int min, final int max) {
         if (value < min) {

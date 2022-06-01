@@ -1,11 +1,9 @@
 package com.barelyconscious.game.entity.playercontroller;
 
 import com.barelyconscious.game.entity.Actor;
+import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.GameInstance;
-import com.barelyconscious.game.entity.components.BoxColliderComponent;
-import com.barelyconscious.game.entity.components.HealthComponent;
-import com.barelyconscious.game.entity.components.MoveComponent;
-import com.barelyconscious.game.entity.components.SpriteComponent;
+import com.barelyconscious.game.entity.components.*;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
@@ -127,7 +125,7 @@ public class PlayerController {
             final Vector facing
         ) {
             val aBullet = new Actor(usedBy + "#Bullet", usedBy.transform.plus(32, 0));
-            aBullet.addComponent(new MoveComponent(aBullet, 2f));
+            aBullet.addComponent(new MoveComponent(aBullet, 32f));
             aBullet.addComponent(new BoxColliderComponent(aBullet, false, true, new Box(0, 32, 0, 32)));
             aBullet.addComponent(new SpriteComponent(aBullet, Resources.getSprite(ResourceSprite.POTION)));
             aBullet.getComponent(BoxColliderComponent.class)
@@ -151,9 +149,15 @@ public class PlayerController {
                     aBullet.destroy();
                     return null;
                 });
+            aBullet.addComponent(new LifetimeComponent(aBullet, .2f));
 
-            aBullet.getComponent(MoveComponent.class)
-                .addForce(facing, 45f);
+            aBullet.addComponent(new Component(aBullet) {
+                @Override
+                public void update(EventArgs eventArgs) {
+                    aBullet.getComponent(MoveComponent.class)
+                        .addForce(facing, 4500f);
+                }
+            });
 
             GameInstance.getInstance().getWorld()
                 .spawnActor(aBullet);
