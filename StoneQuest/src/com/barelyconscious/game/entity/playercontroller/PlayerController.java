@@ -45,7 +45,7 @@ public class PlayerController {
         mouseHandler.onMouseReleased.bindDelegate(this::onMouseReleased);
         mouseHandler.onMouseExited.bindDelegate(this::onMouseExited);
 
-        keyHandler.onKeyTyped.bindDelegate(this::onKeyTyped);
+        keyHandler.onKeyPressed.bindDelegate(this::onKeyTyped);
     }
 
     private Void onKeyTyped(KeyEvent keyEvent) {
@@ -59,12 +59,32 @@ public class PlayerController {
             GameInstance.getInstance().setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
         }
 
-        if (keyEvent.getKeyChar() == KeyEvent.VK_F) {
+        if (keyEvent.getKeyChar() == 'f' || keyEvent.getKeyChar() == 'F') {
             GameInstance.getInstance()
                 .getHeroSelected()
                 .getComponent(HealthComponent.class)
                 .adjust(1.2f);
         }
+
+        final MoveComponent move = GameInstance.getInstance()
+            .getHeroSelected()
+            .getComponent(MoveComponent.class);
+
+        if (move != null) {
+            if (keyEvent.getKeyChar() == 'd') {
+                move.addForce(Vector.RIGHT, 100f);
+            }
+            if (keyEvent.getKeyChar() == 'a') {
+                move.addForce(Vector.LEFT, 100f);
+            }
+            if (keyEvent.getKeyChar() == 'w') {
+                move.addForce(Vector.UP, 100f);
+            }
+            if (keyEvent.getKeyChar() == 's') {
+                move.addForce(Vector.DOWN, 100f);
+            }
+        }
+
         return null;
     }
 
@@ -123,12 +143,12 @@ public class PlayerController {
                         health.adjust(-0.4f);
                     }
 
-                    final MoveComponent move = hit.getComponent(MoveComponent.class);
-                    if (move != null && move.isEnabled()) {
-                        move.addForce(facing, 64);
-                    }
+//                    final MoveComponent move = hit.getComponent(MoveComponent.class);
+//                    if (move != null && move.isEnabled()) {
+//                        move.addForce(facing, 64);
+//                    }
 
-//                    aBullet.destroy();
+                    aBullet.destroy();
                     return null;
                 });
 

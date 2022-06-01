@@ -7,20 +7,18 @@ import java.awt.event.KeyListener;
 
 public class KeyInputHandler implements KeyListener {
 
-    public final Delegate<KeyEvent> onKeyTyped = new Delegate<>();
+    public final Delegate<KeyEvent> onKeyPressed = new Delegate<>();
 
     @Override
     public void keyTyped(KeyEvent e) {
-        onKeyTyped.call(e);
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        onKeyPressed.call(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }

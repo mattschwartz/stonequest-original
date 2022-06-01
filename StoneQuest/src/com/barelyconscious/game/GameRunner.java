@@ -21,6 +21,7 @@ import com.google.inject.Injector;
 import lombok.val;
 
 import javax.swing.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Random;
@@ -259,17 +260,17 @@ public final class GameRunner {
 
         final TranslateMoveComponent cameraMoveComponent = new TranslateMoveComponent();
         aCamera.addComponent(cameraMoveComponent);
-        keyInputHandler.onKeyTyped.bindDelegate(keyEvent -> {
-            if (keyEvent.getKeyChar() == 'd') {
+        keyInputHandler.onKeyPressed.bindDelegate(keyEvent -> {
+            if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
                 cameraMoveComponent.translate(Vector.RIGHT.multiply(100f));
             }
-            if (keyEvent.getKeyChar() == 'a') {
+            if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
                 cameraMoveComponent.translate(Vector.LEFT.multiply(100f));
             }
-            if (keyEvent.getKeyChar() == 'w') {
+            if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
                 cameraMoveComponent.translate(Vector.UP.multiply(100f));
             }
-            if (keyEvent.getKeyChar() == 's') {
+            if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
                 cameraMoveComponent.translate(Vector.DOWN.multiply(100f));
             }
             return null;

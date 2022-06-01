@@ -50,6 +50,12 @@ public class HeroQuickbarPanel extends Widget {
             .build(),
             hero.name));
 
+        addWidget(new SpriteWidget(Anchor.builder()
+            .width((int) (ResourceGUI.HERO_PORTRAIT_LEFT.width * .75))
+            .height((int) (ResourceGUI.HERO_PORTRAIT_LEFT.height * .75))
+            .build(),
+            ResourceGUI.HERO_PORTRAIT_LEFT));
+
         addWidget(spriteWidget);
         selectedSpriteWidget.setEnabled(false);
         addWidget(selectedSpriteWidget);
@@ -76,10 +82,13 @@ public class HeroQuickbarPanel extends Widget {
         hero.getComponent(HealthComponent.class)
             .delegateOnValueChanged.bindDelegate(e -> {
                 final Color textColor;
+                final String dmgText;
                 if (e.delta > 0) {
                     textColor = Color.GREEN;
+                    dmgText = String.format("+%.1f", e.delta);
                 } else if (e.delta < 0) {
                     textColor = Color.RED;
+                    dmgText = String.format("%.1f", e.delta);
                 } else  {
                     return null;
                 }
@@ -94,7 +103,7 @@ public class HeroQuickbarPanel extends Widget {
                 spriteWidget.addWidget(wFtext);
                 wFtext.resize(spriteWidget.screenBounds);
 
-                wFtext.beginFloating(String.format("%.1f", e.delta));
+                wFtext.beginFloating(dmgText);
                 return null;
             });
     }

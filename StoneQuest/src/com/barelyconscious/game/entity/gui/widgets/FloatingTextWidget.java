@@ -71,7 +71,7 @@ public class FloatingTextWidget extends Widget {
     private static final Random RANDOM = new Random(1L);
 
     private final int maxJitterX = 32;
-    private final int maxJitterY = 32;
+    private final int maxJitterY = 5;
 
     public void beginFloating(final String text) {
         if (started) {
