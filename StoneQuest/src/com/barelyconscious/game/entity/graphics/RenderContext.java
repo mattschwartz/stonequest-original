@@ -5,9 +5,9 @@ import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -127,6 +127,19 @@ public class RenderContext {
     ) {
         this.renderGuiRect(color, fill, screenBounds.left, screenBounds.top,
             screenBounds.width, screenBounds.height);
+    }
+
+    public void renderGuiGrayscale(
+        final Image image,
+        final Box screenBounds
+    ) {
+        ImageFilter filter = new GrayFilter(true, 50);
+        ImageProducer producer = new FilteredImageSource(image.getSource(), filter);
+        final Image grayscale = Toolkit.getDefaultToolkit().createImage(producer);
+
+        final Graphics graphics = graphicsByLayer.get(RenderLayer.GUI);
+        graphics.drawImage(grayscale, screenBounds.left, screenBounds.top,
+            screenBounds.width, screenBounds.height, null);
     }
 
     public void renderGuiRect(

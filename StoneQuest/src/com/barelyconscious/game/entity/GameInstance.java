@@ -55,6 +55,12 @@ public final class GameInstance {
         this.playerController = playerController;
     }
 
+    public Hero setHeroSelectedSlot(final PartySlot selectedIndex) {
+        final Hero prevHeroSelected = heroParty[selectedIndex.index];
+        heroSelected = heroParty[selectedIndex.index];
+        return prevHeroSelected;
+    }
+
     @Nullable
     public Hero setHero(final Hero hero, final PartySlot slot) {
         final Hero existing = heroParty[slot.index];

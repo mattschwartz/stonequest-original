@@ -5,6 +5,7 @@ import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.shape.Box;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,10 @@ public abstract class Widget {
     }
 
     @Getter
+    @Setter
+    private boolean isEnabled = true;
+
+    @Getter
     private final Anchor anchor;
 
     protected final List<Widget> widgets;
@@ -55,8 +60,12 @@ public abstract class Widget {
         this.widgets = new ArrayList<>();
     }
 
-    public void addWidget(final Widget widget) {
+    /**
+     * @return the widget added
+     */
+    public Widget addWidget(final Widget widget) {
         widgets.add(widget);
+        return widget;
     }
 
     public void removeWidget(final Widget widget) {
@@ -69,7 +78,9 @@ public abstract class Widget {
     }
 
     public final void render(final EventArgs eventArgs, final RenderContext renderContext) {
-        this.widgets.forEach(t -> t.render(eventArgs, renderContext));
+        this.widgets.stream()
+            .filter(Widget::isEnabled)
+            .forEach(t -> t.render(eventArgs, renderContext));
         this.onRender(eventArgs, renderContext);
     }
 

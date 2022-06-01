@@ -86,7 +86,7 @@ public final class GameRunner {
         aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
             .alignLeft(0.33f)
             .alignTop(1)
-            .paddingTop(-120)
+            .paddingTop(-164)
             .height(94)
             .width(400)
             .build(),
@@ -98,7 +98,7 @@ public final class GameRunner {
             3,
             11f,
             11f,
-            6,
+            24,
             24,
             new Stats(),
             144f,
@@ -112,14 +112,14 @@ public final class GameRunner {
         aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
             .alignLeft(0.67f)
             .alignTop(1)
-            .paddingTop(-120)
+            .paddingTop(-164)
             .height(94)
             .width(400)
             .build(),
             heroJohn));
         world.spawnActor(aGui);
 
-        GameInstance.getInstance().setHero(heroJohn, GameInstance.PartySlot.LEFT);
+        GameInstance.getInstance().setHero(heroJohn, GameInstance.PartySlot.RIGHT);
         GameInstance.getInstance().setHero(heroNicnole, GameInstance.PartySlot.MIDDLE);
         GameInstance.getInstance().setHeroSelected(heroJohn);
     }
@@ -145,13 +145,13 @@ public final class GameRunner {
             .addForce(Vector.RIGHT, 25f);
 
         world.spawnActor(aPlayer);
-        GameInstance.getInstance().setHero(aPlayer, GameInstance.PartySlot.RIGHT);
+        GameInstance.getInstance().setHero(aPlayer, GameInstance.PartySlot.LEFT);
 
         val aGui = new GuiCanvas(screen);
 
         aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
             .alignTop(1)
-            .paddingTop(-120)
+            .paddingTop(-164)
             .height(94)
             .width(400)
             .build(),
@@ -192,7 +192,7 @@ public final class GameRunner {
 
                 final HealthComponent health = hit.getComponent(HealthComponent.class);
                 if (health != null && health.isEnabled()) {
-                    health.adjustHealth(-6);
+                    health.adjust(-6);
                 }
 
                 aBullet.destroy();

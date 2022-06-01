@@ -15,19 +15,30 @@ public final class Resources {
 
     private static final Map<ResourceSprite, Sprite> loadedSprites = new HashMap<>();
 
-    public static Sprite createSprite(final ResourceSprite res, final int width, final int height) {
-
+    private static Sprite loadSprite(
+        final String filepath,
+        final int width,
+        final int height
+    ) {
         final Image spriteImage;
         try {
             final InputStream inputStream = Objects.requireNonNull(GameRunner.class.getClassLoader()
-                    .getResource(res.filepath))
+                    .getResource(filepath))
                 .openStream();
             spriteImage = ImageIO.read(inputStream);
         } catch (final Exception e) {
-            throw new MissingResourceException("Failed to load res: " + res, e);
+            throw new MissingResourceException("Failed to load resource: " + filepath, e);
         }
 
         return new Sprite(spriteImage, width, height);
+    }
+
+    public static Sprite createGuiSprite(final ResourceGUI res, final int width, final int height) {
+        return loadSprite(res.filepath, width, height);
+    }
+
+    public static Sprite createSprite(final ResourceSprite res, final int width, final int height) {
+        return loadSprite(res.filepath, width, height);
     }
 
     public static Sprite getSprite(final ResourceSprite resource) {
@@ -35,17 +46,8 @@ public final class Resources {
             return loadedSprites.get(resource);
         }
 
-        final Image spriteImage;
-        try {
-            final InputStream inputStream = Objects.requireNonNull(GameRunner.class.getClassLoader()
-                    .getResource(resource.filepath))
-                .openStream();
-            spriteImage = ImageIO.read(inputStream);
-        } catch (final Exception e) {
-            throw new MissingResourceException("Failed to load resource: " + resource, e);
-        }
-
-        final Sprite sprite = new Sprite(spriteImage, resource.width, resource.height);
+        final Sprite sprite = loadSprite(
+            resource.filepath, resource.width, resource.height);
 
         loadedSprites.put(resource, sprite);
 

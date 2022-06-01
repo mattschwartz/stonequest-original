@@ -47,7 +47,7 @@ public class HealthBarComponent extends Component {
             return;
         }
 
-        float p = UMath.clampf(health.getCurrentHealth() / health.getMaxHealth(), 0, 1);
+        float p = UMath.clampf(health.getCurrentValue() / health.getMaxValue(), 0, 1);
         float healthRemainingWidth = width * p;
 
         final Vector position = getParent().transform;

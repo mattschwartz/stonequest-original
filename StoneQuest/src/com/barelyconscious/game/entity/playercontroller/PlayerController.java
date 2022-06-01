@@ -48,28 +48,16 @@ public class PlayerController {
         keyHandler.onKeyTyped.bindDelegate(this::onKeyTyped);
     }
 
-    // todo(p0) - since this is moving camera outside of game updates, movement is choppy
-    private final float moveSpeed = 32f;
     private Void onKeyTyped(KeyEvent keyEvent) {
-//        Vector translate = Vector.ZERO;
-//
-//        if (keyEvent.getKeyChar() == 'd') {
-//            translate = translate.plus(moveSpeed, 0);
-//        }
-//        if (keyEvent.getKeyChar() == 'a') {
-//            translate = translate.plus(-moveSpeed, 0);
-//        }
-//        if (keyEvent.getKeyChar() == 'w') {
-//            translate = translate.plus(0, -moveSpeed);
-//        }
-//        if (keyEvent.getKeyChar() == 's') {
-//            translate = translate.plus(0, moveSpeed);
-//        }
-//
-//        final Vector cameraWorldPos = GameInstance.getInstance().getCamera()
-//            .transform;
-//        GameInstance.getInstance().getCamera().transform = cameraWorldPos.plus(translate);
-
+        if (keyEvent.getKeyChar() == KeyEvent.VK_1) {
+            GameInstance.getInstance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
+        }
+        if (keyEvent.getKeyChar() == KeyEvent.VK_2) {
+            GameInstance.getInstance().setHeroSelectedSlot(GameInstance.PartySlot.MIDDLE);
+        }
+        if (keyEvent.getKeyChar() == KeyEvent.VK_3) {
+            GameInstance.getInstance().setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
+        }
         return null;
     }
 
@@ -125,7 +113,7 @@ public class PlayerController {
 
                     final HealthComponent health = hit.getComponent(HealthComponent.class);
                     if (health != null && health.isEnabled()) {
-                        health.adjustHealth(-0.4f);
+                        health.adjust(-0.4f);
                     }
 
                     final MoveComponent move = hit.getComponent(MoveComponent.class);

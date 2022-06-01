@@ -29,7 +29,7 @@ public class DestroyOnDeathComponent extends Component{
         }
         final HealthComponent health = getParent().getComponent(HealthComponent.class);
         if (health != null) {
-            hasBeenKilled = health.getCurrentHealth() <= 0;
+            hasBeenKilled = health.getCurrentValue() <= 0;
             if (hasBeenKilled) {
                 // disable all other components
                 getParent().getComponents().stream()
