@@ -3,6 +3,7 @@ package com.barelyconscious.game;
 import com.barelyconscious.game.entity.*;
 import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.entity.components.*;
+import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.gui.GuiCanvas;
 import com.barelyconscious.game.entity.gui.HeroQuickbarPanel;
@@ -29,6 +30,8 @@ public final class GameRunner {
     public static void main(final String[] args) {
         final String propertiesFilePath = "Worlds.properties";
         final Injector injector = Guice.createInjector(new WorldsModule(propertiesFilePath));
+
+        final GameInstance gi = injector.getInstance(GameInstance.class);
 
         final JFrame frame = injector.getInstance(JFrame.class);
         final World world = injector.getInstance(World.class);
@@ -115,6 +118,10 @@ public final class GameRunner {
             .build(),
             heroJohn));
         world.spawnActor(aGui);
+
+        GameInstance.getInstance().setHero(heroJohn, GameInstance.PartySlot.LEFT);
+        GameInstance.getInstance().setHero(heroNicnole, GameInstance.PartySlot.MIDDLE);
+        GameInstance.getInstance().setHeroSelected(heroJohn);
     }
 
     private static void _populateTestWorld(final World world, final Screen screen) {
@@ -138,6 +145,8 @@ public final class GameRunner {
             .addForce(Vector.RIGHT, 25f);
 
         world.spawnActor(aPlayer);
+        GameInstance.getInstance().setHero(aPlayer, GameInstance.PartySlot.RIGHT);
+
         val aGui = new GuiCanvas(screen);
 
         aGui.addWidget(new HeroQuickbarPanel(Widget.Anchor.builder()
@@ -243,7 +252,7 @@ public final class GameRunner {
             }
 
             @Override
-            public void update(EventArgs eventArgs) {
+            public void guiRender(EventArgs eventArgs, RenderContext renderContext) {
                 camera.transform = desiredLocation;
             }
         }

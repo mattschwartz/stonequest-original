@@ -1,10 +1,19 @@
 package com.barelyconscious.game.entity.playercontroller;
 
+import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.GameInstance;
+import com.barelyconscious.game.entity.components.BoxColliderComponent;
+import com.barelyconscious.game.entity.components.HealthComponent;
+import com.barelyconscious.game.entity.components.MoveComponent;
+import com.barelyconscious.game.entity.components.SpriteComponent;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
+import com.barelyconscious.game.entity.resources.ResourceSprite;
+import com.barelyconscious.game.entity.resources.Resources;
+import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
+import lombok.val;
 
 import javax.annotation.Nullable;
 import java.awt.event.KeyEvent;
@@ -87,7 +96,53 @@ public class PlayerController {
     private Void onMouseClicked(final MouseEvent mouseEvent) {
         mouseClickedScreenPos = mouseScreenPos = new Vector(mouseEvent.getX(), mouseEvent.getY());
         mouseClickedWorldPos = mouseWorldPos = GameInstance.getInstance().getCamera().screenToWorldPos(mouseScreenPos);
+
+        final Actor usedBy = GameInstance.getInstance().getHeroSelected();
+        final Vector facing = usedBy.facing;
+
+        new AwesomeBulletWeaponItem().use(usedBy, facing);
+
         return null;
+    }
+
+    private static final class AwesomeBulletWeaponItem {
+
+        public void use(
+            final Actor usedBy,
+            final Vector facing
+        ) {
+            val aBullet = new Actor(usedBy + "#Bullet", usedBy.transform.plus(32, 0));
+            aBullet.addComponent(new MoveComponent(aBullet, 2f));
+            aBullet.addComponent(new BoxColliderComponent(aBullet, false, true, new Box(0, 32, 0, 32)));
+            aBullet.addComponent(new SpriteComponent(aBullet, Resources.getSprite(ResourceSprite.POTION)));
+            aBullet.getComponent(BoxColliderComponent.class)
+                .delegateOnOverlap.bindDelegate((col) -> {
+                    if (col.causedByActor != aBullet) {
+                        return null;
+                    }
+
+                    final Actor hit = col.hit;
+
+                    final HealthComponent health = hit.getComponent(HealthComponent.class);
+                    if (health != null && health.isEnabled()) {
+                        health.adjustHealth(-0.4f);
+                    }
+
+                    final MoveComponent move = hit.getComponent(MoveComponent.class);
+                    if (move != null && move.isEnabled()) {
+                        move.addForce(facing, 64);
+                    }
+
+//                    aBullet.destroy();
+                    return null;
+                });
+
+            aBullet.getComponent(MoveComponent.class)
+                .addForce(facing, 45f);
+
+            GameInstance.getInstance().getWorld()
+                .spawnActor(aBullet);
+        }
     }
 
 }

@@ -12,6 +12,18 @@ import java.util.Objects;
 
 /**
  * todo: collision events trigger kinda weird right now.
+ *
+ * todo: collisions aren't detected if something tried to move
+ *  very quickly through things it shouldnt have been able to move
+ *  to if it had gone more slowly.
+ *  Need to consider collisions by projecting the entire
+ *  path taken as a collision data to compare against.
+ *  \
+ *  likely by taking position start and position end, then comparing
+ *  the resulting shape to the other collider.
+ *  \
+ *  basically answering the question "did object collide with, or
+ *  pass through, the other?"
  */
 public final class Physics {
 

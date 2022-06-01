@@ -4,6 +4,8 @@ import com.barelyconscious.game.entity.playercontroller.PlayerController;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.annotation.Nullable;
+
 public final class GameInstance {
 
     @Getter
@@ -32,9 +34,36 @@ public final class GameInstance {
     @Setter
     private Camera camera;
 
+    public enum PartySlot {
+        LEFT(0),
+        MIDDLE(1),
+        RIGHT(2);
+
+        public final int index;
+        PartySlot(final int index) {
+            this.index = index;
+        }
+    }
+
+    @Getter
+    @Setter
+    private Hero heroSelected;
+    private final Hero[] heroParty = new Hero[PartySlot.values().length];
+
     private GameInstance(final World world, final PlayerController playerController) {
         this.world = world;
         this.playerController = playerController;
+    }
+
+    @Nullable
+    public Hero setHero(final Hero hero, final PartySlot slot) {
+        final Hero existing = heroParty[slot.index];
+        heroParty[slot.index] = hero;
+        return existing;
+    }
+
+    public Hero getHeroInGroup(final PartySlot slot) {
+        return heroParty[slot.index];
     }
 
     public void changeWorld(final World world) {

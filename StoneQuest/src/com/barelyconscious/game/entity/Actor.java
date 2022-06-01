@@ -29,6 +29,7 @@ public class Actor {
     private boolean isDestroying = false;
 
     public Vector transform;
+    public Vector facing = Vector.UP;
 
     public Actor(final Vector transform) {
         this(null, transform);
