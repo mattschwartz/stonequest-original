@@ -5,13 +5,20 @@ import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.physics.Physics;
+import com.barelyconscious.util.UString;
+import com.google.common.base.Stopwatch;
+import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.log4j.Log4j2;
 
 import java.awt.*;
 import java.time.Clock;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -108,6 +115,7 @@ public final class Engine {
     }
 
     long next = 100;
+    private final Map<Actor, Long> latencyByActor = new HashMap<>();
 
     public void renderTick() {
         final EventArgs eventArgs = buildEventArgs();
@@ -120,20 +128,27 @@ public final class Engine {
             next += 250;
         }
 
+        final Stopwatch sw = Stopwatch.createUnstarted();
         for (final Actor actor : world.getActors()) {
             if (!actor.isEnabled() || actor.isDestroying()) {
                 continue;
             }
 
+            sw.reset();
+            sw.start();
             for (final Component c : actor.getComponents()) {
                 if (c.isRenderEnabled()) {
                     c.render(eventArgs, renderContext);
                     c.guiRender(eventArgs, renderContext);
                 }
             }
+
+            sw.stop();
+            final long renderLatency = sw.elapsed(TimeUnit.MILLISECONDS);
+            latencyByActor.put(actor, renderLatency);
         }
 
-        renderDebug(eventArgs, renderContext);
+        renderDebug(eventArgs, renderContext, latencyByActor);
 
         screen.render(renderContext);
     }
@@ -175,7 +190,11 @@ public final class Engine {
     }
 
     // todo(p0) - obviously this shouldn't be part of the Engine
-    private void renderDebug(EventArgs eventArgs, RenderContext renderContext) {
+    private void renderDebug(
+        EventArgs eventArgs,
+        RenderContext renderContext,
+        Map<Actor, Long> slowestActors
+    ) {
         if (eventArgs.getDeltaTime() > .2f) {
             renderContext.renderString(
                 String.format("FPS: %d (time: %.1fms)",
@@ -184,7 +203,7 @@ public final class Engine {
                 Color.red,
                 0, 12,
                 RenderLayer._DEBUG);
-        }  else {
+        } else {
             renderContext.renderString(
                 String.format("FPS: %d (time: %.1fms)",
                     (int) averageFps,
@@ -204,5 +223,33 @@ public final class Engine {
             Color.yellow,
             0, 44,
             RenderLayer._DEBUG);
+
+        int yPos = 60;
+
+        renderContext.renderString("Slowest actors:",
+            Color.yellow,
+            0, yPos,
+            RenderLayer._DEBUG);
+
+        final Map<Long, Actor> actorsByTime = new HashMap<>();
+        slowestActors.forEach((k, v) -> actorsByTime.put(v, k));
+
+        List<Long> reverse = slowestActors.values().stream().sorted()
+            .collect(Collectors.toList())
+            .subList(0,
+                Math.min(
+                    Math.min(5, slowestActors.size()),
+                    actorsByTime.size()));
+
+        for (final Long time : reverse) {
+            final Actor actor = actorsByTime.get(time);
+            yPos += 16;
+            renderContext.renderString(String.format("%s took %dms",
+                    UString.clamp(actor.name, 0, 12),
+                    time),
+                Color.yellow,
+                0, yPos,
+                RenderLayer._DEBUG);
+        }
     }
 }
