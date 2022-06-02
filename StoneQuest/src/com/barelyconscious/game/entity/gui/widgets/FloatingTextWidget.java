@@ -71,8 +71,8 @@ public class FloatingTextWidget extends Widget {
 
     private static final Random RANDOM = new Random(1L);
 
-    private final int maxJitterX = 32;
-    private final int maxJitterY = 5;
+    private final float maxJitterX = 1;
+    private final float maxJitterY = 1;
 
     public void beginFloating(final String text) {
         if (started) {
@@ -81,13 +81,16 @@ public class FloatingTextWidget extends Widget {
         this.text = text;
 
         state.isFloating = true;
-        state.offsX = RANDOM.nextInt(maxJitterX * 2) - maxJitterX;
-        state.offsY = -RANDOM.nextInt(maxJitterY);
+        state.offsX = 0;
+        state.offsY = 0;
+        direction = new Vector(
+            direction.x + ((RANDOM.nextFloat() * 2) - maxJitterX),
+            direction.y + ((RANDOM.nextFloat() * 2) - maxJitterY));
         state.remainingTime = durationMs;
         started = true;
     }
 
-    final float moveSpeed = 200f;
+    final float moveSpeed = 175f;
 
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {

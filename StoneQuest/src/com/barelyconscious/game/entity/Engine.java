@@ -2,11 +2,13 @@ package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.graphics.RenderContext;
+import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.physics.Physics;
 import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.log4j.Log4j2;
 
+import java.awt.*;
 import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,10 @@ public final class Engine {
     private long lastTick;
     private long lastRenderTick;
     private final Physics physics;
+
+    private long frames = 0;
+    private long gameClockMillis = 1;
+    private float averageFps = 0;
 
     private boolean isRunning = false;
 
@@ -101,10 +107,18 @@ public final class Engine {
             gameInstance.getPlayerController().getMouseWorldPos());
     }
 
+    long next = 100;
+
     public void renderTick() {
         final EventArgs eventArgs = buildEventArgs();
         screen.clear();
         final RenderContext renderContext = screen.createRenderContext();
+
+        ++frames;
+        if (gameClockMillis >= next) {
+            averageFps = ((float) frames) / (gameClockMillis * 0.001f);
+            next += 250;
+        }
 
         for (final Actor actor : world.getActors()) {
             if (!actor.isEnabled() || actor.isDestroying()) {
@@ -119,11 +133,15 @@ public final class Engine {
             }
         }
 
+        renderDebug(eventArgs, renderContext);
+
         screen.render(renderContext);
     }
 
+
     public void tick() {
         final EventArgs eventArgs = buildEventArgs();
+        gameClockMillis += eventArgs.getDeltaTime() * 1000;
         final List<Component> componentsToUpdate = new ArrayList<>();
         final List<Actor> actorsToRemove = new ArrayList<>();
 
@@ -154,5 +172,37 @@ public final class Engine {
         final List<Component> updateComponents
     ) {
         updateComponents.forEach(t -> t.update(eventArgs));
+    }
+
+    // todo(p0) - obviously this shouldn't be part of the Engine
+    private void renderDebug(EventArgs eventArgs, RenderContext renderContext) {
+        if (eventArgs.getDeltaTime() > .2f) {
+            renderContext.renderString(
+                String.format("FPS: %d (time: %.1fms)",
+                    (int) averageFps,
+                    eventArgs.getDeltaTime()),
+                Color.red,
+                0, 12,
+                RenderLayer._DEBUG);
+        }  else {
+            renderContext.renderString(
+                String.format("FPS: %d (time: %.1fms)",
+                    (int) averageFps,
+                    eventArgs.getDeltaTime()),
+                Color.yellow,
+                0, 12,
+                RenderLayer._DEBUG);
+        }
+
+        renderContext.renderString(
+            String.format("Game clock: %.2fs",
+                gameClockMillis * 0.001f),
+            Color.yellow,
+            0, 28,
+            RenderLayer._DEBUG);
+        renderContext.renderString("Total actors: " + world.getActors().size(),
+            Color.yellow,
+            0, 44,
+            RenderLayer._DEBUG);
     }
 }

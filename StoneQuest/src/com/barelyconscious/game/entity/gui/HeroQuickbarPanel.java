@@ -87,12 +87,12 @@ public class HeroQuickbarPanel extends Widget {
                     .size(LayoutData.SIZE_FILL)
                     .build(),
                     Vector.UP,
-                    0.2f,
+                    5f,
                     textColor);
-                spriteWidget.addWidget(wFtext);
                 wFtext.resize(spriteWidget.screenBounds);
-
                 wFtext.beginFloating(dmgText);
+                spriteWidget.addWidget(wFtext);
+
                 return null;
             });
     }
