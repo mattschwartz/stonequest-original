@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class GameInstance {
 
@@ -39,15 +41,25 @@ public final class GameInstance {
         MIDDLE(1),
         RIGHT(2);
 
+        private final static Map<Integer, PartySlot> slotsById = new HashMap<Integer, PartySlot>() {{
+            put(0, LEFT);
+            put(1, MIDDLE);
+            put(2, RIGHT);
+        }};
+
+        public static PartySlot fromSlotId(final int id) {
+            return slotsById.get(id);
+        }
+
         public final int index;
+
         PartySlot(final int index) {
             this.index = index;
         }
     }
 
     @Getter
-    @Setter
-    private Hero heroSelected;
+    private PartySlot selectedHeroId;
     private final Hero[] heroParty = new Hero[PartySlot.values().length];
 
     private GameInstance(final World world, final PlayerController playerController) {
@@ -55,9 +67,23 @@ public final class GameInstance {
         this.playerController = playerController;
     }
 
+    public PartySlot getSlotByHero(final Hero hero) {
+        if (heroParty[PartySlot.LEFT.index] == hero) {
+            return PartySlot.LEFT;
+        } else if (heroParty[PartySlot.MIDDLE.index] == hero) {
+            return PartySlot.MIDDLE;
+        } else {
+            return PartySlot.RIGHT;
+        }
+    }
+
+    public Hero getHeroSelected() {
+        return heroParty[selectedHeroId.index];
+    }
+
     public Hero setHeroSelectedSlot(final PartySlot selectedIndex) {
         final Hero prevHeroSelected = heroParty[selectedIndex.index];
-        heroSelected = heroParty[selectedIndex.index];
+        selectedHeroId = selectedIndex;
         return prevHeroSelected;
     }
 

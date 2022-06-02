@@ -19,6 +19,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 /**
+ * todo(p0) When selected and while player holding the alt key,
+ *  directional arrows with party members will show up around
+ *  the selected hero to give player better sense of spatial
+ *  relations between the party.
+ *  \
+ *  other heroes will be slightly highlighted as well.
+ *
  * Facilitates interactions between the player and the game, such as handling keyboard and mouse
  * input.
  */
@@ -82,6 +89,13 @@ public class PlayerController {
             if (keyEvent.getKeyChar() == 's') {
                 move.addForce(Vector.DOWN, 100f);
             }
+        }
+
+        if (keyEvent.getKeyCode() == KeyEvent.VK_TAB) {
+            int curIndex = GameInstance.getInstance().getSelectedHeroId().index;
+            int newIndex = (curIndex + 1) % 3;
+            GameInstance.getInstance().setHeroSelectedSlot(
+                GameInstance.PartySlot.fromSlotId(newIndex));
         }
 
         return null;

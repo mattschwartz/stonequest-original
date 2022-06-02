@@ -83,15 +83,15 @@ public class HeroQuickbarPanel extends Widget {
                 }
 
                 final FloatingTextWidget wFtext = new FloatingTextWidget(LayoutData.builder()
-                    .anchor(new VDim(0.4f, 0.67f, 0, 0))
+                    .anchor(new VDim(0.5f, 0.33f, -20, 0))
                     .size(LayoutData.SIZE_FILL)
                     .build(),
                     Vector.UP,
-                    5f,
+                    .75f,
                     textColor);
                 wFtext.resize(spriteWidget.screenBounds);
                 wFtext.beginFloating(dmgText);
-                spriteWidget.addWidget(wFtext);
+                addWidget(wFtext);
 
                 return null;
             });

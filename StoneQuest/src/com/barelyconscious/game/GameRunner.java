@@ -4,6 +4,7 @@ import com.barelyconscious.game.entity.*;
 import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.entity.components.*;
 import com.barelyconscious.game.entity.graphics.RenderContext;
+import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.gui.*;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
@@ -114,7 +115,7 @@ public final class GameRunner {
 
         GameInstance.getInstance().setHero(heroJohn, GameInstance.PartySlot.RIGHT);
         GameInstance.getInstance().setHero(heroNicnole, GameInstance.PartySlot.MIDDLE);
-        GameInstance.getInstance().setHeroSelected(heroJohn);
+        GameInstance.getInstance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
     }
 
     private static void _populateTestWorld(final World world, final Screen screen) {
@@ -130,7 +131,7 @@ public final class GameRunner {
             144f,
             new Inventory(28));
         aPlayer.addComponent(new MoveComponent(aPlayer, 32f));
-        aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.getSprite(ResourceSprite.PLAYER)));
+        aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.getSprite(ResourceSprite.PLAYER), RenderLayer.ENTITIES));
         aPlayer.addComponent(new BoxColliderComponent(aPlayer, true, true, new Box(0, 32, 0, 32)));
         aPlayer.addComponent(new HealthBarComponent(aPlayer));
 

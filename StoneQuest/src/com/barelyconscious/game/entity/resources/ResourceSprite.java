@@ -9,7 +9,9 @@ public enum ResourceSprite {
 
     GRASS_1("tiles/world/grass.png", 32, 32),
     GRASS_2("tiles/world/grass_2.png", 32, 32),
-    GRASS_3("tiles/world/grass_3.png", 32, 32);
+    GRASS_3("tiles/world/grass_3.png", 32, 32),
+
+    HERO_SELECTION_SPRITE("sprites/heroSelectionSprite.png", 48, 48);
 
     public final String filepath;
     public final int width;

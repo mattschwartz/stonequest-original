@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
-import java.util.Random;
 
 public class FloatingTextWidget extends Widget {
 
@@ -69,11 +68,6 @@ public class FloatingTextWidget extends Widget {
 
     private boolean started = false;
 
-    private static final Random RANDOM = new Random(1L);
-
-    private final float maxJitterX = 1;
-    private final float maxJitterY = 1;
-
     public void beginFloating(final String text) {
         if (started) {
             return;
@@ -83,14 +77,11 @@ public class FloatingTextWidget extends Widget {
         state.isFloating = true;
         state.offsX = 0;
         state.offsY = 0;
-        direction = new Vector(
-            direction.x + ((RANDOM.nextFloat() * 2) - maxJitterX),
-            direction.y + ((RANDOM.nextFloat() * 2) - maxJitterY));
         state.remainingTime = durationMs;
         started = true;
     }
 
-    final float moveSpeed = 175f;
+    final float moveSpeed = 60f;
 
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {

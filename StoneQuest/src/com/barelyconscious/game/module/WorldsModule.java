@@ -102,6 +102,7 @@ public class WorldsModule extends AbstractModule {
 
         frame.pack();
 
+        screen.getCanvas().setFocusTraversalKeysEnabled(false);
         screen.getCanvas().addMouseListener(mouseInputHandler);
         screen.getCanvas().addMouseMotionListener(mouseInputHandler);
 
