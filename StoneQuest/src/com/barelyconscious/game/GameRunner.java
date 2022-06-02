@@ -78,7 +78,7 @@ public final class GameRunner {
             144f,
             new Inventory(28));
         heroNicnole.addComponent(new MoveComponent(heroNicnole, 32f));
-        heroNicnole.addComponent(new SpriteComponent(heroNicnole, Resources.getSprite(ResourceSprite.PLAYER)));
+        heroNicnole.addComponent(new SpriteComponent(heroNicnole, Resources.getSprite(ResourceSprite.HERO_2), RenderLayer.ENTITIES));
         heroNicnole.addComponent(new BoxColliderComponent(heroNicnole, true, true, new Box(0, 32, 0, 32)));
         heroNicnole.addComponent(new HealthBarComponent(heroNicnole));
 
@@ -101,7 +101,7 @@ public final class GameRunner {
             144f,
             new Inventory(28));
         heroJohn.addComponent(new MoveComponent(heroJohn, 32f));
-        heroJohn.addComponent(new SpriteComponent(heroJohn, Resources.getSprite(ResourceSprite.PLAYER)));
+        heroJohn.addComponent(new SpriteComponent(heroJohn, Resources.getSprite(ResourceSprite.HERO_3), RenderLayer.ENTITIES));
         heroJohn.addComponent(new BoxColliderComponent(heroJohn, true, true, new Box(0, 32, 0, 32)));
         heroJohn.addComponent(new HealthBarComponent(heroJohn));
 
@@ -131,7 +131,7 @@ public final class GameRunner {
             144f,
             new Inventory(28));
         aPlayer.addComponent(new MoveComponent(aPlayer, 32f));
-        aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.getSprite(ResourceSprite.PLAYER), RenderLayer.ENTITIES));
+        aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.getSprite(ResourceSprite.HERO_1), RenderLayer.ENTITIES));
         aPlayer.addComponent(new BoxColliderComponent(aPlayer, true, true, new Box(0, 32, 0, 32)));
         aPlayer.addComponent(new HealthBarComponent(aPlayer));
 
@@ -162,7 +162,6 @@ public final class GameRunner {
         aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprite.SEWER_RAT)));
         aRat.addComponent(new HealthBarComponent(aRat));
         aRat.addComponent(new DestroyOnDeathComponent(aRat, 0));
-        aRat.addComponent(new PlayerVisibilityComponent(aRat));
 
         world.spawnActor(aRat);
 
@@ -204,11 +203,11 @@ public final class GameRunner {
     ) {
         for (int x = 0; x < 25; ++x) {
             for (int y = 0; y < 25; ++y) {
-                final int grassTileId = RANDOM.nextInt(3);
+                final int grassTileId = RANDOM.nextInt(100);
                 ResourceSprite rSprite;
-                if (grassTileId == 0) {
+                if (grassTileId > 23) {
                     rSprite = ResourceSprite.GRASS_1;
-                } else if (grassTileId == 1) {
+                } else if (grassTileId > 15) {
                     rSprite = ResourceSprite.GRASS_2;
                 } else {
                     rSprite = ResourceSprite.GRASS_3;

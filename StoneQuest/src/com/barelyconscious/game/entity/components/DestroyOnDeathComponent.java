@@ -1,7 +1,9 @@
 package com.barelyconscious.game.entity.components;
 
+import com.barelyconscious.game.entity.AGravestone;
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.GameInstance;
 
 /**
  * Simple componet that destroys an actor when its health falls to 0.
@@ -23,6 +25,8 @@ public class DestroyOnDeathComponent extends Component{
             remainingCorpseDuration -= eventArgs.getDeltaTime();
             if (remainingCorpseDuration <= 0) {
                 getParent().destroy();
+                GameInstance.getInstance().getWorld()
+                    .spawnActor(new AGravestone(getParent().transform));
                 return;
             }
             return;
