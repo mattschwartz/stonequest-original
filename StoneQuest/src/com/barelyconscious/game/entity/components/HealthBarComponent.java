@@ -20,11 +20,13 @@ public class HealthBarComponent extends Component {
 
     private final boolean hideWhenFull;
 
+    private float progress = 0;
+
     /**
      * creates a standard health bar component that appears under entities.
      */
-    public HealthBarComponent(final Actor parent) {
-        this(parent, 0, 34, 32, 4, true);
+    public HealthBarComponent(final Actor parent, final StatValueComponent stat) {
+        this(parent, 0, 34, 32, 4, stat, true);
     }
 
     public HealthBarComponent(
@@ -33,6 +35,7 @@ public class HealthBarComponent extends Component {
         final int yOffs,
         final int width,
         final int height,
+        final StatValueComponent stat,
         final boolean hideWhenFull
     ) {
         super(parent);
@@ -41,21 +44,20 @@ public class HealthBarComponent extends Component {
         this.width = width;
         this.height = height;
         this.hideWhenFull = hideWhenFull;
+
+        this.progress = UMath.clampf(stat.getCurrentValue() / stat.getMaxValue(), 0, 1);
+        stat.delegateOnValueChanged.bindDelegate(e -> {
+            progress = UMath.clampf(e.currentValue / e.maxValue, 0, 1);
+            return null;
+        });
     }
 
     @Override
     public void render(final EventArgs eventArgs, final RenderContext renderContext) {
-        final HealthComponent health = getParent().getComponent(HealthComponent.class);
-        if (health == null) {
-            log.warn("Actor=" + getParent() + " does not have health component!");
-            return;
-        }
-
-        float p = UMath.clampf(health.getCurrentValue() / health.getMaxValue(), 0, 1);
-        float healthRemainingWidth = width * p;
+        float healthRemainingWidth = width * progress;
 
         final Vector position = getParent().transform;
-        if (p != 1) {
+        if (progress != 1) {
             renderContext.renderRect(
                 Color.BLACK,
                 true,
@@ -63,7 +65,7 @@ public class HealthBarComponent extends Component {
                 (int) position.y + yOffs,
                 width,
                 height,
-                RenderLayer.GUI);
+                RenderLayer.ENTITIES);
         }
 
         if (healthRemainingWidth >= 1f) {
@@ -74,7 +76,7 @@ public class HealthBarComponent extends Component {
                 (int) position.y + yOffs,
                 (int) healthRemainingWidth,
                 height,
-                RenderLayer.GUI
+                RenderLayer.ENTITIES
             );
         }
     }

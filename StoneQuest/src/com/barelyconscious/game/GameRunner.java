@@ -80,7 +80,7 @@ public final class GameRunner {
         heroNicnole.addComponent(new MoveComponent(heroNicnole, 32f));
         heroNicnole.addComponent(new SpriteComponent(heroNicnole, Resources.getSprite(ResourceSprite.HERO_2), RenderLayer.ENTITIES));
         heroNicnole.addComponent(new BoxColliderComponent(heroNicnole, true, true, new Box(0, 32, 0, 32)));
-        heroNicnole.addComponent(new HealthBarComponent(heroNicnole));
+        heroNicnole.addComponent(new HealthBarComponent(heroNicnole, heroNicnole.getComponent(HealthComponent.class)));
 
         world.spawnActor(heroNicnole);
         aGui.addWidget(new HeroQuickbarPanel(LayoutData.builder()
@@ -103,7 +103,7 @@ public final class GameRunner {
         heroJohn.addComponent(new MoveComponent(heroJohn, 32f));
         heroJohn.addComponent(new SpriteComponent(heroJohn, Resources.getSprite(ResourceSprite.HERO_3), RenderLayer.ENTITIES));
         heroJohn.addComponent(new BoxColliderComponent(heroJohn, true, true, new Box(0, 32, 0, 32)));
-        heroJohn.addComponent(new HealthBarComponent(heroJohn));
+        heroJohn.addComponent(new HealthBarComponent(heroJohn, heroJohn.getComponent(HealthComponent.class)));
 
         world.spawnActor(heroJohn);
         aGui.addWidget(new HeroQuickbarPanel(LayoutData.builder()
@@ -133,7 +133,7 @@ public final class GameRunner {
         aPlayer.addComponent(new MoveComponent(aPlayer, 32f));
         aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.getSprite(ResourceSprite.HERO_1), RenderLayer.ENTITIES));
         aPlayer.addComponent(new BoxColliderComponent(aPlayer, true, true, new Box(0, 32, 0, 32)));
-        aPlayer.addComponent(new HealthBarComponent(aPlayer));
+        aPlayer.addComponent(new HealthBarComponent(aPlayer, aPlayer.getComponent(HealthComponent.class)));
 
         world.spawnActor(aPlayer);
         GameInstance.getInstance().setHero(aPlayer, GameInstance.PartySlot.LEFT);
@@ -160,7 +160,7 @@ public final class GameRunner {
             new Stats());
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
         aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprite.SEWER_RAT)));
-        aRat.addComponent(new HealthBarComponent(aRat));
+        aRat.addComponent(new HealthBarComponent(aRat, aRat.getComponent(HealthComponent.class)));
         aRat.addComponent(new DestroyOnDeathComponent(aRat, 0));
 
         world.spawnActor(aRat);

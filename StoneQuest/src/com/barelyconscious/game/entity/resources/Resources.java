@@ -2,6 +2,7 @@ package com.barelyconscious.game.entity.resources;
 
 import com.barelyconscious.game.GameRunner;
 import com.barelyconscious.game.entity.Sprite;
+import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.exception.MissingResourceException;
 
 import javax.imageio.ImageIO;
@@ -14,6 +15,25 @@ import java.util.Objects;
 public final class Resources {
 
     private static final Map<ResourceSprite, Sprite> loadedSprites = new HashMap<>();
+
+    private static WSprite create(
+        final String filepath,
+        final RenderLayer layer,
+        final int width,
+        final int height
+    ) {
+        final Image spriteImage;
+        try {
+            final InputStream inputStream = Objects.requireNonNull(GameRunner.class.getClassLoader()
+                    .getResource(filepath))
+                .openStream();
+            spriteImage = ImageIO.read(inputStream);
+        } catch (final Exception e) {
+            throw new MissingResourceException("Failed to load resource: " + filepath, e);
+        }
+
+        return new WSprite(spriteImage, layer, width, height);
+    }
 
     private static Sprite loadSprite(
         final String filepath,

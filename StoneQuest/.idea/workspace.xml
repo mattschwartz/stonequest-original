@@ -3,10 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/AGravestone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/AGravestone.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/DestroyOnDeathComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/DestroyOnDeathComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/sprites/heroSelectionSprite.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/sprites/heroSelectionSprite.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Hero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Hero.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/HealthBarComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/HealthBarComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/ResourceSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/ResourceSprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/Resources.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/Resources.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

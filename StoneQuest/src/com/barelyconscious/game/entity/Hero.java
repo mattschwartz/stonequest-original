@@ -42,7 +42,7 @@ public class Hero extends AEntity {
         addComponent(new HeroSlotIdSpriteComponent(this));
     }
 
-    private class HeroSelectedSpriteComponent extends SpriteComponent {
+    private static class HeroSelectedSpriteComponent extends SpriteComponent {
 
         public HeroSelectedSpriteComponent(Actor parent) {
             super(
@@ -62,14 +62,14 @@ public class Hero extends AEntity {
             renderContext.render(
                 sprite.image,
                 (int) getParent().transform.x - 8,
-                (int) getParent().transform.y - 8,
+                (int) getParent().transform.y - 14,
                 48, 48,
                 RenderLayer.ENTITIES
             );
         }
     }
 
-    private class HeroSlotIdSpriteComponent extends Component {
+    private static class HeroSlotIdSpriteComponent extends Component {
 
         public HeroSlotIdSpriteComponent(Actor parent) {
             super(parent);
