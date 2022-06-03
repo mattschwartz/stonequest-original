@@ -4,12 +4,15 @@ import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.Hero;
 import com.barelyconscious.game.entity.components.HealthComponent;
 import com.barelyconscious.game.entity.components.PowerComponent;
+import com.barelyconscious.game.entity.components.SpriteComponent;
 import com.barelyconscious.game.entity.gui.widgets.*;
 import com.barelyconscious.game.entity.resources.*;
 import com.barelyconscious.game.shape.Vector;
 
 import java.awt.*;
 import java.util.Objects;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class HeroQuickbarPanel extends Widget {
 
@@ -25,6 +28,9 @@ public class HeroQuickbarPanel extends Widget {
         final WSprite spriteHeroPortrait
     ) {
         super(layout);
+        checkArgument(hero != null, "hero is null");
+        checkArgument(spriteHeroPortrait != null, "spriteHeroPortrait is null");
+
         this.hero = hero;
         this.spriteHeroPortrait = spriteHeroPortrait;
 
@@ -86,7 +92,7 @@ public class HeroQuickbarPanel extends Widget {
                 }
 
                 final FloatingTextWidget wFtext = new FloatingTextWidget(LayoutData.builder()
-                    .anchor(new VDim(0.5f, 0.33f, -20, 0))
+                    .anchor(new VDim(0, 0, 10, -8))
                     .size(LayoutData.SIZE_FILL)
                     .build(),
                     Vector.UP,
@@ -98,6 +104,11 @@ public class HeroQuickbarPanel extends Widget {
 
                 return null;
             });
+        addWidget(new SpriteWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 12, 12))
+            .size(new VDim(0, 0, 32, 32))
+            .build(),
+            spriteHeroPortrait));
 
         GameInstance.getInstance().delegateHeroSelectionChanged.bindDelegate(e -> {
             this.selectedSpriteWidget.setEnabled(e.selectedHero == hero);

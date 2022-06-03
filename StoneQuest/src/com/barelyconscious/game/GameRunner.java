@@ -95,7 +95,7 @@ public final class GameRunner {
                 GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getHeight()))
             .build(),
             heroNicnole,
-            null));
+            Resources.getSprite(ResourceSprite.HERO_2)));
 
         val heroJohn = new Hero(
             "John",
@@ -124,7 +124,7 @@ public final class GameRunner {
                 GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getHeight()))
             .build(),
             heroJohn,
-            null));
+            Resources.getSprite(ResourceSprite.HERO_3)));
         world.spawnActor(aGui);
 
         GameInstance.getInstance().setHero(heroJohn, GameInstance.PartySlot.RIGHT);
@@ -165,7 +165,8 @@ public final class GameRunner {
                 GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getHeight()))
             .build(),
             heroPaul,
-            null));
+
+            Resources.getSprite(ResourceSprite.HERO_1)));
 
         world.spawnActor(aGui);
 

@@ -43,8 +43,8 @@ public class SpriteComponent extends Component {
     public Box getBounds() {
         final Vector worldPos = getParent().transform;
         return new Box(
-            (int) worldPos.x, (int) worldPos.x + sprite.width,
-            (int) worldPos.y, (int) worldPos.y + sprite.height);
+            (int) worldPos.x, (int) worldPos.x + sprite.getWidth(),
+            (int) worldPos.y, (int) worldPos.y + sprite.getWidth());
     }
 
     @Override
@@ -52,11 +52,11 @@ public class SpriteComponent extends Component {
         final Vector position = getParent().transform;
 
         renderContext.render(
-            sprite.image,
+            sprite.getTexture(),
             (int) position.x,
             (int) position.y,
-            sprite.width,
-            sprite.height,
+            sprite.getWidth(),
+            sprite.getHeight(),
             renderLayer);
     }
 }

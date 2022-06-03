@@ -60,7 +60,7 @@ public class Hero extends AEntity {
         @Override
         public void render(EventArgs eventArgs, RenderContext renderContext) {
             renderContext.render(
-                sprite.image,
+                sprite.getTexture(),
                 (int) getParent().transform.x - 8,
                 (int) getParent().transform.y - 14,
                 48, 48,
