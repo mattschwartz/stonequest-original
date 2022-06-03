@@ -1,5 +1,6 @@
 package com.barelyconscious.game.entity.resources;
 
+@Deprecated
 public enum ResourceGUI {
 
     HERO_UNIT_FRAME("GUI/hero_unit_frame.png", 160, 184),

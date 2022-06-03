@@ -2,7 +2,6 @@ package com.barelyconscious.game.entity.resources;
 
 import com.barelyconscious.game.GameRunner;
 import com.barelyconscious.game.entity.Sprite;
-import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.exception.MissingResourceException;
 
 import javax.imageio.ImageIO;
@@ -14,26 +13,34 @@ import java.util.Objects;
 
 public final class Resources {
 
-    private static final Map<ResourceSprite, Sprite> loadedSprites = new HashMap<>();
+    private static final class InstanceHolder {
+        static final Resources instance = new Resources();
+    }
+    public static Resources instance() {
+        return InstanceHolder.instance;
+    }
 
-    private static WSprite create(
-        final String filepath,
-        final RenderLayer layer,
-        final int width,
-        final int height
-    ) {
-        final Image spriteImage;
-        try {
-            final InputStream inputStream = Objects.requireNonNull(GameRunner.class.getClassLoader()
-                    .getResource(filepath))
-                .openStream();
-            spriteImage = ImageIO.read(inputStream);
-        } catch (final Exception e) {
-            throw new MissingResourceException("Failed to load resource: " + filepath, e);
+    private final SpriteSheet guiSpriteSheet;
+
+    private Resources() {
+        this.guiSpriteSheet = GUISpriteSheet.createGuiSpriteSheet();
+    }
+
+    public WSprite getSprite(final SpriteResource resource) {
+        WSprite sprite = null;
+
+        if (resource instanceof GUISpriteSheet.Resources) {
+            sprite = guiSpriteSheet.getSpriteFromSheet(resource);
         }
 
-        return new WSprite(spriteImage, layer, width, height);
+        if (sprite == null) {
+            throw new MissingResourceException("Failed to load resource: " + resource);
+        } else {
+            return sprite;
+        }
     }
+
+    private static final Map<ResourceSprite, Sprite> loadedSprites = new HashMap<>();
 
     private static Sprite loadSprite(
         final String filepath,
@@ -73,6 +80,4 @@ public final class Resources {
 
         return sprite;
     }
-
-    private Resources(){}
 }

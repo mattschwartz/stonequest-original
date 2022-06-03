@@ -51,6 +51,7 @@ public abstract class Widget {
     }
 
     public final void render(final EventArgs eventArgs, final RenderContext renderContext) {
+        this.onRender(eventArgs, renderContext);
         final List<Widget> toRemove = new ArrayList<>();
 
         for (final Widget w : widgets) {
@@ -61,9 +62,9 @@ public abstract class Widget {
             }
         }
 
-        this.onRender(eventArgs, renderContext);
         widgets.removeAll(toRemove);
     }
 
-    protected abstract void onRender(final EventArgs eventArgs, final RenderContext renderContext);
+    protected void onRender(final EventArgs eventArgs, final RenderContext renderContext) {
+    }
 }

@@ -9,6 +9,7 @@ import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.gui.*;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
+import com.barelyconscious.game.entity.resources.GUISpriteSheet;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.entity.tile.Tile;
@@ -24,6 +25,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Random;
+
+import static com.barelyconscious.game.entity.resources.GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP;
 
 public final class GameRunner {
 
@@ -84,10 +87,15 @@ public final class GameRunner {
 
         world.spawnActor(heroNicnole);
         aGui.addWidget(new HeroQuickbarPanel(LayoutData.builder()
-            .anchor(new VDim(0.33f, 1, 0, -164))
-            .size(new VDim(0, 0, 400, 94))
+            .anchor(new VDim(0.5f, 1,
+                -(GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getWidth() / 2),
+                -GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getHeight() - 28))
+            .size(new VDim(0, 0,
+                GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getWidth(),
+                GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getHeight()))
             .build(),
-            heroNicnole));
+            heroNicnole,
+            null));
 
         val heroJohn = new Hero(
             "John",
@@ -107,10 +115,16 @@ public final class GameRunner {
 
         world.spawnActor(heroJohn);
         aGui.addWidget(new HeroQuickbarPanel(LayoutData.builder()
-            .anchor(new VDim(0.67f, 1, 0, -164))
-            .size(new VDim(0, 0, 400, 94))
+            .anchor(new VDim(0.5f, 1,
+                +(GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getWidth() / 2)
+                    + 16,
+                -GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getHeight() - 28))
+            .size(new VDim(0, 0,
+                GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getWidth(),
+                GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getHeight()))
             .build(),
-            heroJohn));
+            heroJohn,
+            null));
         world.spawnActor(aGui);
 
         GameInstance.getInstance().setHero(heroJohn, GameInstance.PartySlot.RIGHT);
@@ -119,7 +133,7 @@ public final class GameRunner {
     }
 
     private static void _populateTestWorld(final World world, final Screen screen) {
-        val aPlayer = new Hero(
+        val heroPaul = new Hero(
             "Paul",
             new Vector(200, 200),
             3,
@@ -130,21 +144,28 @@ public final class GameRunner {
             new Stats(),
             144f,
             new Inventory(28));
-        aPlayer.addComponent(new MoveComponent(aPlayer, 32f));
-        aPlayer.addComponent(new SpriteComponent(aPlayer, Resources.getSprite(ResourceSprite.HERO_1), RenderLayer.ENTITIES));
-        aPlayer.addComponent(new BoxColliderComponent(aPlayer, true, true, new Box(0, 32, 0, 32)));
-        aPlayer.addComponent(new HealthBarComponent(aPlayer, aPlayer.getComponent(HealthComponent.class)));
+        heroPaul.addComponent(new MoveComponent(heroPaul, 32f));
+        heroPaul.addComponent(new SpriteComponent(heroPaul, Resources.getSprite(ResourceSprite.HERO_1), RenderLayer.ENTITIES));
+        heroPaul.addComponent(new BoxColliderComponent(heroPaul, true, true, new Box(0, 32, 0, 32)));
+        heroPaul.addComponent(new HealthBarComponent(heroPaul, heroPaul.getComponent(HealthComponent.class)));
 
-        world.spawnActor(aPlayer);
-        GameInstance.getInstance().setHero(aPlayer, GameInstance.PartySlot.LEFT);
+        world.spawnActor(heroPaul);
+        GameInstance.getInstance().setHero(heroPaul, GameInstance.PartySlot.LEFT);
 
         val aGui = new GuiCanvas(screen);
 
         aGui.addWidget(new HeroQuickbarPanel(LayoutData.builder()
-            .anchor(new VDim(0, 1, 0, -164))
-            .size(new VDim(0, 0, 400, 94))
+            .anchor(new VDim(0.5f, 1,
+                -(GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getWidth() / 2)
+                    - GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getWidth()
+                    - 16,
+                -GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getHeight() - 28))
+            .size(new VDim(0, 0,
+                GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getWidth(),
+                GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getHeight()))
             .build(),
-            aPlayer));
+            heroPaul,
+            null));
 
         world.spawnActor(aGui);
 

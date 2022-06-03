@@ -1,13 +1,11 @@
 package com.barelyconscious.game.entity.gui;
 
-import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.Hero;
 import com.barelyconscious.game.entity.components.HealthComponent;
 import com.barelyconscious.game.entity.components.PowerComponent;
-import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.gui.widgets.*;
-import com.barelyconscious.game.entity.resources.ResourceGUI;
+import com.barelyconscious.game.entity.resources.*;
 import com.barelyconscious.game.shape.Vector;
 
 import java.awt.*;
@@ -18,55 +16,60 @@ public class HeroQuickbarPanel extends Widget {
     private final SpriteWidget spriteWidget;
     private final SpriteWidget selectedSpriteWidget;
 
+    private final WSprite spriteHeroPortrait;
     private final Hero hero;
 
-    public HeroQuickbarPanel(final LayoutData layout, final Hero hero) {
+    public HeroQuickbarPanel(
+        final LayoutData layout,
+        final Hero hero,
+        final WSprite spriteHeroPortrait
+    ) {
         super(layout);
         this.hero = hero;
-        this.spriteWidget = new SpriteWidget(LayoutData.builder()
-            .size(new VDim(0, 0, (int) (ResourceGUI.HERO_UNIT_FRAME.width * .75),
-                (int) (ResourceGUI.HERO_UNIT_FRAME.height * .75)))
-            .build(),
-            ResourceGUI.HERO_UNIT_FRAME);
+        this.spriteHeroPortrait = spriteHeroPortrait;
+
+        this.spriteWidget = new SpriteWidget(Resources.instance().getSprite(
+            GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP));
+        WSprite selectedSprite = Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_SELECTED);
         this.selectedSpriteWidget = new SpriteWidget(LayoutData.builder()
-            .size(new VDim(0, 0, (int) (ResourceGUI.HERO_UNIT_FRAME_SELECTED.width * .75),
-                (int) (ResourceGUI.HERO_UNIT_FRAME_SELECTED.height * .75)))
+            .anchor(new VDim(0, 0, 0, -11))
+            .size(new VDim(0, 0, selectedSprite.getWidth(), selectedSprite.getHeight()))
             .build(),
-            ResourceGUI.HERO_UNIT_FRAME_SELECTED);
+            selectedSprite);
 
-        addWidget(new BackgroundPanelWidget(LayoutData.DEFAULT,
-            new Color(55, 55, 55)));
-
-        addWidget(new TextFieldWidget(LayoutData.builder()
-            .anchor(new VDim(0, 1, 6, -10))
+        this.spriteWidget.addWidget(new TextFieldWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 70, 16))
             .size(new VDim(0, 0, 64, 14))
             .build(),
             hero.name));
-
-        addWidget(new SpriteWidget(LayoutData.builder()
-            .size(new VDim(0, 0, (int) (ResourceGUI.HERO_PORTRAIT_LEFT.width * .75),
-                (int) (ResourceGUI.HERO_PORTRAIT_LEFT.height * .75)))
+        this.spriteWidget.addWidget(new TextFieldWidget(LayoutData.builder()
+            .anchor(new VDim(1, 0, -20, 16))
+            .size(new VDim(0, 0, 24, 24))
             .build(),
-            ResourceGUI.HERO_PORTRAIT_LEFT));
+            Integer.toString(hero.getEntityLevel())));
 
         addWidget(spriteWidget);
         selectedSpriteWidget.setEnabled(false);
         addWidget(selectedSpriteWidget);
 
-        addWidget(new ProgressBarWidget(LayoutData.builder()
-            .anchor(new VDim(0, 0, 9, 101))
-            .size(new VDim(0, 0, 102, 12))
+        this.spriteWidget.addWidget(new ProgressBarWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 62, 25))
+            .size(new VDim(0, 0, 167, 15))
             .build(),
-            hero.getComponent(HealthComponent.class),
-            new Color(0, 0, 0, 0),
-            new Color(106, 190, 48)));
+            Objects.requireNonNull(hero.getComponent(HealthComponent.class)),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_HEALTHBAR_PROGRESS_START),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_HEALTHBAR_PROGRESS_MIDDLE),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_HEALTHBAR_PROGRESS_PARTIAL_CAP),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_HEALTHBAR_PROGRESS_FULL_CAP)));
         addWidget(new ProgressBarWidget(LayoutData.builder()
-            .anchor(new VDim(0, 0, 9, 122))
-            .size(new VDim(0, 0, 102, 7))
+            .anchor(new VDim(0, 0, 62, 43))
+            .size(new VDim(0, 0, 167, 11))
             .build(),
-            hero.getComponent(PowerComponent.class),
-            new Color(0, 0, 0, 0),
-            new Color(91, 110, 225)));
+            Objects.requireNonNull(hero.getComponent(PowerComponent.class)),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_POWERBAR_PROGRESS_START),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_POWERBAR_PROGRESS_MIDDLE),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_POWERBAR_PROGRESS_PARTIAL_CAP),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_POWERBAR_PROGRESS_FULL_CAP)));
 
         hero.getComponent(HealthComponent.class)
             .delegateOnValueChanged.bindDelegate(e -> {
@@ -95,14 +98,10 @@ public class HeroQuickbarPanel extends Widget {
 
                 return null;
             });
-    }
 
-    @Override
-    protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
-        final boolean isHeroSelected = Objects.equals(
-            GameInstance.getInstance().getHeroSelected().id,
-            hero.id);
-
-        selectedSpriteWidget.setEnabled(isHeroSelected);
+        GameInstance.getInstance().delegateHeroSelectionChanged.bindDelegate(e -> {
+            this.selectedSpriteWidget.setEnabled(e.selectedHero == hero);
+            return null;
+        });
     }
 }

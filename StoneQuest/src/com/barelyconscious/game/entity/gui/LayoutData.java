@@ -1,5 +1,6 @@
 package com.barelyconscious.game.entity.gui;
 
+import com.barelyconscious.game.entity.resources.WSprite;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.AllArgsConstructor;

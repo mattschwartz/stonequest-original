@@ -1,31 +1,34 @@
 package com.barelyconscious.game.entity.gui.widgets;
 
 import com.barelyconscious.game.entity.EventArgs;
-import com.barelyconscious.game.entity.Sprite;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.gui.LayoutData;
+import com.barelyconscious.game.entity.gui.VDim;
 import com.barelyconscious.game.entity.gui.Widget;
-import com.barelyconscious.game.entity.resources.ResourceGUI;
-import com.barelyconscious.game.entity.resources.Resources;
-import com.barelyconscious.game.shape.Box;
+import com.barelyconscious.game.entity.resources.WSprite;
 import lombok.Setter;
 
 public class SpriteWidget extends Widget {
 
-    private Sprite sprite;
-    private ResourceGUI rSprite;
+    private final WSprite sprite;
     @Setter
     private boolean renderGrayscale = false;
 
-    public SpriteWidget(final LayoutData layout, final ResourceGUI rSprite) {
-        super(layout);
-        this.rSprite = rSprite;
+    /**
+     * uses sprite's width and height to set the absolute size of this widget. Uses TOP_LEFT
+     * anchor
+     */
+    public SpriteWidget(final WSprite sprite) {
+        this(LayoutData.builder()
+            .anchor(LayoutData.ANCHOR_TOP_LEFT)
+            .size(new VDim(0, 0, sprite.getWidth(), sprite.getHeight()))
+            .build(),
+            sprite);
     }
 
-    @Override
-    public void resize(final Box bounds) {
-        super.resize(bounds);
-        this.sprite = Resources.createGuiSprite(rSprite, screenBounds.width, screenBounds.height);
+    public SpriteWidget(final LayoutData layout, final WSprite sprite) {
+        super(layout);
+        this.sprite = sprite;
     }
 
     @Override
@@ -33,11 +36,11 @@ public class SpriteWidget extends Widget {
         if (sprite != null) {
             if (renderGrayscale) {
                 renderContext.renderGuiGrayscale(
-                    sprite.image,
+                    sprite.getTexture(),
                     screenBounds);
             } else {
                 renderContext.renderGui(
-                    sprite.image,
+                    sprite.getTexture(),
                     screenBounds);
             }
         }

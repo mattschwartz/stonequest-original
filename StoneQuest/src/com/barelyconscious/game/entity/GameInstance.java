@@ -1,6 +1,8 @@
 package com.barelyconscious.game.entity;
 
+import com.barelyconscious.game.delegate.Delegate;
 import com.barelyconscious.game.entity.playercontroller.PlayerController;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +11,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class GameInstance {
+
+    public final Delegate<HeroSelectionChanged> delegateHeroSelectionChanged = new Delegate<>();
+
+    @AllArgsConstructor
+    public static final class HeroSelectionChanged {
+
+        public final Hero selectedHero;
+        public final PartySlot selectedPartySlot;
+        public final Hero previouslySelectedHero;
+        public final PartySlot previouslySelectedPartySlot;
+    }
 
     @Getter
     private static GameInstance instance;
@@ -82,8 +95,14 @@ public final class GameInstance {
     }
 
     public Hero setHeroSelectedSlot(final PartySlot selectedIndex) {
+        final PartySlot prevSelectedPartySlot = selectedHeroId;
         final Hero prevHeroSelected = heroParty[selectedIndex.index];
+
         selectedHeroId = selectedIndex;
+        final Hero selectedHero = heroParty[selectedHeroId.index];
+
+        delegateHeroSelectionChanged.call(new HeroSelectionChanged(selectedHero, selectedIndex, prevHeroSelected, prevSelectedPartySlot));
+
         return prevHeroSelected;
     }
 
