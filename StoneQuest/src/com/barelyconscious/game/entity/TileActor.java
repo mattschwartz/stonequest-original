@@ -104,7 +104,7 @@ public class TileActor extends Actor implements Interactable {
                     b.left,
                     b.bottom + 2);
 
-                renderContext.renderString(tile.getName(),
+                renderContext.getFontContext().renderString(tile.getName(),
                     Color.YELLOW,
                     (int) renderPos.x,
                     (int) renderPos.y,

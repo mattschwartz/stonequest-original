@@ -16,6 +16,7 @@ public final class Resources {
     private static final class InstanceHolder {
         static final Resources instance = new Resources();
     }
+
     public static Resources instance() {
         return InstanceHolder.instance;
     }
@@ -41,6 +42,24 @@ public final class Resources {
     }
 
     private static final Map<ResourceSprite, Sprite> loadedSprites = new HashMap<>();
+    private static final Map<FontResource, Font> fonts = new HashMap<>();
+
+    public static Font loadFont(FontResource resource) {
+        if (fonts.containsKey(resource)) {
+            return fonts.get(resource);
+        }
+
+        try {
+            Font font = Font.createFont(resource.fontFormat, Objects.requireNonNull(GameRunner.class.getClassLoader()
+                    .getResource(resource.filepath))
+                .openStream());
+            fonts.put(resource, font);
+
+            return font;
+        } catch (final Exception e) {
+            throw new MissingResourceException("Failed to load font: " + resource);
+        }
+    }
 
     private static Sprite loadSprite(
         final String filepath,

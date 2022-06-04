@@ -196,7 +196,7 @@ public final class Engine {
         Map<Actor, Long> slowestActors
     ) {
         if (eventArgs.getDeltaTime() > .2f) {
-            renderContext.renderString(
+            renderContext.getFontContext().renderString(
                 String.format("FPS: %d (time: %.1fms)",
                     (int) averageFps,
                     eventArgs.getDeltaTime()),
@@ -204,7 +204,7 @@ public final class Engine {
                 0, 12,
                 RenderLayer._DEBUG);
         } else {
-            renderContext.renderString(
+            renderContext.getFontContext().renderString(
                 String.format("FPS: %d (time: %.1fms)",
                     (int) averageFps,
                     eventArgs.getDeltaTime()),
@@ -213,20 +213,20 @@ public final class Engine {
                 RenderLayer._DEBUG);
         }
 
-        renderContext.renderString(
+        renderContext.getFontContext().renderString(
             String.format("Game clock: %.2fs",
                 gameClockMillis * 0.001f),
             Color.yellow,
             0, 28,
             RenderLayer._DEBUG);
-        renderContext.renderString("Total actors: " + world.getActors().size(),
+        renderContext.getFontContext().renderString("Total actors: " + world.getActors().size(),
             Color.yellow,
             0, 44,
             RenderLayer._DEBUG);
 
         int yPos = 60;
 
-        renderContext.renderString("Slowest actors:",
+        renderContext.getFontContext().renderString("Slowest actors:",
             Color.yellow,
             0, yPos,
             RenderLayer._DEBUG);
@@ -244,7 +244,7 @@ public final class Engine {
         for (final Long time : reverse) {
             final Actor actor = actorsByTime.get(time);
             yPos += 16;
-            renderContext.renderString(String.format("%s took %dms",
+            renderContext.getFontContext().renderString(String.format("%s took %dms",
                     UString.clamp(actor.name, 0, 12),
                     time),
                 Color.yellow,

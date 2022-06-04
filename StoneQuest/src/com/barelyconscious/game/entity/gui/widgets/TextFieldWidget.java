@@ -19,7 +19,7 @@ public class TextFieldWidget extends Widget {
 
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
-        renderContext.renderString(
+        renderContext.getFontContext().renderString(
             text,
             Color.yellow,
             screenBounds.left,

@@ -1,7 +1,9 @@
 package com.barelyconscious.game.entity.resources;
 
 import com.barelyconscious.game.entity.graphics.RenderLayer;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public enum ResourceSprite {
 
     HERO_1("sprites/player_sprite.png", 32, 32, RenderLayer.ENTITIES),
@@ -26,16 +28,4 @@ public enum ResourceSprite {
     public final int width;
     public final int height;
     public final RenderLayer defaultRenderLayer;
-
-    ResourceSprite(
-        final String filepath,
-        final int width,
-        final int height,
-        final RenderLayer defaultRenderLayer
-    ) {
-        this.filepath = filepath;
-        this.width = width;
-        this.height = height;
-        this.defaultRenderLayer = defaultRenderLayer;
-    }
 }

@@ -1,6 +1,7 @@
 package com.barelyconscious.game.entity.graphics;
 
 import com.barelyconscious.game.entity.Camera;
+import com.barelyconscious.game.entity.resources.FontResource;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
@@ -28,6 +29,9 @@ public class RenderContext {
     private final BufferStrategy bufferStrategy;
     public final Camera camera;
 
+    @Getter
+    private FontContext fontContext;
+
     private final Map<RenderLayer, BufferedImage> renderByLayer;
     private final Map<RenderLayer, Graphics2D> graphicsByLayer;
 
@@ -37,6 +41,7 @@ public class RenderContext {
     ) {
         this.bufferStrategy = bufferStrategy;
         this.camera = camera;
+        this.fontContext = new FontContext(Color.white, FontResource.FONTIN_REGULAR, RenderLayer.GUI, this);
 
         renderByLayer = new EnumMap<>(RenderLayer.class);
         graphicsByLayer = new EnumMap<>(RenderLayer.class);
@@ -68,6 +73,10 @@ public class RenderContext {
         g.dispose();
 
         return renderedImage;
+    }
+
+    Graphics getGraphics(final RenderLayer renderLayer) {
+        return graphicsByLayer.get(renderLayer);
     }
 
     /**
@@ -188,21 +197,6 @@ public class RenderContext {
 
             g.setColor(prev);
         }
-    }
-
-    public void renderString(
-        final String message,
-        final Color color,
-        final int screenX,
-        final int screenY,
-        final RenderLayer layer
-    ) {
-        final Graphics g = graphicsByLayer.get(layer);
-
-        final Color prev = g.getColor();
-        g.setColor(color);
-        g.drawString(message, screenX, screenY);
-        g.setColor(prev);
     }
 
     private boolean isDisposing = false;

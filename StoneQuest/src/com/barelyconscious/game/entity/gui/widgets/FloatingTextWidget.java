@@ -91,7 +91,7 @@ public class FloatingTextWidget extends Widget {
             final Box pos = screenBounds.boxAtPosition(new Vector(
                 state.offsX, state.offsY));
 
-            renderContext.renderString(
+            renderContext.getFontContext().renderString(
                 text,
                 textColor,
                 pos.left,
