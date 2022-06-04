@@ -1,9 +1,6 @@
 package com.barelyconscious.game.entity.input;
 
 import com.barelyconscious.game.delegate.Delegate;
-import com.barelyconscious.game.entity.GameInstance;
-import com.barelyconscious.game.entity.components.MouseInputComponent;
-import com.google.common.collect.Lists;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.*;

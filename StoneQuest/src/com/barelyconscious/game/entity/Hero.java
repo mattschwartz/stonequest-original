@@ -5,6 +5,7 @@ import com.barelyconscious.game.entity.components.SpriteComponent;
 import com.barelyconscious.game.entity.graphics.FontContext;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
+import com.barelyconscious.game.entity.graphics.RenderString;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.shape.Vector;
@@ -87,20 +88,22 @@ public class Hero extends AEntity {
             renderContext.renderRect(
                 Color.black,
                 true,
-                (int) worldPos.x-2,
-                (int) worldPos.y-12,
+                (int) worldPos.x - 2,
+                (int) worldPos.y - 12,
                 11, 16,
                 RenderLayer.GUI
             );
 
             final GameInstance.PartySlot slot = GameInstance.getInstance()
-                    .getSlotByHero((Hero)getParent());
+                .getSlotByHero((Hero) getParent());
 
             final FontContext font = renderContext.getFontContext();
-            font.setColor(Color.yellow);
             font.setRenderLayer(RenderLayer.GUI);
-            font.drawString(
-                "" + (slot.index + 1),
+
+            font.drawString(new RenderString(
+                    Integer.toString(slot.index + 1),
+                    Color.yellow,
+                    font.getFont()),
                 (int) screenPos.x,
                 (int) screenPos.y);
         }

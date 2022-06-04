@@ -53,6 +53,7 @@ public final class Resources {
             Font font = Font.createFont(resource.fontFormat, Objects.requireNonNull(GameRunner.class.getClassLoader()
                     .getResource(resource.filepath))
                 .openStream());
+            font = font.deriveFont(resource.defaultFontSize);
             fonts.put(resource, font);
 
             return font;

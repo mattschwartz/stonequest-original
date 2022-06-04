@@ -1,8 +1,10 @@
 package com.barelyconscious.game.entity.gui.widgets;
 
 import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.graphics.FontContext;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
+import com.barelyconscious.game.entity.graphics.RenderString;
 import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.Widget;
 
@@ -19,11 +21,13 @@ public class TextFieldWidget extends Widget {
 
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
-        renderContext.getFontContext().renderString(
-            text,
-            Color.yellow,
+        FontContext font = renderContext.getFontContext();
+        font.setRenderLayer(RenderLayer.GUI);
+        font.drawString(new RenderString(
+                text,
+                Color.yellow,
+                font.getFont()),
             screenBounds.left,
-            screenBounds.top,
-            RenderLayer.GUI);
+            screenBounds.top);
     }
 }

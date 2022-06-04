@@ -29,8 +29,13 @@ public class RenderContext {
     private final BufferStrategy bufferStrategy;
     public final Camera camera;
 
-    @Getter
-    private FontContext fontContext;
+    public FontContext getFontContext() {
+        return new FontContext(
+            Color.yellow,
+            FontResource.FONTIN_REGULAR,
+            RenderLayer.GUI,
+            this);
+    }
 
     private final Map<RenderLayer, BufferedImage> renderByLayer;
     private final Map<RenderLayer, Graphics2D> graphicsByLayer;
@@ -41,7 +46,6 @@ public class RenderContext {
     ) {
         this.bufferStrategy = bufferStrategy;
         this.camera = camera;
-        this.fontContext = new FontContext(Color.white, FontResource.FONTIN_REGULAR, RenderLayer.GUI, this);
 
         renderByLayer = new EnumMap<>(RenderLayer.class);
         graphicsByLayer = new EnumMap<>(RenderLayer.class);

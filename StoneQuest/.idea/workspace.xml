@@ -6,10 +6,13 @@
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Engine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Hero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Hero.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/TileActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/TileActor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/components/MouseInputComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/graphics/FontContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/graphics/FontContext.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/graphics/RenderContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/graphics/RenderContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/FloatingTextWidget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/FloatingTextWidget.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/TextFieldWidget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/TextFieldWidget.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/ResourceSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/ResourceSprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/input/Interactable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/input/Interactable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/input/MouseInputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/input/MouseInputHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/FontResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/FontResource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/Resources.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/Resources.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

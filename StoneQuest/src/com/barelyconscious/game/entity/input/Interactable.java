@@ -8,8 +8,9 @@ public interface Interactable {
 
     boolean isMouseOver();
 
-    void onMouseOver(final MouseEvent e);
-    void onMouseClicked(final MouseEvent e);
-    void onMouseEntered(final MouseEvent e);
-    void onMouseExited(final MouseEvent e);
+    void onMouseOver(MouseEvent e);
+    void onMouseClicked(MouseEvent e);
+    void onMouseEntered(MouseEvent e);
+    void onMouseExited(MouseEvent e);
+
 }

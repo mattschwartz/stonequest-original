@@ -52,14 +52,23 @@ public class FontContext {
         setColor(prevColor);
     }
 
+    public void drawString(final RenderString renderString, int screenX, int screenY) {
+        final Graphics2D g = (Graphics2D) renderContext.getGraphics(renderLayer);
+        renderString.render(g, screenX, screenY);
+    }
+
     public void drawString(final String msg, final int screenX, final int screenY) {
         final Graphics2D g = (Graphics2D) renderContext.getGraphics(renderLayer);
         final Color prev = g.getColor();
+        final Font prevFont = g.getFont();
 
+        g.setFont(font);
         g.setColor(color);
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g.drawString(msg, screenX, screenY);
+
         g.setColor(prev);
+        g.setFont(prevFont);
     }
 
     public void worldDrawString(final String msg, final int worldX, final int worldY) {

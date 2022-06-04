@@ -1,6 +1,7 @@
 package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.components.Component;
+import com.barelyconscious.game.entity.graphics.FontContext;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
@@ -244,7 +245,12 @@ public final class Engine {
         for (final Long time : reverse) {
             final Actor actor = actorsByTime.get(time);
             yPos += 16;
-            renderContext.getFontContext().renderString(String.format("%s took %dms",
+            FontContext font = renderContext.getFontContext();
+            font.setFontSize(12);
+            font.setRenderLayer(RenderLayer._DEBUG);
+            font.setColor(Color.white);
+
+            font.renderString(String.format("%s took %dms",
                     UString.clamp(actor.name, 0, 12),
                     time),
                 Color.yellow,
