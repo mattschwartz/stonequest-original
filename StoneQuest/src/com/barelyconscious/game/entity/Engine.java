@@ -137,12 +137,19 @@ public final class Engine {
 
             sw.reset();
             sw.start();
+            final List<Component> componentsToRemove = new ArrayList<>();
             for (final Component c : actor.getComponents()) {
+                if (c.isRemoveOnNextUpdate()) {
+                    componentsToRemove.add(c);
+                    continue;
+                }
+
                 if (c.isRenderEnabled()) {
                     c.render(eventArgs, renderContext);
                     c.guiRender(eventArgs, renderContext);
                 }
             }
+            componentsToRemove.forEach(actor::removeComponent);
 
             sw.stop();
             final long renderLatency = sw.elapsed(TimeUnit.MILLISECONDS);
@@ -170,11 +177,17 @@ public final class Engine {
                 continue;
             }
 
+            final List<Component> componentsToRemove = new ArrayList<>();
             for (final Component c : actor.getComponents()) {
+                if (c.isRemoveOnNextUpdate()) {
+                    componentsToRemove.add(c);
+                    continue;
+                }
                 if (c.isEnabled()) {
                     componentsToUpdate.add(c);
                 }
             }
+            componentsToRemove.forEach(actor::removeComponent);
         }
 
         physics.updatePhysics(eventArgs, world.getActors());

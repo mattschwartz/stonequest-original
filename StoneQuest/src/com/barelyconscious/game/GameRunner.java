@@ -112,6 +112,11 @@ public final class GameRunner {
         heroJohn.addComponent(new SpriteComponent(heroJohn, Resources.getSprite(ResourceSprite.HERO_3), RenderLayer.ENTITIES));
         heroJohn.addComponent(new BoxColliderComponent(heroJohn, true, true, new Box(0, 32, 0, 32)));
         heroJohn.addComponent(new HealthBarComponent(heroJohn, heroJohn.getComponent(HealthComponent.class)));
+        heroJohn.addComponent(new StatChangeOverTime(heroJohn,
+            heroJohn.getComponent(HealthComponent.class),
+            6,
+            0.5f,
+            1f));
 
         world.spawnActor(heroJohn);
         aGui.addWidget(new HeroQuickbarPanel(LayoutData.builder()

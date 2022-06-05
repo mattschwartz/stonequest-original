@@ -10,13 +10,28 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public abstract class Component {
 
+    /**
+     * If false, the component will not be called on game updates.
+     */
     @Getter
     @Setter
     private boolean isEnabled = true;
 
+    /**
+     * If false, the component will not be called on render updates.
+     */
     @Getter
     @Setter
     private boolean isRenderEnabled = true;
+
+    /**
+     * If true, this component will be removed before the next game
+     * update. The component will not receive an update before it
+     * is removed.
+     */
+    @Getter
+    @Setter
+    private boolean removeOnNextUpdate = false;
 
     @Getter
     private final Actor parent;
