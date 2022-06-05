@@ -44,13 +44,13 @@ public class HeroQuickbarPanel extends Widget {
             selectedSprite);
 
         this.spriteWidget.addWidget(new TextFieldWidget(LayoutData.builder()
-            .anchor(new VDim(0, 0, 70, 16))
-            .size(new VDim(0, 0, 64, 14))
+            .anchor(new VDim(0, 0, 62 + (134 / 2), 16))
+            .size(new VDim(0, 0, 134, 18))
             .build(),
             hero.name));
         this.spriteWidget.addWidget(new TextFieldWidget(LayoutData.builder()
-            .anchor(new VDim(1, 0, -20, 16))
-            .size(new VDim(0, 0, 24, 24))
+            .anchor(new VDim(1, 0, -18, 16))
+            .size(new VDim(0, 0, 22, 14))
             .build(),
             Integer.toString(hero.getEntityLevel())));
 

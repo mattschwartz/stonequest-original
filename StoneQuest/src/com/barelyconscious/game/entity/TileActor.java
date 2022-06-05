@@ -2,10 +2,8 @@ package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.components.SpriteComponent;
-import com.barelyconscious.game.entity.graphics.FontContext;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
-import com.barelyconscious.game.entity.graphics.RenderString;
 import com.barelyconscious.game.entity.input.InputLayer;
 import com.barelyconscious.game.entity.input.Interactable;
 import com.barelyconscious.game.entity.input.MouseInputHandler;

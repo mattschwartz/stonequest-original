@@ -2,13 +2,18 @@ package com.barelyconscious.game.entity.graphics;
 
 import com.barelyconscious.game.entity.resources.FontResource;
 import com.barelyconscious.game.entity.resources.Resources;
-import com.barelyconscious.game.shape.Vector;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
 
 public class FontContext {
+
+    public enum TextAlign {
+        LEFT,
+        CENTER,
+        RIGHT
+    }
 
     @Getter
     @Setter
@@ -39,25 +44,31 @@ public class FontContext {
         this.renderContext = renderContext;
     }
 
-    public void renderString(String msg, Color color, int screenX, int screenY, RenderLayer renderLayer) {
+    public void renderString(
+        final String msg,
+        final Color color,
+        final int screenX,
+        final int screenY,
+        final RenderLayer renderLayer
+    ) {
         val prevLayer = this.renderLayer;
         val prevColor = this.color;
 
         setRenderLayer(renderLayer);
         setColor(color);
 
-        drawString(msg, screenX, screenY);
+        drawString(msg, TextAlign.LEFT, screenX, screenY);
 
         setRenderLayer(prevLayer);
         setColor(prevColor);
     }
 
-    public void drawString(final RenderString renderString, int screenX, int screenY) {
-        final Graphics2D g = (Graphics2D) renderContext.getGraphics(renderLayer);
-        renderString.render(g, screenX, screenY);
-    }
-
-    public void drawString(final String msg, final int screenX, final int screenY) {
+    public void drawString(
+        final String msg,
+        final TextAlign textAlignment,
+        final int screenX,
+        final int screenY
+    ) {
         final Graphics2D g = (Graphics2D) renderContext.getGraphics(renderLayer);
         final Color prev = g.getColor();
         final Font prevFont = g.getFont();
@@ -65,22 +76,36 @@ public class FontContext {
         g.setFont(font);
         g.setColor(color);
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g.drawString(msg, screenX, screenY);
+
+        final int lineHeight = g.getFontMetrics(font).getHeight();
+
+        int yOffs = 0;
+        final String[] lines = msg.split("\n");
+        for (final String line : lines) {
+            int xOffs = 0;
+            int lineWidth = getStringWidth(line);
+
+            switch (textAlignment) {
+                case RIGHT:
+                    xOffs -= lineWidth;
+                case CENTER:
+                    xOffs -= lineWidth / 2;
+            }
+
+            g.drawString(msg, screenX + xOffs, screenY + yOffs);
+
+            yOffs += lineHeight;
+        }
+
 
         g.setColor(prev);
         g.setFont(prevFont);
-    }
-
-    public void worldDrawString(final String msg, final int worldX, final int worldY) {
-        Vector screenPos = renderContext.camera.worldToScreenPos(worldX, worldY);
-        this.drawString(msg, (int) screenPos.x, (int) screenPos.y);
     }
 
     public int getStringWidth(final String str) {
         if (StringUtils.isBlank(str)) {
             return 0;
         }
-
         return renderContext
             .getGraphics(renderLayer)
             .getFontMetrics(font)

@@ -111,7 +111,7 @@ public final class GameRunner {
         val heroJohn = new Hero(
             "John",
             new Vector(186, 299),
-            3,
+            38,
             11f,
             11f,
             24,
