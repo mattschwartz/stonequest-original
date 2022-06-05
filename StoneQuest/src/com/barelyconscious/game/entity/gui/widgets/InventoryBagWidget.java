@@ -21,11 +21,9 @@ import java.util.Optional;
  */
 public final class InventoryBagWidget extends Widget {
 
-    private Inventory inventory;
+    private final Inventory inventory;
     private final int numRows;
     private final int numCols;
-
-    private final List<ItemSlot> itemSlots;
 
     /**
      * @param numRows the number of horizontal item slots
@@ -41,7 +39,6 @@ public final class InventoryBagWidget extends Widget {
         this.inventory = inventoryBag;
         this.numRows = numRows;
         this.numCols = numCols;
-        this.itemSlots = new ArrayList<>(inventoryBag.size);
 
         this.configureWidgets();
     }

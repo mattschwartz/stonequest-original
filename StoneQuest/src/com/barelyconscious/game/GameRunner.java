@@ -255,6 +255,14 @@ public final class GameRunner {
             Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_IRON_ORE),
             null
         ));
+        inventory.addItem(new Item(
+            3,
+            1,
+            "Stream Drive",
+            "A stream drive.",
+            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_STREAM_DRIVE),
+            null
+        ));
 
         val wBackpack = new InventoryBagWidget(LayoutData.builder()
             .anchor(new VDim(1, 0.5f,
@@ -276,8 +284,8 @@ public final class GameRunner {
         final KeyInputHandler keyInputHandler,
         final Camera camera
     ) {
-        for (int x = 0; x < 25; ++x) {
-            for (int y = 0; y < 25; ++y) {
+        for (int x = 0; x < 75; ++x) {
+            for (int y = 0; y < 75; ++y) {
                 final int grassTileId = RANDOM.nextInt(100);
                 ResourceSprite rSprite;
                 if (grassTileId > 23) {
