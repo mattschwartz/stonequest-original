@@ -3,6 +3,7 @@ package com.barelyconscious.game.entity.playercontroller;
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.GameInstance;
+import com.barelyconscious.game.entity.Inventory;
 import com.barelyconscious.game.entity.components.*;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
@@ -12,6 +13,7 @@ import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import com.barelyconscious.util.UMath;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.val;
 
 import javax.annotation.Nullable;
@@ -45,7 +47,16 @@ public class PlayerController {
     @Nullable
     private Vector mouseClickedWorldPos;
 
-    public PlayerController(final MouseInputHandler mouseHandler, final KeyInputHandler keyHandler) {
+    @Getter
+    private final Inventory inventory;
+
+    public PlayerController(
+        @NonNull final Inventory inventory,
+        final MouseInputHandler mouseHandler,
+        final KeyInputHandler keyHandler
+    ) {
+        this.inventory = inventory;
+
         mouseHandler.onMouseClicked.bindDelegate(this::onMouseClicked);
         mouseHandler.onMouseMoved.bindDelegate(this::onMouseMoved);
         mouseHandler.onMouseReleased.bindDelegate(this::onMouseReleased);

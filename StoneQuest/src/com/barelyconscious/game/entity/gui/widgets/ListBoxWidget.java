@@ -5,6 +5,7 @@ import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.Widget;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,10 @@ public class ListBoxWidget extends Widget {
 
     private int currentlySelectedIndex = -1;
 
-    public ListBoxWidget(LayoutData layout) {
+    public ListBoxWidget( LayoutData layout) {
         super(layout);
         this.items = new ArrayList<>();
+        addWidget(new BackgroundPanelWidget(layout, new Color(255, 255, 255, 150)));
     }
 
     public void addItem(final ListBoxItem item) {

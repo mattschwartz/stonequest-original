@@ -19,6 +19,10 @@ public final class Inventory {
         items = new ArrayList<>(size);
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
     public boolean addItem(final Item item) {
         if (isFull()) {
             return false;

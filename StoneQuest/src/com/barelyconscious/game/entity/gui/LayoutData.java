@@ -4,6 +4,8 @@ import com.barelyconscious.game.entity.resources.WSprite;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 public final class LayoutData {
@@ -12,11 +14,15 @@ public final class LayoutData {
      * The location within the widget that will be used to position
      * the widget within its parent.
      */
-    final VDim anchor;
+    @Getter
+    @Setter
+    private VDim anchor;
     /**
      * The dimensions of the scaled widget. x=width, y=height
      */
-    final VDim size;
+    @Getter
+    @Setter
+    private VDim size;
 
     public static VDim ANCHOR_TOP_LEFT = new VDim(0, 0, 0, 0);
     public static VDim ANCHOR_TOP_RIGHT = new VDim(1, 0, 0, 0);

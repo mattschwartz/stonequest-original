@@ -7,8 +7,10 @@ import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.gui.*;
+import com.barelyconscious.game.entity.gui.widgets.InventoryBagWidget;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
+import com.barelyconscious.game.entity.playercontroller.PlayerController;
 import com.barelyconscious.game.entity.resources.GUISpriteSheet;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
 import com.barelyconscious.game.entity.resources.Resources;
@@ -26,7 +28,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Random;
 
-import static com.barelyconscious.game.entity.resources.GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP;
+import static com.barelyconscious.game.entity.resources.GUISpriteSheet.Resources.INV_ITEM_SLOT_BACKGROUND;
 
 public final class GameRunner {
 
@@ -55,7 +57,13 @@ public final class GameRunner {
             }
         });
 
-        _initTest(world, screen);
+        val aGui = new GuiCanvas(screen);
+        world.spawnActor(aGui);
+
+        _initTest(world, screen, aGui);
+
+        final PlayerController playerController = injector.getInstance(PlayerController.class);
+        _setupInventory(aGui, playerController.getInventory());
 
         frame.requestFocus();
 
@@ -65,10 +73,7 @@ public final class GameRunner {
         System.out.println("");
     }
 
-    private static void _initTest(final World world, final Screen screen) {
-        val aGui = new GuiCanvas(screen);
-        world.spawnActor(aGui);
-
+    private static void _initTest(final World world, final Screen screen, final GuiCanvas aGui) {
         val heroNicnole = new Hero(
             "Nicnole",
             new Vector(200, 264),
@@ -218,6 +223,22 @@ public final class GameRunner {
             .addForce(Vector.DOWN, 100f);
 
         world.spawnActor(aBullet);
+    }
+
+    private static void _setupInventory(
+        final GuiCanvas gui,
+        final Inventory inventory
+    ) {
+        val wBackpack = new InventoryBagWidget(LayoutData.builder()
+            .anchor(new VDim(1, 0.5f,
+                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 75),
+                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight() / 2)))
+            .size(new VDim(0, 0,
+                INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth(),
+                INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight()))
+            .build(), inventory, 4, 4);
+
+        gui.addWidget(wBackpack);
     }
 
     private static final Random RANDOM = new Random(100L);

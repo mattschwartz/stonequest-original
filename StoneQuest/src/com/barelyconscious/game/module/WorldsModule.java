@@ -2,6 +2,7 @@ package com.barelyconscious.game.module;
 
 import com.barelyconscious.game.entity.Engine;
 import com.barelyconscious.game.entity.GameInstance;
+import com.barelyconscious.game.entity.Inventory;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.playercontroller.PlayerController;
@@ -144,13 +145,23 @@ public class WorldsModule extends AbstractModule {
         return GameInstance.createInstance(world, playerController);
     }
 
+    @Provides
+    @Singleton
+    Inventory providesInventory() {
+        return new Inventory(16);
+    }
+
     @Singleton
     @Provides
     PlayerController providesPlayerController(
+        final Inventory inventory,
         final MouseInputHandler mouseInputHandler,
         final KeyInputHandler keyInputHandler
     ) {
-        return new PlayerController(mouseInputHandler, keyInputHandler);
+        return new PlayerController(
+            inventory,
+            mouseInputHandler,
+            keyInputHandler);
     }
 
     @Singleton
