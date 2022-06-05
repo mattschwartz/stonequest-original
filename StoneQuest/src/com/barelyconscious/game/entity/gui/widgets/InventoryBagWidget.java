@@ -61,16 +61,18 @@ public final class InventoryBagWidget extends Widget {
         // spacing between rows/cols
         final int gutterSize = 2;
 
+        int index = 0;
         for (int row = 0; row < numRows; ++row) {
             for (int col = 0; col < numCols; ++col) {
                 int xOffs = col * (itemSlotWidth + gutterSize);
                 int yOffs = row * (itemSlotHeight + gutterSize);
 
+                Item item = inventory.getItem(index++);
                 addWidget(new ItemSlot(LayoutData.builder()
                     .anchor(new VDim(0, 0, xOffs, yOffs))
                     .size(new VDim(0, 0, itemSlotWidth, itemSlotHeight))
                     .build(),
-                    null));
+                    item));
             }
         }
     }

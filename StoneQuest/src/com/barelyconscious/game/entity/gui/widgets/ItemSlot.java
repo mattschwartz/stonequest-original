@@ -58,8 +58,7 @@ public class ItemSlot extends Widget {
     ) {
         if (item != null) {
             renderContext.renderGui(
-                Resources.instance().getSprite(
-                    ItemsSpriteSheet.Resources.ITEM_RECOVERED_TEXT_FILE).getTexture(),
+                item.getSprite().getTexture(),
                 screenBounds);
         }
     }

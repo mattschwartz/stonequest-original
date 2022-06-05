@@ -1,7 +1,7 @@
 package com.barelyconscious.game.entity.item;
 
 
-import com.barelyconscious.game.entity.Sprite;
+import com.barelyconscious.game.entity.resources.WSprite;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,6 +15,6 @@ public class Item {
     private final int itemLevel;
     private final String name;
     private final String description;
-    private final Sprite sprite;
+    private final WSprite sprite;
     private final List<ItemRequirement> requirements;
 }

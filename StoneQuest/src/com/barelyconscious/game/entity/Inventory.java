@@ -2,6 +2,7 @@ package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.item.Item;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,15 +12,13 @@ import java.util.Optional;
  */
 public final class Inventory {
 
+    public int currentSize = 0;
     public final int size;
     private final List<Item> items;
 
     public Inventory(final int size) {
         this.size = size;
-        items = new ArrayList<>(size);
-        for (int i = 0; i < size; ++i) {
-            items.add(null);
-        }
+        items = new ArrayList<>();
     }
 
     public List<Item> getItems() {
@@ -30,25 +29,19 @@ public final class Inventory {
         if (isFull()) {
             return false;
         }
+        ++currentSize;
         return items.add(item);
     }
 
-    public boolean insertItem(final Item item, final int slot) {
-        if (isFull()) {
-            return false;
+    @Nullable
+    public Item getItem(final int slot) {
+        if (slot < 0 || slot >= currentSize) {
+            return null;
         }
-        items.add(slot, item);
-        return true;
-    }
-
-    public Optional<Item> getItem(final int slot) {
-        if (slot < 0 || slot > items.size()) {
-            return Optional.empty();
-        }
-        return Optional.ofNullable(items.get(slot));
+        return items.get(slot);
     }
 
     public boolean isFull() {
-        return items.size() >= size;
+        return currentSize >= size;
     }
 }

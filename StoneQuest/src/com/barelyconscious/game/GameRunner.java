@@ -10,8 +10,10 @@ import com.barelyconscious.game.entity.gui.*;
 import com.barelyconscious.game.entity.gui.widgets.InventoryBagWidget;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
+import com.barelyconscious.game.entity.item.Item;
 import com.barelyconscious.game.entity.playercontroller.PlayerController;
 import com.barelyconscious.game.entity.resources.GUISpriteSheet;
+import com.barelyconscious.game.entity.resources.ItemsSpriteSheet;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.entity.tile.Tile;
@@ -229,6 +231,31 @@ public final class GameRunner {
         final GuiCanvas gui,
         final Inventory inventory
     ) {
+        inventory.addItem(new Item(
+            0,
+            1,
+            "Willow Bark",
+            "Bark from the willow tree. Has minimal healing properties.",
+            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_WILLOW_BARK),
+            null
+        ));
+        inventory.addItem(new Item(
+            1,
+            1,
+            "Cured Leather",
+            "What ails the leather that it needs curing?",
+            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_CURED_LEATHER),
+            null
+        ));
+        inventory.addItem(new Item(
+            2,
+            1,
+            "Iron Ore",
+            "Unrefined iron ore.",
+            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_IRON_ORE),
+            null
+        ));
+
         val wBackpack = new InventoryBagWidget(LayoutData.builder()
             .anchor(new VDim(1, 0.5f,
                 -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 75),
