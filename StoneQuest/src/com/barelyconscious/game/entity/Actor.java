@@ -1,6 +1,8 @@
 package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.components.Component;
+import com.barelyconscious.game.entity.resources.Region;
+import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import com.google.common.collect.Lists;
 import lombok.extern.log4j.Log4j2;
@@ -30,6 +32,15 @@ public class Actor {
 
     public Vector transform;
     public Vector facing = Vector.UP;
+
+    // todo (p0) implement this better
+    public Box getBoundingBox() {
+        return new Box(
+            (int) transform.x,
+            (int) transform.x + 32,
+            (int) transform.y,
+            (int) transform.y + 32);
+    }
 
     public Actor(final Vector transform) {
         this(null, transform);

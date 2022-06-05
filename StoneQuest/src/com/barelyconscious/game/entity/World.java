@@ -1,9 +1,13 @@
 package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.shape.Vector;
+import com.google.common.base.Stopwatch;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
 
 public final class World {
 
@@ -34,19 +38,26 @@ public final class World {
     public void saveWorld() {
     }
 
-    /**
-     * converts the screen position as viewed through the provided camera into the corresponding
-     * position in the game world.
-     */
-    public Vector screenToWorldPos(final Camera camera, final Vector screenPos) {
-        return new Vector(
-            screenPos.x + camera.getWorldX(),
-            screenPos.y + camera.getWorldY());
+    public Actor getActorAt(final Vector worldPos) {
+        return getActorAt(worldPos.x, worldPos.y);
     }
 
-    public Vector worldToScreenPos(final Camera camera, final Vector worldPos) {
-        return new Vector(
-            worldPos.x - camera.getWorldX(),
-            worldPos.y - camera.getWorldY());
+    public Actor getActorAt(final float worldX, final float worldY) {
+        final List<Actor> matches = new ArrayList<>();
+        for (final Actor a : actors) {
+            if (a.getBoundingBox().contains((int) worldX, (int) worldY)) {
+                matches.add(a);
+            }
+        }
+
+        if (matches.isEmpty()) {
+            return null;
+        }
+        if (matches.size() == 1) {
+            return matches.get(0);
+        } else {
+            int index = matches.size() - 1;
+            return matches.get(index);
+        }
     }
 }

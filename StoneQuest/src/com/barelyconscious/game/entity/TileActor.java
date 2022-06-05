@@ -14,6 +14,7 @@ import com.barelyconscious.game.entity.tile.Tile;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -27,12 +28,12 @@ public class TileActor extends Actor implements Interactable {
 
     public TileActor(
         final Vector transform,
-        final Tile tile,
+        @NonNull final Tile tile,
         final int width,
         final int height,
         final MouseInputHandler mouseInputHandler
     ) {
-        super(transform);
+        super(tile.getName(), transform);
         this.tile = tile;
 
         configure(width, height);
@@ -99,22 +100,8 @@ public class TileActor extends Actor implements Interactable {
         public void guiRender(EventArgs eventArgs, RenderContext renderContext) {
             if (isMouseOver && eventArgs.getMouseScreenPos() != null) {
                 final Vector screenPos = renderContext.camera.worldToScreenPos(transform);
-                final Box b = mouseCaptureBounds.boxAtPosition(screenPos);
-                final Vector renderPos = new Vector(
-                    b.left,
-                    b.bottom + 2);
-
-                final FontContext font = renderContext.getFontContext();
-                font.setRenderLayer(RenderLayer.GUI);
-                font.setFontSize(14f);
-
-                final String str = String.format("%s\n%s",
-                    tile.getName(),
-                    tile.isBlocksMovement() ? "blocks movement" : "free");
-
-                font.drawString(new RenderString(str, Color.YELLOW, font.getFont()),
-                    (int) renderPos.x,
-                    (int) renderPos.y);
+                renderContext.renderRect(Color.yellow, false, (int) transform.x, (int) transform.y, 32, 32,
+                    RenderLayer.SKY);
             }
         }
     }

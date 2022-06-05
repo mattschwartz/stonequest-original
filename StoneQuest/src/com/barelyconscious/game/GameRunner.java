@@ -8,6 +8,7 @@ import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.gui.*;
 import com.barelyconscious.game.entity.gui.widgets.InventoryBagWidget;
+import com.barelyconscious.game.entity.gui.widgets.TileInfoWidget;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.item.Item;
@@ -60,6 +61,10 @@ public final class GameRunner {
         });
 
         val aGui = new GuiCanvas(screen);
+        aGui.addWidget(new TileInfoWidget(LayoutData.builder()
+            .anchor(new VDim(0.5f, 0, -45, 15))
+            .size(new VDim(0, 0, 15, 45))
+            .build()));
         world.spawnActor(aGui);
 
         _initTest(world, screen, aGui);
@@ -72,7 +77,6 @@ public final class GameRunner {
         engine.start();
         System.out.println("Saving game...");
         System.out.println("Cleaning up...");
-        System.out.println("");
     }
 
     private static void _initTest(final World world, final Screen screen, final GuiCanvas aGui) {
