@@ -22,9 +22,11 @@ public final class Resources {
     }
 
     private final SpriteSheet guiSpriteSheet;
+    private final SpriteSheet itemsSpriteSheet;
 
     private Resources() {
         this.guiSpriteSheet = GUISpriteSheet.createGuiSpriteSheet();
+        this.itemsSpriteSheet = ItemsSpriteSheet.createItemSpriteSheet();
     }
 
     public WSprite getSprite(final SpriteResource resource) {
@@ -32,6 +34,8 @@ public final class Resources {
 
         if (resource instanceof GUISpriteSheet.Resources) {
             sprite = guiSpriteSheet.getSpriteFromSheet(resource);
+        } else if (resource instanceof ItemsSpriteSheet.Resources) {
+            sprite = itemsSpriteSheet.getSpriteFromSheet(resource);
         }
 
         if (sprite == null) {

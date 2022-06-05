@@ -3,15 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/GUI/player_frame_sheet.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/GUI/player_frame_sheet.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/GameRunner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/LayoutData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/LayoutData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/ListBoxItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/ListBoxItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/ListBoxWidget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/ListBoxWidget.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/playercontroller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/playercontroller/PlayerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/GUISpriteSheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/GUISpriteSheet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/module/WorldsModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/module/WorldsModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/InventoryBagWidget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/InventoryBagWidget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/Resources.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/resources/Resources.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,16 +256,6 @@
           <url>file://$PROJECT_DIR$/src/com/barelyconscious/game/entity/playercontroller/PlayerController.java</url>
           <line>105</line>
           <option name="timeStamp" value="81" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/barelyconscious/game/entity/Engine.java</url>
-          <line>143</line>
-          <option name="timeStamp" value="91" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/barelyconscious/game/entity/Engine.java</url>
-          <line>151</line>
-          <option name="timeStamp" value="92" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

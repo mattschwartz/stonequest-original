@@ -17,6 +17,9 @@ public final class Inventory {
     public Inventory(final int size) {
         this.size = size;
         items = new ArrayList<>(size);
+        for (int i = 0; i < size; ++i) {
+            items.add(null);
+        }
     }
 
     public List<Item> getItems() {
@@ -42,7 +45,7 @@ public final class Inventory {
         if (slot < 0 || slot > items.size()) {
             return Optional.empty();
         }
-        return Optional.of(items.get(slot));
+        return Optional.ofNullable(items.get(slot));
     }
 
     public boolean isFull() {
