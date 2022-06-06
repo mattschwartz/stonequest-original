@@ -47,7 +47,7 @@ public final class GameRunner {
         final MouseInputHandler mouseInputHandler = injector.getInstance(MouseInputHandler.class);
         final KeyInputHandler keyInputHandler = injector.getInstance(KeyInputHandler.class);
         _createMap(world, mouseInputHandler, keyInputHandler, screen.getCamera());
-        _populateTestWorld(world, screen);
+        _populateTestWorld(world, screen, mouseInputHandler, keyInputHandler);
         final Engine engine = injector.getInstance(Engine.class);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +60,7 @@ public final class GameRunner {
             }
         });
 
-        val aGui = new GuiCanvas(screen);
+        val aGui = new GuiCanvas(screen, mouseInputHandler, keyInputHandler);
         aGui.addWidget(new TileInfoWidget(LayoutData.builder()
             .anchor(new VDim(0.5f, 0, -45, 15))
             .size(new VDim(0, 0, 15, 45))
@@ -148,7 +148,7 @@ public final class GameRunner {
         GameInstance.getInstance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
     }
 
-    private static void _populateTestWorld(final World world, final Screen screen) {
+    private static void _populateTestWorld(final World world, final Screen screen, final MouseInputHandler mouseInputHandler, final KeyInputHandler keyInputHandler) {
         val heroPaul = new Hero(
             "Paul",
             new Vector(200, 200),
@@ -168,7 +168,7 @@ public final class GameRunner {
         world.spawnActor(heroPaul);
         GameInstance.getInstance().setHero(heroPaul, GameInstance.PartySlot.LEFT);
 
-        val aGui = new GuiCanvas(screen);
+        val aGui = new GuiCanvas(screen, mouseInputHandler, keyInputHandler);
 
         aGui.addWidget(new HeroQuickbarPanel(LayoutData.builder()
             .anchor(new VDim(0.5f, 1,

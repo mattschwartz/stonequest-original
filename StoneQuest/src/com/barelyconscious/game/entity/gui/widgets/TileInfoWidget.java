@@ -3,6 +3,7 @@ package com.barelyconscious.game.entity.gui.widgets;
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.GameInstance;
+import com.barelyconscious.game.entity.TileActor;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.gui.LayoutData;
@@ -27,7 +28,7 @@ public class TileInfoWidget extends Widget {
         final Vector worldPos = eventArgs.getMouseWorldPos();
         if (worldPos != null) {
             Actor a = GameInstance.getInstance().getWorld().getActorAt(worldPos);
-            if (a != null) {
+            if (a instanceof TileActor) {
                 renderContext.getFontContext().renderString(
                     a.name,
                     Color.YELLOW,
