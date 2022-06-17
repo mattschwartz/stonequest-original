@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/graphics/FontContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/graphics/FontContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/Widget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/Widget.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/ItemSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/ItemSlot.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
