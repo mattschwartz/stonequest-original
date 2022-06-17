@@ -1,6 +1,7 @@
 package com.barelyconscious.game.entity.gui.widgets;
 
 import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.graphics.FontContext;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.gui.LayoutData;
@@ -8,8 +9,6 @@ import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.entity.input.InputLayer;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.item.Item;
-import com.barelyconscious.game.entity.resources.ItemsSpriteSheet;
-import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.shape.Box;
 import lombok.Getter;
 
@@ -36,26 +35,33 @@ public class ItemSlot extends Widget {
                     return;
                 }
 
+                final String name = item.getName();
+                final String description = item.getDescription();
+                FontContext fontContext = renderContext.getFontContext();
+
+                final int ttWidth = fontContext.getMaxWidthOfStrings(name, description);
+                final int ttHeight = 2*fontContext.getStringHeight();
+
+                final Box box = new Box(
+                    screenBounds.left - ttWidth,
+                    screenBounds.left,
+                    screenBounds.top - ttHeight,
+                    screenBounds.top);
                 renderContext.renderRect(
-                    Color.red,
+                    new Color(33, 33, 33, 175),
                     true,
-                    screenBounds,
-                    RenderLayer.GUI
-                );
+                    box,
+                    RenderLayer.GUI);
+
+                fontContext.setColor(Color.yellow);
+                fontContext.setRenderLayer(RenderLayer.GUI);
+                fontContext.drawString(
+                    name + "\n" + description,
+                    FontContext.TextAlign.LEFT, box.left, box.top + ttHeight / 2 - 5);
             }
         });
 
         MouseInputHandler.instance().registerInteractable(this, InputLayer.GUI);
-    }
-
-    @Override
-    public boolean onMouseOver(MouseEvent e) {
-        if (item != null) {
-            System.out.println("Looking at item: " + item.getName());
-        }
-
-        // always consume
-        return true;
     }
 
     /**
@@ -96,5 +102,10 @@ public class ItemSlot extends Widget {
                 item.getSprite().getTexture(),
                 screenBounds);
         }
+    }
+
+    @Override
+    public boolean onMouseClicked(MouseEvent e) {
+        return isMouseOver();
     }
 }

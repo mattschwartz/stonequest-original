@@ -92,7 +92,7 @@ public class FontContext {
                     xOffs -= lineWidth / 2;
             }
 
-            g.drawString(msg, screenX + xOffs, screenY + yOffs);
+            g.drawString(line, screenX + xOffs, screenY + yOffs);
 
             yOffs += lineHeight;
         }
@@ -118,6 +118,11 @@ public class FontContext {
             maxLength = Math.max(getStringWidth(str), maxLength);
         }
         return maxLength;
+    }
+
+    public int getStringHeight() {
+        return renderContext.getGraphics(renderLayer).getFontMetrics(font)
+            .getHeight();
     }
 
     public void setFont(final FontResource resource) {

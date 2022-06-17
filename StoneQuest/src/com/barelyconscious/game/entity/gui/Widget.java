@@ -83,6 +83,12 @@ public abstract class Widget implements Interactable {
     }
 
     @Override
+    public boolean onMouseOver(MouseEvent e) {
+        // widgets default to consuming events
+        return true;
+    }
+
+    @Override
     public boolean onMouseExited(MouseEvent e) {
         isMouseOver = false;
         return false;
@@ -92,4 +98,5 @@ public abstract class Widget implements Interactable {
     public final boolean isMouseOver() {
         return isMouseOver;
     }
+
 }
