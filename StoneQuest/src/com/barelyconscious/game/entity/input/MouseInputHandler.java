@@ -94,11 +94,12 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
         boolean isConsumed = false;
         for (final InputLayer layer : InputLayer.sorted()) {
             for (final Interactable it : interactablesByLayer.get(layer)) {
-                if (!isConsumed && it.contains(e.getX(), e.getY())) {
+                if (it.contains(e.getX(), e.getY())) {
                     if (!it.isMouseOver()) {
-                        isConsumed = it.onMouseEntered(e);
+                        isConsumed = isConsumed || it.onMouseEntered(e);
                     }
-                    it.onMouseOver(e);
+                    isConsumed = isConsumed || it.onMouseEntered(e); // 🤔🤔🤔
+
                 } else if (it.isMouseOver()) {
                     it.onMouseExited(e);
                 }

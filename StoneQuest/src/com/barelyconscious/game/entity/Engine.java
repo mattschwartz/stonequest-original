@@ -1,13 +1,11 @@
 package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.components.Component;
-import com.barelyconscious.game.entity.graphics.FontContext;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.physics.Physics;
-import com.barelyconscious.util.UString;
-import com.google.common.base.Stopwatch;
+import com.barelyconscious.game.shape.Vector;
 import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.log4j.Log4j2;
 
@@ -15,8 +13,6 @@ import java.awt.*;
 import java.time.Clock;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -111,7 +107,6 @@ public final class Engine {
     }
 
     long next = 100;
-    private final Map<Actor, Long> latencyByActor = new HashMap<>();
 
     public void renderTick() {
         final EventArgs eventArgs = buildEventArgs();
@@ -124,14 +119,11 @@ public final class Engine {
             next += 250;
         }
 
-        final Stopwatch sw = Stopwatch.createUnstarted();
         for (final Actor actor : world.getActors()) {
             if (!actor.isEnabled() || actor.isDestroying()) {
                 continue;
             }
 
-            sw.reset();
-            sw.start();
             final List<Component> componentsToRemove = new ArrayList<>();
             for (final Component c : actor.getComponents()) {
                 if (c.isRemoveOnNextUpdate()) {
@@ -145,13 +137,9 @@ public final class Engine {
                 }
             }
             componentsToRemove.forEach(actor::removeComponent);
-
-            sw.stop();
-            final long renderLatency = sw.elapsed(TimeUnit.MILLISECONDS);
-            latencyByActor.put(actor, renderLatency);
         }
 
-        renderDebug(eventArgs, renderContext, latencyByActor);
+        renderDebug(eventArgs, renderContext);
 
         screen.render(renderContext);
     }
@@ -200,16 +188,26 @@ public final class Engine {
     // todo(p0) - obviously this shouldn't be part of the Engine
     private void renderDebug(
         EventArgs eventArgs,
-        RenderContext renderContext,
-        Map<Actor, Long> slowestActors
+        RenderContext renderContext
     ) {
+        final Vector screenPos = renderContext.camera.screenToWorldPos(new Vector(5, 5));
+        renderContext.renderRect(
+            new Color(33, 33, 33, 200),
+            true,
+            (int) screenPos.x,
+            (int) screenPos.y,
+            150,
+            50,
+            RenderLayer._DEBUG
+        );
+
         if (eventArgs.getDeltaTime() > .2f) {
             renderContext.getFontContext().renderString(
                 String.format("FPS: %d (time: %.1fms)",
                     (int) averageFps,
                     eventArgs.getDeltaTime()),
                 Color.red,
-                0, 12,
+                5, 17,
                 RenderLayer._DEBUG);
         } else {
             renderContext.getFontContext().renderString(
@@ -217,52 +215,19 @@ public final class Engine {
                     (int) averageFps,
                     eventArgs.getDeltaTime()),
                 Color.yellow,
-                0, 12,
+                5, 17,
                 RenderLayer._DEBUG);
         }
 
         renderContext.getFontContext().renderString(
-            String.format("Game clock: %.2fs",
+            String.format("Game clock: %.1fs",
                 gameClockMillis * 0.001f),
             Color.yellow,
-            0, 28,
+            5, 33,
             RenderLayer._DEBUG);
         renderContext.getFontContext().renderString("Total actors: " + world.getActors().size(),
             Color.yellow,
-            0, 44,
+            5, 49,
             RenderLayer._DEBUG);
-
-        int yPos = 60;
-
-        renderContext.getFontContext().renderString("Slowest actors:",
-            Color.yellow,
-            0, yPos,
-            RenderLayer._DEBUG);
-
-        final Map<Long, Actor> actorsByTime = new HashMap<>();
-        slowestActors.forEach((k, v) -> actorsByTime.put(v, k));
-
-        List<Long> reverse = slowestActors.values().stream().sorted()
-            .collect(Collectors.toList())
-            .subList(0,
-                Math.min(
-                    Math.min(5, slowestActors.size()),
-                    actorsByTime.size()));
-
-        for (final Long time : reverse) {
-            final Actor actor = actorsByTime.get(time);
-            yPos += 16;
-            FontContext font = renderContext.getFontContext();
-            font.setFontSize(12);
-            font.setRenderLayer(RenderLayer._DEBUG);
-            font.setColor(Color.white);
-
-            font.renderString(String.format("%s took %dms",
-                    UString.clamp(actor.name, 0, 12),
-                    time),
-                Color.yellow,
-                0, yPos,
-                RenderLayer._DEBUG);
-        }
     }
 }

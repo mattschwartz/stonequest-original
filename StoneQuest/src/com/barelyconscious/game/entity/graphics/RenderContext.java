@@ -177,6 +177,11 @@ public class RenderContext {
         g.setColor(prev);
     }
 
+    public void renderRect(final Color color, final boolean fill, final Box bounds, final RenderLayer layer) {
+        final Vector worldPos = camera.screenToWorldPos(new Vector(bounds.left, bounds.top));
+        this.renderRect(color, fill, (int) worldPos.x, (int) worldPos.y, bounds.width, bounds.height, layer);
+    }
+
     public void renderRect(
         final Color color,
         final boolean fill,

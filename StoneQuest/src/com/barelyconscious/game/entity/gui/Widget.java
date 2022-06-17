@@ -72,18 +72,24 @@ public abstract class Widget implements Interactable {
     private boolean isMouseOver = false;
 
     @Override
-    public boolean contains(final int screenX, final int screenY) {
+    public final boolean contains(final int screenX, final int screenY) {
         return screenBounds.contains(screenX, screenY);
     }
 
     @Override
     public boolean onMouseEntered(MouseEvent e) {
         isMouseOver = true;
+        return true;
+    }
+
+    @Override
+    public boolean onMouseExited(MouseEvent e) {
+        isMouseOver = false;
         return false;
     }
 
     @Override
-    public boolean isMouseOver() {
+    public final boolean isMouseOver() {
         return isMouseOver;
     }
 }

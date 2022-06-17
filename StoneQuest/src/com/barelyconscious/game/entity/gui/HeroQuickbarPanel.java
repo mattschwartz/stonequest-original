@@ -128,11 +128,6 @@ public class HeroQuickbarPanel extends Widget {
     }
 
     @Override
-    public boolean onMouseOver(MouseEvent e) {
-        return isMouseOver();
-    }
-
-    @Override
     public boolean onMouseExited(MouseEvent e) {
         return super.onMouseExited(e);
     }
