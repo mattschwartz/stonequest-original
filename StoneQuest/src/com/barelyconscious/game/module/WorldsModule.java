@@ -184,7 +184,7 @@ public class WorldsModule extends AbstractModule {
     @Singleton
     @Provides
     MouseInputHandler providesMouseInputHandler() {
-        return new MouseInputHandler();
+        return MouseInputHandler.instance();
     }
 
     @Singleton

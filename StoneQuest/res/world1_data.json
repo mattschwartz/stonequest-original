@@ -1,0 +1,41 @@
+{
+  "entities": [
+    {
+      "name": "Paul",
+      "transform": [
+        200,
+        200
+      ],
+      "entityLevel": 3,
+      "currentHealth": 15,
+      "maxHealth": 15,
+      "currentPower": 11,
+      "maxPower": 12,
+      "stats": {
+        "STRENGTH": 10,
+        "DEXTERITY": 10,
+        "CONSTITUTION": 10,
+        "INTELLIGENCE": 10,
+        "WISDOM": 10,
+        "CHARISMA": 10
+      },
+      "currentExperience": 144,
+      "inventory": [],
+      "components": {
+        "MoveComponent": {
+          "moveSpeed": 32
+        },
+        "SpriteComponent": {
+          "resourceSprite": "HERO_1"
+        },
+        "BoxColliderComponent": {
+          "blocksMovement": true,
+          "firesOverlapEvents": true,
+          "bounds": [0, 32, 0, 32]
+        },
+        "HealthBarComponent": {
+        }
+      }
+    }
+  ]
+}

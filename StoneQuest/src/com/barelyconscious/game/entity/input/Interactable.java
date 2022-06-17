@@ -8,9 +8,31 @@ public interface Interactable {
 
     boolean isMouseOver();
 
-    void onMouseOver(MouseEvent e);
-    void onMouseClicked(MouseEvent e);
-    void onMouseEntered(MouseEvent e);
-    void onMouseExited(MouseEvent e);
+    /**
+     * @return true if the event has been consumed and should not be processed further
+     */
+    default boolean onMouseOver(MouseEvent e) {
+        return false;
+    }
 
+    /**
+     * @return true if the event has been consumed and should not be processed further
+     */
+    default boolean onMouseClicked(MouseEvent e) {
+        return false;
+    }
+
+    /**
+     * @return true if the event has been consumed and should not be processed further
+     */
+    default boolean onMouseEntered(MouseEvent e) {
+        return false;
+    }
+
+    /**
+     * @return true if the event has been consumed and should not be processed further
+     */
+    default boolean onMouseExited(MouseEvent e) {
+        return false;
+    }
 }

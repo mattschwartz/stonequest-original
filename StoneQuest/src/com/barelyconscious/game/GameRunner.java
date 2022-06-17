@@ -60,7 +60,7 @@ public final class GameRunner {
             }
         });
 
-        val aGui = new GuiCanvas(screen, mouseInputHandler, keyInputHandler);
+        val aGui = new GuiCanvas(screen);
         aGui.addWidget(new TileInfoWidget(LayoutData.builder()
             .anchor(new VDim(0.5f, 0, -45, 15))
             .size(new VDim(0, 0, 15, 45))
@@ -168,7 +168,7 @@ public final class GameRunner {
         world.spawnActor(heroPaul);
         GameInstance.getInstance().setHero(heroPaul, GameInstance.PartySlot.LEFT);
 
-        val aGui = new GuiCanvas(screen, mouseInputHandler, keyInputHandler);
+        val aGui = new GuiCanvas(screen);
 
         aGui.addWidget(new HeroQuickbarPanel(LayoutData.builder()
             .anchor(new VDim(0.5f, 1,

@@ -6,10 +6,14 @@ import com.barelyconscious.game.entity.components.HealthComponent;
 import com.barelyconscious.game.entity.components.PowerComponent;
 import com.barelyconscious.game.entity.components.SpriteComponent;
 import com.barelyconscious.game.entity.gui.widgets.*;
+import com.barelyconscious.game.entity.input.InputLayer;
+import com.barelyconscious.game.entity.input.Interactable;
+import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.resources.*;
 import com.barelyconscious.game.shape.Vector;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -114,5 +118,22 @@ public class HeroQuickbarPanel extends Widget {
             this.selectedSpriteWidget.setEnabled(e.selectedHero == hero);
             return null;
         });
+
+        MouseInputHandler.instance().registerInteractable(this, InputLayer.GUI);
+    }
+
+    @Override
+    public boolean onMouseEntered(MouseEvent e) {
+        return true;
+    }
+
+    @Override
+    public boolean onMouseOver(MouseEvent e) {
+        return isMouseOver();
+    }
+
+    @Override
+    public boolean onMouseExited(MouseEvent e) {
+        return super.onMouseExited(e);
     }
 }

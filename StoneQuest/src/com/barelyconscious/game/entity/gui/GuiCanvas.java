@@ -5,18 +5,17 @@ import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.Screen;
-import com.barelyconscious.game.entity.input.KeyInputHandler;
-import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
-import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * An actor that controls drawing Widgets to the user interface.
+ * <p>
+ * todo(p0) - should probably not be an actor
  */
 public class GuiCanvas extends Actor {
 
@@ -27,18 +26,9 @@ public class GuiCanvas extends Actor {
 
     private final List<Widget> widgets;
 
-    private final MouseInputHandler mouseInputHandler;
-    private final KeyInputHandler keyInputHandler;
-
-    public GuiCanvas(
-        final Screen screen,
-        @NonNull final MouseInputHandler mouseInputHandler,
-        @NonNull final KeyInputHandler keyInputHandler
-    ) {
+    public GuiCanvas(final Screen screen) {
         super("GuiCanvas", Vector.ZERO);
 
-        this.mouseInputHandler = mouseInputHandler;
-        this.keyInputHandler = keyInputHandler;
         this.width = screen.getWidth();
         this.height = screen.getHeight();
         this.widgets = new ArrayList<>();

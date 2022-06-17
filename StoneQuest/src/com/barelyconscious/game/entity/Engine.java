@@ -8,16 +8,13 @@ import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.physics.Physics;
 import com.barelyconscious.util.UString;
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.log4j.Log4j2;
 
 import java.awt.*;
 import java.time.Clock;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -35,7 +32,6 @@ public final class Engine {
     private final RateLimiter upsLimiter;
     private final RateLimiter fpsLimiter;
 
-    private long lastTick;
     private long lastRenderTick;
     private final Physics physics;
 
@@ -75,7 +71,6 @@ public final class Engine {
 
     public void start() {
         isRunning = true;
-        this.lastTick = clock.millis();
         this.lastRenderTick = clock.millis();
 
         final Thread threadUpdate = new Thread(() -> {
@@ -160,7 +155,6 @@ public final class Engine {
 
         screen.render(renderContext);
     }
-
 
     public void tick() {
         final EventArgs eventArgs = buildEventArgs();

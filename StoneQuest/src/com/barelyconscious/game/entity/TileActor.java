@@ -70,21 +70,15 @@ public class TileActor extends Actor implements Interactable {
     }
 
     @Override
-    public void onMouseOver(MouseEvent e) {
-    }
-
-    @Override
-    public void onMouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void onMouseEntered(MouseEvent e) {
+    public boolean onMouseEntered(MouseEvent e) {
         isMouseOver = true;
+        return false;
     }
 
     @Override
-    public void onMouseExited(MouseEvent e) {
+    public boolean onMouseExited(MouseEvent e) {
         isMouseOver = false;
+        return false;
     }
 
     // todo: should not make this part of every single tile
