@@ -22,7 +22,9 @@ public class ItemSlot extends Widget {
     @Nullable
     private Item item;
 
-    private boolean shouldShowTooltip() { return isMouseOver(); }
+    private boolean shouldShowTooltip() {
+        return isMouseOver();
+    }
 
     public ItemSlot(LayoutData layout, @Nullable final Item item) {
         super(layout);
@@ -40,7 +42,7 @@ public class ItemSlot extends Widget {
                 FontContext fontContext = renderContext.getFontContext();
 
                 final int ttWidth = fontContext.getMaxWidthOfStrings(name, description);
-                final int ttHeight = 2*fontContext.getStringHeight();
+                final int ttHeight = 2 * fontContext.getStringHeight();
 
                 final Box box = new Box(
                     screenBounds.left - ttWidth,
