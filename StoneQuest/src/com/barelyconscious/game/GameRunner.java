@@ -228,6 +228,14 @@ public final class GameRunner {
         world.spawnActor(aBullet);
 
         val loot = new ItemLootActor(new Vector(264f, 175f));
+        loot.setItem(new Item(
+            0,
+            1,
+            "Willow Bark",
+            "Bark from the willow tree. Has minimal healing properties.",
+            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_WILLOW_BARK),
+            null
+        ));
         world.spawnActor(loot);
     }
 

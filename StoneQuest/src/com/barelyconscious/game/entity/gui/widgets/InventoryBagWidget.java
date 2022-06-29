@@ -7,14 +7,19 @@ import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.entity.item.Item;
 import com.barelyconscious.game.entity.resources.GUISpriteSheet;
 import com.barelyconscious.game.entity.resources.Resources;
+import lombok.extern.log4j.Log4j2;
 
-import java.awt.*;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An inventory bag that can hold items.
  */
+@Log4j2
 public final class InventoryBagWidget extends Widget {
 
+    private final List<ItemSlot> itemSlots = new ArrayList<>();
     private final Inventory inventory;
     private final int numRows;
     private final int numCols;
@@ -35,6 +40,25 @@ public final class InventoryBagWidget extends Widget {
         this.numCols = numCols;
 
         this.configureWidgets();
+        inventory.delegateOnItemChanged.bindDelegate(this::onInventoryChanged);
+
+        if (inventory.size != numRows * numCols) {
+            log.error("Inventory size ({}) does not match specified rows ({}) and columns ({})!",
+                inventory.size, numRows, numCols);
+        }
+    }
+
+    private Void onInventoryChanged(Inventory.InventoryItemEvent inventoryItemEvent) {
+        int index = 0;
+        for (int row = 0; row < numRows; ++row) {
+            for (int col = 0; col < numCols; ++col, ++index) {
+                Item item = inventory.getItem(index);
+                final ItemSlot itemSlot = itemSlots.get(index);
+                itemSlot.setItem(item);
+            }
+        }
+
+        return null;
     }
 
     private void configureWidgets() {
@@ -59,11 +83,13 @@ public final class InventoryBagWidget extends Widget {
                 int yOffs = row * (itemSlotHeight + gutterSize);
 
                 Item item = inventory.getItem(index++);
-                addWidget(new ItemSlot(LayoutData.builder()
+                final ItemSlot itemSlot = new ItemSlot(LayoutData.builder()
                     .anchor(new VDim(0, 0, xOffs, yOffs))
                     .size(new VDim(0, 0, itemSlotWidth, itemSlotHeight))
                     .build(),
-                    item));
+                    item);
+                itemSlots.add(itemSlot);
+                addWidget(itemSlot);
             }
         }
     }

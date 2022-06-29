@@ -1,11 +1,21 @@
 package com.barelyconscious.game.entity.input;
 
-import com.barelyconscious.game.delegate.Delegate;
+import com.barelyconscious.game.delegate.*;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class KeyInputHandler implements KeyListener {
+
+    private static final class InstanceHolder {
+        static final KeyInputHandler instance = new KeyInputHandler();
+    }
+
+    public static KeyInputHandler instance() {
+        return KeyInputHandler.InstanceHolder.instance;
+    }
+
+    private KeyInputHandler() {
+    }
 
     public final Delegate<KeyEvent> onKeyPressed = new Delegate<>();
 

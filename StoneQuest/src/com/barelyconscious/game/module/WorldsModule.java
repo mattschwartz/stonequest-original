@@ -190,7 +190,7 @@ public class WorldsModule extends AbstractModule {
     @Singleton
     @Provides
     KeyInputHandler providesKeyInputHandler() {
-        return new KeyInputHandler();
+        return KeyInputHandler.instance();
     }
 
     @Singleton
