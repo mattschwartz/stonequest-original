@@ -4,7 +4,8 @@ import com.barelyconscious.game.entity.graphics.RenderLayer;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum ResourceSprite {
+@Deprecated // need to rename this
+public enum ResourceSprite implements SpriteResource {
 
     HERO_1("sprites/player_sprite.png", 32, 32, RenderLayer.ENTITIES),
     HERO_2("sprites/player_sprite_ranger.png", 32, 32, RenderLayer.ENTITIES),
@@ -22,10 +23,27 @@ public enum ResourceSprite {
     GRASS_2("tiles/world/grass_2.png", 32, 32, RenderLayer.GROUND),
     GRASS_3("tiles/world/grass_3.png", 32, 32, RenderLayer.GROUND),
 
-    HERO_SELECTION_SPRITE("sprites/heroSelectionSprite.png", 48, 48, RenderLayer.DOODADS);
+    HERO_SELECTION_SPRITE("sprites/heroSelectionSprite.png", 48, 48, RenderLayer.DOODADS),
+
+    ITEM_LOOT_ACTOR_SPRITE("sprites/item_loot_actor_sprite.png", 32, 32, RenderLayer.LOOT);
 
     public final String filepath;
     public final int width;
     public final int height;
     public final RenderLayer defaultRenderLayer;
+
+    @Override
+    public String getName() {
+        return filepath;
+    }
+
+    @Override
+    public Region getRegion() {
+        return new Region(0, 0, width, height);
+    }
+
+    @Override
+    public RenderLayer getRenderLayer() {
+        return defaultRenderLayer;
+    }
 }

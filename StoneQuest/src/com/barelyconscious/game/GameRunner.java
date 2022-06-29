@@ -13,10 +13,7 @@ import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.item.Item;
 import com.barelyconscious.game.entity.playercontroller.PlayerController;
-import com.barelyconscious.game.entity.resources.GUISpriteSheet;
-import com.barelyconscious.game.entity.resources.ItemsSpriteSheet;
-import com.barelyconscious.game.entity.resources.ResourceSprite;
-import com.barelyconscious.game.entity.resources.Resources;
+import com.barelyconscious.game.entity.resources.*;
 import com.barelyconscious.game.entity.tile.Tile;
 import com.barelyconscious.game.module.WorldsModule;
 import com.barelyconscious.game.shape.Box;
@@ -209,7 +206,7 @@ public final class GameRunner {
         aBullet.addComponent(new SpriteComponent(aBullet, Resources.getSprite(ResourceSprite.POTION)));
 
         aBullet.getComponent(BoxColliderComponent.class)
-            .delegateOnOverlap.bindDelegate((col) -> {
+            .delegateOnEnter.bindDelegate((col) -> {
                 if (col.causedByActor != aBullet) {
                     return null;
                 }
@@ -229,6 +226,9 @@ public final class GameRunner {
             .addForce(Vector.DOWN, 100f);
 
         world.spawnActor(aBullet);
+
+        val loot = new ItemLootActor(new Vector(264f, 175f));
+        world.spawnActor(loot);
     }
 
     private static void _setupInventory(

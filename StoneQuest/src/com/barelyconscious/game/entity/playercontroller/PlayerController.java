@@ -155,7 +155,7 @@ public class PlayerController {
             aBullet.addComponent(new BoxColliderComponent(aBullet, false, true, new Box(0, 32, 0, 32)));
             aBullet.addComponent(new SpriteComponent(aBullet, Resources.getSprite(ResourceSprite.POTION)));
             aBullet.getComponent(BoxColliderComponent.class)
-                .delegateOnOverlap.bindDelegate((col) -> {
+                .delegateOnEnter.bindDelegate((col) -> {
                     if (col.causedByActor != aBullet) {
                         return null;
                     }

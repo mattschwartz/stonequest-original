@@ -8,7 +8,7 @@ import com.google.common.collect.Lists;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Nullable;
+import javax.annotation.*;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -32,6 +32,9 @@ public class Actor {
 
     public Vector transform;
     public Vector facing = Vector.UP;
+
+    // todo: game owns instantiation on actors?
+    public void init() {}
 
     // todo (p0) implement this better
     public Box getBoundingBox() {

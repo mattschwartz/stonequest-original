@@ -14,7 +14,12 @@ import lombok.Setter;
 public abstract class ColliderComponent extends Component {
 
     public final Delegate<CollisionData> delegateOnHit;
-    public final Delegate<CollisionData> delegateOnOverlap;
+    public final Delegate<CollisionData> delegateOnEnter;
+    /**
+     * Actor provided is the actor that has left.
+     */
+    public final Delegate<Actor> delegateOnLeave;
+    public final Delegate<CollisionData> delegateOnOverlapping;
 
     @Getter
     @Setter
@@ -34,7 +39,9 @@ public abstract class ColliderComponent extends Component {
         this.firesOverlapEvents = firesOverlapEvents;
 
         this.delegateOnHit = new Delegate<>();
-        this.delegateOnOverlap = new Delegate<>();
+        this.delegateOnEnter = new Delegate<>();
+        this.delegateOnLeave = new Delegate<>();
+        this.delegateOnOverlapping = new Delegate<>();
     }
 
     public abstract boolean intersects(final ColliderComponent other);

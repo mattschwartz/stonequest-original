@@ -1,18 +1,15 @@
 package com.barelyconscious.game.physics;
 
-import com.barelyconscious.game.entity.Actor;
-import com.barelyconscious.game.entity.EventArgs;
-import com.barelyconscious.game.entity.components.BoxColliderComponent;
-import com.barelyconscious.game.entity.components.ColliderComponent;
-import com.barelyconscious.game.entity.components.MoveComponent;
+import com.barelyconscious.game.entity.*;
+import com.barelyconscious.game.entity.components.*;
 import com.barelyconscious.game.shape.Vector;
+import lombok.*;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * todo: collision events trigger kinda weird right now.
- *
+ * <p>
  * todo: collisions aren't detected if something tried to move
  *  very quickly through things it shouldnt have been able to move
  *  to if it had gone more slowly.
@@ -26,6 +23,20 @@ import java.util.Objects;
  *  pass through, the other?"
  */
 public final class Physics {
+
+    private enum CollisionState {CLEAR, OVERLAP}
+
+    @AllArgsConstructor
+    @EqualsAndHashCode
+    private static class CollisionDescriptor {
+        @NonNull
+        private final ColliderComponent causedByCollider;
+        @NonNull
+        private final ColliderComponent victimCollider;
+    }
+
+    private final Map<CollisionDescriptor, CollisionState> lastFrameCollisions = new HashMap<>();
+
 
     public void updatePhysics(
         final EventArgs eventArgs,
@@ -59,6 +70,24 @@ public final class Physics {
                 actor.transform = desiredLocation;
             }
         }
+
+//        postProcess();
+    }
+
+    private void postProcess() {
+        Set<CollisionDescriptor> collisionDescriptors = lastFrameCollisions.keySet();
+
+        for (final CollisionDescriptor collisionDescriptor : collisionDescriptors) {
+            final CollisionState state = lastFrameCollisions.get(collisionDescriptor);
+
+            if (state == CollisionState.CLEAR) {
+                // doesn't intersect, but was it intersecting before?
+                collisionDescriptor.victimCollider.delegateOnLeave.call(collisionDescriptor.causedByCollider.getParent());
+                lastFrameCollisions.remove(collisionDescriptor);
+            } else if (state == CollisionState.OVERLAP) {
+                lastFrameCollisions.put(collisionDescriptor, CollisionState.CLEAR);
+            }
+        }
     }
 
     /**
@@ -83,8 +112,12 @@ public final class Physics {
 
             final ColliderComponent other = otherActor.getComponent(BoxColliderComponent.class);
             if (other != null && other.isEnabled()) {
+                final CollisionDescriptor collisionDescriptor = new CollisionDescriptor(collider, other);
+                final CollisionState lastCollisionState = lastFrameCollisions.get(collisionDescriptor);
+                CollisionState newCollisionState = null;
+
                 if (collider.intersects(desiredLocation, other)) {
-                    final CollisionData col = new CollisionData(
+                    final CollisionData collisionData = new CollisionData(
                         other.isBlocksMovement(),
                         other.isFiresOverlapEvents(),
                         other.getParent(),
@@ -93,17 +126,34 @@ public final class Physics {
                         eventArgs);
 
                     if (other.isBlocksMovement()) {
-                        collider.delegateOnHit.call(col);
-//                        other.delegateOnHit.call(col);
+                        collider.delegateOnHit.call(collisionData);
 
                         didMove = false;
                     }
+
                     if (other.isFiresOverlapEvents()) {
-                        collider.delegateOnOverlap.call(col);
-//                        other.delegateOnOverlap.call(col);
+                        final CollisionState collisionState = lastFrameCollisions.get(collisionDescriptor);
+
+                        if (collisionState == null || collisionState == CollisionState.CLEAR) {
+                            collider.delegateOnEnter.call(collisionData);
+                            other.delegateOnEnter.call(collisionData);
+                        }
+
+                        collider.delegateOnOverlapping.call(collisionData);
+                        other.delegateOnOverlapping.call(collisionData);
                     }
+
+                    newCollisionState = CollisionState.OVERLAP;
+                    lastFrameCollisions.put(collisionDescriptor, CollisionState.OVERLAP);
+                }
+
+                // doesn't intersect, but was it intersecting before?
+                if (lastCollisionState == CollisionState.OVERLAP && newCollisionState == null) {
+                    collisionDescriptor.victimCollider.delegateOnLeave.call(collisionDescriptor.causedByCollider.getParent());
+                    lastFrameCollisions.remove(collisionDescriptor);
                 }
             }
+
         }
 
         return didMove;

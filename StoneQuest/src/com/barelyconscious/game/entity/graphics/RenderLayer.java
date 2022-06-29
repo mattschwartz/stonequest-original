@@ -13,7 +13,8 @@ public enum RenderLayer {
 
     GROUND(0),
     DOODADS(1),
-    ENTITIES(2),
+    LOOT(2),
+    ENTITIES(3),
     SKY(100),
     GUI(1000),
 

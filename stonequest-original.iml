@@ -8,5 +8,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="google.inject.guice" level="project" />
+    <orderEntry type="library" exported="" name="apache.commons.lang3" level="project" />
+    <orderEntry type="library" exported="" name="apache.logging.log4j.core" level="project" />
+    <orderEntry type="library" exported="" name="junit.jupiter.api" level="project" />
+    <orderEntry type="library" exported="" name="junit.jupiter.params" level="project" />
+    <orderEntry type="library" exported="" name="junit.platform.runner" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="mockito.core" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="mockito.junit.jupiter" level="project" />
+    <orderEntry type="library" exported="" name="projectlombok.lombok" level="project" />
   </component>
 </module>
