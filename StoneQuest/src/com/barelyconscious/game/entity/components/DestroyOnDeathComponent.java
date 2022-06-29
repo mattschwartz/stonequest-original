@@ -8,37 +8,28 @@ import com.barelyconscious.game.entity.GameInstance;
 /**
  * Simple componet that destroys an actor when its health falls to 0.
  */
-public class DestroyOnDeathComponent extends Component{
+public class DestroyOnDeathComponent extends OnDeathComponent {
 
     private float remainingCorpseDuration;
 
     public DestroyOnDeathComponent(final Actor parent, final float corpseDuration) {
-        super(parent);
+        super(parent, parent.getComponent(HealthComponent.class));
         this.remainingCorpseDuration = corpseDuration;
     }
 
-    private boolean hasBeenKilled = false;
-
     @Override
     public void update(EventArgs eventArgs) {
-        if (hasBeenKilled) {
+        if (this.isDead()) {
+            // disable all other components
+            getParent().getComponents().stream()
+                .filter(t -> t != this)
+                .forEach(t -> t.setEnabled(false));
+
             remainingCorpseDuration -= eventArgs.getDeltaTime();
             if (remainingCorpseDuration <= 0) {
                 getParent().destroy();
                 GameInstance.getInstance().getWorld()
                     .spawnActor(new AGravestone(getParent().transform));
-                return;
-            }
-            return;
-        }
-        final HealthComponent health = getParent().getComponent(HealthComponent.class);
-        if (health != null) {
-            hasBeenKilled = health.getCurrentValue() <= 0;
-            if (hasBeenKilled) {
-                // disable all other components
-                getParent().getComponents().stream()
-                    .filter(t -> t != this)
-                    .forEach(t -> t.setEnabled(false));
             }
         }
     }
