@@ -65,12 +65,15 @@ public class ItemSlot extends Widget {
             final String description = inventoryItem.item.getDescription();
 
             final StringBuilder sb = new StringBuilder();
-            sb.append(name);
+            sb.append("{COLOR=255,255,0,255}{STYLE=BOLD}").append(name);
             if (inventoryItem.stackSize > 1) {
                 sb.append(" (").append(inventoryItem.stackSize).append(") ");
             }
-            sb.append("\n").append(description);
-            sb.append("\n").append("Click to use");
+            sb.append("\n");
+            sb.append("{COLOR=200,200,200,200}{STYLE=ITALIC}").append(description).append("\n");
+            if (inventoryItem.item.isConsumable()) {
+                sb.append("\n").append("{COLOR=0,255,0,255}Click to use");
+            }
 
             final String tooltipText = sb.toString();
 
@@ -97,7 +100,7 @@ public class ItemSlot extends Widget {
                 bb,
                 RenderLayer.GUI);
 
-            fontContext.setColor(Color.yellow);
+            fontContext.setColor(Color.white);
             fontContext.setRenderLayer(RenderLayer.GUI);
 
             fontContext.drawString(
@@ -146,8 +149,7 @@ public class ItemSlot extends Widget {
                 inventoryItem.item.getSprite().getTexture(),
                 screenBounds);
             if (inventoryItem.stackSize > 1) {
-                final String stackSizeStr = Integer.toString(99);
-//                final String stackSizeStr = Integer.toString(inventoryItem.stackSize);
+                final String stackSizeStr = Integer.toString(inventoryItem.stackSize);
                 final FontContext fc = renderContext.getFontContext();
 
                 fc.setColor(Color.black);
