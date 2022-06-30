@@ -2,10 +2,19 @@ package com.barelyconscious.game.entity.graphics;
 
 import com.barelyconscious.game.entity.resources.FontResource;
 import com.barelyconscious.game.entity.resources.Resources;
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
 
 public class FontContext {
 
@@ -63,6 +72,8 @@ public class FontContext {
         setColor(prevColor);
     }
 
+    private static final int LINE_SPACING = 2;
+
     public void drawString(
         final String msg,
         final TextAlign textAlignment,
@@ -77,11 +88,8 @@ public class FontContext {
         g.setColor(color);
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-        final int lineHeight = g.getFontMetrics(font).getHeight();
-
         int yOffs = 0;
-        final String[] lines = msg.split("\n");
-        for (final String line : lines) {
+        for (final String line : msg.split("\n")) {
             int xOffs = 0;
             int lineWidth = getStringWidth(line);
 
@@ -94,9 +102,8 @@ public class FontContext {
 
             g.drawString(line, screenX + xOffs, screenY + yOffs);
 
-            yOffs += lineHeight;
+            yOffs += getStringHeight(line) + LINE_SPACING;
         }
-
 
         g.setColor(prev);
         g.setFont(prevFont);
@@ -106,23 +113,38 @@ public class FontContext {
         if (StringUtils.isBlank(str)) {
             return 0;
         }
-        return renderContext
-            .getGraphics(renderLayer)
-            .getFontMetrics(font)
-            .stringWidth(str);
-    }
+        int maxWidth = 0;
+        for (final String part : str.split("\n")) {
+            Graphics g = renderContext.getGraphics(renderLayer);
+            FontRenderContext frc = g.getFontMetrics(font).getFontRenderContext();
 
-    public int getMaxWidthOfStrings(final String... strings) {
-        int maxLength = 0;
-        for (final String str : strings) {
-            maxLength = Math.max(getStringWidth(str), maxLength);
+            TextLayout textLayout = new TextLayout(part, font, frc);
+
+            final int partWidth = (int) Math.round(textLayout.getBounds().getWidth());
+            maxWidth = Math.max(partWidth, maxWidth);
         }
-        return maxLength;
+        return maxWidth;
+
     }
 
-    public int getStringHeight() {
-        return renderContext.getGraphics(renderLayer).getFontMetrics(font)
-            .getHeight();
+
+    public int getStringHeight(final String str) {
+        final String[] parts = str.split("\n");
+        double totalHeight = 0;
+
+        for (final String part : parts) {
+            Graphics g = renderContext.getGraphics(renderLayer);
+            FontRenderContext frc = g.getFontMetrics(font).getFontRenderContext();
+
+            TextLayout textLayout = new TextLayout(part, font, frc);
+            totalHeight += Math.round(textLayout.getBounds().getHeight());
+        }
+
+        if (parts.length > 1) {
+            totalHeight += (parts.length - 1) * LINE_SPACING;
+        }
+
+        return (int) totalHeight;
     }
 
     public void setFont(final FontResource resource) {

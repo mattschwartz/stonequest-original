@@ -4,7 +4,6 @@ import com.barelyconscious.game.entity.Inventory;
 import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.VDim;
 import com.barelyconscious.game.entity.gui.Widget;
-import com.barelyconscious.game.entity.item.Item;
 import com.barelyconscious.game.entity.resources.GUISpriteSheet;
 import com.barelyconscious.game.entity.resources.Resources;
 import lombok.extern.log4j.Log4j2;
@@ -52,9 +51,9 @@ public final class InventoryBagWidget extends Widget {
         int index = 0;
         for (int row = 0; row < numRows; ++row) {
             for (int col = 0; col < numCols; ++col, ++index) {
-                Item item = inventory.getItem(index);
+                Inventory.InventoryItem inventoryItem = inventory.getItem(index);
                 final ItemSlot itemSlot = itemSlots.get(index);
-                itemSlot.setItem(item);
+                itemSlot.setItem(inventoryItem == null ? null : inventoryItem.item);
             }
         }
 
@@ -78,16 +77,18 @@ public final class InventoryBagWidget extends Widget {
 
         int index = 0;
         for (int row = 0; row < numRows; ++row) {
-            for (int col = 0; col < numCols; ++col) {
+            for (int col = 0; col < numCols; ++col, ++index) {
                 int xOffs = col * (itemSlotWidth + gutterSize);
                 int yOffs = row * (itemSlotHeight + gutterSize);
 
-                Item item = inventory.getItem(index++);
+                Inventory.InventoryItem inventoryItem = inventory.getItem(index);
                 final ItemSlot itemSlot = new ItemSlot(LayoutData.builder()
                     .anchor(new VDim(0, 0, xOffs, yOffs))
                     .size(new VDim(0, 0, itemSlotWidth, itemSlotHeight))
                     .build(),
-                    item);
+                    inventory,
+                    inventoryItem == null ? null : inventoryItem.item,
+                    index);
                 itemSlots.add(itemSlot);
                 addWidget(itemSlot);
             }

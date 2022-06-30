@@ -230,6 +230,8 @@ public final class GameRunner {
         aRat.addComponent(new DropOnDeathComponent(aRat, new Item(
             0,
             1,
+            false,
+            true,
             "Willow Bark",
             "Bark from the willow tree. Has minimal healing properties.",
             Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_WILLOW_BARK),
@@ -244,6 +246,8 @@ public final class GameRunner {
         inventory.addItem(new Item(
             0,
             1,
+            false,
+            true,
             "Willow Bark",
             "Bark from the willow tree. Has minimal healing properties.",
             Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_WILLOW_BARK),
@@ -252,6 +256,8 @@ public final class GameRunner {
         inventory.addItem(new Item(
             1,
             1,
+            false,
+            true,
             "Cured Leather",
             "What ails the leather that it needs curing?",
             Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_CURED_LEATHER),
@@ -260,6 +266,8 @@ public final class GameRunner {
         inventory.addItem(new Item(
             2,
             1,
+            false,
+            true,
             "Iron Ore",
             "Unrefined iron ore.",
             Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_IRON_ORE),
@@ -268,6 +276,18 @@ public final class GameRunner {
         inventory.addItem(new Item(
             3,
             1,
+            true,
+            true,
+            "Stream Drive",
+            "A stream drive.",
+            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_STREAM_DRIVE),
+            null
+        ));
+        inventory.addItem(new Item(
+            3,
+            1,
+            true,
+            true,
             "Stream Drive",
             "A stream drive.",
             Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_STREAM_DRIVE),
