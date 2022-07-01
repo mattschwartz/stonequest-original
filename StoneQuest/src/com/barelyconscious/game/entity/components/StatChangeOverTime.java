@@ -15,7 +15,7 @@ public class StatChangeOverTime extends Component {
     private final float changePerTick;
     private float nextTickIn;
     private int ticksRemaining;
-    private final StatValueComponent stat;
+    private final AdjustableValueComponent stat;
 
     /**
      * @param durationSeconds      duration of how long the stat change will be applied
@@ -24,7 +24,7 @@ public class StatChangeOverTime extends Component {
      */
     public StatChangeOverTime(
         Actor parent,
-        StatValueComponent stat,
+        AdjustableValueComponent stat,
         float durationSeconds,
         float tickFrequencySeconds,
         float changePerTick

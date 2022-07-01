@@ -3,6 +3,7 @@ package com.barelyconscious.game.entity;
 import com.barelyconscious.game.entity.components.EntityLevelComponent;
 import com.barelyconscious.game.entity.components.HealthComponent;
 import com.barelyconscious.game.entity.components.PowerComponent;
+import com.barelyconscious.game.entity.components.StatsComponent;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
 
@@ -13,25 +14,36 @@ import lombok.Getter;
 public class AEntity extends Actor {
 
     private int entityLevel;
-    private final Stats entityStats;
+    private final StatsComponent entityStatsComponent;
+    public AEntity(
+        final String name,
+        final Vector transform,
+        final int entityLevel,
+        final float currentExperience,
+        final float currentPower,
+        final float maxPower,
+        final Stats entityStats
+    ) {
+        this(name, transform, entityLevel, currentExperience, currentPower, maxPower, entityStats, 0);
+    }
 
     public AEntity(
         final String name,
         final Vector transform,
         final int entityLevel,
         final float currentExperience,
-        final float currentHealth,
-        final float maxHealth,
         final float currentPower,
         final float maxPower,
-        final Stats entityStats
+        final Stats entityStats,
+        final int difficultyClass
     ) {
         super(name, transform);
 
         this.entityLevel = entityLevel;
-        this.entityStats = entityStats;
+        entityStatsComponent = new StatsComponent(this, entityStats);
 
-        addComponent(new HealthComponent(this, currentHealth, maxHealth));
+        addComponent(entityStatsComponent);
+        addComponent(new HealthComponent(this, entityStatsComponent, entityLevel, difficultyClass));
         addComponent(new PowerComponent(this, currentPower, maxPower));
         addComponent(new EntityLevelComponent(this, entityLevel, currentExperience));
     }

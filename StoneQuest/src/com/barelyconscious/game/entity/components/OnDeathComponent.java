@@ -18,7 +18,7 @@ public abstract class OnDeathComponent extends Component {
         }
     }
 
-    private Void onHealthChanged(StatValueComponent.StatValueChanged statValueChanged) {
+    private Void onHealthChanged(AdjustableValueComponent.StatValueChanged statValueChanged) {
         if (statValueChanged.currentValue <= 0.01) {
             isDead = true;
             onDeath(statValueChanged);
@@ -26,6 +26,6 @@ public abstract class OnDeathComponent extends Component {
         return null;
     }
 
-    protected void onDeath(StatValueComponent.StatValueChanged statValueChanged) {
+    protected void onDeath(AdjustableValueComponent.StatValueChanged statValueChanged) {
     }
 }

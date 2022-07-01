@@ -21,8 +21,6 @@ public class Hero extends AEntity {
         final String name,
         final Vector transform,
         final int entityLevel,
-        final float currentHealth,
-        final float maxHealth,
         final float currentPower,
         final float maxPower,
         final Stats entityStats,
@@ -33,8 +31,6 @@ public class Hero extends AEntity {
             transform,
             entityLevel,
             currentExperience,
-            currentHealth,
-            maxHealth,
             currentPower,
             maxPower,
             entityStats);

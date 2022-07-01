@@ -1,5 +1,7 @@
 package com.barelyconscious.game.entity;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +24,7 @@ public final class Stats {
         }
     }
 
+    @Getter
     private final Map<StatName, Float> stats;
 
     /**

@@ -1,19 +1,42 @@
 package com.barelyconscious.game;
 
-import com.barelyconscious.game.entity.*;
+import com.barelyconscious.game.entity.AEntity;
+import com.barelyconscious.game.entity.Actor;
+import com.barelyconscious.game.entity.Camera;
+import com.barelyconscious.game.entity.Engine;
+import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.GameInstance;
+import com.barelyconscious.game.entity.Hero;
+import com.barelyconscious.game.entity.Inventory;
+import com.barelyconscious.game.entity.Stats;
+import com.barelyconscious.game.entity.TileActor;
 import com.barelyconscious.game.entity.World;
-import com.barelyconscious.game.entity.components.*;
+import com.barelyconscious.game.entity.components.BoxColliderComponent;
+import com.barelyconscious.game.entity.components.Component;
+import com.barelyconscious.game.entity.components.DestroyOnDeathComponent;
+import com.barelyconscious.game.entity.components.DropOnDeathComponent;
+import com.barelyconscious.game.entity.components.HealthBarComponent;
+import com.barelyconscious.game.entity.components.HealthComponent;
+import com.barelyconscious.game.entity.components.MoveComponent;
+import com.barelyconscious.game.entity.components.SpriteComponent;
+import com.barelyconscious.game.entity.components.StatChangeOverTime;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
-import com.barelyconscious.game.entity.gui.*;
+import com.barelyconscious.game.entity.gui.GuiCanvas;
+import com.barelyconscious.game.entity.gui.HeroQuickbarPanel;
+import com.barelyconscious.game.entity.gui.LayoutData;
+import com.barelyconscious.game.entity.gui.VDim;
 import com.barelyconscious.game.entity.gui.widgets.InventoryBagWidget;
 import com.barelyconscious.game.entity.gui.widgets.TileInfoWidget;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.item.Item;
 import com.barelyconscious.game.entity.playercontroller.PlayerController;
-import com.barelyconscious.game.entity.resources.*;
+import com.barelyconscious.game.entity.resources.GUISpriteSheet;
+import com.barelyconscious.game.entity.resources.ItemsSpriteSheet;
+import com.barelyconscious.game.entity.resources.ResourceSprite;
+import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.entity.tile.Tile;
 import com.barelyconscious.game.module.WorldsModule;
 import com.barelyconscious.game.shape.Box;
@@ -22,10 +45,11 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import lombok.val;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
 import java.util.Random;
 
 import static com.barelyconscious.game.entity.resources.GUISpriteSheet.Resources.INV_ITEM_SLOT_BACKGROUND;
@@ -81,11 +105,9 @@ public final class GameRunner {
             "Nicnole",
             new Vector(200, 264),
             3,
-            8f,
-            9f,
             14,
             16,
-            new Stats(),
+            new Stats(new HashMap<>() {{ put(Stats.StatName.CONSTITUTION, 10f); }}),
             144f,
             new Inventory(28));
         heroNicnole.addComponent(new MoveComponent(heroNicnole, 32f));
@@ -109,11 +131,9 @@ public final class GameRunner {
             "John",
             new Vector(186, 299),
             38,
-            11f,
-            11f,
             24,
             24,
-            new Stats(),
+            new Stats(new HashMap<>() {{ put(Stats.StatName.CONSTITUTION, 10f); }}),
             144f,
             new Inventory(28));
         heroJohn.addComponent(new MoveComponent(heroJohn, 32f));
@@ -150,11 +170,9 @@ public final class GameRunner {
             "Paul",
             new Vector(200, 200),
             3,
-            9f,
-            15f,
             11,
             12,
-            new Stats(),
+            new Stats(new HashMap<>() {{ put(Stats.StatName.CONSTITUTION, 10f); }}),
             144f,
             new Inventory(28));
         heroPaul.addComponent(new MoveComponent(heroPaul, 32f));
@@ -188,11 +206,9 @@ public final class GameRunner {
             new Vector(264f, 208f),
             1,
             0,
-            10,
-            10,
             0,
             0,
-            new Stats());
+            new Stats(new HashMap<>() {{ put(Stats.StatName.CONSTITUTION, 10f); }}));
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
         aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprite.SEWER_RAT)));
         aRat.addComponent(new HealthBarComponent(aRat, aRat.getComponent(HealthComponent.class)));

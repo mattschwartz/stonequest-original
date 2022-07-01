@@ -25,7 +25,7 @@ public abstract class ItemRequirement {
         public boolean meetsRequirement(final Actor actor) {
             if (actor instanceof AEntity) {
                 final AEntity entity = (AEntity) actor;
-                final float entityStatValue = entity.getEntityStats().getStat(statName);
+                final float entityStatValue = entity.getEntityStatsComponent().getStat(statName).getCurrentValue();
                 return entityStatValue >= requiredStatValue;
             }
 

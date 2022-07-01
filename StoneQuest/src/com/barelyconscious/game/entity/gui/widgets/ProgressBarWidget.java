@@ -1,16 +1,13 @@
 package com.barelyconscious.game.entity.gui.widgets;
 
 import com.barelyconscious.game.entity.EventArgs;
-import com.barelyconscious.game.entity.components.StatValueComponent;
+import com.barelyconscious.game.entity.components.AdjustableValueComponent;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.entity.resources.WSprite;
 import com.barelyconscious.game.shape.Box;
 import lombok.Setter;
-import org.checkerframework.checker.fenum.qual.AwtColorSpace;
-
-import java.awt.*;
 
 public class ProgressBarWidget extends Widget {
 
@@ -24,7 +21,7 @@ public class ProgressBarWidget extends Widget {
 
     public ProgressBarWidget(
         final LayoutData layout,
-        final StatValueComponent stat,
+        final AdjustableValueComponent stat,
         final WSprite progressStart,
         final WSprite progressMid,
         final WSprite progressPartialCap,

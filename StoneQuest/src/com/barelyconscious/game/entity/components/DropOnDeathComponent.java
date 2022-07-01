@@ -23,7 +23,7 @@ public class DropOnDeathComponent extends OnDeathComponent {
     }
 
     @Override
-    protected void onDeath(StatValueComponent.StatValueChanged statValueChanged) {
+    protected void onDeath(AdjustableValueComponent.StatValueChanged statValueChanged) {
         itemsOnDrop.forEach(droppedItem -> GameInstance.getInstance().getWorld().spawnActor(new ItemLootActor(
             getParent().transform, droppedItem
         )));
