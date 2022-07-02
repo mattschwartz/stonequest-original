@@ -1,6 +1,7 @@
 package com.barelyconscious.game.entity.gui;
 
-import com.barelyconscious.game.entity.resources.WSprite;
+import com.barelyconscious.game.entity.resources.Region;
+import com.barelyconscious.game.entity.resources.SpriteResource;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.AllArgsConstructor;
@@ -80,11 +81,19 @@ public final class LayoutData {
 
     public static final class LayoutDataBuilder {
 
-        VDim anchor;
-        VDim size;
+        private VDim anchor;
+        private VDim size;
 
         public LayoutDataBuilder anchor(final VDim anchor) {
             this.anchor = anchor;
+            return this;
+        }
+
+        public LayoutDataBuilder size(final SpriteResource sprite) {
+            Region region = sprite.getRegion();
+            this.size = new VDim(0, 0,
+                region.getWidth(),
+                region.getHeight());
             return this;
         }
 

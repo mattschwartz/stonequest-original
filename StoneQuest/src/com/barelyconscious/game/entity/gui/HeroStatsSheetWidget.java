@@ -3,6 +3,7 @@ package com.barelyconscious.game.entity.gui;
 import com.barelyconscious.game.entity.Hero;
 import com.barelyconscious.game.entity.Stats;
 import com.barelyconscious.game.entity.components.AdjustableValueComponent;
+import com.barelyconscious.game.entity.gui.widgets.ButtonWidget;
 import com.barelyconscious.game.entity.gui.widgets.SpriteWidget;
 import com.barelyconscious.game.entity.gui.widgets.TextFieldWidget;
 import com.barelyconscious.game.entity.gui.widgets.TooltipWidget;
@@ -42,6 +43,20 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
             heroClassText));
 
         createHeroDescriptionTooltipWidget(backdrop);
+
+        addWidget(new ButtonWidget(
+            LayoutData.builder()
+                .anchor(new VDim(1, 0,
+                    -GUISpriteSheet.Resources.BUTTON_DEFAULT.getRegion().getWidth(),
+                    -GUISpriteSheet.Resources.BUTTON_DEFAULT.getRegion().getHeight() - 4))
+                .size(GUISpriteSheet.Resources.BUTTON_DEFAULT)
+                .build(),
+            "Details",
+            () -> {
+                System.out.println("Button clicked");
+                return null;
+            }
+        ));
     }
 
     private void setupStatsWidgets(SpriteWidget backdrop) {

@@ -24,6 +24,7 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
 
     public final Delegate<MouseEvent> onMouseClicked = new Delegate<>();
     public final Delegate<MouseEvent> onMouseMoved = new Delegate<>();
+    public final Delegate<MouseEvent> onMousePressed = new Delegate<>();
     public final Delegate<MouseEvent> onMouseReleased = new Delegate<>();
 
     public final Delegate<MouseEvent> onMouseEntered = new Delegate<>();
@@ -55,6 +56,14 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
 
     @Override
     public void mousePressed(MouseEvent e) {
+        onMousePressed.call(e);
+        for (final InputLayer layer : InputLayer.sorted()) {
+            for (final Interactable it : interactablesByLayer.get(layer)) {
+                if (it.isInteractableEnabled()) {
+                    it.onMousePressed(e);
+                }
+            }
+        }
     }
 
     @Override
@@ -67,9 +76,14 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
             }
 
             for (final Interactable it : interactablesByLayer.get(layer)) {
-                if (it.isInteractableEnabled()) {
+                if (it.isInteractableEnabled() && it.isMouseOver()) {
+                    if (!it.contains(e.getX(), e.getY())) {
+                        it.onMouseExited(e);
+                    }
+
                     isConsumed = it.onMouseClicked(e);
                     if (isConsumed) {
+                        it.onMouseReleased(e);
                         break;
                     }
                 }

@@ -39,7 +39,13 @@ public final class GUISpriteSheet {
 
         INV_ITEM_SLOT_BACKGROUND(new Region(0, 229, 198, 198)),
 
-        HERO_STAT_SHEET_BACKDROP(new Region(0, 427, 211, 199));
+        HERO_STAT_SHEET_BACKDROP(new Region(0, 427, 211, 199)),
+
+        BUTTON_DEFAULT(new Region(0, 626, 81, 26)),
+        BUTTON_DISABLED(new Region(81, 652, 81, 26)),
+        BUTTON_OVER(new Region(81, 626, 81, 26)),
+        BUTTON_DOWN(new Region(0, 652, 81, 26)),
+        ;
 
         private final Region bounds;
 

@@ -39,4 +39,8 @@ public interface Interactable {
     default boolean onMouseExited(MouseEvent e) {
         return false;
     }
+
+    default void onMousePressed(MouseEvent e) { }
+
+    default void onMouseReleased(MouseEvent e) { }
 }
