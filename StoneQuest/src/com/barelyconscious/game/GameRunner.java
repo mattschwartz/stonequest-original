@@ -111,7 +111,14 @@ public final class GameRunner {
             3,
             14,
             16,
-            new Stats(new HashMap<>() {{ put(Stats.StatName.CONSTITUTION, 10f); }}),
+            new Stats(new HashMap<>() {{
+                put(Stats.StatName.STRENGTH, 13f);
+                put(Stats.StatName.DEXTERITY, 9f);
+                put(Stats.StatName.CONSTITUTION, 18f);
+                put(Stats.StatName.INTELLIGENCE, 11f);
+                put(Stats.StatName.WISDOM, 13f);
+                put(Stats.StatName.CHARISMA, 11f);
+            }}),
             144f,
             new Inventory(28),
             HeroClassType.MACHINIST);
@@ -138,7 +145,14 @@ public final class GameRunner {
             38,
             24,
             24,
-            new Stats(new HashMap<>() {{ put(Stats.StatName.CONSTITUTION, 10f); }}),
+            new Stats(new HashMap<>() {{
+                put(Stats.StatName.STRENGTH, 10f);
+                put(Stats.StatName.DEXTERITY, 15f);
+                put(Stats.StatName.CONSTITUTION, 15f);
+                put(Stats.StatName.INTELLIGENCE, 11f);
+                put(Stats.StatName.WISDOM, 15f);
+                put(Stats.StatName.CHARISMA, 11f);
+            }}),
             144f,
             new Inventory(28),
             HeroClassType.SHADOW_ASSASSIN);
@@ -178,7 +192,14 @@ public final class GameRunner {
             3,
             11,
             12,
-            new Stats(new HashMap<>() {{ put(Stats.StatName.CONSTITUTION, 10f); }}),
+            new Stats(new HashMap<>() {{
+                put(Stats.StatName.STRENGTH, 7f);
+                put(Stats.StatName.DEXTERITY, 13f);
+                put(Stats.StatName.CONSTITUTION, 12f);
+                put(Stats.StatName.INTELLIGENCE, 7f);
+                put(Stats.StatName.WISDOM, 14f);
+                put(Stats.StatName.CHARISMA, 15f);
+            }}),
             144f,
             new Inventory(28),
             HeroClassType.PRIEST);
@@ -214,7 +235,9 @@ public final class GameRunner {
             0,
             0,
             0,
-            new Stats(new HashMap<>() {{ put(Stats.StatName.CONSTITUTION, 10f); }}));
+            new Stats(new HashMap<>() {{
+                put(Stats.StatName.CONSTITUTION, 10f);
+            }}));
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
         aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprite.SEWER_RAT)));
         aRat.addComponent(new HealthBarComponent(aRat, aRat.getComponent(HealthComponent.class)));

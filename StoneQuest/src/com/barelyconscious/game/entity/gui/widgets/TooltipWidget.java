@@ -59,13 +59,13 @@ public class TooltipWidget extends Widget {
 
         final Box textBounds = new Box(
             screenBounds.left,
-            screenBounds.left,
+            screenBounds.left + maxTextWidth,
             screenBounds.top,
             screenBounds.top);
 
         final Box bb = new Box(
             textBounds.left - 4,
-            screenBounds.left + maxTextWidth + 4,
+            textBounds.right + 4,
             screenBounds.top - textHeight - 12,
             screenBounds.top - 12);
 

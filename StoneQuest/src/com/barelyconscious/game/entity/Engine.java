@@ -139,7 +139,9 @@ public final class Engine {
             componentsToRemove.forEach(actor::removeComponent);
         }
 
-        renderDebug(eventArgs, renderContext);
+        if (EventArgs.IS_DEBUG) {
+            renderDebug(eventArgs, renderContext);
+        }
 
         screen.render(renderContext);
     }

@@ -40,6 +40,8 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
             .size(new VDim(0, 0, 156, 0))
             .build(),
             heroClassText));
+
+        createHeroDescriptionTooltipWidget(backdrop);
     }
 
     private void setupStatsWidgets(SpriteWidget backdrop) {
@@ -83,6 +85,29 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
             statName.description,
             null, null);
         statWidget.addWidget(ttw);
+
+        miw.delegateOnMouseOver.bindDelegate(e -> {
+            ttw.setEnabled(e);
+            return null;
+        });
+        ttw.setEnabled(false);
+    }
+
+    private void createHeroDescriptionTooltipWidget(SpriteWidget backdrop) {
+        MouseInputWidget miw = new MouseInputWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 12, 11))
+            .size(new VDim(0, 0, 156, 32))
+            .build(),
+            InputLayer.USER_INPUT);
+        backdrop.addWidget(miw);
+
+        TooltipWidget ttw = new TooltipWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 4, -4))
+            .build(),
+            hero.name,
+            "Level " + hero.getEntityLevelComponent().getEntityLevel() + " " + hero.getHeroClassType().getHeroClassName(),
+            null, null);
+        miw.addWidget(ttw);
 
         miw.delegateOnMouseOver.bindDelegate(e -> {
             ttw.setEnabled(e);
