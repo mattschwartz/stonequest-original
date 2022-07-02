@@ -48,6 +48,7 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
             heroClassText));
 
         createHeroDescriptionTooltipWidget(backdrop);
+        detailedStatsWidget = createDetailedStatsWidget(backdrop);
 
         addWidget(new ButtonWidget(
             LayoutData.builder()
@@ -58,12 +59,17 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
                 .build(),
             "Details",
             () -> {
-                System.out.println("Button clicked");
+                detailedStatsWidget.setEnabled(!detailedStatsWidget.isEnabled());
                 return null;
             }
         ));
 
-        detailedStatsWidget = createDetailedStatsWidget(backdrop);
+    }
+
+    @Override
+    public void setEnabled(boolean isEnabled) {
+        super.setEnabled(isEnabled);
+        detailedStatsWidget.setEnabled(false);
     }
 
     private void setupStatsWidgets(SpriteWidget backdrop) {
@@ -159,6 +165,8 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
 
         backdrop.addWidget(detailedStatsWidget);
         detailedStatsWidget.addWidget(tw);
+
+        detailedStatsWidget.setEnabled(false);
 
         return detailedStatsWidget;
     }

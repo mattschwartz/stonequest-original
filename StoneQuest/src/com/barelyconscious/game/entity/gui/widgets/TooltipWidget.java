@@ -45,7 +45,7 @@ public class TooltipWidget extends Widget {
 
         sb.append(TITLE_FORMAT_STRING).append(title).append("\n").append("\n");
         if (description != null) {
-            sb.append(description).append("\n");
+            sb.append(DESCRIPTION_FORMAT_STRING).append(description).append("\n");
         }
         if (actionText != null) {
             sb.append("\n");

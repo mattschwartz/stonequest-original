@@ -98,11 +98,11 @@ public class FontContext {
         final Font prevFont = g.getFont();
 
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g.setFont(font);
+        g.setColor(color);
 
         int yOffs = 0;
         for (String line : msg.split("\n")) {
-            g.setFont(font);
-            g.setColor(color);
 
             int xStart = 0;
             int lineWidth = getStringWidth(line);
@@ -144,17 +144,17 @@ public class FontContext {
 
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
+        g.setFont(font);
+        g.setColor(color);
         int yOffs = 0;
         for (String line : msg.split("\n")) {
-            g.setFont(font);
-            g.setColor(color);
-
             int xOffs = 0;
             int lineWidth = getStringWidth(line);
 
             int matchesEndIndex = applyFormat(line, g);
             line = line.substring(matchesEndIndex);
 
+            // todo(p0): make this formattable?
             switch (textAlignment) {
                 case RIGHT:
                     xOffs -= lineWidth;
@@ -172,7 +172,6 @@ public class FontContext {
     }
 
     /**
-     * todo(p1): user should be able to apply format within a section of text instead of relying on newlines
      * @return the index after any format matching
      */
     private int applyFormat(final String line, final Graphics g) {

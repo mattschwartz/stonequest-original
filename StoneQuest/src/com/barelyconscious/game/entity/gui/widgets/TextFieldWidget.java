@@ -53,7 +53,7 @@ public class TextFieldWidget extends Widget {
             screenBounds.top + yOffs, screenBounds.bottom + yOffs);
 
         if (showShadow) {
-            final String shadowText = "{COLOR=0,0,0,255}" + text.replace("\n", "\n{COLOR=0,0,0,255}");
+            final String shadowText = "{COLOR=0,0,0,255}" + text;
 
             font.drawString(shadowText,
                 textAlignment,
