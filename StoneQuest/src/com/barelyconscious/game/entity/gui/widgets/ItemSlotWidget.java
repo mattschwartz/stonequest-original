@@ -7,6 +7,7 @@ import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.MouseInputWidget;
+import com.barelyconscious.game.entity.gui.VDim;
 import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.entity.item.Item;
 import com.barelyconscious.game.shape.Box;
@@ -56,7 +57,9 @@ public class ItemSlotWidget extends MouseInputWidget {
     }
 
     private Widget createItemHighlightWidget() {
-        return new Widget(LayoutData.DEFAULT) {
+        return new Widget(LayoutData.builder()
+            .size(new VDim(0, 0, 47, 47))
+            .build()) {
             @Override
             protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
                 renderContext.renderRect(Color.WHITE, false, screenBounds, RenderLayer.GUI);
@@ -64,9 +67,12 @@ public class ItemSlotWidget extends MouseInputWidget {
         };
     }
 
+    // todo(p0): should re-use the common TooltipWidget instead
     private class TooltipWidget extends Widget {
         public TooltipWidget() {
-            super(LayoutData.DEFAULT);
+            super(LayoutData.builder()
+                .anchor(new VDim(1, 0, -4, -4))
+                .build());
         }
 
         @Override

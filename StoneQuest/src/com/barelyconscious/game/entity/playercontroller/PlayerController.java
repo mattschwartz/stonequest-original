@@ -82,7 +82,7 @@ public class PlayerController {
         if (keyEvent.getKeyChar() == 'f' || keyEvent.getKeyChar() == 'F') {
             GameInstance.getInstance()
                 .getHeroSelected()
-                .getComponent(HealthComponent.class)
+                .getHealthComponent()
                 .adjust(1.2f);
         }
 

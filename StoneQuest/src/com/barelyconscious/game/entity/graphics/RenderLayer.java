@@ -17,6 +17,7 @@ public enum RenderLayer {
     ENTITIES(3),
     SKY(100),
     GUI(1000),
+    GUI_FOCUS(1001),
 
     _DEBUG(Integer.MAX_VALUE);
 

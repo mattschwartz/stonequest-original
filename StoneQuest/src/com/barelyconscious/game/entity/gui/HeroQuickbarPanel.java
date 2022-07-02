@@ -54,12 +54,12 @@ public class HeroQuickbarPanel extends MouseInputWidget {
             selectedSprite);
 
         this.spriteWidget.addWidget(new TextFieldWidget(LayoutData.builder()
-            .anchor(new VDim(0, 0, 62, 16))
+            .anchor(new VDim(0, 0, 62, 10))
             .size(new VDim(0, 0, 134, 18))
             .build(),
             hero.name));
         this.spriteWidget.addWidget(new TextFieldWidget(LayoutData.builder()
-            .anchor(new VDim(1, 0, -28, 16))
+            .anchor(new VDim(1, 0, -28, 10))
             .size(new VDim(0, 0, 20, 14))
             .build(),
             Integer.toString(hero.getEntityLevelComponent().getEntityLevel())));
@@ -174,7 +174,7 @@ public class HeroQuickbarPanel extends MouseInputWidget {
 
         private TextFieldWidget setupHealthWidget(final HealthComponent healthComponent) {
             final TextFieldWidget result = new TextFieldWidget(LayoutData.builder()
-                .anchor(new VDim(0, 0, 65, 37))
+                .anchor(new VDim(0, 0, 65, 30))
                 .size(new VDim(0, 0, 161, 13))
                 .build(),
                 formatAdjustableValue(healthComponent.getCurrentValue(), healthComponent.getMaxValue(), null));
@@ -189,7 +189,7 @@ public class HeroQuickbarPanel extends MouseInputWidget {
 
         private TextFieldWidget setupPowerWidget(final PowerComponent powerComponent) {
             final TextFieldWidget result = new TextFieldWidget(LayoutData.builder()
-                .anchor(new VDim(0, 0, 65, 52))
+                .anchor(new VDim(0, 0, 65, 44))
                 .size(new VDim(0, 0, 161, 8))
                 .build(),
                 formatAdjustableValue(powerComponent.getCurrentValue(), powerComponent.getMaxValue(), "{SIZE=13}"));

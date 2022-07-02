@@ -3,18 +3,17 @@ package com.barelyconscious.game.entity.gui;
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
-import com.barelyconscious.game.entity.input.Interactable;
 import com.barelyconscious.game.shape.Box;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.Color;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public abstract class Widget implements Interactable {
+public abstract class Widget {
 
     @Getter
     @Setter
@@ -39,13 +38,10 @@ public abstract class Widget implements Interactable {
     /**
      * @return the widget added
      */
+    @CanIgnoreReturnValue
     public Widget addWidget(final Widget widget) {
         widgets.add(widget);
         return widget;
-    }
-
-    public void removeWidget(final Widget widget) {
-        widgets.remove(widget);
     }
 
     public void resize(final Box bounds) {
@@ -73,35 +69,5 @@ public abstract class Widget implements Interactable {
     }
 
     protected void onRender(final EventArgs eventArgs, final RenderContext renderContext) {
-    }
-
-    private boolean isMouseOver = false;
-
-    @Override
-    public final boolean contains(final int screenX, final int screenY) {
-        return screenBounds != null && screenBounds.contains(screenX, screenY);
-    }
-
-    @Override
-    public boolean onMouseEntered(MouseEvent e) {
-        isMouseOver = true;
-        return true;
-    }
-
-    @Override
-    public boolean onMouseOver(MouseEvent e) {
-        // widgets default to consuming events
-        return true;
-    }
-
-    @Override
-    public boolean onMouseExited(MouseEvent e) {
-        isMouseOver = false;
-        return false;
-    }
-
-    @Override
-    public final boolean isMouseOver() {
-        return isMouseOver;
     }
 }

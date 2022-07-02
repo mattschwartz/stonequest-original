@@ -166,6 +166,7 @@ public class FontContext {
     }
 
     /**
+     * todo(p1): user should be able to apply format within a section of text instead of relying on newlines
      * @return the index after any format matching
      */
     private int applyFormat(final String line, final Graphics g) {
@@ -191,9 +192,12 @@ public class FontContext {
                         isColorSet = true;
                     }
 
-                    List<Integer> values = Lists.newArrayList(matchResult.group(2).split(",")).stream()
-                        .map(Integer::valueOf).collect(Collectors.toList());
-                    g.setColor(new Color(values.get(0), values.get(1), values.get(2), values.get(3)));
+                    if (!applyCommonColors(matchResult.group(2), g)) {
+                        List<Integer> values = Lists.newArrayList(matchResult.group(2).split(",")).stream()
+                            .map(Integer::valueOf).collect(Collectors.toList());
+                        g.setColor(new Color(values.get(0), values.get(1), values.get(2), values.get(3)));
+                    }
+
                     break;
                 case "STYLE":
                     if (isStyleSet) {
@@ -227,6 +231,28 @@ public class FontContext {
         }
 
         return Math.max(matchesEndIndex, 0);
+    }
+
+    /**
+     * @return true if format was applied
+     */
+    private boolean applyCommonColors(String group, Graphics g) {
+        switch (group) {
+            case "WHITE":
+                g.setColor(Color.WHITE);
+                return true;
+            case "BLACK":
+                g.setColor(Color.BLACK);
+                return true;
+            case "YELLOW":
+                g.setColor(Color.YELLOW);
+                return true;
+            case "GREEN":
+                g.setColor(Color.GREEN);
+                return true;
+            default:
+            return false;
+        }
     }
 
     public int getStringWidth(final String str) {

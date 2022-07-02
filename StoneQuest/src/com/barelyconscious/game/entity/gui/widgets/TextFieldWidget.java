@@ -26,23 +26,28 @@ public class TextFieldWidget extends Widget {
         FontContext font = renderContext.getFontContext();
         font.setRenderLayer(RenderLayer.GUI);
 
+        final int textWidth = font.getStringWidth(text);
+        final int textHeight = font.getStringHeight(text);
+        final Box textBounds = new Box(screenBounds.left, screenBounds.right,
+            screenBounds.top + textHeight/ 2, screenBounds.bottom);
+
         if (showShadow) {
             font.drawString("{COLOR=0,0,0,255}" + text,
                 FontContext.TextAlign.CENTER,
-                new Box(screenBounds.left + 1, screenBounds.right + 1, screenBounds.top, screenBounds.bottom));
+                new Box(textBounds.left + 1, textBounds.right + 1, textBounds.top, textBounds.bottom));
             font.drawString("{COLOR=0,0,0,255}" + text,
                 FontContext.TextAlign.CENTER,
-                new Box(screenBounds.left - 1, screenBounds.right - 1, screenBounds.top, screenBounds.bottom));
+                new Box(textBounds.left - 1, textBounds.right - 1, textBounds.top, textBounds.bottom));
             font.drawString("{COLOR=0,0,0,255}" + text,
                 FontContext.TextAlign.CENTER,
-                new Box(screenBounds.left, screenBounds.right, screenBounds.top + 1, screenBounds.bottom + 1));
+                new Box(textBounds.left, textBounds.right, textBounds.top + 1, textBounds.bottom + 1));
             font.drawString("{COLOR=0,0,0,255}" + text,
                 FontContext.TextAlign.CENTER,
-                new Box(screenBounds.left, screenBounds.right, screenBounds.top - 1, screenBounds.bottom - 1));
+                new Box(textBounds.left, textBounds.right, textBounds.top - 1, textBounds.bottom - 1));
         }
 
         font.drawString(text,
             FontContext.TextAlign.CENTER,
-            screenBounds);
+            textBounds);
     }
 }
