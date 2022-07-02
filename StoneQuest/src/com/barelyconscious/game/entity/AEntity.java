@@ -13,8 +13,12 @@ import lombok.Getter;
 @Getter
 public class AEntity extends Actor {
 
-    private int entityLevel;
     private final StatsComponent entityStatsComponent;
+
+    private final HealthComponent healthComponent;
+    private final PowerComponent powerComponent;
+    private final EntityLevelComponent entityLevelComponent;
+
     public AEntity(
         final String name,
         final Vector transform,
@@ -24,7 +28,8 @@ public class AEntity extends Actor {
         final float maxPower,
         final Stats entityStats
     ) {
-        this(name, transform, entityLevel, currentExperience, currentPower, maxPower, entityStats, 0);
+        this(name, transform, entityLevel, currentExperience,
+            currentPower, maxPower, entityStats, 0);
     }
 
     public AEntity(
@@ -39,16 +44,11 @@ public class AEntity extends Actor {
     ) {
         super(name, transform);
 
-        this.entityLevel = entityLevel;
         entityStatsComponent = new StatsComponent(this, entityStats);
 
         addComponent(entityStatsComponent);
-        addComponent(new HealthComponent(this, entityStatsComponent, entityLevel, difficultyClass));
-        addComponent(new PowerComponent(this, currentPower, maxPower));
-        addComponent(new EntityLevelComponent(this, entityLevel, currentExperience));
-    }
-
-    protected void adjustEntityLevel(final int delta) {
-        entityLevel += delta;
+        addComponent(healthComponent = new HealthComponent(this, entityStatsComponent, entityLevel, difficultyClass));
+        addComponent(powerComponent = new PowerComponent(this, currentPower, maxPower));
+        addComponent(entityLevelComponent = new EntityLevelComponent(this, entityLevel, currentExperience));
     }
 }

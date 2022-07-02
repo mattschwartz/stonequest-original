@@ -7,6 +7,7 @@ import com.barelyconscious.game.entity.Engine;
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.Hero;
+import com.barelyconscious.game.entity.HeroClassType;
 import com.barelyconscious.game.entity.Inventory;
 import com.barelyconscious.game.entity.Stats;
 import com.barelyconscious.game.entity.TileActor;
@@ -82,10 +83,13 @@ public final class GameRunner {
         });
 
         val aGui = new GuiCanvas(screen);
-        aGui.addWidget(new TileInfoWidget(LayoutData.builder()
+        TileInfoWidget tiw = new TileInfoWidget(LayoutData.builder()
             .anchor(new VDim(0.5f, 0, -45, 15))
             .size(new VDim(0, 0, 15, 45))
-            .build()));
+            .build());
+        tiw.setEnabled(false);
+        aGui.addWidget(tiw);
+
         world.spawnActor(aGui);
 
         _initTest(world, screen, aGui);
@@ -109,7 +113,8 @@ public final class GameRunner {
             16,
             new Stats(new HashMap<>() {{ put(Stats.StatName.CONSTITUTION, 10f); }}),
             144f,
-            new Inventory(28));
+            new Inventory(28),
+            HeroClassType.MACHINIST);
         heroNicnole.addComponent(new MoveComponent(heroNicnole, 32f));
         heroNicnole.addComponent(new SpriteComponent(heroNicnole, Resources.getSprite(ResourceSprite.HERO_2), RenderLayer.ENTITIES));
         heroNicnole.addComponent(new BoxColliderComponent(heroNicnole, true, true, new Box(0, 32, 0, 32)));
@@ -135,7 +140,8 @@ public final class GameRunner {
             24,
             new Stats(new HashMap<>() {{ put(Stats.StatName.CONSTITUTION, 10f); }}),
             144f,
-            new Inventory(28));
+            new Inventory(28),
+            HeroClassType.SHADOW_ASSASSIN);
         heroJohn.addComponent(new MoveComponent(heroJohn, 32f));
         heroJohn.addComponent(new SpriteComponent(heroJohn, Resources.getSprite(ResourceSprite.HERO_3), RenderLayer.ENTITIES));
         heroJohn.addComponent(new BoxColliderComponent(heroJohn, true, true, new Box(0, 32, 0, 32)));
@@ -174,7 +180,8 @@ public final class GameRunner {
             12,
             new Stats(new HashMap<>() {{ put(Stats.StatName.CONSTITUTION, 10f); }}),
             144f,
-            new Inventory(28));
+            new Inventory(28),
+            HeroClassType.PRIEST);
         heroPaul.addComponent(new MoveComponent(heroPaul, 32f));
         heroPaul.addComponent(new SpriteComponent(heroPaul, Resources.getSprite(ResourceSprite.HERO_1), RenderLayer.ENTITIES));
         heroPaul.addComponent(new BoxColliderComponent(heroPaul, true, true, new Box(0, 32, 0, 32)));
@@ -196,7 +203,6 @@ public final class GameRunner {
                 GUISpriteSheet.Resources.HERO_UNITFRAME_BACKDROP.getRegion().getHeight()))
             .build(),
             heroPaul,
-
             Resources.getSprite(ResourceSprite.HERO_1)));
 
         world.spawnActor(aGui);

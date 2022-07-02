@@ -17,6 +17,9 @@ public class Hero extends AEntity {
 
     private final Inventory inventory;
 
+    @Getter
+    private final HeroClassType heroClassType;
+
     public Hero(
         final String name,
         final Vector transform,
@@ -25,7 +28,8 @@ public class Hero extends AEntity {
         final float maxPower,
         final Stats entityStats,
         final float currentExperience,
-        final Inventory inventory
+        final Inventory inventory,
+        final HeroClassType heroClassType
     ) {
         super(name,
             transform,
@@ -35,6 +39,8 @@ public class Hero extends AEntity {
             maxPower,
             entityStats);
         this.inventory = inventory;
+        this.heroClassType = heroClassType;
+
         addComponent(new HeroSelectedSpriteComponent(this));
         addComponent(new HeroSlotIdSpriteComponent(this));
     }

@@ -59,7 +59,7 @@ public class GuiCanvas extends Actor {
 
         @Override
         public void guiRender(EventArgs eventArgs, RenderContext renderContext) {
-            widgets.forEach(t -> t.render(eventArgs, renderContext));
+            widgets.stream().filter(Widget::isEnabled).forEach(t -> t.render(eventArgs, renderContext));
         }
     }
 }

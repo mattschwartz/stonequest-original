@@ -2,6 +2,7 @@ package com.barelyconscious.game.entity.graphics;
 
 import com.barelyconscious.game.entity.resources.FontResource;
 import com.barelyconscious.game.entity.resources.Resources;
+import com.barelyconscious.game.shape.Box;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.NonNull;
@@ -85,6 +86,46 @@ public class FontContext {
 
     private static final Pattern COMMAND_PATTERN = Pattern.compile("\\{(\\w+)=([\\w, ]+)}");
 
+    public void drawString(final String msg, final TextAlign textAlign, final Box bounds) {
+        final Graphics2D g = (Graphics2D) renderContext.getGraphics(renderLayer);
+        final Color prev = g.getColor();
+        final Font prevFont = g.getFont();
+
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+        int yOffs = 0;
+        for (String line : msg.split("\n")) {
+            g.setFont(font);
+            g.setColor(color);
+
+            int xStart = 0;
+            int lineWidth = getStringWidth(line);
+
+            int matchesEndIndex = applyFormat(line, g);
+            line = line.substring(matchesEndIndex);
+
+            switch (textAlign) {
+                case RIGHT:
+                    xStart = bounds.right - lineWidth;
+                    break;
+
+                case CENTER:
+                    xStart = bounds.left + (bounds.width - lineWidth) / 2;
+                    break;
+                case LEFT:
+                    xStart = bounds.left;
+                    break;
+            }
+
+            g.drawString(line, xStart, bounds.top + yOffs);
+
+            yOffs += getStringHeight(line) + LINE_SPACING;
+        }
+
+        g.setColor(prev);
+        g.setFont(prevFont);
+    }
+
     public void drawString(
         final String msg,
         final TextAlign textAlignment,
@@ -105,38 +146,7 @@ public class FontContext {
             int xOffs = 0;
             int lineWidth = getStringWidth(line);
 
-
-            Matcher matcher = COMMAND_PATTERN.matcher(line);
-            int matchesEndIndex = 0;
-            while (matcher.find()) {
-                matchesEndIndex = matcher.end();
-                MatchResult matchResult = matcher.toMatchResult();
-                String command = matchResult.group(1);
-
-                switch (command) {
-                    case "COLOR":
-                        List<Integer> values = Lists.newArrayList(matchResult.group(2).split(",")).stream()
-                            .map(Integer::valueOf).collect(Collectors.toList());
-                        g.setColor(new Color(values.get(0), values.get(1), values.get(2), values.get(3)));
-                        break;
-                    case "STYLE":
-                        final String value = matchResult.group(2);
-                        if ("BOLD".equals(value)) {
-                            g.setFont(font.deriveFont(Font.BOLD));
-                        } else if ("ITALIC".equals(value)) {
-                            g.setFont(font.deriveFont(Font.ITALIC));
-                        }
-                        break;
-                    case "SIZE":
-                        Font gFont = g.getFont();
-                        final int fontSize = Integer.parseInt(matchResult.group(2));
-                        g.setFont(gFont.deriveFont((float) fontSize));
-
-                        break;
-                    default:
-                        log.error("Unsupported format command={}. Full line={}", command, line);
-                }
-            }
+            int matchesEndIndex = applyFormat(line, g);
             line = line.substring(matchesEndIndex);
 
             switch (textAlignment) {
@@ -155,33 +165,91 @@ public class FontContext {
         g.setFont(prevFont);
     }
 
+    /**
+     * @return the index after any format matching
+     */
+    private int applyFormat(final String line, final Graphics g) {
+        Matcher matcher = COMMAND_PATTERN.matcher(line);
+
+        // make it so first come first serve
+
+        boolean isColorSet = false;
+        boolean isStyleSet = false;
+        boolean isSizeSet = false;
+
+        int matchesEndIndex = 0;
+        while (matcher.find()) {
+            matchesEndIndex = matcher.end();
+            MatchResult matchResult = matcher.toMatchResult();
+            String command = matchResult.group(1);
+
+            switch (command) {
+                case "COLOR":
+                    if (isColorSet) {
+                        continue;
+                    } else {
+                        isColorSet = true;
+                    }
+
+                    List<Integer> values = Lists.newArrayList(matchResult.group(2).split(",")).stream()
+                        .map(Integer::valueOf).collect(Collectors.toList());
+                    g.setColor(new Color(values.get(0), values.get(1), values.get(2), values.get(3)));
+                    break;
+                case "STYLE":
+                    if (isStyleSet) {
+                        continue;
+                    } else {
+                        isStyleSet = true;
+                    }
+
+                    final String value = matchResult.group(2);
+                    if ("BOLD".equals(value)) {
+                        g.setFont(font.deriveFont(Font.BOLD));
+                    } else if ("ITALIC".equals(value)) {
+                        g.setFont(font.deriveFont(Font.ITALIC));
+                    }
+                    break;
+                case "SIZE":
+                    if (isSizeSet) {
+                        continue;
+                    } else {
+                        isSizeSet = true;
+                    }
+
+                    Font gFont = g.getFont();
+                    final int fontSize = Integer.parseInt(matchResult.group(2));
+                    g.setFont(gFont.deriveFont((float) fontSize));
+
+                    break;
+                default:
+                    log.error("Unsupported format command={}. Full line={}", command, line);
+            }
+        }
+
+        return Math.max(matchesEndIndex, 0);
+    }
+
     public int getStringWidth(final String str) {
         if (StringUtils.isBlank(str)) {
             return 0;
         }
         int maxWidth = 0;
         for (String part : str.split("\n")) {
-
-            Matcher matcher = COMMAND_PATTERN.matcher(part);
-            int matchesEndIndex = 0;
-            while (matcher.find()) {
-                matchesEndIndex = matcher.end();
-            }
+            Graphics g = renderContext.getGraphics(renderLayer);
+            final int matchesEndIndex = applyFormat(part, g);
             part = part.substring(matchesEndIndex);
             if (part.length() == 0) {
                 continue;
             }
 
-            Graphics g = renderContext.getGraphics(renderLayer);
-            FontRenderContext frc = g.getFontMetrics(font).getFontRenderContext();
+            FontRenderContext frc = g.getFontMetrics(g.getFont()).getFontRenderContext();
 
-            TextLayout textLayout = new TextLayout(part, font, frc);
+            TextLayout textLayout = new TextLayout(part, g.getFont(), frc);
 
             final int partWidth = (int) Math.round(textLayout.getBounds().getWidth());
             maxWidth = Math.max(partWidth, maxWidth);
         }
         return maxWidth;
-
     }
 
 

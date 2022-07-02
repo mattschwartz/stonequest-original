@@ -37,7 +37,9 @@ public final class GUISpriteSheet {
         HERO_UNITFRAME_POWERBAR_PROGRESS_PARTIAL_CAP(new Region(56, 0, 4, 10)),
         HERO_UNITFRAME_POWERBAR_PROGRESS_FULL_CAP(new Region(61, 0, 3, 10)),
 
-        INV_ITEM_SLOT_BACKGROUND(new Region(0, 229, 198, 198));
+        INV_ITEM_SLOT_BACKGROUND(new Region(0, 229, 198, 198)),
+
+        HERO_STAT_SHEET_BACKDROP(new Region(0, 427, 211, 199));
 
         private final Region bounds;
 
