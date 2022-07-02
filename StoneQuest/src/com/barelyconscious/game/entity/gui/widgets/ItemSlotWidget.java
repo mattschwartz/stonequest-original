@@ -6,9 +6,8 @@ import com.barelyconscious.game.entity.graphics.FontContext;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.gui.LayoutData;
+import com.barelyconscious.game.entity.gui.MouseInputWidget;
 import com.barelyconscious.game.entity.gui.Widget;
-import com.barelyconscious.game.entity.input.InputLayer;
-import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.item.Item;
 import com.barelyconscious.game.shape.Box;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
@@ -19,7 +18,7 @@ import javax.annotation.Nullable;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
-public class ItemSlotWidget extends Widget {
+public class ItemSlotWidget extends MouseInputWidget {
 
     @Getter
     @Nullable
@@ -29,7 +28,7 @@ public class ItemSlotWidget extends Widget {
     private final SpriteWidget itemSpriteWidget;
     private final Widget itemHighlightWidget;
 
-    private Inventory inventory;
+    private final Inventory inventory;
 
     private boolean shouldShowTooltip() {
         return isMouseOver();
@@ -52,8 +51,6 @@ public class ItemSlotWidget extends Widget {
         addWidget(new TooltipWidget());
         addWidget(createItemStackWidget());
         addWidget(itemHighlightWidget);
-
-        MouseInputHandler.instance().registerInteractable(this, InputLayer.GUI);
 
         itemHighlightWidget.setEnabled(false);
     }

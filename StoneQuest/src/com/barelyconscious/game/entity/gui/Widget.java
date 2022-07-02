@@ -98,5 +98,4 @@ public abstract class Widget implements Interactable {
     public final boolean isMouseOver() {
         return isMouseOver;
     }
-
 }

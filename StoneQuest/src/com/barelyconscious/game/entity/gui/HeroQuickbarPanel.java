@@ -8,8 +8,6 @@ import com.barelyconscious.game.entity.gui.widgets.FloatingTextWidget;
 import com.barelyconscious.game.entity.gui.widgets.ProgressBarWidget;
 import com.barelyconscious.game.entity.gui.widgets.SpriteWidget;
 import com.barelyconscious.game.entity.gui.widgets.TextFieldWidget;
-import com.barelyconscious.game.entity.input.InputLayer;
-import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.resources.GUISpriteSheet;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.entity.resources.WSprite;
@@ -22,7 +20,7 @@ import java.awt.event.MouseEvent;
 import static com.google.common.base.Preconditions.checkArgument;
 
 @Log4j2
-public class HeroQuickbarPanel extends Widget {
+public class HeroQuickbarPanel extends MouseInputWidget {
 
     private final SpriteWidget spriteWidget;
     private final SpriteWidget selectedSpriteWidget;
@@ -127,7 +125,6 @@ public class HeroQuickbarPanel extends Widget {
             return null;
         });
 
-        MouseInputHandler.instance().registerInteractable(this, InputLayer.GUI);
 
         addWidget(hoverControlWidget = new OnHoverRenderWidget(hero.getHealthComponent(), hero.getPowerComponent()));
         addWidget(statsSheet);

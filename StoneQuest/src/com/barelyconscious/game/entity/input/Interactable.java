@@ -8,6 +8,10 @@ public interface Interactable {
 
     boolean isMouseOver();
 
+    default boolean isInteractableEnabled() {
+        return true;
+    }
+
     /**
      * @return true if the event has been consumed and should not be processed further
      */

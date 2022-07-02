@@ -8,7 +8,7 @@ import com.barelyconscious.game.entity.gui.widgets.TextFieldWidget;
 import com.barelyconscious.game.entity.resources.GUISpriteSheet;
 import com.barelyconscious.game.entity.resources.Resources;
 
-public class HeroStatsSheetWidget extends Widget {
+public class HeroStatsSheetWidget extends MouseInputWidget {
 
     private final Hero hero;
 
