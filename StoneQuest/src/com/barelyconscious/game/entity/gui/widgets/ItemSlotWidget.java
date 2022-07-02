@@ -26,6 +26,8 @@ public class ItemSlotWidget extends Widget {
     // todo: should item slot just get the item directly from inventory instead?
     private Item item;
     private final int inventorySlotId;
+    private final SpriteWidget itemSpriteWidget;
+    private final Widget itemHighlightWidget;
 
     private Inventory inventory;
 
@@ -43,10 +45,26 @@ public class ItemSlotWidget extends Widget {
         this.item = item;
         this.inventory = inventory;
         this.inventorySlotId = inventorySlotId;
+        this.itemSpriteWidget = new SpriteWidget(LayoutData.DEFAULT, item == null ? null : item.getSprite());
+        this.itemHighlightWidget = createItemHighlightWidget();
 
+        addWidget(itemSpriteWidget);
         addWidget(new TooltipWidget());
+        addWidget(createItemStackWidget());
+        addWidget(itemHighlightWidget);
 
         MouseInputHandler.instance().registerInteractable(this, InputLayer.GUI);
+
+        itemHighlightWidget.setEnabled(false);
+    }
+
+    private Widget createItemHighlightWidget() {
+        return new Widget(LayoutData.DEFAULT) {
+            @Override
+            protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
+                renderContext.renderRect(Color.WHITE, false, screenBounds, RenderLayer.GUI);
+            }
+        };
     }
 
     private class TooltipWidget extends Widget {
@@ -109,25 +127,64 @@ public class ItemSlotWidget extends Widget {
         }
     }
 
+    @Override
+    public boolean onMouseEntered(MouseEvent e) {
+        itemHighlightWidget.setEnabled(item != null);
+        return super.onMouseEntered(e);
+    }
+
+    @Override
+    public boolean onMouseExited(MouseEvent e) {
+        itemHighlightWidget.setEnabled(false);
+        return super.onMouseExited(e);
+    }
+
     /**
      * @return the previous item if any, else null
      */
     @Nullable
     @CanIgnoreReturnValue
     public Item setItem(final Item item) {
-        if (acceptsItem(item)) {
-            Item prevItem = this.item;
+        final Item prevItem = this.item;
+        if (item == null) {
+            itemSpriteWidget.setEnabled(false);
+            itemSpriteWidget.setSprite(null);
+            itemHighlightWidget.setEnabled(false);
+        } else if (acceptsItem(item)) {
             this.item = item;
-            return prevItem;
+            itemSpriteWidget.setSprite(item.getSprite());
+            itemSpriteWidget.setEnabled(true);
         } else {
             return null;
         }
-    }
 
-    public Item removeItem(final Item item) {
-        final Item prevItem = this.item;
         this.item = item;
         return prevItem;
+    }
+
+    public Widget createItemStackWidget() {
+        return new Widget(LayoutData.DEFAULT) {
+            @Override
+            protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
+                final Inventory.InventoryItem inventoryItem = inventory.getItem(inventorySlotId);
+                if (inventoryItem != null && inventoryItem.item != null) {
+                    if (inventoryItem.stackSize > 1) {
+                        final String stackSizeStr = Integer.toString(inventoryItem.stackSize);
+                        final FontContext fc = renderContext.getFontContext();
+
+                        fc.setColor(Color.black);
+                        fc.drawString(stackSizeStr, FontContext.TextAlign.RIGHT,
+                            screenBounds.right+1,
+                            screenBounds.bottom - 2);
+
+                        fc.setColor(Color.yellow);
+                        fc.drawString(stackSizeStr, FontContext.TextAlign.RIGHT,
+                            screenBounds.right,
+                            screenBounds.bottom - 3);
+                    }
+                }
+            }
+        };
     }
 
     /**
@@ -136,33 +193,6 @@ public class ItemSlotWidget extends Widget {
      */
     public boolean acceptsItem(final Item item) {
         return true;
-    }
-
-    @Override
-    public void onRender(
-        EventArgs eventArgs,
-        RenderContext renderContext
-    ) {
-        final Inventory.InventoryItem inventoryItem = inventory.getItem(inventorySlotId);
-        if (inventoryItem != null && inventoryItem.item != null) {
-            renderContext.renderGui(
-                inventoryItem.item.getSprite().getTexture(),
-                screenBounds);
-            if (inventoryItem.stackSize > 1) {
-                final String stackSizeStr = Integer.toString(inventoryItem.stackSize);
-                final FontContext fc = renderContext.getFontContext();
-
-                fc.setColor(Color.black);
-                fc.drawString(stackSizeStr, FontContext.TextAlign.RIGHT,
-                    screenBounds.right+1,
-                    screenBounds.bottom - 2);
-
-                fc.setColor(Color.yellow);
-                fc.drawString(stackSizeStr, FontContext.TextAlign.RIGHT,
-                    screenBounds.right,
-                    screenBounds.bottom - 3);
-            }
-        }
     }
 
     @Override

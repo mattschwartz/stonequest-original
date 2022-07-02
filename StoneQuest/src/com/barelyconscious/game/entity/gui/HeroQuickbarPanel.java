@@ -131,6 +131,8 @@ public class HeroQuickbarPanel extends Widget {
 
         addWidget(hoverControlWidget = new OnHoverRenderWidget(hero.getHealthComponent(), hero.getPowerComponent()));
         addWidget(statsSheet);
+
+        hoverControlWidget.setVisible(false);
         statsSheet.setEnabled(false);
     }
 

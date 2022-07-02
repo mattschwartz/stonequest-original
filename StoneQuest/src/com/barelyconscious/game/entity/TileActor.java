@@ -45,7 +45,8 @@ public class TileActor extends Actor implements Interactable {
         mouseCaptureBounds = new Box(
             0, width,
             0, height);
-        addComponent(new TileInfoTextComponent(this));
+        
+        //        addComponent(new TileInfoTextComponent(this));
     }
 
     private boolean isMouseOver = false;

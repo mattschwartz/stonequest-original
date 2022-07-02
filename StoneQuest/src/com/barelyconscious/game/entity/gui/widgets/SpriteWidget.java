@@ -8,11 +8,10 @@ import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.entity.resources.WSprite;
 import lombok.Setter;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 public class SpriteWidget extends Widget {
 
-    private final WSprite sprite;
+    @Setter
+    private WSprite sprite;
     @Setter
     private boolean renderGrayscale = false;
 
@@ -30,7 +29,6 @@ public class SpriteWidget extends Widget {
 
     public SpriteWidget(final LayoutData layout, final WSprite sprite) {
         super(layout);
-        checkArgument(sprite != null, "sprite is null");
         this.sprite = sprite;
     }
 
