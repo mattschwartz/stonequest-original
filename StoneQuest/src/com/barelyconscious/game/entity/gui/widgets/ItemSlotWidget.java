@@ -10,6 +10,7 @@ import com.barelyconscious.game.entity.gui.MouseInputWidget;
 import com.barelyconscious.game.entity.gui.VDim;
 import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.entity.item.Item;
+import com.barelyconscious.game.entity.item.ItemClassType;
 import com.barelyconscious.game.shape.Box;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.Getter;
@@ -18,6 +19,8 @@ import lombok.NonNull;
 import javax.annotation.Nullable;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemSlotWidget extends MouseInputWidget {
 
@@ -190,12 +193,18 @@ public class ItemSlotWidget extends MouseInputWidget {
         };
     }
 
+    private final List<ItemClassType> acceptableItemClassTypes = new ArrayList<>();
+
+    public void addAcceptableItem(final ItemClassType acceptableItemClassType) {
+        acceptableItemClassTypes.add(acceptableItemClassType);
+    }
+
     /**
      * Returns true if this item slot can hold this item.
      * default=true
      */
     public boolean acceptsItem(final Item item) {
-        return true;
+        return acceptableItemClassTypes.isEmpty() || acceptableItemClassTypes.contains(item.getItemClassType());
     }
 
     @Override

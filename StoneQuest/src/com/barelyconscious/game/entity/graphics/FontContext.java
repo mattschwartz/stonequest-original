@@ -260,6 +260,9 @@ public class FontContext {
             case "LIGHT_GRAY":
                 g.setColor(new Color(165, 165, 165));
                 return true;
+            case "RED":
+                g.setColor(new Color(172, 50, 50));
+                return true;
 
             default:
                 return false;

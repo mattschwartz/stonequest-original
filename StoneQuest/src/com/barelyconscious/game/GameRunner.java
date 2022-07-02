@@ -32,10 +32,9 @@ import com.barelyconscious.game.entity.gui.widgets.InventoryBagWidget;
 import com.barelyconscious.game.entity.gui.widgets.TileInfoWidget;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
-import com.barelyconscious.game.entity.item.Item;
+import com.barelyconscious.game.entity.item.GameItems;
 import com.barelyconscious.game.entity.playercontroller.PlayerController;
 import com.barelyconscious.game.entity.resources.GUISpriteSheet;
-import com.barelyconscious.game.entity.resources.ItemsSpriteSheet;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.entity.tile.Tile;
@@ -272,72 +271,18 @@ public final class GameRunner {
 
         world.spawnActor(aBullet);
 
-        aRat.addComponent(new DropOnDeathComponent(aRat, new Item(
-            0,
-            1,
-            false,
-            true,
-            "Willow Bark",
-            "Bark from the willow tree. Has minimal healing properties.",
-            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_WILLOW_BARK),
-            null
-        )));
+        aRat.addComponent(new DropOnDeathComponent(aRat, GameItems.WILLOW_BARK.toItem()));
     }
 
     private static void _setupInventory(
         final GuiCanvas gui,
         final Inventory inventory
     ) {
-        inventory.addItem(new Item(
-            0,
-            1,
-            false,
-            true,
-            "Willow Bark",
-            "Bark from the willow tree. Has minimal healing properties.",
-            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_WILLOW_BARK),
-            null
-        ));
-        inventory.addItem(new Item(
-            1,
-            1,
-            false,
-            true,
-            "Cured Leather",
-            "What ails the leather that it needs curing?",
-            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_CURED_LEATHER),
-            null
-        ));
-        inventory.addItem(new Item(
-            2,
-            1,
-            false,
-            true,
-            "Iron Ore",
-            "Unrefined iron ore.",
-            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_IRON_ORE),
-            null
-        ));
-        inventory.addItem(new Item(
-            3,
-            1,
-            true,
-            true,
-            "Stream Drive",
-            "A stream drive.",
-            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_STREAM_DRIVE),
-            null
-        ));
-        inventory.addItem(new Item(
-            3,
-            1,
-            true,
-            true,
-            "Stream Drive",
-            "A stream drive.",
-            Resources.instance().getSprite(ItemsSpriteSheet.Resources.ITEM_STREAM_DRIVE),
-            null
-        ));
+        inventory.addItem(GameItems.WILLOW_BARK.toItem());
+        inventory.addItem(GameItems.CURED_LEATHER.toItem());
+        inventory.addItem(GameItems.IRON_ORE.toItem());
+        inventory.addItem(GameItems.STREAM_DRIVE.toItem());
+        inventory.addItem(GameItems.STREAM_DRIVE.toItem());
 
         val wBackpack = new InventoryBagWidget(LayoutData.builder()
             .anchor(new VDim(1, 0.5f,

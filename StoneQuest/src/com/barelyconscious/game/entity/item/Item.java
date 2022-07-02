@@ -3,7 +3,7 @@ package com.barelyconscious.game.entity.item;
 
 import com.barelyconscious.game.delegate.Delegate;
 import com.barelyconscious.game.entity.resources.WSprite;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
-@AllArgsConstructor
+@Builder
 public class Item {
 
     private final int itemId;
     private final int itemLevel;
+    private final ItemClassType itemClassType;
     private final boolean isConsumable;
     private final boolean isStackable;
     private final String name;

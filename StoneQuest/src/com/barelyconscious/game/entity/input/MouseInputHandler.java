@@ -76,15 +76,19 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
             }
 
             for (final Interactable it : interactablesByLayer.get(layer)) {
-                if (it.isInteractableEnabled() && it.isMouseOver()) {
-                    if (!it.contains(e.getX(), e.getY())) {
-                        it.onMouseExited(e);
-                    }
+                if (it.isInteractableEnabled()) {
+                    if (it.isMouseOver()) {
+                        if (!it.contains(e.getX(), e.getY())) {
+                            it.onMouseExited(e);
+                            isConsumed=true;
+                            break;
+                        }
 
-                    isConsumed = it.onMouseClicked(e);
-                    if (isConsumed) {
-                        it.onMouseReleased(e);
-                        break;
+                        isConsumed = it.onMouseClicked(e);
+                        if (isConsumed) {
+                            it.onMouseReleased(e);
+                            break;
+                        }
                     }
                 }
             }

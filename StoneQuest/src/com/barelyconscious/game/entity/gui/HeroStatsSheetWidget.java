@@ -171,14 +171,14 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
             "{COLOR=LIGHT_GRAY}Evasion",
             "{COLOR=GREEN}{STYLE=BOLD}25.0%",
             "{COLOR=LIGHT_GRAY}Fire Magic Bonus",
-            "{COLOR=GREEN}{STYLE=BOLD}0%",
+            "{COLOR=LIGHT_GRAY}0%",
             "{COLOR=LIGHT_GRAY}Frost Magic Bonus",
-            "{COLOR=GREEN}{STYLE=BOLD}0%",
+            "{COLOR=LIGHT_GRAY}0%",
             "{COLOR=LIGHT_GRAY}Faith Magic Bonus",
             "{COLOR=GREEN}{STYLE=BOLD}9%",
             "{COLOR=LIGHT_GRAY}Eldritch Bonus",
-            "{COLOR=GREEN}{STYLE=BOLD}-150%",
-            "{COLOR=LIGHT_GRAY}Experience",
+            "{COLOR=RED}{STYLE=BOLD}-150%",
+            "{COLOR=WHITE}Experience",
             "{COLOR=GREEN}{STYLE=BOLD}175/600"
         };
 
