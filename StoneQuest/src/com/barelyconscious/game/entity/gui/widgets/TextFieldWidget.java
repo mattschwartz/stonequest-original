@@ -7,10 +7,12 @@ import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.shape.Box;
+import lombok.Getter;
 import lombok.Setter;
 
 public class TextFieldWidget extends Widget {
 
+    @Getter
     @Setter
     private String text;
     @Setter

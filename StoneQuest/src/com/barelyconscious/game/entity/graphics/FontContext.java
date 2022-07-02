@@ -216,6 +216,8 @@ public class FontContext {
                         g.setFont(font.deriveFont(Font.BOLD));
                     } else if ("ITALIC".equals(value)) {
                         g.setFont(font.deriveFont(Font.ITALIC));
+                    } else if ("NONE".equals(value)) {
+                        g.setFont(font.deriveFont(Font.PLAIN));
                     }
                     break;
                 case "SIZE":
@@ -253,10 +255,14 @@ public class FontContext {
                 g.setColor(Color.YELLOW);
                 return true;
             case "GREEN":
-                g.setColor(Color.GREEN);
+                g.setColor(new Color(69, 182, 69));
                 return true;
+            case "LIGHT_GRAY":
+                g.setColor(new Color(165, 165, 165));
+                return true;
+
             default:
-            return false;
+                return false;
         }
     }
 

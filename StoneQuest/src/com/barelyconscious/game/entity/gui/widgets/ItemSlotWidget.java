@@ -93,7 +93,7 @@ public class ItemSlotWidget extends MouseInputWidget {
             sb.append("\n");
             sb.append("{COLOR=200,200,200,200}{STYLE=ITALIC}").append(description).append("\n");
             if (inventoryItem.item.isConsumable()) {
-                sb.append("\n").append("{COLOR=0,255,0,255}Click to use");
+                sb.append("\n").append("{COLOR=0,255,0,255}{STYLE=NONE}Click to use");
             }
 
             final String tooltipText = sb.toString();
@@ -202,7 +202,6 @@ public class ItemSlotWidget extends MouseInputWidget {
     public boolean onMouseClicked(MouseEvent e) {
         if (isMouseOver()) {
             if (item != null && e.getButton() == MouseEvent.BUTTON1) {
-                System.out.println("Using " + item);
                 item.onUse.call(new Item.ItemContext());
                 if (item.isConsumable()) {
                     inventory.consumeOrRemoveItem(inventorySlotId);

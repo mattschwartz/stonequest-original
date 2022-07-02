@@ -146,27 +146,59 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
 
     private Widget createDetailedStatsWidget(SpriteWidget backdrop) {
         final Widget detailedStatsWidget = new BackgroundPanelWidget(LayoutData.builder()
-            .anchor(new VDim(0, 0, 0, -(161+6) - 26))
+            .anchor(new VDim(0, 0, 0, -(161 + 6) - 26))
             .size(new VDim(0, 0, GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getWidth(), 161))
             .build(),
             new Color(33, 33, 33, 255));
 
-        TextFieldWidget tw = new TextFieldWidget(
+        final GridLayoutWidget glw = new GridLayoutWidget(
             LayoutData.builder()
                 .anchor(new VDim(0, 0, 2, 13))
                 .size(new VDim(1, 1, 0, 0))
                 .build(),
-            "Melee Damage           1d8+3\nSpell DC         18\nCrit Chance         50.0%\n" +
-                "Armor          180\nEvasion            25.0%\nFire Magic Bonus         0%\nFrost Magic Bonus           0%\n" +
-                "Fatih Magic Bonus          9%\nEldritch Bonus          -100%\nExperience       175/600"
-        );
-        tw.setTextAlignment(FontContext.TextAlign.LEFT);
-        tw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
+            10,
+            2);
+
+        final String[] str = new String[]{
+            "{COLOR=LIGHT_GRAY}Melee Damage",
+            "{COLOR=GREEN}{STYLE=BOLD}1d8+3",
+            "{COLOR=LIGHT_GRAY}Spell DC",
+            "{COLOR=GREEN}{STYLE=BOLD}18",
+            "{COLOR=LIGHT_GRAY}Crit Chance",
+            "{COLOR=GREEN}{STYLE=BOLD}50.0%",
+            "{COLOR=LIGHT_GRAY}Armor",
+            "{COLOR=GREEN}{STYLE=BOLD}180",
+            "{COLOR=LIGHT_GRAY}Evasion",
+            "{COLOR=GREEN}{STYLE=BOLD}25.0%",
+            "{COLOR=LIGHT_GRAY}Fire Magic Bonus",
+            "{COLOR=GREEN}{STYLE=BOLD}0%",
+            "{COLOR=LIGHT_GRAY}Frost Magic Bonus",
+            "{COLOR=GREEN}{STYLE=BOLD}0%",
+            "{COLOR=LIGHT_GRAY}Faith Magic Bonus",
+            "{COLOR=GREEN}{STYLE=BOLD}9%",
+            "{COLOR=LIGHT_GRAY}Eldritch Bonus",
+            "{COLOR=GREEN}{STYLE=BOLD}-150%",
+            "{COLOR=LIGHT_GRAY}Experience",
+            "{COLOR=GREEN}{STYLE=BOLD}175/600"
+        };
+
+        int i = 0;
+        for (int r = 0; r < 10; ++r) {
+            for (int c = 0; c < 2; ++c) {
+                TextFieldWidget tfw = new TextFieldWidget(LayoutData.DEFAULT, str[i++]);
+                glw.setCell(r, c, tfw);
+                if (c == 0) {
+                    tfw.setTextAlignment(FontContext.TextAlign.LEFT);
+                    tfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
+                } else {
+                    tfw.setTextAlignment(FontContext.TextAlign.RIGHT);
+                    tfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
+                }
+            }
+        }
 
         backdrop.addWidget(detailedStatsWidget);
-        detailedStatsWidget.addWidget(tw);
-
-        detailedStatsWidget.setEnabled(false);
+        detailedStatsWidget.addWidget(glw);
 
         return detailedStatsWidget;
     }

@@ -12,8 +12,8 @@ import java.awt.Color;
 
 public class TooltipWidget extends Widget {
 
-    private static final String TITLE_FORMAT_STRING = "{COLOR=YELLOW}";
-    private static final String DESCRIPTION_FORMAT_STRING = "{STYLE=ITALIC}{COLOR=180,180,180,200}";
+    private static final String TITLE_FORMAT_STRING = "{COLOR=WHITE}";
+    private static final String DESCRIPTION_FORMAT_STRING = "{STYLE=ITALIC}{COLOR=LIGHT_GRAY}";
     private static final String ACTION_TEXT_FORMAT_STRING = "{STYLE=BOLD}{COLOR=GREEN}";
     private static final String TOP_RIGHT_TEXT_FORMAT_STRING = "{STYLE=BOLD}{COLOR=WHITE}";
 
@@ -43,7 +43,7 @@ public class TooltipWidget extends Widget {
 
         final StringBuilder sb = new StringBuilder();
 
-        sb.append(TITLE_FORMAT_STRING).append(title).append("\n").append("\n");
+        sb.append(TITLE_FORMAT_STRING).append(title).append("\n");
         if (description != null) {
             sb.append(DESCRIPTION_FORMAT_STRING).append(description).append("\n");
         }
