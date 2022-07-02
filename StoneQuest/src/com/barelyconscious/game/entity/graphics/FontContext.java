@@ -33,6 +33,12 @@ public class FontContext {
         RIGHT
     }
 
+    public enum VerticalTextAlignment {
+        TOP,
+        BOTTOM,
+        CENTER
+    }
+
     @Getter
     @Setter
     @NonNull

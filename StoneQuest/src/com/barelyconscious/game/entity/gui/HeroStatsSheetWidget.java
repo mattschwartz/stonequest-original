@@ -3,6 +3,8 @@ package com.barelyconscious.game.entity.gui;
 import com.barelyconscious.game.entity.Hero;
 import com.barelyconscious.game.entity.Stats;
 import com.barelyconscious.game.entity.components.AdjustableValueComponent;
+import com.barelyconscious.game.entity.graphics.FontContext;
+import com.barelyconscious.game.entity.gui.widgets.BackgroundPanelWidget;
 import com.barelyconscious.game.entity.gui.widgets.ButtonWidget;
 import com.barelyconscious.game.entity.gui.widgets.SpriteWidget;
 import com.barelyconscious.game.entity.gui.widgets.TextFieldWidget;
@@ -11,9 +13,12 @@ import com.barelyconscious.game.entity.input.InputLayer;
 import com.barelyconscious.game.entity.resources.GUISpriteSheet;
 import com.barelyconscious.game.entity.resources.Resources;
 
+import java.awt.Color;
+
 public class HeroStatsSheetWidget extends MouseInputWidget {
 
     private final Hero hero;
+    private final Widget detailedStatsWidget;
 
     public HeroStatsSheetWidget(final Hero hero) {
         super(LayoutData.builder()
@@ -57,6 +62,8 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
                 return null;
             }
         ));
+
+        detailedStatsWidget = createDetailedStatsWidget(backdrop);
     }
 
     private void setupStatsWidgets(SpriteWidget backdrop) {
@@ -129,5 +136,30 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
             return null;
         });
         ttw.setEnabled(false);
+    }
+
+    private Widget createDetailedStatsWidget(SpriteWidget backdrop) {
+        final Widget detailedStatsWidget = new BackgroundPanelWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 0, -(161+6) - 26))
+            .size(new VDim(0, 0, GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getWidth(), 161))
+            .build(),
+            new Color(33, 33, 33, 255));
+
+        TextFieldWidget tw = new TextFieldWidget(
+            LayoutData.builder()
+                .anchor(new VDim(0, 0, 2, 13))
+                .size(new VDim(1, 1, 0, 0))
+                .build(),
+            "Melee Damage           1d8+3\nSpell DC         18\nCrit Chance         50.0%\n" +
+                "Armor          180\nEvasion            25.0%\nFire Magic Bonus         0%\nFrost Magic Bonus           0%\n" +
+                "Fatih Magic Bonus          9%\nEldritch Bonus          -100%\nExperience       175/600"
+        );
+        tw.setTextAlignment(FontContext.TextAlign.LEFT);
+        tw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
+
+        backdrop.addWidget(detailedStatsWidget);
+        detailedStatsWidget.addWidget(tw);
+
+        return detailedStatsWidget;
     }
 }
