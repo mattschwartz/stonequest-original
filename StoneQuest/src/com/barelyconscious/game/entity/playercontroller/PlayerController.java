@@ -66,6 +66,9 @@ public class PlayerController {
     }
 
     private Void onKeyTyped(KeyEvent keyEvent) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
+            EventArgs.IS_DEBUG = !EventArgs.IS_DEBUG;
+        }
         if (keyEvent.getKeyChar() == KeyEvent.VK_1) {
             GameInstance.getInstance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
         }

@@ -16,5 +16,5 @@ public final class EventArgs {
     private final Vector mouseScreenPos;
     private final Vector mouseWorldPos;
 
-    public static final boolean IS_DEBUG = false;
+    public static boolean IS_DEBUG = false;
 }

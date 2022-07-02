@@ -23,6 +23,6 @@ public class MouseInputWidget extends Widget {
 
     @Override
     public boolean onMouseClicked(MouseEvent e) {
-        return true;
+        return isMouseOver();
     }
 }

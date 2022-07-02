@@ -2,11 +2,13 @@ package com.barelyconscious.game.entity.gui;
 
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.graphics.RenderContext;
+import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.input.Interactable;
 import com.barelyconscious.game.shape.Box;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,10 @@ public abstract class Widget implements Interactable {
     }
 
     public final void render(final EventArgs eventArgs, final RenderContext renderContext) {
+        if (EventArgs.IS_DEBUG) {
+            renderContext.renderRect(Color.RED, false, screenBounds, RenderLayer._DEBUG);
+        }
+
         this.onRender(eventArgs, renderContext);
         final List<Widget> toRemove = new ArrayList<>();
 
@@ -73,7 +79,7 @@ public abstract class Widget implements Interactable {
 
     @Override
     public final boolean contains(final int screenX, final int screenY) {
-        return screenBounds.contains(screenX, screenY);
+        return screenBounds != null && screenBounds.contains(screenX, screenY);
     }
 
     @Override
