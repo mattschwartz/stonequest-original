@@ -1,11 +1,15 @@
 package com.barelyconscious.game.entity.input;
 
 import com.barelyconscious.game.delegate.Delegate;
-import com.barelyconscious.game.entity.resources.Resources;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MouseInputHandler implements MouseListener, MouseMotionListener, MouseWheelListener {
@@ -47,23 +51,6 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        boolean isConsumed = false;
-        for (final InputLayer layer : InputLayer.sorted()) {
-            if (isConsumed) {
-                break;
-            }
-
-            for (final Interactable it : interactablesByLayer.get(layer)) {
-                isConsumed = it.onMouseClicked(e);
-                if (isConsumed) {
-                    break;
-                }
-            }
-        }
-
-        if (!isConsumed) {
-            onMouseClicked.call(e);
-        }
     }
 
     @Override
@@ -73,6 +60,25 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
     @Override
     public void mouseReleased(MouseEvent e) {
         onMouseReleased.call(e);
+        boolean isConsumed = false;
+        for (final InputLayer layer : InputLayer.sorted()) {
+            if (isConsumed) {
+                break;
+            }
+
+            for (final Interactable it : interactablesByLayer.get(layer)) {
+                if (it.isInteractableEnabled()) {
+                    isConsumed = it.onMouseClicked(e);
+                    if (isConsumed) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!isConsumed) {
+            onMouseClicked.call(e);
+        }
     }
 
     @Override
@@ -94,14 +100,16 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
         boolean isConsumed = false;
         for (final InputLayer layer : InputLayer.sorted()) {
             for (final Interactable it : interactablesByLayer.get(layer)) {
-                if (it.contains(e.getX(), e.getY())) {
-                    if (!it.isMouseOver()) {
-                        isConsumed = isConsumed || it.onMouseEntered(e);
-                    }
-                    isConsumed = isConsumed || it.onMouseEntered(e); // 🤔🤔🤔
+                if (it.isInteractableEnabled()) {
+                    if (it.contains(e.getX(), e.getY())) {
+                        if (!it.isMouseOver()) {
+                            isConsumed = isConsumed || it.onMouseEntered(e);
+                        }
+                        isConsumed = isConsumed || it.onMouseEntered(e); // 🤔🤔🤔
 
-                } else if (it.isMouseOver()) {
-                    it.onMouseExited(e);
+                    } else if (it.isMouseOver()) {
+                        it.onMouseExited(e);
+                    }
                 }
             }
         }
