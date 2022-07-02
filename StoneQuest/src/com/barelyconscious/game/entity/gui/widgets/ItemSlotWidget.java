@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
-public class ItemSlot extends Widget {
+public class ItemSlotWidget extends Widget {
 
     @Getter
     @Nullable
@@ -33,7 +33,7 @@ public class ItemSlot extends Widget {
         return isMouseOver();
     }
 
-    public ItemSlot(
+    public ItemSlotWidget(
         LayoutData layout,
         final @NonNull Inventory inventory,
         @Nullable final Item item,

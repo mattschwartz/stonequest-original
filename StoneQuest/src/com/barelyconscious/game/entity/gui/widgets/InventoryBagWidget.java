@@ -18,7 +18,7 @@ import java.util.List;
 @Log4j2
 public final class InventoryBagWidget extends Widget {
 
-    private final List<ItemSlot> itemSlots = new ArrayList<>();
+    private final List<ItemSlotWidget> itemSlotWidgets = new ArrayList<>();
     private final Inventory inventory;
     private final int numRows;
     private final int numCols;
@@ -52,8 +52,8 @@ public final class InventoryBagWidget extends Widget {
         for (int row = 0; row < numRows; ++row) {
             for (int col = 0; col < numCols; ++col, ++index) {
                 Inventory.InventoryItem inventoryItem = inventory.getItem(index);
-                final ItemSlot itemSlot = itemSlots.get(index);
-                itemSlot.setItem(inventoryItem == null ? null : inventoryItem.item);
+                final ItemSlotWidget itemSlotWidget = itemSlotWidgets.get(index);
+                itemSlotWidget.setItem(inventoryItem == null ? null : inventoryItem.item);
             }
         }
 
@@ -82,15 +82,15 @@ public final class InventoryBagWidget extends Widget {
                 int yOffs = row * (itemSlotHeight + gutterSize);
 
                 Inventory.InventoryItem inventoryItem = inventory.getItem(index);
-                final ItemSlot itemSlot = new ItemSlot(LayoutData.builder()
+                final ItemSlotWidget itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
                     .anchor(new VDim(0, 0, xOffs, yOffs))
                     .size(new VDim(0, 0, itemSlotWidth, itemSlotHeight))
                     .build(),
                     inventory,
                     inventoryItem == null ? null : inventoryItem.item,
                     index);
-                itemSlots.add(itemSlot);
-                addWidget(itemSlot);
+                itemSlotWidgets.add(itemSlotWidget);
+                addWidget(itemSlotWidget);
             }
         }
     }
