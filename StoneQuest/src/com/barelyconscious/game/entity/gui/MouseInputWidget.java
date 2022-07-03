@@ -17,7 +17,7 @@ public class MouseInputWidget extends Widget implements Interactable {
     public final Delegate<Boolean> delegateOnMouseOver = new Delegate<>();
 
     public MouseInputWidget(LayoutData layout) {
-        this(layout, InputLayer.GUI);
+        this(layout, InputLayer.USER_INPUT);
     }
 
     public MouseInputWidget(final LayoutData layout, InputLayer inputLayer) {

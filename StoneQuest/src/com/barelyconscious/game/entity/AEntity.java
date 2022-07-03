@@ -4,6 +4,7 @@ import com.barelyconscious.game.entity.components.EntityLevelComponent;
 import com.barelyconscious.game.entity.components.HealthComponent;
 import com.barelyconscious.game.entity.components.PowerComponent;
 import com.barelyconscious.game.entity.components.StatsComponent;
+import com.barelyconscious.game.entity.components.combat.EquipmentComponent;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
 
@@ -18,6 +19,7 @@ public class AEntity extends Actor {
     private final HealthComponent healthComponent;
     private final PowerComponent powerComponent;
     private final EntityLevelComponent entityLevelComponent;
+    private final EquipmentComponent equipment;
 
     public AEntity(
         final String name,
@@ -43,8 +45,8 @@ public class AEntity extends Actor {
         final int difficultyClass
     ) {
         super(name, transform);
-
-        entityStatsComponent = new StatsComponent(this, entityStats);
+        this.equipment = new EquipmentComponent(this);
+        this.entityStatsComponent = new StatsComponent(this, entityStats);
 
         addComponent(entityStatsComponent);
         addComponent(healthComponent = new HealthComponent(this, entityStatsComponent, entityLevel, difficultyClass));

@@ -25,7 +25,8 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
             .anchor(new VDim(0, 0, 0, -(15 + GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getHeight())))
             .size(new VDim(0, 0, GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getWidth(),
                 GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getHeight()))
-            .build());
+            .build(),
+            InputLayer.GUI);
         this.hero = hero;
 
         SpriteWidget backdrop = new SpriteWidget(LayoutData.DEFAULT,
@@ -64,7 +65,15 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
             }
         ));
 
+        setupEquipmentDollWidget();
     }
+
+    private void setupEquipmentDollWidget() {
+        final EquipmentDollWidget equipmentDollWidget = new EquipmentDollWidget(LayoutData.DEFAULT, hero.getEquipment());
+
+        addWidget(equipmentDollWidget);
+    }
+
 
     @Override
     public void setEnabled(boolean isEnabled) {

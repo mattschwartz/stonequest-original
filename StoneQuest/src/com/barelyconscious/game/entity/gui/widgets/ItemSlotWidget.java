@@ -9,6 +9,7 @@ import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.MouseInputWidget;
 import com.barelyconscious.game.entity.gui.VDim;
 import com.barelyconscious.game.entity.gui.Widget;
+import com.barelyconscious.game.entity.input.InputLayer;
 import com.barelyconscious.game.entity.item.Item;
 import com.barelyconscious.game.entity.item.ItemClassType;
 import com.barelyconscious.game.shape.Box;
@@ -42,9 +43,10 @@ public class ItemSlotWidget extends MouseInputWidget {
         LayoutData layout,
         final @NonNull Inventory inventory,
         @Nullable final Item item,
-        final int inventorySlotId
+        final int inventorySlotId,
+        final InputLayer inputLayer
     ) {
-        super(layout);
+        super(layout, inputLayer);
         this.item = item;
         this.inventory = inventory;
         this.inventorySlotId = inventorySlotId;
@@ -59,10 +61,17 @@ public class ItemSlotWidget extends MouseInputWidget {
         itemHighlightWidget.setEnabled(false);
     }
 
+    public ItemSlotWidget(
+        LayoutData layout,
+        final @NonNull Inventory inventory,
+        @Nullable final Item item,
+        final int inventorySlotId
+    ) {
+        this(layout, inventory, item, inventorySlotId, InputLayer.GUI);
+    }
+
     private Widget createItemHighlightWidget() {
-        return new Widget(LayoutData.builder()
-            .size(new VDim(0, 0, 47, 47))
-            .build()) {
+        return new Widget(LayoutData.DEFAULT) {
             @Override
             protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
                 renderContext.renderRect(Color.WHITE, false, screenBounds, RenderLayer.GUI);
@@ -119,8 +128,14 @@ public class ItemSlotWidget extends MouseInputWidget {
                 screenBounds.top);
 
             renderContext.renderRect(
-                new Color(33, 33, 33, 175),
+                new Color(33, 33, 33),
                 true,
+                bb,
+                RenderLayer.GUI);
+
+            renderContext.renderRect(
+                new Color(155, 155, 155),
+                false,
                 bb,
                 RenderLayer.GUI);
 
@@ -180,7 +195,7 @@ public class ItemSlotWidget extends MouseInputWidget {
 
                         fc.setColor(Color.black);
                         fc.drawString(stackSizeStr, FontContext.TextAlign.RIGHT,
-                            screenBounds.right+1,
+                            screenBounds.right + 1,
                             screenBounds.bottom - 2);
 
                         fc.setColor(Color.yellow);
@@ -211,6 +226,7 @@ public class ItemSlotWidget extends MouseInputWidget {
     public boolean onMouseClicked(MouseEvent e) {
         if (isMouseOver()) {
             if (item != null && e.getButton() == MouseEvent.BUTTON1) {
+                System.out.println("Calling item on use");
                 item.onUse.call(new Item.ItemContext());
                 if (item.isConsumable()) {
                     inventory.consumeOrRemoveItem(inventorySlotId);

@@ -40,24 +40,41 @@ public final class Inventory {
     public Inventory(final int size) {
         this.size = size;
         items = new ArrayList<>();
+        for (int i = 0; i < size; ++i) {
+            items.add(null);
+        }
+    }
+
+    @CanIgnoreReturnValue
+    public InventoryItem setItemAt(final int slotId, final Item item) {
+        if (slotId < size) {
+            final InventoryItem prevItem = items.set(slotId, new InventoryItem(item, 1));
+            if (prevItem == null) {
+                currentSize++;
+            }
+            return prevItem;
+        }
+        return null;
     }
 
     public boolean addItem(final Item item) {
-        if (isFull()) {
+        if (isFull() || item == null) {
             return false;
         }
 
         if (item.isStackable()) {
             int existingSlot = findIndexOfItem(item);
             if (existingSlot == -1) {
-                items.add(new InventoryItem(item, 1));
+                final int slotId = findEmptySlotId();
+                items.set(slotId, new InventoryItem(item, 1));
                 ++currentSize;
             } else {
                 InventoryItem inventoryItem = items.get(existingSlot);
                 ++inventoryItem.stackSize;
             }
         } else {
-            items.add(new InventoryItem(item, 1));
+            final int slotId = findEmptySlotId();
+            items.set(slotId, new InventoryItem(item, 1));
             ++currentSize;
         }
 
@@ -67,13 +84,31 @@ public final class Inventory {
         return true;
     }
 
+    /**
+     * finds the slot id for an empty slot in the inventory if any
+     *
+     * @return -1 if inventory is full
+     */
+    private int findEmptySlotId() {
+        if (items.get(currentSize) == null) {
+            return currentSize;
+        } else {
+            for (int i = 0; i < items.size(); ++i) {
+                if (items.get(i) == null) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
     @Nullable
     @CanIgnoreReturnValue
     public Item removeItemAt(final int slot) {
-        if (slot < 0 || slot >= currentSize) {
+        if (slot < 0 || slot >= size) {
             return null;
         }
-        final InventoryItem itemRemoved = items.remove(slot);
+        final InventoryItem itemRemoved = items.set(slot, null);
 
         if (itemRemoved != null) {
             --currentSize;
@@ -104,7 +139,7 @@ public final class Inventory {
 
     @Nullable
     public InventoryItem getItem(final int slot) {
-        if (slot < 0 || slot >= currentSize) {
+        if (slot < 0 || slot >= size) {
             return null;
         }
         return items.get(slot);

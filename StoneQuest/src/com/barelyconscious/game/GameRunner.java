@@ -202,6 +202,10 @@ public final class GameRunner {
             144f,
             new Inventory(28),
             HeroClassType.PRIEST);
+
+        heroPaul.getEquipment().setEquippedItem(GameItems.IRON_SHIELD.toItem());
+        heroPaul.getEquipment().setEquippedItem(GameItems.CLOTH_ROBE.toItem());
+
         heroPaul.addComponent(new MoveComponent(heroPaul, 32f));
         heroPaul.addComponent(new SpriteComponent(heroPaul, Resources.getSprite(ResourceSprite.HERO_1), RenderLayer.ENTITIES));
         heroPaul.addComponent(new BoxColliderComponent(heroPaul, true, true, new Box(0, 32, 0, 32)));
