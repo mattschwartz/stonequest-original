@@ -3,13 +3,13 @@ package com.barelyconscious.game.module;
 import com.barelyconscious.game.entity.Engine;
 import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.Inventory;
+import com.barelyconscious.game.entity.World;
+import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.playercontroller.PlayerController;
-import com.barelyconscious.game.physics.Physics;
-import com.barelyconscious.game.entity.graphics.Screen;
-import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.exception.InvalidGameConfigurationException;
+import com.barelyconscious.game.physics.Physics;
 import com.google.common.util.concurrent.RateLimiter;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -18,12 +18,22 @@ import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import java.awt.AWTException;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.time.Clock;
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -108,6 +118,46 @@ public class WorldsModule extends AbstractModule {
         screen.getCanvas().addMouseMotionListener(mouseInputHandler);
 
         screen.getCanvas().addKeyListener(keyInputHandler);
+
+        keyInputHandler.onKeyPressed.bindDelegate(e -> {
+            if (e.getKeyCode() == KeyEvent.VK_F11) {
+                String hour, minute, second, day, month, year;
+                String date;
+                File file = new File(System.getProperty("user.dir") + "\\Progress Screenshots\\");
+                Robot robot;
+                Rectangle bounds = new Rectangle();
+                BufferedImage capture;
+                Calendar cal = Calendar.getInstance();
+
+                if (!file.isDirectory()) {
+                    file.mkdirs();
+                }
+
+                hour = cal.get(Calendar.HOUR_OF_DAY) < 10 ? "0" + cal.get(Calendar.HOUR_OF_DAY) : "" + cal.get(Calendar.HOUR_OF_DAY);
+                minute = cal.get(Calendar.MINUTE) < 10 ? "0" + cal.get(Calendar.MINUTE) : "" + cal.get(Calendar.MINUTE);
+                second = cal.get(Calendar.SECOND) < 10 ? "0" + cal.get(Calendar.SECOND) : "" + cal.get(Calendar.SECOND);
+                month = (cal.get(Calendar.MONTH) + 1) < 10 ? "0" + (cal.get(Calendar.MONTH) + 1) : "" + (cal.get(Calendar.MONTH) + 1);
+                day = cal.get(Calendar.DAY_OF_MONTH) < 10 ? "0" + cal.get(Calendar.DAY_OF_MONTH) : "" + cal.get(Calendar.DAY_OF_MONTH);
+                year = "" + cal.get(Calendar.YEAR);
+
+                date = day + month + year + "_" + hour + minute + second;
+
+                file = new File(file.getAbsolutePath() + "\\Screenshot " + date + ".png");
+
+                System.err.println("Saving screenshot to: " + file.getAbsolutePath());
+
+                try {
+                    robot = new Robot();
+                    bounds.setBounds(frame.getLocationOnScreen().x, frame.getLocationOnScreen().y, frame.getWidth(), frame.getHeight());
+                    capture = robot.createScreenCapture(bounds);
+                    ImageIO.write(capture, "png", file);
+                } catch (IOException | AWTException ex) {
+                    System.err.println("Error: " + ex);
+                }
+            }
+
+            return null;
+        });
 
         return frame;
     }
