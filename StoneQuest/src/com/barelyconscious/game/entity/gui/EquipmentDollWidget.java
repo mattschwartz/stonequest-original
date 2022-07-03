@@ -120,7 +120,7 @@ public class EquipmentDollWidget extends Widget {
             .build(),
             equipmentComponent.getEquipmentInventory(),
             equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_RIGHT_HAND),
-            ItemClassType.EQUIPMENT_NECK.ordinal(), InputLayer.USER_INPUT);
+            ItemClassType.EQUIPMENT_RIGHT_HAND.ordinal(), InputLayer.USER_INPUT);
         addWidget(itemSlotWidget);
         itemSlotsByClassType.put(ItemClassType.EQUIPMENT_RIGHT_HAND.ordinal(), itemSlotWidget);
 
