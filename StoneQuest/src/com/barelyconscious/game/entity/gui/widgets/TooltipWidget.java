@@ -75,6 +75,12 @@ public class TooltipWidget extends Widget {
             bb,
             RenderLayer.GUI_FOCUS);
 
+        renderContext.renderRect(
+            new Color(155, 155, 155),
+            false,
+            bb,
+            RenderLayer.GUI_FOCUS);
+
         fc.setColor(Color.white);
         fc.setRenderLayer(RenderLayer.GUI_FOCUS);
 

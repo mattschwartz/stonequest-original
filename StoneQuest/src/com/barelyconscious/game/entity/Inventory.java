@@ -45,13 +45,40 @@ public final class Inventory {
         }
     }
 
+    /**
+     * @param inventoryItem if null, nothing happens
+     */
+    public InventoryItem setItem(final int slotId, final InventoryItem inventoryItem) {
+        if (slotId < size && inventoryItem != null) {
+            final InventoryItem prevItem = items.set(slotId, inventoryItem);
+            if (prevItem == null) {
+                currentSize++;
+            }
+
+            delegateOnItemAdded.call(new InventoryItemEvent(inventoryItem.item, currentSize));
+            delegateOnItemChanged.call(new InventoryItemEvent(inventoryItem.item, currentSize));
+
+            return prevItem;
+        }
+        return null;
+
+    }
+
+    /**
+     * @deprecated use setItem instead
+     */
     @CanIgnoreReturnValue
+    @Deprecated
     public InventoryItem setItemAt(final int slotId, final Item item) {
         if (slotId < size) {
             final InventoryItem prevItem = items.set(slotId, new InventoryItem(item, 1));
             if (prevItem == null) {
                 currentSize++;
             }
+
+            delegateOnItemAdded.call(new InventoryItemEvent(item, currentSize));
+            delegateOnItemChanged.call(new InventoryItemEvent(item, currentSize));
+
             return prevItem;
         }
         return null;
@@ -102,21 +129,29 @@ public final class Inventory {
         return -1;
     }
 
-    @Nullable
-    @CanIgnoreReturnValue
-    public Item removeItemAt(final int slot) {
-        if (slot < 0 || slot >= size) {
+    /**
+     * @return the item and stack size and removes it from the inventory
+     */
+    public InventoryItem removeStackAt(final int slotId) {
+        if (slotId < 0 || slotId >= size) {
             return null;
         }
-        final InventoryItem itemRemoved = items.set(slot, null);
+        final InventoryItem itemRemoved = items.set(slotId, null);
 
         if (itemRemoved != null) {
             --currentSize;
-            delegateOnItemRemoved.call(new InventoryItemEvent(itemRemoved.item, slot));
-            delegateOnItemChanged.call(new InventoryItemEvent(itemRemoved.item, slot));
+            delegateOnItemRemoved.call(new InventoryItemEvent(itemRemoved.item, slotId));
+            delegateOnItemChanged.call(new InventoryItemEvent(itemRemoved.item, slotId));
         }
 
-        return null;
+        return itemRemoved;
+    }
+
+    @Nullable
+    @CanIgnoreReturnValue
+    public Item removeItemAt(final int slot) {
+        final InventoryItem itemRemoved = removeStackAt(slot);
+        return itemRemoved == null ? null : itemRemoved.item;
     }
 
     /**

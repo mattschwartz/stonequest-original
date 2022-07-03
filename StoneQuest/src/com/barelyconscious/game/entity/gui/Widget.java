@@ -16,7 +16,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class Widget {
 
     @Getter
-    @Setter
     private boolean isEnabled = true;
 
     @Getter
@@ -28,11 +27,17 @@ public abstract class Widget {
 
     protected final List<Widget> widgets;
 
+    @Getter
     protected Box screenBounds;
 
     public Widget(final LayoutData layout) {
         this.layout = layout;
         this.widgets = new CopyOnWriteArrayList<>();
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+//        widgets.forEach(t -> t.setEnabled(enabled));
     }
 
     /**

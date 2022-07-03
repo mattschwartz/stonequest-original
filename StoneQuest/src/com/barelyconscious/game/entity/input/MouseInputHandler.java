@@ -132,8 +132,8 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
             }
         }
 
-        if (!isConsumed) {
+//        if (!isConsumed) {
             onMouseMoved.call(e);
-        }
+//        }
     }
 }

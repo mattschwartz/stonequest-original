@@ -5,6 +5,7 @@ import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.Screen;
+import com.barelyconscious.game.entity.gui.widgets.ItemFollowCursorWidget;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class GuiCanvas extends Actor {
         this.widgets = new ArrayList<>();
 
         addComponent(new GuiRenderComponent(this));
+        addWidget(new ItemFollowCursorWidget());
 
         screen.onResize.bindDelegate((e) -> resize(e.newWidth, e.newHeight));
     }

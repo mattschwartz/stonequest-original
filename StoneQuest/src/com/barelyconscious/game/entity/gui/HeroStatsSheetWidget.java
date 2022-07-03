@@ -19,13 +19,14 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
 
     private final Hero hero;
     private final Widget detailedStatsWidget;
+    private final Widget equipmentDollWidget;
 
     public HeroStatsSheetWidget(final Hero hero) {
         super(LayoutData.builder()
-            .anchor(new VDim(0, 0, 0, -(15 + GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getHeight())))
-            .size(new VDim(0, 0, GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getWidth(),
-                GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getHeight()))
-            .build(),
+                .anchor(new VDim(0, 0, 0, -(15 + GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getHeight())))
+                .size(new VDim(0, 0, GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getWidth(),
+                    GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getHeight()))
+                .build(),
             InputLayer.GUI);
         this.hero = hero;
 
@@ -65,20 +66,22 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
             }
         ));
 
-        setupEquipmentDollWidget();
+        this.equipmentDollWidget = setupEquipmentDollWidget();
     }
 
-    private void setupEquipmentDollWidget() {
+    private Widget setupEquipmentDollWidget() {
         final EquipmentDollWidget equipmentDollWidget = new EquipmentDollWidget(LayoutData.DEFAULT, hero.getEquipment());
 
         addWidget(equipmentDollWidget);
+        equipmentDollWidget.setEnabled(false);
+        return equipmentDollWidget;
     }
-
 
     @Override
     public void setEnabled(boolean isEnabled) {
         super.setEnabled(isEnabled);
         detailedStatsWidget.setEnabled(false);
+        equipmentDollWidget.setEnabled(isEnabled);
     }
 
     private void setupStatsWidgets(SpriteWidget backdrop) {

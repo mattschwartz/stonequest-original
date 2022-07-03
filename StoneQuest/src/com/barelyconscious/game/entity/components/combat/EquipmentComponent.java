@@ -1,6 +1,5 @@
 package com.barelyconscious.game.entity.components.combat;
 
-import com.barelyconscious.game.delegate.Delegate;
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.Inventory;
 import com.barelyconscious.game.entity.components.Component;
@@ -16,8 +15,6 @@ public class EquipmentComponent extends Component {
 
     @Getter
     private final Inventory equipmentInventory;
-
-    public final Delegate<Item> delegateOnEquipmentChanged = new Delegate<>();
 
     @Getter
     @AllArgsConstructor
@@ -52,8 +49,6 @@ public class EquipmentComponent extends Component {
     @CanIgnoreReturnValue
     public Item setEquippedItem(final Item item) {
         Inventory.InventoryItem prevItem = equipmentInventory.setItemAt(itemClassToSlotId(item.getItemClassType()), item);
-        delegateOnEquipmentChanged.call(item);
-
         return prevItem == null ? null : prevItem.item;
     }
 }

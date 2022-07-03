@@ -4,7 +4,6 @@ import com.barelyconscious.game.entity.Inventory;
 import com.barelyconscious.game.entity.components.combat.EquipmentComponent;
 import com.barelyconscious.game.entity.gui.widgets.ItemSlotWidget;
 import com.barelyconscious.game.entity.input.InputLayer;
-import com.barelyconscious.game.entity.item.Item;
 import com.barelyconscious.game.entity.item.ItemClassType;
 import lombok.extern.log4j.Log4j2;
 
@@ -15,7 +14,7 @@ import java.util.Map;
 public class EquipmentDollWidget extends Widget {
 
     private final EquipmentComponent equipmentComponent;
-    private final Map<ItemClassType, ItemSlotWidget> itemSlotsByClassType;
+    private final Map<Integer, ItemSlotWidget> itemSlotsByClassType;
 
     public EquipmentDollWidget(LayoutData layout, EquipmentComponent equipmentComponent) {
         super(layout);
@@ -23,18 +22,32 @@ public class EquipmentDollWidget extends Widget {
         this.itemSlotsByClassType = new HashMap<>();
 
         setupEquipmentSlots();
-        equipmentComponent.delegateOnEquipmentChanged.bindDelegate(this::onEquipmentChanged);
+        equipmentComponent.getEquipmentInventory().delegateOnItemChanged.bindDelegate(this::onEquipmentChanged);
     }
 
-    private Void onEquipmentChanged(Item itemChanged) {
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        widgets.forEach(t -> t.setEnabled(enabled));
+    }
+
+    private Void onEquipmentChanged(Inventory.InventoryItemEvent itemChanged) {
         for (int i = 0; i < equipmentComponent.getEquipmentInventory().size; ++i) {
-            final Inventory.InventoryItem item = equipmentComponent.getEquipmentInventory().getItem(i);
-            if (item == null || item.item == null) {
-                log.error("Item was null");
+            final ItemSlotWidget itemSlotWidget = itemSlotsByClassType.get(i);
+
+            if(itemSlotWidget == null) {
+                log.error("Could not find item slot widget for " + i);
                 continue;
             }
 
-            final ItemSlotWidget itemSlotWidget = itemSlotsByClassType.get(item.item.getItemClassType());
+            final Inventory.InventoryItem item = equipmentComponent.getEquipmentInventory().getItem(i);
+            if (item == null || item.item == null) {
+                log.error("Item was null for index=" + i);
+                itemSlotWidget.setItem(null);
+                continue;
+            }
+
+            log.error("Setting {} to {}", i, item);
             itemSlotWidget.setItem(item.item);
         }
         return null;
@@ -49,7 +62,7 @@ public class EquipmentDollWidget extends Widget {
             equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_HEAD),
             ItemClassType.EQUIPMENT_HEAD.ordinal(), InputLayer.USER_INPUT);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_HEAD, itemSlotWidget);
+        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_HEAD.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 19, 78))
@@ -59,7 +72,7 @@ public class EquipmentDollWidget extends Widget {
             equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_NECK),
             ItemClassType.EQUIPMENT_NECK.ordinal(), InputLayer.USER_INPUT);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_NECK, itemSlotWidget);
+        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_NECK.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 19, 114))
@@ -69,7 +82,7 @@ public class EquipmentDollWidget extends Widget {
             equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_CHEST),
             ItemClassType.EQUIPMENT_CHEST.ordinal(), InputLayer.USER_INPUT);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_CHEST, itemSlotWidget);
+        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_CHEST.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 127, 42))
@@ -79,7 +92,7 @@ public class EquipmentDollWidget extends Widget {
             equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_GLOVES),
             ItemClassType.EQUIPMENT_GLOVES.ordinal(), InputLayer.USER_INPUT);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_GLOVES, itemSlotWidget);
+        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_GLOVES.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 127, 78))
@@ -89,7 +102,7 @@ public class EquipmentDollWidget extends Widget {
             equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_LEGS),
             ItemClassType.EQUIPMENT_LEGS.ordinal(), InputLayer.USER_INPUT);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_LEGS, itemSlotWidget);
+        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_LEGS.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 127, 114))
@@ -99,7 +112,7 @@ public class EquipmentDollWidget extends Widget {
             equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_FEET),
             ItemClassType.EQUIPMENT_FEET.ordinal(), InputLayer.USER_INPUT);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_FEET, itemSlotWidget);
+        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_FEET.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 55, 150))
@@ -109,7 +122,7 @@ public class EquipmentDollWidget extends Widget {
             equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_RIGHT_HAND),
             ItemClassType.EQUIPMENT_NECK.ordinal(), InputLayer.USER_INPUT);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_RIGHT_HAND, itemSlotWidget);
+        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_RIGHT_HAND.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 91, 150))
@@ -119,6 +132,6 @@ public class EquipmentDollWidget extends Widget {
             equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_LEFT_HAND),
             ItemClassType.EQUIPMENT_LEFT_HAND.ordinal(), InputLayer.USER_INPUT);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_LEFT_HAND, itemSlotWidget);
+        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_LEFT_HAND.ordinal(), itemSlotWidget);
     }
 }

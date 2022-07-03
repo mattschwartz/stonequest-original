@@ -128,10 +128,17 @@ public class RenderContext {
         final Image image,
         final Box screenBounds
     ) {
-        final Graphics g = graphicsByLayer.get(RenderLayer.GUI);
-        g.drawImage(image, screenBounds.left, screenBounds.top, screenBounds.width, screenBounds.height, null);
+        renderImage(image, screenBounds, RenderLayer.GUI);
     }
 
+    public void renderImage(
+        final Image image,
+        final Box screenBounds,
+        final RenderLayer renderLayer
+    ) {
+        final Graphics g = graphicsByLayer.get(renderLayer);
+        g.drawImage(image, screenBounds.left, screenBounds.top, screenBounds.width, screenBounds.height, null);
+    }
 
     public void renderGuiRect(
         final Color color,

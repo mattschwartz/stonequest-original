@@ -36,7 +36,7 @@ public class ItemSlotWidget extends MouseInputWidget {
     private final Inventory inventory;
 
     private boolean shouldShowTooltip() {
-        return isMouseOver();
+        return isEnabled() && isMouseOver();
     }
 
     public ItemSlotWidget(
@@ -71,7 +71,10 @@ public class ItemSlotWidget extends MouseInputWidget {
     }
 
     private Widget createItemHighlightWidget() {
-        return new Widget(LayoutData.DEFAULT) {
+        return new Widget(LayoutData.builder()
+            .anchor(LayoutData.ANCHOR_TOP_LEFT)
+            .size(new VDim(1, 1, -1, -1))
+            .build()) {
             @Override
             protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
                 renderContext.renderRect(Color.WHITE, false, screenBounds, RenderLayer.GUI);
@@ -225,13 +228,22 @@ public class ItemSlotWidget extends MouseInputWidget {
     @Override
     public boolean onMouseClicked(MouseEvent e) {
         if (isMouseOver()) {
-            if (item != null && e.getButton() == MouseEvent.BUTTON1) {
-                System.out.println("Calling item on use");
-                item.onUse.call(new Item.ItemContext());
-                if (item.isConsumable()) {
-                    inventory.consumeOrRemoveItem(inventorySlotId);
+            final Inventory.InventoryItem itemOnCursor = ItemFollowCursorWidget.getInventoryItemOnCursor();
+            if (itemOnCursor != null) {
+                final Inventory.InventoryItem prevItem = inventory.setItem(inventorySlotId, itemOnCursor);
+                ItemFollowCursorWidget.setInventoryItemOnCursor(prevItem);
+            } else if (item != null) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    ItemFollowCursorWidget.setInventoryItemOnCursor(inventory.removeStackAt(inventorySlotId));
+                } else if (e.getButton() == MouseEvent.BUTTON3) {
+                    System.out.println("Calling item on use");
+                    item.onUse.call(new Item.ItemContext());
+                    if (item.isConsumable()) {
+                        inventory.consumeOrRemoveItem(inventorySlotId);
+                    }
                 }
             }
+
             return true;
         }
         return false;
