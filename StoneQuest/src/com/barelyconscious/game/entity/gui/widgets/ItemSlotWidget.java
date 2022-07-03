@@ -77,7 +77,16 @@ public class ItemSlotWidget extends MouseInputWidget {
             .build()) {
             @Override
             protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
-                renderContext.renderRect(Color.WHITE, false, screenBounds, RenderLayer.GUI);
+                Inventory.InventoryItem inventoryItemOnCursor = ItemFollowCursorWidget.getInventoryItemOnCursor();
+                if (inventoryItemOnCursor != null) {
+                    if (acceptsItem(inventoryItemOnCursor.item)) {
+                        renderContext.renderRect(new Color(69, 182, 69), false, screenBounds, RenderLayer.GUI);
+                    } else {
+                        renderContext.renderRect(new Color(172, 50, 50), false, screenBounds, RenderLayer.GUI);
+                    }
+                } else if (item != null) {
+                    renderContext.renderRect(Color.WHITE, false, screenBounds, RenderLayer.GUI);
+                }
             }
         };
     }
@@ -153,7 +162,7 @@ public class ItemSlotWidget extends MouseInputWidget {
 
     @Override
     public boolean onMouseEntered(MouseEvent e) {
-        itemHighlightWidget.setEnabled(item != null);
+        itemHighlightWidget.setEnabled(true);
         return super.onMouseEntered(e);
     }
 
@@ -230,8 +239,10 @@ public class ItemSlotWidget extends MouseInputWidget {
         if (isMouseOver()) {
             final Inventory.InventoryItem itemOnCursor = ItemFollowCursorWidget.getInventoryItemOnCursor();
             if (itemOnCursor != null) {
-                final Inventory.InventoryItem prevItem = inventory.setItem(inventorySlotId, itemOnCursor);
-                ItemFollowCursorWidget.setInventoryItemOnCursor(prevItem);
+                if (acceptsItem(itemOnCursor.item)) {
+                    final Inventory.InventoryItem prevItem = inventory.setItem(inventorySlotId, itemOnCursor);
+                    ItemFollowCursorWidget.setInventoryItemOnCursor(prevItem);
+                }
             } else if (item != null) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     ItemFollowCursorWidget.setInventoryItemOnCursor(inventory.removeStackAt(inventorySlotId));
