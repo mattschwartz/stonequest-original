@@ -11,17 +11,18 @@ import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.entity.resources.WSprite;
 import lombok.SneakyThrows;
 
+import javax.annotation.Nullable;
 import java.awt.event.MouseEvent;
 import java.util.EnumMap;
 import java.util.concurrent.Callable;
 
 public class ButtonWidget extends MouseInputWidget {
 
-    private enum ButtonWidgetState {
+    public enum ButtonWidgetState {
         DEFAULT,
         MOUSE_DOWN,
-        DISABLED,
         MOUSE_OVER,
+        DISABLED,
     }
 
     private ButtonWidgetState currentState;
@@ -30,7 +31,11 @@ public class ButtonWidget extends MouseInputWidget {
     private final SpriteWidget buttonSpriteWidget;
     private final Callable<Void> onClick;
 
-    public ButtonWidget(LayoutData layout, String text, Callable<Void> onClick) {
+    public ButtonWidget(LayoutData layout, Callable<Void> onClick) {
+        this(layout, null, onClick);
+    }
+
+    public ButtonWidget(LayoutData layout, @Nullable String text, Callable<Void> onClick) {
         super(layout, InputLayer.USER_INPUT);
 
         this.currentState = ButtonWidgetState.DEFAULT;
@@ -43,9 +48,9 @@ public class ButtonWidget extends MouseInputWidget {
 
         spritesByState = new EnumMap<>(ButtonWidgetState.class) {{
             put(ButtonWidgetState.DEFAULT, Resources.instance().getSprite(GUISpriteSheet.Resources.BUTTON_DEFAULT));
-            put(ButtonWidgetState.DISABLED, Resources.instance().getSprite(GUISpriteSheet.Resources.BUTTON_DISABLED));
             put(ButtonWidgetState.MOUSE_OVER, Resources.instance().getSprite(GUISpriteSheet.Resources.BUTTON_OVER));
             put(ButtonWidgetState.MOUSE_DOWN, Resources.instance().getSprite(GUISpriteSheet.Resources.BUTTON_DOWN));
+            put(ButtonWidgetState.DISABLED, Resources.instance().getSprite(GUISpriteSheet.Resources.BUTTON_DISABLED));
         }};
 
         buttonSpriteWidget = new SpriteWidget(LayoutData.DEFAULT, spritesByState.get(ButtonWidgetState.DEFAULT));
@@ -57,6 +62,21 @@ public class ButtonWidget extends MouseInputWidget {
 
         addWidget(buttonSpriteWidget);
         addWidget(textWidget);
+    }
+
+    /**
+     * all states should be supplied, but will fallback to default buttons if not specified for any or all states
+     */
+    public void setButtonStateSprites(final EnumMap<ButtonWidgetState, WSprite> spriteOverrides) {
+        for (final ButtonWidgetState state : ButtonWidgetState.values()) {
+            WSprite spriteOverride = spriteOverrides.get(state);
+            if (spriteOverride != null) {
+                System.out.println("Setting " + state + " sprite to " + spriteOverride);
+                spritesByState.put(state, spriteOverride);
+            }
+        }
+
+        buttonSpriteWidget.setSprite(spritesByState.get(ButtonWidgetState.DEFAULT));
     }
 
     @Override
@@ -71,10 +91,14 @@ public class ButtonWidget extends MouseInputWidget {
     public void onMouseReleased(MouseEvent e) {
         if (isMouseOver()) {
             currentState = ButtonWidgetState.MOUSE_OVER;
-            onClick.call();
+            if (onClick != null) {
+                onClick.call();
+            }
         } else if (currentState == ButtonWidgetState.MOUSE_DOWN) {
             currentState = ButtonWidgetState.DEFAULT;
-            onClick.call();
+            if (onClick != null) {
+                onClick.call();
+            }
         }
     }
 

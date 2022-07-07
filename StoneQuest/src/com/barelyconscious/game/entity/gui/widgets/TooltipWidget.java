@@ -39,6 +39,10 @@ public class TooltipWidget extends Widget {
 
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
+        if (!isVisible()) {
+            return;
+        }
+
         final FontContext fc = renderContext.getFontContext();
 
         final StringBuilder sb = new StringBuilder();

@@ -27,6 +27,7 @@ import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.gui.GuiCanvas;
 import com.barelyconscious.game.entity.gui.HeroQuickbarPanel;
 import com.barelyconscious.game.entity.gui.LayoutData;
+import com.barelyconscious.game.entity.gui.UserInputPanel;
 import com.barelyconscious.game.entity.gui.VDim;
 import com.barelyconscious.game.entity.gui.widgets.InventoryBagWidget;
 import com.barelyconscious.game.entity.gui.widgets.TileInfoWidget;
@@ -298,6 +299,11 @@ public final class GameRunner {
             .build(), inventory, 4, 4);
 
         gui.addWidget(wBackpack);
+        gui.addWidget(new UserInputPanel(LayoutData.builder()
+            .anchor(new VDim(1, 1, -47 * 3, -80))
+            .size(new VDim(0, 0, 47 * 3, 35))
+            .build(),
+            wBackpack));
     }
 
     private static final Random RANDOM = new Random(100L);

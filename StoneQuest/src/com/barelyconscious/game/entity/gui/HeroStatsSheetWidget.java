@@ -127,10 +127,10 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
         statWidget.addWidget(ttw);
 
         miw.delegateOnMouseOver.bindDelegate(e -> {
-            ttw.setEnabled(e);
+            ttw.setVisible(e);
             return null;
         });
-        ttw.setEnabled(false);
+        ttw.setVisible(false);
     }
 
     private void createHeroDescriptionTooltipWidget(SpriteWidget backdrop) {
@@ -150,10 +150,10 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
         miw.addWidget(ttw);
 
         miw.delegateOnMouseOver.bindDelegate(e -> {
-            ttw.setEnabled(e);
+            ttw.setVisible(e);
             return null;
         });
-        ttw.setEnabled(false);
+        ttw.setVisible(false);
     }
 
     private Widget createDetailedStatsWidget(SpriteWidget backdrop) {

@@ -42,9 +42,24 @@ public final class GUISpriteSheet {
         HERO_STAT_SHEET_BACKDROP(new Region(0, 427, 211, 199)),
 
         BUTTON_DEFAULT(new Region(0, 626, 81, 26)),
-        BUTTON_DISABLED(new Region(81, 652, 81, 26)),
         BUTTON_OVER(new Region(81, 626, 81, 26)),
         BUTTON_DOWN(new Region(0, 652, 81, 26)),
+        BUTTON_DISABLED(new Region(81, 652, 81, 26)),
+
+        UI_MENU_BUTTON_INVENTORY_DEFAULT(new Region(0, 678, 47, 35)),
+        UI_MENU_BUTTON_INVENTORY_OVER(new Region(94, 678, 47, 35)),
+        UI_MENU_BUTTON_INVENTORY_DOWN(new Region(47, 678, 47, 35)),
+        UI_MENU_BUTTON_INVENTORY_DISABLED(new Region(0, 0, 47, 35)),
+
+        UI_MENU_BUTTON_CRAFTING_DEFAULT(new Region(0, 713, 47, 35)),
+        UI_MENU_BUTTON_CRAFTING_DOWN(new Region(47, 713, 47, 35)),
+        UI_MENU_BUTTON_CRAFTING_OVER(new Region(94, 713, 47, 35)),
+        UI_MENU_BUTTON_CRAFTING_DISABLED(new Region(0, 713, 47, 35)),
+
+        UI_MENU_BUTTON_WORLD_MAP_DEFAULT(new Region(0, 853, 47, 35)),
+        UI_MENU_BUTTON_WORLD_MAP_DOWN(new Region(47, 853, 47, 35)),
+        UI_MENU_BUTTON_WORLD_MAP_OVER(new Region(94, 853, 47, 35)),
+        UI_MENU_BUTTON_WORLD_MAP_DISABLED(new Region(0, 853, 47, 35)),
         ;
 
         private final Region bounds;

@@ -9,6 +9,7 @@ import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.shape.Box;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 public class TextFieldWidget extends Widget {
 
@@ -31,6 +32,10 @@ public class TextFieldWidget extends Widget {
 
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
+        if (StringUtils.isBlank(text)) {
+            return;
+        }
+
         FontContext font = renderContext.getFontContext();
         font.setRenderLayer(RenderLayer.GUI);
 

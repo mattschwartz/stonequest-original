@@ -34,6 +34,22 @@ public class GridLayoutWidget extends Widget {
     }
 
     @Override
+    public Widget addWidget(Widget widget) {
+        for (int row = 0; row < rows; ++row) {
+            for (int column = 0; column < columns; ++column) {
+                final int cellIndex = row + column * rows;
+                if (cellIndex < widgetCells.length) {
+                    if (widgetCells[cellIndex] == null) {
+                        setCell(row, column, widget);
+                        return widget;
+                    }
+                }
+            }
+        }
+        return widget;
+    }
+
+    @Override
     public void resize(Box bounds) {
         super.resize(bounds);
         this.cellSize = new Vector(
@@ -48,6 +64,10 @@ public class GridLayoutWidget extends Widget {
                 }
 
                 final Widget w = widgetCells[cellIndex];
+                if (w == null) {
+                    continue;
+                }
+
                 w.resize(screenBounds);
 
                 int xOffs = (int) ((float) c * (cellSize.x - 3));
@@ -55,9 +75,9 @@ public class GridLayoutWidget extends Widget {
 
                 w.resize(new Box(
                     screenBounds.left + xOffs,
-                    screenBounds.left + xOffs + (int)cellSize.x,
+                    screenBounds.left + xOffs + (int) cellSize.x,
                     screenBounds.top + yOffs,
-                    screenBounds.bottom + yOffs + (int)cellSize.y
+                    screenBounds.bottom + yOffs + (int) cellSize.y
                 ));
 
             }
@@ -73,7 +93,9 @@ public class GridLayoutWidget extends Widget {
                 final int cellIndex = r + c * rows;
                 if (cellIndex < widgetCells.length) {
                     final Widget w = widgetCells[cellIndex];
-                    w.render(eventArgs, renderContext);
+                    if (w != null) {
+                        w.render(eventArgs, renderContext);
+                    }
                 }
             }
         }

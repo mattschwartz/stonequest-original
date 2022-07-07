@@ -20,6 +20,10 @@ public abstract class Widget {
 
     @Getter
     @Setter
+    private boolean isVisible = true;
+
+    @Getter
+    @Setter
     private boolean isRemoving = false;
 
     @Getter
@@ -37,7 +41,7 @@ public abstract class Widget {
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
-//        widgets.forEach(t -> t.setEnabled(enabled));
+        widgets.stream().filter(t -> t instanceof MouseInputWidget).forEach(t -> t.setEnabled(enabled));
     }
 
     /**
