@@ -95,6 +95,10 @@ public final class GameRunner {
         _initTest(world, screen, aGui);
 
         final PlayerController playerController = injector.getInstance(PlayerController.class);
+        playerController.delegateOnQuitRequested.bindDelegate(t -> {
+            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            return null;
+        });
         _setupInventory(aGui, playerController.getInventory());
 
         frame.requestFocus();
@@ -299,10 +303,7 @@ public final class GameRunner {
             .build(), inventory, 4, 4);
 
         gui.addWidget(wBackpack);
-        gui.addWidget(new UserInputPanel(LayoutData.builder()
-            .anchor(new VDim(1, 1, -47 * 3, -80))
-            .size(new VDim(0, 0, 47 * 3, 35))
-            .build(),
+        gui.addWidget(new UserInputPanel(
             wBackpack));
     }
 

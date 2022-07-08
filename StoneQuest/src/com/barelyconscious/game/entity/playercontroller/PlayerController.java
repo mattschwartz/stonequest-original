@@ -1,5 +1,6 @@
 package com.barelyconscious.game.entity.playercontroller;
 
+import com.barelyconscious.game.delegate.Delegate;
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.GameInstance;
@@ -38,6 +39,8 @@ import java.awt.event.MouseEvent;
  */
 public class PlayerController {
 
+    public final Delegate<Boolean> delegateOnQuitRequested = new Delegate<>();
+
     @Getter
     @Nullable
     private Vector mouseScreenPos;
@@ -73,6 +76,10 @@ public class PlayerController {
     private Void onKeyTyped(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
             EventArgs.IS_DEBUG = !EventArgs.IS_DEBUG;
+        }
+        if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                System.out.println("Requesting stop");
+                delegateOnQuitRequested.call(true);
         }
         if (keyEvent.getKeyChar() == KeyEvent.VK_1) {
             GameInstance.getInstance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);

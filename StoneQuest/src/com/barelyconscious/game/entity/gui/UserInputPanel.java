@@ -2,6 +2,7 @@ package com.barelyconscious.game.entity.gui;
 
 import com.barelyconscious.game.entity.gui.widgets.ButtonWidget;
 import com.barelyconscious.game.entity.gui.widgets.InventoryBagWidget;
+import com.barelyconscious.game.entity.gui.widgets.SpriteWidget;
 import com.barelyconscious.game.entity.resources.GUISpriteSheet;
 import com.barelyconscious.game.entity.resources.Resources;
 
@@ -12,23 +13,29 @@ import java.util.EnumMap;
  */
 public class UserInputPanel extends Widget {
 
+    private static final LayoutData LAYOUT = LayoutData.builder()
+        .anchor(new VDim(1, 0,
+            -GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND.getWidth() - 1,
+            1))
+//            -GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND.getHeight()))
+        .size(GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND)
+        .build();
+
     private final InventoryBagWidget inventoryBagWidget;
 
-    public UserInputPanel(LayoutData layout, final InventoryBagWidget inventoryBagWidget) {
-        super(layout);
+    public UserInputPanel(final InventoryBagWidget inventoryBagWidget) {
+        super(LAYOUT);
         this.inventoryBagWidget = inventoryBagWidget;
+
+        addWidget(new SpriteWidget(LayoutData.DEFAULT,
+            Resources.instance().getSprite(GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND)));
 
         configureMenuButtons();
     }
 
     private void configureMenuButtons() {
-        GridLayoutWidget glw = new GridLayoutWidget(LayoutData.builder()
-            .anchor(new VDim(1, 1, -47 * 3 - 18, -35))
-            .size(new VDim(0, 0, 47 * 3, 35))
-            .build(),
-            1, 3);
-
         ButtonWidget invButton = new ButtonWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 11, 11))
             .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_INVENTORY_DEFAULT)
             .build(),
             () -> {
@@ -41,11 +48,26 @@ public class UserInputPanel extends Widget {
             put(ButtonWidget.ButtonWidgetState.MOUSE_DOWN, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_INVENTORY_DOWN));
             put(ButtonWidget.ButtonWidgetState.DISABLED, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_INVENTORY_DISABLED));
         }});
-        glw.addWidget(invButton);
+        addWidget(invButton);
 
+        ButtonWidget craftingButton = new ButtonWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 54+12, 11))
+            .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DEFAULT)
+            .build(), () -> {
+            System.out.println("Toggling crafting");
+            return null;
+        });
+        craftingButton.setButtonStateSprites(new EnumMap<>(ButtonWidget.ButtonWidgetState.class) {{
+            put(ButtonWidget.ButtonWidgetState.DEFAULT, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DEFAULT));
+            put(ButtonWidget.ButtonWidgetState.MOUSE_OVER, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_OVER));
+            put(ButtonWidget.ButtonWidgetState.MOUSE_DOWN, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DOWN));
+            put(ButtonWidget.ButtonWidgetState.DISABLED, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DISABLED));
+        }});
+        addWidget(craftingButton);
 
         ButtonWidget worldMapButton = new ButtonWidget(LayoutData.builder()
-            .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_INVENTORY_DEFAULT)
+            .anchor(new VDim(0, 0, 107+14, 11))
+            .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DEFAULT)
             .build(), () -> {
             System.out.println("Toggling world map");
             return null;
@@ -56,23 +78,21 @@ public class UserInputPanel extends Widget {
             put(ButtonWidget.ButtonWidgetState.MOUSE_DOWN, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_WORLD_MAP_DOWN));
             put(ButtonWidget.ButtonWidgetState.DISABLED, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_WORLD_MAP_DISABLED));
         }});
-        glw.addWidget(worldMapButton);
+        addWidget(worldMapButton);
 
-
-        ButtonWidget craftingButton = new ButtonWidget(LayoutData.builder()
-            .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_INVENTORY_DEFAULT)
+        ButtonWidget gameMenuButton = new ButtonWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 176, 11))
+            .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_GAME_MENU_DEFAULT)
             .build(), () -> {
-            System.out.println("Toggling world map");
+            System.out.println("Toggling escape");
             return null;
         });
-        craftingButton.setButtonStateSprites(new EnumMap<>(ButtonWidget.ButtonWidgetState.class) {{
-            put(ButtonWidget.ButtonWidgetState.DEFAULT, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DEFAULT));
-            put(ButtonWidget.ButtonWidgetState.MOUSE_OVER, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_OVER));
-            put(ButtonWidget.ButtonWidgetState.MOUSE_DOWN, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DOWN));
-            put(ButtonWidget.ButtonWidgetState.DISABLED, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DISABLED));
+        gameMenuButton.setButtonStateSprites(new EnumMap<>(ButtonWidget.ButtonWidgetState.class) {{
+            put(ButtonWidget.ButtonWidgetState.DEFAULT, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_GAME_MENU_DEFAULT));
+            put(ButtonWidget.ButtonWidgetState.MOUSE_OVER, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_GAME_MENU_OVER));
+            put(ButtonWidget.ButtonWidgetState.MOUSE_DOWN, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_GAME_MENU_DOWN));
+            put(ButtonWidget.ButtonWidgetState.DISABLED, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_GAME_MENU_DISABLED));
         }});
-        glw.addWidget(craftingButton);
-
-        addWidget(glw);
+        addWidget(gameMenuButton);
     }
 }

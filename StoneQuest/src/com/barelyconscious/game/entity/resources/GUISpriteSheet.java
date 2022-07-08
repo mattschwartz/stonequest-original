@@ -46,20 +46,33 @@ public final class GUISpriteSheet {
         BUTTON_DOWN(new Region(0, 652, 81, 26)),
         BUTTON_DISABLED(new Region(81, 652, 81, 26)),
 
-        UI_MENU_BUTTON_INVENTORY_DEFAULT(new Region(0, 678, 47, 35)),
-        UI_MENU_BUTTON_INVENTORY_OVER(new Region(94, 678, 47, 35)),
-        UI_MENU_BUTTON_INVENTORY_DOWN(new Region(47, 678, 47, 35)),
-        UI_MENU_BUTTON_INVENTORY_DISABLED(new Region(0, 0, 47, 35)),
+        UI_MENU_BUTTON_INVENTORY_DEFAULT(new Region(104, 1097, 52, 77)),
+        UI_MENU_BUTTON_INVENTORY_DOWN(new Region(0, 1097, 52, 77)),
+        UI_MENU_BUTTON_INVENTORY_OVER(new Region(52, 1097, 52, 77)),
+        UI_MENU_BUTTON_INVENTORY_DISABLED(new Region(0, 0, 52, 77)),
 
-        UI_MENU_BUTTON_CRAFTING_DEFAULT(new Region(0, 713, 47, 35)),
-        UI_MENU_BUTTON_CRAFTING_DOWN(new Region(47, 713, 47, 35)),
-        UI_MENU_BUTTON_CRAFTING_OVER(new Region(94, 713, 47, 35)),
-        UI_MENU_BUTTON_CRAFTING_DISABLED(new Region(0, 713, 47, 35)),
+        UI_MENU_BUTTON_CRAFTING_DEFAULT(new Region(104, 1174, 52, 77)),
+        UI_MENU_BUTTON_CRAFTING_DOWN(new Region(0, 1174, 52, 77)),
+        UI_MENU_BUTTON_CRAFTING_OVER(new Region(52, 1174, 52, 77)),
+        UI_MENU_BUTTON_CRAFTING_DISABLED(new Region(0, 1174, 52, 77)),
 
-        UI_MENU_BUTTON_WORLD_MAP_DEFAULT(new Region(0, 853, 47, 35)),
-        UI_MENU_BUTTON_WORLD_MAP_DOWN(new Region(47, 853, 47, 35)),
-        UI_MENU_BUTTON_WORLD_MAP_OVER(new Region(94, 853, 47, 35)),
-        UI_MENU_BUTTON_WORLD_MAP_DISABLED(new Region(0, 853, 47, 35)),
+        UI_MENU_BUTTON_WORLD_MAP_DEFAULT(new Region(104, 1328, 52, 77)),
+        UI_MENU_BUTTON_WORLD_MAP_DOWN(new Region(0, 1328, 52, 77)),
+        UI_MENU_BUTTON_WORLD_MAP_OVER(new Region(52, 1328, 52, 77)),
+        UI_MENU_BUTTON_WORLD_MAP_DISABLED(new Region(0, 1328, 52, 77)),
+
+        UI_MENU_BUTTON_GAME_MENU_DEFAULT(new Region(104, 1251, 52, 77)),
+        UI_MENU_BUTTON_GAME_MENU_DOWN(new Region(0, 1251, 52, 77)),
+        UI_MENU_BUTTON_GAME_MENU_OVER(new Region(52, 1251, 52, 77)),
+        UI_MENU_BUTTON_GAME_MENU_DISABLED(new Region(0, 1251, 52, 77)),
+
+        UI_MENU_BUTTON_CLOSE_BUTTON_DEFAULT(new Region(199, 626, 34, 34)),
+        UI_MENU_BUTTON_CLOSE_BUTTON_DOWN(new Region(199, 660, 34, 34)),
+        UI_MENU_BUTTON_CLOSE_BUTTON_OVER(new Region(165, 626, 34, 34)),
+        UI_MENU_BUTTON_CLOSE_BUTTON_DISABLED(new Region(0, 0, 34, 34)),
+
+        UI_INPUT_CONTROL_BACKGROUND(new Region(0, 921, 239, 99))
+
         ;
 
         private final Region bounds;

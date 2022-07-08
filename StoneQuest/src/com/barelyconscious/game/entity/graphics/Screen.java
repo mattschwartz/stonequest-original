@@ -121,6 +121,8 @@ public final class Screen {
                         0, 0,
                         getWidth(), getHeight(),
                         null);
+                    g.setColor(Color.WHITE);
+                    g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
                 } finally {
                     if (g != null) {
                         g.dispose();

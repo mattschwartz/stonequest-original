@@ -4,6 +4,7 @@ import com.barelyconscious.game.delegate.*;
 
 import java.awt.event.*;
 
+// todo(p0): doesn't handle multiple keys at once
 public class KeyInputHandler implements KeyListener {
 
     private static final class InstanceHolder {

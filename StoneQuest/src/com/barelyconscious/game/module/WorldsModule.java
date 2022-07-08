@@ -84,6 +84,7 @@ public class WorldsModule extends AbstractModule {
         final KeyInputHandler keyInputHandler
     ) {
         final JFrame frame = new JFrame();
+        frame.setUndecorated(true);
         frame.setMinimumSize(new Dimension(screenWidth, screenHeight));
         frame.setTitle(windowTitle + " v" + version);
         frame.setLocationRelativeTo(null);
