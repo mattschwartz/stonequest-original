@@ -1,7 +1,6 @@
 package com.barelyconscious.game.entity.gui;
 
 import com.barelyconscious.game.entity.gui.widgets.ButtonWidget;
-import com.barelyconscious.game.entity.gui.widgets.InventoryBagWidget;
 import com.barelyconscious.game.entity.gui.widgets.SpriteWidget;
 import com.barelyconscious.game.entity.resources.GUISpriteSheet;
 import com.barelyconscious.game.entity.resources.Resources;
@@ -17,15 +16,25 @@ public class UserInputPanel extends Widget {
         .anchor(new VDim(1, 0,
             -GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND.getWidth() - 1,
             1))
-//            -GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND.getHeight()))
         .size(GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND)
         .build();
 
-    private final InventoryBagWidget inventoryBagWidget;
+    private final Widget inventoryBagWidget;
+    private final Widget craftingMenuWidget;
+    private final Widget worldMapWidget;
+    private final Widget gameMenuWidget;
 
-    public UserInputPanel(final InventoryBagWidget inventoryBagWidget) {
+    public UserInputPanel(
+        final Widget inventoryBagWidget,
+        final Widget craftingMenuWidget,
+        final Widget worldMapWidget,
+        final Widget gameMenuWidget
+    ) {
         super(LAYOUT);
         this.inventoryBagWidget = inventoryBagWidget;
+        this.craftingMenuWidget = craftingMenuWidget;
+        this.worldMapWidget = worldMapWidget;
+        this.gameMenuWidget = gameMenuWidget;
 
         addWidget(new SpriteWidget(LayoutData.DEFAULT,
             Resources.instance().getSprite(GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND)));
@@ -51,10 +60,10 @@ public class UserInputPanel extends Widget {
         addWidget(invButton);
 
         ButtonWidget craftingButton = new ButtonWidget(LayoutData.builder()
-            .anchor(new VDim(0, 0, 54+12, 11))
+            .anchor(new VDim(0, 0, 54 + 12, 11))
             .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DEFAULT)
             .build(), () -> {
-            System.out.println("Toggling crafting");
+            craftingMenuWidget.setEnabled(!craftingMenuWidget.isEnabled());
             return null;
         });
         craftingButton.setButtonStateSprites(new EnumMap<>(ButtonWidget.ButtonWidgetState.class) {{
@@ -66,10 +75,10 @@ public class UserInputPanel extends Widget {
         addWidget(craftingButton);
 
         ButtonWidget worldMapButton = new ButtonWidget(LayoutData.builder()
-            .anchor(new VDim(0, 0, 107+14, 11))
+            .anchor(new VDim(0, 0, 107 + 14, 11))
             .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DEFAULT)
             .build(), () -> {
-            System.out.println("Toggling world map");
+            worldMapWidget.setEnabled(worldMapWidget.isEnabled());
             return null;
         });
         worldMapButton.setButtonStateSprites(new EnumMap<>(ButtonWidget.ButtonWidgetState.class) {{
@@ -84,7 +93,7 @@ public class UserInputPanel extends Widget {
             .anchor(new VDim(0, 0, 176, 11))
             .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_GAME_MENU_DEFAULT)
             .build(), () -> {
-            System.out.println("Toggling escape");
+            gameMenuWidget.setEnabled(gameMenuWidget.isEnabled());
             return null;
         });
         gameMenuButton.setButtonStateSprites(new EnumMap<>(ButtonWidget.ButtonWidgetState.class) {{

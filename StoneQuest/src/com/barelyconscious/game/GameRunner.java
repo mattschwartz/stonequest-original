@@ -29,8 +29,11 @@ import com.barelyconscious.game.entity.gui.HeroQuickbarPanel;
 import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.UserInputPanel;
 import com.barelyconscious.game.entity.gui.VDim;
+import com.barelyconscious.game.entity.gui.widgets.CraftingMenuWidget;
+import com.barelyconscious.game.entity.gui.widgets.GameMenuWidget;
 import com.barelyconscious.game.entity.gui.widgets.InventoryBagWidget;
 import com.barelyconscious.game.entity.gui.widgets.TileInfoWidget;
+import com.barelyconscious.game.entity.gui.widgets.WorldMapWidget;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
 import com.barelyconscious.game.entity.item.GameItems;
@@ -302,9 +305,20 @@ public final class GameRunner {
                 INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight()))
             .build(), inventory, 4, 4);
 
+        val wCraftingMenu = new CraftingMenuWidget();
+        var wWorldMapMenu = new WorldMapWidget();
+        var wGameMenu = new GameMenuWidget();
+
         gui.addWidget(wBackpack);
+        gui.addWidget(wCraftingMenu);
+        gui.addWidget(wWorldMapMenu);
+        gui.addWidget(wGameMenu);
+
         gui.addWidget(new UserInputPanel(
-            wBackpack));
+            wBackpack,
+            wCraftingMenu,
+            wWorldMapMenu,
+            wGameMenu));
     }
 
     private static final Random RANDOM = new Random(100L);

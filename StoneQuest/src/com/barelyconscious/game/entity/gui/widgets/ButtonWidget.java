@@ -71,7 +71,6 @@ public class ButtonWidget extends MouseInputWidget {
         for (final ButtonWidgetState state : ButtonWidgetState.values()) {
             WSprite spriteOverride = spriteOverrides.get(state);
             if (spriteOverride != null) {
-                System.out.println("Setting " + state + " sprite to " + spriteOverride);
                 spritesByState.put(state, spriteOverride);
             }
         }
