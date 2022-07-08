@@ -1,29 +1,36 @@
 package com.barelyconscious.game.entity;
 
+import com.barelyconscious.game.entity.components.BoxColliderComponent;
 import com.barelyconscious.game.entity.components.Component;
-import com.barelyconscious.game.entity.components.*;
-import com.barelyconscious.game.entity.graphics.*;
-import com.barelyconscious.game.entity.item.*;
-import com.barelyconscious.game.entity.resources.*;
-import com.barelyconscious.game.physics.*;
-import com.barelyconscious.game.shape.*;
-import lombok.*;
-import lombok.extern.log4j.*;
+import com.barelyconscious.game.entity.components.MouseListenerComponent;
+import com.barelyconscious.game.entity.components.SpriteComponent;
+import com.barelyconscious.game.entity.graphics.FontContext;
+import com.barelyconscious.game.entity.graphics.RenderContext;
+import com.barelyconscious.game.entity.graphics.RenderLayer;
+import com.barelyconscious.game.entity.item.Item;
+import com.barelyconscious.game.entity.resources.ResourceSprite;
+import com.barelyconscious.game.entity.resources.Resources;
+import com.barelyconscious.game.physics.CollisionData;
+import com.barelyconscious.game.shape.Box;
+import com.barelyconscious.game.shape.Vector;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.event.MouseEvent;
 
+// todo(p1): interacting with items should be handled by the player controller instead, something like casting out
+//  from the hero to get all Items in the vicinity
 @Log4j2
 public class ItemLootActor extends Actor {
 
     private static final int DEFAULT_WIDTH = 30;
     private static final int DEFAULT_HEIGHT = 30;
+
+    private final MouseListenerComponent mouseListenerComponent;
+
     @Setter
     private Item item;
-
-    public ItemLootActor(final Vector transform) {
-        this(transform, null);
-    }
 
     public ItemLootActor(final Vector transform, final Item item) {
         super(transform);
@@ -35,19 +42,20 @@ public class ItemLootActor extends Actor {
             new Sprite(sprite.getTexture(), DEFAULT_WIDTH, DEFAULT_HEIGHT),
             RenderLayer.LOOT));
 
-        final Box bounds = new Box(0, DEFAULT_WIDTH, 0, DEFAULT_HEIGHT);
         final BoxColliderComponent collider = new BoxColliderComponent(
-            this, false, true, bounds);
+            this, false, true, new Box(-DEFAULT_WIDTH, DEFAULT_WIDTH*3, -DEFAULT_HEIGHT, DEFAULT_HEIGHT*3));
 
         collider.delegateOnEnter.bindDelegate(this::onEnter);
         collider.delegateOnLeave.bindDelegate(this::onLeave);
 
         addComponent(collider);
         attachPromptComponent();
-        addComponent(new KeyListenerComponent(this, 'e', this::onItemPickup));
+        addComponent(mouseListenerComponent = new MouseListenerComponent(this, new Box(0, DEFAULT_WIDTH, 0, DEFAULT_HEIGHT)));
+
+        mouseListenerComponent.delegateOnMouseClicked.bindDelegate(this::onItemPickup);
     }
 
-    private Void onItemPickup(KeyEvent keyEvent) {
+    private Void onItemPickup(MouseEvent keyEvent) {
         if (numHeroesOver > 0 && item != null) {
             final Inventory inventory = GameInstance.getInstance().getPlayerController().getInventory();
             if (inventory.addItem(item)) {
@@ -90,20 +98,52 @@ public class ItemLootActor extends Actor {
 
             @Override
             public void render(EventArgs eventArgs, RenderContext renderContext) {
-                if (item == null && !isErrorLogged) {
-                    log.error("ItemLootActor#{} has null item!", getParent().id);
-                    isErrorLogged = true;
+                if (item == null) {
+                    if (!isErrorLogged) {
+                        log.error("ItemLootActor#{} has null item!", getParent().id);
+                        isErrorLogged = true;
+                    }
                     getParent().destroy();
                     return;
                 }
 
                 final FontContext fc = renderContext.getFontContext();
 
-                if (numHeroesOver > 0 && item != null) {
-                    final String msg = String.format("Pick up '%s'", item.getName());
-                    fc.renderString(msg, Color.yellow, renderContext.camera.getScreenWidth() / 2 - 50, 30,
-                        RenderLayer.GUI);
+                if (!mouseListenerComponent.isMouseOver()) {
+                    return;
                 }
+
+                final StringBuilder sb = new StringBuilder();
+                sb.append("{COLOR=GREEN}").append(item.getName()).append("\n");
+
+                if (numHeroesOver > 0) {
+                    sb.append("{COLOR=GRAY}").append(item.getDescription()).append("\n\n");
+                    sb.append("{COLOR=WHITE}Click to pick up.").append("\n");
+                } else {
+                    sb.append("{COLOR=RED}").append("Move closer\n");
+                }
+
+                final String msg = sb.toString();
+                final int screenWidth = renderContext.camera.getScreenWidth();
+                final int fontWidth = fc.getStringWidth(msg);
+                final int fontHeight = fc.getStringHeight(msg);
+
+                final Box stringBounds = new Box(0, screenWidth, 15, 15 + fontHeight);
+
+                fc.setRenderLayer(RenderLayer.GUI);
+
+                final Box boxBounds = new Box(
+                    (screenWidth - fontWidth) / 2 - 4,
+                    (screenWidth - fontWidth) / 2 + fontWidth + 8,
+                    0,
+                    10+fontHeight);
+
+                renderContext.renderGuiRect(new Color(33, 33, 33), true,
+                    boxBounds);
+                fc.drawString(
+                    msg,
+                    FontContext.TextAlign.CENTER,
+                    stringBounds);
             }
         });
     }

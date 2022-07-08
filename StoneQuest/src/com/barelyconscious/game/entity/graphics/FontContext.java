@@ -27,6 +27,9 @@ import java.util.stream.Collectors;
 @Log4j2
 public class FontContext {
 
+    private static final int LINE_SPACING = 2;
+    private static final Pattern COMMAND_PATTERN = Pattern.compile("\\{(\\w+)=([\\w, ]+)}");
+
     public enum TextAlign {
         LEFT,
         CENTER,
@@ -68,6 +71,10 @@ public class FontContext {
         this.renderContext = renderContext;
     }
 
+    /**
+     * @deprecated use drawString instead
+     */
+    @Deprecated
     public void renderString(
         final String msg,
         final Color color,
@@ -86,11 +93,6 @@ public class FontContext {
         setRenderLayer(prevLayer);
         setColor(prevColor);
     }
-
-    private static final int LINE_SPACING = 2;
-
-
-    private static final Pattern COMMAND_PATTERN = Pattern.compile("\\{(\\w+)=([\\w, ]+)}");
 
     public void drawString(final String msg, final TextAlign textAlign, final Box bounds) {
         final Graphics2D g = (Graphics2D) renderContext.getGraphics(renderLayer);
@@ -149,10 +151,10 @@ public class FontContext {
         int yOffs = 0;
         for (String line : msg.split("\n")) {
             int xOffs = 0;
-            int lineWidth = getStringWidth(line);
-
             int matchesEndIndex = applyFormat(line, g);
             line = line.substring(matchesEndIndex);
+
+            int lineWidth = getStringWidth(line, g);
 
             // todo(p0): make this formattable?
             switch (textAlignment) {
@@ -164,7 +166,7 @@ public class FontContext {
 
             g.drawString(line, screenX + xOffs, screenY + yOffs);
 
-            yOffs += getStringHeight(line) + LINE_SPACING;
+            yOffs += getStringHeight(line, g);
         }
 
         g.setColor(prev);
@@ -172,6 +174,8 @@ public class FontContext {
     }
 
     /**
+     * todo(p0): this logic prevents formats from occurring within a line eg "Pick up {COLOR=GREEN}ItemName" removes
+     *  the "Pick Up" from the line bc of the index here
      * @return the index after any format matching
      */
     private int applyFormat(final String line, final Graphics g) {
@@ -257,6 +261,9 @@ public class FontContext {
             case "GREEN":
                 g.setColor(new Color(69, 182, 69));
                 return true;
+            case "GRAY":
+            case "GREY":
+            case "LIGHT_GREY":
             case "LIGHT_GRAY":
                 g.setColor(new Color(165, 165, 165));
                 return true;
@@ -269,6 +276,24 @@ public class FontContext {
         }
     }
 
+    private int getStringWidth(final String str, final Graphics g) {
+        if (StringUtils.isBlank(str)) {
+            return 0;
+        }
+        int maxWidth = 0;
+        for (String part : str.split("\n")) {
+            if (part.length() == 0) {
+                continue;
+            }
+            FontRenderContext frc = g.getFontMetrics(g.getFont()).getFontRenderContext();
+            TextLayout textLayout = new TextLayout(part, g.getFont(), frc);
+
+            final int partWidth = (int) Math.round(textLayout.getBounds().getWidth());
+            maxWidth = Math.max(partWidth, maxWidth);
+        }
+        return maxWidth;
+    }
+
     public int getStringWidth(final String str) {
         if (StringUtils.isBlank(str)) {
             return 0;
@@ -276,6 +301,8 @@ public class FontContext {
         int maxWidth = 0;
         for (String part : str.split("\n")) {
             Graphics g = renderContext.getGraphics(renderLayer);
+            g.setFont(font);
+            g.setColor(color);
             final int matchesEndIndex = applyFormat(part, g);
             part = part.substring(matchesEndIndex);
             if (part.length() == 0) {
@@ -292,8 +319,7 @@ public class FontContext {
         return maxWidth;
     }
 
-
-    public int getStringHeight(final String str) {
+    private int getStringHeight(final String str, final Graphics g) {
         final String[] parts = str.split("\n");
         double totalHeight = 0;
 
@@ -301,10 +327,41 @@ public class FontContext {
             if (StringUtils.isBlank(part)) {
                 part = "@"; // newlines should take up space too
             }
-            Graphics g = renderContext.getGraphics(renderLayer);
-            FontRenderContext frc = g.getFontMetrics(font).getFontRenderContext();
+            Font formatFont = g.getFont();
+            FontRenderContext frc = g.getFontMetrics(formatFont).getFontRenderContext();
 
-            TextLayout textLayout = new TextLayout(part, font, frc);
+            TextLayout textLayout = new TextLayout(part, formatFont, frc);
+            totalHeight += Math.round(textLayout.getBounds().getHeight());
+        }
+
+        if (parts.length > 1) {
+            totalHeight += (parts.length - 1) * LINE_SPACING;
+        }
+
+        return (int) totalHeight;
+    }
+
+    public int getStringHeight(final String str) {
+        final String[] parts = str.split("\n");
+        double totalHeight = 0;
+
+        Graphics g = renderContext.getGraphics(renderLayer);
+        g.setFont(font);
+        g.setColor(color);
+        for (String part : parts) {
+            if (StringUtils.isBlank(part)) {
+                part = "@"; // newlines should take up space too
+            }
+            final int matchesEndIndex = applyFormat(part, g);
+            part = part.substring(matchesEndIndex);
+            if (part.length() == 0) {
+                continue;
+            }
+
+            Font formatFont = g.getFont();
+            FontRenderContext frc = g.getFontMetrics(formatFont).getFontRenderContext();
+
+            TextLayout textLayout = new TextLayout(part, formatFont, frc);
             totalHeight += Math.round(textLayout.getBounds().getHeight());
         }
 

@@ -124,6 +124,13 @@ public class PlayerController {
                 GameInstance.PartySlot.fromSlotId(newIndex));
         }
 
+        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+            final Actor usedBy = GameInstance.getInstance().getHeroSelected();
+            final Vector facing = usedBy.facing;
+
+            new AwesomeBulletWeaponItem().use(usedBy, facing);
+        }
+
         return null;
     }
 
@@ -150,12 +157,6 @@ public class PlayerController {
     private Void onMouseClicked(final MouseEvent mouseEvent) {
         mouseClickedScreenPos = mouseScreenPos = new Vector(mouseEvent.getX(), mouseEvent.getY());
         mouseClickedWorldPos = mouseWorldPos = GameInstance.getInstance().getCamera().screenToWorldPos(mouseScreenPos);
-
-        final Actor usedBy = GameInstance.getInstance().getHeroSelected();
-        final Vector facing = usedBy.facing;
-
-        new AwesomeBulletWeaponItem().use(usedBy, facing);
-
         return null;
     }
 

@@ -9,6 +9,7 @@ import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.Hero;
 import com.barelyconscious.game.entity.HeroClassType;
 import com.barelyconscious.game.entity.Inventory;
+import com.barelyconscious.game.entity.ItemLootActor;
 import com.barelyconscious.game.entity.Stats;
 import com.barelyconscious.game.entity.TileActor;
 import com.barelyconscious.game.entity.World;
@@ -282,6 +283,9 @@ public final class GameRunner {
             .addForce(Vector.DOWN, 100f);
 
         world.spawnActor(aBullet);
+
+        world.spawnActor(new ItemLootActor(
+            new Vector(200, 175), GameItems.IRON_SHIELD.toItem()));
 
         aRat.addComponent(new DropOnDeathComponent(aRat, GameItems.WILLOW_BARK.toItem()));
     }
