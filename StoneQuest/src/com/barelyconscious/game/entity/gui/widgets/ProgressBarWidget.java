@@ -21,6 +21,22 @@ public class ProgressBarWidget extends Widget {
 
     public ProgressBarWidget(
         final LayoutData layout,
+        final WSprite start,
+        final WSprite mid,
+        final WSprite partialCap,
+        final float progress
+    ) {
+        super(layout);
+        this.progressStart = start;
+        this.progressMid = mid;
+        this.progressPartialCap = partialCap;
+        this.progressFullCap = null;
+
+        this.progress =  progress;
+    }
+
+    public ProgressBarWidget(
+        final LayoutData layout,
         final AdjustableValueComponent stat,
         final WSprite progressStart,
         final WSprite progressMid,
@@ -50,7 +66,7 @@ public class ProgressBarWidget extends Widget {
         xOffs += renderMid(xOffs, renderContext);
         if (progress < 1) {
             renderPartialCap(xOffs, renderContext);
-        } else {
+        } else if (progressFullCap != null) {
             renderFullCap(renderContext);
         }
     }
@@ -87,7 +103,13 @@ public class ProgressBarWidget extends Widget {
     }
 
     private int renderMid(final int xOffs, final RenderContext renderContext) {
-        final int maxWidth = screenBounds.width - progressFullCap.getWidth();
+        final int maxWidth;
+        if (progressFullCap != null) {
+            maxWidth = screenBounds.width - progressFullCap.getWidth();
+        } else {
+            maxWidth = screenBounds.width;
+
+        }
         final Box bounds = new Box(
             screenBounds.left + xOffs,
             screenBounds.left + (int) (maxWidth * progress),

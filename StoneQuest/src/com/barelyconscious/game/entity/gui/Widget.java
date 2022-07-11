@@ -2,12 +2,14 @@ package com.barelyconscious.game.entity.gui;
 
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.graphics.RenderContext;
+import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.shape.Box;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.annotation.Nullable;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -71,6 +73,10 @@ public abstract class Widget {
     public final void render(final EventArgs eventArgs, final RenderContext renderContext) {
         this.onRender(eventArgs, renderContext);
         final List<Widget> toRemove = new ArrayList<>();
+
+        if (EventArgs.IS_DEBUG) {
+            renderContext.renderRect(new Color(175, 175, 0, 88), false, screenBounds, RenderLayer._DEBUG);
+        }
 
         for (final Widget w : widgets) {
             if (w.isRemoving) {
