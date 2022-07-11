@@ -82,14 +82,12 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
                     if (it.isMouseOver()) {
                         if (!it.contains(e.getX(), e.getY())) {
                             it.onMouseExited(e);
-                            System.out.println("Mouse input consumed by " + it);
                             isConsumed=true;
                             break;
                         }
 
                         isConsumed = it.onMouseClicked(e);
                         if (isConsumed) {
-                            System.out.println("Mouse input consumed by " + it);
                             it.onMouseReleased(e);
                             break;
                         }

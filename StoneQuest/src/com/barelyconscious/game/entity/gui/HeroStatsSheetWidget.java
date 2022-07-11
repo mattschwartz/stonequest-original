@@ -104,7 +104,7 @@ public class HeroStatsSheetWidget extends Widget {
             .anchor(new VDim(0, 0, 179, yOffs))
             .size(new VDim(0, 0, 31, 31))
             .build(),
-            InputLayer.USER_INPUT);
+            InputLayer.GUI);
         backdrop.addWidget(miw);
 
         final TextFieldWidget statWidget = new TextFieldWidget(LayoutData.builder()

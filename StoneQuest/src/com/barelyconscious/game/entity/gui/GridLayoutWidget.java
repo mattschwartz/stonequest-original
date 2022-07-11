@@ -34,22 +34,6 @@ public class GridLayoutWidget extends Widget {
     }
 
     @Override
-    public Widget addWidget(Widget widget) {
-        for (int row = 0; row < rows; ++row) {
-            for (int column = 0; column < columns; ++column) {
-                final int cellIndex = row + column * rows;
-                if (cellIndex < widgetCells.length) {
-                    if (widgetCells[cellIndex] == null) {
-                        setCell(row, column, widget);
-                        return widget;
-                    }
-                }
-            }
-        }
-        return widget;
-    }
-
-    @Override
     public void resize(Box bounds) {
         super.resize(bounds);
         this.cellSize = new Vector(

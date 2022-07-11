@@ -37,12 +37,13 @@ public class MouseInputWidget extends Widget implements Interactable {
 
     @Override
     public boolean onMouseClicked(MouseEvent e) {
-        return isMouseOver();
+        return isEnabled() && isMouseOver();
     }
 
     @Override
     public final boolean contains(final int screenX, final int screenY) {
-        return screenBounds != null && screenBounds.contains(screenX, screenY);
+        return isEnabled() &&
+            (screenBounds != null && screenBounds.contains(screenX, screenY));
     }
 
     @Override
@@ -78,10 +79,6 @@ public class MouseInputWidget extends Widget implements Interactable {
 
     @Override
     public boolean onMouseExited(MouseEvent e) {
-        if (!isEnabled()) {
-            return false;
-        }
-
         isMouseOver = false;
         delegateOnMouseOver.call(false);
         return false;

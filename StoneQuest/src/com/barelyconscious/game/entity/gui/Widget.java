@@ -7,13 +7,13 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Widget {
 
-    @Getter
     private boolean isEnabled = true;
 
     @Getter
@@ -30,6 +30,11 @@ public abstract class Widget {
     protected final List<Widget> widgets;
 
     @Getter
+    @Setter
+    @Nullable
+    private Widget parent;
+
+    @Getter
     protected Box screenBounds;
 
     public Widget(final LayoutData layout) {
@@ -37,16 +42,23 @@ public abstract class Widget {
         this.widgets = new CopyOnWriteArrayList<>();
     }
 
+    public final boolean isEnabled() {
+        if (parent != null) {
+            return parent.isEnabled && isEnabled;
+        }
+        return isEnabled;
+    }
+
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
-        widgets.stream().filter(t -> t instanceof MouseInputWidget).forEach(t -> t.setEnabled(enabled));
     }
 
     /**
      * @return the widget added
      */
     @CanIgnoreReturnValue
-    public Widget addWidget(final Widget widget) {
+    public final Widget addWidget(final Widget widget) {
+        widget.setParent(this);
         widgets.add(widget);
         return widget;
     }
