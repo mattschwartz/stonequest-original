@@ -30,7 +30,7 @@ import com.barelyconscious.game.entity.gui.HeroQuickbarPanel;
 import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.UserInputPanel;
 import com.barelyconscious.game.entity.gui.VDim;
-import com.barelyconscious.game.entity.gui.widgets.CraftingMenuWidget;
+import com.barelyconscious.game.entity.gui.CraftingWindowWidget;
 import com.barelyconscious.game.entity.gui.widgets.GameMenuWidget;
 import com.barelyconscious.game.entity.gui.widgets.InventoryBagWidget;
 import com.barelyconscious.game.entity.gui.widgets.TileInfoWidget;
@@ -309,7 +309,7 @@ public final class GameRunner {
                 INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight()))
             .build(), inventory, 4, 4);
 
-        val wCraftingMenu = new CraftingMenuWidget();
+        val wCraftingMenu = new CraftingWindowWidget();
         var wWorldMapMenu = new WorldMapWidget();
         var wGameMenu = new GameMenuWidget();
 

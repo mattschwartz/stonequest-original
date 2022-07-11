@@ -75,7 +75,16 @@ public class PlayerController {
 
     private Void onKeyTyped(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
-            EventArgs.IS_DEBUG = !EventArgs.IS_DEBUG;
+            if (EventArgs.IS_DEBUG) {
+                if (EventArgs.IS_VERBOSE) {
+                    EventArgs.IS_DEBUG = false;
+                    EventArgs.IS_VERBOSE = false;
+                } else {
+                    EventArgs.IS_VERBOSE = true;
+                }
+            } else {
+                EventArgs.IS_DEBUG = true;
+            }
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 System.out.println("Requesting stop");

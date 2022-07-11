@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+// todo(p1): implement concept of window focus
+// todo(p2): UI navigation
 public class MouseInputHandler implements MouseListener, MouseMotionListener, MouseWheelListener {
 
     private static final class InstanceHolder {
@@ -80,12 +82,14 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
                     if (it.isMouseOver()) {
                         if (!it.contains(e.getX(), e.getY())) {
                             it.onMouseExited(e);
+                            System.out.println("Mouse input consumed by " + it);
                             isConsumed=true;
                             break;
                         }
 
                         isConsumed = it.onMouseClicked(e);
                         if (isConsumed) {
+                            System.out.println("Mouse input consumed by " + it);
                             it.onMouseReleased(e);
                             break;
                         }

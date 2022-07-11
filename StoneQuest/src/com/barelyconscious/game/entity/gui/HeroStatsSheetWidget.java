@@ -15,7 +15,7 @@ import com.barelyconscious.game.entity.resources.Resources;
 
 import java.awt.Color;
 
-public class HeroStatsSheetWidget extends MouseInputWidget {
+public class HeroStatsSheetWidget extends Widget {
 
     private final Hero hero;
     private final Widget detailedStatsWidget;
@@ -26,8 +26,7 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
                 .anchor(new VDim(0, 0, 0, -(15 + GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getHeight())))
                 .size(new VDim(0, 0, GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getWidth(),
                     GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getHeight()))
-                .build(),
-            InputLayer.GUI);
+                .build());
         this.hero = hero;
 
         SpriteWidget backdrop = new SpriteWidget(LayoutData.DEFAULT,
@@ -127,10 +126,10 @@ public class HeroStatsSheetWidget extends MouseInputWidget {
         statWidget.addWidget(ttw);
 
         miw.delegateOnMouseOver.bindDelegate(e -> {
-            ttw.setVisible(e);
+            ttw.setEnabled(e);
             return null;
         });
-        ttw.setVisible(false);
+        ttw.setEnabled(false);
     }
 
     private void createHeroDescriptionTooltipWidget(SpriteWidget backdrop) {
