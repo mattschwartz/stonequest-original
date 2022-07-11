@@ -23,6 +23,7 @@ public class Item {
     private final String description;
     private final WSprite sprite;
     private final List<ItemRequirement> requirements;
+    private final List<ItemProperty> properties;
 
     public final Delegate<ItemContext> onUse = new Delegate<>();
 

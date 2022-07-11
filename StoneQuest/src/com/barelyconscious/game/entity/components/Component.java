@@ -6,8 +6,6 @@ import com.barelyconscious.game.entity.graphics.RenderContext;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 public abstract class Component {
 
     /**
@@ -33,12 +31,26 @@ public abstract class Component {
     @Setter
     private boolean removeOnNextUpdate = false;
 
-    @Getter
-    private final Actor parent;
+    private Actor parent;
 
     public Component(final Actor parent) {
-        checkArgument(parent != null, "parent is null");
+        this.parent = parent;
+    }
 
+    public Actor getParent() {
+        if (parent == null) {
+            throw new RuntimeException("Component with null parent tried to access parent! Component=" + this);
+        }
+        return parent;
+    }
+
+    /**
+     * Removes this component from its current parent and reassigns the component's parent to the supplied parent
+     */
+    public void setParent(Actor parent) {
+        if (this.parent != null) {
+            this.parent.removeComponent(this);
+        }
         this.parent = parent;
     }
 

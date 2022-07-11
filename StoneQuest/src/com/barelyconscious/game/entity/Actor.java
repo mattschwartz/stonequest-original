@@ -1,15 +1,20 @@
 package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.components.Component;
-import com.barelyconscious.game.entity.resources.Region;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import com.google.common.collect.Lists;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -98,6 +103,7 @@ public class Actor {
             return false;
         }
 
+        component.setParent(this);
         componentsByType.put(component.getClass(), component);
         return components.add(component);
     }
@@ -118,13 +124,17 @@ public class Actor {
         return componentRemoved;
     }
 
+    /**
+     * Attempts to remove the provided component. If removed, the provided component's parent is also set to null.
+     */
     @Nullable
-    public Component removeComponent(final Component component) {
-        return removeComponentByType(component.getClass());
-    }
-
-    public boolean hasComponent(final Class<? extends Component> componentType) {
-        return componentsByType.containsKey(componentType);
+    @CanIgnoreReturnValue
+    public Component removeComponent(@NonNull final Component componentToRemove) {
+        Component componentRemoved = removeComponentByType(componentToRemove.getClass());
+        if (componentRemoved != null) {
+            componentRemoved.setParent(null);
+        }
+        return componentRemoved;
     }
 
     @Nullable

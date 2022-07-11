@@ -149,7 +149,6 @@ public class HeroQuickbarPanel extends MouseInputWidget {
     public boolean onMouseClicked(MouseEvent e) {
         if (isMouseOver()) {
             statsSheet.setEnabled(!statsSheet.isEnabled());
-            System.out.println("Stats sheet=" + statsSheet.isEnabled());
             return true;
         } else {
             return false;
@@ -160,7 +159,6 @@ public class HeroQuickbarPanel extends MouseInputWidget {
 
         private final TextFieldWidget healthWidget;
         private final TextFieldWidget powerWidget;
-//        private final TextFieldWidget experienceWidget;
 
         public OnHoverRenderWidget(final HealthComponent healthComponent, final PowerComponent powerComponent) {
             super(LayoutData.DEFAULT);
