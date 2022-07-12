@@ -1,5 +1,6 @@
 package com.barelyconscious.game.entity.item;
 
+@Deprecated // use tags instead
 public enum ItemClassType {
 
     EQUIPMENT_HEAD,

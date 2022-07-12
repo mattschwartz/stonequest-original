@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * A general-purpose container of Items.
+ *
+ * todo(p0): need to implement a locking mechanism on items to prevent dupes
  */
 public final class Inventory {
 
@@ -61,7 +63,10 @@ public final class Inventory {
             return prevItem;
         }
         return null;
+    }
 
+    public boolean contains(Item item) {
+        return findIndexOfItem(item) != -1;
     }
 
     /**
