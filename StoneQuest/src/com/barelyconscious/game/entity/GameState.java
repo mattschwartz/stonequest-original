@@ -1,6 +1,12 @@
 package com.barelyconscious.game.entity;
 
+import com.barelyconscious.game.entity.hero.skill.CitizenSkill;
+import com.barelyconscious.game.entity.hero.skill.FactionSkill;
+import com.barelyconscious.game.entity.hero.skill.HeroSkill;
 import lombok.Getter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The current state of the game - things like:
@@ -21,6 +27,10 @@ public class GameState {
         private Inventory backpack;
         private Inventory resourcesInventory;
         private Inventory toolsInventory;
+
+        private final Set<HeroSkill> heroSkills = new HashSet<>();
+        private final Set<CitizenSkill> citizenSkills = new HashSet<>();
+        private final Set<FactionSkill> factionSkills = new HashSet<>();
 
         private GameStateData() {
         }

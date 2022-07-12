@@ -1,6 +1,6 @@
 package com.barelyconscious.game.entity.hero.recipe;
 
-import com.barelyconscious.game.entity.item.CraftingToolItemTag;
+import com.barelyconscious.game.entity.item.tags.CraftingToolItemTag;
 import lombok.Builder;
 import lombok.Getter;
 
