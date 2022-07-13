@@ -5,12 +5,13 @@ import com.barelyconscious.game.entity.gui.widgets.ButtonWidget;
 import com.barelyconscious.game.entity.gui.widgets.ProgressBarWidget;
 import com.barelyconscious.game.entity.gui.widgets.SpriteWidget;
 import com.barelyconscious.game.entity.gui.widgets.TextFieldWidget;
+import com.barelyconscious.game.entity.input.InputLayer;
 import com.barelyconscious.game.entity.resources.CraftingWindowSpriteSheet;
 import com.barelyconscious.game.entity.resources.Resources;
 
 import java.util.EnumMap;
 
-public class CraftingWindowWidget extends Widget {
+public class CraftingWindowWidget extends MouseInputWidget {
 
     private static final LayoutData LAYOUT = LayoutData.builder()
         .anchor(new VDim(0.5f, 0.5f,
@@ -21,7 +22,7 @@ public class CraftingWindowWidget extends Widget {
         .build();
 
     public CraftingWindowWidget() {
-        super(LAYOUT);
+        super(LAYOUT, InputLayer.GUI);
 
         addSpriteBackdrop();
         addRecipeBookDropdown();

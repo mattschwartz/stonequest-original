@@ -156,10 +156,11 @@ public class HeroStatsSheetWidget extends Widget {
     }
 
     private Widget createDetailedStatsWidget(SpriteWidget backdrop) {
-        final Widget detailedStatsWidget = new BackgroundPanelWidget(LayoutData.builder()
+        final Widget miw = new MouseInputWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 0, -(161 + 6) - 26))
             .size(new VDim(0, 0, GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getWidth(), 161))
-            .build(),
+            .build(), InputLayer.GUI);
+        final Widget detailedStatsWidget = new BackgroundPanelWidget(LayoutData.DEFAULT,
             new Color(33, 33, 33, 255));
 
         final GridLayoutWidget glw = new GridLayoutWidget(
@@ -208,7 +209,8 @@ public class HeroStatsSheetWidget extends Widget {
             }
         }
 
-        backdrop.addWidget(detailedStatsWidget);
+        backdrop.addWidget(miw);
+        miw.addWidget(detailedStatsWidget);
         detailedStatsWidget.addWidget(glw);
 
         return detailedStatsWidget;

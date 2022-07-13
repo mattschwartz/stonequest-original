@@ -14,6 +14,8 @@ import java.util.Set;
  * - Inventory
  * - Enemies in the world
  * - Doodads in the world like loot, chests, doors
+ *
+ * TODO(p1): conversion between SaveGame<->GameState
  */
 public class GameState {
 

@@ -4,6 +4,9 @@ import com.barelyconscious.game.entity.item.ItemTag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Classification of item by skill they are associated with (as ingredients/products)
+ */
 @Getter
 @AllArgsConstructor
 public enum RelatedSkillItemTag implements ItemTag {

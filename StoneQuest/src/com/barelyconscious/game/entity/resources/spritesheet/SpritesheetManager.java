@@ -3,11 +3,13 @@ package com.barelyconscious.game.entity.resources.spritesheet;
 import com.barelyconscious.game.GameRunner;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.resources.WSprite;
+import com.barelyconscious.game.exception.InvalidResourceException;
 import com.barelyconscious.game.exception.MissingResourceException;
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NonNull;
 
 import javax.imageio.ImageIO;
@@ -62,21 +64,41 @@ public class SpritesheetManager {
 
     public static final Map<String, WSprite> SPRITE_MAP = new HashMap<>();
 
-    public static void loadItemsSpritesheet() {
-        final String resourceFilepath = "sprites/items_spritesheet.json";
-        final String spritesheetFilepath = "sprites/items_spritesheet.png";
+    @Getter
+    @AllArgsConstructor
+    public enum Namespace {
+        ITEMS("items"),
+        GUI("gui");
+        private final String namespace;
+    }
 
+    /**
+     * @param spritesheetNamespace helps avoid collisions with other spritesheets for each sprite's filename
+     *                             eg: gui::button, items::button
+     */
+    public static void loadItemsSpritesheet(
+        final Namespace spritesheetNamespace,
+        final String resourceFilepath,
+        final String spritesheetFilepath
+    ) {
         final SourceSprite[] sourceSprites = readSpritesheetDefinitions(resourceFilepath);
 
         final BufferedImage spritesheet = loadSpritesheet(spritesheetFilepath);
 
         for (SourceSprite sourceSprite : sourceSprites) {
-            final String spriteName = sourceSprite.filename;
+            final String resourceName = spritesheetNamespace.namespace + "::" + sourceSprite.filename;
             final Frame frame = sourceSprite.frame;
 
             final BufferedImage spriteImage = spritesheet.getSubimage(
                 frame.x, frame.y, frame.w, frame.h);
-            SPRITE_MAP.put(spriteName, new WSprite(spriteImage, RenderLayer.GUI,
+
+            if (SPRITE_MAP.containsKey(resourceName)) {
+                throw new InvalidResourceException(String.format("[filepath=%s] Sprite with resourceName '%s' already exists.",
+                    resourceFilepath,
+                    resourceName));
+            }
+
+            SPRITE_MAP.put(resourceName, new WSprite(spriteImage, RenderLayer.GUI,
                 sourceSprite.sourceSize.w, sourceSprite.sourceSize.h));
         }
     }

@@ -11,13 +11,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Log4j2
-public class EquipmentDollWidget extends Widget {
+public class EquipmentDollWidget extends MouseInputWidget {
 
     private final EquipmentComponent equipmentComponent;
     private final Map<Integer, ItemSlotWidget> itemSlotsByClassType;
 
     public EquipmentDollWidget(LayoutData layout, EquipmentComponent equipmentComponent) {
-        super(layout);
+        super(layout, InputLayer.GUI);
         this.equipmentComponent = equipmentComponent;
         this.itemSlotsByClassType = new HashMap<>();
 
