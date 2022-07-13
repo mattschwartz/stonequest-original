@@ -4,7 +4,7 @@ import com.barelyconscious.game.entity.Inventory;
 import com.barelyconscious.game.entity.components.combat.EquipmentComponent;
 import com.barelyconscious.game.entity.gui.widgets.ItemSlotWidget;
 import com.barelyconscious.game.entity.input.InputLayer;
-import com.barelyconscious.game.entity.item.ItemClassType;
+import com.barelyconscious.game.entity.item.tags.EquipmentItemTag;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
@@ -56,87 +56,87 @@ public class EquipmentDollWidget extends MouseInputWidget {
             .size(new VDim(0, 0, 34, 34))
             .build(),
             equipmentComponent.getEquipmentInventory(),
-            equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_HEAD),
-            ItemClassType.EQUIPMENT_HEAD.ordinal(), InputLayer.USER_INPUT);
-        itemSlotWidget.addAcceptableItem(ItemClassType.EQUIPMENT_HEAD);
+            equipmentComponent.getEquippedItem(EquipmentItemTag.EQUIPMENT_HEAD),
+            EquipmentItemTag.EQUIPMENT_HEAD.ordinal(), InputLayer.USER_INPUT);
+        itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_HEAD);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_HEAD.ordinal(), itemSlotWidget);
+        itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_HEAD.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 19, 78))
             .size(new VDim(0, 0, 34, 34))
             .build(),
             equipmentComponent.getEquipmentInventory(),
-            equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_NECK),
-            ItemClassType.EQUIPMENT_NECK.ordinal(), InputLayer.USER_INPUT);
-        itemSlotWidget.addAcceptableItem(ItemClassType.EQUIPMENT_NECK);
+            equipmentComponent.getEquippedItem(EquipmentItemTag.EQUIPMENT_NECK),
+            EquipmentItemTag.EQUIPMENT_NECK.ordinal(), InputLayer.USER_INPUT);
+        itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_NECK);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_NECK.ordinal(), itemSlotWidget);
+        itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_NECK.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 19, 114))
             .size(new VDim(0, 0, 34, 34))
             .build(),
             equipmentComponent.getEquipmentInventory(),
-            equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_CHEST),
-            ItemClassType.EQUIPMENT_CHEST.ordinal(), InputLayer.USER_INPUT);
-        itemSlotWidget.addAcceptableItem(ItemClassType.EQUIPMENT_CHEST);
+            equipmentComponent.getEquippedItem(EquipmentItemTag.EQUIPMENT_CHEST),
+            EquipmentItemTag.EQUIPMENT_CHEST.ordinal(), InputLayer.USER_INPUT);
+        itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_CHEST);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_CHEST.ordinal(), itemSlotWidget);
+        itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_CHEST.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 127, 42))
             .size(new VDim(0, 0, 34, 34))
             .build(),
             equipmentComponent.getEquipmentInventory(),
-            equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_GLOVES),
-            ItemClassType.EQUIPMENT_GLOVES.ordinal(), InputLayer.USER_INPUT);
-        itemSlotWidget.addAcceptableItem(ItemClassType.EQUIPMENT_GLOVES);
+            equipmentComponent.getEquippedItem(EquipmentItemTag.EQUIPMENT_GLOVES),
+            EquipmentItemTag.EQUIPMENT_GLOVES.ordinal(), InputLayer.USER_INPUT);
+        itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_GLOVES);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_GLOVES.ordinal(), itemSlotWidget);
+        itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_GLOVES.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 127, 78))
             .size(new VDim(0, 0, 34, 34))
             .build(),
             equipmentComponent.getEquipmentInventory(),
-            equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_LEGS),
-            ItemClassType.EQUIPMENT_LEGS.ordinal(), InputLayer.USER_INPUT);
-        itemSlotWidget.addAcceptableItem(ItemClassType.EQUIPMENT_LEGS);
+            equipmentComponent.getEquippedItem(EquipmentItemTag.EQUIPMENT_LEGS),
+            EquipmentItemTag.EQUIPMENT_LEGS.ordinal(), InputLayer.USER_INPUT);
+        itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_LEGS);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_LEGS.ordinal(), itemSlotWidget);
+        itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_LEGS.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 127, 114))
             .size(new VDim(0, 0, 34, 34))
             .build(),
             equipmentComponent.getEquipmentInventory(),
-            equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_FEET),
-            ItemClassType.EQUIPMENT_FEET.ordinal(), InputLayer.USER_INPUT);
-        itemSlotWidget.addAcceptableItem(ItemClassType.EQUIPMENT_FEET);
+            equipmentComponent.getEquippedItem(EquipmentItemTag.EQUIPMENT_FEET),
+            EquipmentItemTag.EQUIPMENT_FEET.ordinal(), InputLayer.USER_INPUT);
+        itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_FEET);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_FEET.ordinal(), itemSlotWidget);
+        itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_FEET.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 55, 150))
             .size(new VDim(0, 0, 34, 34))
             .build(),
             equipmentComponent.getEquipmentInventory(),
-            equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_RIGHT_HAND),
-            ItemClassType.EQUIPMENT_RIGHT_HAND.ordinal(), InputLayer.USER_INPUT);
-        itemSlotWidget.addAcceptableItem(ItemClassType.EQUIPMENT_RIGHT_HAND);
+            equipmentComponent.getEquippedItem(EquipmentItemTag.EQUIPMENT_RIGHT_HAND),
+            EquipmentItemTag.EQUIPMENT_RIGHT_HAND.ordinal(), InputLayer.USER_INPUT);
+        itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_RIGHT_HAND);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_RIGHT_HAND.ordinal(), itemSlotWidget);
+        itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_RIGHT_HAND.ordinal(), itemSlotWidget);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 91, 150))
             .size(new VDim(0, 0, 34, 34))
             .build(),
             equipmentComponent.getEquipmentInventory(),
-            equipmentComponent.getEquippedItem(ItemClassType.EQUIPMENT_LEFT_HAND),
-            ItemClassType.EQUIPMENT_LEFT_HAND.ordinal(), InputLayer.USER_INPUT);
-        itemSlotWidget.addAcceptableItem(ItemClassType.EQUIPMENT_LEFT_HAND);
+            equipmentComponent.getEquippedItem(EquipmentItemTag.EQUIPMENT_LEFT_HAND),
+            EquipmentItemTag.EQUIPMENT_LEFT_HAND.ordinal(), InputLayer.USER_INPUT);
+        itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_LEFT_HAND);
         addWidget(itemSlotWidget);
-        itemSlotsByClassType.put(ItemClassType.EQUIPMENT_LEFT_HAND.ordinal(), itemSlotWidget);
+        itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_LEFT_HAND.ordinal(), itemSlotWidget);
     }
 }

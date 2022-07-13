@@ -11,8 +11,9 @@ import com.barelyconscious.game.entity.gui.VDim;
 import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.entity.input.InputLayer;
 import com.barelyconscious.game.entity.item.Item;
-import com.barelyconscious.game.entity.item.ItemClassType;
+import com.barelyconscious.game.entity.item.ItemTag;
 import com.barelyconscious.game.shape.Box;
+import com.google.common.collect.Sets;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.Getter;
 import lombok.NonNull;
@@ -20,8 +21,8 @@ import lombok.NonNull;
 import javax.annotation.Nullable;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ItemSlotWidget extends MouseInputWidget {
 
@@ -50,7 +51,7 @@ public class ItemSlotWidget extends MouseInputWidget {
         this.item = item;
         this.inventory = inventory;
         this.inventorySlotId = inventorySlotId;
-        this.itemSpriteWidget = new SpriteWidget(LayoutData.DEFAULT, item == null ? null : item.getSprite());
+        this.itemSpriteWidget = new SpriteWidget(LayoutData.DEFAULT, item == null ? null : item.getSprite().load());
         this.itemHighlightWidget = createItemHighlightWidget();
 
         addWidget(itemSpriteWidget);
@@ -185,7 +186,7 @@ public class ItemSlotWidget extends MouseInputWidget {
             itemHighlightWidget.setEnabled(false);
         } else if (acceptsItem(item)) {
             this.item = item;
-            itemSpriteWidget.setSprite(item.getSprite());
+            itemSpriteWidget.setSprite(item.getSprite().load());
             itemSpriteWidget.setEnabled(true);
         } else {
             return null;
@@ -220,10 +221,11 @@ public class ItemSlotWidget extends MouseInputWidget {
         };
     }
 
-    private final List<ItemClassType> acceptableItemClassTypes = new ArrayList<>();
+    // uses OR
+    private final Set<ItemTag> requiredTags = new HashSet<>();
 
-    public void addAcceptableItem(final ItemClassType acceptableItemClassType) {
-        acceptableItemClassTypes.add(acceptableItemClassType);
+    public void addRequiredItemTag(final ItemTag requiredTag) {
+        requiredTags.add(requiredTag);
     }
 
     /**
@@ -231,7 +233,12 @@ public class ItemSlotWidget extends MouseInputWidget {
      * default=true
      */
     public boolean acceptsItem(final Item item) {
-        return acceptableItemClassTypes.isEmpty() || acceptableItemClassTypes.contains(item.getItemClassType());
+        if (requiredTags.isEmpty()) {
+            return true;
+        }
+
+        // at least 1 overlapping tag
+        return Sets.intersection(item.getTags(), requiredTags).size() >= 1;
     }
 
     @Override

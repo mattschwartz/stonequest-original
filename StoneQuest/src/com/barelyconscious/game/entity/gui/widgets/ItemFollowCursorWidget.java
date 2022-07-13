@@ -41,6 +41,6 @@ public class ItemFollowCursorWidget extends Widget {
             screenBounds.top + screenY + 48
         );
 
-        renderContext.renderImage(inventoryItemOnCursor.item.getSprite().getTexture(), bounds, RenderLayer.GUI_FOCUS);
+        renderContext.renderImage(inventoryItemOnCursor.item.getSprite().load().getTexture(), bounds, RenderLayer.GUI_FOCUS);
     }
 }

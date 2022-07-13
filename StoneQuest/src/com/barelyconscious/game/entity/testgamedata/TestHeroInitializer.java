@@ -133,7 +133,7 @@ public class TestHeroInitializer {
         inventory.addItem(GameItems.WILLOW_BARK.toItem());
         inventory.addItem(GameItems.CURED_LEATHER.toItem());
         inventory.addItem(GameItems.IRON_ORE.toItem());
-        inventory.addItem(GameItems.STREAM_DRIVE.toItem());
-        inventory.addItem(GameItems.STREAM_DRIVE.toItem());
+        inventory.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
+        inventory.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
     }
 }

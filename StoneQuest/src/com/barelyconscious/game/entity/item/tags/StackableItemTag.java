@@ -6,12 +6,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ResourceItemTag implements ItemTag {
-    CLOTH("Cloth"),
-    ORE("Ore"),
-    HERB("Herb"),
-    LEATHER("Leather"),
-    TECH("Tech");
+public enum StackableItemTag implements ItemTag {
+    STACKABLE("Stackable"),
+    ;
 
     private final String tagName;
 }

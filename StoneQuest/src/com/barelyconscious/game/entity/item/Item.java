@@ -2,7 +2,9 @@ package com.barelyconscious.game.entity.item;
 
 
 import com.barelyconscious.game.delegate.Delegate;
-import com.barelyconscious.game.entity.resources.WSprite;
+import com.barelyconscious.game.entity.item.tags.ConsumableItemTag;
+import com.barelyconscious.game.entity.item.tags.StackableItemTag;
+import com.barelyconscious.game.entity.resources.Resources;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,15 +19,19 @@ public class Item {
 
     private final int itemId;
     private final int itemLevel;
-    private final ItemClassType itemClassType;
     private final Set<ItemTag> tags;
-    private final boolean isConsumable;
-    private final boolean isStackable;
     private final String name;
     private final String description;
-    private final WSprite sprite;
+    private final Resources.Sprite_Resource sprite;
     private final List<ItemRequirement> requirements;
     private final List<ItemProperty> properties;
+
+    public boolean isConsumable() {
+        return tags.stream().anyMatch(t -> t instanceof ConsumableItemTag);
+    }
+    public boolean isStackable() {
+        return tags.stream().anyMatch(t -> t instanceof StackableItemTag);
+    }
 
     public boolean hasTag(final ItemTag itemTag) {
         return tags.contains(itemTag);
