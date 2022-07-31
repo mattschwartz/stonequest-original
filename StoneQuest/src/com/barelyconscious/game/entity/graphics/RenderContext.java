@@ -5,6 +5,7 @@ import com.barelyconscious.game.entity.resources.FontResource;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
+import lombok.NonNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -109,12 +110,12 @@ public class RenderContext {
      * @param worldY the top-left corner of the image
      */
     public void render(
-        final Image image,
+        @NonNull final Image image,
         final int worldX,
         final int worldY,
         final int width,
         final int height,
-        final RenderLayer layer
+        @NonNull final RenderLayer layer
     ) {
         final Graphics graphics = graphicsByLayer.get(layer);
         final Vector screenPos = camera.worldToScreenPos(worldX, worldY);

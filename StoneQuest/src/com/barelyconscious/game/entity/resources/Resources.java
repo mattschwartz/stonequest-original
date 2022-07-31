@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import javax.imageio.ImageIO;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +54,108 @@ public final class Resources {
     public static final Sprite_Resource ITEM_TEXT_FILE_RECOVERED = new Sprite_Resource("items::text_file_recovered");
     public static final Sprite_Resource ITEM_WHEEL_OF_CHEESE = new Sprite_Resource("items::wheel_of_cheese");
 
+    public static final Sprite_Resource TEX_MYCELIUM = new Sprite_Resource("texture::mycelium");
+    public static final Sprite_Resource TEX_ADAMANTINEVEIN_512 = new Sprite_Resource("texture::adamantinevein_512");
+    public static final Sprite_Resource TEX_CAVE512 = new Sprite_Resource("texture::cave512");
+    public static final Sprite_Resource TEX_CAVE_BRICK = new Sprite_Resource("texture::cave_brick");
+    public static final Sprite_Resource TEX_CAVE_BRICK_U = new Sprite_Resource("texture::cave_brick_u");
+    public static final Sprite_Resource TEX_CAVE_MARBLE = new Sprite_Resource("texture::cave_marble");
+    public static final Sprite_Resource TEX_CAVE_MARBLE_U = new Sprite_Resource("texture::cave_marble_u");
+    public static final Sprite_Resource TEX_CAVE_RENDERED = new Sprite_Resource("texture::cave_rendered");
+    public static final Sprite_Resource TEX_CAVE_ROUNDED = new Sprite_Resource("texture::cave_rounded");
+    public static final Sprite_Resource TEX_CAVE_ROUNDED_U = new Sprite_Resource("texture::cave_rounded_u");
+    public static final Sprite_Resource TEX_CAVE_SANDSTONE_U = new Sprite_Resource("texture::cave_sandstone_u");
+    public static final Sprite_Resource TEX_CAVE_SLATE = new Sprite_Resource("texture::cave_slate");
+    public static final Sprite_Resource TEX_CAVE_SLATE_U = new Sprite_Resource("texture::cave_slate_u");
+    public static final Sprite_Resource TEX_CAVE_STONEHOUSE = new Sprite_Resource("texture::cave_stonehouse");
+    public static final Sprite_Resource TEX_CAVE_STONEHOUSE_U = new Sprite_Resource("texture::cave_stonehouse_u");
+    public static final Sprite_Resource TEX_CAVE_WOOD = new Sprite_Resource("texture::cave_wood");
+    public static final Sprite_Resource TEX_CAVE_WOOD_U = new Sprite_Resource("texture::cave_wood_u");
+    public static final Sprite_Resource TEX_CLAY = new Sprite_Resource("texture::clay");
+    public static final Sprite_Resource TEX_CLIFF = new Sprite_Resource("texture::cliff");
+    public static final Sprite_Resource TEX_COBBLE = new Sprite_Resource("texture::cobble");
+    public static final Sprite_Resource TEX_COBBLE2 = new Sprite_Resource("texture::cobble2");
+    public static final Sprite_Resource TEX_COBBLE3 = new Sprite_Resource("texture::cobble3");
+    public static final Sprite_Resource TEX_COPPERVEIN_512 = new Sprite_Resource("texture::coppervein_512");
+    public static final Sprite_Resource TEX_DIRT = new Sprite_Resource("texture::dirt");
+    public static final Sprite_Resource TEX_ENCHANTEDFOREST = new Sprite_Resource("texture::enchantedforest");
+    public static final Sprite_Resource TEX_ENCHANTEDGRASS = new Sprite_Resource("texture::enchantedgrass");
+    public static final Sprite_Resource TEX_FALLDIRT = new Sprite_Resource("texture::falldirt");
+    public static final Sprite_Resource TEX_FALLGRASS = new Sprite_Resource("texture::fallgrass");
+    public static final Sprite_Resource TEX_FALLGRAVEL = new Sprite_Resource("texture::fallgravel");
+    public static final Sprite_Resource TEX_FALLPACKED = new Sprite_Resource("texture::fallpacked");
+    public static final Sprite_Resource TEX_FALLROCK = new Sprite_Resource("texture::fallrock");
+    public static final Sprite_Resource TEX_FALLSAND = new Sprite_Resource("texture::fallsand");
+    public static final Sprite_Resource TEX_FARM = new Sprite_Resource("texture::farm");
+    public static final Sprite_Resource TEX_WINTERSNOW3 = new Sprite_Resource("texture::wintersnow3");
+    public static final Sprite_Resource TEX_FLOORBOARDTARRED = new Sprite_Resource("texture::floorBoardTarred");
+    public static final Sprite_Resource TEX_FLOOR_PREPARED = new Sprite_Resource("texture::floor_prepared");
+    public static final Sprite_Resource TEX_FOREST_MYCELIUM = new Sprite_Resource("texture::forest-Mycelium");
+    public static final Sprite_Resource TEX_FOREST = new Sprite_Resource("texture::forest");
+    public static final Sprite_Resource TEX_GLIMMERSTEELVEIN_512 = new Sprite_Resource("texture::glimmersteelvein_512");
+    public static final Sprite_Resource TEX_GOLDVEIN_512 = new Sprite_Resource("texture::goldvein_512");
+    public static final Sprite_Resource TEX_GRASS = new Sprite_Resource("texture::grass");
+    public static final Sprite_Resource TEX_GRAVEL = new Sprite_Resource("texture::gravel");
+    public static final Sprite_Resource TEX_IRONVEIN_512 = new Sprite_Resource("texture::ironvein_512");
+    public static final Sprite_Resource TEX_LAVA = new Sprite_Resource("texture::lava");
+    public static final Sprite_Resource TEX_LAWN = new Sprite_Resource("texture::lawn");
+    public static final Sprite_Resource TEX_LEADVEIN_512 = new Sprite_Resource("texture::leadvein_512");
+    public static final Sprite_Resource TEX_MARBLEBRICKS = new Sprite_Resource("texture::marbleBricks");
+    public static final Sprite_Resource TEX_MARBLESLAB = new Sprite_Resource("texture::marbleslab");
+    public static final Sprite_Resource TEX_MARBLEVEIN_512 = new Sprite_Resource("texture::marblevein_512");
+    public static final Sprite_Resource TEX_MARSH = new Sprite_Resource("texture::marsh");
+    public static final Sprite_Resource TEX_MOSS = new Sprite_Resource("texture::moss");
+    public static final Sprite_Resource TEX_BRIDGEPREPARED = new Sprite_Resource("texture::bridgePrepared");
+    public static final Sprite_Resource TEX_PACKED = new Sprite_Resource("texture::packed");
+    public static final Sprite_Resource TEX_PEAT = new Sprite_Resource("texture::peat");
+    public static final Sprite_Resource TEX_PLANKS = new Sprite_Resource("texture::planks");
+    public static final Sprite_Resource TEX_POTTERYBRICKPAVING = new Sprite_Resource("texture::potterybrickpaving");
+    public static final Sprite_Resource TEX_REED = new Sprite_Resource("texture::reed");
+    public static final Sprite_Resource TEX_REINFORCEDCAVEFLOOR_V1 = new Sprite_Resource("texture::reinforcedcaveFloor_v1");
+    public static final Sprite_Resource TEX_REINFORCEDCAVE_V1 = new Sprite_Resource("texture::reinforcedcave_v1");
+    public static final Sprite_Resource TEX_ROCK = new Sprite_Resource("texture::rock");
+    public static final Sprite_Resource TEX_ROCKSALT = new Sprite_Resource("texture::rocksalt");
+    public static final Sprite_Resource TEX_SAND = new Sprite_Resource("texture::sand");
+    public static final Sprite_Resource TEX_SANDSTONEBRICK = new Sprite_Resource("texture::sandstonebrick");
+    public static final Sprite_Resource TEX_SANDSTONESLAB = new Sprite_Resource("texture::sandstoneslab");
+    public static final Sprite_Resource TEX_SANDSTONEVEIN = new Sprite_Resource("texture::sandstonevein");
+    public static final Sprite_Resource TEX_SILVERVEIN_512 = new Sprite_Resource("texture::silvervein_512");
+    public static final Sprite_Resource TEX_SLAB = new Sprite_Resource("texture::slab");
+    public static final Sprite_Resource TEX_SLATETILES = new Sprite_Resource("texture::slateTiles");
+    public static final Sprite_Resource TEX_SLATEBRICKS = new Sprite_Resource("texture::slatebricks");
+    public static final Sprite_Resource TEX_SLATEVEIN_512 = new Sprite_Resource("texture::slatevein_512");
+    public static final Sprite_Resource TEX_STEPPE = new Sprite_Resource("texture::steppe");
+    public static final Sprite_Resource TEX_TAR = new Sprite_Resource("texture::tar");
+    public static final Sprite_Resource TEX_TINVEIN_512 = new Sprite_Resource("texture::tinvein_512");
+    public static final Sprite_Resource TEX_TUNDRA = new Sprite_Resource("texture::tundra");
+    public static final Sprite_Resource TEX_WINTERSNOW1 = new Sprite_Resource("texture::wintersnow1");
+    public static final Sprite_Resource TEX_WINTERSLATEBRICKS = new Sprite_Resource("texture::winterslatebricks");
+    public static final Sprite_Resource TEX_WINTERCLIFF = new Sprite_Resource("texture::wintercliff");
+    public static final Sprite_Resource TEX_WINTERCOBBLE = new Sprite_Resource("texture::wintercobble");
+    public static final Sprite_Resource TEX_WINTERCOBBLE2 = new Sprite_Resource("texture::wintercobble2");
+    public static final Sprite_Resource TEX_WINTERCOBBLE3 = new Sprite_Resource("texture::wintercobble3");
+    public static final Sprite_Resource TEX_WINTERDIRT = new Sprite_Resource("texture::winterdirt");
+    public static final Sprite_Resource TEX_WINTERFARM = new Sprite_Resource("texture::winterfarm");
+    public static final Sprite_Resource TEX_WINTERGRAVEL = new Sprite_Resource("texture::wintergravel");
+    public static final Sprite_Resource TEX_WINTERMARBLEBRICKS = new Sprite_Resource("texture::wintermarblebricks");
+    public static final Sprite_Resource TEX_WINTERMARBLESLAB = new Sprite_Resource("texture::wintermarbleslab");
+    public static final Sprite_Resource TEX_WINTERMARSH = new Sprite_Resource("texture::wintermarsh");
+    public static final Sprite_Resource TEX_WINTERMOSS = new Sprite_Resource("texture::wintermoss");
+    public static final Sprite_Resource TEX_WINTERMYCELIUM = new Sprite_Resource("texture::wintermycelium");
+    public static final Sprite_Resource TEX_WINTERPACKED = new Sprite_Resource("texture::winterpacked");
+    public static final Sprite_Resource TEX_WINTERPEAT = new Sprite_Resource("texture::winterpeat");
+    public static final Sprite_Resource TEX_WINTERPLANKS = new Sprite_Resource("texture::winterplanks");
+    public static final Sprite_Resource TEX_WINTERPOTTERYBRICKS = new Sprite_Resource("texture::winterpotterybricks");
+    public static final Sprite_Resource TEX_WINTERREED = new Sprite_Resource("texture::winterreed");
+    public static final Sprite_Resource TEX_WINTERSAND = new Sprite_Resource("texture::wintersand");
+    public static final Sprite_Resource TEX_WINTERSANDSTONEBRICKS = new Sprite_Resource("texture::wintersandstonebricks");
+    public static final Sprite_Resource TEX_WINTERSANDSTONESLAB = new Sprite_Resource("texture::wintersandstoneslab");
+    public static final Sprite_Resource TEX_WINTERSLAB = new Sprite_Resource("texture::winterslab");
+    public static final Sprite_Resource TEX_WINTERSLATETILES = new Sprite_Resource("texture::winterslateTiles");
+    public static final Sprite_Resource TEX_ZINCVEIN_512 = new Sprite_Resource("texture::zincvein_512");
+    public static final Sprite_Resource TEX_WATER = new Sprite_Resource("texture::water");
+    public static final Sprite_Resource TEX_UNDETAIL = new Sprite_Resource("texture::undetail");
+    public static final Sprite_Resource TEX_FARMLAND = new Sprite_Resource("texture::farmland");
 
     @AllArgsConstructor
     public static class Sprite_Resource {
@@ -60,6 +163,10 @@ public final class Resources {
 
         public int getWidth() {
             return load().getWidth();
+        }
+
+        public BufferedImage getTexture() {
+            return load().getTexture();
         }
 
         public int getHeight() {

@@ -21,26 +21,28 @@ public class TileActor extends Actor implements Interactable {
 
     @Getter
     private Tile tile;
+    private Resources.Sprite_Resource spriteResource;
 
     private Box mouseCaptureBounds;
 
     public TileActor(
         final Vector transform,
         @NonNull final Tile tile,
+        final Resources.Sprite_Resource spriteResource,
         final int width,
         final int height,
         final MouseInputHandler mouseInputHandler
     ) {
         super(tile.getName(), transform);
         this.tile = tile;
+        this.spriteResource = spriteResource;
 
         configure(width, height);
         mouseInputHandler.registerInteractable(this, InputLayer.GAME_WORLD);
     }
 
     private void configure(final int width, final int height) {
-        final Sprite tileSprite = Resources.getSprite(tile.getSpriteResource());
-        addComponent(new SpriteComponent(this, tileSprite));
+        addComponent(new SpriteComponent(this, spriteResource));
 
         mouseCaptureBounds = new Box(
             0, width,

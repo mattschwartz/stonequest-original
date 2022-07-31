@@ -68,7 +68,8 @@ public class SpritesheetManager {
     @AllArgsConstructor
     public enum Namespace {
         ITEMS("items"),
-        GUI("gui");
+        GUI("gui"),
+        TEXTURE("texture");
         private final String namespace;
     }
 
