@@ -1,5 +1,9 @@
 package com.barelyconscious.game.entity.graphics;
 
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 /**
  * The layer onto which the component will be rendered.
  *
@@ -16,10 +20,23 @@ public enum RenderLayer {
     LOOT(2),
     ENTITIES(3),
     SKY(100),
+
+    /**
+     * Applies lighting to the scenes rendered on layers before it.
+     */
+    LIGHTMAP(400),
     GUI(1000),
     GUI_FOCUS(1001),
 
     _DEBUG(Integer.MAX_VALUE);
+
+    public static List<RenderLayer> layersToBeLit() {
+        return Lists.newArrayList(GROUND, DOODADS, LOOT, ENTITIES, SKY);
+    }
+
+    public static List<RenderLayer> layersAboveLight() {
+        return Lists.newArrayList(GUI, GUI_FOCUS, _DEBUG);
+    }
 
     public final int zLevel;
     RenderLayer(final int zLevel) {

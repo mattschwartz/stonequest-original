@@ -1,9 +1,6 @@
 package com.barelyconscious.game.entity;
 
-import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.components.SpriteComponent;
-import com.barelyconscious.game.entity.graphics.RenderContext;
-import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.input.InputLayer;
 import com.barelyconscious.game.entity.input.Interactable;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
@@ -11,10 +8,10 @@ import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.entity.tile.Tile;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class TileActor extends Actor implements Interactable {
@@ -22,8 +19,23 @@ public class TileActor extends Actor implements Interactable {
     @Getter
     private Tile tile;
     private Resources.Sprite_Resource spriteResource;
+    private final SpriteComponent spriteComponent;
 
     private Box mouseCaptureBounds;
+
+    @AllArgsConstructor
+    public enum OpacityPresets {
+        NOT_VISIBLE(0),
+        HEAVILY_OBSCURED(0.25f),
+        LIGHTLY_OBSCURED(0.5f),
+        VISIBLE(.88f);
+
+        private final float opacity;
+    }
+
+    public void setOpacity(final OpacityPresets opacityPresets) {
+        spriteComponent.setOpacity(opacityPresets.opacity);
+    }
 
     public TileActor(
         final Vector transform,
@@ -36,19 +48,17 @@ public class TileActor extends Actor implements Interactable {
         super(tile.getName(), transform);
         this.tile = tile;
         this.spriteResource = spriteResource;
+        this.spriteComponent = new SpriteComponent(this, spriteResource, width, height);
 
         configure(width, height);
         mouseInputHandler.registerInteractable(this, InputLayer.GAME_WORLD);
     }
 
     private void configure(final int width, final int height) {
-        addComponent(new SpriteComponent(this, spriteResource));
-
+        addComponent(spriteComponent);
         mouseCaptureBounds = new Box(
             0, width,
             0, height);
-        
-        //        addComponent(new TileInfoTextComponent(this));
     }
 
     private boolean isMouseOver = false;
@@ -82,22 +92,5 @@ public class TileActor extends Actor implements Interactable {
     public boolean onMouseExited(MouseEvent e) {
         isMouseOver = false;
         return false;
-    }
-
-    // todo: should not make this part of every single tile
-    private final class TileInfoTextComponent extends Component {
-
-        public TileInfoTextComponent(Actor parent) {
-            super(parent);
-        }
-
-        @Override
-        public void guiRender(EventArgs eventArgs, RenderContext renderContext) {
-            if (isMouseOver && eventArgs.getMouseScreenPos() != null) {
-                final Vector screenPos = renderContext.camera.worldToScreenPos(transform);
-                renderContext.renderRect(Color.yellow, false, (int) transform.x, (int) transform.y, 32, 32,
-                    RenderLayer.SKY);
-            }
-        }
     }
 }

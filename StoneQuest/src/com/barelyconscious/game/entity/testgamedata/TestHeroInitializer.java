@@ -9,6 +9,7 @@ import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.entity.components.BoxColliderComponent;
 import com.barelyconscious.game.entity.components.HealthBarComponent;
 import com.barelyconscious.game.entity.components.HealthComponent;
+import com.barelyconscious.game.entity.components.LightSourceComponent;
 import com.barelyconscious.game.entity.components.MoveComponent;
 import com.barelyconscious.game.entity.components.SpriteComponent;
 import com.barelyconscious.game.entity.components.StatChangeOverTime;
@@ -108,16 +109,19 @@ public class TestHeroInitializer {
         World world = GameInstance.getInstance().getWorld();
 
         Hero heroJohn = HERO_JOHN;
+        heroJohn.addComponent(new LightSourceComponent(heroJohn, 200, 200));
         world.spawnActor(heroJohn);
         GameInstance.getInstance().setHero(heroJohn, GameInstance.PartySlot.RIGHT);
         world.spawnActor(HERO_JOHN);
 
         Hero heroNicnole = HERO_NICNOLE;
+        heroNicnole.addComponent(new LightSourceComponent(heroNicnole, 200, 200));
         GameInstance.getInstance().setHero(heroNicnole, GameInstance.PartySlot.MIDDLE);
         world.spawnActor(heroNicnole);
         world.spawnActor(HERO_NICNOLE);
 
         Hero heroPaul = HERO_PAUL;
+        heroPaul.addComponent(new LightSourceComponent(heroPaul, 200, 200));
         world.spawnActor(heroPaul);
         GameInstance.getInstance().setHero(heroPaul, GameInstance.PartySlot.LEFT);
         world.spawnActor(HERO_PAUL);

@@ -8,6 +8,8 @@ import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
+import com.barelyconscious.util.UMath;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 
@@ -20,14 +22,26 @@ public class SpriteComponent extends Component {
     @NonNull
     public RenderLayer renderLayer;
 
+    @Getter
+    private float opacity = 1;
+
     public final Sprite sprite;
     private final Resources.Sprite_Resource spriteResource;
+    private final int width;
+    private final int height;
 
-    public SpriteComponent(final Actor parent, final Resources.Sprite_Resource spriteResource) {
+    public SpriteComponent(final Actor parent, final Resources.Sprite_Resource spriteResource, final int width, final int height) {
         super(parent);
+
         this.spriteResource = spriteResource;
         this.sprite = null;
         this.renderLayer = RenderLayer.GROUND;
+        this.width = width;
+        this.height = height;
+    }
+
+    public SpriteComponent(final Actor parent, final Resources.Sprite_Resource spriteResource) {
+        this(parent, spriteResource, spriteResource.getWidth(), spriteResource.getHeight());
     }
 
     /**
@@ -53,6 +67,12 @@ public class SpriteComponent extends Component {
         this.sprite = sprite;
         this.renderLayer = renderLayer;
         this.spriteResource = null;
+        this.width = sprite.getWidth();
+        this.height = sprite.getHeight();
+    }
+
+    public void setOpacity(float opacity) {
+        this.opacity = UMath.clampf(opacity, 0, 1);
     }
 
     public Box getBounds() {
@@ -75,13 +95,13 @@ public class SpriteComponent extends Component {
         final Vector position = getParent().transform;
 
         if (spriteResource != null) {
-            renderContext.render(
-                spriteResource.getTexture(),
-                (int) position.x,
-                (int) position.y,
-                spriteResource.getWidth(),
-                spriteResource.getHeight(),
-                renderLayer);
+            renderContext.render(RenderContext.RenderRequest.builder()
+                    .spriteResource(spriteResource)
+                    .width(width).height(height)
+                    .worldX((int) position.x).worldY((int) position.y)
+                    .renderOpacity(opacity)
+                    .renderLayer(renderLayer)
+                .build());
         } else {
             // deprecated
             renderContext.render(

@@ -72,6 +72,14 @@ public class TestMapGenerator {
                 final TileActor aTile = new TileActor(transform, tile, rSprite,
                     width, height, MouseInputHandler.instance());
 
+                if (x < 3 && y < 3) {
+                    aTile.setOpacity(TileActor.OpacityPresets.VISIBLE);
+                } else if (x < 8 && y < 8) {
+                    aTile.setOpacity(TileActor.OpacityPresets.LIGHTLY_OBSCURED);
+                } else {
+                    aTile.setOpacity(TileActor.OpacityPresets.HEAVILY_OBSCURED);
+                }
+
                 world.spawnActor(aTile);
             }
         }

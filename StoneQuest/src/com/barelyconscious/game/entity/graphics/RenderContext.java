@@ -2,14 +2,27 @@ package com.barelyconscious.game.entity.graphics;
 
 import com.barelyconscious.game.entity.Camera;
 import com.barelyconscious.game.entity.resources.FontResource;
+import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.*;
+import javax.swing.GrayFilter;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageProducer;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -66,16 +79,43 @@ public class RenderContext {
      * @return a rendered image applying renders to every RenderLayer
      */
     BufferedImage getRenderedImage() {
+        final BufferedImage prelitRender = new BufferedImage(
+            camera.getScreenWidth(),
+            camera.getScreenHeight(),
+            BufferedImage.TYPE_INT_ARGB);
+
+        final Graphics g = prelitRender.createGraphics();
+        for (final RenderLayer layer : RenderLayer.layersToBeLit()) {
+            g.drawImage(renderByLayer.get(layer), 0, 0, camera.getScreenWidth(), camera.getScreenHeight(), null);
+        }
+        g.dispose();
+
         final BufferedImage renderedImage = new BufferedImage(
             camera.getScreenWidth(),
             camera.getScreenHeight(),
             BufferedImage.TYPE_INT_ARGB);
 
-        final Graphics g = renderedImage.createGraphics();
-        for (final RenderLayer layer : RenderLayer.values()) {
-            g.drawImage(renderByLayer.get(layer), 0, 0, camera.getScreenWidth(), camera.getScreenHeight(), null);
+        BufferedImage lightmap = renderByLayer.get(RenderLayer.LIGHTMAP);
+
+        int[] prelitPixels = ((DataBufferInt) prelitRender.getRaster().getDataBuffer()).getData();
+        int[] lightPixels = ((DataBufferInt) lightmap.getRaster().getDataBuffer()).getData();
+        int[] renderedImagePixels = ((DataBufferInt) renderedImage.getRaster().getDataBuffer()).getData();
+
+        for (int i = 0; i < prelitPixels.length; ++i) {
+            int pix = prelitPixels[i];
+            int ca, cr, cg, cb;
+            ca = (lightPixels[i] >> 24) & 0xFF;
+            cr = (pix >> 16) & 0xFF;
+            cg = (pix >> 8) & 0xFF;
+            cb = pix & 0xFF;
+            renderedImagePixels[i] = (ca << 24) + (cr << 16) + (cg << 8) + cb;
         }
-        g.dispose();
+
+        final Graphics gg = renderedImage.createGraphics();
+        for (final RenderLayer layer : RenderLayer.layersAboveLight()) {
+            gg.drawImage(renderByLayer.get(layer), 0, 0, camera.getScreenWidth(), camera.getScreenHeight(), null);
+        }
+        gg.dispose();
 
         return renderedImage;
     }
@@ -122,6 +162,33 @@ public class RenderContext {
 
         if (inBounds(worldX, worldY, width, height)) {
             graphics.drawImage(image, (int) screenPos.x, (int) screenPos.y, width, height, null);
+        }
+    }
+
+    @Builder
+    public static class RenderRequest {
+
+        private final Resources.Sprite_Resource spriteResource;
+        private final int width;
+        private final int height;
+        private final int worldX;
+        private final int worldY;
+        private final float renderOpacity;
+        private final RenderLayer renderLayer;
+    }
+
+    public void render(final RenderRequest rr) {
+        final Graphics2D g = graphicsByLayer.get(rr.renderLayer);
+        final Vector screenPos = camera.worldToScreenPos(rr.worldX, rr.worldY);
+
+        if (inBounds(rr.worldX, rr.worldY, rr.width, rr.height)) {
+            Composite prevComposite = g.getComposite();
+
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, rr.renderOpacity));
+
+            g.drawImage(rr.spriteResource.getTexture(), (int) screenPos.x, (int) screenPos.y, rr.width, rr.height, null);
+
+            g.setComposite(prevComposite);
         }
     }
 
