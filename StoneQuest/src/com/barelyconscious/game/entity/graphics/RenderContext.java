@@ -5,6 +5,7 @@ import com.barelyconscious.game.entity.resources.FontResource;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
+import com.barelyconscious.util.UColor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -101,19 +102,15 @@ public class RenderContext {
         int[] lightPixels = ((DataBufferInt) lightmap.getRaster().getDataBuffer()).getData();
         int[] renderedImagePixels = ((DataBufferInt) renderedImage.getRaster().getDataBuffer()).getData();
 
-        for (int i = 0; i < prelitPixels.length; ++i) {
-            int pix = prelitPixels[i];
-            int ca, cr, cg, cb;
-            // TODO hopefully temporary because resizing kinda crashes the program otherwise
-            if (i < lightPixels.length) {
-                ca = (lightPixels[i] >> 24) & 0xFF;
-            } else {
-                ca = 0;
+        // TODO hopefully temporary because resizing kinda crashes the program otherwise
+        if (prelitPixels.length == lightPixels.length) {
+            for (int i = 0; i < prelitPixels.length; ++i) {
+                final Color prelitColor = UColor.toColor(prelitPixels[i]);
+                final Color lightColor = UColor.toColor(lightPixels[i]);
+                final Color maxColor = UColor.combine(prelitColor, lightColor);
+
+                renderedImagePixels[i] = maxColor.getRGB();
             }
-            cr = (pix >> 16) & 0xFF;
-            cg = (pix >> 8) & 0xFF;
-            cb = pix & 0xFF;
-            renderedImagePixels[i] = (ca << 24) + (cr << 16) + (cg << 8) + cb;
         }
 
         final Graphics gg = renderedImage.createGraphics();
