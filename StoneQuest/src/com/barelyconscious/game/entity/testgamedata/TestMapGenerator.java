@@ -64,10 +64,10 @@ public class TestMapGenerator {
                     ];
                 final Resources.Sprite_Resource rSprite = KEY_SPRITE.get(key);
 
-                int width = 64;//rSprite.getWidth();
-                int height =64;// rSprite.getHeight();
+                int width = 64;
+                int height =64;
 
-                final Tile tile = new Tile(0, "Grass", false, false);
+                final Tile tile = new Tile(0, "Grass", key == 3, false);
                 final Vector transform = new Vector(x * width, y * height);
                 final TileActor aTile = new TileActor(transform, tile, rSprite,
                     width, height, MouseInputHandler.instance());

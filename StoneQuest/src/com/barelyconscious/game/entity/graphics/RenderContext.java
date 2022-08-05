@@ -104,7 +104,12 @@ public class RenderContext {
         for (int i = 0; i < prelitPixels.length; ++i) {
             int pix = prelitPixels[i];
             int ca, cr, cg, cb;
-            ca = (lightPixels[i] >> 24) & 0xFF;
+            // TODO hopefully temporary because resizing kinda crashes the program otherwise
+            if (i < lightPixels.length) {
+                ca = (lightPixels[i] >> 24) & 0xFF;
+            } else {
+                ca = 0;
+            }
             cr = (pix >> 16) & 0xFF;
             cg = (pix >> 8) & 0xFF;
             cb = pix & 0xFF;

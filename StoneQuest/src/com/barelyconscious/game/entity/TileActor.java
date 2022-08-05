@@ -1,5 +1,6 @@
 package com.barelyconscious.game.entity;
 
+import com.barelyconscious.game.entity.components.BoxColliderComponent;
 import com.barelyconscious.game.entity.components.SpriteComponent;
 import com.barelyconscious.game.entity.input.InputLayer;
 import com.barelyconscious.game.entity.input.Interactable;
@@ -49,6 +50,14 @@ public class TileActor extends Actor implements Interactable {
         this.tile = tile;
         this.spriteResource = spriteResource;
         this.spriteComponent = new SpriteComponent(this, spriteResource, width, height);
+
+        if (tile.isBlocksMovement()) {
+            addComponent(new BoxColliderComponent(this, true, false, new Box(
+                0,
+                width,
+                0,
+                height)));
+        }
 
         configure(width, height);
         mouseInputHandler.registerInteractable(this, InputLayer.GAME_WORLD);
