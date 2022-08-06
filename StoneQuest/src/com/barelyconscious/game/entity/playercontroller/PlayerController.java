@@ -4,10 +4,12 @@ import com.barelyconscious.game.delegate.Delegate;
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.EventArgs;
 import com.barelyconscious.game.entity.GameInstance;
+import com.barelyconscious.game.entity.Hero;
 import com.barelyconscious.game.entity.Inventory;
 import com.barelyconscious.game.entity.components.BoxColliderComponent;
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.components.HealthComponent;
+import com.barelyconscious.game.entity.components.JobActionComponent;
 import com.barelyconscious.game.entity.components.LifetimeComponent;
 import com.barelyconscious.game.entity.components.MoveComponent;
 import com.barelyconscious.game.entity.components.SpriteComponent;
@@ -20,6 +22,7 @@ import com.barelyconscious.game.shape.Vector;
 import com.barelyconscious.util.UMath;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
 import lombok.val;
 
 import javax.annotation.Nullable;
@@ -33,10 +36,11 @@ import java.awt.event.MouseEvent;
  *  relations between the party.
  *  \
  *  other heroes will be slightly highlighted as well.
- *
+ * <p>
  * Facilitates interactions between the player and the game, such as handling keyboard and mouse
  * input.
  */
+@Log4j2
 public class PlayerController {
 
     public final Delegate<Boolean> delegateOnQuitRequested = new Delegate<>();
@@ -87,8 +91,8 @@ public class PlayerController {
             }
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                System.out.println("Requesting stop");
-                delegateOnQuitRequested.call(true);
+            System.out.println("Requesting stop");
+            delegateOnQuitRequested.call(true);
         }
         if (keyEvent.getKeyChar() == KeyEvent.VK_1) {
             GameInstance.getInstance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
@@ -134,10 +138,41 @@ public class PlayerController {
         }
 
         if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-            final Actor usedBy = GameInstance.getInstance().getHeroSelected();
+            final Hero usedBy = GameInstance.getInstance().getHeroSelected();
             final Vector facing = usedBy.facing;
 
-            new AwesomeBulletWeaponItem().use(usedBy, facing);
+            JobActionComponent jobComponent = usedBy.getComponent(JobActionComponent.class);
+            if (jobComponent == null) {
+                return null;
+            }
+            try {
+                jobComponent.queueAction(e -> {
+                    int waitTime = UMath.RANDOM.nextInt(60) + 40;
+                    e.yield(waitTime, t -> {
+                        new AwesomeBulletWeaponItem().use(usedBy, facing);
+                        return null;
+                    });
+                    return null;
+                });
+                jobComponent.queueAction(e -> {
+                    int waitTime = UMath.RANDOM.nextInt(60) + 40;
+                    e.yield(waitTime, t -> {
+                        new AwesomeBulletWeaponItem().use(usedBy, facing);
+                        return null;
+                    });
+                    return null;
+                });
+                jobComponent.queueAction(e -> {
+                    int waitTime = UMath.RANDOM.nextInt(60) + 40;
+                    e.yield(waitTime, t -> {
+                        new AwesomeBulletWeaponItem().use(usedBy, facing);
+                        return null;
+                    });
+                    return null;
+                });
+            } catch (JobActionComponent.TooManyActionsException e) {
+                log.error("You can't handle that many things at once.");
+            }
         }
 
         return null;
@@ -190,12 +225,12 @@ public class PlayerController {
                     final HealthComponent health = hit.getComponent(HealthComponent.class);
                     if (health != null && health.isEnabled()) {
                         health.adjust(UMath.RANDOM.nextFloat() * -3);
+                        aBullet.destroy();
                     }
 
-                    aBullet.destroy();
                     return null;
                 });
-            aBullet.addComponent(new LifetimeComponent(aBullet, .2f));
+            aBullet.addComponent(new LifetimeComponent(aBullet, 200));
 
             aBullet.addComponent(new Component(aBullet) {
                 @Override

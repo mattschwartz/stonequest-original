@@ -6,13 +6,18 @@ import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.physics.Physics;
 import com.barelyconscious.game.shape.Vector;
+import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.log4j.Log4j2;
 
-import java.awt.*;
+import java.awt.Color;
 import java.time.Clock;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -36,6 +41,9 @@ public final class Engine {
     private float averageFps = 0;
 
     private boolean isRunning = false;
+
+    private final Queue<Function<EventArgs, Void>> jobQueue = new ArrayDeque<>();
+    private final List<YieldingCallback> yields = new ArrayList<>();
 
     public Engine(
         final GameInstance gameInstance,
@@ -94,16 +102,6 @@ public final class Engine {
 
     public void stop() {
         isRunning = false;
-    }
-
-    private EventArgs buildEventArgs() {
-        final long now = clock.millis();
-        final long deltaTime = now - lastRenderTick;
-        lastRenderTick = now;
-        return new EventArgs(
-            deltaTime * 0.001f,
-            gameInstance.getPlayerController().getMouseScreenPos(),
-            gameInstance.getPlayerController().getMouseWorldPos());
     }
 
     long next = 100;
@@ -175,9 +173,41 @@ public final class Engine {
         }
 
         physics.updatePhysics(eventArgs, world.getActors());
+        // Run jobs submitted from last tick
+        runJobs(eventArgs);
         update(eventArgs, componentsToUpdate);
 
         actorsToRemove.forEach(world::removeActor);
+    }
+
+    private void runJobs(final EventArgs eventArgs) {
+        // make sure new calls aren't coming in before calling all actions
+        // to prevent jobs from being able to submit new jobs and creating
+        // an infinite loop or significantly slowing down updates
+        eventArgs.stopAcceptingJobs();
+
+        final Stopwatch sw = Stopwatch.createStarted();
+
+        Function<EventArgs, Void> callback;
+        while ( (callback = jobQueue.poll()) != null ) {
+            try {
+                callback.apply(eventArgs);
+            } catch (final Exception e) {
+                log.error("Job threw exception", e);
+            }
+        }
+
+        yields.removeIf(t -> t.tickAndCall(eventArgs));
+
+        sw.stop();
+
+        if (sw.elapsed(TimeUnit.MILLISECONDS) > 5) {
+            log.error("Running jobs took {}ms", sw.elapsed(TimeUnit.MILLISECONDS));
+        }
+
+        // allows other types of update to enqueue jobs on this tick
+        // todo: this may not be a good idea so check here if bug
+        eventArgs.startAcceptingJobs();
     }
 
     private void update(
@@ -231,5 +261,21 @@ public final class Engine {
             Color.yellow,
             5, 49,
             RenderLayer._DEBUG);
+        renderContext.getFontContext().renderString("Active jobs: " + jobQueue.size(),
+            Color.yellow,
+            5, 65,
+            RenderLayer._DEBUG);
+    }
+
+    private EventArgs buildEventArgs() {
+        final long now = clock.millis();
+        final long deltaTime = now - lastRenderTick;
+        lastRenderTick = now;
+        return new EventArgs(
+            deltaTime * 0.001f,
+            gameInstance.getPlayerController().getMouseScreenPos(),
+            gameInstance.getPlayerController().getMouseWorldPos(),
+            jobQueue,
+            yields);
     }
 }

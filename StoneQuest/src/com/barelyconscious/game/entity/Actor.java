@@ -50,6 +50,10 @@ public class Actor {
             (int) transform.y + 32);
     }
 
+    public Actor() {
+        this(Vector.ZERO);
+    }
+
     public Actor(final Vector transform) {
         this(null, transform);
     }

@@ -7,11 +7,13 @@ import com.barelyconscious.game.entity.item.tags.ResourceItemTag;
 import com.barelyconscious.game.entity.item.tags.StackableItemTag;
 import com.barelyconscious.game.entity.resources.Resources;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Getter
 @AllArgsConstructor
 public enum GameItems {
     WILLOW_BARK(0, 1, "Willow Bark", "Bark from the willow tree. Has minimal healing properties.",

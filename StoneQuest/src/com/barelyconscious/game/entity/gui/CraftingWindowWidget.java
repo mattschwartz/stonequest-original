@@ -2,6 +2,7 @@ package com.barelyconscious.game.entity.gui;
 
 import com.barelyconscious.game.entity.graphics.FontContext;
 import com.barelyconscious.game.entity.gui.widgets.ButtonWidget;
+import com.barelyconscious.game.entity.gui.widgets.ListWidget;
 import com.barelyconscious.game.entity.gui.widgets.ProgressBarWidget;
 import com.barelyconscious.game.entity.gui.widgets.SpriteWidget;
 import com.barelyconscious.game.entity.gui.widgets.TextFieldWidget;
@@ -29,6 +30,18 @@ public class CraftingWindowWidget extends MouseInputWidget {
         addCloseButton();
         addCreateButtons();
         addExperienceWidget();
+        addRecipeListWidget();
+    }
+
+    private void addRecipeListWidget() {
+        final ListWidget listWidget = new ListWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 223, 63))
+            .size(new VDim(0, 0, 228, 224))
+            .build());
+        listWidget.addItem(new ListWidget.ListItemWidget("0", "Aspirin"));
+        listWidget.addItem(new ListWidget.ListItemWidget("0", "Bandages"));
+        listWidget.addItem(new ListWidget.ListItemWidget("0", "Salve"));
+        addWidget(listWidget);
     }
 
     private void addExperienceWidget() {
