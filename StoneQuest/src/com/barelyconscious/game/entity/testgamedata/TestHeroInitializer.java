@@ -17,6 +17,8 @@ import com.barelyconscious.game.entity.components.SpriteComponent;
 import com.barelyconscious.game.entity.components.StatChangeOverTime;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.item.GameItems;
+import com.barelyconscious.game.entity.playercontroller.MouseKeyboardPlayerController;
+import com.barelyconscious.game.entity.playercontroller.PlayerController;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
 import com.barelyconscious.game.entity.resources.Resources;
 import com.barelyconscious.game.shape.Box;
@@ -107,9 +109,7 @@ public class TestHeroInitializer {
         HERO_PAUL.addComponent(new HealthBarComponent(HERO_PAUL, HERO_PAUL.getComponent(HealthComponent.class)));
     }
 
-    public static void createHeroes() {
-        World world = GameInstance.getInstance().getWorld();
-
+    public static void createHeroes(final World world, final PlayerController playerController) {
         Hero heroJohn = HERO_JOHN;
         heroJohn.addComponent(new LightSourceComponent(heroJohn, 250));
         heroJohn.addComponent(new Component(heroJohn) {
@@ -117,7 +117,7 @@ public class TestHeroInitializer {
             public void update(EventArgs eventArgs) {
                 LightSourceComponent component = getParent().getComponent(LightSourceComponent.class);
                 if (component != null && component.isEnabled()) {
-                    if (GameInstance.getInstance().getHeroSelected() == HERO_JOHN) {
+                    if (GameInstance.instance().getHeroSelected() == HERO_JOHN) {
                         component.setOpacity(1);
                     } else {
                         component.setOpacity(0.5f);
@@ -125,9 +125,9 @@ public class TestHeroInitializer {
                 }
             }
         });
-        world.spawnActor(heroJohn);
-        GameInstance.getInstance().setHero(heroJohn, GameInstance.PartySlot.RIGHT);
-        world.spawnActor(HERO_JOHN);
+        world.addActor(heroJohn);
+        GameInstance.instance().setHero(heroJohn, GameInstance.PartySlot.RIGHT);
+        world.addActor(HERO_JOHN);
 
         Hero heroNicnole = HERO_NICNOLE;
         heroNicnole.addComponent(new LightSourceComponent(heroNicnole, 250));
@@ -136,7 +136,7 @@ public class TestHeroInitializer {
             public void update(EventArgs eventArgs) {
                 LightSourceComponent component = getParent().getComponent(LightSourceComponent.class);
                 if (component != null && component.isEnabled()) {
-                    if (GameInstance.getInstance().getHeroSelected() == HERO_NICNOLE) {
+                    if (GameInstance.instance().getHeroSelected() == HERO_NICNOLE) {
                         component.setOpacity(1);
                     } else {
                         component.setOpacity(0.5f);
@@ -144,9 +144,9 @@ public class TestHeroInitializer {
                 }
             }
         });
-        GameInstance.getInstance().setHero(heroNicnole, GameInstance.PartySlot.MIDDLE);
-        world.spawnActor(heroNicnole);
-        world.spawnActor(HERO_NICNOLE);
+        GameInstance.instance().setHero(heroNicnole, GameInstance.PartySlot.MIDDLE);
+        world.addActor(heroNicnole);
+        world.addActor(HERO_NICNOLE);
 
         Hero heroPaul = HERO_PAUL;
         heroPaul.addComponent(new LightSourceComponent(heroPaul, 250));
@@ -155,7 +155,7 @@ public class TestHeroInitializer {
             public void update(EventArgs eventArgs) {
                 LightSourceComponent component = getParent().getComponent(LightSourceComponent.class);
                 if (component != null && component.isEnabled()) {
-                    if (GameInstance.getInstance().getHeroSelected() == HERO_PAUL) {
+                    if (GameInstance.instance().getHeroSelected() == HERO_PAUL) {
                         component.setOpacity(1);
                     } else {
                         component.setOpacity(0.5f);
@@ -163,17 +163,20 @@ public class TestHeroInitializer {
                 }
             }
         });
-        world.spawnActor(heroPaul);
-        GameInstance.getInstance().setHero(heroPaul, GameInstance.PartySlot.LEFT);
-        world.spawnActor(HERO_PAUL);
+        world.addActor(heroPaul);
+        GameInstance.instance().setHero(heroPaul, GameInstance.PartySlot.LEFT);
+        world.addActor(HERO_PAUL);
 
-        GameInstance.getInstance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
+        GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
 
-        setupPartyInventory();
+        setupPartyInventory(playerController);
     }
 
-    private static void setupPartyInventory() {
-        Inventory inventory = GameInstance.getInstance().getPlayerController().getInventory();
+    private static void setupPartyInventory(final PlayerController pc) {
+        if (!(pc instanceof MouseKeyboardPlayerController)) {
+            return;
+        }
+        Inventory inventory = ((MouseKeyboardPlayerController) pc).getInventory();
 
         inventory.addItem(GameItems.WILLOW_BARK.toItem());
         inventory.addItem(GameItems.CURED_LEATHER.toItem());

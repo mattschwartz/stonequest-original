@@ -60,7 +60,7 @@ public class Hero extends AEntity {
 
         @Override
         public void update(EventArgs eventArgs) {
-            setRenderEnabled(GameInstance.getInstance().getHeroSelected() == getParent());
+            setRenderEnabled(GameInstance.instance().getHeroSelected() == getParent());
         }
 
         @Override
@@ -98,7 +98,7 @@ public class Hero extends AEntity {
                 RenderLayer.GUI
             );
 
-            final GameInstance.PartySlot slot = GameInstance.getInstance()
+            final GameInstance.PartySlot slot = GameInstance.instance()
                 .getSlotByHero((Hero) getParent());
 
             final FontContext font = renderContext.getFontContext();

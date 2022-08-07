@@ -7,6 +7,8 @@ import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.graphics.Screen;
+import com.barelyconscious.game.entity.playercontroller.MouseKeyboardPlayerController;
+import com.barelyconscious.game.entity.playercontroller.PlayerController;
 import com.barelyconscious.game.physics.Physics;
 import com.barelyconscious.game.shape.Vector;
 import com.google.common.base.Stopwatch;
@@ -60,13 +62,35 @@ public final class Engine {
         this.fpsLimiter = fps;
     }
 
-    public void start(
+    private GameInstance gameInstance;
+    private World world;
+    private Screen screen;
+    private PlayerController playerController;
+    private boolean readyToStart = false;
+
+    public void prestart(
         @NonNull final GameInstance gameInstance,
         @NonNull final World world,
-        @NonNull final Screen screen
+        @NonNull final Screen screen,
+        @NonNull final MouseKeyboardPlayerController playerController
     ) {
-        isRunning = true;
+        this.gameInstance = gameInstance;
+        this.world = world;
+        this.screen = screen;
+        this.playerController = playerController;
+
         gameInstance.setCamera(screen.getCamera());
+        gameInstance.changeWorld(world);
+        gameInstance.setPlayerController(playerController);
+        readyToStart = true;
+    }
+
+    public void start() {
+        if (!readyToStart) {
+            throw new RuntimeException("Engine has not been configured.");
+        }
+
+        isRunning = true;
 
         final Thread threadUpdate = new Thread(() -> {
             long lastUpdateTimeMillis = clock.millis();
@@ -75,7 +99,7 @@ public final class Engine {
 
                 final long now = clock.millis();
                 final long deltaTime = now - lastUpdateTimeMillis;
-                tick(buildEventArgs(deltaTime, gameInstance), world);
+                tick(buildEventArgs(deltaTime));
 
                 lastUpdateTimeMillis = clock.millis();
             }
@@ -88,7 +112,7 @@ public final class Engine {
 
             final long now = clock.millis();
             final long deltaTime = now - lastRenderTimeMillis;
-            renderTick(buildEventArgs(deltaTime, gameInstance), world, screen);
+            renderTick(buildEventArgs(deltaTime));
 
             lastRenderTimeMillis = clock.millis();
         }
@@ -108,10 +132,9 @@ public final class Engine {
     }
 
     long next = 100;
+
     public void renderTick(
-        final EventArgs eventArgs,
-        final World world,
-        final Screen screen
+        final EventArgs eventArgs
     ) {
         screen.clear();
         final RenderContext renderContext = screen.createRenderContext();
@@ -149,7 +172,7 @@ public final class Engine {
         screen.render(renderContext);
     }
 
-    public void tick(final EventArgs eventArgs, final World world) {
+    public void tick(final EventArgs eventArgs) {
         gameClockMillis += eventArgs.getDeltaTime() * 1000;
         final List<Component> componentsToUpdate = new ArrayList<>();
         final List<Actor> actorsToRemove = new ArrayList<>();
@@ -182,6 +205,8 @@ public final class Engine {
         update(eventArgs, componentsToUpdate);
 
         actorsToRemove.forEach(world::removeActor);
+
+        eventArgs.getWorldContext().applyActorOperations();
     }
 
     private void runJobs(final EventArgs eventArgs) {
@@ -261,11 +286,13 @@ public final class Engine {
             RenderLayer._DEBUG);
     }
 
-    private EventArgs buildEventArgs(final long deltaTime, final GameInstance gameInstance) {
+    private EventArgs buildEventArgs(final long deltaTime) {
         return new EventArgs(
             deltaTime * 0.001f,
-            gameInstance.getPlayerController().getMouseScreenPos(),
-            gameInstance.getPlayerController().getMouseWorldPos(),
-            pendingJobExecutions);
+            playerController.getMouseScreenPos(),
+            playerController.getMouseWorldPos(),
+            pendingJobExecutions,
+            playerController,
+            world);
     }
 }

@@ -74,8 +74,8 @@ public class TileActor extends Actor implements Interactable {
 
     @Override
     public boolean contains(final int screenX, final int screenY) {
-        if (GameInstance.getInstance() != null) {
-            final Camera camera = GameInstance.getInstance().getCamera();
+        if (GameInstance.instance() != null) {
+            final Camera camera = GameInstance.instance().getCamera();
             if (camera != null) {
                 final Vector screenPos = camera.worldToScreenPos(transform);
                 if (screenPos != null) {

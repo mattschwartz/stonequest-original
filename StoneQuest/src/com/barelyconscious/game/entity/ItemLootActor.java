@@ -54,19 +54,29 @@ public class ItemLootActor extends Actor {
         addComponent(mouseListenerComponent = new MouseListenerComponent(this, new Box(0, DEFAULT_WIDTH, 0, DEFAULT_HEIGHT)));
 
         mouseListenerComponent.delegateOnMouseClicked.bindDelegate(this::onItemPickup);
+
+        addComponent(nextUpdateComponent);
     }
 
+    private final Component nextUpdateComponent = new Component(this) {
+    };
+
     private Void onItemPickup(MouseEvent keyEvent) {
-        if (numHeroesOver > 0 && item != null) {
-            final Inventory inventory = GameInstance.getInstance().getPlayerController().getInventory();
-            if (inventory.addItem(item)) {
-                System.out.println("Picked up: " + item.getName());
-                item = null;
-                destroy();
-            } else {
-                System.out.println("Could not pick up item, inventory was full.");
+
+        nextUpdateComponent.onNextUpdate(eventArgs -> {
+            if (numHeroesOver > 0 && item != null) {
+                final Inventory inventory = eventArgs.getPlayerController().getInventory();
+                if (inventory.addItem(item)) {
+                    System.out.println("Picked up: " + item.getName());
+                    item = null;
+                    destroy();
+                } else {
+                    System.out.println("Could not pick up item, inventory was full.");
+                }
             }
-        }
+            return null;
+        });
+
         return null;
     }
 

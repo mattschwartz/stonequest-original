@@ -41,9 +41,9 @@ public class MouseListenerComponent extends Component implements Interactable {
     @Override
     public boolean contains(int screenX, int screenY) {
         // todo(p0) big ew
-        if (GameInstance.getInstance().getCamera() == null) { return false; }
+        if (GameInstance.instance().getCamera() == null) { return false; }
         final Vector worldPos = getParent().transform;
-        final Vector screenPos = GameInstance.getInstance().getCamera().worldToScreenPos(worldPos);
+        final Vector screenPos = GameInstance.instance().getCamera().worldToScreenPos(worldPos);
         final Box bounds = listenerBounds.boxAtPosition(screenPos);
         screenListenerBounds = bounds;
 

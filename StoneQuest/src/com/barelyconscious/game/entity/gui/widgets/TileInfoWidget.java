@@ -1,16 +1,16 @@
 package com.barelyconscious.game.entity.gui.widgets;
 
 import com.barelyconscious.game.entity.Actor;
-import com.barelyconscious.game.entity.engine.EventArgs;
-import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.TileActor;
+import com.barelyconscious.game.entity.engine.EventArgs;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.Widget;
 import com.barelyconscious.game.shape.Vector;
 
-import java.awt.*;
+import java.awt.Color;
+import java.util.Optional;
 
 /**
  * Renders details about the tile that the mouse is over.
@@ -27,10 +27,10 @@ public class TileInfoWidget extends Widget {
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
         final Vector worldPos = eventArgs.getMouseWorldPos();
         if (worldPos != null) {
-            Actor a = GameInstance.getInstance().getWorld().getActorAt(worldPos);
-            if (a instanceof TileActor) {
+            Optional<Actor> actor = eventArgs.getWorldContext().getActorAt(worldPos);
+            if (actor.isPresent() && actor.get() instanceof TileActor) {
                 renderContext.getFontContext().renderString(
-                    a.name,
+                    actor.get().name,
                     Color.YELLOW,
                     screenBounds.left,
                     screenBounds.top,

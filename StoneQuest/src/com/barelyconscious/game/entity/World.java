@@ -1,13 +1,10 @@
 package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.shape.Vector;
-import com.google.common.base.Stopwatch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.TimeUnit;
 
 public final class World {
 
@@ -17,6 +14,12 @@ public final class World {
         actors = new CopyOnWriteArrayList<>();
     }
 
+    public void addActor(final Actor actor) {
+        actors.add(actor);
+    }
+
+    // kind of wasn't the most intuitive name
+    @Deprecated
     public void spawnActor(final Actor actor) {
         actors.add(actor);
     }

@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,27 +22,19 @@ public final class GameInstance {
         public final PartySlot previouslySelectedPartySlot;
     }
 
-    @Getter
-    private static GameInstance instance;
-
-    // todo: ewwwwwwwuh
-    //  can maybe pass these through event args?
-    //  should probable introduce a new component that handles configuring the delegates instead of player controller
-    //  and that can be capture somewhere in engine where game instance is known
-    public static GameInstance createInstance(final World world, final PlayerController playerController) {
-        if (instance == null) {
-            instance = new GameInstance(world, playerController);
-        }
-
-        return instance;
+    private static final class InstanceHolder {
+        static final GameInstance instance = new GameInstance();
     }
 
-    @Getter
+    public static GameInstance instance() {
+        return GameInstance.InstanceHolder.instance;
+    }
+
     private World world;
 
     @Getter
     @Setter
-    private PlayerController playerController;
+    private PlayerController playerController = new PlayerController();
 
     @Getter
     @Setter
@@ -54,7 +45,7 @@ public final class GameInstance {
         MIDDLE(1),
         RIGHT(2);
 
-        private final static Map<Integer, PartySlot> slotsById = new HashMap<Integer, PartySlot>() {{
+        private final static Map<Integer, PartySlot> slotsById = new HashMap<>() {{
             put(0, LEFT);
             put(1, MIDDLE);
             put(2, RIGHT);
@@ -75,11 +66,6 @@ public final class GameInstance {
     private PartySlot selectedHeroId;
     private final Hero[] heroParty = new Hero[PartySlot.values().length];
 
-    private GameInstance(final World world, final PlayerController playerController) {
-        this.world = world;
-        this.playerController = playerController;
-    }
-
     public PartySlot getSlotByHero(final Hero hero) {
         if (heroParty[PartySlot.LEFT.index] == hero) {
             return PartySlot.LEFT;
@@ -94,7 +80,7 @@ public final class GameInstance {
         return heroParty[selectedHeroId.index];
     }
 
-    public Hero setHeroSelectedSlot(final PartySlot selectedIndex) {
+    public void setHeroSelectedSlot(final PartySlot selectedIndex) {
         final PartySlot prevSelectedPartySlot = selectedHeroId;
         final Hero prevHeroSelected = heroParty[selectedIndex.index];
 
@@ -102,15 +88,10 @@ public final class GameInstance {
         final Hero selectedHero = heroParty[selectedHeroId.index];
 
         delegateHeroSelectionChanged.call(new HeroSelectionChanged(selectedHero, selectedIndex, prevHeroSelected, prevSelectedPartySlot));
-
-        return prevHeroSelected;
     }
 
-    @Nullable
-    public Hero setHero(final Hero hero, final PartySlot slot) {
-        final Hero existing = heroParty[slot.index];
+    public void setHero(final Hero hero, final PartySlot slot) {
         heroParty[slot.index] = hero;
-        return existing;
     }
 
     public Hero getHeroInGroup(final PartySlot slot) {
@@ -118,7 +99,9 @@ public final class GameInstance {
     }
 
     public void changeWorld(final World world) {
-        this.world.unloadWorld();
+        if (this.world != null) {
+            this.world.unloadWorld();
+        }
 
         world.loadWorld();
 

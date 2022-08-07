@@ -6,7 +6,7 @@ import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
-import com.barelyconscious.game.entity.playercontroller.PlayerController;
+import com.barelyconscious.game.entity.playercontroller.MouseKeyboardPlayerController;
 import com.barelyconscious.game.entity.resources.spritesheet.SpritesheetManager;
 import com.barelyconscious.game.entity.testgamedata.TestHeroInitializer;
 import com.barelyconscious.game.entity.testgamedata.TestWorldInitializer;
@@ -45,21 +45,24 @@ public final class GameRunner {
             }
         });
 
-        GuiInitializer.createGui(screen);
-        TestHeroInitializer.createHeroes();
+        final MouseKeyboardPlayerController playerController = injector.getInstance(MouseKeyboardPlayerController.class);
+
+        engine.prestart(gi, world, screen, playerController);
+
+        GuiInitializer.createGui(screen, world, playerController);
+        TestHeroInitializer.createHeroes(world, playerController);
         TestWorldInitializer.createWorld(world);
 
         world.spawnActor(new CameraActor(screen.getCamera()));
 
-        final PlayerController playerController = injector.getInstance(PlayerController.class);
+        frame.requestFocus();
+
         playerController.delegateOnQuitRequested.bindDelegate(t -> {
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
             return null;
         });
 
-        frame.requestFocus();
-
-        engine.start(gi, world, screen);
+        engine.start();
         System.out.println("Saving game...");
         System.out.println("Cleaning up...");
     }

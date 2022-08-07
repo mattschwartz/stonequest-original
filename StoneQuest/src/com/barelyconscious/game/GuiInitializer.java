@@ -1,6 +1,5 @@
 package com.barelyconscious.game;
 
-import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.Inventory;
 import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.entity.graphics.Screen;
@@ -14,6 +13,8 @@ import com.barelyconscious.game.entity.gui.widgets.GameMenuWidget;
 import com.barelyconscious.game.entity.gui.widgets.InventoryBagWidget;
 import com.barelyconscious.game.entity.gui.widgets.TileInfoWidget;
 import com.barelyconscious.game.entity.gui.widgets.WorldMapWidget;
+import com.barelyconscious.game.entity.playercontroller.MouseKeyboardPlayerController;
+import com.barelyconscious.game.entity.playercontroller.PlayerController;
 import com.barelyconscious.game.entity.resources.GUISpriteSheet;
 import com.barelyconscious.game.entity.resources.ResourceSprite;
 import com.barelyconscious.game.entity.resources.Resources;
@@ -24,7 +25,7 @@ import static com.barelyconscious.game.entity.resources.GUISpriteSheet.Resources
 
 public final class GuiInitializer {
 
-    public static void createGui(final Screen screen) {
+    public static void createGui(final Screen screen, final World world, final PlayerController playerController) {
         val gui = new GuiCanvas(screen);
         TileInfoWidget tiw = new TileInfoWidget(LayoutData.builder()
             .anchor(new VDim(0.5f, 0, -45, 15))
@@ -34,13 +35,16 @@ public final class GuiInitializer {
         gui.addWidget(tiw);
 
         configureHeroQuickbarPanel(gui);
-        configureInventory(gui);
-        World world = GameInstance.getInstance().getWorld();
-        world.spawnActor(gui);
+        configureInventory(gui, playerController);
+        world.addActor(gui);
     }
 
-    private static void configureInventory(GuiCanvas gui) {
-        Inventory inventory = GameInstance.getInstance().getPlayerController().getInventory();
+    private static void configureInventory(GuiCanvas gui, final PlayerController playerController) {
+        if (!(playerController instanceof MouseKeyboardPlayerController)) {
+            return;
+        }
+
+        Inventory inventory = ((MouseKeyboardPlayerController) playerController).getInventory();
 
         val wBackpack = new InventoryBagWidget(LayoutData.builder()
             .anchor(new VDim(1, 0.5f,

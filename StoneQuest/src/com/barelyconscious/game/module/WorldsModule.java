@@ -1,13 +1,13 @@
 package com.barelyconscious.game.module;
 
-import com.barelyconscious.game.entity.engine.Engine;
 import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.Inventory;
 import com.barelyconscious.game.entity.World;
+import com.barelyconscious.game.entity.engine.Engine;
 import com.barelyconscious.game.entity.graphics.Screen;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.entity.input.MouseInputHandler;
-import com.barelyconscious.game.entity.playercontroller.PlayerController;
+import com.barelyconscious.game.entity.playercontroller.MouseKeyboardPlayerController;
 import com.barelyconscious.game.exception.InvalidGameConfigurationException;
 import com.barelyconscious.game.physics.Physics;
 import com.google.common.util.concurrent.RateLimiter;
@@ -186,8 +186,8 @@ public class WorldsModule extends AbstractModule {
 
     @Singleton
     @Provides
-    GameInstance providesGameInstance(final World world, final PlayerController playerController) {
-        return GameInstance.createInstance(world, playerController);
+    GameInstance providesGameInstance() {
+        return GameInstance.instance();
     }
 
     @Provides
@@ -198,12 +198,12 @@ public class WorldsModule extends AbstractModule {
 
     @Singleton
     @Provides
-    PlayerController providesPlayerController(
+    MouseKeyboardPlayerController providesPlayerController(
         final Inventory inventory,
         final MouseInputHandler mouseInputHandler,
         final KeyInputHandler keyInputHandler
     ) {
-        return new PlayerController(
+        return new MouseKeyboardPlayerController(
             inventory,
             mouseInputHandler,
             keyInputHandler);

@@ -1,7 +1,6 @@
 package com.barelyconscious.game.entity.components;
 
 import com.barelyconscious.game.entity.Actor;
-import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.ItemLootActor;
 import com.barelyconscious.game.entity.item.Item;
 import com.google.common.collect.Lists;
@@ -24,10 +23,18 @@ public class DropOnDeathComponent extends OnDeathComponent {
 
     @Override
     protected void onDeath(AdjustableValueComponent.StatValueChanged statValueChanged) {
-        itemsOnDrop.forEach(droppedItem -> GameInstance.getInstance().getWorld().spawnActor(new ItemLootActor(
-            getParent().transform, droppedItem
-        )));
-        itemsOnDrop.clear();
-        setRemoveOnNextUpdate(true);
+        onNextUpdate(e -> {
+            if (isRemoveOnNextUpdate()) {
+                return null;
+            }
+
+            itemsOnDrop.forEach(droppedItem -> e.getWorldContext().addActor(new ItemLootActor(
+                getParent().transform, droppedItem
+            )));
+            itemsOnDrop.clear();
+            setRemoveOnNextUpdate(true);
+
+            return null;
+        });
     }
 }

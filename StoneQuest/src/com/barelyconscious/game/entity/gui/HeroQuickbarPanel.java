@@ -120,7 +120,7 @@ public class HeroQuickbarPanel extends MouseInputWidget {
             .build(),
             spriteHeroPortrait));
 
-        GameInstance.getInstance().delegateHeroSelectionChanged.bindDelegate(e -> {
+        GameInstance.instance().delegateHeroSelectionChanged.bindDelegate(e -> {
             this.selectedSpriteWidget.setEnabled(e.selectedHero == hero);
             return null;
         });

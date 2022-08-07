@@ -6,6 +6,8 @@ import com.barelyconscious.game.entity.graphics.RenderContext;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.function.Function;
+
 public abstract class Component {
 
     /**
@@ -57,12 +59,28 @@ public abstract class Component {
     public void physicsUpdate(EventArgs eventArgs) {
     }
 
+    // todo: probably want to do `final update` which calls pendingupdate and an inner update
+    //  but that's a lot of work
     public void update(EventArgs eventArgs) {
+        if (pendingUpdate != null) {
+            pendingUpdate.apply(eventArgs);
+            pendingUpdate = null;
+        }
     }
 
     public void render(EventArgs eventArgs, RenderContext renderContext) {
     }
 
     public void guiRender(EventArgs eventArgs, RenderContext renderContext) {
+    }
+
+    private Function<EventArgs, Void> pendingUpdate;
+
+    /**
+     * Until to-do above is fixed, if you want to have an update fired on the next update, then you
+     * must call update.super(...);
+     */
+    public void onNextUpdate(Function<EventArgs, Void> update) {
+        this.pendingUpdate = update;
     }
 }
