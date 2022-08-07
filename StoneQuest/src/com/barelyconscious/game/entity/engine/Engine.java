@@ -1,10 +1,8 @@
 package com.barelyconscious.game.entity.engine;
 
-import com.barelyconscious.game.delegate.Delegate;
 import com.barelyconscious.game.entity.Actor;
 import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.World;
-import com.barelyconscious.game.entity.YieldingCallback;
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
@@ -13,7 +11,6 @@ import com.barelyconscious.game.physics.Physics;
 import com.barelyconscious.game.shape.Vector;
 import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.RateLimiter;
-import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 import java.awt.Color;
@@ -21,10 +18,8 @@ import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -40,8 +35,6 @@ public final class Engine {
     private final RateLimiter upsLimiter;
     private final RateLimiter fpsLimiter;
 
-    private long lastRenderTimeMillis;
-    private long lastUpdateTimeMillis;
     private final Physics physics;
 
     private long frames = 0;
@@ -49,93 +42,6 @@ public final class Engine {
     private float averageFps = 0;
 
     private boolean isRunning = false;
-
-    public static class JobRunContext {
-        @Getter
-        private final String jobId;
-        @Getter
-        private EventArgs eventArgs;
-        private final List<YieldingCallback> yields = new ArrayList<>();
-
-        public JobRunContext(final String jobId, final EventArgs e) {
-            this.jobId = jobId;
-            this.eventArgs = e;
-        }
-
-        public boolean isCompleted() {
-            return yields.isEmpty();
-        }
-
-        public void yield(final long yieldForMillis, final Function<JobRunContext, Void> callback) {
-            yields.add(new YieldingCallback(yieldForMillis, callback));
-        }
-
-        private void setEventArgs(EventArgs eventArgs) {
-            this.eventArgs = eventArgs;
-        }
-    }
-
-    public static class JobExecution {
-
-        @Getter
-        private final String jobId;
-        @Getter
-        private final String createdDateTime;
-
-        public final Delegate<Void> delegateOnJobSucceeded = new Delegate<>();
-        public final Delegate<Exception> delegateOnJobFailed = new Delegate<>();
-        /**
-         * Delegate always fired whether the job completed successfully or not.
-         */
-        public final Delegate<Void> delegateOnCompleted = new Delegate<>();
-
-        private final JobRunContext runContext;
-        private final Function<JobRunContext, Void> job;
-        private boolean jobExecuted;
-        private final Stopwatch stopwatch;
-
-        public JobExecution(final EventArgs eventArgs, final Function<JobRunContext, Void> job) {
-            this.job = job;
-            this.jobExecuted = false;
-            this.jobId = UUID.randomUUID().toString();
-            this.createdDateTime = Clock.systemDefaultZone().toString();
-            this.stopwatch = Stopwatch.createStarted();
-
-            this.runContext = new JobRunContext(jobId, eventArgs);
-        }
-
-        private boolean isJobComplete(final EventArgs eventArgs) {
-            if (!jobExecuted) {
-                job.apply(runContext);
-                jobExecuted=true;
-            }
-
-            final List<Exception> failedJobs = new ArrayList<>();
-            runContext.setEventArgs(eventArgs);
-            runContext.yields.removeIf(cb -> {
-                try {
-                    return cb.tickAndCall(runContext);
-                } catch (final Exception e) {
-                    log.warn("[Job={}] Failed to update: {}", jobId, e.getMessage(), e);
-                    failedJobs.add(e);
-                }
-                return true;
-            });
-
-            if (runContext.isCompleted()) {
-                log.debug("Completed job={} in {}ms", jobId, stopwatch.elapsed(TimeUnit.MILLISECONDS));
-                if (failedJobs.isEmpty()) {
-                    delegateOnJobSucceeded.call(null);
-                } else {
-                    delegateOnJobFailed.call(failedJobs.get(0));
-                }
-                delegateOnCompleted.call(null);
-                return true;
-            }
-
-            return false;
-        }
-    }
 
     private final Queue<JobExecution> pendingJobExecutions = new ConcurrentLinkedDeque<>();
 
@@ -171,7 +77,7 @@ public final class Engine {
         isRunning = true;
 
         final Thread threadUpdate = new Thread(() -> {
-            this.lastUpdateTimeMillis = clock.millis();
+            long lastUpdateTimeMillis = clock.millis();
             while (isRunning) {
                 upsLimiter.acquire();
 
@@ -179,20 +85,20 @@ public final class Engine {
                 final long deltaTime = now - lastUpdateTimeMillis;
                 tick(buildEventArgs(deltaTime));
 
-                this.lastUpdateTimeMillis = clock.millis();
+                lastUpdateTimeMillis = clock.millis();
             }
         });
         threadUpdate.start();
 
+        long lastRenderTimeMillis = clock.millis();
         while (isRunning) {
-            this.lastRenderTimeMillis = clock.millis();
             fpsLimiter.acquire();
 
             final long now = clock.millis();
             final long deltaTime = now - lastRenderTimeMillis;
             renderTick(buildEventArgs(deltaTime));
 
-            this.lastRenderTimeMillis = clock.millis();
+            lastRenderTimeMillis = clock.millis();
         }
 
         try {
@@ -210,7 +116,6 @@ public final class Engine {
     }
 
     long next = 100;
-
     public void renderTick(final EventArgs eventArgs) {
         screen.clear();
         final RenderContext renderContext = screen.createRenderContext();

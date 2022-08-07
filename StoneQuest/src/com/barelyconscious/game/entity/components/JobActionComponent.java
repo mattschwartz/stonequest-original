@@ -1,8 +1,8 @@
 package com.barelyconscious.game.entity.components;
 
 import com.barelyconscious.game.entity.Actor;
-import com.barelyconscious.game.entity.engine.Engine;
 import com.barelyconscious.game.entity.engine.EventArgs;
+import com.barelyconscious.game.entity.engine.JobRunContext;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.Queue;
@@ -26,8 +26,8 @@ public class JobActionComponent extends Component {
     public static class TooManyActionsException extends Exception {
     }
 
-    private final Queue<Function<Engine.JobRunContext, Void>> pendingJobs = new ConcurrentLinkedQueue<>();
-    private final Queue<Function<Engine.JobRunContext, Void>> activeJobs = new ConcurrentLinkedQueue<>();
+    private final Queue<Function<JobRunContext, Void>> pendingJobs = new ConcurrentLinkedQueue<>();
+    private final Queue<Function<JobRunContext, Void>> activeJobs = new ConcurrentLinkedQueue<>();
     private final int maxDepth;
 
     public JobActionComponent(final Actor parent, final int maxDepth) {
@@ -43,7 +43,7 @@ public class JobActionComponent extends Component {
      * @throws TooManyActionsException when caller tries to submit a job beyond the configured maxDepth. Exceeding
      *                                 maxDepth will prevent further jobs from running.
      */
-    public void queueAction(final Function<Engine.JobRunContext, Void> a) throws TooManyActionsException {
+    public void queueAction(final Function<JobRunContext, Void> a) throws TooManyActionsException {
         log.debug("There are {} pending jobs and {} active jobs. You have {} depth.",
             pendingJobs.size(), activeJobs.size(), maxDepth);
         if (activeJobs.size() + pendingJobs.size() >= maxDepth) {
@@ -52,12 +52,12 @@ public class JobActionComponent extends Component {
         pendingJobs.add(a);
     }
 
-    public void replaceActions(final Function<Engine.JobRunContext, Void> a) {
+    public void replaceActions(final Function<JobRunContext, Void> a) {
         pendingJobs.clear();
         pendingJobs.add(a);
     }
 
-    public void cancelAction(final Function<Engine.JobRunContext, Void> a) {
+    public void cancelAction(final Function<JobRunContext, Void> a) {
         pendingJobs.remove(a);
     }
 
@@ -73,7 +73,7 @@ public class JobActionComponent extends Component {
         }
 
         // submit just 1 job to the engine per update
-        final Function<Engine.JobRunContext, Void> action = pendingJobs.peek();
+        final Function<JobRunContext, Void> action = pendingJobs.peek();
         if (action != null) {
             final EventArgs.SubmitJobResponse response = eventArgs.submitJob(action);
             if (response.isSuccess()) {

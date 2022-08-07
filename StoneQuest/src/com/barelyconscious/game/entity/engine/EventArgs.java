@@ -24,13 +24,13 @@ public class EventArgs {
 
     private boolean acceptsNewJobs = true;
 
-    private final Queue<Engine.JobExecution> engineThings;
+    private final Queue<JobExecution> engineThings;
 
     public EventArgs(
         final float deltaTime,
         final Vector mouseScreenPos,
         final Vector mouseWorldPos,
-        final Queue<Engine.JobExecution> engineThings
+        final Queue<JobExecution> engineThings
     ) {
         this.deltaTime = deltaTime;
         this.mouseScreenPos = mouseScreenPos;
@@ -50,13 +50,13 @@ public class EventArgs {
     @AllArgsConstructor
     public static class SubmitJobResponse {
         private final boolean success;
-        private final Engine.JobExecution jobExecution;
+        private final JobExecution jobExecution;
     }
 
     @CanIgnoreReturnValue
-    public SubmitJobResponse submitJob(final Function<Engine.JobRunContext, Void> job) {
+    public SubmitJobResponse submitJob(final Function<JobRunContext, Void> job) {
         if (acceptsNewJobs) {
-            final Engine.JobExecution jobExecution = new Engine.JobExecution(this, job);
+            final JobExecution jobExecution = new JobExecution(this, job);
 
             engineThings.add(jobExecution);
 
