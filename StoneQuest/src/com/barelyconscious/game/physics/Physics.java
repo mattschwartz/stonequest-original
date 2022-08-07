@@ -123,6 +123,7 @@ public final class Physics {
                         other.isFiresOverlapEvents(),
                         other.getParent(),
                         collider.getParent(),
+                        collider,
                         forceVector,
                         eventArgs);
 

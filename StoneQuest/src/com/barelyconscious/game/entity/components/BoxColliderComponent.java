@@ -8,6 +8,8 @@ import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.awt.Color;
+
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class BoxColliderComponent extends ColliderComponent {
@@ -34,8 +36,13 @@ public class BoxColliderComponent extends ColliderComponent {
             return;
         }
 
+        final Color debugColor = isBlocksMovement()
+            ? Color.RED
+            : Color.BLUE;
+
         final Vector location = getParent().transform;
         renderContext.debugRenderBox(
+            debugColor,
             (int) location.x + bounds.left,
             (int) location.y + bounds.top,
             bounds.right,

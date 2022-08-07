@@ -126,16 +126,13 @@ public class RenderContext {
         return graphicsByLayer.get(renderLayer);
     }
 
-    /**
-     * Draws a box to the debug layer using the default debug color.
-     */
-    public void debugRenderBox(final int worldX, final int worldY, final int width, final int height) {
+    public void debugRenderBox(final Color color, final int worldX, final int worldY, final int width, final int height) {
         final Graphics graphics = graphicsByLayer.get(RenderLayer._DEBUG);
         final Color prev = graphics.getColor();
 
         final Vector screenPos = camera.worldToScreenPos(worldX, worldY);
         if (inBounds(worldX, worldY, width, height)) {
-            graphics.setColor(DEBUG_COLOR);
+            graphics.setColor(color);
             graphics.drawRect(
                 (int) screenPos.x,
                 (int) screenPos.y,
@@ -143,6 +140,13 @@ public class RenderContext {
                 height);
             graphics.setColor(prev);
         }
+    }
+
+    /**
+     * Draws a box to the debug layer using the default debug color.
+     */
+    public void debugRenderBox(final int worldX, final int worldY, final int width, final int height) {
+        debugRenderBox(DEBUG_COLOR, worldX, worldY, width, height);
     }
 
     /**

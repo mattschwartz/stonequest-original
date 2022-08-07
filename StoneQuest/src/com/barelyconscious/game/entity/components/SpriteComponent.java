@@ -96,11 +96,21 @@ public class SpriteComponent extends Component {
 
         if (spriteResource != null) {
             renderContext.render(RenderContext.RenderRequest.builder()
-                    .spriteResource(spriteResource)
-                    .width(width).height(height)
-                    .worldX((int) position.x).worldY((int) position.y)
-                    .renderOpacity(opacity)
-                    .renderLayer(renderLayer)
+                .spriteResource(spriteResource)
+                .width(width).height(height)
+                .worldX((int) position.x).worldY((int) position.y)
+                .renderOpacity(1)
+                .renderLayer(renderLayer)
+                .build());
+            // also render to the accumulated light so this sprite still shows up as "seen"
+            // todo - sprites that have been recently seen but are not currently visible should be rendered at the
+            //  last place they were seen
+            renderContext.render(RenderContext.RenderRequest.builder()
+                .spriteResource(spriteResource)
+                .width(width).height(height)
+                .worldX((int) position.x).worldY((int) position.y)
+                .renderOpacity(opacity)
+                .renderLayer(RenderLayer.LIGHTMAP)
                 .build());
         } else {
             // deprecated

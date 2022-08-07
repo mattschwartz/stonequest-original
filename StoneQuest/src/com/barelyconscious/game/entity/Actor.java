@@ -3,8 +3,6 @@ package com.barelyconscious.game.entity;
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
-import com.google.common.collect.Lists;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -29,8 +28,9 @@ public class Actor {
     public final String id;
     public final String name;
 
-    private final Map<Class<? extends Component>, Component> componentsByType;
-    private final List<Component> components;
+    private final Map<Class<? extends Component>, List<Component>> componentsByType;
+//    private final List<Component> components;
+    private final List<Component> allComponents;
 
     private boolean isEnabled = true;
     private boolean isDestroying = false;
@@ -60,11 +60,9 @@ public class Actor {
 
     public Actor(
         final String name,
-        final Vector transform,
-        final Component... components
+        final Vector transform
     ) {
         checkArgument(transform != null, "transform is null");
-        checkArgument(components != null, "components is null");
 
         this.id = UUID.randomUUID().toString();
 
@@ -75,10 +73,9 @@ public class Actor {
         }
 
         this.transform = transform;
-        this.components = Lists.newArrayList(components);
+        this.allComponents = new ArrayList<>();
 
         this.componentsByType = new HashMap<>();
-        this.components.forEach(t -> this.componentsByType.put(t.getClass(), t));
     }
 
     public boolean isEnabled() {
@@ -100,59 +97,51 @@ public class Actor {
     public boolean addComponent(final Component component) {
         checkArgument(component != null, "component is null");
 
-        if (componentsByType.containsKey(component.getClass())) {
-            log.warn("Attempted to add component of type={}. Already exists on Actor '{}'",
-                component.getClass(),
-                this.name);
-            return false;
+        List<Component> components;
+        if (!componentsByType.containsKey(component.getClass())) {
+            components = new ArrayList<>();
+        } else {
+            components = componentsByType.get(component.getClass());
         }
+        components.add(component);
 
         component.setParent(this);
-        componentsByType.put(component.getClass(), component);
-        return components.add(component);
-    }
-
-    @Nullable
-    public Component removeComponentByType(final Class<? extends Component> componentType) {
-        if (!componentsByType.containsKey(componentType)) {
-            log.info("Attempted to remove component of type={}. Does not exist on Actor '{}'",
-                componentType,
-                this.name);
-            return null;
-        }
-
-        final Component componentRemoved = componentsByType.get(componentType);
-        componentsByType.remove(componentType);
-        components.remove(componentRemoved);
-
-        return componentRemoved;
+        componentsByType.put(component.getClass(), components);
+        allComponents.add(component);
+        return true;
     }
 
     /**
      * Attempts to remove the provided component. If removed, the provided component's parent is also set to null.
      */
-    @Nullable
-    @CanIgnoreReturnValue
-    public Component removeComponent(@NonNull final Component componentToRemove) {
-        Component componentRemoved = removeComponentByType(componentToRemove.getClass());
-        if (componentRemoved != null) {
-            componentRemoved.setParent(null);
+    public void removeComponent(
+        @NonNull final Component componentToRemove
+    ) {
+        List<Component> components = componentsByType.get(componentToRemove.getClass());
+        if (components != null) {
+            Optional<Component> first = components.stream()
+                .filter(t -> t == componentToRemove)
+                .findFirst();
+            first.ifPresent(t -> {
+                t.setParent(null);
+                components.remove(t);
+            });
         }
-        return componentRemoved;
     }
 
+    // returns the first one, not necessarily the one you want...
     @Nullable
     @SuppressWarnings("unchecked")
     public <T extends Component> T getComponent(final Class<T> componentType) {
-        final Component component = componentsByType.get(componentType);
+        final List<T> components = (List<T>) componentsByType.get(componentType);
 
-        if (component != null) {
-            return (T) component;
+        if (components != null && !components.isEmpty()) {
+            return components.get(0);
         }
         return null;
     }
 
     public List<Component> getComponents() {
-        return new ArrayList<>(components);
+        return allComponents;
     }
 }
