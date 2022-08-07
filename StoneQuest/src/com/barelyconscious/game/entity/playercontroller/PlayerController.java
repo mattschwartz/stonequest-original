@@ -74,10 +74,47 @@ public class PlayerController {
         mouseHandler.onMouseReleased.bindDelegate(this::onMouseReleased);
         mouseHandler.onMouseExited.bindDelegate(this::onMouseExited);
 
-        keyHandler.onKeyPressed.bindDelegate(this::onKeyTyped);
+        keyHandler.delegateOnKeyPressed.bindDelegate(this::onKeyPressed);
+        keyHandler.delegateOnKeyReleased.bindDelegate(this::onKeyReleased);
     }
 
-    private Void onKeyTyped(KeyEvent keyEvent) {
+    private Void onKeyReleased(KeyEvent keyEvent) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+            final Hero usedBy = GameInstance.getInstance().getHeroSelected();
+            final Vector facing = usedBy.facing;
+
+            JobActionComponent jobComponent = usedBy.getComponent(JobActionComponent.class);
+            if (jobComponent == null) {
+                return null;
+            }
+            try {
+                jobComponent.queueAction(e -> {
+                    final int wait1 = 250;
+                    final int wait2 = 300;
+                    final int wait3 = 350;
+
+                    e.yield(wait1, t -> {
+                        new AwesomeBulletWeaponItem().use(usedBy, facing);
+                        return null;
+                    });
+                    e.yield(wait2, t -> {
+                        new AwesomeBulletWeaponItem().use(usedBy, facing);
+                        return null;
+                    });
+                    e.yield(wait3, t -> {
+                        new AwesomeBulletWeaponItem().use(usedBy, facing);
+                        return null;
+                    });
+                    return null;
+                });
+            } catch (JobActionComponent.TooManyActionsException e) {
+                log.error("You can't handle that many things at once.");
+            }
+        }
+        return null;
+    }
+
+    private Void onKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
             if (EventArgs.IS_DEBUG) {
                 if (EventArgs.IS_VERBOSE) {
@@ -135,44 +172,6 @@ public class PlayerController {
             int newIndex = (curIndex + 1) % 3;
             GameInstance.getInstance().setHeroSelectedSlot(
                 GameInstance.PartySlot.fromSlotId(newIndex));
-        }
-
-        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-            final Hero usedBy = GameInstance.getInstance().getHeroSelected();
-            final Vector facing = usedBy.facing;
-
-            JobActionComponent jobComponent = usedBy.getComponent(JobActionComponent.class);
-            if (jobComponent == null) {
-                return null;
-            }
-            try {
-                jobComponent.queueAction(e -> {
-                    int waitTime = UMath.RANDOM.nextInt(60) + 40;
-                    e.yield(waitTime, t -> {
-                        new AwesomeBulletWeaponItem().use(usedBy, facing);
-                        return null;
-                    });
-                    return null;
-                });
-                jobComponent.queueAction(e -> {
-                    int waitTime = UMath.RANDOM.nextInt(60) + 40;
-                    e.yield(waitTime, t -> {
-                        new AwesomeBulletWeaponItem().use(usedBy, facing);
-                        return null;
-                    });
-                    return null;
-                });
-                jobComponent.queueAction(e -> {
-                    int waitTime = UMath.RANDOM.nextInt(60) + 40;
-                    e.yield(waitTime, t -> {
-                        new AwesomeBulletWeaponItem().use(usedBy, facing);
-                        return null;
-                    });
-                    return null;
-                });
-            } catch (JobActionComponent.TooManyActionsException e) {
-                log.error("You can't handle that many things at once.");
-            }
         }
 
         return null;

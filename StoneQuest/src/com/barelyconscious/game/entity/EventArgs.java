@@ -2,16 +2,14 @@ package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.shape.Vector;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-import java.util.List;
 import java.util.Queue;
 import java.util.function.Function;
 
 @Getter
-@RequiredArgsConstructor
-public final class EventArgs {
+public class EventArgs {
 
     /**
      * Time in seconds since last update.
@@ -25,8 +23,20 @@ public final class EventArgs {
     public static boolean IS_VERBOSE = false;
 
     private boolean acceptsNewJobs = true;
-    private final Queue<Function<EventArgs, Void>> engineJobQueue;
-    private final List<YieldingCallback> engineYields;
+
+    private final Queue<Engine.JobExecution> engineThings;
+
+    public EventArgs(
+        final float deltaTime,
+        final Vector mouseScreenPos,
+        final Vector mouseWorldPos,
+        final Queue<Engine.JobExecution> engineThings
+    ) {
+        this.deltaTime = deltaTime;
+        this.mouseScreenPos = mouseScreenPos;
+        this.mouseWorldPos = mouseWorldPos;
+        this.engineThings = engineThings;
+    }
 
     void startAcceptingJobs() {
         acceptsNewJobs = true;
@@ -36,15 +46,22 @@ public final class EventArgs {
         acceptsNewJobs = false;
     }
 
-    @CanIgnoreReturnValue
-    public boolean submitJob(final Function<EventArgs, Void> job) {
-        if (acceptsNewJobs) {
-            engineJobQueue.add(job);
-        }
-        return acceptsNewJobs;
+    @Getter
+    @AllArgsConstructor
+    public static class SubmitJobResponse {
+        private final boolean success;
+        private final Engine.JobExecution jobExecution;
     }
 
-    public void yield(final long yieldForMillis, final Function<EventArgs, Void> callback) {
-        engineYields.add(new YieldingCallback(yieldForMillis, callback));
+    @CanIgnoreReturnValue
+    public SubmitJobResponse submitJob(final Function<Engine.JobRunContext, Void> job) {
+        if (acceptsNewJobs) {
+            final Engine.JobExecution jobExecution = new Engine.JobExecution(this, job);
+
+            engineThings.add(jobExecution);
+
+            return new SubmitJobResponse(true, jobExecution);
+        }
+        return new SubmitJobResponse(false, null);
     }
 }

@@ -1,10 +1,12 @@
 package com.barelyconscious.game.entity.components;
 
 import com.barelyconscious.game.entity.Actor;
+import com.barelyconscious.game.entity.Engine;
 import com.barelyconscious.game.entity.EventArgs;
+import lombok.extern.log4j.Log4j2;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Function;
 
 /**
@@ -16,6 +18,7 @@ import java.util.function.Function;
  *  actor dies as a result of a fatal blow is dependent on whether the other damaging
  *  actor is updated before or after the healing spell is processed.
  */
+@Log4j2
 public class JobActionComponent extends Component {
 
     public static final int DEFAULT_MAX_DEPTH = 3;
@@ -23,7 +26,8 @@ public class JobActionComponent extends Component {
     public static class TooManyActionsException extends Exception {
     }
 
-    private final Queue<Function<EventArgs, Void>> actionQueue = new ArrayDeque<>();
+    private final Queue<Function<Engine.JobRunContext, Void>> pendingJobs = new ConcurrentLinkedQueue<>();
+    private final Queue<Function<Engine.JobRunContext, Void>> activeJobs = new ConcurrentLinkedQueue<>();
     private final int maxDepth;
 
     public JobActionComponent(final Actor parent, final int maxDepth) {
@@ -39,32 +43,53 @@ public class JobActionComponent extends Component {
      * @throws TooManyActionsException when caller tries to submit a job beyond the configured maxDepth. Exceeding
      *                                 maxDepth will prevent further jobs from running.
      */
-    public void queueAction(final Function<EventArgs, Void> a) throws TooManyActionsException {
-        if (actionQueue.size() >= maxDepth) {
+    public void queueAction(final Function<Engine.JobRunContext, Void> a) throws TooManyActionsException {
+        log.debug("There are {} pending jobs and {} active jobs. You have {} depth.",
+            pendingJobs.size(), activeJobs.size(), maxDepth);
+        if (activeJobs.size() + pendingJobs.size() >= maxDepth) {
             throw new TooManyActionsException();
         }
-        actionQueue.add(a);
+        pendingJobs.add(a);
     }
 
-    public void replaceActions(final Function<EventArgs, Void> a) {
-        actionQueue.clear();
-        actionQueue.add(a);
+    public void replaceActions(final Function<Engine.JobRunContext, Void> a) {
+        pendingJobs.clear();
+        pendingJobs.add(a);
     }
 
-    public void cancelAction(final Function<EventArgs, Void> a) {
-        actionQueue.remove(a);
+    public void cancelAction(final Function<Engine.JobRunContext, Void> a) {
+        pendingJobs.remove(a);
     }
 
     public void cancelAllActions() {
-        actionQueue.clear();
+        pendingJobs.clear();
     }
 
+
     @Override
-    public void update(EventArgs eventArgs) {
+    public void update(final EventArgs eventArgs) {
+        if (activeJobs.size() + pendingJobs.size() >= maxDepth) {
+            return;
+        }
+
         // submit just 1 job to the engine per update
-        final Function<EventArgs, Void> action = actionQueue.poll();
+        final Function<Engine.JobRunContext, Void> action = pendingJobs.peek();
         if (action != null) {
-            eventArgs.submitJob(action);
+            final EventArgs.SubmitJobResponse response = eventArgs.submitJob(action);
+            if (response.isSuccess()) {
+                activeJobs.add(action);
+                pendingJobs.remove(action);
+
+                response.getJobExecution().delegateOnCompleted.bindDelegate(t -> {
+                    activeJobs.remove(action);
+                    return null;
+                });
+
+                log.debug("Submitted job {}. {} pending job(s) and {} active Job(s)",
+                    response.getJobExecution().getJobId().substring(0, 8), pendingJobs.size(), activeJobs.size());
+            } else {
+                log.warn("Failed to submit job");
+            }
         }
     }
 }
