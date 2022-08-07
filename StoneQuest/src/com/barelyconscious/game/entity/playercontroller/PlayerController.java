@@ -89,14 +89,11 @@ public class PlayerController {
             }
             try {
                 jobComponent.queueAction(e -> {
-                    final int wait1 = 250;
-                    final int wait2 = 300;
-                    final int wait3 = 350;
+                    final int wait2 = 75;
+                    final int wait3 = 100;
 
-                    e.yield(wait1, t -> {
-                        new AwesomeBulletWeaponItem().use(usedBy, facing);
-                        return null;
-                    });
+                    new AwesomeBulletWeaponItem().use(usedBy, facing);
+
                     e.yield(wait2, t -> {
                         new AwesomeBulletWeaponItem().use(usedBy, facing);
                         return null;
