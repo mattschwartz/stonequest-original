@@ -11,6 +11,7 @@ import com.barelyconscious.game.physics.Physics;
 import com.barelyconscious.game.shape.Vector;
 import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.RateLimiter;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 
 import java.awt.Color;
@@ -27,9 +28,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Log4j2
 public final class Engine {
 
-    private final GameInstance gameInstance;
-    private final World world;
-    private final Screen screen;
     private final Clock clock;
 
     private final RateLimiter upsLimiter;
@@ -46,35 +44,29 @@ public final class Engine {
     private final Queue<JobExecution> pendingJobExecutions = new ConcurrentLinkedDeque<>();
 
     public Engine(
-        final GameInstance gameInstance,
-        final World world,
-        final Screen screen,
         final Physics physics,
         final Clock clock,
         final RateLimiter ups,
         final RateLimiter fps
     ) {
-        checkArgument(gameInstance != null, "gameInstance is null");
-        checkArgument(world != null, "world is null");
-        checkArgument(screen != null, "screen is null");
         checkArgument(physics != null, "physics is null");
         checkArgument(clock != null, "clock is null");
         checkArgument(ups != null, "ups is null");
         checkArgument(fps != null, "fps is null");
 
-        this.gameInstance = gameInstance;
-        this.world = world;
-        this.screen = screen;
         this.physics = physics;
         this.clock = clock;
         this.upsLimiter = ups;
         this.fpsLimiter = fps;
-
-        gameInstance.setCamera(screen.getCamera());
     }
 
-    public void start() {
+    public void start(
+        @NonNull final GameInstance gameInstance,
+        @NonNull final World world,
+        @NonNull final Screen screen
+    ) {
         isRunning = true;
+        gameInstance.setCamera(screen.getCamera());
 
         final Thread threadUpdate = new Thread(() -> {
             long lastUpdateTimeMillis = clock.millis();
@@ -83,7 +75,7 @@ public final class Engine {
 
                 final long now = clock.millis();
                 final long deltaTime = now - lastUpdateTimeMillis;
-                tick(buildEventArgs(deltaTime));
+                tick(buildEventArgs(deltaTime, gameInstance), world);
 
                 lastUpdateTimeMillis = clock.millis();
             }
@@ -96,7 +88,7 @@ public final class Engine {
 
             final long now = clock.millis();
             final long deltaTime = now - lastRenderTimeMillis;
-            renderTick(buildEventArgs(deltaTime));
+            renderTick(buildEventArgs(deltaTime, gameInstance), world, screen);
 
             lastRenderTimeMillis = clock.millis();
         }
@@ -116,7 +108,11 @@ public final class Engine {
     }
 
     long next = 100;
-    public void renderTick(final EventArgs eventArgs) {
+    public void renderTick(
+        final EventArgs eventArgs,
+        final World world,
+        final Screen screen
+    ) {
         screen.clear();
         final RenderContext renderContext = screen.createRenderContext();
 
@@ -147,13 +143,13 @@ public final class Engine {
         }
 
         if (EventArgs.IS_DEBUG) {
-            renderDebug(eventArgs, renderContext);
+            renderDebug(eventArgs, renderContext, world);
         }
 
         screen.render(renderContext);
     }
 
-    public void tick(final EventArgs eventArgs) {
+    public void tick(final EventArgs eventArgs, final World world) {
         gameClockMillis += eventArgs.getDeltaTime() * 1000;
         final List<Component> componentsToUpdate = new ArrayList<>();
         final List<Actor> actorsToRemove = new ArrayList<>();
@@ -217,7 +213,8 @@ public final class Engine {
     // todo(p0) - obviously this shouldn't be part of the Engine
     private void renderDebug(
         EventArgs eventArgs,
-        RenderContext renderContext
+        RenderContext renderContext,
+        World world
     ) {
         final Vector screenPos = renderContext.camera.screenToWorldPos(new Vector(5, 5));
         renderContext.renderRect(
@@ -264,7 +261,7 @@ public final class Engine {
             RenderLayer._DEBUG);
     }
 
-    private EventArgs buildEventArgs(final long deltaTime) {
+    private EventArgs buildEventArgs(final long deltaTime, final GameInstance gameInstance) {
         return new EventArgs(
             deltaTime * 0.001f,
             gameInstance.getPlayerController().getMouseScreenPos(),

@@ -166,18 +166,12 @@ public class WorldsModule extends AbstractModule {
     @Singleton
     @Provides
     Engine providesEngine(
-        final GameInstance gameInstance,
-        @Named(DEFAULT_WORLD_NAMED) final World world,
-        final Screen screen,
         final Physics physics,
         final Clock clock,
         @Named("game.maxFramesPerSecond") final long fps,
         @Named("game.maxUpdatesPerSecond") final long ups
     ) {
         return new Engine(
-            gameInstance,
-            world,
-            screen,
             physics,
             clock,
             RateLimiter.create(ups),

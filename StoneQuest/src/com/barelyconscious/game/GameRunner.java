@@ -59,7 +59,7 @@ public final class GameRunner {
 
         frame.requestFocus();
 
-        engine.start();
+        engine.start(gi, world, screen);
         System.out.println("Saving game...");
         System.out.println("Cleaning up...");
     }
