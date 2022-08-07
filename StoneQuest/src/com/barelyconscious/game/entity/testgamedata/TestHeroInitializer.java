@@ -111,7 +111,7 @@ public class TestHeroInitializer {
         World world = GameInstance.getInstance().getWorld();
 
         Hero heroJohn = HERO_JOHN;
-        heroJohn.addComponent(new LightSourceComponent(heroJohn, 400, 400));
+        heroJohn.addComponent(new LightSourceComponent(heroJohn, 250));
         heroJohn.addComponent(new Component(heroJohn) {
             @Override
             public void update(EventArgs eventArgs) {
@@ -130,7 +130,7 @@ public class TestHeroInitializer {
         world.spawnActor(HERO_JOHN);
 
         Hero heroNicnole = HERO_NICNOLE;
-        heroNicnole.addComponent(new LightSourceComponent(heroNicnole, 400, 400));
+        heroNicnole.addComponent(new LightSourceComponent(heroNicnole, 250));
         heroNicnole.addComponent(new Component(heroNicnole) {
             @Override
             public void update(EventArgs eventArgs) {
@@ -149,7 +149,7 @@ public class TestHeroInitializer {
         world.spawnActor(HERO_NICNOLE);
 
         Hero heroPaul = HERO_PAUL;
-        heroPaul.addComponent(new LightSourceComponent(heroPaul, 400, 400));
+        heroPaul.addComponent(new LightSourceComponent(heroPaul, 250));
         heroPaul.addComponent(new Component(heroPaul) {
             @Override
             public void update(EventArgs eventArgs) {

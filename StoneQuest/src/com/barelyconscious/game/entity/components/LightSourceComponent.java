@@ -11,16 +11,14 @@ import java.awt.Color;
 
 public class LightSourceComponent extends Component {
 
-    private final int width;
-    private final int height;
+    private final int radius;
     @Getter
     @Setter
     private float opacity;
 
-    public LightSourceComponent(Actor parent, int width, int height) {
+    public LightSourceComponent(Actor parent, int radius) {
         super(parent);
-        this.width = width;
-        this.height = height;
+        this.radius = radius;
 
         opacity = 1;
     }
@@ -28,14 +26,14 @@ public class LightSourceComponent extends Component {
     @Override
     public void render(EventArgs eventArgs, RenderContext renderContext) {
         {
-            final int worldX = (int) (getParent().transform.x - (width - 32) / 2);
-            final int worldY = (int) (getParent().transform.y - (height - 32) / 2);
+            final int worldX = (int) (getParent().transform.x - (radius - 16));
+            final int worldY = (int) (getParent().transform.y - (radius - 16));
 
-            renderContext.renderRect(
+            renderContext.renderCircle(
                 new Color(255, 255, 255, (int) (255 * opacity)),
                 true,
                 worldX, worldY,
-                width, height,
+                radius,
                 RenderLayer.LIGHTMAP
             );
         }

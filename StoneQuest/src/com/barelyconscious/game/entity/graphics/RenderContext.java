@@ -259,6 +259,29 @@ public class RenderContext {
         this.renderRect(color, fill, (int) worldPos.x, (int) worldPos.y, screenBounds.width, screenBounds.height, layer);
     }
 
+    public void renderCircle(final Color color, final boolean fill, final int worldX, final int worldY,
+                             final int radius, final RenderLayer layer) {
+        final Graphics g = graphicsByLayer.get(layer);
+        if (inBounds(worldX, worldY, radius * 2, radius * 2)) {
+            final Color prevColor = g.getColor();
+            final Vector screenPos = camera.worldToScreenPos(worldX, worldY);
+            g.setColor(color);
+            if (fill) {
+                g.fillOval(
+                    (int) screenPos.x,
+                    (int) screenPos.y,
+                    radius * 2, radius * 2
+                );
+            } else {
+                g.drawOval(
+                    (int) screenPos.x,
+                    (int) screenPos.y,
+                    radius * 2, radius * 2
+                );
+            }
+        }
+    }
+
     public void renderRect(
         final Color color,
         final boolean fill,
