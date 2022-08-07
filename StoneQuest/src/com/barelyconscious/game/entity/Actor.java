@@ -114,7 +114,7 @@ public class Actor {
 
     @Nullable
     public Component removeComponentByType(final Class<? extends Component> componentType) {
-        if (componentsByType.containsKey(componentType)) {
+        if (!componentsByType.containsKey(componentType)) {
             log.info("Attempted to remove component of type={}. Does not exist on Actor '{}'",
                 componentType,
                 this.name);

@@ -48,7 +48,7 @@ public abstract class Component {
      * Removes this component from its current parent and reassigns the component's parent to the supplied parent
      */
     public void setParent(Actor parent) {
-        if (this.parent != null) {
+        if (this.parent != null && this.parent != parent && parent != null) {
             this.parent.removeComponent(this);
         }
         this.parent = parent;
