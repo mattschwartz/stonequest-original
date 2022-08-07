@@ -1,8 +1,8 @@
 package com.barelyconscious.game.entity.components;
 
 import com.barelyconscious.game.entity.Actor;
-import com.barelyconscious.game.entity.Engine;
-import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.engine.Engine;
+import com.barelyconscious.game.entity.engine.EventArgs;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.Queue;

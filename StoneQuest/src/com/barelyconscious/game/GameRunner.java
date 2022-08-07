@@ -1,7 +1,7 @@
 package com.barelyconscious.game;
 
 import com.barelyconscious.game.entity.CameraActor;
-import com.barelyconscious.game.entity.Engine;
+import com.barelyconscious.game.entity.engine.Engine;
 import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.World;
 import com.barelyconscious.game.entity.graphics.Screen;

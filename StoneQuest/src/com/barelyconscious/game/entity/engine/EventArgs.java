@@ -1,4 +1,4 @@
-package com.barelyconscious.game.entity;
+package com.barelyconscious.game.entity.engine;
 
 import com.barelyconscious.game.shape.Vector;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;

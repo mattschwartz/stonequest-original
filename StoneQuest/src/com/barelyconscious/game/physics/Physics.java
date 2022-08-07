@@ -2,6 +2,7 @@ package com.barelyconscious.game.physics;
 
 import com.barelyconscious.game.entity.*;
 import com.barelyconscious.game.entity.components.*;
+import com.barelyconscious.game.entity.engine.EventArgs;
 import com.barelyconscious.game.shape.Vector;
 import lombok.*;
 

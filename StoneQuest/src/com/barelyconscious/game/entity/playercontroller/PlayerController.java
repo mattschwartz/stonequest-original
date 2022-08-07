@@ -2,7 +2,7 @@ package com.barelyconscious.game.entity.playercontroller;
 
 import com.barelyconscious.game.delegate.Delegate;
 import com.barelyconscious.game.entity.Actor;
-import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.engine.EventArgs;
 import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.Hero;
 import com.barelyconscious.game.entity.Inventory;

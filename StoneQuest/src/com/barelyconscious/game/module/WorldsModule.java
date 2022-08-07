@@ -1,6 +1,6 @@
 package com.barelyconscious.game.module;
 
-import com.barelyconscious.game.entity.Engine;
+import com.barelyconscious.game.entity.engine.Engine;
 import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.Inventory;
 import com.barelyconscious.game.entity.World;

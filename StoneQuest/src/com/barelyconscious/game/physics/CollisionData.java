@@ -1,7 +1,7 @@
 package com.barelyconscious.game.physics;
 
 import com.barelyconscious.game.entity.Actor;
-import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.engine.EventArgs;
 import com.barelyconscious.game.shape.Vector;
 import lombok.AllArgsConstructor;
 

@@ -1,6 +1,7 @@
 package com.barelyconscious.game.entity;
 
 import com.barelyconscious.game.entity.components.Component;
+import com.barelyconscious.game.entity.engine.EventArgs;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.input.KeyInputHandler;
 import com.barelyconscious.game.shape.Vector;

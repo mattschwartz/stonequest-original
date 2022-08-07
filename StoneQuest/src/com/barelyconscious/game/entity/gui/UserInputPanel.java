@@ -36,6 +36,9 @@ public class UserInputPanel extends Widget {
         this.worldMapWidget = worldMapWidget;
         this.gameMenuWidget = gameMenuWidget;
 
+        this.inventoryBagWidget.setEnabled(false);
+        this.craftingMenuWidget.setEnabled(false);
+
         addWidget(new SpriteWidget(LayoutData.DEFAULT,
             Resources.instance().getSprite(GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND)));
 

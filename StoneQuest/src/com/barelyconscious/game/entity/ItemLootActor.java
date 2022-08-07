@@ -4,6 +4,7 @@ import com.barelyconscious.game.entity.components.BoxColliderComponent;
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.components.MouseListenerComponent;
 import com.barelyconscious.game.entity.components.SpriteComponent;
+import com.barelyconscious.game.entity.engine.EventArgs;
 import com.barelyconscious.game.entity.graphics.FontContext;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;

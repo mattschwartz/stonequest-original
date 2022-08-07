@@ -1,6 +1,6 @@
 package com.barelyconscious.game.entity.gui.widgets;
 
-import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.engine.EventArgs;
 import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.MouseInputWidget;

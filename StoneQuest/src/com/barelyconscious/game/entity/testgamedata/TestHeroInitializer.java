@@ -1,6 +1,6 @@
 package com.barelyconscious.game.entity.testgamedata;
 
-import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.engine.EventArgs;
 import com.barelyconscious.game.entity.GameInstance;
 import com.barelyconscious.game.entity.Hero;
 import com.barelyconscious.game.entity.HeroClassType;

@@ -1,7 +1,7 @@
 package com.barelyconscious.game.entity.components.combat;
 
 import com.barelyconscious.game.entity.Actor;
-import com.barelyconscious.game.entity.EventArgs;
+import com.barelyconscious.game.entity.engine.EventArgs;
 import com.barelyconscious.game.entity.Stats;
 import com.barelyconscious.game.entity.components.Component;
 import com.barelyconscious.game.entity.components.AdjustableValueComponent;

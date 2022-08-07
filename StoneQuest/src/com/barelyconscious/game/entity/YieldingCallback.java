@@ -1,5 +1,7 @@
 package com.barelyconscious.game.entity;
 
+import com.barelyconscious.game.entity.engine.Engine;
+import com.barelyconscious.game.entity.engine.EventArgs;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
