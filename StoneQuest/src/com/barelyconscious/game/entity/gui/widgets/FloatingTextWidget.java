@@ -5,12 +5,11 @@ import com.barelyconscious.game.entity.graphics.RenderContext;
 import com.barelyconscious.game.entity.graphics.RenderLayer;
 import com.barelyconscious.game.entity.gui.LayoutData;
 import com.barelyconscious.game.entity.gui.Widget;
-import com.barelyconscious.game.shape.Box;
 import com.barelyconscious.game.shape.Vector;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class FloatingTextWidget extends Widget {
 
@@ -20,7 +19,7 @@ public class FloatingTextWidget extends Widget {
 
     @Getter
     @Setter
-    private float durationMs;
+    private long durationMillis;
 
     @Getter
     @Setter
@@ -33,70 +32,35 @@ public class FloatingTextWidget extends Widget {
     public FloatingTextWidget(
         final LayoutData layoutData,
         final Vector direction,
-        final float durationMs,
+        final long durationMillis,
         final Color textColor
     ) {
         super(layoutData);
         this.direction = direction;
-        this.durationMs = durationMs;
+        this.durationMillis = durationMillis;
         this.textColor = textColor;
     }
 
-    private final WidgetState state = new WidgetState();
-
-    private final class WidgetState {
-        boolean isFloating = false;
-        float remainingTime = 0;
-        float offsX = 0;
-        float offsY = 0;
-
-        void tick(float deltaTime) {
-            if (!isFloating) {
-                return;
-            }
-            remainingTime -= deltaTime;
-            if (remainingTime <= 0) {
-                isFloating = false;
-                setRemoving(true);
-            }
-
-            final Vector delta = direction.multiply(moveSpeed * deltaTime);
-            state.offsX += delta.x;
-            state.offsY += delta.y;
-        }
-    }
-
-    private boolean started = false;
-
-    public void beginFloating(final String text) {
-        if (started) {
-            return;
-        }
-        this.text = text;
-
-        state.isFloating = true;
-        state.offsX = 0;
-        state.offsY = 0;
-        state.remainingTime = durationMs;
-        started = true;
-    }
-
-    final float moveSpeed = 60f;
+    private final float moveSpeed = 30f;
+    private int deltaY = 0;
 
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
-        state.tick(eventArgs.getDeltaTime());
+        eventArgs.submitJob(t -> {
+            t.yield(durationMillis, u -> {
+                setRemoving(true);
+                return null;
+            });
+            return null;
+        });
 
-        if (state.isFloating) {
-            final Box pos = screenBounds.boxAtPosition(new Vector(
-                state.offsX, state.offsY));
+        renderContext.getFontContext().renderString(
+            text,
+            textColor,
+            screenBounds.left,
+            screenBounds.top - deltaY,
+            RenderLayer.GUI);
 
-            renderContext.getFontContext().renderString(
-                text,
-                textColor,
-                pos.left,
-                pos.top,
-                RenderLayer.GUI);
-        }
+        deltaY += Math.round(moveSpeed * (eventArgs.getDeltaTime() + 0.075));
     }
 }

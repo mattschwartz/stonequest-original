@@ -106,10 +106,10 @@ public class HeroQuickbarPanel extends MouseInputWidget {
                     .size(LayoutData.SIZE_FILL)
                     .build(),
                     Vector.UP,
-                    .75f,
+                    500,
                     textColor);
+                wFtext.setText(dmgText);
                 wFtext.resize(spriteWidget.screenBounds);
-                wFtext.beginFloating(dmgText);
                 addWidget(wFtext);
 
                 return null;
