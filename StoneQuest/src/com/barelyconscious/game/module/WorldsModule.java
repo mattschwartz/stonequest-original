@@ -120,7 +120,7 @@ public class WorldsModule extends AbstractModule {
 
         screen.getCanvas().addKeyListener(keyInputHandler);
 
-        keyInputHandler.onKeyPressed.bindDelegate(e -> {
+        keyInputHandler.delegateOnKeyPressed.bindDelegate(e -> {
             if (e.getKeyCode() == KeyEvent.VK_F11) {
                 String hour, minute, second, day, month, year;
                 String date;

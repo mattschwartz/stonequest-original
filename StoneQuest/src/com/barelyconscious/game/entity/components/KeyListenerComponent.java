@@ -14,7 +14,7 @@ public class KeyListenerComponent extends Component {
 
     public KeyListenerComponent(final Actor parent, final char keyCharTrigger, final Function<KeyEvent, Void> callback) {
         super(parent);
-        KeyInputHandler.instance().onKeyPressed.bindDelegate(this::onKeyPressed);
+        KeyInputHandler.instance().delegateOnKeyPressed.bindDelegate(this::onKeyPressed);
         this.keyCharTrigger = keyCharTrigger;
         this.keyCodeTrigger = null;
         this.callback = callback;
@@ -22,7 +22,7 @@ public class KeyListenerComponent extends Component {
 
     public KeyListenerComponent(final Actor parent, final int keyCodeTrigger, final Function<KeyEvent, Void> callback) {
         super(parent);
-        KeyInputHandler.instance().onKeyPressed.bindDelegate(this::onKeyPressed);
+        KeyInputHandler.instance().delegateOnKeyPressed.bindDelegate(this::onKeyPressed);
         this.keyCharTrigger = null;
         this.keyCodeTrigger = keyCodeTrigger;
         this.callback = callback;

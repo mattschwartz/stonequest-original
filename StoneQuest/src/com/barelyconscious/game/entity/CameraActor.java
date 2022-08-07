@@ -15,7 +15,7 @@ public class CameraActor extends Actor {
         final TranslateMoveComponent cameraMoveComponent = new TranslateMoveComponent(this, camera);
         addComponent(cameraMoveComponent);
 
-        KeyInputHandler.instance().onKeyPressed.bindDelegate(keyEvent -> {
+        KeyInputHandler.instance().delegateOnKeyPressed.bindDelegate(keyEvent -> {
             if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
                 cameraMoveComponent.translate(Vector.RIGHT.multiply(100f));
             }

@@ -18,7 +18,8 @@ public class KeyInputHandler implements KeyListener {
     private KeyInputHandler() {
     }
 
-    public final Delegate<KeyEvent> onKeyPressed = new Delegate<>();
+    public final Delegate<KeyEvent> delegateOnKeyPressed = new Delegate<>();
+    public final Delegate<KeyEvent> delegateOnKeyReleased = new Delegate<>();
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -26,10 +27,11 @@ public class KeyInputHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        onKeyPressed.call(e);
+        delegateOnKeyPressed.call(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        delegateOnKeyReleased.call(e);
     }
 }
