@@ -12,7 +12,7 @@ import lombok.Getter;
  * A mobile unit that can be spawned into the game world. Creatures, players, npcs, etc.
  */
 @Getter
-public class AEntity extends Actor {
+public class EntityActor extends Actor {
 
     private final StatsComponent entityStatsComponent;
 
@@ -21,7 +21,7 @@ public class AEntity extends Actor {
     private final EntityLevelComponent entityLevelComponent;
     private final EquipmentComponent equipment;
 
-    public AEntity(
+    public EntityActor(
         final String name,
         final Vector transform,
         final int entityLevel,
@@ -34,7 +34,7 @@ public class AEntity extends Actor {
             currentPower, maxPower, entityStats, 0);
     }
 
-    public AEntity(
+    public EntityActor(
         final String name,
         final Vector transform,
         final int entityLevel,

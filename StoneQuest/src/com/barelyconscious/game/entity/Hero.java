@@ -15,7 +15,7 @@ import lombok.Getter;
 import java.awt.Color;
 
 @Getter
-public class Hero extends AEntity {
+public class Hero extends EntityActor {
 
     private final Inventory inventory;
 

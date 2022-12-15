@@ -1,6 +1,6 @@
 package com.barelyconscious.game.entity.item;
 
-import com.barelyconscious.game.entity.AEntity;
+import com.barelyconscious.game.entity.EntityActor;
 import com.barelyconscious.game.entity.Stats;
 import com.barelyconscious.game.entity.components.AdjustableValueComponent;
 import com.barelyconscious.game.entity.components.EntityLevelComponent;
@@ -13,7 +13,7 @@ import lombok.Getter;
  */
 public abstract class ItemRequirement {
 
-    public abstract boolean meetsRequirement(final AEntity entity);
+    public abstract boolean meetsRequirement(final EntityActor entity);
 
     @AllArgsConstructor
     public static class LevelItemRequirement extends ItemRequirement {
@@ -21,7 +21,7 @@ public abstract class ItemRequirement {
         private final int requiredLevel;
 
         @Override
-        public boolean meetsRequirement(AEntity entity) {
+        public boolean meetsRequirement(EntityActor entity) {
             EntityLevelComponent entityLevelComponent = entity.getEntityLevelComponent();
             return entityLevelComponent.getEntityLevel() >= requiredLevel;
         }
@@ -49,7 +49,7 @@ public abstract class ItemRequirement {
         }
 
         @Override
-        public boolean meetsRequirement(AEntity entity) {
+        public boolean meetsRequirement(EntityActor entity) {
             StatsComponent entityStatsComponent = entity.getEntityStatsComponent();
             AdjustableValueComponent stat = entityStatsComponent.getStat(statName);
 

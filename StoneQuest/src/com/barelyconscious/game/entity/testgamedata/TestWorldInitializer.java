@@ -1,6 +1,6 @@
 package com.barelyconscious.game.entity.testgamedata;
 
-import com.barelyconscious.game.entity.AEntity;
+import com.barelyconscious.game.entity.EntityActor;
 import com.barelyconscious.game.entity.ItemLootActor;
 import com.barelyconscious.game.entity.Stats;
 import com.barelyconscious.game.entity.World;
@@ -34,7 +34,7 @@ public final class TestWorldInitializer {
     }
 
     private static void createEntities(final World world) {
-        val aRat = new AEntity(
+        val aRat = new EntityActor(
             "Sewer Rat",
             new Vector(264f, 208f),
             1,
