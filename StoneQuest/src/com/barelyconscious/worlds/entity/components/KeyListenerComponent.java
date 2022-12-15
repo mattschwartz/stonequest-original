@@ -1,10 +1,10 @@
 package com.barelyconscious.worlds.entity.components;
 
-import com.barelyconscious.worlds.entity.*;
-import com.barelyconscious.worlds.entity.input.*;
+import com.barelyconscious.worlds.engine.input.KeyInputHandler;
+import com.barelyconscious.worlds.entity.Actor;
 
-import java.awt.event.*;
-import java.util.function.*;
+import java.awt.event.KeyEvent;
+import java.util.function.Function;
 
 public class KeyListenerComponent extends Component {
 

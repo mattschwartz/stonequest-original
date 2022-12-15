@@ -1,11 +1,11 @@
 package com.barelyconscious.worlds.entity.components;
 
 import com.barelyconscious.worlds.entity.Actor;
-import com.barelyconscious.worlds.entity.engine.EventArgs;
-import com.barelyconscious.worlds.entity.graphics.RenderContext;
-import com.barelyconscious.worlds.entity.graphics.RenderLayer;
-import com.barelyconscious.worlds.shape.Vector;
-import com.barelyconscious.worlds.util.UMath;
+import com.barelyconscious.worlds.engine.EventArgs;
+import com.barelyconscious.worlds.engine.graphics.RenderContext;
+import com.barelyconscious.worlds.engine.graphics.RenderLayer;
+import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.common.UMath;
 import lombok.extern.log4j.Log4j2;
 
 import java.awt.*;

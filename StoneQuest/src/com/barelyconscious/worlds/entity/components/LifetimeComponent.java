@@ -1,8 +1,8 @@
 package com.barelyconscious.worlds.entity.components;
 
 import com.barelyconscious.worlds.entity.Actor;
-import com.barelyconscious.worlds.entity.engine.EventArgs;
-import com.barelyconscious.worlds.entity.YieldingCallback;
+import com.barelyconscious.worlds.engine.EventArgs;
+import com.barelyconscious.worlds.engine.YieldingCallback;
 
 public class LifetimeComponent extends Component{
 

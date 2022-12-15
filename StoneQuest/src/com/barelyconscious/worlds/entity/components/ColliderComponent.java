@@ -1,9 +1,9 @@
 package com.barelyconscious.worlds.entity.components;
 
-import com.barelyconscious.worlds.delegate.Delegate;
+import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.entity.Actor;
-import com.barelyconscious.worlds.entity.engine.EventArgs;
-import com.barelyconscious.worlds.physics.CollisionData;
+import com.barelyconscious.worlds.engine.EventArgs;
+import com.barelyconscious.worlds.engine.CollisionData;
 import lombok.Getter;
 import lombok.Setter;
 

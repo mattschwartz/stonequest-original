@@ -1,8 +1,8 @@
 package com.barelyconscious.worlds.entity.components;
 
 import com.barelyconscious.worlds.entity.Actor;
-import com.barelyconscious.worlds.entity.engine.EventArgs;
-import com.barelyconscious.worlds.entity.engine.JobRunContext;
+import com.barelyconscious.worlds.engine.EventArgs;
+import com.barelyconscious.worlds.engine.JobRunContext;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.Queue;

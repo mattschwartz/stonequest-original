@@ -1,10 +1,10 @@
 package com.barelyconscious.worlds.entity.components;
 
 import com.barelyconscious.worlds.entity.Actor;
-import com.barelyconscious.worlds.entity.engine.EventArgs;
-import com.barelyconscious.worlds.entity.graphics.RenderContext;
-import com.barelyconscious.worlds.entity.graphics.RenderLayer;
-import com.barelyconscious.worlds.shape.Box;
+import com.barelyconscious.worlds.engine.EventArgs;
+import com.barelyconscious.worlds.engine.graphics.RenderContext;
+import com.barelyconscious.worlds.engine.graphics.RenderLayer;
+import com.barelyconscious.worlds.common.shape.Box;
 import lombok.Getter;
 import lombok.Setter;
 

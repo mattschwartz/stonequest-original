@@ -2,7 +2,7 @@ package com.barelyconscious.worlds.entity.components;
 
 import com.barelyconscious.worlds.entity.AGravestone;
 import com.barelyconscious.worlds.entity.Actor;
-import com.barelyconscious.worlds.entity.engine.EventArgs;
+import com.barelyconscious.worlds.engine.EventArgs;
 
 /**
  * Simple componet that destroys an actor when its health falls to 0.

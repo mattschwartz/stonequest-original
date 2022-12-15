@@ -1,10 +1,10 @@
 package com.barelyconscious.worlds.entity;
 
 import com.barelyconscious.worlds.entity.components.SpriteComponent;
-import com.barelyconscious.worlds.entity.graphics.RenderLayer;
-import com.barelyconscious.worlds.entity.resources.ResourceSprite;
-import com.barelyconscious.worlds.entity.resources.Resources;
-import com.barelyconscious.worlds.shape.Vector;
+import com.barelyconscious.worlds.engine.graphics.RenderLayer;
+import com.barelyconscious.worlds.game.resources.ResourceSprite;
+import com.barelyconscious.worlds.game.resources.Resources;
+import com.barelyconscious.worlds.common.shape.Vector;
 
 public class AGravestone extends Actor {
 

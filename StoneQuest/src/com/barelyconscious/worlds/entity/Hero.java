@@ -2,14 +2,16 @@ package com.barelyconscious.worlds.entity;
 
 import com.barelyconscious.worlds.entity.components.Component;
 import com.barelyconscious.worlds.entity.components.SpriteComponent;
-import com.barelyconscious.worlds.entity.engine.EventArgs;
-import com.barelyconscious.worlds.entity.graphics.FontContext;
-import com.barelyconscious.worlds.entity.graphics.RenderContext;
-import com.barelyconscious.worlds.entity.graphics.RenderLayer;
+import com.barelyconscious.worlds.engine.EventArgs;
+import com.barelyconscious.worlds.engine.graphics.FontContext;
+import com.barelyconscious.worlds.engine.graphics.RenderContext;
+import com.barelyconscious.worlds.engine.graphics.RenderLayer;
 import com.barelyconscious.worlds.entity.components.JobActionComponent;
-import com.barelyconscious.worlds.entity.resources.ResourceSprite;
-import com.barelyconscious.worlds.entity.resources.Resources;
-import com.barelyconscious.worlds.shape.Vector;
+import com.barelyconscious.worlds.game.resources.ResourceSprite;
+import com.barelyconscious.worlds.game.resources.Resources;
+import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.game.GameInstance;
+import com.barelyconscious.worlds.game.Inventory;
 import lombok.Getter;
 
 import java.awt.Color;

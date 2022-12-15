@@ -1,10 +1,10 @@
 package com.barelyconscious.worlds.module;
 
-import com.barelyconscious.worlds.entity.GameInstance;
-import com.barelyconscious.worlds.physics.Physics;
-import com.barelyconscious.worlds.entity.graphics.Screen;
-import com.barelyconscious.worlds.entity.World;
-import com.barelyconscious.worlds.exception.InvalidGameConfigurationException;
+import com.barelyconscious.worlds.game.GameInstance;
+import com.barelyconscious.worlds.engine.Physics;
+import com.barelyconscious.worlds.engine.graphics.Screen;
+import com.barelyconscious.worlds.game.World;
+import com.barelyconscious.worlds.common.exception.InvalidGameConfigurationException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.jupiter.api.BeforeEach;

@@ -4,8 +4,8 @@ import com.barelyconscious.worlds.entity.components.EntityLevelComponent;
 import com.barelyconscious.worlds.entity.components.HealthComponent;
 import com.barelyconscious.worlds.entity.components.PowerComponent;
 import com.barelyconscious.worlds.entity.components.StatsComponent;
-import com.barelyconscious.worlds.entity.components.combat.EquipmentComponent;
-import com.barelyconscious.worlds.shape.Vector;
+import com.barelyconscious.worlds.entity.components.EquipmentComponent;
+import com.barelyconscious.worlds.common.shape.Vector;
 import lombok.Getter;
 
 /**

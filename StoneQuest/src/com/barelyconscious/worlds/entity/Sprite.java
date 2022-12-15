@@ -1,7 +1,7 @@
 package com.barelyconscious.worlds.entity;
 
-import com.barelyconscious.worlds.entity.graphics.RenderLayer;
-import com.barelyconscious.worlds.entity.resources.WSprite;
+import com.barelyconscious.worlds.engine.graphics.RenderLayer;
+import com.barelyconscious.worlds.game.resources.WSprite;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

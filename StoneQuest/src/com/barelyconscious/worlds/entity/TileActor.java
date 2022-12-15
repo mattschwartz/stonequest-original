@@ -1,16 +1,17 @@
 package com.barelyconscious.worlds.entity;
 
+import com.barelyconscious.worlds.engine.Camera;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
 import com.barelyconscious.worlds.entity.components.Component;
 import com.barelyconscious.worlds.entity.components.LightSourceComponent;
 import com.barelyconscious.worlds.entity.components.SpriteComponent;
-import com.barelyconscious.worlds.entity.input.InputLayer;
-import com.barelyconscious.worlds.entity.input.Interactable;
-import com.barelyconscious.worlds.entity.input.MouseInputHandler;
-import com.barelyconscious.worlds.entity.resources.Resources;
-import com.barelyconscious.worlds.entity.tile.Tile;
-import com.barelyconscious.worlds.shape.Box;
-import com.barelyconscious.worlds.shape.Vector;
+import com.barelyconscious.worlds.engine.input.InputLayer;
+import com.barelyconscious.worlds.engine.input.Interactable;
+import com.barelyconscious.worlds.engine.input.MouseInputHandler;
+import com.barelyconscious.worlds.game.resources.Resources;
+import com.barelyconscious.worlds.common.shape.Box;
+import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.game.GameInstance;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;

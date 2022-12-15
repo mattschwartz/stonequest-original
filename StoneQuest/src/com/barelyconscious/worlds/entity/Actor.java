@@ -1,8 +1,8 @@
 package com.barelyconscious.worlds.entity;
 
 import com.barelyconscious.worlds.entity.components.Component;
-import com.barelyconscious.worlds.shape.Box;
-import com.barelyconscious.worlds.shape.Vector;
+import com.barelyconscious.worlds.common.shape.Box;
+import com.barelyconscious.worlds.common.shape.Vector;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;

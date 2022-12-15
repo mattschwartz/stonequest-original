@@ -1,15 +1,16 @@
 package com.barelyconscious.worlds;
 
 import com.barelyconscious.worlds.entity.CameraActor;
-import com.barelyconscious.worlds.entity.engine.Engine;
-import com.barelyconscious.worlds.entity.GameInstance;
-import com.barelyconscious.worlds.entity.World;
-import com.barelyconscious.worlds.entity.graphics.Screen;
-import com.barelyconscious.worlds.entity.input.KeyInputHandler;
-import com.barelyconscious.worlds.entity.playercontroller.MouseKeyboardPlayerController;
-import com.barelyconscious.worlds.entity.resources.spritesheet.SpritesheetManager;
-import com.barelyconscious.worlds.entity.testgamedata.TestHeroInitializer;
-import com.barelyconscious.worlds.entity.testgamedata.TestWorldInitializer;
+import com.barelyconscious.worlds.engine.Engine;
+import com.barelyconscious.worlds.game.GameInstance;
+import com.barelyconscious.worlds.game.World;
+import com.barelyconscious.worlds.engine.graphics.Screen;
+import com.barelyconscious.worlds.engine.input.KeyInputHandler;
+import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
+import com.barelyconscious.worlds.game.resources.spritesheet.SpritesheetManager;
+import com.barelyconscious.worlds.testgamedata.TestHeroInitializer;
+import com.barelyconscious.worlds.testgamedata.TestWorldInitializer;
+import com.barelyconscious.worlds.module.GuiInitializer;
 import com.barelyconscious.worlds.module.WorldsModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;

@@ -1,16 +1,16 @@
 package com.barelyconscious.worlds.entity.components;
 
-import com.barelyconscious.worlds.delegate.Delegate;
+import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.entity.Actor;
-import com.barelyconscious.worlds.entity.engine.EventArgs;
-import com.barelyconscious.worlds.entity.GameInstance;
-import com.barelyconscious.worlds.entity.graphics.RenderContext;
-import com.barelyconscious.worlds.entity.graphics.RenderLayer;
-import com.barelyconscious.worlds.entity.input.InputLayer;
-import com.barelyconscious.worlds.entity.input.Interactable;
-import com.barelyconscious.worlds.entity.input.MouseInputHandler;
-import com.barelyconscious.worlds.shape.Box;
-import com.barelyconscious.worlds.shape.Vector;
+import com.barelyconscious.worlds.engine.EventArgs;
+import com.barelyconscious.worlds.game.GameInstance;
+import com.barelyconscious.worlds.engine.graphics.RenderContext;
+import com.barelyconscious.worlds.engine.graphics.RenderLayer;
+import com.barelyconscious.worlds.engine.input.InputLayer;
+import com.barelyconscious.worlds.engine.input.Interactable;
+import com.barelyconscious.worlds.engine.input.MouseInputHandler;
+import com.barelyconscious.worlds.common.shape.Box;
+import com.barelyconscious.worlds.common.shape.Vector;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;

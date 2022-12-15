@@ -1,10 +1,11 @@
 package com.barelyconscious.worlds.entity;
 
+import com.barelyconscious.worlds.engine.Camera;
 import com.barelyconscious.worlds.entity.components.Component;
-import com.barelyconscious.worlds.entity.engine.EventArgs;
-import com.barelyconscious.worlds.entity.graphics.RenderContext;
-import com.barelyconscious.worlds.entity.input.KeyInputHandler;
-import com.barelyconscious.worlds.shape.Vector;
+import com.barelyconscious.worlds.engine.EventArgs;
+import com.barelyconscious.worlds.engine.graphics.RenderContext;
+import com.barelyconscious.worlds.engine.input.KeyInputHandler;
+import com.barelyconscious.worlds.common.shape.Vector;
 
 import java.awt.event.KeyEvent;
 

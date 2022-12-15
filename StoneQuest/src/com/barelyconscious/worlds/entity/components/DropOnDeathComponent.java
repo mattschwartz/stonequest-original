@@ -2,7 +2,7 @@ package com.barelyconscious.worlds.entity.components;
 
 import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.entity.ItemLootActor;
-import com.barelyconscious.worlds.entity.item.Item;
+import com.barelyconscious.worlds.game.item.Item;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
