@@ -1,6 +1,6 @@
 package com.barelyconscious.util;
 
-import com.barelyconscious.game.shape.Vector;
+import com.barelyconscious.worlds.shape.Vector;
 
 import java.util.Random;
 

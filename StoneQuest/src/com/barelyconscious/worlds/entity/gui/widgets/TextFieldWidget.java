@@ -1,0 +1,83 @@
+package com.barelyconscious.worlds.entity.gui.widgets;
+
+import com.barelyconscious.worlds.entity.engine.EventArgs;
+import com.barelyconscious.worlds.entity.graphics.FontContext;
+import com.barelyconscious.worlds.entity.graphics.RenderContext;
+import com.barelyconscious.worlds.entity.graphics.RenderLayer;
+import com.barelyconscious.worlds.entity.gui.LayoutData;
+import com.barelyconscious.worlds.entity.gui.Widget;
+import com.barelyconscious.worlds.shape.Box;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
+
+public class TextFieldWidget extends Widget {
+
+    @Getter
+    @Setter
+    private String text;
+    @Setter
+    private FontContext.TextAlign textAlignment;
+    @Setter
+    private boolean showShadow = true;
+    @Setter
+    private FontContext.VerticalTextAlignment verticalTextAlignment;
+
+    public TextFieldWidget(final LayoutData layout, final String text) {
+        super(layout);
+        this.text = text;
+        this.textAlignment = FontContext.TextAlign.CENTER;
+        this.verticalTextAlignment = FontContext.VerticalTextAlignment.CENTER;
+    }
+
+    @Override
+    protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
+        if (StringUtils.isBlank(text)) {
+            return;
+        }
+
+        FontContext font = renderContext.getFontContext();
+        font.setRenderLayer(RenderLayer.GUI);
+
+        final int textWidth = font.getStringWidth(text);
+        final int textHeight = font.getStringHeight(text);
+
+        final int yOffs;
+        switch (verticalTextAlignment) {
+            case BOTTOM:
+                yOffs = screenBounds.height;
+                break;
+            case CENTER:
+                yOffs = textHeight / 2;
+                break;
+
+            case TOP:
+            default:
+                yOffs = 0;
+        }
+
+        final Box textBounds = new Box(screenBounds.left, screenBounds.right,
+            screenBounds.top + yOffs, screenBounds.bottom + yOffs);
+
+        if (showShadow) {
+            final String shadowText = "{COLOR=0,0,0,255}" + text;
+
+            font.drawString(shadowText,
+                textAlignment,
+                new Box(textBounds.left + 1, textBounds.right + 1, textBounds.top, textBounds.bottom));
+            font.drawString(shadowText,
+                textAlignment,
+                new Box(textBounds.left - 1, textBounds.right - 1, textBounds.top, textBounds.bottom));
+            font.drawString(shadowText,
+                textAlignment,
+                new Box(textBounds.left, textBounds.right, textBounds.top + 1, textBounds.bottom + 1));
+            font.drawString(shadowText,
+                textAlignment,
+                new Box(textBounds.left, textBounds.right, textBounds.top - 1, textBounds.bottom - 1));
+        }
+
+        font.drawString(text,
+            textAlignment,
+            textBounds);
+    }
+}
