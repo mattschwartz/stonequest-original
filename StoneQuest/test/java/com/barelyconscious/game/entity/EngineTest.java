@@ -1,8 +1,8 @@
-package com.barelyconscious.game.entity;
+package com.barelyconscious.worlds.entity;
 
-import com.barelyconscious.game.entity.components.BoxColliderComponent;
-import com.barelyconscious.game.entity.graphics.Screen;
-import com.barelyconscious.game.physics.Physics;
+import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
+import com.barelyconscious.worlds.entity.graphics.Screen;
+import com.barelyconscious.worlds.physics.Physics;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.RateLimiter;
 import org.junit.jupiter.api.BeforeEach;
