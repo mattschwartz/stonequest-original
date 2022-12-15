@@ -5,7 +5,7 @@ import com.barelyconscious.worlds.entity.resources.FontResource;
 import com.barelyconscious.worlds.entity.resources.Resources;
 import com.barelyconscious.worlds.shape.Box;
 import com.barelyconscious.worlds.shape.Vector;
-import com.barelyconscious.util.UColor;
+import com.barelyconscious.worlds.util.UColor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;

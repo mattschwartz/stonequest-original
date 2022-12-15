@@ -1,4 +1,4 @@
-package com.barelyconscious.util;
+package com.barelyconscious.worlds.util;
 
 import java.awt.Color;
 

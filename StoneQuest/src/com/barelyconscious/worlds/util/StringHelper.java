@@ -11,7 +11,7 @@
    * File Description:  
    ************************************************************************** */
 
-package com.barelyconscious.util;
+package com.barelyconscious.worlds.util;
 
 import java.util.ArrayList;
 import java.util.List;

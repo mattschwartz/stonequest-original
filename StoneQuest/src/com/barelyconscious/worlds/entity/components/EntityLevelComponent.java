@@ -3,7 +3,7 @@ package com.barelyconscious.worlds.entity.components;
 import com.barelyconscious.worlds.delegate.Delegate;
 import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.entity.engine.EventArgs;
-import com.barelyconscious.util.UMath;
+import com.barelyconscious.worlds.util.UMath;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

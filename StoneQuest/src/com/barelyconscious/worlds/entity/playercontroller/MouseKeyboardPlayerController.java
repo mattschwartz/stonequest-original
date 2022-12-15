@@ -19,7 +19,7 @@ import com.barelyconscious.worlds.entity.resources.ResourceSprite;
 import com.barelyconscious.worlds.entity.resources.Resources;
 import com.barelyconscious.worlds.shape.Box;
 import com.barelyconscious.worlds.shape.Vector;
-import com.barelyconscious.util.UMath;
+import com.barelyconscious.worlds.util.UMath;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;

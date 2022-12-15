@@ -5,7 +5,7 @@ import com.barelyconscious.worlds.entity.engine.EventArgs;
 import com.barelyconscious.worlds.entity.graphics.RenderContext;
 import com.barelyconscious.worlds.entity.graphics.RenderLayer;
 import com.barelyconscious.worlds.shape.Vector;
-import com.barelyconscious.util.UMath;
+import com.barelyconscious.worlds.util.UMath;
 import lombok.extern.log4j.Log4j2;
 
 import java.awt.*;

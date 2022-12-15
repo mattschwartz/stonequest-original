@@ -1,4 +1,4 @@
-package com.barelyconscious.util;
+package com.barelyconscious.worlds.util;
 
 import com.barelyconscious.worlds.shape.Vector;
 
