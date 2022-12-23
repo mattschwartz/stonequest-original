@@ -1,0 +1,294 @@
+@startuml
+' scale 1800 width
+
+
+[*] --> CreateNewGame
+state CreateNewGame #gray {
+    state SelectDifficulty {
+        SetStartingAge -> SetFactions
+        SetStartingAge: Early Age (hard)
+        SetStartingAge: Middle Age (normal)
+        SetStartingAge : Late Age (easy)
+
+        SetFactions -> SetStartingLocation
+        SetFactions : more enemies, less\n territory
+        SetFactions : Calm
+        SetFactions : Tense
+        SetFactions : Hostile
+
+        SetStartingLocation -> SetPatrons
+        SetStartingLocation : Locales have different\n benefits and challenges
+
+        SetPatrons -> SetStartingHeroProfessions
+        SetPatrons : Game offers patrons at start
+        SetPatrons : - Get unique bonuses
+        SetPatrons : - Get access to funds
+        SetPatrons : - Mandatory missions
+        SetPatrons : - Will determine starting POG
+        SetPatrons : (this is like gods in SQ)
+
+        SetStartingHeroProfessions : Limited options
+        SetStartingHeroProfessions : - Depends on locale
+        SetStartingHeroProfessions : - Depends on factions
+        SetStartingHeroProfessions : - Depends on starting age
+        SetStartingHeroProfessions : - Depends on patrons
+    }
+
+    SelectDifficulty --> WorldCreation
+    state WorldCreation {
+        state GenerateWorld {
+            SetWorldSize -> GenerateTerritories
+            GenerateTerritories ->  SetLocation
+        }
+
+        GenerateWorld --> GenerateFactions
+        state GenerateFactions {
+            GenerateCitizens -> GenerateStartingRumors
+            GenerateStartingRumors -> GenerateStartingQuests
+        }
+
+        GenerateFactions --> GenerateHeroes
+        state GenerateHeroes {
+            SetAttributes -> SetStartingEquipment
+            SetStartingEquipment -> SetProfessionAbilities
+        }
+    }
+
+    WorldCreation --> SpawnContractor
+    state SpawnContractor {
+        SetPartyFunds -> SetPartyHeroes
+        SetPartyFunds : Influenced by patrons
+
+        SetPartyHeroes -> SetPartySupplies
+        SetPartySupplies : Basic wagon
+        SetPartySupplies : Basic backpack
+        SetPartySupplies : Poor quality tools
+
+        SetPartySupplies -> SetContracts
+        SetContracts : Quests
+        SetContracts : Expedition orders
+    }
+
+    SpawnContractor --> SpawnChancellor
+    state SpawnChancellor {
+        SetCouncil -> SetTrade
+    }
+
+    SpawnChancellor --> SetInitialScene
+    state SetInitialScene {
+        state branch_SetInitialScene <<choice>>
+        SetStartCamera --> branch_SetInitialScene
+        branch_SetInitialScene --> SetExpeditionCamera : if on expedition
+        branch_SetInitialScene --> SetFactionCamera : if not on expedition
+    }
+
+    SetInitialScene --> SpawnPlayerController
+    state SpawnPlayerController {
+        SetMouseListener -> SetKeyListener
+        SetKeyListener -> ApplyCustomBindings
+        ApplyCustomBindings -> MapBindingToFunction
+    }
+}
+
+CreateNewGame -> GameLoop : Player is given\n control and taken\n to the game
+state GameLoop {
+    state Chancellor {
+
+        state Buildings {
+            SelectTerritory --> CreateResourceBuilding
+            CreateResourceBuilding : Resources generate automatically\n into Stock
+
+            SelectTerritory : Must be owned by the player
+
+            SelectTerritory --> BuildRoad
+            BuildRoad : - Modified by terrain
+            BuildRoad : - Can be improved
+            BuildRoad : - Can build StreamRoads\n to teleport
+
+            SelectTerritory --> CreateExpeditionHere
+            CreateExpeditionHere --> [*] : Enter into ExpeditionContractSystem
+        }
+        state Industry {
+            SelectIndustryType -> SelectResourceBuildings
+            SelectIndustryType : - Steel, paper, stream gel
+
+            SelectResourceBuildings : - Selected buildings will ONLY\n send goods here
+            SelectResourceBuildings : - Other industries may be needed
+
+            SelectResourceBuildings -> ConnectToResourceBuildings
+            ConnectToResourceBuildings : - Make sure a road exists\n and you own the territory
+        }
+
+        state Diplomacy {
+            state Council
+            state Treasury
+            state Policies
+            state Population
+            state Trade
+        }
+
+        state Omniscience {
+            state SpyOnHero
+            SpyOnHero : Check in on what your heroes are\n doing at any time
+            state WanderCity
+            WanderCity : Just zoom in and see\n what's going on\n and what people think
+        }
+
+        state Crafting {
+            Crafting : Can be done any time player is off expedition
+
+            state CraftConsumables
+            state CraftFood
+            state CraftEquipment
+            state CraftPartySupplies
+        }
+    }
+
+    state Contractor {
+        FindJobs -> ExpeditionContractSystem
+        Guildmaster --> GuildHallSystem
+        ManageParty --> PartyManagementSystem
+    }
+
+    state GuildHallSystem {
+        state CraftQuest {
+            CollectQuestComponents --> DepositFunds
+            DepositFunds --> PostInGuild
+            PostInGuild --> GuildmembersAccept
+            GuildmembersAccept --> RunExpedition
+            RunExpedition --> PlayerReceivesRewards
+            PlayerReceivesRewards --> PlayerRunsExpedition
+            PlayerRunsExpedition --> CollectQuestComponents
+        }
+
+        state EstablishmentManagement {
+            ImproveGuildHall --> AttractBetterHeroes
+            AttractBetterHeroes --> MoreChallengingQuests
+            MoreChallengingQuests --> MoreProfit
+            MoreProfit --> ImproveGuildHall
+        }
+    }
+
+    state PartyManagementSystem {
+
+        EnterNewTerritory --> Combat
+        EnterNewTerritory --> GatherResources
+        GatherResources --> GatherLoot
+        
+        EnterNewTerritory --> RaidVillages
+        RaidVillages --> Combat
+        RaidVillages --> GatherLoot
+
+        state GatherLoot
+        state ReturnToWagon
+
+        state Combat {
+            SetUpTrap --> EngageCreature
+            DrinkPotion --> EngageCreature
+            AttackCreature --> EngageCreature
+            EngageCreature --> CombatLoop
+            state CombatLoop {
+                state CreatureAbilities
+                state CreatureDefenseCalculations
+                state CombatConsumables
+            }
+
+            CombatLoop --> CombatEnded
+
+            CombatEnded --> BuryCreature
+            BuryCreature --> CombatEnded
+            CombatEnded --> HarvestCreature
+            CombatEnded --> GatherLoot
+
+            HarvestCreature --> GatherLoot
+            GatherLoot --> ReturnToWagon
+        }
+
+        GatherResources --> ReturnToWagon
+
+        ReturnToWagon --> FieldCrafting
+        FieldCrafting --> ReturnToWagon 
+        ReturnToWagon --> Rest
+        Rest --> ReturnToWagon
+        ReturnToWagon --> TransitionToAnotherNewTerritory
+    }
+
+    state ExpeditionContractSystem {
+        FromQuest --> SetContract : AcceptJob
+        FromPatron --> SetContract : AcceptGrant
+        FromChancellor --> SetContract : CreateExpeditionHere
+        FromGuildHall --> SetContract : Quest Crafting\n this process is automated
+
+        SetContract --> PrepareStage
+        SetContract : Tells you how long you have to complete\n measured in days of rest
+        SetContract : So you should buy enough food to rest
+
+        state PrepareStage {
+            state HireHeroes {
+                ViewHeroMap -> SelectHeroes
+                SelectHeroes -> SetMeetingPoint
+                SetMeetingPoint : The territory that the expedition will depart from
+                SetMeetingPoint : Everyone will meet each other here
+            }
+            state HireWagonGuard
+            HireWagonGuard : More canary than guard
+
+            state PurchaseConsumables
+            PurchaseConsumables : - Food (affects expedition duration)
+            PurchaseConsumables : - Elixirs
+
+            state SendScout
+            SendScout : - Costs money per distance\n  and difficulty
+            SendScout : - % of success per Scout level
+            SendScout : - Shows threats and POI
+
+            state AddStreamCollector
+            AddStreamCollector : Increases rewards and threat
+        }
+
+        PrepareStage --> AdventureStage : Embark
+        state AdventureStage {
+            state Villages
+            Villages : - Kind of like above-ground dungeons
+            Villages : - Abandoned. May contain squatters
+            Villages : - More devices, blueprints, lore
+            Villages : - Can claim as an outpost
+
+            state RandomEvents
+            RandomEvents : - Randomly generated
+            RandomEvents : - "Side quests"
+            RandomEvents : - Stranded villager
+            RandomEvents : - Stronger than normal stream portal
+            RandomEvents : - Highwaypersons
+
+            state StreamPortals
+            StreamPortals : - Open portals for stream gel
+            StreamPortals : - Fight monsters
+            StreamPortals : - Close portals for stream gel\n after all monsters gone
+
+            state Junkyards
+            Junkyards : - Chance to spawn in certain territories
+            Junkyards : - Increased chance of devices
+            Junkyards : - More bizzarre/difficult monsters
+
+        }
+
+        AdventureStage --> RescueStage : FailedContract
+        RescueStage : - You didn't complete the mission in time\n and they sent a search party
+        RescueStage : - You get no rewards
+        RescueStage : - Dead heroes will be looted to you
+        RescueStage : - Party wipe instantly transitions here
+
+        AdventureStage --> RewardStage : SuccessfulContract
+        RewardStage : - Quest rewards go to party funds\n showing hero cut to player
+        RewardStage : - Field resources are destroyed
+        RewardStage : - Core resources are stored in stock
+        RewardStage : - Player can craft gear and things
+        RewardStage : - Unlocked territories can be conquered
+
+        RescueStage --> [*] : Return to chancellor system
+        RewardStage --> [*] : Return to chancellor system
+    }
+}
+
+@enduml
