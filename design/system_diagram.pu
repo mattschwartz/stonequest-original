@@ -90,35 +90,30 @@ state CreateNewGame #gray {
     }
 }
 
-CreateNewGame -> GameLoop : Player is given\n control and taken\n to the game
+CreateNewGame --> GameLoop : Player is given\n control and taken\n to the game
+
+
 state GameLoop {
+    ' START Definitions
+
+    state ResourceSystem {
+        state ResourceStock
+        state MaterialResource
+        state FieldResource
+
+        ResourceProducingBuilding --> ResourceStock : Generate resources
+
+        ResourceStock --> Industry : Consumed by
+
+        MaterialResource -> FieldCrafting
+        FieldResource --> FieldCrafting
+
+        MaterialResource --> FactionCrafting
+        ResourceStock --> FactionCrafting
+    }
+
     state Chancellor {
-
-        state Buildings {
-            SelectTerritory --> CreateResourceBuilding
-            CreateResourceBuilding : Resources generate automatically\n into Stock
-
-            SelectTerritory : Must be owned by the player
-
-            SelectTerritory --> BuildRoad
-            BuildRoad : - Modified by terrain
-            BuildRoad : - Can be improved
-            BuildRoad : - Can build StreamRoads\n to teleport
-
-            SelectTerritory --> CreateExpeditionHere
-            CreateExpeditionHere --> [*] : Enter into ExpeditionContractSystem
-        }
-        state Industry {
-            SelectIndustryType -> SelectResourceBuildings
-            SelectIndustryType : - Steel, paper, stream gel
-
-            SelectResourceBuildings : - Selected buildings will ONLY\n send goods here
-            SelectResourceBuildings : - Other industries may be needed
-
-            SelectResourceBuildings -> ConnectToResourceBuildings
-            ConnectToResourceBuildings : - Make sure a road exists\n and you own the territory
-        }
-
+        state Industry
         state Diplomacy {
             state Council
             state Treasury
@@ -126,32 +121,263 @@ state GameLoop {
             state Population
             state Trade
         }
+    }
 
-        state Omniscience {
-            state SpyOnHero
-            SpyOnHero : Check in on what your heroes are\n doing at any time
-            state WanderCity
-            WanderCity : Just zoom in and see\n what's going on\n and what people think
+    state Contractor {
+        state ViewJobBoard
+        state AcceptJob
+        state PartyFunds
+
+        state GuildmasterSystem {
+            state CraftQuest {
+                state CollectQuestComponents
+            }
+            state EstablishmentManagement
         }
 
-        state Crafting {
-            Crafting : Can be done any time player is off expedition
+        state ExpeditionSystem {
+            state CreateContract
+        }
+    }
 
-            state CraftConsumables
-            state CraftFood
-            state CraftEquipment
-            state CraftPartySupplies
+    state Crafting {
+        Crafting : Can be done any time player is off expedition
+
+        state FactionCrafting {
+
+        }
+
+        state FieldCrafting {
+
+        }
+    }
+
+
+    ' END Definitions
+
+    state Chancellor {
+        state ManageTerritory {
+            state CreateBuildingHere {
+                SelectResource --> SelectBuilding
+                SelectBuilding --> PayBuildingFees
+                PayBuildingFees --> WaitForSomeTime
+                WaitForSomeTime --> BuildingComplete
+                BuildingComplete --> ResourceProducingBuilding
+            }
+
+            CreateTradeRouteHere -> Trade
+            CreateTradeRouteHere : If clicking on territory owned by\n allied faction
+
+            state BuildRoadHere {
+                SelectRoadType --> PayRoadBuildingFees
+                PayRoadBuildingFees --> WaitForSomeTimeForRoad
+                WaitForSomeTimeForRoad --> ImprovesTravelSpeedHere
+            }
+
+            CreateExpeditionHere --> CreateContract
+        }
+
+        state Industry {
+            SelectIndustryType --> SelectResourceBuildings
+            SelectIndustryType : - Steel, paper, stream gel
+
+            SelectResourceBuildings : - Selected buildings will ONLY\n send goods here
+            SelectResourceBuildings : - Other industries may be needed
+
+            SelectResourceBuildings --> ConnectToResourceBuildings
+            ConnectToResourceBuildings : - Make sure a road exists\n and you own the territory
         }
     }
 
     state Contractor {
-        FindJobs -> ExpeditionContractSystem
-        Guildmaster --> GuildHallSystem
-        ManageParty --> PartyManagementSystem
+        ViewJobBoard --> AcceptJob
+        AcceptJob -> CreateContract
+
+        state PartyManagementSystem {
+            EnterNewTerritory -> AtAnyPoint
+
+            state EnterNewTerritory {
+                GenerateEnvironment --> GenerateResources
+                GenerateResources --> GenerateRandomEvents
+                GenerateRandomEvents --> GenerateEnemies
+            }
+
+            RandomEvents --> Highwaypersons
+            RandomEvents --> SideJobs
+            RandomEvents --> StrandedVillager
+            RandomEvents --> Villages
+            RandomEvents --> StreamPortals
+            RandomEvents --> Junkyards
+
+            Villages --> EstablishOutpost
+            Villages --> RaidVillages
+
+            Villages : - Kind of like above-ground dungeons
+            Villages : - Abandoned. May contain squatters
+            Villages : - More devices, blueprints, lore
+            Villages : - Can claim as an outpost
+            StreamPortals : - Open portals for stream gel
+            StreamPortals : - Fight monsters
+            StreamPortals : - Close portals for stream gel\n after all monsters gone
+            Junkyards : - Chance to spawn in certain territories
+            Junkyards : - Increased chance of devices
+            Junkyards : - More bizzarre/difficult monsters
+
+            AtAnyPoint --> Combat
+            AtAnyPoint -> RandomEvents
+            AtAnyPoint --> GatherResources
+            AtAnyPoint --> ReturnToWagon
+
+            RaidVillages --> GatherLoot
+            RaidVillages --> Combat
+
+            Highwaypersons --> Combat
+            StreamPortals --> Combat
+
+            SideJobs --> Combat
+
+            Junkyards --> StreamPortals
+            Junkyards --> Combat
+
+            state HarvestCreature
+            state GatherLoot
+            state ReturnToWagon
+
+            state Combat {
+                state PreEngagement {
+                    state SetUpTrap
+                    state DrinkPotion
+                    state ApplyWeaponOils
+                }
+
+                state CombatLoop {
+                    state CreatureAttacks {
+                        state AttackWithWeapon
+                        state PerformAbility
+                        state UseCombatItem {
+                            state ThrowBomb
+                        }
+                    }
+
+                    ApplyEnvironmentalEffects --> CreatureAttacks
+                    CreatureAttacks : - Fire damage from terrain, Poison clouds
+                    CreatureAttacks : - Rain, Snow, Ice
+                    CreatureAttacks --> CreatureDefenses
+                    CreatureDefenses : Damage is passed through defenses
+
+                    state CreatureDefenses {
+                        state PhysicalDefense {
+                            state Evasion
+                            state PiercingDefense
+                            state CrushingDefense
+                            state SlashingDefense
+                        }
+                        state MagicalDefense {
+                            state FireDefense
+                            state WaterDefense
+                            state ToxinDefense
+                        }
+                    }
+
+                    CreatureDefenses --> AdjustCreatureStats : Take damage, apply temporary effects, etc.
+                    AdjustCreatureStats --> IsCreatureDead
+
+                    state cc <<choice>>
+                    IsCreatureDead --> cc
+                    cc --> CombatEnded : yes
+                    cc -> NewCombatTurn : no
+                    NewCombatTurn --> Flee
+                    NewCombatTurn --> ApplyEnvironmentalEffects
+                }
+
+                PreEngagement --> NewCombatTurn : Engage creature
+
+                CombatEnded --> HarvestCreature
+                CombatEnded --> GatherLoot
+
+                HarvestCreature --> GatherLoot
+                GatherLoot --> ReturnToWagon
+            }
+
+
+            GatherResources --> MaterialResource
+            GatherResources --> FieldResource
+            GatherResources --> ReturnToWagon
+
+            ReturnToWagon --> FieldCrafting
+            ReturnToWagon --> Rest
+            state Rest {
+                state BuildCamp
+                state RestAtInn
+
+                RestAtInn --> GainRestedBonus
+                GainRestedBonus --> RecoverHealth
+
+                BuildCamp --> Ambushed
+                BuildCamp --> RecoverHealth
+
+                Ambushed --> ReturnToWagon
+                RecoverHealth --> ReturnToWagon
+            }
+            ReturnToWagon --> EnterNewTerritory
+        }
+
+        state ExpeditionSystem {
+            FromPatron --> CreateContract : AcceptGrant
+
+            CreateContract --> PrepareStage
+            CreateContract : Tells you how long you have to complete\n measured in days of rest
+            CreateContract : So you should buy enough food to rest
+
+            state PrepareStage {
+                state HireHeroes {
+                    ViewHeroMap -> SelectHeroes
+                    SelectHeroes -> SetMeetingPoint
+                    SetMeetingPoint : The territory that the expedition will depart from
+                    SetMeetingPoint : Everyone will meet each other here
+                }
+                state HireWagonGuard
+                HireWagonGuard : More canary than guard
+
+                state PurchaseConsumables
+                PurchaseConsumables : - Food (affects expedition duration)
+                PurchaseConsumables : - Elixirs
+
+                state SendScout
+                SendScout : - Costs money per distance\n  and difficulty
+                SendScout : - % of success per Scout level
+                SendScout : - Shows threats and POI
+
+                state AddStreamCollector
+                AddStreamCollector : Increases rewards and threat
+            }
+
+            PrepareStage --> AdventureStage : Embark
+            state AdventureStage {
+
+            }
+
+            AdventureStage --> EnterNewTerritory : Moving between territories
+            EnterNewTerritory --> AdventureStage
+
+            AdventureStage --> RescueStage : FailedContract
+            AdventureStage --> RewardStage : SuccessfulContract
+
+            state RewardStage {
+                DepositRewardFunds --> DepositItemRewards
+                DepositRewardFunds --> PartyFunds
+                DepositItemRewards --> SellFieldResourcesForCurrency
+                SellFieldResourcesForCurrency --> PartyFunds
+                SellFieldResourcesForCurrency --> VisitExtractors
+                VisitExtractors --> SellLootToCollectors
+                SellLootToCollectors --> PartyFunds
+            }
+        }
     }
 
-    state GuildHallSystem {
+    state GuildmasterSystem {
         state CraftQuest {
+
             CollectQuestComponents --> DepositFunds
             DepositFunds --> PostInGuild
             PostInGuild --> GuildmembersAccept
@@ -167,127 +393,6 @@ state GameLoop {
             MoreChallengingQuests --> MoreProfit
             MoreProfit --> ImproveGuildHall
         }
-    }
-
-    state PartyManagementSystem {
-
-        EnterNewTerritory --> Combat
-        EnterNewTerritory --> GatherResources
-        GatherResources --> GatherLoot
-        
-        EnterNewTerritory --> RaidVillages
-        RaidVillages --> Combat
-        RaidVillages --> GatherLoot
-
-        state GatherLoot
-        state ReturnToWagon
-
-        state Combat {
-            SetUpTrap --> EngageCreature
-            DrinkPotion --> EngageCreature
-            AttackCreature --> EngageCreature
-            EngageCreature --> CombatLoop
-            state CombatLoop {
-                state CreatureAbilities
-                state CreatureDefenseCalculations
-                state CombatConsumables
-            }
-
-            CombatLoop --> CombatEnded
-
-            CombatEnded --> BuryCreature
-            BuryCreature --> CombatEnded
-            CombatEnded --> HarvestCreature
-            CombatEnded --> GatherLoot
-
-            HarvestCreature --> GatherLoot
-            GatherLoot --> ReturnToWagon
-        }
-
-        GatherResources --> ReturnToWagon
-
-        ReturnToWagon --> FieldCrafting
-        FieldCrafting --> ReturnToWagon 
-        ReturnToWagon --> Rest
-        Rest --> ReturnToWagon
-        ReturnToWagon --> TransitionToAnotherNewTerritory
-    }
-
-    state ExpeditionContractSystem {
-        FromQuest --> SetContract : AcceptJob
-        FromPatron --> SetContract : AcceptGrant
-        FromChancellor --> SetContract : CreateExpeditionHere
-        FromGuildHall --> SetContract : Quest Crafting\n this process is automated
-
-        SetContract --> PrepareStage
-        SetContract : Tells you how long you have to complete\n measured in days of rest
-        SetContract : So you should buy enough food to rest
-
-        state PrepareStage {
-            state HireHeroes {
-                ViewHeroMap -> SelectHeroes
-                SelectHeroes -> SetMeetingPoint
-                SetMeetingPoint : The territory that the expedition will depart from
-                SetMeetingPoint : Everyone will meet each other here
-            }
-            state HireWagonGuard
-            HireWagonGuard : More canary than guard
-
-            state PurchaseConsumables
-            PurchaseConsumables : - Food (affects expedition duration)
-            PurchaseConsumables : - Elixirs
-
-            state SendScout
-            SendScout : - Costs money per distance\n  and difficulty
-            SendScout : - % of success per Scout level
-            SendScout : - Shows threats and POI
-
-            state AddStreamCollector
-            AddStreamCollector : Increases rewards and threat
-        }
-
-        PrepareStage --> AdventureStage : Embark
-        state AdventureStage {
-            state Villages
-            Villages : - Kind of like above-ground dungeons
-            Villages : - Abandoned. May contain squatters
-            Villages : - More devices, blueprints, lore
-            Villages : - Can claim as an outpost
-
-            state RandomEvents
-            RandomEvents : - Randomly generated
-            RandomEvents : - "Side quests"
-            RandomEvents : - Stranded villager
-            RandomEvents : - Stronger than normal stream portal
-            RandomEvents : - Highwaypersons
-
-            state StreamPortals
-            StreamPortals : - Open portals for stream gel
-            StreamPortals : - Fight monsters
-            StreamPortals : - Close portals for stream gel\n after all monsters gone
-
-            state Junkyards
-            Junkyards : - Chance to spawn in certain territories
-            Junkyards : - Increased chance of devices
-            Junkyards : - More bizzarre/difficult monsters
-
-        }
-
-        AdventureStage --> RescueStage : FailedContract
-        RescueStage : - You didn't complete the mission in time\n and they sent a search party
-        RescueStage : - You get no rewards
-        RescueStage : - Dead heroes will be looted to you
-        RescueStage : - Party wipe instantly transitions here
-
-        AdventureStage --> RewardStage : SuccessfulContract
-        RewardStage : - Quest rewards go to party funds\n showing hero cut to player
-        RewardStage : - Field resources are destroyed
-        RewardStage : - Core resources are stored in stock
-        RewardStage : - Player can craft gear and things
-        RewardStage : - Unlocked territories can be conquered
-
-        RescueStage --> [*] : Return to chancellor system
-        RewardStage --> [*] : Return to chancellor system
     }
 }
 
