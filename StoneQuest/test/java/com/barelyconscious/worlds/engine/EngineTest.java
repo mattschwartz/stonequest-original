@@ -1,8 +1,10 @@
-package com.barelyconscious.worlds.entity;
+package com.barelyconscious.worlds.engine;
 
+import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
-import com.barelyconscious.worlds.entity.graphics.Screen;
-import com.barelyconscious.worlds.physics.Physics;
+import com.barelyconscious.worlds.engine.graphics.Screen;
+import com.barelyconscious.worlds.game.GameInstance;
+import com.barelyconscious.worlds.game.World;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.RateLimiter;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,9 +42,6 @@ public class EngineTest {
         MockitoAnnotations.openMocks(this);
 
         classUnderTest = new Engine(
-            mockGameInstance,
-            mockWorld,
-            mockScreen,
             mockPhysics,
             mockClock,
             mockUpsLimiter,
@@ -52,19 +51,11 @@ public class EngineTest {
     @Test
     void constructor_invalidArguments_shouldThrowIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class,
-            () -> new Engine(null, mockWorld, mockScreen, mockPhysics, mockClock, mockUpsLimiter, mockFpsLimiter));
+            () -> new Engine(mockPhysics, null, mockUpsLimiter, mockFpsLimiter));
         assertThrows(IllegalArgumentException.class,
-            () -> new Engine(mockGameInstance, null, mockScreen, mockPhysics, mockClock, mockUpsLimiter, mockFpsLimiter));
+            () -> new Engine(mockPhysics, mockClock, null, mockFpsLimiter));
         assertThrows(IllegalArgumentException.class,
-            () -> new Engine(mockGameInstance, mockWorld, null, mockPhysics, mockClock, mockUpsLimiter, mockFpsLimiter));
-        assertThrows(IllegalArgumentException.class,
-            () -> new Engine(mockGameInstance, mockWorld, mockScreen, null, mockClock, mockUpsLimiter, mockFpsLimiter));
-        assertThrows(IllegalArgumentException.class,
-            () -> new Engine(mockGameInstance, mockWorld, mockScreen, mockPhysics, null, mockUpsLimiter, mockFpsLimiter));
-        assertThrows(IllegalArgumentException.class,
-            () -> new Engine(mockGameInstance, mockWorld, mockScreen, mockPhysics, mockClock, null, mockFpsLimiter));
-        assertThrows(IllegalArgumentException.class,
-            () -> new Engine(mockGameInstance, mockWorld, mockScreen, mockPhysics, mockClock, mockUpsLimiter, null));
+            () -> new Engine(mockPhysics, mockClock, mockUpsLimiter, null));
     }
 
     @Test
@@ -79,7 +70,7 @@ public class EngineTest {
         when(mockWorld.getActors()).thenReturn(
             Lists.newArrayList(actor_withPhysicsComponent));
 
-        classUnderTest.tick();
+        classUnderTest.tick(mock(EventArgs.class));
 
         verify(mockPhysics).updatePhysics(any(EventArgs.class), eq(mockWorld.getActors()));
         verify(mockPhysicsComponent).update(any());

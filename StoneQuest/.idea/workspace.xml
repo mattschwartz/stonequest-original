@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="1f9e887f-6a6c-4202-8db6-94e89c907198" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/ItemSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/barelyconscious/game/entity/gui/widgets/ItemSlot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/StoneQuest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/StoneQuest.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/java/com/barelyconscious/game/entity/EngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/java/com/barelyconscious/worlds/engine/EngineTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,20 +99,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="Downloaded.Files.Path.Enabled" value="false" />
-    <property name="Repository.Attach.Annotations" value="false" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/My life backup [09022013]/My life backup [09022013]/Projects/Java/StoneQuest 0.6.9" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.1632107" />
-    <property name="project.structure.side.proportion" value="0.33139536" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.30229884",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/res" />
@@ -122,7 +128,7 @@
       <recent name="com.barelyconscious.game.entity.gui" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GameRunner">
+  <component name="RunManager" selected="Application.com.barelyconscious.worlds.GameRunner">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.Game" />
       <module name="StoneQuest" />
@@ -149,17 +155,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EngineTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="com.barelyconscious.worlds.GameRunner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.barelyconscious.worlds.GameRunner" />
       <module name="StoneQuest" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.barelyconscious.game.entity.components.*" />
+          <option name="PATTERN" value="com.barelyconscious.worlds.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.barelyconscious.game.entity" />
-      <option name="MAIN_CLASS_NAME" value="com.barelyconscious.game.entity.EngineTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -198,11 +202,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.com.barelyconscious.worlds.GameRunner" />
         <item itemvalue="Application.GameRunner" />
         <item itemvalue="Application.Game" />
         <item itemvalue="JUnit.EngineTest.tick_withPhysicsComponent_shouldUpdatePhysics" />
         <item itemvalue="JUnit.EngineTest.tick_" />
-        <item itemvalue="JUnit.EngineTest" />
       </list>
     </recent_temporary>
   </component>
