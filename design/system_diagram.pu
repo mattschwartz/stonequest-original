@@ -141,17 +141,15 @@ state GameLoop {
     }
 
     state Crafting {
-        Crafting : Can be done any time player is off expedition
-
         state FactionCrafting {
-
+            state CraftEquipment
+            state CraftConsumables
         }
 
         state FieldCrafting {
-
+            state CraftFieldSupplies
         }
     }
-
 
     ' END Definitions
 

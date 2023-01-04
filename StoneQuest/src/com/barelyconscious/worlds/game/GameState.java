@@ -39,6 +39,13 @@ public class GameState {
         }
     }
 
+    public static class Contractor {
+
+        private PartyFunds partyFunds;
+        private Wagon partyWagon;
+        private ResourecePouch partyResourcePouch;
+    }
+
     private final GameStateData data;
 
     public GameState() {

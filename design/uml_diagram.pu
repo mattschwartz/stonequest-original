@@ -1,0 +1,191 @@
+@startuml
+
+package worlds.game.Items {
+
+    class Inventory {
+        - InventoryItem[] items
+        + addItem()
+        + removeItem()
+    }
+
+    class InventoryItem {
+        - int stackSize
+        - Item item
+    }
+
+    Inventory *-- InventoryItem
+    
+    enum ItemRarity {
+        + COMMON
+        + CURIOUS
+        + STRANGE
+        + ELDRITCH
+    }
+
+    enum ItemTag {
+        + CONSUMABLE
+        + RESOURCE
+        + EQUIPPABLE
+    }
+
+    interface ItemProperty {
+        + void applyProperty()
+        + void removeProperty()
+    }
+
+    class AttributeItemProperty {
+        - Attribute attribute
+        - int attributeModifier
+    }
+    class AbilityItemProperty {
+        - Ability abilityToAdd
+    }
+
+    ItemProperty <|-- AttributeItemProperty
+    ItemProperty <|-- AbilityItemProperty
+
+    interface ItemRequirement {
+        + boolean meetsRequirement()
+    }
+    class LevelItemRequirement {
+        - int requiredLevel
+    }
+
+    ItemRequirement <|-- LevelItemRequirement
+
+    class Item {
+        + String id
+        + ItemTag tags
+        + ItemRarity rarity
+        + ItemProperty[] properties
+        + ItemRequirement[] requirements
+
+        + void useItem()
+    }
+
+    class Equipment <<item>> {
+        - Tags=[EQUIPPABLE]
+    }
+
+    class CraftingResource <<item>> {
+        - Tags=[CRAFTING, MATERIAL, FIELD]
+    }
+
+    Item <|- Equipment
+    Item <|- CraftingResource
+
+    Item o-- ItemRarity
+    Item o-- ItemTag
+    Item *-- ItemProperty
+    Item *-- ItemRequirement
+
+    InventoryItem o-- Item
+}
+
+package worlds.game.creatures {
+    class Creature {
+        + Attribute[] attributes
+        + Ability[] abilities
+    }
+
+    enum Attribute {
+        + CONSTITUTION
+        + STRENGTH
+        + DEXTERITY
+        + WISDOM
+        + CHARISMA
+        + INTELLIGENCE
+    }
+
+
+    class Hero {
+        + Profession profession
+        + Career career
+    }
+
+    enum Profession {
+        + APOTHECARY
+    }
+
+    Creature <|- Hero
+    Hero o-- Profession
+    Creature o-- Attribute
+}
+
+package worlds.game.systems <<Node>> {
+
+    class AbilitySystem << (S,#FF7700) System >> {
+        + Ability[] getProfessionAbilities(Profession,CareerProgress)
+        + void craftAbility()
+    }
+
+    class CombatSystem << (S,#FF7700) System >> {
+        + float doDamage()
+        + void takeDamage()
+    }
+
+    note top of AbilitySystem : System used to populate\n  a creature's abilities
+    note top of CombatSystem : System used to calculate\n moment-to-moment combat results
+}
+
+package Data <<Database>> {
+    json Abilities {
+        "id": "String",
+        "name": "String",
+        "description": "String",
+        "properties": "String"
+
+    }
+    json Creatures {
+        "id": "String",
+        "creatureType": "String",
+        "abilityIds": ["abilityId1", "abilityId2", "abilityId3"]
+    }
+
+    json CreatureTemplate {
+        "creatureType": "String",
+        "attributes": ["CON=6", "STR=9"]
+    }
+
+    json Heroes {
+        "creatureId": "String",
+        "profession": "Profession",
+        "career": "Career"
+    }
+
+    json Jobs {
+        "jobId": "String",
+        "initialFunding": "Decimal",
+        "rewardCurrency": "Decimal",
+        "rewardItems": ["itemId1", "itemId2"]
+    }
+
+    json Player {
+        "playerFunds": "Decimal",
+        "completedJobs": ["jobId1", "jobId2"],
+        "activeJobs": ["jobId3", "jobId4"],
+        "party": ["heroId1", "heroId2", "heroId3"]
+    }
+
+    json ItemTemplate {
+        "templateId": "String"
+    }
+
+    json Items {
+        "itemId": "String",
+        "tempalteId": "String"
+    }
+
+    json ProfessionTemplate {
+        "professionId": "String",
+        "name": "String",
+        "description": "String",
+        "abilitiesGranted": ["abilityId1", "abilityId2"]
+    }
+
+    CreatureTemplate o-- Creatures
+    Creatures o-- Heroes
+}
+
+
+@enduml
