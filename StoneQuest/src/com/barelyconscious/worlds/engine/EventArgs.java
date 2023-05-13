@@ -1,5 +1,6 @@
 package com.barelyconscious.worlds.engine;
 
+import com.barelyconscious.worlds.game.GameState;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.common.shape.Vector;
@@ -33,6 +34,10 @@ public class EventArgs {
 
     @Getter
     @NonNull
+    private final GameState gameState;
+
+    @Getter
+    @NonNull
     private final PlayerController playerController;
     @NonNull
     private final World currentWorld;
@@ -46,7 +51,8 @@ public class EventArgs {
         final Vector mouseWorldPos,
         final Queue<JobExecution> engineThings,
         final @NonNull PlayerController playerController,
-        final @NonNull World currentWorld
+        final @NonNull World currentWorld,
+        final @NonNull GameState gameState
     ) {
         this.deltaTime = deltaTime;
         this.mouseScreenPos = mouseScreenPos;
@@ -55,6 +61,7 @@ public class EventArgs {
         this.playerController = playerController;
         this.currentWorld = currentWorld;
         this.worldContext = new WorldUpdateContext(currentWorld);
+        this.gameState = gameState;
     }
 
     void startAcceptingJobs() {

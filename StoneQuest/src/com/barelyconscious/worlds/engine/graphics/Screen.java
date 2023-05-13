@@ -114,7 +114,7 @@ public final class Screen {
                 try {
                     g = (Graphics2D) bufferStrategy
                         .getDrawGraphics();
-                    g.setColor(Color.black);
+                    g.setColor(Color.white);
                     g.fillRect(0, 0, getWidth(), getHeight());
                     g.drawImage(
                         renderContext.getRenderedImage(),

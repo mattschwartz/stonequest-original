@@ -4,24 +4,24 @@ import com.barelyconscious.worlds.entity.Hero;
 import com.barelyconscious.worlds.game.hero.skill.CitizenSkill;
 import com.barelyconscious.worlds.game.hero.skill.FactionSkill;
 import com.barelyconscious.worlds.game.hero.skill.HeroSkill;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The current state of the game - things like:
- * - Heroes: their stats, equipment, abilities, etc
- * - Inventory
- * - Enemies in the world
- * - Doodads in the world like loot, chests, doors
- *
+ * Tracks properties that change during gameplay and are visible to every
+ * entity and component.
+ * <p>
  * TODO(p1): conversion between SaveGame<->GameState
  */
 public class GameState {
 
     @Getter
     public static class GameStateData {
+
+        public GameStateData(){}
 
         private Hero heroSlot1;
         private Hero heroSlot2;
@@ -34,25 +34,17 @@ public class GameState {
         private final Set<HeroSkill> heroSkills = new HashSet<>();
         private final Set<CitizenSkill> citizenSkills = new HashSet<>();
         private final Set<FactionSkill> factionSkills = new HashSet<>();
-
-        private GameStateData() {
-        }
     }
 
-    public static class Contractor {
-
-        private PartyFunds partyFunds;
-        private Wagon partyWagon;
-        private ResourecePouch partyResourcePouch;
+    public GameState(final GameInstance gameInstance) {
+//        this.data = GameStateData.builder()
+//            .heroSlot1(gameInstance.getHeroInGroup(GameInstance.PartySlot.LEFT))
+//            .heroSlot2(gameInstance.getHeroInGroup(GameInstance.PartySlot.MIDDLE))
+//            .heroSlot3(gameInstance.getHeroInGroup(GameInstance.PartySlot.RIGHT))
+//            .backpack(gameInstance.getPlayerController().getInventory())
+//            .build();
     }
 
-    private final GameStateData data;
-
-    public GameState() {
-        this.data = new GameStateData();
-    }
-
-    public void setHeroSlot(final Hero hero, final int slotId) {
-        data.heroSlot1 = hero;
-    }
+    @Getter
+    private  GameStateData data;
 }

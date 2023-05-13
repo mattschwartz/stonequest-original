@@ -2,6 +2,7 @@ package com.barelyconscious.worlds.engine;
 
 import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.game.GameInstance;
+import com.barelyconscious.worlds.game.GameState;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.entity.components.Component;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
@@ -30,10 +31,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 public final class Engine {
 
     private final Clock clock;
-
     private final RateLimiter upsLimiter;
     private final RateLimiter fpsLimiter;
-
     private final Physics physics;
 
     private long frames = 0;
@@ -61,7 +60,9 @@ public final class Engine {
         this.fpsLimiter = fps;
     }
 
+    @Deprecated
     private GameInstance gameInstance;
+
     private World world;
     private Screen screen;
     private PlayerController playerController;
@@ -73,10 +74,10 @@ public final class Engine {
         @NonNull final Screen screen,
         @NonNull final MouseKeyboardPlayerController playerController
     ) {
-        this.gameInstance = gameInstance;
         this.world = world;
         this.screen = screen;
         this.playerController = playerController;
+        this.gameInstance = gameInstance;
 
         gameInstance.setCamera(screen.getCamera());
         gameInstance.changeWorld(world);
@@ -292,6 +293,7 @@ public final class Engine {
             playerController.getMouseWorldPos(),
             pendingJobExecutions,
             playerController,
-            world);
+            world,
+            new GameState(null));
     }
 }

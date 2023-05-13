@@ -1,7 +1,8 @@
 package com.barelyconscious.worlds.game.playercontroller;
 
-import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.engine.Camera;
+import com.barelyconscious.worlds.game.Inventory;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -22,6 +23,9 @@ public class PlayerController {
     @Getter
     @Nullable
     protected Vector mouseClickedWorldPos;
+
+    @Getter
+    private Camera playerCamera;
 
     @Getter
     @NonNull
