@@ -40,12 +40,12 @@ public class TestHeroInitializer {
             14,
             16,
             new Stats(new HashMap<>() {{
-                put(Stats.StatName.STRENGTH, 13f);
-                put(Stats.StatName.DEXTERITY, 9f);
-                put(Stats.StatName.CONSTITUTION, 18f);
-                put(Stats.StatName.INTELLIGENCE, 11f);
-                put(Stats.StatName.WISDOM, 13f);
-                put(Stats.StatName.CHARISMA, 11f);
+                put(Stats.Attribute.STRENGTH, 13f);
+                put(Stats.Attribute.DEXTERITY, 9f);
+                put(Stats.Attribute.CONSTITUTION, 18f);
+                put(Stats.Attribute.INTELLIGENCE, 11f);
+                put(Stats.Attribute.WISDOM, 13f);
+                put(Stats.Attribute.CHARISMA, 11f);
             }}),
             144f,
             new Inventory(28),
@@ -62,12 +62,12 @@ public class TestHeroInitializer {
             24,
             24,
             new Stats(new HashMap<>() {{
-                put(Stats.StatName.STRENGTH, 10f);
-                put(Stats.StatName.DEXTERITY, 15f);
-                put(Stats.StatName.CONSTITUTION, 15f);
-                put(Stats.StatName.INTELLIGENCE, 11f);
-                put(Stats.StatName.WISDOM, 15f);
-                put(Stats.StatName.CHARISMA, 11f);
+                put(Stats.Attribute.STRENGTH, 10f);
+                put(Stats.Attribute.DEXTERITY, 15f);
+                put(Stats.Attribute.CONSTITUTION, 15f);
+                put(Stats.Attribute.INTELLIGENCE, 11f);
+                put(Stats.Attribute.WISDOM, 15f);
+                put(Stats.Attribute.CHARISMA, 11f);
             }}),
             144f,
             new Inventory(28),
@@ -89,12 +89,12 @@ public class TestHeroInitializer {
             11,
             12,
             new Stats(new HashMap<>() {{
-                put(Stats.StatName.STRENGTH, 7f);
-                put(Stats.StatName.DEXTERITY, 13f);
-                put(Stats.StatName.CONSTITUTION, 12f);
-                put(Stats.StatName.INTELLIGENCE, 7f);
-                put(Stats.StatName.WISDOM, 14f);
-                put(Stats.StatName.CHARISMA, 15f);
+                put(Stats.Attribute.STRENGTH, 7f);
+                put(Stats.Attribute.DEXTERITY, 13f);
+                put(Stats.Attribute.CONSTITUTION, 12f);
+                put(Stats.Attribute.INTELLIGENCE, 7f);
+                put(Stats.Attribute.WISDOM, 14f);
+                put(Stats.Attribute.CHARISMA, 15f);
             }}),
             144f,
             new Inventory(28),

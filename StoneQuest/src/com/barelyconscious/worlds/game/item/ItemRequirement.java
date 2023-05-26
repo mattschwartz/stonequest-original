@@ -4,7 +4,7 @@ import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.entity.Stats;
 import com.barelyconscious.worlds.entity.components.AdjustableValueComponent;
 import com.barelyconscious.worlds.entity.components.EntityLevelComponent;
-import com.barelyconscious.worlds.entity.components.StatsComponent;
+import com.barelyconscious.worlds.entity.components.AttributeComponent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -29,7 +29,7 @@ public abstract class ItemRequirement {
 
     @Getter
     public static class StatItemRequirement extends ItemRequirement {
-        private final Stats.StatName statName;
+        private final Stats.Attribute attribute;
         private final float requiredStatValue;
         /**
          * If true, requirement will only use the max stat value instead of the current
@@ -38,20 +38,20 @@ public abstract class ItemRequirement {
          */
         private final boolean useMaxStatValue;
 
-        public StatItemRequirement(Stats.StatName statName, float requiredStatValue) {
-            this(statName, requiredStatValue, true);
+        public StatItemRequirement(Stats.Attribute attribute, float requiredStatValue) {
+            this(attribute, requiredStatValue, true);
         }
 
-        public StatItemRequirement(Stats.StatName statName, float requiredStatValue, boolean useMaxStatValue) {
-            this.statName = statName;
+        public StatItemRequirement(Stats.Attribute attribute, float requiredStatValue, boolean useMaxStatValue) {
+            this.attribute = attribute;
             this.requiredStatValue = requiredStatValue;
             this.useMaxStatValue = useMaxStatValue;
         }
 
         @Override
         public boolean meetsRequirement(EntityActor entity) {
-            StatsComponent entityStatsComponent = entity.getEntityStatsComponent();
-            AdjustableValueComponent stat = entityStatsComponent.getStat(statName);
+            AttributeComponent entityAttributeComponent = entity.getEntityAttributeComponent();
+            AdjustableValueComponent stat = entityAttributeComponent.getStat(attribute);
 
             if (useMaxStatValue) {
                 return stat.getMaxValue() >= requiredStatValue;

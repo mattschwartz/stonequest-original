@@ -42,7 +42,7 @@ public final class TestWorldInitializer {
             0,
             0,
             new Stats(new HashMap<>() {{
-                put(Stats.StatName.CONSTITUTION, 10f);
+                put(Stats.Attribute.CONSTITUTION, 10f);
             }}));
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
         aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprite.SEWER_RAT)));

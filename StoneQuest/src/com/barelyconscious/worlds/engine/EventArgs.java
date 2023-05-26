@@ -4,7 +4,6 @@ import com.barelyconscious.worlds.game.GameState;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
@@ -79,7 +78,6 @@ public class EventArgs {
         private final JobExecution jobExecution;
     }
 
-    @CanIgnoreReturnValue
     public SubmitJobResponse submitJob(final Function<JobRunContext, Void> job) {
         if (acceptsNewJobs) {
             final JobExecution jobExecution = new JobExecution(this, job);

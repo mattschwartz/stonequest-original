@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/stonequest-original.iml" filepath="$PROJECT_DIR$/stonequest-original.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stonequest-original.main.iml" filepath="$PROJECT_DIR$/.idea/modules/stonequest-original.main.iml" />
     </modules>
   </component>
 </project>

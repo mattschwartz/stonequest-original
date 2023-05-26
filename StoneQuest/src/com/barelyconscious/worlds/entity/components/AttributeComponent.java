@@ -7,17 +7,17 @@ import lombok.extern.log4j.Log4j2;
 import java.util.EnumMap;
 
 @Log4j2
-public class StatsComponent extends Component {
+public class AttributeComponent extends Component {
 
-    private final EnumMap<Stats.StatName, AdjustableValueComponent> componentsByStatName= new EnumMap<>(Stats.StatName.class);
+    private final EnumMap<Stats.Attribute, AdjustableValueComponent> componentsByStatName= new EnumMap<>(Stats.Attribute.class);
 
-    public StatsComponent(final Actor parent, final Stats stats) {
+    public AttributeComponent(final Actor parent, final Stats stats) {
         super(parent);
 
         stats.getStats().forEach(this::setStatValue);
     }
 
-    public void setStatValue(final Stats.StatName name, final float value) {
+    public void setStatValue(final Stats.Attribute name, final float value) {
         AdjustableValueComponent component = componentsByStatName.get(name);
         if (component == null) {
             component = new AdjustableValueComponent(getParent(), value, value);
@@ -31,7 +31,7 @@ public class StatsComponent extends Component {
      * helper method to adjust the stat component by delta.
      * if stat doesn't exist then nothing is adjusted
      */
-    public void adjustValue(final Stats.StatName name, final float delta) {
+    public void adjustValue(final Stats.Attribute name, final float delta) {
         AdjustableValueComponent component = componentsByStatName.get(name);
         if (component != null) {
             component.adjust(delta);
@@ -40,7 +40,7 @@ public class StatsComponent extends Component {
         }
     }
 
-    public AdjustableValueComponent getStat(final Stats.StatName name) {
+    public AdjustableValueComponent getStat(final Stats.Attribute name) {
         if (!componentsByStatName.containsKey(name)) {
             componentsByStatName.put(name, new AdjustableValueComponent(getParent()));
         }

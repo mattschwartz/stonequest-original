@@ -84,20 +84,20 @@ public class HeroStatsSheetWidget extends Widget {
     }
 
     private void setupStatsWidgets(SpriteWidget backdrop) {
-        createAndBindStatWidget(backdrop, Stats.StatName.STRENGTH, 1);
-        createAndBindStatWidget(backdrop, Stats.StatName.DEXTERITY, 33);
-        createAndBindStatWidget(backdrop, Stats.StatName.CONSTITUTION, 66);
-        createAndBindStatWidget(backdrop, Stats.StatName.INTELLIGENCE, 101);
-        createAndBindStatWidget(backdrop, Stats.StatName.WISDOM, 134);
-        createAndBindStatWidget(backdrop, Stats.StatName.CHARISMA, 167);
+        createAndBindStatWidget(backdrop, Stats.Attribute.STRENGTH, 1);
+        createAndBindStatWidget(backdrop, Stats.Attribute.DEXTERITY, 33);
+        createAndBindStatWidget(backdrop, Stats.Attribute.CONSTITUTION, 66);
+        createAndBindStatWidget(backdrop, Stats.Attribute.INTELLIGENCE, 101);
+        createAndBindStatWidget(backdrop, Stats.Attribute.WISDOM, 134);
+        createAndBindStatWidget(backdrop, Stats.Attribute.CHARISMA, 167);
     }
 
     private void createAndBindStatWidget(
         final SpriteWidget backdrop,
-        final Stats.StatName statName,
+        final Stats.Attribute attribute,
         final int yOffs
     ) {
-        final AdjustableValueComponent avc = hero.getEntityStatsComponent().getStat(statName);
+        final AdjustableValueComponent avc = hero.getEntityAttributeComponent().getStat(attribute);
         final String formatString = "{COLOR=255,255,255,255}{SIZE=20}{STYLE=CENTER}";
 
         MouseInputWidget miw = new MouseInputWidget(LayoutData.builder()
@@ -120,8 +120,8 @@ public class HeroStatsSheetWidget extends Widget {
         TooltipWidget ttw = new TooltipWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 4, -4))
             .build(),
-            statName.name,
-            statName.description,
+            attribute.name,
+            attribute.description,
             null, null);
         statWidget.addWidget(ttw);
 

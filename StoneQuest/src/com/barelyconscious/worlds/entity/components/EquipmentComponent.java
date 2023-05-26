@@ -4,7 +4,6 @@ import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.item.tags.EquipmentItemTag;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -57,7 +56,6 @@ public class EquipmentComponent extends Component {
         return inventoryItem == null ? null : inventoryItem.item;
     }
 
-    @CanIgnoreReturnValue
     public Item setEquippedItem(final Item item) {
         EquipmentItemTag equipmentTag = (EquipmentItemTag) item.getTags().stream().filter(t -> t instanceof EquipmentItemTag).findFirst().orElse(null);
         if (equipmentTag == null) {

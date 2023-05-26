@@ -2,7 +2,6 @@ package com.barelyconscious.worlds.game;
 
 import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.game.item.Item;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
@@ -72,7 +71,6 @@ public final class Inventory {
     /**
      * @deprecated use setItem instead
      */
-    @CanIgnoreReturnValue
     @Deprecated
     public InventoryItem setItemAt(final int slotId, final Item item) {
         if (slotId < size) {
@@ -153,7 +151,6 @@ public final class Inventory {
     }
 
     @Nullable
-    @CanIgnoreReturnValue
     public Item removeItemAt(final int slot) {
         final InventoryItem itemRemoved = removeStackAt(slot);
         return itemRemoved == null ? null : itemRemoved.item;
@@ -162,7 +159,6 @@ public final class Inventory {
     /**
      * if stackable, the item's stack size is reduced and if <= 0, item is removed. if not stackable, item is removed
      */
-    @CanIgnoreReturnValue
     public Item consumeOrRemoveItem(final int slot) {
         InventoryItem inventoryItem = items.get(slot);
 

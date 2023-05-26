@@ -1,6 +1,5 @@
 package com.barelyconscious.worlds.engine;
 
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,7 +20,6 @@ public class YieldingCallback {
      * yield functionality is helpful elsewhere, so:
      * todo(p1): fix yields outside of job context not able to yield in callback
      */
-    @CanIgnoreReturnValue
     public boolean tickAndCall(final EventArgs eventArgs) {
         yieldForMillis -= eventArgs.getDeltaTime() * 1000;
         if (yieldForMillis < 0) {

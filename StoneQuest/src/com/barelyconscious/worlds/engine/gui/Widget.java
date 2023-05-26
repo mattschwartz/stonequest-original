@@ -4,7 +4,6 @@ import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
 import com.barelyconscious.worlds.common.shape.Box;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,7 +57,6 @@ public abstract class Widget {
     /**
      * @return the widget added
      */
-    @CanIgnoreReturnValue
     public final Widget addWidget(final Widget widget) {
         widget.setParent(this);
         widgets.add(widget);

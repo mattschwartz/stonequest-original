@@ -53,8 +53,8 @@ public class TestMapGenerator {
     }};
 
     private static void createTiles(final World world) {
-        int tileWidth = 5;
-        int tileHeight = 5;
+        int tileWidth = 16;
+        int tileHeight = 16;
 
         int i = 0;
         for (int x = 0; x < tileWidth; ++x) {
