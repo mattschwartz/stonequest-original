@@ -1,10 +1,10 @@
 package com.barelyconscious.worlds.engine.gui;
 
+import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
 import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.components.Component;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
-import com.barelyconscious.worlds.engine.graphics.Screen;
 import com.barelyconscious.worlds.engine.gui.widgets.ItemFollowCursorWidget;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
@@ -27,7 +27,7 @@ public class GuiCanvas extends Actor {
 
     private final List<Widget> widgets;
 
-    public GuiCanvas(final Screen screen) {
+    public GuiCanvas(final CanvasScreen screen) {
         super("GuiCanvas", Vector.ZERO);
 
         this.width = screen.getWidth();

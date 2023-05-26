@@ -1,5 +1,6 @@
 package com.barelyconscious.worlds.module;
 
+import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.World;
@@ -79,7 +80,7 @@ public class WorldsModule extends AbstractModule {
         @Named("window.height") final int screenHeight,
         @Named("window.title") final String windowTitle,
         @Named("version") final String version,
-        final Screen screen,
+        final CanvasScreen screen,
         final MouseInputHandler mouseInputHandler,
         final KeyInputHandler keyInputHandler
     ) {
@@ -217,13 +218,13 @@ public class WorldsModule extends AbstractModule {
 
     @Singleton
     @Provides
-    Screen providesScreen(
+    CanvasScreen providesCanvasScreen(
         @Named("window.width") final int screenWidth,
         @Named("window.height") final int screenHeight
     ) {
         final Canvas canvas = new Canvas();
         canvas.setSize(screenWidth, screenHeight);
-        return new Screen(canvas, screenWidth, screenHeight);
+        return new CanvasScreen(canvas, screenWidth, screenHeight);
     }
 
     @Singleton

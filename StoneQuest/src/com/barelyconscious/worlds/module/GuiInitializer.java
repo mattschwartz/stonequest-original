@@ -1,8 +1,8 @@
 package com.barelyconscious.worlds.module;
 
+import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.World;
-import com.barelyconscious.worlds.engine.graphics.Screen;
 import com.barelyconscious.worlds.engine.gui.CraftingWindowWidget;
 import com.barelyconscious.worlds.engine.gui.GuiCanvas;
 import com.barelyconscious.worlds.engine.gui.HeroQuickbarPanel;
@@ -25,7 +25,7 @@ import static com.barelyconscious.worlds.game.resources.GUISpriteSheet.Resources
 
 public final class GuiInitializer {
 
-    public static void createGui(final Screen screen, final World world, final PlayerController playerController) {
+    public static void createGui(final CanvasScreen screen, final World world, final PlayerController playerController) {
         val gui = new GuiCanvas(screen);
         TileInfoWidget tiw = new TileInfoWidget(LayoutData.builder()
             .anchor(new VDim(0.5f, 0, -45, 15))

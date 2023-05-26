@@ -1,10 +1,10 @@
 package com.barelyconscious.worlds;
 
+import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
 import com.barelyconscious.worlds.entity.CameraActor;
 import com.barelyconscious.worlds.engine.Engine;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.World;
-import com.barelyconscious.worlds.engine.graphics.Screen;
 import com.barelyconscious.worlds.engine.input.KeyInputHandler;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
 import com.barelyconscious.worlds.game.resources.spritesheet.SpritesheetManager;
@@ -32,7 +32,7 @@ public final class GameRunner {
 
         final JFrame frame = injector.getInstance(JFrame.class);
         final World world = injector.getInstance(World.class);
-        final Screen screen = injector.getInstance(Screen.class);
+        final CanvasScreen screen = injector.getInstance(CanvasScreen.class);
         final KeyInputHandler keyInputHandler = injector.getInstance(KeyInputHandler.class);
         final Engine engine = injector.getInstance(Engine.class);
 
