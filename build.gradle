@@ -4,7 +4,7 @@ plugins {
 }
 
 project.ext.lwjglVersion = "3.3.2"
-project.ext.lwjglNatives = "natives-macos"
+project.ext.lwjglNatives = "natives-macos-arm64"
 
 group 'com.barelyconscious'
 version '1.0'
@@ -23,15 +23,10 @@ sourceSets {
         }
     }
 }
+applicationDefaultJvmArgs = ["-Xms512m", "-Xmx1024m", "-XstartOnFirstThread"]
 
 application {
-    mainClassName = 'com.barelyconscious.worlds.GameRunner'
-    applicationDefaultJvmArgs=[
-            "-Dorg.lwjgl.librarypath=/Users/matt/lwjgl/lwjgl",
-            "-Djava.library.path=/Users/matt/lwjgl/lwjgl",
-            "-Dorg.lwjgl.util.Debug=true",
-            "-XstartOnFirstThread"
-    ]
+    mainClassName = 'com.barelyconscious.worlds.GameRunnerOpenGL'
 }
 
 dependencies {
