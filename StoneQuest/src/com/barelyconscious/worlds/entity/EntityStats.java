@@ -5,7 +5,9 @@ import java.util.Map;
 
 public class EntityStats {
 
+    // Attributes are properties intrinsic to an entity. They are used to calculate stats.
     private final Map<Stats.Attribute, Float> attributes = new HashMap<>();
+    // Stats are properties that are derived from attributes and are affected by equipment and other modifiers.
     private final Map<Stats.Stat, Float> stats = new HashMap<>();
 
     public EntityStats() {

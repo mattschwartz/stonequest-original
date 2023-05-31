@@ -1,0 +1,625 @@
+[
+  {
+    "name": "Solid State Drive",
+    "ingredients": [
+      {
+        "name": "Flash Memory",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Controller",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "DRAM Cache",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "PCB",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Case",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "SATA Connector",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Power Connector",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Screws",
+        "quantity": {
+          "min": 4
+        }
+      },
+
+      {
+        "name": "Sticker",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Packaging",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Hard Disk Drive",
+    "ingredients": [
+      {
+        "name": "Platters",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Actuator Arm",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Actuator Arm Motor",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Spindle Motor",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "PCB",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Case",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "SATA Connector",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Power Connector",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Screws",
+        "quantity": {
+          "min": 4
+        }
+      },
+
+      {
+        "name": "Sticker",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Packaging",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Motherboard",
+    "ingredients": [
+      {
+        "name": "CPU Socket",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "RAM Slots",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "PCIe Slots",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "SATA Ports",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "USB Ports",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Ethernet Port",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Audio Jacks",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "PCB",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Case",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Screws",
+        "quantity": {
+          "min": 4
+        }
+      },
+
+      {
+        "name": "Sticker",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Packaging",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "CPU",
+    "ingredients": [
+      {
+        "name": "PCB",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Case",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Screws",
+        "quantity": {
+          "min": 4
+        }
+      },
+
+      {
+        "name": "Sticker",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Packaging",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "RAM",
+    "ingredients": [
+      {
+        "name": "PCB",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Case",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Screws",
+        "quantity": {
+          "min": 4
+        }
+      },
+
+      {
+        "name": "Sticker",
+        "quantity": {
+          "min": 1
+        }
+      },
+
+      {
+        "name": "Packaging",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "GPU",
+    "ingredients": [
+      {
+        "name": "PCB",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Case",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Screws",
+        "quantity": {
+          "min": 4
+        }
+      },
+      {
+        "name": "Sticker",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Packaging",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "PCB",
+    "ingredients": [
+      {
+        "name": "Copper",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Fiberglass",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Solder",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Resistors",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Capacitors",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Transistors",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Capacitor",
+    "ingredients": [
+      {
+        "name": "Aluminum",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Plastic",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Electrolyte",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Resistor",
+    "ingredients": [
+      {
+        "name": "Ceramic",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Carbon",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Metal",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Transistor",
+    "ingredients": [
+      {
+        "name": "Silicon",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Plastic",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Metal",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Solder",
+    "ingredients": [
+      {
+        "name": "Tin",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Lead",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Flux",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Fiberglass",
+    "ingredients": [
+      {
+        "name": "Sand",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Soda Ash",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Limestone",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Borax",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Feldspar",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Kaolin",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Aspirin",
+    "ingredients": [
+      {
+        "name": "Salicylic Acid",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Acetic Anhydride",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Acetic Acid",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Lidocaine",
+    "ingredients": [
+      {
+        "name": "Diethylamine",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Chloroacetyl Chloride",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Hydrochloric Acid",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Sodium Hydroxide",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Paracetamol",
+    "ingredients": [
+      {
+        "name": "Phenol",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Acetic Anhydride",
+        "quantity": {
+          "min": 1
+        }
+      },
+      {
+        "name": "Sulfuric Acid",
+        "quantity": {
+          "min": 1
+        }
+      }
+    ]
+  },
+
+  {
+    "name": ""
+  }
+]

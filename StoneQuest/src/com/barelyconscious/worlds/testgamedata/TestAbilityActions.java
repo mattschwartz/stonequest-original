@@ -1,0 +1,20 @@
+package com.barelyconscious.worlds.testgamedata;
+
+import com.barelyconscious.worlds.game.abilitysystem.AbilityAction;
+import com.barelyconscious.worlds.game.abilitysystem.BehaviorWorkflow;
+import com.barelyconscious.worlds.game.abilitysystem.behaviors.EntityHasPowerBehavior;
+
+public class TestAbilityActions {
+
+    public void create () {
+        var renewAction = new AbilityAction(
+                "Renew",
+                10,
+                0,
+                0,
+                new BehaviorWorkflow(
+                    new EntityHasPowerBehavior(10)
+                )
+        );
+    }
+}

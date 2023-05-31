@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Inventive Genius",
+    "level_requirement": 13,
+    "applies_aura": "inventive_genius",
+    "duration": -1,
+    "cooldown": 0,
+    "icon": "inventive_genius",
+    "description": "Through their unmatched ingenuity, the Machinist demonstrates their ability to devise innovative solutions on the spot. With this talent, the Machinist gains the unique capability to swiftly adapt and modify their mechanical creations during combat situations.\n\nUpon activation, the Machinist's Inventive Genius talent grants them a surge of inspiration, enabling them to make instant adjustments to their contraptions or devices. This allows them to optimize their effectiveness, improve their performance, or introduce unexpected features to their creations on the fly.\n\nWhether it's fine-tuning the firing mechanism of a firearm, enhancing the defensive capabilities of a mechanical companion, or adding a new utility function to a gadget, the Machinist's Inventive Genius talent empowers them to rapidly engineer improvements in real-time.\n\nThis talent provides tactical versatility and adaptability to the Machinist, allowing them to adapt their inventions to changing battlefield conditions and exploit weaknesses in their opponents' defenses. With their creative genius at work, the Machinist becomes a force to be reckoned with, always one step ahead of their adversaries.\n\nHarnessing the Inventive Genius talent, the Machinist embodies the essence of an ingenious inventor, continuously pushing the boundaries of what is possible and using their brilliance to gain an edge in combat."
+  },
+
+  {
+    "name": "Mechanical Companion",
+    "level_requirement": 13,
+    "applies_aura": "mechanical_companion",
+    "description": "The Machinist's Mechanical Companion talent allows them to construct a mechanical companion to accompany them on their adventures. This mechanical companion is a robotic construct that can be customized and upgraded to suit the Machinist's needs.\n\nThe Machinist's mechanical companion is a robotic construct that can be customized and upgraded to suit the Machinist's needs. The Machinist can choose from a variety of different mechanical companions, each with their own unique abilities and functions. The Machinist can also upgrade their mechanical companion with new abilities and functions as they progress through their adventures.\n\nThe Machinist's mechanical companion is a robotic construct that can be customized and upgraded to suit the Machinist's needs. The Machinist can choose from a variety of different mechanical companions, each with their own unique abilities and functions. The Machinist can also upgrade their mechanical companion with new abilities and functions as they progress through their adventures."
+  },
+
+  {
+    "name": "Advanced Engineering",
+    "level_requirement": 13,
+    "applies_aura": "advanced_engineering",
+    "icon": "advanced_engineering",
+    "cooldown": 0,
+    "description": "The Machinist's Advanced Engineering talent allows them to construct advanced mechanical devices and contraptions. These devices and contraptions can be used to aid the Machinist in combat, or to assist them in their adventures.\n\nThe Machinist's Advanced Engineering talent allows them to construct advanced mechanical devices and contraptions. These devices and contraptions can be used to aid the Machinist in combat, or to assist them in their adventures.\n\nThe Machinist's Advanced Engineering talent allows them to construct advanced mechanical devices and contraptions. These devices and contraptions can be used to aid the Machinist in combat, or to assist them in their adventures."
+  },
+
+  {
+    "name": "Augmented Arsenal",
+    "description": "Augmented Arsenal: With the Augmented Arsenal talent, the Machinist demonstrates their expertise in integrating cutting-edge technology with their weaponry. This talent empowers the Machinist to enhance their arsenal with powerful augmentations and modifications, elevating their combat prowess to new heights.\n\nWhen activated, the Augmented Arsenal talent enables the Machinist to temporarily infuse their weapons with advanced technological upgrades. This augmentation can take various forms, such as energy amplification, improved firing mechanisms, or integrated targeting systems. These enhancements significantly enhance the effectiveness and versatility of the Machinist's weapons during battles.\n\nThe Machinist can selectively activate specific augmentations based on the situation, adapting their arsenal to the demands of each encounter. This talent allows them to unleash devastating energy blasts, rapid-fire volleys, or precision shots with enhanced accuracy and impact. Additionally, the Augmented Arsenal talent may provide supplementary effects like piercing armor, causing elemental damage, or disabling enemy defenses.\n\nBy leveraging the Augmented Arsenal talent, the Machinist becomes a force to be reckoned with on the battlefield. Their weapons become an extension of their technological prowess, capable of surpassing conventional limitations and delivering unparalleled firepower. This talent enables the Machinist to engage in versatile combat strategies, adapting their approach to overcome various challenges.\n\nWith Augmented Arsenal, the Machinist embodies the pinnacle of technological innovation and wields weapons that are truly awe-inspiring. Their ability to seamlessly integrate advanced augmentations with their arsenal sets them apart as a formidable presence in the game, combining ingenuity, firepower, and precision to dominate their foes.",
+    "level_requirement": 13,
+    "applies_aura": "augmented_arsenal",
+    "icon": "augmented_arsenal",
+    "cooldown": 0
+  },
+
+  {
+    "name": "Creative Combustion",
+    "level_requirement": 13,
+    "applies_aura": "creative_combustion",
+    "icon": "creative_combustion",
+    "cooldown": 0,
+    "description": "The Machinist's Creative Combustion talent allows them to create and deploy a variety of explosive devices. These devices can be used to deal damage to enemies, or to create obstacles and traps that can be used to hinder or delay enemies.\n\nThe Machinist's Creative Combustion talent allows them to create and deploy a variety of explosive devices. These devices can be used to deal damage to enemies, or to create obstacles and traps that can be used to hinder or delay enemies.\n\nThe Machinist's Creative Combustion talent allows them to create and deploy a variety of explosive devices. These devices can be used to deal damage to enemies, or to create obstacles and traps that can be used to hinder or delay enemies."
+  },
+
+  {
+    "name": "Jury-Rigged",
+    "level_requirement": 13,
+    "applies_aura": "jury_rigged",
+    "icon": "jury_rigged",
+    "cooldown": 0,
+    "description": "The Machinist's Jury-Rigged talent allows them to create and deploy a variety of mechanical devices. These devices can be used to aid the Machinist in combat, or to assist them in their adventures.\n\nThe Machinist's Jury-Rigged talent allows them to create and deploy a variety of mechanical devices. These devices can be used to aid the Machinist in combat, or to assist them in their adventures.\n\nThe Machinist's Jury-Rigged talent allows them to create and deploy a variety of mechanical devices. These devices can be used to aid the Machinist in combat, or to assist them in their adventures."
+  },
+
+  {
+    "name": "Mechanical Hysteria",
+    "level_requirement": 13,
+    "applies_aura": "mechanical_hysteria",
+    "icon": "mechanical_hysteria",
+    "cooldown": 0,
+    "description": "The Machinist's Mechanical Hysteria talent allows them to create and deploy a variety of mechanical devices. These devices can be used to aid the Machinist in combat, or to assist them in their adventures.\n\nThe Machinist's Mechanical Hysteria talent allows them to create and deploy a variety of mechanical devices. These devices can be used to aid the Machinist in combat, or to assist them in their adventures.\n\nThe Machinist's Mechanical Hysteria talent allows them to create and deploy a variety of mechanical devices. These devices can be used to aid the Machinist in combat, or to assist them in their adventures."
+  }
+]

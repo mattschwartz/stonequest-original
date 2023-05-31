@@ -21,6 +21,8 @@ public class EntityActor extends Actor {
     private final EntityLevelComponent entityLevelComponent;
     private final EquipmentComponent equipment;
 
+//    private final EntityStats stats;
+
     public EntityActor(
         final String name,
         final Vector transform,
