@@ -2,7 +2,7 @@ package com.barelyconscious.worlds.testgamedata;
 
 import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.entity.ItemLootActor;
-import com.barelyconscious.worlds.entity.Stats;
+import com.barelyconscious.worlds.entity.TraitName;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
 import com.barelyconscious.worlds.entity.components.DestroyOnDeathComponent;
@@ -37,13 +37,8 @@ public final class TestWorldInitializer {
         val aRat = new EntityActor(
             "Sewer Rat",
             new Vector(264f, 208f),
-            1,
-            0,
-            0,
-            0,
-            new Stats(new HashMap<>() {{
-                put(Stats.Attribute.CONSTITUTION, 10f);
-            }}));
+            1, 0, 0, 0)
+            .addTrait(TraitName.CONSTITUTION, 10f);
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
         aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprite.SEWER_RAT)));
         aRat.addComponent(new HealthBarComponent(aRat, aRat.getComponent(HealthComponent.class)));

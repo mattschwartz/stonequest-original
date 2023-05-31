@@ -1,10 +1,9 @@
 package com.barelyconscious.worlds.game.item;
 
 import com.barelyconscious.worlds.entity.EntityActor;
-import com.barelyconscious.worlds.entity.Stats;
+import com.barelyconscious.worlds.entity.StatName;
 import com.barelyconscious.worlds.entity.components.AdjustableValueComponent;
 import com.barelyconscious.worlds.entity.components.EntityLevelComponent;
-import com.barelyconscious.worlds.entity.components.AttributeComponent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -29,7 +28,7 @@ public abstract class ItemRequirement {
 
     @Getter
     public static class StatItemRequirement extends ItemRequirement {
-        private final Stats.Attribute attribute;
+        private final StatName stat;
         private final float requiredStatValue;
         /**
          * If true, requirement will only use the max stat value instead of the current
@@ -38,25 +37,24 @@ public abstract class ItemRequirement {
          */
         private final boolean useMaxStatValue;
 
-        public StatItemRequirement(Stats.Attribute attribute, float requiredStatValue) {
-            this(attribute, requiredStatValue, true);
+        public StatItemRequirement(StatName stat, float requiredStatValue) {
+            this(stat, requiredStatValue, true);
         }
 
-        public StatItemRequirement(Stats.Attribute attribute, float requiredStatValue, boolean useMaxStatValue) {
-            this.attribute = attribute;
+        public StatItemRequirement(StatName stat, float requiredStatValue, boolean useMaxStatValue) {
+            this.stat = stat;
             this.requiredStatValue = requiredStatValue;
             this.useMaxStatValue = useMaxStatValue;
         }
 
         @Override
         public boolean meetsRequirement(EntityActor entity) {
-            AttributeComponent entityAttributeComponent = entity.getEntityAttributeComponent();
-            AdjustableValueComponent stat = entityAttributeComponent.getStat(attribute);
+            AdjustableValueComponent adjStat = entity.getStat(stat);
 
             if (useMaxStatValue) {
-                return stat.getMaxValue() >= requiredStatValue;
+                return adjStat.getMaxValue() >= requiredStatValue;
             } else {
-                return stat.getCurrentValue() >= requiredStatValue;
+                return adjStat.getCurrentValue() >= requiredStatValue;
             }
         }
     }

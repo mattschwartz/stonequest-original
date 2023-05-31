@@ -1,7 +1,7 @@
 package com.barelyconscious.worlds.game.abilitysystem.behaviors;
 
 import com.barelyconscious.worlds.entity.EntityActor;
-import com.barelyconscious.worlds.entity.Stats;
+import com.barelyconscious.worlds.entity.StatName;
 import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
 import com.barelyconscious.worlds.game.abilitysystem.Behavior;
 import com.barelyconscious.worlds.game.abilitysystem.BehaviorFeedback;
@@ -12,16 +12,18 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AdjustEntityStatBehavior implements Behavior {
 
-    private final Stats.Stat stat;
+    private final StatName stat;
     private final float amount;
 
     @Override
     public BehaviorFeedback perform(AbilityContext context) {
-//        context.getTargets().stream().filter(t -> t instanceof EntityActor)
-//            .forEach(t -> ((EntityActor) t).getEntityAttributeComponent().adjustValue(stat, amount)));
-//
-//
-//        context.getTargets().get(0).getStats().adjust(stat, amount);
+
+        for (var target : context.getTargets()) {
+            if (target instanceof EntityActor tar) {
+                tar.adjustStatMaxBy(stat, amount);
+            }
+        }
+
         return null;
     }
 }

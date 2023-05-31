@@ -1,12 +1,11 @@
 package com.barelyconscious.worlds.entity;
 
-import com.barelyconscious.worlds.entity.components.EntityLevelComponent;
-import com.barelyconscious.worlds.entity.components.HealthComponent;
-import com.barelyconscious.worlds.entity.components.PowerComponent;
-import com.barelyconscious.worlds.entity.components.AttributeComponent;
-import com.barelyconscious.worlds.entity.components.EquipmentComponent;
+import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.common.shape.Vector;
 import lombok.Getter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A mobile unit that can be spawned into the game world. Creatures, players, npcs, etc.
@@ -14,14 +13,19 @@ import lombok.Getter;
 @Getter
 public class EntityActor extends Actor {
 
-    private final AttributeComponent entityAttributeComponent;
-
-    private final HealthComponent healthComponent;
-    private final PowerComponent powerComponent;
     private final EntityLevelComponent entityLevelComponent;
     private final EquipmentComponent equipment;
 
-//    private final EntityStats stats;
+    private final Map<TraitName, AdjustableValueComponent> traits = new HashMap<>();
+    private final Map<StatName, AdjustableValueComponent> stats = new HashMap<>();
+
+    public AdjustableValueComponent getPowerComponent() {
+        return stats.get(StatName.POWER);
+    }
+
+    public AdjustableValueComponent getHealthComponent() {
+        return stats.get(StatName.HEALTH);
+    }
 
     public EntityActor(
         final String name,
@@ -29,11 +33,10 @@ public class EntityActor extends Actor {
         final int entityLevel,
         final float currentExperience,
         final float currentPower,
-        final float maxPower,
-        final Stats entityStats
+        final float maxPower
     ) {
         this(name, transform, entityLevel, currentExperience,
-            currentPower, maxPower, entityStats, 0);
+            currentPower, maxPower, 0);
     }
 
     public EntityActor(
@@ -43,16 +46,77 @@ public class EntityActor extends Actor {
         final float currentExperience,
         final float currentPower,
         final float maxPower,
-        final Stats entityStats,
         final int difficultyClass
     ) {
         super(name, transform);
         this.equipment = new EquipmentComponent(this);
-        this.entityAttributeComponent = new AttributeComponent(this, entityStats);
 
-        addComponent(entityAttributeComponent);
-        addComponent(healthComponent = new HealthComponent(this, entityAttributeComponent, entityLevel, difficultyClass));
-        addComponent(powerComponent = new PowerComponent(this, currentPower, maxPower));
+        var healthComponent = new HealthComponent(this, entityLevel, difficultyClass);
+        addComponent(healthComponent);
+        stats.put(StatName.HEALTH, healthComponent);
+
+        var powerComponent = new PowerComponent(this, currentPower, maxPower);
+        addComponent(powerComponent);
+        stats.put(StatName.POWER, powerComponent);
+
         addComponent(entityLevelComponent = new EntityLevelComponent(this, entityLevel, currentExperience));
+    }
+
+    public EntityActor addTrait(TraitName traitName, float value) {
+        var adjustableValue = new AdjustableValueComponent(this, value, value);
+
+        if (!traits.containsKey(traitName)) {
+            addComponent(adjustableValue);
+        }
+
+        traits.put(traitName, adjustableValue);
+        return this;
+    }
+
+    public EntityActor addStat(StatName statName, float value) {
+        var adjustableValue = new AdjustableValueComponent(this, value, value);
+
+        if (!stats.containsKey(statName)) {
+            addComponent(adjustableValue);
+        }
+
+        stats.put(statName, adjustableValue);
+        return this;
+    }
+
+    public AdjustableValueComponent getTrait(TraitName traitName) {
+        return traits.get(traitName);
+    }
+
+    public AdjustableValueComponent getStat(StatName statName) {
+        return stats.get(statName);
+    }
+
+    public void adjustTraitMaxBy(TraitName traitName, float delta) {
+        AdjustableValueComponent adjValue = traits.get(traitName);
+        if (adjValue != null) {
+            adjValue.adjustMaxValueBy(delta);
+        }
+    }
+
+    public void adjustTraitCurrentBy(TraitName traitName, float delta) {
+        AdjustableValueComponent adjValue = traits.get(traitName);
+        if (adjValue != null) {
+            adjValue.adjust(delta);
+        }
+    }
+
+    public void adjustStatMaxBy(StatName statName, float delta) {
+        AdjustableValueComponent adjValue = stats.get(statName);
+        if (adjValue != null) {
+            adjValue.adjustMaxValueBy(delta);
+        }
+    }
+
+    public void adjustStatCurrentBy(StatName statName, float delta) {
+        AdjustableValueComponent adjValue = stats.get(statName);
+        if (adjValue != null) {
+            adjValue.adjust(delta);
+        }
     }
 }

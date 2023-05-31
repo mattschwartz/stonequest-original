@@ -1,11 +1,11 @@
 package com.barelyconscious.worlds.testgamedata;
 
 import com.barelyconscious.worlds.engine.EventArgs;
+import com.barelyconscious.worlds.entity.TraitName;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.entity.Hero;
 import com.barelyconscious.worlds.entity.HeroClassType;
 import com.barelyconscious.worlds.game.Inventory;
-import com.barelyconscious.worlds.entity.Stats;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
 import com.barelyconscious.worlds.entity.components.Component;
@@ -39,17 +39,16 @@ public class TestHeroInitializer {
             3,
             14,
             16,
-            new Stats(new HashMap<>() {{
-                put(Stats.Attribute.STRENGTH, 13f);
-                put(Stats.Attribute.DEXTERITY, 9f);
-                put(Stats.Attribute.CONSTITUTION, 18f);
-                put(Stats.Attribute.INTELLIGENCE, 11f);
-                put(Stats.Attribute.WISDOM, 13f);
-                put(Stats.Attribute.CHARISMA, 11f);
-            }}),
             144f,
             new Inventory(28),
             HeroClassType.MACHINIST);
+
+        HERO_NICNOLE.addTrait(TraitName.STRENGTH, 13f)
+            .addTrait(TraitName.DEXTERITY, 9f)
+            .addTrait(TraitName.CONSTITUTION, 18f)
+            .addTrait(TraitName.INTELLIGENCE, 11f)
+            .addTrait(TraitName.WISDOM, 13f)
+            .addTrait(TraitName.CHARISMA, 11f);
         HERO_NICNOLE.addComponent(new MoveComponent(HERO_NICNOLE, 32f));
         HERO_NICNOLE.addComponent(new SpriteComponent(HERO_NICNOLE, Resources.getSprite(ResourceSprite.HERO_2), RenderLayer.ENTITIES));
         HERO_NICNOLE.addComponent(new BoxColliderComponent(HERO_NICNOLE, true, true, new Box(0, 32, 0, 32)));
@@ -61,17 +60,17 @@ public class TestHeroInitializer {
             38,
             24,
             24,
-            new Stats(new HashMap<>() {{
-                put(Stats.Attribute.STRENGTH, 10f);
-                put(Stats.Attribute.DEXTERITY, 15f);
-                put(Stats.Attribute.CONSTITUTION, 15f);
-                put(Stats.Attribute.INTELLIGENCE, 11f);
-                put(Stats.Attribute.WISDOM, 15f);
-                put(Stats.Attribute.CHARISMA, 11f);
-            }}),
             144f,
             new Inventory(28),
             HeroClassType.SHADOW_ASSASSIN);
+
+        HERO_JOHN.addTrait(TraitName.STRENGTH, 10f)
+            .addTrait(TraitName.DEXTERITY, 15f)
+            .addTrait(TraitName.CONSTITUTION, 15f)
+            .addTrait(TraitName.INTELLIGENCE, 11f)
+            .addTrait(TraitName.WISDOM, 15f)
+            .addTrait(TraitName.CHARISMA, 11f);
+
         HERO_JOHN.addComponent(new MoveComponent(HERO_JOHN, 32f));
         HERO_JOHN.addComponent(new SpriteComponent(HERO_JOHN, Resources.getSprite(ResourceSprite.HERO_3), RenderLayer.ENTITIES));
         HERO_JOHN.addComponent(new BoxColliderComponent(HERO_JOHN, true, true, new Box(0, 32, 0, 32)));
@@ -88,17 +87,16 @@ public class TestHeroInitializer {
             3,
             11,
             12,
-            new Stats(new HashMap<>() {{
-                put(Stats.Attribute.STRENGTH, 7f);
-                put(Stats.Attribute.DEXTERITY, 13f);
-                put(Stats.Attribute.CONSTITUTION, 12f);
-                put(Stats.Attribute.INTELLIGENCE, 7f);
-                put(Stats.Attribute.WISDOM, 14f);
-                put(Stats.Attribute.CHARISMA, 15f);
-            }}),
             144f,
             new Inventory(28),
             HeroClassType.PRIEST);
+
+        HERO_PAUL.addTrait(TraitName.STRENGTH, 7f)
+            .addTrait(TraitName.DEXTERITY, 13f)
+            .addTrait(TraitName.CONSTITUTION, 12f)
+            .addTrait(TraitName.INTELLIGENCE, 7f)
+            .addTrait(TraitName.WISDOM, 14f)
+            .addTrait(TraitName.CHARISMA, 15f);
 
         HERO_PAUL.getEquipment().setEquippedItem(GameItems.IRON_SHIELD.toItem());
         HERO_PAUL.getEquipment().setEquippedItem(GameItems.CLOTH_ROBE.toItem());

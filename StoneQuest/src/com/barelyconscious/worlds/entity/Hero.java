@@ -30,7 +30,6 @@ public class Hero extends EntityActor {
         final int entityLevel,
         final float currentPower,
         final float maxPower,
-        final Stats entityStats,
         final float currentExperience,
         final Inventory inventory,
         final HeroClassType heroClassType
@@ -40,8 +39,7 @@ public class Hero extends EntityActor {
             entityLevel,
             currentExperience,
             currentPower,
-            maxPower,
-            entityStats);
+            maxPower);
         this.inventory = inventory;
         this.heroClassType = heroClassType;
 
