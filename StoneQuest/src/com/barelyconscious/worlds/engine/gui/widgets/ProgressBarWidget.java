@@ -1,7 +1,7 @@
 package com.barelyconscious.worlds.engine.gui.widgets;
 
 import com.barelyconscious.worlds.engine.EventArgs;
-import com.barelyconscious.worlds.entity.components.AdjustableValueComponent;
+import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.Widget;
@@ -37,7 +37,7 @@ public class ProgressBarWidget extends Widget {
 
     public ProgressBarWidget(
         final LayoutData layout,
-        final AdjustableValueComponent stat,
+        final DynamicValueComponent stat,
         final WSprite progressStart,
         final WSprite progressMid,
         final WSprite progressPartialCap,

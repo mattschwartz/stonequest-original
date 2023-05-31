@@ -22,7 +22,7 @@ public class DropOnDeathComponent extends OnDeathComponent {
     }
 
     @Override
-    protected void onDeath(AdjustableValueComponent.StatValueChanged statValueChanged) {
+    protected void onDeath(DynamicValueComponent.DynamicValueChanged dynamicValueChanged) {
         onNextUpdate(e -> {
             if (isRemoveOnNextUpdate()) {
                 return null;

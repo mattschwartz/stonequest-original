@@ -16,14 +16,14 @@ public class EntityActor extends Actor {
     private final EntityLevelComponent entityLevelComponent;
     private final EquipmentComponent equipment;
 
-    private final Map<TraitName, AdjustableValueComponent> traits = new HashMap<>();
-    private final Map<StatName, AdjustableValueComponent> stats = new HashMap<>();
+    private final Map<TraitName, DynamicValueComponent> traits = new HashMap<>();
+    private final Map<StatName, DynamicValueComponent> stats = new HashMap<>();
 
-    public AdjustableValueComponent getPowerComponent() {
+    public DynamicValueComponent getPowerComponent() {
         return stats.get(StatName.POWER);
     }
 
-    public AdjustableValueComponent getHealthComponent() {
+    public DynamicValueComponent getHealthComponent() {
         return stats.get(StatName.HEALTH);
     }
 
@@ -63,7 +63,7 @@ public class EntityActor extends Actor {
     }
 
     public EntityActor addTrait(TraitName traitName, float value) {
-        var adjustableValue = new AdjustableValueComponent(this, value, value);
+        var adjustableValue = new DynamicValueComponent(this, value, value);
 
         if (!traits.containsKey(traitName)) {
             addComponent(adjustableValue);
@@ -74,7 +74,7 @@ public class EntityActor extends Actor {
     }
 
     public EntityActor addStat(StatName statName, float value) {
-        var adjustableValue = new AdjustableValueComponent(this, value, value);
+        var adjustableValue = new DynamicValueComponent(this, value, value);
 
         if (!stats.containsKey(statName)) {
             addComponent(adjustableValue);
@@ -84,37 +84,37 @@ public class EntityActor extends Actor {
         return this;
     }
 
-    public AdjustableValueComponent getTrait(TraitName traitName) {
+    public DynamicValueComponent getTrait(TraitName traitName) {
         return traits.get(traitName);
     }
 
-    public AdjustableValueComponent getStat(StatName statName) {
+    public DynamicValueComponent getStat(StatName statName) {
         return stats.get(statName);
     }
 
     public void adjustTraitMaxBy(TraitName traitName, float delta) {
-        AdjustableValueComponent adjValue = traits.get(traitName);
+        DynamicValueComponent adjValue = traits.get(traitName);
         if (adjValue != null) {
             adjValue.adjustMaxValueBy(delta);
         }
     }
 
     public void adjustTraitCurrentBy(TraitName traitName, float delta) {
-        AdjustableValueComponent adjValue = traits.get(traitName);
+        DynamicValueComponent adjValue = traits.get(traitName);
         if (adjValue != null) {
             adjValue.adjust(delta);
         }
     }
 
     public void adjustStatMaxBy(StatName statName, float delta) {
-        AdjustableValueComponent adjValue = stats.get(statName);
+        DynamicValueComponent adjValue = stats.get(statName);
         if (adjValue != null) {
             adjValue.adjustMaxValueBy(delta);
         }
     }
 
     public void adjustStatCurrentBy(StatName statName, float delta) {
-        AdjustableValueComponent adjValue = stats.get(statName);
+        DynamicValueComponent adjValue = stats.get(statName);
         if (adjValue != null) {
             adjValue.adjust(delta);
         }

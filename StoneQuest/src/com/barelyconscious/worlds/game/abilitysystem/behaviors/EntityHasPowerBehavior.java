@@ -1,9 +1,7 @@
 package com.barelyconscious.worlds.game.abilitysystem.behaviors;
 
-import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.entity.EntityActor;
-import com.barelyconscious.worlds.entity.components.AdjustableValueComponent;
-import com.barelyconscious.worlds.entity.components.PowerComponent;
+import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
 import com.barelyconscious.worlds.game.abilitysystem.Behavior;
 import com.barelyconscious.worlds.game.abilitysystem.BehaviorFeedback;
@@ -23,7 +21,7 @@ public class EntityHasPowerBehavior implements Behavior {
             return new BehaviorFeedback(ContinuationResult.STOP, context, "Caster is not an entity");
         }
 
-        AdjustableValueComponent power = caster.getPowerComponent();
+        DynamicValueComponent power = caster.getPowerComponent();
         if (power == null || power.getCurrentValue() < powerCost) {
             return new BehaviorFeedback(ContinuationResult.STOP, context, "Caster does not have enough power");
         }

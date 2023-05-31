@@ -3,8 +3,7 @@ package com.barelyconscious.worlds.game.item;
 import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.entity.StatName;
 import com.barelyconscious.worlds.entity.TraitName;
-import com.barelyconscious.worlds.entity.components.AdjustableValueComponent;
-import com.barelyconscious.worlds.entity.components.HealthComponent;
+import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.entity.components.ItemPropertyComponent;
 import lombok.Getter;
 
@@ -82,13 +81,13 @@ public abstract class ItemProperty {
 
         @Override
         public void applyProperty(EntityActor entity) {
-            AdjustableValueComponent healthComponent = entity.getHealthComponent();
+            DynamicValueComponent healthComponent = entity.getHealthComponent();
             healthComponent.adjustMaxValueBy(healthAmount);
         }
 
         @Override
         public void removeProperty(EntityActor entity) {
-            AdjustableValueComponent healthComponent = entity.getHealthComponent();
+            DynamicValueComponent healthComponent = entity.getHealthComponent();
             healthComponent.adjustMaxValueBy(-healthAmount);
         }
     }

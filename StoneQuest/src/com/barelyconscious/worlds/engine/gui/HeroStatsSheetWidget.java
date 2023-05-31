@@ -7,7 +7,7 @@ import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
 import com.barelyconscious.worlds.entity.Hero;
 import com.barelyconscious.worlds.entity.TraitName;
-import com.barelyconscious.worlds.entity.components.AdjustableValueComponent;
+import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.engine.graphics.FontContext;
 import com.barelyconscious.worlds.engine.input.InputLayer;
 import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
@@ -97,7 +97,7 @@ public class HeroStatsSheetWidget extends Widget {
         final TraitName trait,
         final int yOffs
     ) {
-        final AdjustableValueComponent avc = hero.getTrait(trait);
+        final DynamicValueComponent avc = hero.getTrait(trait);
         final String formatString = "{COLOR=255,255,255,255}{SIZE=20}{STYLE=CENTER}";
 
         MouseInputWidget miw = new MouseInputWidget(LayoutData.builder()

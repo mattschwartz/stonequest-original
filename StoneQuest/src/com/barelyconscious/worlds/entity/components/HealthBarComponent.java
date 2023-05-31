@@ -25,7 +25,7 @@ public class HealthBarComponent extends Component {
     /**
      * creates a standard health bar component that appears under entities.
      */
-    public HealthBarComponent(final Actor parent, final AdjustableValueComponent stat) {
+    public HealthBarComponent(final Actor parent, final DynamicValueComponent stat) {
         this(parent, 0, 34, 32, 4, stat, true);
     }
 
@@ -35,7 +35,7 @@ public class HealthBarComponent extends Component {
         final int yOffs,
         final int width,
         final int height,
-        final AdjustableValueComponent stat,
+        final DynamicValueComponent stat,
         final boolean hideWhenFull
     ) {
         super(parent);

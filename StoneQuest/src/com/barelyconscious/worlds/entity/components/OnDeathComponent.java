@@ -18,14 +18,14 @@ public abstract class OnDeathComponent extends Component {
         }
     }
 
-    private Void onHealthChanged(AdjustableValueComponent.StatValueChanged statValueChanged) {
-        if (statValueChanged.currentValue <= 0.01) {
+    private Void onHealthChanged(DynamicValueComponent.DynamicValueChanged dynamicValueChanged) {
+        if (dynamicValueChanged.currentValue <= 0.01) {
             isDead = true;
-            onDeath(statValueChanged);
+            onDeath(dynamicValueChanged);
         }
         return null;
     }
 
-    protected void onDeath(AdjustableValueComponent.StatValueChanged statValueChanged) {
+    protected void onDeath(DynamicValueComponent.DynamicValueChanged dynamicValueChanged) {
     }
 }

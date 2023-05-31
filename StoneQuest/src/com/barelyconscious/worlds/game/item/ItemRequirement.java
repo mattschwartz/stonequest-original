@@ -2,7 +2,7 @@ package com.barelyconscious.worlds.game.item;
 
 import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.entity.StatName;
-import com.barelyconscious.worlds.entity.components.AdjustableValueComponent;
+import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.entity.components.EntityLevelComponent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,7 +49,7 @@ public abstract class ItemRequirement {
 
         @Override
         public boolean meetsRequirement(EntityActor entity) {
-            AdjustableValueComponent adjStat = entity.getStat(stat);
+            DynamicValueComponent adjStat = entity.getStat(stat);
 
             if (useMaxStatValue) {
                 return adjStat.getMaxValue() >= requiredStatValue;

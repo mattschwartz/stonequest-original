@@ -4,11 +4,9 @@ import com.barelyconscious.worlds.engine.gui.widgets.FloatingTextWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.ProgressBarWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.SpriteWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
-import com.barelyconscious.worlds.entity.components.AdjustableValueComponent;
+import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.entity.Hero;
-import com.barelyconscious.worlds.entity.components.HealthComponent;
-import com.barelyconscious.worlds.entity.components.PowerComponent;
 import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.game.resources.WSprite;
@@ -161,7 +159,7 @@ public class HeroQuickbarPanel extends MouseInputWidget {
         private final TextFieldWidget healthWidget;
         private final TextFieldWidget powerWidget;
 
-        public OnHoverRenderWidget(final AdjustableValueComponent healthComponent, final AdjustableValueComponent powerComponent) {
+        public OnHoverRenderWidget(final DynamicValueComponent healthComponent, final DynamicValueComponent powerComponent) {
             super(LayoutData.DEFAULT);
 
             healthWidget = setupHealthWidget(healthComponent);
@@ -171,7 +169,7 @@ public class HeroQuickbarPanel extends MouseInputWidget {
             addWidget(powerWidget);
         }
 
-        private TextFieldWidget setupHealthWidget(final AdjustableValueComponent healthComponent) {
+        private TextFieldWidget setupHealthWidget(final DynamicValueComponent healthComponent) {
             final TextFieldWidget result = new TextFieldWidget(LayoutData.builder()
                 .anchor(new VDim(0, 0, 65, 30))
                 .size(new VDim(0, 0, 161, 13))
@@ -186,7 +184,7 @@ public class HeroQuickbarPanel extends MouseInputWidget {
             return result;
         }
 
-        private TextFieldWidget setupPowerWidget(final AdjustableValueComponent powerComponent) {
+        private TextFieldWidget setupPowerWidget(final DynamicValueComponent powerComponent) {
             final TextFieldWidget result = new TextFieldWidget(LayoutData.builder()
                 .anchor(new VDim(0, 0, 65, 44))
                 .size(new VDim(0, 0, 161, 8))

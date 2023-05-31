@@ -2,7 +2,7 @@ package com.barelyconscious.worlds.entity.components;
 
 import com.barelyconscious.worlds.entity.Actor;
 
-public class HealthComponent extends AdjustableValueComponent {
+public class HealthComponent extends DynamicValueComponent {
 
     private static final float CONS_HEALTH_MODIFIER = 0.6f;
     private static final float LEVEL_HEALTH_MODIFIER = 2.5f;
