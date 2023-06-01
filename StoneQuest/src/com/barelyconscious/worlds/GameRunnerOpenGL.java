@@ -1,26 +1,22 @@
 package com.barelyconscious.worlds;
 
-import com.barelyconscious.worlds.engine.graphics.Screen;
-import com.barelyconscious.worlds.engine.opengl.OpenGLScreen;
+import com.barelyconscious.worlds.engine.opengl.GLScreen;
 import org.lwjgl.Version;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.util.List;
 
-import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
-import static org.lwjgl.glfw.GLFW.*;
-
 public class GameRunnerOpenGL {
 
-    private final OpenGLScreen screen;
+    private final GLScreen screen;
 
-    public GameRunnerOpenGL(final OpenGLScreen screen) {
+    public GameRunnerOpenGL(final GLScreen screen) {
         this.screen = screen;
     }
 
     public static void main(String[] args) {
-        new GameRunnerOpenGL(new OpenGLScreen()).run();
+        new GameRunnerOpenGL(new GLScreen()).run();
     }
 
     public void run() {

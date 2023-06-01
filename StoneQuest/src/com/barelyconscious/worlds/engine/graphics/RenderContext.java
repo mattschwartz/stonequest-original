@@ -36,7 +36,7 @@ import java.util.Map;
  *  and determine how best to apply these draws to the canvas. Can help abstract away the underlying
  *  rendering implementation as well.
  */
-public class RenderContext {
+public class RenderContext implements IRenderContext {
 
     private static final Color DEBUG_COLOR = Color.red;
 
