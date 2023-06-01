@@ -6,6 +6,7 @@ import com.barelyconscious.worlds.entity.TraitName;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.entity.components.ItemPropertyComponent;
 import lombok.Getter;
+import lombok.NonNull;
 
 public abstract class ItemProperty {
 
@@ -50,12 +51,12 @@ public abstract class ItemProperty {
 
         @Override
         public void applyProperty(EntityActor entity) {
-            entity.adjustTraitMaxBy(trait, statValue);
+            entity.trait(trait).adjustMaxValueBy(statValue);
         }
 
         @Override
         public void removeProperty(EntityActor entity) {
-            entity.adjustTraitMaxBy(trait, -statValue);
+            entity.trait(trait).adjustMaxValueBy(-statValue);
         }
     }
 
@@ -107,12 +108,12 @@ public abstract class ItemProperty {
 
         @Override
         public void applyProperty(EntityActor entity) {
-            entity.adjustStatMaxBy(stat, statValue);
+            entity.stat(stat).adjustMaxValueBy(statValue);
         }
 
         @Override
-        public void removeProperty(EntityActor entity) {
-            entity.adjustStatMaxBy(stat, -statValue);
+        public void removeProperty(@NonNull EntityActor entity) {
+            entity.stat(stat).adjustMaxValueBy(-statValue);
         }
     }
 

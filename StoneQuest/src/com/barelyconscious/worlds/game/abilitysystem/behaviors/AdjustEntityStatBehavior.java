@@ -20,7 +20,7 @@ public class AdjustEntityStatBehavior implements Behavior {
 
         for (var target : context.getTargets()) {
             if (target instanceof EntityActor tar) {
-                tar.adjustStatMaxBy(stat, amount);
+                tar.stat(stat).adjustMaxValueBy(amount);
             }
         }
 

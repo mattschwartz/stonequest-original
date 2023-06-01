@@ -49,7 +49,7 @@ public abstract class ItemRequirement {
 
         @Override
         public boolean meetsRequirement(EntityActor entity) {
-            DynamicValueComponent adjStat = entity.getStat(stat);
+            DynamicValueComponent adjStat = entity.stat(stat).get();
 
             if (useMaxStatValue) {
                 return adjStat.getMaxValue() >= requiredStatValue;

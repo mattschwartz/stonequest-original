@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.testgamedata;
 
 import com.barelyconscious.worlds.entity.EntityActor;
+import com.barelyconscious.worlds.entity.EntityFactory;
 import com.barelyconscious.worlds.entity.ItemLootActor;
 import com.barelyconscious.worlds.entity.TraitName;
 import com.barelyconscious.worlds.game.World;
@@ -8,7 +9,6 @@ import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
 import com.barelyconscious.worlds.entity.components.DestroyOnDeathComponent;
 import com.barelyconscious.worlds.entity.components.DropOnDeathComponent;
 import com.barelyconscious.worlds.entity.components.HealthBarComponent;
-import com.barelyconscious.worlds.entity.components.HealthComponent;
 import com.barelyconscious.worlds.entity.components.SpriteComponent;
 import com.barelyconscious.worlds.game.hero.recipe.CraftingIngredient;
 import com.barelyconscious.worlds.game.hero.recipe.Recipe;
@@ -21,8 +21,6 @@ import com.barelyconscious.worlds.common.shape.Vector;
 import com.google.common.collect.Lists;
 import lombok.val;
 
-import java.util.HashMap;
-
 public final class TestWorldInitializer {
 
     public static void createWorld(final World world) {
@@ -34,14 +32,17 @@ public final class TestWorldInitializer {
     }
 
     private static void createEntities(final World world) {
-        val aRat = new EntityActor(
-            "Sewer Rat",
-            new Vector(264f, 208f),
-            1, 0, 0, 0)
-            .addTrait(TraitName.CONSTITUTION, 10f);
+
+        val aRat = EntityFactory.anEntity()
+            .called("Sewer Rat")
+            .spawnAtLocation(new Vector(264f, 208f))
+            .withCreatureLevel(1, 0, 0)
+            .withTrait(TraitName.CONSTITUTION, 10f)
+            .build();
+
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));
         aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprite.SEWER_RAT)));
-        aRat.addComponent(new HealthBarComponent(aRat, aRat.getComponent(HealthComponent.class)));
+        aRat.addComponent(new HealthBarComponent(aRat, aRat.getHealthComponent()));
         aRat.addComponent(new DestroyOnDeathComponent(aRat, 0));
 
         aRat.addComponent(new DropOnDeathComponent(aRat, GameItems.WILLOW_BARK.toItem()));

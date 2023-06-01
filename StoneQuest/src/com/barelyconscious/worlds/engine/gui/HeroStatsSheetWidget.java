@@ -97,7 +97,7 @@ public class HeroStatsSheetWidget extends Widget {
         final TraitName trait,
         final int yOffs
     ) {
-        final DynamicValueComponent avc = hero.getTrait(trait);
+        final DynamicValueComponent avc = hero.trait(trait).get();
         final String formatString = "{COLOR=255,255,255,255}{SIZE=20}{STYLE=CENTER}";
 
         MouseInputWidget miw = new MouseInputWidget(LayoutData.builder()

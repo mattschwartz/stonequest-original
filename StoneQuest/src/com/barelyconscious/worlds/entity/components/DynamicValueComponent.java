@@ -39,7 +39,7 @@ public class DynamicValueComponent extends Component {
         this.maxValue = maxValue;
     }
 
-    public void updateValues(final float newCurrentValue, final float newMaxValue) {
+    public void setValue(final float newCurrentValue, final float newMaxValue) {
         this.currentValue = newCurrentValue;
         this.maxValue = newMaxValue;
     }

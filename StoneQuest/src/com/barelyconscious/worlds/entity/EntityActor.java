@@ -1,8 +1,12 @@
 package com.barelyconscious.worlds.entity;
 
+import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.game.EntityStatsCalculator;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,30 +17,23 @@ import java.util.Map;
 @Getter
 public class EntityActor extends Actor {
 
-    private final EntityLevelComponent entityLevelComponent;
-    private final EquipmentComponent equipment;
-
-    private final Map<TraitName, DynamicValueComponent> traits = new HashMap<>();
-    private final Map<StatName, DynamicValueComponent> stats = new HashMap<>();
-
-    public DynamicValueComponent getPowerComponent() {
-        return stats.get(StatName.POWER);
-    }
-
-    public DynamicValueComponent getHealthComponent() {
-        return stats.get(StatName.HEALTH);
-    }
+    protected final Map<TraitName, DynamicValueComponent> traits = new HashMap<>();
+    protected final Map<StatName, DynamicValueComponent> stats = new HashMap<>();
 
     public EntityActor(
         final String name,
-        final Vector transform,
-        final int entityLevel,
-        final float currentExperience,
-        final float currentPower,
-        final float maxPower
+        final Vector transform
     ) {
-        this(name, transform, entityLevel, currentExperience,
-            currentPower, maxPower, 0);
+        super(name, transform);
+        addComponent(new EquipmentComponent(this));
+    }
+
+    public EntityLevelComponent getEntityLevelComponent() {
+        return getComponent(EntityLevelComponent.class);
+    }
+
+    public EquipmentComponent getEquipment() {
+        return getComponent(EquipmentComponent.class);
     }
 
     public EntityActor(
@@ -49,74 +46,81 @@ public class EntityActor extends Actor {
         final int difficultyClass
     ) {
         super(name, transform);
-        this.equipment = new EquipmentComponent(this);
+        addComponent(new EquipmentComponent(this));
 
-        var healthComponent = new HealthComponent(this, entityLevel, difficultyClass);
+        var healthComponent = new DynamicValueComponent(this, entityLevel, difficultyClass);
         addComponent(healthComponent);
         stats.put(StatName.HEALTH, healthComponent);
 
-        var powerComponent = new PowerComponent(this, currentPower, maxPower);
+        var powerComponent = new DynamicValueComponent(this, currentPower, maxPower);
         addComponent(powerComponent);
         stats.put(StatName.POWER, powerComponent);
 
-        addComponent(entityLevelComponent = new EntityLevelComponent(this, entityLevel, currentExperience));
+        addComponent(new EntityLevelComponent(this, entityLevel, currentExperience));
     }
 
-    public EntityActor addTrait(TraitName traitName, float value) {
-        var adjustableValue = new DynamicValueComponent(this, value, value);
+    @AllArgsConstructor
+    public final class TraitAccessor {
+        private final TraitName name;
 
-        if (!traits.containsKey(traitName)) {
-            addComponent(adjustableValue);
+        public DynamicValueComponent get() {
+            return traits.get(name);
         }
 
-        traits.put(traitName, adjustableValue);
-        return this;
-    }
-
-    public EntityActor addStat(StatName statName, float value) {
-        var adjustableValue = new DynamicValueComponent(this, value, value);
-
-        if (!stats.containsKey(statName)) {
-            addComponent(adjustableValue);
+        public TraitAccessor set(float currentValue, float maxValue) {
+            traits.get(name).setValue(currentValue, maxValue);
+            return this;
         }
 
-        stats.put(statName, adjustableValue);
-        return this;
-    }
-
-    public DynamicValueComponent getTrait(TraitName traitName) {
-        return traits.get(traitName);
-    }
-
-    public DynamicValueComponent getStat(StatName statName) {
-        return stats.get(statName);
-    }
-
-    public void adjustTraitMaxBy(TraitName traitName, float delta) {
-        DynamicValueComponent adjValue = traits.get(traitName);
-        if (adjValue != null) {
-            adjValue.adjustMaxValueBy(delta);
+        public TraitAccessor adjustMaxValueBy(float maxValueDelta) {
+            traits.get(name).adjustMaxValueBy(maxValueDelta);
+            return this;
         }
     }
 
-    public void adjustTraitCurrentBy(TraitName traitName, float delta) {
-        DynamicValueComponent adjValue = traits.get(traitName);
-        if (adjValue != null) {
-            adjValue.adjust(delta);
+    @AllArgsConstructor
+    public final class StatAccessor {
+        private final StatName name;
+
+        public DynamicValueComponent get() {
+            return stats.get(name);
+        }
+
+        public StatAccessor set(float currentValue, float maxValue) {
+            stats.get(name).setValue(currentValue, maxValue);
+            return this;
+        }
+
+        public StatAccessor adjustMaxValueBy(float maxValueDelta) {
+            stats.get(name).adjustMaxValueBy(maxValueDelta);
+            return this;
         }
     }
 
-    public void adjustStatMaxBy(StatName statName, float delta) {
-        DynamicValueComponent adjValue = stats.get(statName);
-        if (adjValue != null) {
-            adjValue.adjustMaxValueBy(delta);
+    public TraitAccessor trait(TraitName name) {
+        if (!traits.containsKey(name)) {
+            var dvc = new DynamicValueComponent(this, 0, 0);
+            addComponent(dvc);
+            traits.put(name, dvc);
         }
+
+        return new TraitAccessor(name);
     }
 
-    public void adjustStatCurrentBy(StatName statName, float delta) {
-        DynamicValueComponent adjValue = stats.get(statName);
-        if (adjValue != null) {
-            adjValue.adjust(delta);
+    public StatAccessor stat(StatName name) {
+        if (!stats.containsKey(name)) {
+            var dvc = new DynamicValueComponent(this, 0, 0);
+            addComponent(dvc);
+            stats.put(name, dvc);
         }
+        return new StatAccessor(name);
+    }
+
+    public DynamicValueComponent getPowerComponent() {
+        return stats.get(StatName.POWER);
+    }
+
+    public DynamicValueComponent getHealthComponent() {
+        return stats.get(StatName.HEALTH);
     }
 }

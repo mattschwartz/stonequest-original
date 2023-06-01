@@ -10,15 +10,19 @@ public abstract class OnDeathComponent extends Component {
     @Getter
     private boolean isDead = false;
 
-    public OnDeathComponent(Actor parent, @Nullable HealthComponent health) {
+    public OnDeathComponent(Actor parent) {
+        this(parent, null);
+    }
+
+    public OnDeathComponent(Actor parent, @Nullable DynamicValueComponent healthComponent) {
         super(parent);
 
-        if (health != null) {
-            health.delegateOnValueChanged.bindDelegate(this::onHealthChanged);
+        if (healthComponent != null) {
+            healthComponent.delegateOnValueChanged.bindDelegate(this::onHealthChanged);
         }
     }
 
-    private Void onHealthChanged(DynamicValueComponent.DynamicValueChanged dynamicValueChanged) {
+    protected Void onHealthChanged(DynamicValueComponent.DynamicValueChanged dynamicValueChanged) {
         if (dynamicValueChanged.currentValue <= 0.01) {
             isDead = true;
             onDeath(dynamicValueChanged);
