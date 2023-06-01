@@ -118,14 +118,14 @@ public final class CanvasScreen implements Screen {
                 try {
                     g = (Graphics2D) bufferStrategy
                         .getDrawGraphics();
-                    g.setColor(Color.white);
+                    g.setColor(Color.BLACK);
                     g.fillRect(0, 0, getWidth(), getHeight());
                     g.drawImage(
                         renderContext.getRenderedImage(),
                         0, 0,
                         getWidth(), getHeight(),
                         null);
-                    g.setColor(Color.WHITE);
+                    g.setColor(Color.BLACK);
                     g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
                 } finally {
                     if (g != null) {
