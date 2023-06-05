@@ -10,15 +10,15 @@ import lombok.Getter;
  * Component that stores a numerical value that can be adjusted. Keeps track of a current and max value and provides
  * a delegate for callbacks whenever the value changes.
  */
-public class AdjustableValueComponent extends Component {
+public class DynamicValueComponent extends Component {
 
     /**
      * Fired whenever the value changes.
      */
-    public final Delegate<StatValueChanged> delegateOnValueChanged = new Delegate<>();
+    public final Delegate<DynamicValueChanged> delegateOnValueChanged = new Delegate<>();
 
     @AllArgsConstructor
-    public static final class StatValueChanged {
+    public static final class DynamicValueChanged {
         public final float delta;
         public final float currentValue;
         public final float maxValue;
@@ -29,17 +29,17 @@ public class AdjustableValueComponent extends Component {
     @Getter
     private float maxValue;
 
-    public AdjustableValueComponent(final Actor parent) {
+    public DynamicValueComponent(final Actor parent) {
         super(parent);
     }
 
-    public AdjustableValueComponent(Actor parent, final float currentValue, final float maxValue) {
+    public DynamicValueComponent(Actor parent, final float currentValue, final float maxValue) {
         super(parent);
         this.currentValue = currentValue;
         this.maxValue = maxValue;
     }
 
-    public void updateValues(final float newCurrentValue, final float newMaxValue) {
+    public void setValue(final float newCurrentValue, final float newMaxValue) {
         this.currentValue = newCurrentValue;
         this.maxValue = newMaxValue;
     }
@@ -60,7 +60,7 @@ public class AdjustableValueComponent extends Component {
         }
         this.maxValue = proposedNewMaxValue;
 
-        delegateOnValueChanged.call(new StatValueChanged(
+        delegateOnValueChanged.call(new DynamicValueChanged(
             maxValueDelta,
             previousCurrentValue - currentValue,
             this.maxValue));
@@ -68,6 +68,6 @@ public class AdjustableValueComponent extends Component {
 
     public void adjust(final float delta) {
         currentValue = UMath.clampf(currentValue + delta, 0, maxValue);
-        delegateOnValueChanged.call(new StatValueChanged(delta, currentValue, maxValue));
+        delegateOnValueChanged.call(new DynamicValueChanged(delta, currentValue, maxValue));
     }
 }

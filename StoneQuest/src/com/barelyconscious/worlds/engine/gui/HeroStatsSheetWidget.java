@@ -6,8 +6,8 @@ import com.barelyconscious.worlds.engine.gui.widgets.SpriteWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
 import com.barelyconscious.worlds.entity.Hero;
-import com.barelyconscious.worlds.entity.Stats;
-import com.barelyconscious.worlds.entity.components.AdjustableValueComponent;
+import com.barelyconscious.worlds.entity.TraitName;
+import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.engine.graphics.FontContext;
 import com.barelyconscious.worlds.engine.input.InputLayer;
 import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
@@ -84,20 +84,20 @@ public class HeroStatsSheetWidget extends Widget {
     }
 
     private void setupStatsWidgets(SpriteWidget backdrop) {
-        createAndBindStatWidget(backdrop, Stats.Attribute.STRENGTH, 1);
-        createAndBindStatWidget(backdrop, Stats.Attribute.DEXTERITY, 33);
-        createAndBindStatWidget(backdrop, Stats.Attribute.CONSTITUTION, 66);
-        createAndBindStatWidget(backdrop, Stats.Attribute.INTELLIGENCE, 101);
-        createAndBindStatWidget(backdrop, Stats.Attribute.WISDOM, 134);
-        createAndBindStatWidget(backdrop, Stats.Attribute.CHARISMA, 167);
+        createAndBindStatWidget(backdrop, TraitName.STRENGTH, 1);
+        createAndBindStatWidget(backdrop, TraitName.DEXTERITY, 33);
+        createAndBindStatWidget(backdrop, TraitName.CONSTITUTION, 66);
+        createAndBindStatWidget(backdrop, TraitName.INTELLIGENCE, 101);
+        createAndBindStatWidget(backdrop, TraitName.WISDOM, 134);
+        createAndBindStatWidget(backdrop, TraitName.CHARISMA, 167);
     }
 
     private void createAndBindStatWidget(
         final SpriteWidget backdrop,
-        final Stats.Attribute attribute,
+        final TraitName trait,
         final int yOffs
     ) {
-        final AdjustableValueComponent avc = hero.getEntityAttributeComponent().getStat(attribute);
+        final DynamicValueComponent avc = hero.trait(trait).get();
         final String formatString = "{COLOR=255,255,255,255}{SIZE=20}{STYLE=CENTER}";
 
         MouseInputWidget miw = new MouseInputWidget(LayoutData.builder()
@@ -120,8 +120,8 @@ public class HeroStatsSheetWidget extends Widget {
         TooltipWidget ttw = new TooltipWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 4, -4))
             .build(),
-            attribute.name,
-            attribute.description,
+            trait.name,
+            trait.description,
             null, null);
         statWidget.addWidget(ttw);
 

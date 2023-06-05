@@ -1,12 +1,12 @@
 package com.barelyconscious.worlds.game.item;
 
 import com.barelyconscious.worlds.entity.EntityActor;
-import com.barelyconscious.worlds.entity.Stats;
-import com.barelyconscious.worlds.entity.components.AdjustableValueComponent;
-import com.barelyconscious.worlds.entity.components.HealthComponent;
+import com.barelyconscious.worlds.entity.StatName;
+import com.barelyconscious.worlds.entity.TraitName;
+import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.entity.components.ItemPropertyComponent;
-import com.barelyconscious.worlds.entity.components.AttributeComponent;
 import lombok.Getter;
+import lombok.NonNull;
 
 public abstract class ItemProperty {
 
@@ -28,14 +28,14 @@ public abstract class ItemProperty {
     public abstract void removeProperty(final EntityActor entity);
 
     @Getter
-    public static class ItemAttributeProperty extends ItemProperty {
+    public static class TraitItemProperty extends ItemProperty {
 
-        private final Stats.Attribute attribute;
+        private final TraitName trait;
         private final float statValue;
         private final String propertyDescription;
 
-        public ItemAttributeProperty(Stats.Attribute attribute, float statValue) {
-            this.attribute = attribute;
+        public TraitItemProperty(TraitName trait, float statValue) {
+            this.trait = trait;
             this.statValue = statValue;
 
             final StringBuilder sb = new StringBuilder();
@@ -45,22 +45,18 @@ public abstract class ItemProperty {
                 sb.append("+");
             }
 
-            sb.append(statValue).append(" ").append(attribute.name);
+            sb.append(statValue).append(" ").append(trait.name);
             propertyDescription = sb.toString();
         }
 
         @Override
         public void applyProperty(EntityActor entity) {
-            AttributeComponent entityAttributeComponent = entity.getEntityAttributeComponent();
-            AdjustableValueComponent stat = entityAttributeComponent.getStat(attribute);
-            stat.adjustMaxValueBy(statValue);
+            entity.trait(trait).adjustMaxValueBy(statValue);
         }
 
         @Override
         public void removeProperty(EntityActor entity) {
-            AttributeComponent entityAttributeComponent = entity.getEntityAttributeComponent();
-            AdjustableValueComponent stat = entityAttributeComponent.getStat(attribute);
-            stat.adjustMaxValueBy(-statValue);
+            entity.trait(trait).adjustMaxValueBy(-statValue);
         }
     }
 
@@ -86,13 +82,13 @@ public abstract class ItemProperty {
 
         @Override
         public void applyProperty(EntityActor entity) {
-            HealthComponent healthComponent = entity.getHealthComponent();
+            DynamicValueComponent healthComponent = entity.getHealthComponent();
             healthComponent.adjustMaxValueBy(healthAmount);
         }
 
         @Override
         public void removeProperty(EntityActor entity) {
-            HealthComponent healthComponent = entity.getHealthComponent();
+            DynamicValueComponent healthComponent = entity.getHealthComponent();
             healthComponent.adjustMaxValueBy(-healthAmount);
         }
     }
@@ -100,28 +96,24 @@ public abstract class ItemProperty {
     @Getter
     public static class ItemStatProperty extends ItemProperty {
 
-        private final Stats.Stat attribute;
-        private final float attributeValue;
+        private final StatName stat;
+        private final float statValue;
         private final String propertyDescription;
 
-        public ItemStatProperty(Stats.Stat attribute, float attributeValue) {
-            this.attribute = attribute;
-            this.attributeValue = attributeValue;
-            this.propertyDescription = attribute.description;
+        public ItemStatProperty(StatName stat, float statValue) {
+            this.stat = stat;
+            this.statValue = statValue;
+            this.propertyDescription = stat.description;
         }
 
         @Override
         public void applyProperty(EntityActor entity) {
-//            AttributeComponent entityAttributeComponent = entity.getEntityAttributeComponent();
-//            AdjustableValueComponent attribute = entityAttributeComponent.getAttribute(attribute);
-//            attribute.adjustMaxValueBy(attributeValue);
+            entity.stat(stat).adjustMaxValueBy(statValue);
         }
 
         @Override
-        public void removeProperty(EntityActor entity) {
-//            AttributeComponent entityAttributeComponent = entity.getEntityAttributeComponent();
-//            AdjustableValueComponent attribute = entityAttributeComponent.getAttribute(attribute);
-//            attribute.adjustMaxValueBy(-attributeValue);
+        public void removeProperty(@NonNull EntityActor entity) {
+            entity.stat(stat).adjustMaxValueBy(-statValue);
         }
     }
 

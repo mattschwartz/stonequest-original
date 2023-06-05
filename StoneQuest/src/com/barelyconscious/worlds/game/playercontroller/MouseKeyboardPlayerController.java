@@ -2,16 +2,11 @@ package com.barelyconscious.worlds.game.playercontroller;
 
 import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.entity.Actor;
+import com.barelyconscious.worlds.entity.EntityActor;
+import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.entity.Hero;
 import com.barelyconscious.worlds.game.Inventory;
-import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
-import com.barelyconscious.worlds.entity.components.Component;
-import com.barelyconscious.worlds.entity.components.HealthComponent;
-import com.barelyconscious.worlds.entity.components.JobActionComponent;
-import com.barelyconscious.worlds.entity.components.LifetimeComponent;
-import com.barelyconscious.worlds.entity.components.MoveComponent;
-import com.barelyconscious.worlds.entity.components.SpriteComponent;
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.input.KeyInputHandler;
 import com.barelyconscious.worlds.engine.input.MouseInputHandler;
@@ -42,6 +37,8 @@ import java.awt.event.MouseEvent;
 public class MouseKeyboardPlayerController extends PlayerController {
 
     public final Delegate<Boolean> delegateOnQuitRequested = new Delegate<>();
+
+    public static final Delegate<Object> delegateOnInterruptRequested = new Delegate<>();
 
     public MouseKeyboardPlayerController(
         @NonNull final Inventory inventory,
@@ -106,6 +103,10 @@ public class MouseKeyboardPlayerController extends PlayerController {
             }
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            log.info("Requesting interrupt");
+            delegateOnInterruptRequested.call(true);
+        }
+        if (keyEvent.getKeyChar() == KeyEvent.VK_Q) {
             System.out.println("Requesting stop");
             delegateOnQuitRequested.call(true);
         }
@@ -198,12 +199,12 @@ public class MouseKeyboardPlayerController extends PlayerController {
                         return null;
                     }
 
-                    final Actor hit = col.hit;
-
-                    final HealthComponent health = hit.getComponent(HealthComponent.class);
-                    if (health != null && health.isEnabled()) {
-                        health.adjust(UMath.RANDOM.nextFloat() * -3);
-                        aBullet.destroy();
+                    if (col.hit instanceof EntityActor hit) {
+                        final DynamicValueComponent health = hit.getHealthComponent();
+                        if (health != null && health.isEnabled()) {
+                            health.adjust(UMath.RANDOM.nextFloat() * -3);
+                            aBullet.destroy();
+                        }
                     }
 
                     return null;

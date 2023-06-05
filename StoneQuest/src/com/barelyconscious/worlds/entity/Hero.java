@@ -27,21 +27,10 @@ public class Hero extends EntityActor {
     public Hero(
         final String name,
         final Vector transform,
-        final int entityLevel,
-        final float currentPower,
-        final float maxPower,
-        final Stats entityStats,
-        final float currentExperience,
         final Inventory inventory,
         final HeroClassType heroClassType
     ) {
-        super(name,
-            transform,
-            entityLevel,
-            currentExperience,
-            currentPower,
-            maxPower,
-            entityStats);
+        super(name, transform);
         this.inventory = inventory;
         this.heroClassType = heroClassType;
 
