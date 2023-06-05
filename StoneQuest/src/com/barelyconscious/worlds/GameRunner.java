@@ -26,15 +26,18 @@ import java.awt.event.WindowEvent;
 public final class GameRunner {
 
     private static void testDynamoDB() {
-        var injector = Guice.createInjector(new DatabaseModule());
+        final String propertiesFilePath = "Worlds.properties";
+        var injector = Guice.createInjector(new DatabaseModule(propertiesFilePath));
         var ddb = injector.getInstance(DynamoDbClient.class);
 
-        ddb.createTable(CreateTableRequest.builder()
+        try {
+
+            ddb.createTable(CreateTableRequest.builder()
                 .tableName(RecipeItem.TABLE_NAME)
                 .keySchema(
                     KeySchemaElement.builder()
-                    .attributeName(RecipeItem.HK_RECIPE_ID)
-                    .keyType(KeyType.HASH).build(),
+                        .attributeName(RecipeItem.HK_RECIPE_ID)
+                        .keyType(KeyType.HASH).build(),
                     KeySchemaElement.builder()
                         .attributeName(RecipeItem.RK_RECIPE_TYPE)
                         .keyType(KeyType.RANGE)
@@ -49,7 +52,10 @@ public final class GameRunner {
                         .attributeType("S")
                         .build())
                 .billingMode(BillingMode.PAY_PER_REQUEST)
-            .build());
+                .build());
+        } catch (ResourceInUseException ex) {
+            System.out.println("Table already exists");
+        }
     }
 
     public static void main(final String[] args) {
