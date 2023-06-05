@@ -26,7 +26,7 @@ sourceSets {
 applicationDefaultJvmArgs = ["-Xms512m", "-Xmx1024m", "-XstartOnFirstThread"]
 
 application {
-    mainClassName = 'com.barelyconscious.worlds.GameRunnerOpenGL'
+    mainClassName = 'com.barelyconscious.worlds.GameRunner'
 }
 
 jar {
@@ -34,13 +34,14 @@ jar {
         attributes 'Main-Class': 'com.barelyconscious.worlds.GameRunner'
     }
 
+    zip64 true
 
-//    from {
-//        configurations.runtimeClasspath.collect {
-//            it.isDirectory() ? it : zipTree(it)
-//        }
-//    }
-//    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
 }
 
