@@ -29,6 +29,21 @@ application {
     mainClassName = 'com.barelyconscious.worlds.GameRunnerOpenGL'
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.barelyconscious.worlds.GameRunner'
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+}
+
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
@@ -51,10 +66,14 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
 
+    // https://mvnrepository.com/artifact/software.amazon.awssdk/dynamodb
+    implementation group: 'software.amazon.awssdk', name: 'dynamodb', version: '2.20.78'
+
+
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.12.481'
 
     // Begin implementation of LWJGL
-
-
     implementation files('/Users/matt/lwjgl')
 
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")

@@ -38,6 +38,8 @@ public class MouseKeyboardPlayerController extends PlayerController {
 
     public final Delegate<Boolean> delegateOnQuitRequested = new Delegate<>();
 
+    public static final Delegate<Object> delegateOnInterruptRequested = new Delegate<>();
+
     public MouseKeyboardPlayerController(
         @NonNull final Inventory inventory,
         final MouseInputHandler mouseHandler,
@@ -101,6 +103,10 @@ public class MouseKeyboardPlayerController extends PlayerController {
             }
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            log.info("Requesting interrupt");
+            delegateOnInterruptRequested.call(true);
+        }
+        if (keyEvent.getKeyChar() == KeyEvent.VK_Q) {
             System.out.println("Requesting stop");
             delegateOnQuitRequested.call(true);
         }

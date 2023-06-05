@@ -15,6 +15,11 @@ public final class Delegate<TArg0> {
         boundDelegates.add(callback);
     }
 
+    // todo idk if this works
+    public void freeDelegate(final Function<TArg0, Void> callback) {
+        boundDelegates.remove(callback);
+    }
+
     public void call(final TArg0 arg0) {
         boundDelegates.forEach(t -> {
             try {

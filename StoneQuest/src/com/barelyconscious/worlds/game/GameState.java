@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.game;
 
 import com.barelyconscious.worlds.entity.Hero;
+import com.barelyconscious.worlds.game.abilitysystem.Ability;
 import com.barelyconscious.worlds.game.hero.skill.CitizenSkill;
 import com.barelyconscious.worlds.game.hero.skill.FactionSkill;
 import com.barelyconscious.worlds.game.hero.skill.HeroSkill;
@@ -23,17 +24,28 @@ public class GameState {
 
         public GameStateData(){}
 
-        private Hero heroSlot1;
-        private Hero heroSlot2;
-        private Hero heroSlot3;
-
-        private Inventory backpack;
-        private Inventory resourcesInventory;
-        private Inventory toolsInventory;
+        private HeroState heroSlot1;
+        private HeroState heroSlot2;
+        private HeroState heroSlot3;
 
         private final Set<HeroSkill> heroSkills = new HashSet<>();
         private final Set<CitizenSkill> citizenSkills = new HashSet<>();
         private final Set<FactionSkill> factionSkills = new HashSet<>();
+    }
+
+    /**
+     * To answer questions about the hero state:
+     * 1. What are the heroes stats?
+     * 2. What are they wearing?
+     * 3. What are they carrying?
+     * 4. What are they casting?
+     */
+    public record HeroState(
+        Ability currentAbility,
+        Inventory backpack,
+        Inventory resourcesInventory,
+        Inventory toolsInventory
+    ) {
     }
 
     public GameState(final GameInstance gameInstance) {
