@@ -25,43 +25,7 @@ import java.awt.event.WindowEvent;
 
 public final class GameRunner {
 
-    private static void testDynamoDB() {
-        final String propertiesFilePath = "Worlds.properties";
-        var injector = Guice.createInjector(new DatabaseModule(propertiesFilePath));
-        var ddb = injector.getInstance(DynamoDbClient.class);
-
-        try {
-
-            ddb.createTable(CreateTableRequest.builder()
-                .tableName(RecipeItem.TABLE_NAME)
-                .keySchema(
-                    KeySchemaElement.builder()
-                        .attributeName(RecipeItem.HK_RECIPE_ID)
-                        .keyType(KeyType.HASH).build(),
-                    KeySchemaElement.builder()
-                        .attributeName(RecipeItem.RK_RECIPE_TYPE)
-                        .keyType(KeyType.RANGE)
-                        .build())
-                .attributeDefinitions(
-                    AttributeDefinition.builder()
-                        .attributeName(RecipeItem.HK_RECIPE_ID)
-                        .attributeType("S")
-                        .build(),
-                    AttributeDefinition.builder()
-                        .attributeName(RecipeItem.RK_RECIPE_TYPE)
-                        .attributeType("S")
-                        .build())
-                .billingMode(BillingMode.PAY_PER_REQUEST)
-                .build());
-        } catch (ResourceInUseException ex) {
-            System.out.println("Table already exists");
-        }
-    }
-
     public static void main(final String[] args) {
-
-        testDynamoDB();
-
         SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.ITEMS, "sprites/items_spritesheet.json", "sprites/items_spritesheet.png");
         SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.TEXTURE, "tiles/texture_spritesheet.json", "tiles/texture_spritesheet.png");
 

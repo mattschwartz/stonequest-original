@@ -8,6 +8,11 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import org.apache.commons.lang3.StringUtils;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
@@ -48,6 +53,14 @@ public class DatabaseModule extends AbstractModule {
 
     @Provides
     @Singleton
+    DynamoDbEnhancedClient providesDynamoDbEnhancedClient(DynamoDbClient ddb) {
+        return DynamoDbEnhancedClient.builder()
+            .dynamoDbClient(ddb)
+            .build();
+    }
+
+    @Provides
+    @Singleton
     DynamoDbClient providesAmazonDynamoDB(
         @Named("dynamodb.useLocal") boolean useLocal,
         @Named("dynamodb.endpoint") String endpoint,
@@ -59,9 +72,21 @@ public class DatabaseModule extends AbstractModule {
                 .endpointOverride(
                     URI.create(endpoint)
                 )
+                .credentialsProvider(providesAwsCredentialsProvider())
                 .build();
         } else {
             return null;
         }
+    }
+
+    AwsCredentialsProvider providesAwsCredentialsProvider() {
+        String accessKey = "YOUR_ACCESS_KEY";
+        String secretKey = "YOUR_SECRET_KEY";
+
+        // Create AwsCredentials object with dummy values
+        AwsCredentials credentials = AwsBasicCredentials.create(accessKey, secretKey);
+
+        // Create AwsCredentialsProvider using StaticCredentialsProvider
+        return StaticCredentialsProvider.create(credentials);
     }
 }
