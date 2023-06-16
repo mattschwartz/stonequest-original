@@ -1,11 +1,14 @@
 package com.barelyconscious.worlds.testgamedata;
 
+import com.barelyconscious.worlds.common.UFileLoader;
 import com.barelyconscious.worlds.data.dynamodb.model.RecipeItem;
+import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.module.DatabaseModule;
+import com.google.gson.Gson;
 import com.google.inject.Guice;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -32,22 +35,27 @@ public final class BuildTestDatabase {
 
         table.putItem(newItem);
 
-        log.info("yo dog i created item...");
-
-        System.out.println("created item...");
+        log.info("Created item...");
 
         var existingItem = table.getItem(t -> t.key(Key.builder()
             .partitionValue("test")
             .sortValue("test")
             .build()));
 
-        System.out.println("Found item: " + existingItem);
+        assert existingItem != null;
 
-
-        createItems(ddb);
+        createItems(table);
     }
 
-    private static void createItems(DynamoDbClient ddb) {
+    private static void createItems(DynamoDbTable<RecipeItem> table) {
+        final var gson = new Gson();
+        final String dbjson = UFileLoader.readFileContents("data/items.db.json");
+
+        Item[] items = gson.fromJson(dbjson, Item[].class);
+
+        for (Item item : items) {
+
+        }
     }
 
     private static void createTableIfNotExists(DynamoDbClient ddb) {

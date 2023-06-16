@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+
+class item {
+    id
+    level 
+    name
+    description
+}
+
+class recipe_item {
+    recipe_id
+    item_id
+}
+
+class recipe {
+    id 
+    level 
+    name 
+    description 
+}
+
+item::id *-- recipe_item::item_id
+recipe::id *-- recipe_item::recipe_id
+
+@enduml

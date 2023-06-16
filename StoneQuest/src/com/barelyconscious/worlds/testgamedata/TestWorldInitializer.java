@@ -1,6 +1,5 @@
 package com.barelyconscious.worlds.testgamedata;
 
-import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.entity.EntityFactory;
 import com.barelyconscious.worlds.entity.ItemLootActor;
 import com.barelyconscious.worlds.entity.TraitName;
@@ -35,7 +34,7 @@ public final class TestWorldInitializer {
 
         val aRat = EntityFactory.anEntity()
             .called("Sewer Rat")
-            .spawnAtLocation(new Vector(264f, 208f))
+            .locatedAt(new Vector(264f, 208f))
             .withCreatureLevel(1, 0, 0)
             .withTrait(TraitName.CONSTITUTION, 10f)
             .build();

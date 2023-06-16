@@ -33,7 +33,7 @@ public class EntityFactory {
             return this;
         }
 
-        public EntityActorBuilder spawnAtLocation(Vector transform) {
+        public EntityActorBuilder locatedAt(Vector transform) {
             this.transform = transform;
             return this;
         }

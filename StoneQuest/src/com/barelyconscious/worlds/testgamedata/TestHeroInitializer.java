@@ -30,7 +30,7 @@ public class TestHeroInitializer {
     static {
         HERO_NICNOLE = EntityFactory.anEntity()
             .called("Nicnole")
-            .spawnAtLocation(new Vector(200, 264))
+            .locatedAt(new Vector(200, 264))
             .withCreatureLevel(3, 144, 16)
             .withTrait(TraitName.STRENGTH, 13, 13)
             .withTrait(TraitName.DEXTERITY, 9, 9)
@@ -48,7 +48,7 @@ public class TestHeroInitializer {
 
         HERO_JOHN = EntityFactory.anEntity()
             .called("John")
-            .spawnAtLocation(new Vector(186, 299))
+            .locatedAt(new Vector(186, 299))
             .withCreatureLevel(38, 144, 24)
             .withTrait(TraitName.STRENGTH, 10, 10)
             .withTrait(TraitName.DEXTERITY, 15, 15)
@@ -70,7 +70,7 @@ public class TestHeroInitializer {
 
         HERO_PAUL = EntityFactory.anEntity()
             .called("Paul")
-            .spawnAtLocation(new Vector(200, 200))
+            .locatedAt(new Vector(200, 200))
             .withCreatureLevel(3, 144, 12)
             .withTrait(TraitName.STRENGTH, 7, 7)
             .withTrait(TraitName.DEXTERITY, 13, 13)
