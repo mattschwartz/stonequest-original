@@ -1,8 +1,8 @@
 package com.barelyconscious.worlds.game.item;
 
 import com.barelyconscious.worlds.entity.EntityActor;
-import com.barelyconscious.worlds.entity.StatName;
-import com.barelyconscious.worlds.entity.TraitName;
+import com.barelyconscious.worlds.game.StatName;
+import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.entity.components.ItemPropertyComponent;
 import lombok.Getter;

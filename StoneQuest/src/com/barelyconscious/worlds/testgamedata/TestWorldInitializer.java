@@ -2,7 +2,7 @@ package com.barelyconscious.worlds.testgamedata;
 
 import com.barelyconscious.worlds.entity.EntityFactory;
 import com.barelyconscious.worlds.entity.ItemLootActor;
-import com.barelyconscious.worlds.entity.TraitName;
+import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
 import com.barelyconscious.worlds.entity.components.DestroyOnDeathComponent;

@@ -1,12 +1,11 @@
 package com.barelyconscious.worlds.entity;
 
-import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.game.EntityStatsCalculator;
+import com.barelyconscious.worlds.game.StatName;
+import com.barelyconscious.worlds.game.TraitName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.Map;

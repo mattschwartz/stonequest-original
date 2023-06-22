@@ -1,4 +1,4 @@
-package com.barelyconscious.worlds.entity;
+package com.barelyconscious.worlds.game;
 
 
 import lombok.AllArgsConstructor;
@@ -13,10 +13,9 @@ public enum TraitName {
         "Determines how health you are. Improves health \nand physical resistence"),
     INTELLIGENCE("Intelligence", "int",
         "Determines how bigbrain you are. Improves brain."),
-    WISDOM("Wisdom", "wis",
-        "Determines how insightful and wise you are. Improves \nintuition to learn stats about monsters, \nexposing weaknesses and identifying \nstrengths."),
-    CHARISMA("Charisma", "cha",
-        "Determines how suave you are.");
+    FAITH("Faith", "fai",
+        "Determines how strong your bond with the \nspiritual world is. Improves spiritual resistance.")
+    ;
 
     public final String name;
     public final String shortName;

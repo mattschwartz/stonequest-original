@@ -1,0 +1,50 @@
+[
+    {
+        "class": "THIEF",
+        "traits": {
+            "DEXTERITY": 16,
+            "STRENGTH": 14,
+            "CONSTITUTION": 8,
+            "INTELLIGENCE": 7,
+            "FAITH": 5
+        },
+        "stats": {
+            "HEALTH": 0,
+            "FOCUS": 0,
+            "SPIRIT": 0,
+            "ARMOR": 0,
+            "SPEED": 0,
+            "ACCURACY": 0
+        }
+    },
+    {
+        "class": "ALCHEMIST",
+        "traits": {
+            "DEXTERITY": 7,
+            "STRENGTH": 7,
+            "CONSTITUTION": 7,
+            "INTELLIGENCE": 16,
+            "FAITH": 13
+        }
+    },
+    {
+        "class": "MACHINIST",
+        "traits": {
+            "DEXTERITY": 7,
+            "STRENGTH": 16,
+            "CONSTITUTION": 14,
+            "INTELLIGENCE": 8,
+            "FAITH": 5
+        }
+    },
+    {
+        "class": "PRIEST",
+        "traits": {
+            "DEXTERITY": 7,
+            "STRENGTH": 7,
+            "CONSTITUTION": 7,
+            "INTELLIGENCE": 13,
+            "FAITH": 16
+        }
+    }
+]

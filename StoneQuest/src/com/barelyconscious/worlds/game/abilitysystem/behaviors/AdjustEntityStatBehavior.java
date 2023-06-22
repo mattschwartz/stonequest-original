@@ -1,7 +1,7 @@
 package com.barelyconscious.worlds.game.abilitysystem.behaviors;
 
 import com.barelyconscious.worlds.entity.EntityActor;
-import com.barelyconscious.worlds.entity.StatName;
+import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
 import com.barelyconscious.worlds.game.abilitysystem.Behavior;
 import com.barelyconscious.worlds.game.abilitysystem.BehaviorFeedback;

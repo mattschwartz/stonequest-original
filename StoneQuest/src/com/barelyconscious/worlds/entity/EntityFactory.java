@@ -5,6 +5,9 @@ import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.entity.components.EntityLevelComponent;
 import com.barelyconscious.worlds.game.EntityStatsCalculator;
 import com.barelyconscious.worlds.game.Inventory;
+import com.barelyconscious.worlds.game.StatName;
+import com.barelyconscious.worlds.game.TraitName;
+import com.barelyconscious.worlds.game.hero.HeroClassType;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
@@ -54,6 +57,14 @@ public class EntityFactory {
             traits.put(traitName, Pair.of(value, value));
 
             return this;
+        }
+
+        public EntityActorBuilder withHeroClass(HeroClassType heroClassType) {
+            return withTrait(TraitName.DEXTERITY, heroClassType.getStartingDexterity())
+                .withTrait(TraitName.STRENGTH, heroClassType.getStartingStrength())
+                .withTrait(TraitName.CONSTITUTION, heroClassType.getStartingConstitution())
+                .withTrait(TraitName.INTELLIGENCE, heroClassType.getStartingIntelligence())
+                .withTrait(TraitName.FAITH, heroClassType.getStartingFaith());
         }
 
         public EntityActorBuilder withTrait(TraitName traitName, float currentValue, float maxValue) {

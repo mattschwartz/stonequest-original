@@ -7,6 +7,7 @@ import com.barelyconscious.worlds.engine.graphics.FontContext;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
 import com.barelyconscious.worlds.entity.components.JobActionComponent;
+import com.barelyconscious.worlds.game.hero.HeroClassType;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Vector;

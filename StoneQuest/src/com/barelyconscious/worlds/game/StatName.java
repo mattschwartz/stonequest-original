@@ -1,4 +1,4 @@
-package com.barelyconscious.worlds.entity;
+package com.barelyconscious.worlds.game;
 
 import lombok.AllArgsConstructor;
 

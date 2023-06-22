@@ -4,6 +4,7 @@ import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
+import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
 import com.barelyconscious.worlds.entity.components.Component;
@@ -13,6 +14,7 @@ import com.barelyconscious.worlds.entity.components.MoveComponent;
 import com.barelyconscious.worlds.entity.components.SpriteComponent;
 import com.barelyconscious.worlds.entity.components.StatChangeOverTimeComponent;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
+import com.barelyconscious.worlds.game.hero.HeroClassType;
 import com.barelyconscious.worlds.game.item.GameItems;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
@@ -32,12 +34,7 @@ public class TestHeroInitializer {
             .called("Nicnole")
             .locatedAt(new Vector(200, 264))
             .withCreatureLevel(3, 144, 16)
-            .withTrait(TraitName.STRENGTH, 13, 13)
-            .withTrait(TraitName.DEXTERITY, 9, 9)
-            .withTrait(TraitName.CONSTITUTION, 18, 18)
-            .withTrait(TraitName.INTELLIGENCE, 11, 11)
-            .withTrait(TraitName.WISDOM, 13, 13)
-            .withTrait(TraitName.CHARISMA, 11, 11)
+            .withHeroClass(HeroClassType.MACHINIST)
             .buildHero(new Inventory(28), HeroClassType.MACHINIST);
 
         HERO_NICNOLE.addComponent(new MoveComponent(HERO_NICNOLE, 32f));
@@ -50,13 +47,8 @@ public class TestHeroInitializer {
             .called("John")
             .locatedAt(new Vector(186, 299))
             .withCreatureLevel(38, 144, 24)
-            .withTrait(TraitName.STRENGTH, 10, 10)
-            .withTrait(TraitName.DEXTERITY, 15, 15)
-            .withTrait(TraitName.CONSTITUTION, 15, 15)
-            .withTrait(TraitName.INTELLIGENCE, 11, 11)
-            .withTrait(TraitName.WISDOM, 15, 15)
-            .withTrait(TraitName.CHARISMA, 11, 11)
-            .buildHero(new Inventory(28), HeroClassType.SHADOW_ASSASSIN);
+            .withHeroClass(HeroClassType.THIEF)
+            .buildHero(new Inventory(28), HeroClassType.THIEF);
 
         HERO_JOHN.addComponent(new MoveComponent(HERO_JOHN, 32f));
         HERO_JOHN.addComponent(new SpriteComponent(HERO_JOHN, Resources.getSprite(ResourceSprite.HERO_3), RenderLayer.ENTITIES));
@@ -72,12 +64,7 @@ public class TestHeroInitializer {
             .called("Paul")
             .locatedAt(new Vector(200, 200))
             .withCreatureLevel(3, 144, 12)
-            .withTrait(TraitName.STRENGTH, 7, 7)
-            .withTrait(TraitName.DEXTERITY, 13, 13)
-            .withTrait(TraitName.CONSTITUTION, 12, 12)
-            .withTrait(TraitName.INTELLIGENCE, 7, 7)
-            .withTrait(TraitName.WISDOM, 14, 14)
-            .withTrait(TraitName.CHARISMA, 11, 11)
+            .withHeroClass(HeroClassType.PRIEST)
             .buildHero(new Inventory(28), HeroClassType.PRIEST);
 
         HERO_PAUL.getEquipment().setEquippedItem(GameItems.IRON_SHIELD.toItem());

@@ -6,7 +6,7 @@ import com.barelyconscious.worlds.engine.gui.widgets.SpriteWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
 import com.barelyconscious.worlds.entity.Hero;
-import com.barelyconscious.worlds.entity.TraitName;
+import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.engine.graphics.FontContext;
 import com.barelyconscious.worlds.engine.input.InputLayer;
@@ -88,8 +88,7 @@ public class HeroStatsSheetWidget extends Widget {
         createAndBindStatWidget(backdrop, TraitName.DEXTERITY, 33);
         createAndBindStatWidget(backdrop, TraitName.CONSTITUTION, 66);
         createAndBindStatWidget(backdrop, TraitName.INTELLIGENCE, 101);
-        createAndBindStatWidget(backdrop, TraitName.WISDOM, 134);
-        createAndBindStatWidget(backdrop, TraitName.CHARISMA, 167);
+        createAndBindStatWidget(backdrop, TraitName.FAITH, 134);
     }
 
     private void createAndBindStatWidget(
