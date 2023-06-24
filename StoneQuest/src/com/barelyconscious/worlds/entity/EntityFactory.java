@@ -103,7 +103,7 @@ public class EntityFactory {
                     var maxPower = statsCalculator.toPower(intTrait.getRight(), entityLevel, difficultyClass);
 
                     actor.trait(TraitName.INTELLIGENCE).set(intTrait.getLeft(), intTrait.getRight());
-                    actor.stat(StatName.POWER).set(curPower, maxPower);
+                    actor.stat(StatName.ENERGY).set(curPower, maxPower);
                     return null;
                 });
             }

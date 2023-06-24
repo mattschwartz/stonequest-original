@@ -53,7 +53,7 @@ public class EntityActor extends Actor {
 
         var powerComponent = new DynamicValueComponent(this, currentPower, maxPower);
         addComponent(powerComponent);
-        stats.put(StatName.POWER, powerComponent);
+        stats.put(StatName.ENERGY, powerComponent);
 
         addComponent(new EntityLevelComponent(this, entityLevel, currentExperience));
     }
@@ -116,7 +116,7 @@ public class EntityActor extends Actor {
     }
 
     public DynamicValueComponent getPowerComponent() {
-        return stats.get(StatName.POWER);
+        return stats.get(StatName.ENERGY);
     }
 
     public DynamicValueComponent getHealthComponent() {
