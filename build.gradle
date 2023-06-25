@@ -20,7 +20,7 @@ sourceSets {
         }
     }
 }
-applicationDefaultJvmArgs = ["-Xms512m", "-Xmx1024m", "-XstartOnFirstThread"]
+applicationDefaultJvmArgs = ["-Xms512m", "-Xmx1024m"]
 
 application {
     mainClassName = 'com.barelyconscious.worlds.GameRunner'
