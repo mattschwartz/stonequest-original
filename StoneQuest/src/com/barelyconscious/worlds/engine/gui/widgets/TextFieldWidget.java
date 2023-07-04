@@ -30,6 +30,17 @@ public class TextFieldWidget extends Widget {
         this.verticalTextAlignment = FontContext.VerticalTextAlignment.CENTER;
     }
 
+    public TextFieldWidget(
+        final String text,
+        FontContext.TextAlign textAlignment,
+        FontContext.VerticalTextAlignment verticalTextAlignment
+    ) {
+        super(LayoutData.DEFAULT);
+        this.text = text;
+        this.textAlignment = textAlignment;
+        this.verticalTextAlignment = verticalTextAlignment;
+    }
+
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
         if (StringUtils.isBlank(text)) {

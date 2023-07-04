@@ -67,6 +67,10 @@ public class EntityFactory {
                 .withTrait(TraitName.FAITH, heroClassType.getStartingFaith());
         }
 
+        public EntityActorBuilder withStat(StatName statName, float value) {
+            return withStat(statName, value, value);
+        }
+
         public EntityActorBuilder withStat(StatName statName, float currentValue, float maxValue) {
             stats.put(statName, Pair.of(currentValue, maxValue));
 

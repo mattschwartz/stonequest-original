@@ -157,8 +157,8 @@ public class HeroStatsSheetWidget extends Widget {
 
     private Widget createDetailedStatsWidget(SpriteWidget backdrop, Hero hero) {
         final Widget miw = new MouseInputWidget(LayoutData.builder()
-            .anchor(new VDim(0, 0, 0, -(161 + 6) - 26))
-            .size(new VDim(0, 0, GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getWidth(), 161))
+            .anchor(new VDim(0, 0, 0, -(200 + 6) - 26))
+            .size(new VDim(0, 0, GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getWidth(), 200))
             .build(), InputLayer.GUI);
         final Widget detailedStatsWidget = new BackgroundPanelWidget(LayoutData.DEFAULT,
             new Color(33, 33, 33, 255));
@@ -168,70 +168,61 @@ public class HeroStatsSheetWidget extends Widget {
                 .anchor(new VDim(0, 0, 2, 13))
                 .size(new VDim(1, 1, 0, 0))
                 .build(),
-            hero.getStats().keySet().size(),
+            15,
             2);
 
         int row = 0;
-        for (var statName : hero.getStats().keySet()) {
-            var statNameTfw = new TextFieldWidget(LayoutData.DEFAULT, "{COLOR=LIGHT_GRAY}" + statName.name);
-            statNameTfw.setTextAlignment(FontContext.TextAlign.LEFT);
-            statNameTfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
+        glw.setCell(row++, 0, new TextFieldWidget("Offenses", FontContext.TextAlign.LEFT, FontContext.VerticalTextAlignment.TOP));
+        createStatLine(row++, glw, StatName.ABILITY_POWER, hero.stat(StatName.ABILITY_POWER).get());
+        createStatLine(row++, glw, StatName.ABILITY_SPEED, hero.stat(StatName.ABILITY_SPEED).get());
+        createStatLine(row++, glw, StatName.PRECISION, hero.stat(StatName.PRECISION).get());
 
-            glw.setCell(row, 0, statNameTfw);
+        glw.setCell(row++, 0, new TextFieldWidget("", FontContext.TextAlign.LEFT, FontContext.VerticalTextAlignment.TOP));
+        glw.setCell(row++, 0, new TextFieldWidget("Defenses", FontContext.TextAlign.LEFT, FontContext.VerticalTextAlignment.TOP));
+        createStatLine(row++, glw, StatName.HEALTH, hero.stat(StatName.HEALTH).get());
+        createStatLine(row++, glw, StatName.ARMOR, hero.stat(StatName.ARMOR).get());
+        createStatLine(row++, glw, StatName.FORTITUDE, hero.stat(StatName.FORTITUDE).get());
+        createStatLine(row++, glw, StatName.WARDING, hero.stat(StatName.WARDING).get());
 
-            var statValue = hero.getStats().get(statName);
-            var statValueTfw = new TextFieldWidget(LayoutData.DEFAULT,
-                "{COLOR=GREEN}" + statValue.getCurrentValue());
-
-            statValueTfw.setTextAlignment(FontContext.TextAlign.RIGHT);
-            statValueTfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
-            glw.setCell(row, 1, statValueTfw);
-
-            ++row;
-        }
-
-//        final String[] str = new String[]{
-//            "{COLOR=LIGHT_GRAY}Melee Damage",
-//            "{COLOR=GREEN}{STYLE=BOLD}1d8+3",
-//            "{COLOR=LIGHT_GRAY}Spell DC",
-//            "{COLOR=GREEN}{STYLE=BOLD}18",
-//            "{COLOR=LIGHT_GRAY}Crit Chance",
-//            "{COLOR=GREEN}{STYLE=BOLD}50.0%",
-//            "{COLOR=LIGHT_GRAY}Armor",
-//            "{COLOR=GREEN}{STYLE=BOLD}180",
-//            "{COLOR=LIGHT_GRAY}Evasion",
-//            "{COLOR=GREEN}{STYLE=BOLD}25.0%",
-//            "{COLOR=LIGHT_GRAY}Fire Magic Bonus",
-//            "{COLOR=LIGHT_GRAY}0%",
-//            "{COLOR=LIGHT_GRAY}Frost Magic Bonus",
-//            "{COLOR=LIGHT_GRAY}0%",
-//            "{COLOR=LIGHT_GRAY}Faith Magic Bonus",
-//            "{COLOR=GREEN}{STYLE=BOLD}9%",
-//            "{COLOR=LIGHT_GRAY}Eldritch Bonus",
-//            "{COLOR=RED}{STYLE=BOLD}-150%",
-//            "{COLOR=WHITE}Experience",
-//            "{COLOR=GREEN}{STYLE=BOLD}175/600"
-//        };
-//
-//        int i = 0;
-//        for (int r = 0; r < 10; ++r) {
-//            for (int c = 0; c < 2; ++c) {
-//                TextFieldWidget tfw = new TextFieldWidget(LayoutData.DEFAULT, str[i++]);
-//                glw.setCell(r, c, tfw);
-//                if (c == 0) {
-//                    tfw.setTextAlignment(FontContext.TextAlign.LEFT);
-//                    tfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
-//                } else {
-//                    tfw.setTextAlignment(FontContext.TextAlign.RIGHT);
-//                    tfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
-//                }
-//            }
-//        }
+        glw.setCell(row++, 0, new TextFieldWidget("", FontContext.TextAlign.LEFT, FontContext.VerticalTextAlignment.TOP));
+        glw.setCell(row++, 0, new TextFieldWidget("Combat Resources", FontContext.TextAlign.LEFT, FontContext.VerticalTextAlignment.TOP));
+        createStatLine(row++, glw, StatName.ENERGY, hero.stat(StatName.ENERGY).get());
+        createStatLine(row++, glw, StatName.FOCUS, hero.stat(StatName.FOCUS).get());
+        createStatLine(row++, glw, StatName.SPIRIT, hero.stat(StatName.SPIRIT).get());
 
         backdrop.addWidget(miw);
         miw.addWidget(detailedStatsWidget);
         detailedStatsWidget.addWidget(glw);
 
         return detailedStatsWidget;
+    }
+
+    private void createStatLine(
+        int row,
+        GridLayoutWidget glw,
+        StatName statName,
+        DynamicValueComponent statValue
+    ) {
+        var statNameTfw = new TextFieldWidget(LayoutData.DEFAULT, "{COLOR=LIGHT_GRAY}" + statName.name);
+        statNameTfw.setTextAlignment(FontContext.TextAlign.LEFT);
+        statNameTfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
+
+        glw.setCell(row, 0, statNameTfw);
+
+        String tex;
+        if (statValue.getCurrentValue() < 0) {
+            tex = "{COLOR=RED}";
+        } else if (statValue.getCurrentValue() > 0) {
+            tex = "{COLOR=GREEN}{STYLE=BOLD}";
+        } else {
+            tex = "{COLOR=LIGHT_GRAY}";
+        }
+
+        var statValueTfw = new TextFieldWidget(LayoutData.DEFAULT,
+            tex + statValue.getCurrentValue());
+
+        statValueTfw.setTextAlignment(FontContext.TextAlign.RIGHT);
+        statValueTfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
+        glw.setCell(row, 1, statValueTfw);
     }
 }

@@ -4,6 +4,7 @@ import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
+import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
 import com.barelyconscious.worlds.entity.components.Component;
@@ -34,6 +35,9 @@ public class TestHeroInitializer {
             .locatedAt(new Vector(200, 264))
             .withCreatureLevel(3, 144, 16)
             .withHeroClass(HeroClassType.MACHINIST)
+            .withStat(StatName.ARMOR, 18f)
+            .withStat(StatName.ABILITY_POWER, 6f)
+            .withStat(StatName.ABILITY_SPEED, 3f)
             .buildHero(new Inventory(28), HeroClassType.MACHINIST);
 
         HERO_NICNOLE.addComponent(new MoveComponent(HERO_NICNOLE, 32f));
@@ -47,6 +51,7 @@ public class TestHeroInitializer {
             .locatedAt(new Vector(186, 299))
             .withCreatureLevel(38, 144, 24)
             .withHeroClass(HeroClassType.THIEF)
+            .withStat(StatName.ARMOR, 9f)
             .buildHero(new Inventory(28), HeroClassType.THIEF);
 
         HERO_JOHN.addComponent(new MoveComponent(HERO_JOHN, 32f));
@@ -64,6 +69,8 @@ public class TestHeroInitializer {
             .locatedAt(new Vector(200, 200))
             .withCreatureLevel(3, 144, 12)
             .withHeroClass(HeroClassType.PRIEST)
+            .withStat(StatName.ARMOR, 3f)
+            .withStat(StatName.FOCUS, -1f)
             .buildHero(new Inventory(28), HeroClassType.PRIEST);
 
         HERO_PAUL.getEquipment().setEquippedItem(GameItems.IRON_SHIELD.toItem());
