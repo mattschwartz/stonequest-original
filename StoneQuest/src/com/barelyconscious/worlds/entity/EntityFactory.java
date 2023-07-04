@@ -67,6 +67,12 @@ public class EntityFactory {
                 .withTrait(TraitName.FAITH, heroClassType.getStartingFaith());
         }
 
+        public EntityActorBuilder withStat(StatName statName, float currentValue, float maxValue) {
+            stats.put(statName, Pair.of(currentValue, maxValue));
+
+            return this;
+        }
+
         public EntityActorBuilder withTrait(TraitName traitName, float currentValue, float maxValue) {
             traits.put(traitName, Pair.of(currentValue, maxValue));
 
@@ -90,7 +96,7 @@ public class EntityFactory {
                     var maxHealth = statsCalculator.toHealth(consTrait.getRight(), entityLevel, difficultyClass);
 
                     actor.trait(TraitName.CONSTITUTION).set(consTrait.getLeft(), consTrait.getRight());
-                    actor.stat(StatName.HEALTH).set(curHealth, maxHealth);
+                    stats.put(StatName.HEALTH, Pair.of(curHealth, maxHealth));
 
                     return null;
                 });
@@ -103,7 +109,18 @@ public class EntityFactory {
                     var maxPower = statsCalculator.toPower(intTrait.getRight(), entityLevel, difficultyClass);
 
                     actor.trait(TraitName.INTELLIGENCE).set(intTrait.getLeft(), intTrait.getRight());
-                    actor.stat(StatName.ENERGY).set(curPower, maxPower);
+                    stats.put(StatName.ENERGY, Pair.of(curPower, maxPower));
+                    return null;
+                });
+            }
+
+            for (var statName : StatName.values()) {
+                postBuildDelegate.bindDelegate((actor) -> {
+                    if (stats.containsKey(statName)) {
+                        actor.stat(statName).set(stats.get(statName).getLeft(), stats.get(statName).getRight());
+                    } else {
+                        actor.stat(statName).set(0, 0);
+                    }
                     return null;
                 });
             }

@@ -20,7 +20,7 @@ public enum RelatedSkillItemTag implements ItemTag {
     TAILORING("Tailoring"),
     GUNSMITHING("Gunsmithing"),
     TECHSMITHING("Techsmithing"),
-
+    FLETCHING("Fletching"),
     ;
 
     private final String tagName;

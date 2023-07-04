@@ -1,0 +1,86 @@
+[
+    {
+        "name": "Worn shortbow",
+        "requirements": {
+            "dexterity": 2
+        },
+        "properties": [
+            {
+                "__type": "WeaponDamageProperty",
+                "minDamage": 2,
+                "maxDamage": 5,
+                "weaponSpeed": 2.30
+            }
+        ],
+        "tags": [
+            "EQUIPMENT_TWO_HANDED",
+            "FLETCHING"
+        ]
+    },
+    {
+        "name": "Recurve bow",
+        "properties": [
+            {
+                "__type": "WeaponDamageProperty",
+                "minDamage": 3,
+                "maxDamage": 7,
+                "weaponSpeed": 2.10
+            }
+        ]
+    },
+    {
+        "name": "Hickory shortbow",
+        "properties": [
+            {
+                "__type": "WeaponDamageProperty",
+                "minDamage": 5,
+                "maxDamage": 10,
+                "weaponSpeed": 2.00
+            }
+        ]
+    },
+    {
+        "name": "Reinforced bow",
+        "properties": [
+            {
+                "__type": "WeaponDamageProperty",
+                "minDamage": 11,
+                "maxDamage": 22,
+                "weaponSpeed": 2.20
+            }
+        ]
+    },
+    {
+        "name": "Heavy Recurve bow",
+        "properties": [
+            {
+                "__type": "WeaponDamageProperty",
+                "minDamage": 15,
+                "maxDamage": 29,
+                "weaponSpeed": 2.40
+            }
+        ]
+    },
+    {
+        "name": "Longbow",
+        "properties": [
+            {
+                "__type": "WeaponDamageProperty",
+                "minDamage": 21,
+                "maxDamage": 39,
+                "weaponSpeed": 2.30
+            }
+        ]
+    },
+    {
+        "name": "Composite bow",
+        "properties": [
+            {
+                "__type": "WeaponDamageProperty",
+                "minDamage": 26,
+                "maxDamage": 50,
+                "weaponSpeed": 2.30
+            }
+        ]
+    }
+]

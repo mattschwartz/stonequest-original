@@ -2,96 +2,96 @@
   "meta": {
     "version": "0.6.7"
   },
-  "savePath": "C:\\Users\\cassiius\\Documents\\github\\stonequest-original\\StoneQuest\\res\\sprites",
+  "savePath": "/Users/matt/Documents/GitHub/artwork/stonequest-original/StoneQuest/res/sprites",
   "images": [
     {
       "name": "chamomile_flower.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/chamomile_flower.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/chamomile_flower.png",
       "folder": ""
     },
     {
       "name": "corrupt_digital_image.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/corrupt_digital_image.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/corrupt_digital_image.png",
       "folder": ""
     },
     {
       "name": "cured_leather.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/cured_leather.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/cured_leather.png",
       "folder": ""
     },
     {
       "name": "flask_water.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/flask_water.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/flask_water.png",
       "folder": ""
     },
     {
       "name": "hematite_ore.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/hematite_ore.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/hematite_ore.png",
       "folder": ""
     },
     {
       "name": "iron_oxide_dust.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/iron_oxide_dust.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/iron_oxide_dust.png",
       "folder": ""
     },
     {
       "name": "linenCloth.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/linenCloth.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/linenCloth.png",
       "folder": ""
     },
     {
       "name": "recipe.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/recipe.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/recipe.png",
       "folder": ""
     },
     {
       "name": "recovered_digital_image.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/recovered_digital_image.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/recovered_digital_image.png",
       "folder": ""
     },
     {
       "name": "salvage_essenceOfMind.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/salvage_essenceOfMind.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/salvage_essenceOfMind.png",
       "folder": ""
     },
     {
       "name": "silk_cloth.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/silk_cloth.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/silk_cloth.png",
       "folder": ""
     },
     {
       "name": "stream_drive__strangeRarity.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/stream_drive__strangeRarity.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/stream_drive__strangeRarity.png",
       "folder": ""
     },
     {
       "name": "stream_sample_large.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/stream_sample_large.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/stream_sample_large.png",
       "folder": ""
     },
     {
       "name": "stream_sample_large2.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/stream_sample_large2.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/stream_sample_large2.png",
       "folder": ""
     },
     {
       "name": "stream_sample_small.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/stream_sample_small.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/stream_sample_small.png",
       "folder": ""
     },
     {
       "name": "stream_storage_drive.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/stream_storage_drive.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/stream_storage_drive.png",
       "folder": ""
     },
     {
       "name": "text_file_recovered.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/text_file_recovered.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/text_file_recovered.png",
       "folder": ""
     },
     {
       "name": "willow_bark.png",
-      "path": "C:/Users/cassiius/Documents/github/artwork/worlds/items/willow_bark.png",
+      "path": "/Users/matt/Documents/GitHub/artwork/worlds/items/herbs_bundle.png",
       "folder": ""
     }
   ],
@@ -108,7 +108,7 @@
     "filter": "none",
     "exporter": "custom",
     "fileName": "pack-result",
-    "savePath": "C:\\Users\\cassiius\\Documents\\github\\stonequest-original\\StoneQuest\\res\\sprites",
+    "savePath": "/Users/matt/Documents/GitHub/stonequest-original/StoneQuest/res/sprites",
     "width": 2048,
     "height": 2048,
     "fixedSize": false,

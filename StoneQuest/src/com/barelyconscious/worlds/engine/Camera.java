@@ -5,7 +5,7 @@ import com.barelyconscious.worlds.common.shape.Vector;
 
 import javax.annotation.Nullable;
 
-public final class Camera {
+public class Camera {
 
     public Vector transform;
 

@@ -25,6 +25,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Log4j2
 public class Actor {
 
+    private Actor parent = null;
+
     public final String id;
     public final String name;
 
@@ -56,6 +58,20 @@ public class Actor {
 
     public Actor(final Vector transform) {
         this(null, transform);
+    }
+
+    /**
+     * todo: need to actually implement parent logic
+     * @param newParent
+     * @return
+     */
+    public Actor setParent(final Actor newParent) {
+        Actor oldParent = parent;
+        if (oldParent != null) {
+            // do anything needed here
+        }
+        parent = newParent;
+        return oldParent;
     }
 
     public Actor(

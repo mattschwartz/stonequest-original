@@ -117,6 +117,41 @@ public abstract class ItemProperty {
         }
     }
 
+    @Getter
+    public static class WeaponDamageProperty extends ItemProperty {
+
+        private final float minWeaponDamage;
+        private final float maxWeaponDamage;
+        private final String propertyDescription;
+        private final float weaponSpeed;
+
+        public WeaponDamageProperty(float minWeaponDamage, float maxWeaponDamage, float weaponSpeed) {
+            this.minWeaponDamage = minWeaponDamage;
+            this.maxWeaponDamage = maxWeaponDamage;
+            this.weaponSpeed = weaponSpeed;
+
+            final StringBuilder sb = new StringBuilder();
+            sb.append(minWeaponDamage).append("-").append(maxWeaponDamage).append(" damage");
+            sb.append(" (").append(weaponSpeed).append("s)");
+            propertyDescription = sb.toString();
+        }
+
+        @Override
+        public String getPropertyDescription() {
+            return null;
+        }
+
+        @Override
+        public void applyProperty(EntityActor entity) {
+
+        }
+
+        @Override
+        public void removeProperty(EntityActor entity) {
+
+        }
+    }
+
     /**
      * A property that adds the specified component to the entity.
      */

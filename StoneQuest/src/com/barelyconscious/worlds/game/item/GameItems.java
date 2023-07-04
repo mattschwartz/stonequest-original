@@ -6,6 +6,7 @@ import com.barelyconscious.worlds.game.item.tags.RelatedSkillItemTag;
 import com.barelyconscious.worlds.game.item.tags.ResourceItemTag;
 import com.barelyconscious.worlds.game.item.tags.StackableItemTag;
 import com.barelyconscious.worlds.game.resources.Resources;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -50,6 +51,12 @@ public enum GameItems {
         Set.of(EquipmentItemTag.EQUIPMENT_CHEST, RelatedSkillItemTag.TAILORING),
         new ArrayList<>(),
         new ArrayList<>()),
+    RECURVE_BOW(6, 1,
+        "Recurve Bow", "A bow with a recurved shape.",
+        Resources.ITEM_RECURVE_BOW,
+        Set.of(EquipmentItemTag.EQUIPMENT_TWO_HANDED, RelatedSkillItemTag.FLETCHING),
+        new ArrayList<>(),
+        Lists.newArrayList(new ItemProperty.WeaponDamageProperty(3, 7, 2.3f))),
     ;
 
     private final int itemId;

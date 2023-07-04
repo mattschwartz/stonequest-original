@@ -6,6 +6,7 @@ import com.barelyconscious.worlds.engine.gui.widgets.SpriteWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
 import com.barelyconscious.worlds.entity.Hero;
+import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.engine.graphics.FontContext;
@@ -49,7 +50,7 @@ public class HeroStatsSheetWidget extends Widget {
             heroClassText));
 
         createHeroDescriptionTooltipWidget(backdrop);
-        detailedStatsWidget = createDetailedStatsWidget(backdrop);
+        detailedStatsWidget = createDetailedStatsWidget(backdrop, hero);
 
         addWidget(new ButtonWidget(
             LayoutData.builder()
@@ -154,7 +155,7 @@ public class HeroStatsSheetWidget extends Widget {
         ttw.setVisible(false);
     }
 
-    private Widget createDetailedStatsWidget(SpriteWidget backdrop) {
+    private Widget createDetailedStatsWidget(SpriteWidget backdrop, Hero hero) {
         final Widget miw = new MouseInputWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 0, -(161 + 6) - 26))
             .size(new VDim(0, 0, GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getWidth(), 161))
@@ -167,46 +168,65 @@ public class HeroStatsSheetWidget extends Widget {
                 .anchor(new VDim(0, 0, 2, 13))
                 .size(new VDim(1, 1, 0, 0))
                 .build(),
-            10,
+            hero.getStats().keySet().size(),
             2);
 
-        final String[] str = new String[]{
-            "{COLOR=LIGHT_GRAY}Melee Damage",
-            "{COLOR=GREEN}{STYLE=BOLD}1d8+3",
-            "{COLOR=LIGHT_GRAY}Spell DC",
-            "{COLOR=GREEN}{STYLE=BOLD}18",
-            "{COLOR=LIGHT_GRAY}Crit Chance",
-            "{COLOR=GREEN}{STYLE=BOLD}50.0%",
-            "{COLOR=LIGHT_GRAY}Armor",
-            "{COLOR=GREEN}{STYLE=BOLD}180",
-            "{COLOR=LIGHT_GRAY}Evasion",
-            "{COLOR=GREEN}{STYLE=BOLD}25.0%",
-            "{COLOR=LIGHT_GRAY}Fire Magic Bonus",
-            "{COLOR=LIGHT_GRAY}0%",
-            "{COLOR=LIGHT_GRAY}Frost Magic Bonus",
-            "{COLOR=LIGHT_GRAY}0%",
-            "{COLOR=LIGHT_GRAY}Faith Magic Bonus",
-            "{COLOR=GREEN}{STYLE=BOLD}9%",
-            "{COLOR=LIGHT_GRAY}Eldritch Bonus",
-            "{COLOR=RED}{STYLE=BOLD}-150%",
-            "{COLOR=WHITE}Experience",
-            "{COLOR=GREEN}{STYLE=BOLD}175/600"
-        };
+        int row = 0;
+        for (var statName : hero.getStats().keySet()) {
+            var statNameTfw = new TextFieldWidget(LayoutData.DEFAULT, "{COLOR=LIGHT_GRAY}" + statName.name);
+            statNameTfw.setTextAlignment(FontContext.TextAlign.LEFT);
+            statNameTfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
 
-        int i = 0;
-        for (int r = 0; r < 10; ++r) {
-            for (int c = 0; c < 2; ++c) {
-                TextFieldWidget tfw = new TextFieldWidget(LayoutData.DEFAULT, str[i++]);
-                glw.setCell(r, c, tfw);
-                if (c == 0) {
-                    tfw.setTextAlignment(FontContext.TextAlign.LEFT);
-                    tfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
-                } else {
-                    tfw.setTextAlignment(FontContext.TextAlign.RIGHT);
-                    tfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
-                }
-            }
+            glw.setCell(row, 0, statNameTfw);
+
+            var statValue = hero.getStats().get(statName);
+            var statValueTfw = new TextFieldWidget(LayoutData.DEFAULT,
+                "{COLOR=GREEN}" + statValue.getCurrentValue());
+
+            statValueTfw.setTextAlignment(FontContext.TextAlign.RIGHT);
+            statValueTfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
+            glw.setCell(row, 1, statValueTfw);
+
+            ++row;
         }
+
+//        final String[] str = new String[]{
+//            "{COLOR=LIGHT_GRAY}Melee Damage",
+//            "{COLOR=GREEN}{STYLE=BOLD}1d8+3",
+//            "{COLOR=LIGHT_GRAY}Spell DC",
+//            "{COLOR=GREEN}{STYLE=BOLD}18",
+//            "{COLOR=LIGHT_GRAY}Crit Chance",
+//            "{COLOR=GREEN}{STYLE=BOLD}50.0%",
+//            "{COLOR=LIGHT_GRAY}Armor",
+//            "{COLOR=GREEN}{STYLE=BOLD}180",
+//            "{COLOR=LIGHT_GRAY}Evasion",
+//            "{COLOR=GREEN}{STYLE=BOLD}25.0%",
+//            "{COLOR=LIGHT_GRAY}Fire Magic Bonus",
+//            "{COLOR=LIGHT_GRAY}0%",
+//            "{COLOR=LIGHT_GRAY}Frost Magic Bonus",
+//            "{COLOR=LIGHT_GRAY}0%",
+//            "{COLOR=LIGHT_GRAY}Faith Magic Bonus",
+//            "{COLOR=GREEN}{STYLE=BOLD}9%",
+//            "{COLOR=LIGHT_GRAY}Eldritch Bonus",
+//            "{COLOR=RED}{STYLE=BOLD}-150%",
+//            "{COLOR=WHITE}Experience",
+//            "{COLOR=GREEN}{STYLE=BOLD}175/600"
+//        };
+//
+//        int i = 0;
+//        for (int r = 0; r < 10; ++r) {
+//            for (int c = 0; c < 2; ++c) {
+//                TextFieldWidget tfw = new TextFieldWidget(LayoutData.DEFAULT, str[i++]);
+//                glw.setCell(r, c, tfw);
+//                if (c == 0) {
+//                    tfw.setTextAlignment(FontContext.TextAlign.LEFT);
+//                    tfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
+//                } else {
+//                    tfw.setTextAlignment(FontContext.TextAlign.RIGHT);
+//                    tfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
+//                }
+//            }
+//        }
 
         backdrop.addWidget(miw);
         miw.addWidget(detailedStatsWidget);

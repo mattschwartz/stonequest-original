@@ -30,7 +30,7 @@ import java.util.Set;
  *  basically answering the question "did object collide with, or
  *  pass through, the other?"
  */
-public final class Physics {
+public class Physics {
 
     private enum CollisionState {CLEAR, OVERLAP}
 

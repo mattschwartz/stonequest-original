@@ -26,6 +26,11 @@ application {
     mainClassName = 'com.barelyconscious.worlds.GameRunner'
 }
 
+run {
+    standardInput = System.in
+    mainClassName = 'com.barelyconscious.worlds.GameRunnerCLI'
+}
+
 jar {
     manifest {
         attributes 'Main-Class': 'com.barelyconscious.worlds.GameRunner'

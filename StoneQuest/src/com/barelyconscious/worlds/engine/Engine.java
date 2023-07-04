@@ -72,7 +72,7 @@ public final class Engine {
         @NonNull final GameInstance gameInstance,
         @NonNull final World world,
         @NonNull final Screen screen,
-        @NonNull final MouseKeyboardPlayerController playerController
+        @NonNull final PlayerController playerController
     ) {
         this.world = world;
         this.screen = screen;

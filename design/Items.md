@@ -1,15 +1,38 @@
-# Items
+# Item design 
 
 An item has the following descriptors: id, name, description. 
 
 **Item Property**: can modify stats and traits when an item is used or equipped. Other type of on-use/on-equip effects may be found as well.
+- WeaponDamageProperty(minDamage, maxDamage, weaponSped)
+
 **Item Requirement**: can be hero level requirements, trait requireemnts, stat requirements, that determine whether or not a hero can use/equip the item
+
 **Item Tags**: describe how an item functions in the game world
-- Consumable, Potable, Edible
-- Craftable, water source, heat source, etc
-- Equipment, helm, body, etc
-- Resource, natural, cloth, ore, etc
-- Stackable
+    - Consumable, Potable, Edible
+    - Craftable, water source, heat source, etc
+    - Equipment, helm, body, etc
+    - Resource, natural, cloth, ore, etc
+    - Stackable
+
+**Quality**: improves the values on the item with higher quality
+
+```json
+{
+    "id": 1,
+    "name": "Iron Shield",
+    "description": "A basic shield made of iron",
+    "sprite": "BASIC_SHIELD",
+    "level": 1,
+    "properties": [
+	{
+	    "__type": "StatProperty",
+	    "stat": "ARMOR",
+	    "value": 5
+	}
+    ],
+    "tags": ["EQUIPMENT_OFFHAND"]
+}
+```
 
 ## Resources
 
@@ -60,3 +83,141 @@ Worlds has the following classes of resources:
     - Sodium hydroxide (caustic soda) used to refine bauxite into aluminum
 2. Reducers
     - Hydrogen, magnesium used to refine silicon
+
+
+
+# Items
+
+## Weapons
+
+**Bows**
+- Short Bow
+    - 5-13 damage
+    - 0.67s
+- Hunter's bow
+    - 2-6 damage
+    - 1.0s
+- Long bow
+    - 8-33 damage
+    - 0.8s
+- Composite bow
+    - 16-34 damage
+    - 0.8s
+- Short battle bow
+    - 5-11 damage
+    - 0.9s
+- Long battle bow
+    - 3-18 dmg
+    - 1.0s
+- Short war bow
+    - 6-14 dmg
+    - 0.8s
+- Long war bow
+    - 3-23 damage
+    - 1.0s
+
+**Crossbows**
+- Light xbow
+    - 6-9 dmg
+    - 1.2s
+- Heavy xbow
+    - 14-26 dmg
+    - 1.5s
+- Repeating xbow
+    - 6-12 dmg
+    - 1.0s
+
+**Maces**
+- Club
+    - 6-8 damage
+    - 0.7s
+- War hammer
+    - 13-31 damage
+    - 0.7s
+- Bladed mace
+    - 19-32
+    - 0.7s
+- Scepter
+    - 11-17 damage
+    - 0.8s
+- Maul
+    - 27-49
+    - 0.77s
+- Mallet
+    - 16-33 dmg
+    - 0.77s
+
+**Daggers**
+- Skinning knnife
+- Stiletto
+- Flaying knife
+- Poignard
+- Gutting knife
+- Kris
+- Skean
+
+**Axes**
+- Hatchet
+- Broad axe
+- Arming axe
+- War axe
+- Double axe
+
+**Sword**
+- Copper sword
+- Sabre
+- Broad sword
+- War sword
+- Cutlass
+- Battle sword
+- Gladius
+- Foil
+- Rapier
+
+**2-H sword**
+- Longsword
+- Bastard sword
+- Greatsword
+
+## Armor
+
+**Belts**
+- Belt
+- Heavy belt
+- Plated belt
+
+**Shields**
+- Buckler
+- Round Shield
+- Large shield
+- Kite shield
+- Tower shield
+
+**Body armor**
+- Leather armor
+- Studded leather armor
+- Ring mail
+- Scale mail
+- Breast plate
+- Chain mail
+- Light plate
+- Plate Mail
+
+**Boots**
+- Hide boots
+- Heavy leather boots
+- Chain boots
+- Light plated boots
+- Greaves
+
+**Gloves**
+- Hide gloves
+- Heavy leather gloves
+- Chain gloves
+- Light gauntlets
+- Plate gauntlets
+
+**Helmets**
+- Cap
+- Helm
+- Full helm

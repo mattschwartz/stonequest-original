@@ -40,6 +40,7 @@ public final class Resources {
     public static final Sprite_Resource ITEM_GOLD_COIN = new Sprite_Resource("items::gold_coin");
     public static final Sprite_Resource ITEM_HEADSTONE = new Sprite_Resource("items::headstone");
     public static final Sprite_Resource ITEM_BLUE_ROBE = new Sprite_Resource("items::blue_robe");
+    public static final Sprite_Resource ITEM_RECURVE_BOW = new Sprite_Resource("items::recurve_bow");
     public static final Sprite_Resource ITEM_HERBS_BUNDLE = new Sprite_Resource("items::herbs_bundle");
     public static final Sprite_Resource ITEM_IRON_OXIDE_DUST = new Sprite_Resource("items::iron_oxide_dust");
     public static final Sprite_Resource ITEM_POTION_BLUE = new Sprite_Resource("items::potion_blue");

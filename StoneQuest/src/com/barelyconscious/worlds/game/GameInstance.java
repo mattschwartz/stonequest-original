@@ -38,6 +38,9 @@ public final class GameInstance {
     @Setter
     private PlayerController playerController = new PlayerController();
 
+    /**
+     * A device used by the player to store and interact with media
+     */
     @Getter
     @Setter
     private Camera camera;

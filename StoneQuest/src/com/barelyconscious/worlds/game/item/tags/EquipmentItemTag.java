@@ -17,6 +17,7 @@ public enum EquipmentItemTag implements ItemTag {
 
     EQUIPMENT_LEFT_HAND("Left hand"),
     EQUIPMENT_RIGHT_HAND("Right hand"),
+    EQUIPMENT_TWO_HANDED("Two handed"),
     ;
 
     private final String tagName;
