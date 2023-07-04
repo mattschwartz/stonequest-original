@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.game.tech;
 
 import com.barelyconscious.worlds.entity.Actor;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
  * carry them around.
  */
 public class Motherboard extends Actor {
+    @Getter
     private final List<MotherboardSocket> sockets;
 
     public Motherboard() {

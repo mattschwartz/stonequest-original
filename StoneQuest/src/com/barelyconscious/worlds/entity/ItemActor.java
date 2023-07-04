@@ -11,18 +11,20 @@ import com.barelyconscious.worlds.game.resources.Resources;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Getter
 public class ItemActor extends Actor {
 
-    private int itemLevel;
-    private String description;
-    private Set<ItemTag> tags;
-    private Resources.Sprite_Resource sprite;
-    private List<ItemRequirement> requirements;
-    private List<ItemProperty> properties;
+    protected int itemLevel;
+    protected String description;
+    protected Set<ItemTag> tags = new HashSet<>();
+    protected Resources.Sprite_Resource sprite;
+    protected List<ItemRequirement> requirements = new ArrayList<>();
+    protected List<ItemProperty> properties = new ArrayList<>();
 
     public boolean isConsumable() {
         return tags.stream().anyMatch(t -> t instanceof ConsumableItemTag);

@@ -38,6 +38,7 @@ public class UserInputPanel extends Widget {
 
         this.inventoryBagWidget.setEnabled(false);
         this.craftingMenuWidget.setEnabled(false);
+        this.gameMenuWidget.setEnabled(false);
 
         addWidget(new SpriteWidget(LayoutData.DEFAULT,
             Resources.instance().getSprite(GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND)));
@@ -81,7 +82,7 @@ public class UserInputPanel extends Widget {
             .anchor(new VDim(0, 0, 107 + 14, 11))
             .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DEFAULT)
             .build(), () -> {
-            worldMapWidget.setEnabled(worldMapWidget.isEnabled());
+            worldMapWidget.setEnabled(!worldMapWidget.isEnabled());
             return null;
         });
         worldMapButton.setButtonStateSprites(new EnumMap<>(ButtonWidget.ButtonWidgetState.class) {{
@@ -95,10 +96,11 @@ public class UserInputPanel extends Widget {
         ButtonWidget gameMenuButton = new ButtonWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 176, 11))
             .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_GAME_MENU_DEFAULT)
-            .build(), () -> {
-            gameMenuWidget.setEnabled(gameMenuWidget.isEnabled());
-            return null;
-        });
+            .build(),
+            () -> {
+                gameMenuWidget.setEnabled(!gameMenuWidget.isEnabled());
+                return null;
+            });
         gameMenuButton.setButtonStateSprites(new EnumMap<>(ButtonWidget.ButtonWidgetState.class) {{
             put(ButtonWidget.ButtonWidgetState.DEFAULT, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_GAME_MENU_DEFAULT));
             put(ButtonWidget.ButtonWidgetState.MOUSE_OVER, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_GAME_MENU_OVER));

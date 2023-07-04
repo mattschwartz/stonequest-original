@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.module;
 
 import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
+import com.barelyconscious.worlds.engine.gui.widgets.*;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.gui.CraftingWindowWidget;
@@ -9,10 +10,6 @@ import com.barelyconscious.worlds.engine.gui.HeroQuickbarPanel;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.UserInputPanel;
 import com.barelyconscious.worlds.engine.gui.VDim;
-import com.barelyconscious.worlds.engine.gui.widgets.GameMenuWidget;
-import com.barelyconscious.worlds.engine.gui.widgets.InventoryBagWidget;
-import com.barelyconscious.worlds.engine.gui.widgets.TileInfoWidget;
-import com.barelyconscious.worlds.engine.gui.widgets.WorldMapWidget;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
@@ -57,7 +54,7 @@ public final class GuiInitializer {
 
         val wCraftingMenu = new CraftingWindowWidget();
         var wWorldMapMenu = new WorldMapWidget();
-        var wGameMenu = new GameMenuWidget();
+        var wGameMenu = new PlayerPersonalDeviceWidget();
 
         gui.addWidget(wBackpack);
         gui.addWidget(wCraftingMenu);

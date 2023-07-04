@@ -43,6 +43,15 @@ public abstract class Widget {
         this.widgets = new CopyOnWriteArrayList<>();
     }
 
+    /**
+     * Called when the engine is complete and gui render
+     * is starting for the first time.
+     * todo: hook into this from engine
+     */
+    public void onReady() {
+        widgets.forEach(Widget::onReady);
+    }
+
     public final boolean isEnabled() {
         if (parent != null) {
             return parent.isEnabled && isEnabled;

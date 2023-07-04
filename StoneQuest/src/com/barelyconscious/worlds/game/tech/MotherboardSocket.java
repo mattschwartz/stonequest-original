@@ -43,6 +43,13 @@ public class MotherboardSocket extends Actor {
         return socketedItem != null;
     }
 
+    /**
+     * Attempts to socket the item into this socket.
+     *
+     * @param item the item to socket.
+     * @throws IllegalArgumentException if the item does not fit into this
+     * socket.
+     */
     public void socketItem(final ItemActor item) {
         if (!fitsSocket(item)) {
             throw new IllegalArgumentException("Item does not fit into this socket.");

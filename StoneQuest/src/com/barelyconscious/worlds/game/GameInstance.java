@@ -3,6 +3,7 @@ package com.barelyconscious.worlds.game;
 import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.engine.Camera;
 import com.barelyconscious.worlds.entity.Hero;
+import com.barelyconscious.worlds.entity.PlayerPersonalDevice;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,6 +38,10 @@ public final class GameInstance {
     @Getter
     @Setter
     private PlayerController playerController = new PlayerController();
+
+    @Getter
+    @Setter
+    private PlayerPersonalDevice playerPersonalDevice;
 
     /**
      * A device used by the player to store and interact with media

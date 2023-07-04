@@ -11,6 +11,7 @@ import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerContr
 import com.barelyconscious.worlds.game.resources.spritesheet.SpritesheetManager;
 import com.barelyconscious.worlds.module.DatabaseModule;
 import com.barelyconscious.worlds.testgamedata.TestHeroInitializer;
+import com.barelyconscious.worlds.testgamedata.TestTechInitializer;
 import com.barelyconscious.worlds.testgamedata.TestWorldInitializer;
 import com.barelyconscious.worlds.module.GuiInitializer;
 import com.barelyconscious.worlds.module.WorldsModule;
@@ -54,6 +55,7 @@ public final class GameRunner {
 
         engine.prestart(gi, world, screen, playerController);
 
+        TestTechInitializer.init();
         GuiInitializer.createGui(screen, world, playerController);
         TestHeroInitializer.createHeroes(world, playerController);
         TestWorldInitializer.createWorld(world);

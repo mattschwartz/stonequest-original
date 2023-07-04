@@ -1,6 +1,8 @@
 package com.barelyconscious.worlds.testgamedata;
 
 import com.barelyconscious.worlds.entity.BasicPowerSupply;
+import com.barelyconscious.worlds.entity.PlayerPersonalDevice;
+import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.tech.Motherboard;
 import com.barelyconscious.worlds.game.tech.MotherboardSocket;
 import com.barelyconscious.worlds.game.tech.MotherboardSocketType;
@@ -8,7 +10,7 @@ import com.google.common.collect.Lists;
 
 public class TestTechInitializer {
 
-    static void init() {
+    public static void init() {
         var powerSupplySocket = MotherboardSocket.builder()
             .socketType(MotherboardSocketType.POWER)
             .powerConsumption(10)
@@ -33,9 +35,12 @@ public class TestTechInitializer {
             memorySocket2
         ));
 
-
         var basicPowerSupply = new BasicPowerSupply();
 
         powerSupplySocket.socketItem(basicPowerSupply);
+
+        GameInstance.instance().setPlayerPersonalDevice(
+            new PlayerPersonalDevice(motherboard)
+        );
     }
 }

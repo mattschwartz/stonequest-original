@@ -188,7 +188,7 @@ public class HeroStatsSheetWidget extends Widget {
         glw.setCell(row++, 0, new TextFieldWidget("Combat Resources", FontContext.TextAlign.LEFT, FontContext.VerticalTextAlignment.TOP));
         createStatLine(row++, glw, StatName.ENERGY, hero.stat(StatName.ENERGY).get());
         createStatLine(row++, glw, StatName.FOCUS, hero.stat(StatName.FOCUS).get());
-        createStatLine(row++, glw, StatName.SPIRIT, hero.stat(StatName.SPIRIT).get());
+        createStatLine(row, glw, StatName.SPIRIT, hero.stat(StatName.SPIRIT).get());
 
         backdrop.addWidget(miw);
         miw.addWidget(detailedStatsWidget);
