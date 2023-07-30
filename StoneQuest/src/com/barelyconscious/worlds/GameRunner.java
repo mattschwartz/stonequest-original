@@ -1,6 +1,5 @@
 package com.barelyconscious.worlds;
 
-import com.barelyconscious.worlds.data.dynamodb.model.RecipeItem;
 import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
 import com.barelyconscious.worlds.entity.CameraActor;
 import com.barelyconscious.worlds.engine.Engine;
@@ -9,7 +8,6 @@ import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.input.KeyInputHandler;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
 import com.barelyconscious.worlds.game.resources.spritesheet.SpritesheetManager;
-import com.barelyconscious.worlds.module.DatabaseModule;
 import com.barelyconscious.worlds.testgamedata.TestHeroInitializer;
 import com.barelyconscious.worlds.testgamedata.TestTechInitializer;
 import com.barelyconscious.worlds.testgamedata.TestWorldInitializer;
@@ -17,8 +15,6 @@ import com.barelyconscious.worlds.module.GuiInitializer;
 import com.barelyconscious.worlds.module.WorldsModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
-import software.amazon.awssdk.services.dynamodb.model.*;
 
 import javax.swing.JFrame;
 import java.awt.event.WindowAdapter;

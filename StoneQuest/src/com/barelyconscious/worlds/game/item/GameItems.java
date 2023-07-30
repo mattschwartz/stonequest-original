@@ -1,5 +1,6 @@
 package com.barelyconscious.worlds.game.item;
 
+import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.item.tags.ConsumableItemTag;
 import com.barelyconscious.worlds.game.item.tags.EquipmentItemTag;
 import com.barelyconscious.worlds.game.item.tags.RelatedSkillItemTag;
@@ -43,7 +44,7 @@ public enum GameItems {
         "Iron Shield", "A shield made of iron.",
         Resources.ITEM_SHIELD,
         Set.of(EquipmentItemTag.EQUIPMENT_LEFT_HAND, RelatedSkillItemTag.METALWORKING),
-        new ArrayList<>(),
+        Lists.newArrayList(new ItemRequirement.TraitItemRequirement(TraitName.STRENGTH, 10)),
         new ArrayList<>()),
     CLOTH_ROBE(5, 1,
         "Cloth Robe", "Little more than a bath robe.",

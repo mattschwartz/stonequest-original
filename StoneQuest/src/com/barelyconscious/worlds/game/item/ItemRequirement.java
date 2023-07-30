@@ -4,6 +4,7 @@ import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.entity.components.EntityLevelComponent;
+import com.barelyconscious.worlds.game.TraitName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -59,4 +60,14 @@ public abstract class ItemRequirement {
         }
     }
 
+    @AllArgsConstructor
+    public static class TraitItemRequirement extends ItemRequirement {
+        private final TraitName trait;
+        private final float requiredTraitValue;
+
+        @Override
+        public boolean meetsRequirement(EntityActor entity) {
+            return entity.trait(trait).get().getCurrentValue() >= requiredTraitValue;
+        }
+    }
 }

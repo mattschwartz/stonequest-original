@@ -13,7 +13,6 @@ import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.GameState;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
-import com.barelyconscious.worlds.game.tech.Motherboard;
 import com.google.common.util.concurrent.RateLimiter;
 
 import java.time.Clock;
@@ -36,7 +35,6 @@ public class GameRunnerCLI {
 
         world.addActor(
             new PlayerPersonalDevice(
-                new Motherboard()
             )
         );
 

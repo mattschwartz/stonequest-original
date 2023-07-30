@@ -1,9 +1,6 @@
 package com.barelyconscious.worlds.entity;
 
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.game.tech.Motherboard;
-import com.barelyconscious.worlds.game.tech.MotherboardSocketType;
-import lombok.Getter;
 
 /**
  * The player's Personal Device which serves as a means of interfacing with the tech
@@ -16,33 +13,8 @@ import lombok.Getter;
  */
 public class PlayerPersonalDevice extends Actor {
 
-    @Getter
-    private Motherboard motherboard;
-
-    public PlayerPersonalDevice(final Motherboard motherboard) {
+    public PlayerPersonalDevice() {
         super("Player Personal Device", Vector.ZERO);
-        this.motherboard = motherboard;
-        this.motherboard.setParent(this);
     }
 
-    public void setMotherboard(final Motherboard newMotherboard) {
-
-        // transfer components from old motherboard to new motherboard
-
-        for (MotherboardSocketType socketType :
-            MotherboardSocketType.values()) {
-
-            var existingSockets = this.motherboard.getSocketsOfType(socketType);
-            var newSockets = newMotherboard.getSocketsOfType(socketType);
-
-            if (existingSockets.size() < newSockets.size()) {
-                // fail
-            } else {
-                // transfer sockets from old motherboard to new motherboard
-
-            }
-        }
-
-        this.motherboard = newMotherboard;
-    }
 }
