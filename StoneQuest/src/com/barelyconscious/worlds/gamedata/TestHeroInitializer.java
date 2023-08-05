@@ -1,4 +1,4 @@
-package com.barelyconscious.worlds.testgamedata;
+package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.*;
@@ -52,6 +52,7 @@ public class TestHeroInitializer {
             .withCreatureLevel(38, 144, 24)
             .withHeroClass(HeroClassType.THIEF)
             .withStat(StatName.ARMOR, 9f)
+            .withStat(StatName.FOCUS, 10)
             .buildHero(new Inventory(28), HeroClassType.THIEF);
 
         HERO_JOHN.addComponent(new MoveComponent(HERO_JOHN, 32f));
@@ -71,6 +72,7 @@ public class TestHeroInitializer {
             .withHeroClass(HeroClassType.PRIEST)
             .withStat(StatName.ARMOR, 3f)
             .withStat(StatName.FOCUS, -1f)
+            .withStat(StatName.SPIRIT, 10f)
             .buildHero(new Inventory(28), HeroClassType.PRIEST);
 
         HERO_PAUL.getEquipment().setEquippedItem(GameItems.IRON_SHIELD.toItem());

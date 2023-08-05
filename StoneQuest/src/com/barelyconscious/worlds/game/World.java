@@ -39,9 +39,6 @@ public final class World {
     public void unloadWorld() {
     }
 
-    public void saveWorld() {
-    }
-
     public Actor getActorAt(final Vector worldPos) {
         return getActorAt(worldPos.x, worldPos.y);
     }

@@ -34,7 +34,9 @@ public class AbilityComponent extends Component {
     }
 
     public void enact() {
-        var context = new AbilityContext(getParent(), null, null);
+        var context = AbilityContext.builder()
+            .caster(getParent())
+            .build();
 
         Ability.ActionResult actionResult = ability.enact(context);
 

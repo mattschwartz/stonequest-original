@@ -1,4 +1,4 @@
-package com.barelyconscious.worlds.testgamedata;
+package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.entity.PlayerPersonalDevice;
 import com.barelyconscious.worlds.game.GameInstance;

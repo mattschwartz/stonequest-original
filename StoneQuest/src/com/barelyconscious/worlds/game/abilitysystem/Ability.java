@@ -9,17 +9,26 @@ import lombok.extern.log4j.Log4j2;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @Log4j2
 public class Ability {
 
     private String name;
     private float cooldownSeconds;
     private float remainingCooldownSeconds;
-    private float castTime;
     private BehaviorWorkflow behaviorWorkflow;
 
-    public final Delegate<Object> delegateInterruptAbility = new Delegate<>();
+    protected void setBehaviorWorkflow(BehaviorWorkflow behaviorWorkflow) {
+        this.behaviorWorkflow = behaviorWorkflow;
+    }
+
+    public Ability(
+        String name,
+        float cooldownSeconds
+    ) {
+        this.name = name;
+        this.cooldownSeconds = cooldownSeconds;
+        this.remainingCooldownSeconds = 0;
+    }
 
     public void updateCooldown(float deltaTime) {
         if (remainingCooldownSeconds > 0) {

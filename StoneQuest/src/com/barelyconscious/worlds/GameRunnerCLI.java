@@ -23,8 +23,7 @@ import java.util.Scanner;
 public class GameRunnerCLI {
 
     static CliPlayerController playerController = new CliPlayerController();
-    static GameState gameState = new GameState(
-        GameInstance.instance());
+    static GameState gameState = new GameState();
 
     public static void main(String[] args) {
         engine.prestart(

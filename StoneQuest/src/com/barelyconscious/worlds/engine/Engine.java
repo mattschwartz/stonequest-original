@@ -294,6 +294,6 @@ public final class Engine {
             pendingJobExecutions,
             playerController,
             world,
-            new GameState(null));
+            new GameState());
     }
 }

@@ -12,6 +12,9 @@ import lombok.Setter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Expect that pretttty much all of this is going to go away
+ */
 public final class GameInstance {
 
     public final Delegate<HeroSelectionChanged> delegateHeroSelectionChanged = new Delegate<>();

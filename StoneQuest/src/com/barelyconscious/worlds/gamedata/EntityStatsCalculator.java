@@ -1,4 +1,4 @@
-package com.barelyconscious.worlds.game;
+package com.barelyconscious.worlds.gamedata;
 
 public class EntityStatsCalculator {
 

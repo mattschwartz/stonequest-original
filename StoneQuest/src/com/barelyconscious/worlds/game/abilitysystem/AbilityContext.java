@@ -2,19 +2,22 @@ package com.barelyconscious.worlds.game.abilitysystem;
 
 import com.barelyconscious.worlds.entity.Actor;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor
+@Builder
 public class AbilityContext {
 
     @Getter
     private final Actor caster;
     @Getter
-    private final List<Actor> targets;
-    private final Map<String, Object> context;
+    private List<Actor> targets = new ArrayList<>();
+    private Map<String, Object> context = new HashMap<>();
 
     public enum ContextKey {
         CASTER_CONTEXT_KEY,

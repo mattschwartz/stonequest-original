@@ -15,7 +15,7 @@ import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
-import com.barelyconscious.worlds.testgamedata.TestHeroInitializer;
+import com.barelyconscious.worlds.gamedata.TestHeroInitializer;
 import lombok.val;
 
 import static com.barelyconscious.worlds.game.resources.GUISpriteSheet.Resources.INV_ITEM_SLOT_BACKGROUND;

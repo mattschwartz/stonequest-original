@@ -10,17 +10,22 @@ import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.input.KeyInputHandler;
 import com.barelyconscious.worlds.engine.input.MouseInputHandler;
+import com.barelyconscious.worlds.game.abilitysystem.Ability;
+import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.common.UMath;
+import com.barelyconscious.worlds.gamedata.abilities.RenewAbility;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * todo(p0) When selected and while player holding the alt key,
@@ -89,6 +94,9 @@ public class MouseKeyboardPlayerController extends PlayerController {
         return null;
     }
 
+    /**
+     * todo - convert to use configurable key bindings
+     */
     private Void onKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
             if (EventArgs.IS_DEBUG) {
@@ -121,10 +129,16 @@ public class MouseKeyboardPlayerController extends PlayerController {
         }
 
         if (keyEvent.getKeyChar() == 'f' || keyEvent.getKeyChar() == 'F') {
-            GameInstance.instance()
-                .getHeroSelected()
-                .getHealthComponent()
-                .adjust(1.2f);
+            Ability.ActionResult result = new RenewAbility().enact(AbilityContext.builder()
+                .caster(GameInstance.instance().getHeroSelected())
+                .build());
+
+            log.info(result);
+
+//            GameInstance.instance()
+//                .getHeroSelected()
+//                .getHealthComponent()
+//                .adjust(1.2f);
         }
 
         final MoveComponent move = GameInstance.instance()
@@ -182,6 +196,10 @@ public class MouseKeyboardPlayerController extends PlayerController {
         return null;
     }
 
+
+    /**
+     * todo - needs to move to an ability
+     */
     private static final class AwesomeBulletWeaponItem {
 
         public void use(
