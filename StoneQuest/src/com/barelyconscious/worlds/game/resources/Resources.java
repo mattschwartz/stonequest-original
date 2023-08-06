@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@Deprecated // todo is it tho?
 public final class Resources {
 
     private static final class InstanceHolder {
@@ -35,6 +36,7 @@ public final class Resources {
         this.craftingWindowSpriteSheet = CraftingWindowSpriteSheet.createCraftingWindowSpriteSheet();
     }
 
+    @Deprecated // use SpritesheetManager
     public WSprite getSprite(final SpriteResource resource) {
         WSprite sprite = null;
 
