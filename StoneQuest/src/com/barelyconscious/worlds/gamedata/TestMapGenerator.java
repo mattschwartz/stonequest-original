@@ -43,13 +43,13 @@ public class TestMapGenerator {
         3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,};
 
     private static final Map<Integer, Resources.Sprite_Resource> KEY_SPRITE = new HashMap<>() {{
-        put(1, Resources.TEX_FALLGRASS);
-        put(2, Resources.TEX_FALLDIRT);
-        put(3, Resources.TEX_REINFORCEDCAVEFLOOR_V1);
-        put(4, Resources.TEX_FALLPACKED);
-        put(5, Resources.TEX_COBBLE);
-        put(6, Resources.TEX_GRAVEL);
-        put(7, Resources.TEX_FARM);
+        put(1, new Resources.Sprite_Resource("texture::fallgrass"));
+        put(2, new Resources.Sprite_Resource("texture::falldirt"));
+        put(3, new Resources.Sprite_Resource("texture::reinforcedcaveFloor_v1"));
+        put(4, new Resources.Sprite_Resource("texture::falldirt"));
+        put(5, new Resources.Sprite_Resource("texture::cobble"));
+        put(6, new Resources.Sprite_Resource("texture::gravel"));
+        put(7, new Resources.Sprite_Resource("texture::farm"));
     }};
 
     private static void createTiles(final World world) {
