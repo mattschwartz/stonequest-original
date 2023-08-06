@@ -38,6 +38,15 @@ public class RenewAbility extends Ability {
 
                     return new BehaviorFeedback(ContinuationResult.CONTINUE, context);
                 }
-            }));
+            },
+            new Behavior() {
+                @Override
+                public BehaviorFeedback perform(AbilityContext context) {
+                    context.addTarget(context.getCaster());
+                    return new BehaviorFeedback(ContinuationResult.CONTINUE, context);
+                }
+            },
+            new AdjustEntityStatBehavior(StatName.SPIRIT, -cost, AdjustEntityStatBehavior.StatAdjustmentType.CURRENT)
+        ));
     }
 }

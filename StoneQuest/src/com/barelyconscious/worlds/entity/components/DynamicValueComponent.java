@@ -44,6 +44,15 @@ public class DynamicValueComponent extends Component {
         this.maxValue = newMaxValue;
     }
 
+    public void adjustCurrentValueBy(final float currentValueDelta) {
+        this.currentValue += currentValueDelta;
+
+        delegateOnValueChanged.call(new DynamicValueChanged(
+            currentValueDelta,
+            currentValue,
+            this.maxValue));
+    }
+
     /**
      * increases the max value by maxValueDelta and increases currentValue by the difference.
      * if new maxValueDelta is lower, then currentHealth is not adjusted but is clamped by maxValueDelta

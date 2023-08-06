@@ -8,6 +8,9 @@ import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * Basically like a container for an ability that can be used by an actor.
+ */
 @Getter
 @Log4j2
 public class AbilityComponent extends Component {

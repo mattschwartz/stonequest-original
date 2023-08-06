@@ -4,6 +4,7 @@ import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.TraitName;
+import com.barelyconscious.worlds.game.abilitysystem.Ability;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -87,6 +88,11 @@ public class EntityActor extends Actor {
 
         public StatAccessor set(float currentValue, float maxValue) {
             stats.get(name).setValue(currentValue, maxValue);
+            return this;
+        }
+
+        public StatAccessor adjustCurrentValueBy(float currentValueDelta) {
+            stats.get(name).adjustCurrentValueBy(currentValueDelta);
             return this;
         }
 

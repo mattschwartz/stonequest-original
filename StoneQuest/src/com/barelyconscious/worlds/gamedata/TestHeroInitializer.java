@@ -2,17 +2,11 @@ package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.*;
+import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.World;
-import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
-import com.barelyconscious.worlds.entity.components.Component;
-import com.barelyconscious.worlds.entity.components.HealthBarComponent;
-import com.barelyconscious.worlds.entity.components.LightSourceComponent;
-import com.barelyconscious.worlds.entity.components.MoveComponent;
-import com.barelyconscious.worlds.entity.components.SpriteComponent;
-import com.barelyconscious.worlds.entity.components.StatChangeOverTimeComponent;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
 import com.barelyconscious.worlds.game.hero.HeroClassType;
 import com.barelyconscious.worlds.game.item.GameItems;
@@ -22,6 +16,7 @@ import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.gamedata.abilities.RenewAbility;
 
 public class TestHeroInitializer {
 
@@ -75,6 +70,10 @@ public class TestHeroInitializer {
             .withStat(StatName.SPIRIT, 10f)
             .buildHero(new Inventory(28), HeroClassType.PRIEST);
 
+        // Add some abilities
+        HERO_PAUL.addComponent(new AbilityComponent(HERO_PAUL, new RenewAbility()));
+
+        // Add some equipment
         HERO_PAUL.getEquipment().setEquippedItem(GameItems.IRON_SHIELD.toItem());
         HERO_PAUL.getEquipment().setEquippedItem(GameItems.CLOTH_ROBE.toItem());
 

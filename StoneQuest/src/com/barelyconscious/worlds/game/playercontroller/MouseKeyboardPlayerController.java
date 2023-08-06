@@ -26,6 +26,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * todo(p0) When selected and while player holding the alt key,
@@ -118,28 +119,17 @@ public class MouseKeyboardPlayerController extends PlayerController {
             System.out.println("Requesting stop");
             delegateOnQuitRequested.call(true);
         }
-        if (keyEvent.getKeyChar() == KeyEvent.VK_1) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
             GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
         }
-        if (keyEvent.getKeyChar() == KeyEvent.VK_2) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F2) {
             GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.MIDDLE);
         }
-        if (keyEvent.getKeyChar() == KeyEvent.VK_3) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
             GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
         }
 
-        if (keyEvent.getKeyChar() == 'f' || keyEvent.getKeyChar() == 'F') {
-            Ability.ActionResult result = new RenewAbility().enact(AbilityContext.builder()
-                .caster(GameInstance.instance().getHeroSelected())
-                .build());
-
-            log.info(result);
-
-//            GameInstance.instance()
-//                .getHeroSelected()
-//                .getHealthComponent()
-//                .adjust(1.2f);
-        }
+        handleAbilityKeybinding(keyEvent);
 
         final MoveComponent move = GameInstance.instance()
             .getHeroSelected()
@@ -168,6 +158,32 @@ public class MouseKeyboardPlayerController extends PlayerController {
         }
 
         return null;
+    }
+
+    /**
+     * When player presses a keybinding, this method determines which hero's ability
+     * is performed.
+     * @param keyEvent
+     */
+    private void handleAbilityKeybinding(KeyEvent keyEvent) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_1) {
+            log.info("Performing ability 1");
+
+            List<AbilityComponent> abilityComponents = GameInstance.instance().getHeroSelected()
+                .getComponentsOfType(AbilityComponent.class);
+
+            // f is first ability why not
+            AbilityComponent firstAbility = abilityComponents == null ? null : abilityComponents.get(0);
+            if (firstAbility != null) {
+                Ability.ActionResult result = firstAbility.getAbility().enact(AbilityContext.builder()
+                    .caster(GameInstance.instance().getHeroSelected())
+                    .build());
+                if (result.message() != null) {
+                    log.info(result.message());
+                }
+            }
+        }
+
     }
 
     private Void onMouseExited(MouseEvent mouseEvent) {

@@ -4,12 +4,14 @@ import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.engine.Camera;
 import com.barelyconscious.worlds.entity.Hero;
 import com.barelyconscious.worlds.entity.PlayerPersonalDevice;
+import com.barelyconscious.worlds.entity.components.AbilityComponent;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -79,6 +81,16 @@ public final class GameInstance {
     private PartySlot selectedHeroId;
     private final Hero[] heroParty = new Hero[PartySlot.values().length];
 
+    /**
+     * todo thoughts on how to do ability slots
+     *
+     * heroes have ability components which include all of their abilities. the hero
+     * party slot only has 6 slots and each slot has a keybinding, which may change if
+     * that hero is selected. the player also can bind abilities to the UI, so hero party slots
+     * have 6 ability slots each and each ability slot has a keybinding, and a reference to an ability.
+     */
+    private Map<Hero, List<AbilityComponent>> heroAbilities = new HashMap<>();
+
     public PartySlot getSlotByHero(final Hero hero) {
         if (heroParty[PartySlot.LEFT.index] == hero) {
             return PartySlot.LEFT;
@@ -105,10 +117,6 @@ public final class GameInstance {
 
     public void setHero(final Hero hero, final PartySlot slot) {
         heroParty[slot.index] = hero;
-    }
-
-    public Hero getHeroInGroup(final PartySlot slot) {
-        return heroParty[slot.index];
     }
 
     public void changeWorld(final World world) {

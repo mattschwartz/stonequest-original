@@ -24,6 +24,15 @@ public class AbilityContext {
         TARGETS_CONTEXT_KEY
     }
 
+    public void addTarget(Actor... targets) {
+        if (this.targets == null) {
+            this.targets = new ArrayList<>();
+        }
+        for (var target : targets) {
+            this.targets.add(target);
+        }
+    }
+
     public Object get(String key) {
         return context.get(key);
     }

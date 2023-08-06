@@ -157,6 +157,11 @@ public class Actor {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
+    public <T extends Component> List<T> getComponentsOfType(final Class<T> componentType) {
+        return (List<T>) componentsByType.get(componentType);
+    }
+
     public List<Component> getComponents() {
         return allComponents;
     }
