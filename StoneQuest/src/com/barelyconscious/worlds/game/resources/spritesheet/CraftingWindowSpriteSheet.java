@@ -1,6 +1,8 @@
-package com.barelyconscious.worlds.game.resources;
+package com.barelyconscious.worlds.game.resources.spritesheet;
 
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
+import com.barelyconscious.worlds.common.Region;
+import com.barelyconscious.worlds.game.resources.SpriteResource;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 

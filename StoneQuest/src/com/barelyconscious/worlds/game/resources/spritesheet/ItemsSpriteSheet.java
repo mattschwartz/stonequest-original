@@ -1,6 +1,8 @@
-package com.barelyconscious.worlds.game.resources;
+package com.barelyconscious.worlds.game.resources.spritesheet;
 
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
+import com.barelyconscious.worlds.common.Region;
+import com.barelyconscious.worlds.game.resources.SpriteResource;
 import lombok.AllArgsConstructor;
 
 public class ItemsSpriteSheet {
@@ -12,7 +14,7 @@ public class ItemsSpriteSheet {
     }
 
     @AllArgsConstructor
-    public enum Resources implements SpriteResource {
+    private enum Resources implements SpriteResource {
         ITEM_WILLOW_BARK(regionOf(0, 0)),
         ITEM_CHAMOMILE_FLOWER(regionOf(1, 0)),
         ITEM_CORRUPTED_IMAGE_FILE(regionOf(2, 0)),

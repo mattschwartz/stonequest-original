@@ -1,6 +1,6 @@
 package com.barelyconscious.worlds.engine.gui;
 
-import com.barelyconscious.worlds.game.resources.Region;
+import com.barelyconscious.worlds.common.Region;
 import com.barelyconscious.worlds.game.resources.SpriteResource;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;

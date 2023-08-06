@@ -2,7 +2,7 @@ package com.barelyconscious.worlds.engine.gui;
 
 import com.barelyconscious.worlds.engine.gui.widgets.SpriteWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.ButtonWidget;
-import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
+import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.Resources;
 
 import java.util.EnumMap;

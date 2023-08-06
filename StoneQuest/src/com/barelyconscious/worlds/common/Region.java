@@ -1,4 +1,4 @@
-package com.barelyconscious.worlds.game.resources;
+package com.barelyconscious.worlds.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

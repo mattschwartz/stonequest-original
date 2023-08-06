@@ -4,6 +4,7 @@ import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
 import com.barelyconscious.worlds.entity.CameraActor;
 import com.barelyconscious.worlds.engine.Engine;
 import com.barelyconscious.worlds.game.GameInstance;
+import com.barelyconscious.worlds.game.GameResourceManager;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.input.KeyInputHandler;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;

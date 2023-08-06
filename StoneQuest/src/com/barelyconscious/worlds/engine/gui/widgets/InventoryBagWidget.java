@@ -4,7 +4,7 @@ import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.VDim;
 import com.barelyconscious.worlds.engine.gui.Widget;
 import com.barelyconscious.worlds.game.Inventory;
-import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
+import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.Resources;
 import lombok.extern.log4j.Log4j2;
 

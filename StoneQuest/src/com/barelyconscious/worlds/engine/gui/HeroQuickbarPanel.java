@@ -7,7 +7,7 @@ import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.entity.Hero;
-import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
+import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.game.resources.WSprite;
 import com.barelyconscious.worlds.common.shape.Vector;

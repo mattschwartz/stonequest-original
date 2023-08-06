@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+// todo - is this the new way?
 public class SpritesheetManager {
 
     @AllArgsConstructor

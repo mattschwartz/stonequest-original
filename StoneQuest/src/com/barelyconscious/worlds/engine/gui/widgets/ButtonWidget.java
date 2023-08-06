@@ -6,7 +6,7 @@ import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.VDim;
 import com.barelyconscious.worlds.engine.gui.MouseInputWidget;
 import com.barelyconscious.worlds.engine.input.InputLayer;
-import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
+import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.game.resources.WSprite;
 import lombok.SneakyThrows;

@@ -7,7 +7,7 @@ import com.barelyconscious.worlds.engine.gui.widgets.ProgressBarWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.SpriteWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
 import com.barelyconscious.worlds.engine.input.InputLayer;
-import com.barelyconscious.worlds.game.resources.CraftingWindowSpriteSheet;
+import com.barelyconscious.worlds.game.resources.spritesheet.CraftingWindowSpriteSheet;
 import com.barelyconscious.worlds.game.resources.Resources;
 
 import java.util.EnumMap;

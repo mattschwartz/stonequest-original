@@ -11,7 +11,7 @@ import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.engine.graphics.FontContext;
 import com.barelyconscious.worlds.engine.input.InputLayer;
-import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
+import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.Resources;
 import lombok.extern.log4j.Log4j2;
 

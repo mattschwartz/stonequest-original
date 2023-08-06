@@ -1,7 +1,10 @@
-package com.barelyconscious.worlds.game.resources;
+package com.barelyconscious.worlds.game.resources.spritesheet;
 
 import com.barelyconscious.worlds.GameRunner;
 import com.barelyconscious.worlds.common.exception.MissingResourceException;
+import com.barelyconscious.worlds.common.Region;
+import com.barelyconscious.worlds.game.resources.SpriteResource;
+import com.barelyconscious.worlds.game.resources.WSprite;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

@@ -12,13 +12,13 @@ import com.barelyconscious.worlds.engine.gui.UserInputPanel;
 import com.barelyconscious.worlds.engine.gui.VDim;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
-import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
+import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.gamedata.TestHeroInitializer;
 import lombok.val;
 
-import static com.barelyconscious.worlds.game.resources.GUISpriteSheet.Resources.INV_ITEM_SLOT_BACKGROUND;
+import static com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet.Resources.INV_ITEM_SLOT_BACKGROUND;
 
 public final class GuiInitializer {
 
