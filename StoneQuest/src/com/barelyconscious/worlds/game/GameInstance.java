@@ -38,6 +38,7 @@ public final class GameInstance {
         return GameInstance.InstanceHolder.instance;
     }
 
+    @Getter
     private World world;
 
     @Getter

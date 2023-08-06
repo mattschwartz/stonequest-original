@@ -63,35 +63,6 @@ public class MouseKeyboardPlayerController extends PlayerController {
     }
 
     private Void onKeyReleased(KeyEvent keyEvent) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-            final Hero usedBy = GameInstance.instance().getHeroSelected();
-            final Vector facing = usedBy.facing;
-
-            JobActionComponent jobComponent = usedBy.getComponent(JobActionComponent.class);
-            if (jobComponent == null) {
-                return null;
-            }
-            try {
-                jobComponent.queueAction(e -> {
-                    final int wait2 = 75;
-                    final int wait3 = 100;
-
-                    new AwesomeBulletWeaponItem().use(usedBy, facing, e.getEventArgs());
-
-                    e.yield(wait2, t -> {
-                        new AwesomeBulletWeaponItem().use(usedBy, facing, e.getEventArgs());
-                        return null;
-                    });
-                    e.yield(wait3, t -> {
-                        new AwesomeBulletWeaponItem().use(usedBy, facing, e.getEventArgs());
-                        return null;
-                    });
-                    return null;
-                });
-            } catch (JobActionComponent.TooManyActionsException e) {
-                log.error("You can't handle that many things at once.");
-            }
-        }
         return null;
     }
 
@@ -163,6 +134,7 @@ public class MouseKeyboardPlayerController extends PlayerController {
     /**
      * When player presses a keybinding, this method determines which hero's ability
      * is performed.
+     *
      * @param keyEvent
      */
     private void handleAbilityKeybinding(KeyEvent keyEvent) {
@@ -176,6 +148,41 @@ public class MouseKeyboardPlayerController extends PlayerController {
             AbilityComponent firstAbility = abilityComponents == null ? null : abilityComponents.get(0);
             if (firstAbility != null) {
                 Ability.ActionResult result = firstAbility.getAbility().enact(AbilityContext.builder()
+                    .world(GameInstance.instance().getWorld())
+                    .caster(GameInstance.instance().getHeroSelected())
+                    .build());
+                if (result.message() != null) {
+                    log.info(result.message());
+                }
+            }
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_2) {
+            log.info("Performing ability 2");
+
+            List<AbilityComponent> abilityComponents = GameInstance.instance().getHeroSelected()
+                .getComponentsOfType(AbilityComponent.class);
+
+            // f is first ability why not
+            AbilityComponent firstAbility = abilityComponents == null ? null : abilityComponents.get(1);
+            if (firstAbility != null) {
+                Ability.ActionResult result = firstAbility.getAbility().enact(AbilityContext.builder()
+                    .world(GameInstance.instance().getWorld())
+                    .caster(GameInstance.instance().getHeroSelected())
+                    .build());
+                if (result.message() != null) {
+                    log.info(result.message());
+                }
+            }
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_3) {
+            log.info("Performing ability 3");
+
+            List<AbilityComponent> abilityComponents = GameInstance.instance().getHeroSelected()
+                .getComponentsOfType(AbilityComponent.class);
+
+            // f is first ability why not
+            AbilityComponent firstAbility = abilityComponents == null ? null : abilityComponents.get(2);
+            if (firstAbility != null) {
+                Ability.ActionResult result = firstAbility.getAbility().enact(AbilityContext.builder()
+                    .world(GameInstance.instance().getWorld())
                     .caster(GameInstance.instance().getHeroSelected())
                     .build());
                 if (result.message() != null) {

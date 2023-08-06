@@ -16,6 +16,7 @@ import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.gamedata.abilities.BulletAbility;
 import com.barelyconscious.worlds.gamedata.abilities.RenewAbility;
 
 public class TestHeroInitializer {
@@ -72,6 +73,7 @@ public class TestHeroInitializer {
 
         // Add some abilities
         HERO_PAUL.addComponent(new AbilityComponent(HERO_PAUL, new RenewAbility()));
+        HERO_PAUL.addComponent(new AbilityComponent(HERO_PAUL, new BulletAbility()));
 
         // Add some equipment
         HERO_PAUL.getEquipment().setEquippedItem(GameItems.IRON_SHIELD.toItem());

@@ -1,6 +1,8 @@
 package com.barelyconscious.worlds.game.abilitysystem;
 
+import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.Actor;
+import com.barelyconscious.worlds.game.World;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +15,8 @@ import java.util.Map;
 @Builder
 public class AbilityContext {
 
+    @Getter
+    private final World world;
     @Getter
     private final Actor caster;
     @Getter
