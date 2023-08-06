@@ -13,9 +13,11 @@ import com.barelyconscious.worlds.engine.graphics.FontContext;
 import com.barelyconscious.worlds.engine.input.InputLayer;
 import com.barelyconscious.worlds.game.resources.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.Resources;
+import lombok.extern.log4j.Log4j2;
 
 import java.awt.Color;
 
+@Log4j2
 public class HeroStatsSheetWidget extends Widget {
 
     private final Hero hero;
@@ -220,6 +222,17 @@ public class HeroStatsSheetWidget extends Widget {
 
         var statValueTfw = new TextFieldWidget(LayoutData.DEFAULT,
             tex + statValue.getCurrentValue());
+
+        statValue.delegateOnValueChanged.bindDelegate(e -> {
+            if (e.currentValue < 0) {
+                statValueTfw.setText("{COLOR=RED}" + e.currentValue);
+            } else if (e.currentValue > 0) {
+                statValueTfw.setText("{COLOR=GREEN}{STYLE=BOLD}" + e.currentValue);
+            } else {
+                statValueTfw.setText("{COLOR=LIGHT_GRAY}" + e.currentValue);
+            }
+            return null;
+        });
 
         statValueTfw.setTextAlignment(FontContext.TextAlign.RIGHT);
         statValueTfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);

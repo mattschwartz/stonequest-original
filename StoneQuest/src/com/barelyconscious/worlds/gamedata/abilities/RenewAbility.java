@@ -13,7 +13,7 @@ public class RenewAbility extends Ability {
     private final float duration = 5;
     private final int totalTicks = 10;
     private final float healthPerTick = 1.8f;
-    private final float cost = 10f;
+    private final float cost = 2.4f;
 
     public RenewAbility() {
         super("Renew", 1.4f);

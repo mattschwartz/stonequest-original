@@ -236,7 +236,7 @@ public class MouseKeyboardPlayerController extends PlayerController {
                     if (col.hit instanceof EntityActor hit) {
                         final DynamicValueComponent health = hit.getHealthComponent();
                         if (health != null && health.isEnabled()) {
-                            health.adjust(UMath.RANDOM.nextFloat() * -3);
+                            health.adjustCurrentValueBy(UMath.RANDOM.nextFloat() * -3);
                             aBullet.destroy();
                         }
                     }

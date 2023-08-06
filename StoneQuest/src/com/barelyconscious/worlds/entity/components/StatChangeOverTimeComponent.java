@@ -54,7 +54,7 @@ public class StatChangeOverTimeComponent extends Component {
 
         if (nextTickIn <= 0) {
             --ticksRemaining;
-            stat.adjust(changePerTick);
+            stat.adjustCurrentValueBy(changePerTick);
             nextTickIn = tickFrequencySeconds;
         }
     }

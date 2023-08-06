@@ -45,12 +45,8 @@ public class DynamicValueComponent extends Component {
     }
 
     public void adjustCurrentValueBy(final float currentValueDelta) {
-        this.currentValue += currentValueDelta;
-
-        delegateOnValueChanged.call(new DynamicValueChanged(
-            currentValueDelta,
-            currentValue,
-            this.maxValue));
+        currentValue = UMath.clampf(currentValue + currentValueDelta, 0, maxValue);
+        delegateOnValueChanged.call(new DynamicValueChanged(currentValueDelta, currentValue, maxValue));
     }
 
     /**
@@ -73,10 +69,5 @@ public class DynamicValueComponent extends Component {
             maxValueDelta,
             previousCurrentValue - currentValue,
             this.maxValue));
-    }
-
-    public void adjust(final float delta) {
-        currentValue = UMath.clampf(currentValue + delta, 0, maxValue);
-        delegateOnValueChanged.call(new DynamicValueChanged(delta, currentValue, maxValue));
     }
 }
