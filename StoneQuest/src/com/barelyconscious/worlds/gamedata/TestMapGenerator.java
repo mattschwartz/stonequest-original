@@ -42,14 +42,14 @@ public class TestMapGenerator {
         3,2,2,2,2,2,2,2,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,
         3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,};
 
-    private static final Map<Integer, Resources.Sprite_Resource> KEY_SPRITE = new HashMap<>() {{
-        put(1, new Resources.Sprite_Resource("texture::fallgrass"));
-        put(2, new Resources.Sprite_Resource("texture::falldirt"));
-        put(3, new Resources.Sprite_Resource("texture::reinforcedcaveFloor_v1"));
-        put(4, new Resources.Sprite_Resource("texture::falldirt"));
-        put(5, new Resources.Sprite_Resource("texture::cobble"));
-        put(6, new Resources.Sprite_Resource("texture::gravel"));
-        put(7, new Resources.Sprite_Resource("texture::farm"));
+    private static final Map<Integer, Resources.BetterSpriteResource> KEY_SPRITE = new HashMap<>() {{
+        put(1, new Resources.BetterSpriteResource("texture::fallgrass"));
+        put(2, new Resources.BetterSpriteResource("texture::falldirt"));
+        put(3, new Resources.BetterSpriteResource("texture::reinforcedcaveFloor_v1"));
+        put(4, new Resources.BetterSpriteResource("texture::falldirt"));
+        put(5, new Resources.BetterSpriteResource("texture::cobble"));
+        put(6, new Resources.BetterSpriteResource("texture::gravel"));
+        put(7, new Resources.BetterSpriteResource("texture::farm"));
     }};
 
     private static void createTiles(final World world) {
@@ -62,7 +62,7 @@ public class TestMapGenerator {
                 int key = map[
                     x + y * tileWidth
                     ];
-                final Resources.Sprite_Resource rSprite = KEY_SPRITE.get(key);
+                final Resources.BetterSpriteResource rSprite = KEY_SPRITE.get(key);
 
                 int width = 64;
                 int height =64;

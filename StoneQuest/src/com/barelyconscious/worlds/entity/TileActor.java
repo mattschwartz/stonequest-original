@@ -22,7 +22,7 @@ public class TileActor extends Actor implements Interactable {
 
     @Getter
     private Tile tile;
-    private Resources.Sprite_Resource spriteResource;
+    private Resources.BetterSpriteResource spriteResource;
     private final SpriteComponent spriteComponent;
 
     private Box mouseCaptureBounds;
@@ -44,7 +44,7 @@ public class TileActor extends Actor implements Interactable {
     public TileActor(
         final Vector transform,
         @NonNull final Tile tile,
-        final Resources.Sprite_Resource spriteResource,
+        final Resources.BetterSpriteResource spriteResource,
         final int width,
         final int height,
         final MouseInputHandler mouseInputHandler

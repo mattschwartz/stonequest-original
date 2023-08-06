@@ -22,7 +22,7 @@ public class Item {
     private final Set<ItemTag> tags;
     private final String name;
     private final String description;
-    private final Resources.Sprite_Resource sprite;
+    private final Resources.BetterSpriteResource sprite;
     private final List<ItemRequirement> requirements;
     private final List<ItemProperty> properties;
 

@@ -26,11 +26,11 @@ public class SpriteComponent extends Component {
     private float opacity = 1;
 
     public final Sprite sprite;
-    private final Resources.Sprite_Resource spriteResource;
+    private final Resources.BetterSpriteResource spriteResource;
     private final int width;
     private final int height;
 
-    public SpriteComponent(final Actor parent, final Resources.Sprite_Resource spriteResource, final int width, final int height) {
+    public SpriteComponent(final Actor parent, final Resources.BetterSpriteResource spriteResource, final int width, final int height) {
         super(parent);
 
         this.spriteResource = spriteResource;
@@ -40,7 +40,7 @@ public class SpriteComponent extends Component {
         this.height = height;
     }
 
-    public SpriteComponent(final Actor parent, final Resources.Sprite_Resource spriteResource) {
+    public SpriteComponent(final Actor parent, final Resources.BetterSpriteResource spriteResource) {
         this(parent, spriteResource, spriteResource.getWidth(), spriteResource.getHeight());
     }
 

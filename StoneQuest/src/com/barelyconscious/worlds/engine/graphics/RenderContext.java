@@ -174,7 +174,7 @@ public class RenderContext implements IRenderContext {
     @Builder
     public static class RenderRequest {
 
-        private final Resources.Sprite_Resource spriteResource;
+        private final Resources.BetterSpriteResource spriteResource;
         private final int width;
         private final int height;
         private final int worldX;

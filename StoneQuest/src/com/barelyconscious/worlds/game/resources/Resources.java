@@ -29,7 +29,7 @@ public final class Resources {
      * todo is new way?
      */
     @AllArgsConstructor
-    public static class Sprite_Resource {
+    public static class BetterSpriteResource {
         private final String resourceName;
 
         public int getWidth() {
