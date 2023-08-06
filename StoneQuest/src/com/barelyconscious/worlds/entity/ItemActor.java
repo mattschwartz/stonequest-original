@@ -5,7 +5,7 @@ import com.barelyconscious.worlds.game.item.ItemRequirement;
 import com.barelyconscious.worlds.game.item.ItemTag;
 import com.barelyconscious.worlds.game.item.tags.ConsumableItemTag;
 import com.barelyconscious.worlds.game.item.tags.StackableItemTag;
-import com.barelyconscious.worlds.game.resources.Resources;
+import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class ItemActor extends Actor {
     protected int itemLevel;
     protected String description;
     protected Set<ItemTag> tags = new HashSet<>();
-    protected Resources.BetterSpriteResource sprite;
+    protected BetterSpriteResource sprite;
     protected List<ItemRequirement> requirements = new ArrayList<>();
     protected List<ItemProperty> properties = new ArrayList<>();
 

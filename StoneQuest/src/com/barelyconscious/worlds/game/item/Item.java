@@ -4,7 +4,7 @@ package com.barelyconscious.worlds.game.item;
 import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.game.item.tags.ConsumableItemTag;
 import com.barelyconscious.worlds.game.item.tags.StackableItemTag;
-import com.barelyconscious.worlds.game.resources.Resources;
+import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -22,7 +22,7 @@ public class Item {
     private final Set<ItemTag> tags;
     private final String name;
     private final String description;
-    private final Resources.BetterSpriteResource sprite;
+    private final BetterSpriteResource sprite;
     private final List<ItemRequirement> requirements;
     private final List<ItemProperty> properties;
 

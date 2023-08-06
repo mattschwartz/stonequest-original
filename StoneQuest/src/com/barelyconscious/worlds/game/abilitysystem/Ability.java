@@ -1,7 +1,7 @@
 package com.barelyconscious.worlds.game.abilitysystem;
 
 import com.barelyconscious.worlds.common.UMath;
-import com.barelyconscious.worlds.game.resources.Resources;
+import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -12,7 +12,7 @@ import lombok.extern.log4j.Log4j2;
 public class Ability {
 
     private String name;
-    private Resources.BetterSpriteResource icon;
+    private BetterSpriteResource icon;
     private float cooldownSeconds;
     private float remainingCooldownSeconds;
     private BehaviorWorkflow behaviorWorkflow;

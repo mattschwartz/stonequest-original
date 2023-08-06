@@ -1,8 +1,8 @@
 package com.barelyconscious.worlds.engine.graphics;
 
 import com.barelyconscious.worlds.engine.Camera;
+import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.game.resources.FontResource;
-import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.common.UColor;
@@ -174,7 +174,7 @@ public class RenderContext implements IRenderContext {
     @Builder
     public static class RenderRequest {
 
-        private final Resources.BetterSpriteResource spriteResource;
+        private final BetterSpriteResource spriteResource;
         private final int width;
         private final int height;
         private final int worldX;

@@ -5,7 +5,7 @@ import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.Sprite;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
-import com.barelyconscious.worlds.game.resources.Resources;
+import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.common.UMath;
@@ -26,11 +26,11 @@ public class SpriteComponent extends Component {
     private float opacity = 1;
 
     public final Sprite sprite;
-    private final Resources.BetterSpriteResource spriteResource;
+    private final BetterSpriteResource spriteResource;
     private final int width;
     private final int height;
 
-    public SpriteComponent(final Actor parent, final Resources.BetterSpriteResource spriteResource, final int width, final int height) {
+    public SpriteComponent(final Actor parent, final BetterSpriteResource spriteResource, final int width, final int height) {
         super(parent);
 
         this.spriteResource = spriteResource;
@@ -40,7 +40,7 @@ public class SpriteComponent extends Component {
         this.height = height;
     }
 
-    public SpriteComponent(final Actor parent, final Resources.BetterSpriteResource spriteResource) {
+    public SpriteComponent(final Actor parent, final BetterSpriteResource spriteResource) {
         this(parent, spriteResource, spriteResource.getWidth(), spriteResource.getHeight());
     }
 

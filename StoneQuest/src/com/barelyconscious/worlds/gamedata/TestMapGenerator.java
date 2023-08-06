@@ -3,7 +3,7 @@ package com.barelyconscious.worlds.gamedata;
 import com.barelyconscious.worlds.entity.TileActor;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.input.MouseInputHandler;
-import com.barelyconscious.worlds.game.resources.Resources;
+import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.entity.Tile;
 import com.barelyconscious.worlds.common.shape.Vector;
 
@@ -42,14 +42,14 @@ public class TestMapGenerator {
         3,2,2,2,2,2,2,2,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,
         3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,};
 
-    private static final Map<Integer, Resources.BetterSpriteResource> KEY_SPRITE = new HashMap<>() {{
-        put(1, new Resources.BetterSpriteResource("texture::fallgrass"));
-        put(2, new Resources.BetterSpriteResource("texture::falldirt"));
-        put(3, new Resources.BetterSpriteResource("texture::reinforcedcaveFloor_v1"));
-        put(4, new Resources.BetterSpriteResource("texture::falldirt"));
-        put(5, new Resources.BetterSpriteResource("texture::cobble"));
-        put(6, new Resources.BetterSpriteResource("texture::gravel"));
-        put(7, new Resources.BetterSpriteResource("texture::farm"));
+    private static final Map<Integer, BetterSpriteResource> KEY_SPRITE = new HashMap<>() {{
+        put(1, new BetterSpriteResource("texture::fallgrass"));
+        put(2, new BetterSpriteResource("texture::falldirt"));
+        put(3, new BetterSpriteResource("texture::reinforcedcaveFloor_v1"));
+        put(4, new BetterSpriteResource("texture::falldirt"));
+        put(5, new BetterSpriteResource("texture::cobble"));
+        put(6, new BetterSpriteResource("texture::gravel"));
+        put(7, new BetterSpriteResource("texture::farm"));
     }};
 
     private static void createTiles(final World world) {
@@ -62,7 +62,7 @@ public class TestMapGenerator {
                 int key = map[
                     x + y * tileWidth
                     ];
-                final Resources.BetterSpriteResource rSprite = KEY_SPRITE.get(key);
+                final BetterSpriteResource rSprite = KEY_SPRITE.get(key);
 
                 int width = 64;
                 int height =64;

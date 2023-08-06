@@ -8,7 +8,7 @@ import com.barelyconscious.worlds.entity.components.SpriteComponent;
 import com.barelyconscious.worlds.engine.input.InputLayer;
 import com.barelyconscious.worlds.engine.input.Interactable;
 import com.barelyconscious.worlds.engine.input.MouseInputHandler;
-import com.barelyconscious.worlds.game.resources.Resources;
+import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.game.GameInstance;
@@ -22,7 +22,7 @@ public class TileActor extends Actor implements Interactable {
 
     @Getter
     private Tile tile;
-    private Resources.BetterSpriteResource spriteResource;
+    private BetterSpriteResource spriteResource;
     private final SpriteComponent spriteComponent;
 
     private Box mouseCaptureBounds;
@@ -44,7 +44,7 @@ public class TileActor extends Actor implements Interactable {
     public TileActor(
         final Vector transform,
         @NonNull final Tile tile,
-        final Resources.BetterSpriteResource spriteResource,
+        final BetterSpriteResource spriteResource,
         final int width,
         final int height,
         final MouseInputHandler mouseInputHandler

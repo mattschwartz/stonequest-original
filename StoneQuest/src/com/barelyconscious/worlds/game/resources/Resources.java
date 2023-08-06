@@ -25,30 +25,6 @@ public final class Resources {
         return InstanceHolder.instance;
     }
 
-    /**
-     * todo is new way?
-     */
-    @AllArgsConstructor
-    public static class BetterSpriteResource {
-        private final String resourceName;
-
-        public int getWidth() {
-            return load().getWidth();
-        }
-
-        public BufferedImage getTexture() {
-            return load().getTexture();
-        }
-
-        public int getHeight() {
-            return load().getHeight();
-        }
-
-        public WSprite load() {
-            return SpritesheetManager.SPRITE_MAP.get(resourceName);
-        }
-    }
-
     private final SpriteSheet guiSpriteSheet;
     private final SpriteSheet itemsSpriteSheet;
     private final SpriteSheet craftingWindowSpriteSheet;
