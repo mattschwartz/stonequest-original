@@ -3,6 +3,7 @@ package com.barelyconscious.worlds.game;
 import com.barelyconscious.worlds.GameRunner;
 import com.barelyconscious.worlds.common.exception.MissingResourceException;
 import com.barelyconscious.worlds.game.resources.SpriteResource;
+import com.barelyconscious.worlds.game.resources.spritesheet.SpritesheetManager;
 import lombok.AllArgsConstructor;
 
 import javax.imageio.ImageIO;
@@ -49,6 +50,11 @@ public class GameResourceManager {
         MISC("misc");
 
         private final String namespace;
+    }
+
+    public static void loadResources() {
+        SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.ITEMS, "sprites/items_spritesheet.json", "sprites/items_spritesheet.png");
+        SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.TEXTURE, "tiles/texture_spritesheet.json", "tiles/texture_spritesheet.png");
     }
 
     public void loadSprites() {

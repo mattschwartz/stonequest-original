@@ -24,8 +24,7 @@ import java.awt.event.WindowEvent;
 public final class GameRunner {
 
     public static void main(final String[] args) {
-        SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.ITEMS, "sprites/items_spritesheet.json", "sprites/items_spritesheet.png");
-        SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.TEXTURE, "tiles/texture_spritesheet.json", "tiles/texture_spritesheet.png");
+        GameResourceManager.loadResources();
 
         final String propertiesFilePath = "Worlds.properties";
         final Injector injector = Guice.createInjector(new WorldsModule(propertiesFilePath));
