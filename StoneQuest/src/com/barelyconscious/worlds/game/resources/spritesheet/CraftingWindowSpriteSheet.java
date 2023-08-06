@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.awt.image.RasterFormatException;
 
+@Deprecated // todo - i think so
 @Log4j2
 public final class CraftingWindowSpriteSheet {
 

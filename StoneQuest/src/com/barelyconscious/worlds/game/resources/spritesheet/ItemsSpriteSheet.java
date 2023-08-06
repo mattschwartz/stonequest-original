@@ -5,6 +5,7 @@ import com.barelyconscious.worlds.common.Region;
 import com.barelyconscious.worlds.game.resources.SpriteResource;
 import lombok.AllArgsConstructor;
 
+@Deprecated // todo - i think so
 public class ItemsSpriteSheet {
 
     private static String SPRITE_SHEET_FILEPATH = "sprites/items_sprite_sheet.png";

@@ -18,6 +18,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * An image that contains within it multiple different sprites.
  */
+@Deprecated // todo - i think so
 public class SpriteSheet {
 
     private Map<SpriteResource, BufferedImage> spriteImagesByResource;
