@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 public class ConsumeCombatResourceBehavior implements Behavior {
 
     private final StatName stat;
-    private final float amount;
+    private final double amount;
 
     @Override
     public BehaviorFeedback perform(AbilityContext context) {

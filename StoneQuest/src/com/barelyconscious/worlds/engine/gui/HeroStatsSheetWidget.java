@@ -225,11 +225,11 @@ public class HeroStatsSheetWidget extends Widget {
 
         statValue.delegateOnValueChanged.bindDelegate(e -> {
             if (e.currentValue < 0) {
-                statValueTfw.setText("{COLOR=RED}" + e.currentValue);
+                statValueTfw.setText("{COLOR=RED}" + String.format("%.2f", e.currentValue));
             } else if (e.currentValue > 0) {
-                statValueTfw.setText("{COLOR=GREEN}{STYLE=BOLD}" + e.currentValue);
+                statValueTfw.setText("{COLOR=GREEN}{STYLE=BOLD}" + String.format("%.2f", e.currentValue));
             } else {
-                statValueTfw.setText("{COLOR=LIGHT_GRAY}" + e.currentValue);
+                statValueTfw.setText("{COLOR=LIGHT_GRAY}" + String.format("%.2f", e.currentValue));
             }
             return null;
         });

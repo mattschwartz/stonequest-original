@@ -10,13 +10,13 @@ import com.barelyconscious.worlds.game.abilitysystem.behaviors.EntityHasStatBeha
 
 public class RenewAbility extends Ability {
 
-    private final float duration = 5;
+    private final double duration = 5;
     private final int totalTicks = 10;
-    private final float healthPerTick = 1.8f;
-    private final float cost = 2.4f;
+    private final double healthPerTick = 1.8;
+    private final double cost = 2.4;
 
     public RenewAbility() {
-        super("Renew", 1.4f);
+        super("Renew", 1.4);
 
         setBehaviorWorkflow(new BehaviorWorkflow(
             new EntityHasStatBehavior(StatName.SPIRIT, cost),

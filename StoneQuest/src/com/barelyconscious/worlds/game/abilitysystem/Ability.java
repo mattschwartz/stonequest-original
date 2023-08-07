@@ -13,8 +13,8 @@ public class Ability {
 
     private String name;
     private BetterSpriteResource icon;
-    private float cooldownSeconds;
-    private float remainingCooldownSeconds;
+    private double cooldownSeconds;
+    private double remainingCooldownSeconds;
     private BehaviorWorkflow behaviorWorkflow;
 
     protected void setBehaviorWorkflow(BehaviorWorkflow behaviorWorkflow) {
@@ -23,16 +23,16 @@ public class Ability {
 
     public Ability(
         String name,
-        float cooldownSeconds
+        double cooldownSeconds
     ) {
         this.name = name;
         this.cooldownSeconds = cooldownSeconds;
         this.remainingCooldownSeconds = 0;
     }
 
-    public void updateCooldown(float deltaTime) {
+    public void updateCooldown(double deltaTime) {
         if (remainingCooldownSeconds > 0) {
-            remainingCooldownSeconds = UMath.clampf(remainingCooldownSeconds - deltaTime,
+            remainingCooldownSeconds = UMath.clamp(remainingCooldownSeconds - deltaTime,
                 0, cooldownSeconds);
         }
     }

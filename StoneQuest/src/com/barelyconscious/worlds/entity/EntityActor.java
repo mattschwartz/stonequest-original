@@ -40,9 +40,9 @@ public class EntityActor extends Actor {
         final String name,
         final Vector transform,
         final int entityLevel,
-        final float currentExperience,
-        final float currentPower,
-        final float maxPower,
+        final double currentExperience,
+        final double currentPower,
+        final double maxPower,
         final int difficultyClass
     ) {
         super(name, transform);
@@ -67,12 +67,12 @@ public class EntityActor extends Actor {
             return traits.get(name);
         }
 
-        public TraitAccessor set(float currentValue, float maxValue) {
+        public TraitAccessor set(double currentValue, double maxValue) {
             traits.get(name).setValue(currentValue, maxValue);
             return this;
         }
 
-        public TraitAccessor adjustMaxValueBy(float maxValueDelta) {
+        public TraitAccessor adjustMaxValueBy(double maxValueDelta) {
             traits.get(name).adjustMaxValueBy(maxValueDelta);
             return this;
         }
@@ -86,17 +86,17 @@ public class EntityActor extends Actor {
             return stats.get(name);
         }
 
-        public StatAccessor set(float currentValue, float maxValue) {
+        public StatAccessor set(double currentValue, double maxValue) {
             stats.get(name).setValue(currentValue, maxValue);
             return this;
         }
 
-        public StatAccessor adjustCurrentValueBy(float currentValueDelta) {
+        public StatAccessor adjustCurrentValueBy(double currentValueDelta) {
             stats.get(name).adjustCurrentValueBy(currentValueDelta);
             return this;
         }
 
-        public StatAccessor adjustMaxValueBy(float maxValueDelta) {
+        public StatAccessor adjustMaxValueBy(double maxValueDelta) {
             stats.get(name).adjustMaxValueBy(maxValueDelta);
             return this;
         }

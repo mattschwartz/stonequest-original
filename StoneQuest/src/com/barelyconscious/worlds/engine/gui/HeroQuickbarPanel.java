@@ -199,7 +199,7 @@ public class HeroQuickbarPanel extends MouseInputWidget {
             return result;
         }
 
-        private String formatAdjustableValue(float currentValue, float maxValue, final String format) {
+        private String formatAdjustableValue(double currentValue, double maxValue, final String format) {
             return String.format("%s%.0f / %.0f", format == null ? "" : format, currentValue, maxValue);
         }
 

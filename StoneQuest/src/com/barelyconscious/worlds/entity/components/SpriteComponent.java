@@ -23,7 +23,7 @@ public class SpriteComponent extends Component {
     public RenderLayer renderLayer;
 
     @Getter
-    private float opacity = 1;
+    private double opacity = 1;
 
     public final Sprite sprite;
     private final BetterSpriteResource spriteResource;
@@ -71,8 +71,8 @@ public class SpriteComponent extends Component {
         this.height = sprite.getHeight();
     }
 
-    public void setOpacity(float opacity) {
-        this.opacity = UMath.clampf(opacity, 0, 1);
+    public void setOpacity(double opacity) {
+        this.opacity = UMath.clamp(opacity, 0, 1);
     }
 
     public Box getBounds() {

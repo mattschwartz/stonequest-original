@@ -12,7 +12,7 @@ import lombok.Setter;
 public class ProgressBarWidget extends Widget {
 
     @Setter
-    private float progress;
+    private double progress;
 
     private final WSprite progressStart;
     private final WSprite progressMid;
@@ -24,7 +24,7 @@ public class ProgressBarWidget extends Widget {
         final WSprite start,
         final WSprite mid,
         final WSprite partialCap,
-        final float progress
+        final double progress
     ) {
         super(layout);
         this.progressStart = start;

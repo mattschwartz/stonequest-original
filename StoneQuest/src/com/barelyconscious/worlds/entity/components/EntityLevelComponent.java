@@ -14,20 +14,20 @@ public class EntityLevelComponent extends Component {
     @AllArgsConstructor
     public static final class EntityLevelChanged {
 
-        public final float delta;
-        public final float currentExperience;
-        public final float entityLevel;
+        public final double delta;
+        public final double currentExperience;
+        public final double entityLevel;
     }
 
     @Getter
     private int entityLevel;
     @Getter
-    private float currentExperience;
+    private double currentExperience;
 
     public EntityLevelComponent(
         final Actor parent,
         final int entityLevel,
-        final float currentExperience
+        final double currentExperience
     ) {
         super(parent);
         this.entityLevel = entityLevel;
@@ -36,8 +36,8 @@ public class EntityLevelComponent extends Component {
         delegateOnEntityLevelChanged = new Delegate<>();
     }
 
-    public void adjustExperience(final float delta) {
-        currentExperience = UMath.clampf(currentExperience, 0, Float.MAX_VALUE);
+    public void adjustExperience(final double delta) {
+        currentExperience = UMath.clamp(currentExperience, 0, Double.MAX_VALUE);
         delegateOnEntityLevelChanged.call(new EntityLevelChanged(
             delta, currentExperience, entityLevel));
     }

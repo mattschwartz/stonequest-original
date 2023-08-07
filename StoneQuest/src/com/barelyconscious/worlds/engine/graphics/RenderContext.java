@@ -179,7 +179,7 @@ public class RenderContext implements IRenderContext {
         private final int height;
         private final int worldX;
         private final int worldY;
-        private final float renderOpacity;
+        private final double renderOpacity;
         private final RenderLayer renderLayer;
     }
 
@@ -190,7 +190,7 @@ public class RenderContext implements IRenderContext {
         if (inBounds(rr.worldX, rr.worldY, rr.width, rr.height)) {
             Composite prevComposite = g.getComposite();
 
-            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, rr.renderOpacity));
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) rr.renderOpacity));
 
             g.drawImage(rr.spriteResource.getTexture(), (int) screenPos.x, (int) screenPos.y, rr.width, rr.height, null);
 

@@ -25,7 +25,7 @@ public final class UMath {
         return value;
     }
 
-    public static float clampf(final float value, final float min, final float max) {
+    public static double clamp(final double value, final double min, final double max) {
         if (value < min) {
             return min;
         } else if (value > max) {

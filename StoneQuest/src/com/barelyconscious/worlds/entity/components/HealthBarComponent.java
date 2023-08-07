@@ -20,7 +20,7 @@ public class HealthBarComponent extends Component {
 
     private final boolean hideWhenFull;
 
-    private float progress = 0;
+    private double progress = 0;
 
     /**
      * creates a standard health bar component that appears under entities.
@@ -45,16 +45,16 @@ public class HealthBarComponent extends Component {
         this.height = height;
         this.hideWhenFull = hideWhenFull;
 
-        this.progress = UMath.clampf(stat.getCurrentValue() / stat.getMaxValue(), 0, 1);
+        this.progress = UMath.clamp(stat.getCurrentValue() / stat.getMaxValue(), 0, 1);
         stat.delegateOnValueChanged.bindDelegate(e -> {
-            progress = UMath.clampf(e.currentValue / e.maxValue, 0, 1);
+            progress = UMath.clamp(e.currentValue / e.maxValue, 0, 1);
             return null;
         });
     }
 
     @Override
     public void render(final EventArgs eventArgs, final RenderContext renderContext) {
-        float healthRemainingWidth = width * progress;
+        double healthRemainingWidth = width * progress;
 
         final Vector position = getParent().transform;
         if (progress != 1) {

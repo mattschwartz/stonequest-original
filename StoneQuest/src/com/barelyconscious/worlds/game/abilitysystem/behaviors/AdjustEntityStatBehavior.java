@@ -23,7 +23,7 @@ public class AdjustEntityStatBehavior implements Behavior {
     }
 
     private final StatName stat;
-    private final float amount;
+    private final double amount;
     private final StatAdjustmentType statAdjustmentType;
 
     @Override

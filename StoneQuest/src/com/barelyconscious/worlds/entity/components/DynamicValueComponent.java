@@ -19,33 +19,33 @@ public class DynamicValueComponent extends Component {
 
     @AllArgsConstructor
     public static final class DynamicValueChanged {
-        public final float delta;
-        public final float currentValue;
-        public final float maxValue;
+        public final double delta;
+        public final double currentValue;
+        public final double maxValue;
     }
 
     @Getter
-    private float currentValue;
+    private double currentValue;
     @Getter
-    private float maxValue;
+    private double maxValue;
 
     public DynamicValueComponent(final Actor parent) {
         super(parent);
     }
 
-    public DynamicValueComponent(Actor parent, final float currentValue, final float maxValue) {
+    public DynamicValueComponent(Actor parent, final double currentValue, final double maxValue) {
         super(parent);
         this.currentValue = currentValue;
         this.maxValue = maxValue;
     }
 
-    public void setValue(final float newCurrentValue, final float newMaxValue) {
+    public void setValue(final double newCurrentValue, final double newMaxValue) {
         this.currentValue = newCurrentValue;
         this.maxValue = newMaxValue;
     }
 
-    public void adjustCurrentValueBy(final float currentValueDelta) {
-        currentValue = UMath.clampf(currentValue + currentValueDelta, 0, maxValue);
+    public void adjustCurrentValueBy(final double currentValueDelta) {
+        currentValue = UMath.clamp(currentValue + currentValueDelta, 0, maxValue);
         delegateOnValueChanged.call(new DynamicValueChanged(currentValueDelta, currentValue, maxValue));
     }
 
@@ -53,15 +53,15 @@ public class DynamicValueComponent extends Component {
      * increases the max value by maxValueDelta and increases currentValue by the difference.
      * if new maxValueDelta is lower, then currentHealth is not adjusted but is clamped by maxValueDelta
      */
-    public void adjustMaxValueBy(final float maxValueDelta) {
-        final float proposedNewMaxValue = this.maxValue + maxValueDelta;
-        final float previousCurrentValue = this.currentValue;
+    public void adjustMaxValueBy(final double maxValueDelta) {
+        final double proposedNewMaxValue = this.maxValue + maxValueDelta;
+        final double previousCurrentValue = this.currentValue;
 
         if (proposedNewMaxValue >= this.maxValue) {
-            final float diff = maxValueDelta - this.maxValue;
+            final double diff = maxValueDelta - this.maxValue;
             this.currentValue += diff;
         } else if (maxValueDelta < this.maxValue) {
-            this.currentValue = UMath.clampf(this.currentValue, this.currentValue, maxValueDelta);
+            this.currentValue = UMath.clamp(this.currentValue, this.currentValue, maxValueDelta);
         }
         this.maxValue = proposedNewMaxValue;
 

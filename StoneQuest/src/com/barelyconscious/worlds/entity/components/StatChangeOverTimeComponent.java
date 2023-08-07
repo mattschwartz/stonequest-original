@@ -11,9 +11,9 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 public class StatChangeOverTimeComponent extends Component {
 
-    private final float tickFrequencySeconds;
-    private final float changePerTick;
-    private float nextTickIn;
+    private final double tickFrequencySeconds;
+    private final double changePerTick;
+    private double nextTickIn;
     private int ticksRemaining;
     private final DynamicValueComponent stat;
 
@@ -25,9 +25,9 @@ public class StatChangeOverTimeComponent extends Component {
     public StatChangeOverTimeComponent(
         Actor parent,
         DynamicValueComponent stat,
-        float durationSeconds,
-        float tickFrequencySeconds,
-        float changePerTick
+        double durationSeconds,
+        double tickFrequencySeconds,
+        double changePerTick
     ) {
         super(parent);
         checkArgument(stat != null, "stat is null");

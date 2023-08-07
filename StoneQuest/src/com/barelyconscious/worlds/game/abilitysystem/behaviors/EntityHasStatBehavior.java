@@ -15,7 +15,7 @@ public class EntityHasStatBehavior implements Behavior {
 
     private final StatName stat;
     @Getter
-    private final float cost;
+    private final double cost;
 
     @Override
     public BehaviorFeedback perform(AbilityContext context) {
