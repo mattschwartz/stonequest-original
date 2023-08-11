@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public enum GameItems {
         new BetterSpriteResource("items::herbs_bundle"),
         Set.of(ResourceItemTag.HERB, RelatedSkillItemTag.MEDICINE, RelatedSkillItemTag.COOKING, StackableItemTag.STACKABLE, ConsumableItemTag.EDIBLE),
         new ArrayList<>(),
-        new ArrayList<>()),
+        Lists.newArrayList(new ItemProperty.HealthItemProperty(5, false))),
     CURED_LEATHER(1, 1,
         "Cured Leather", "What ails the leather that it needs curing?",
         new BetterSpriteResource("items::cured_leather"),

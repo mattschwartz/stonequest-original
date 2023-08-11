@@ -31,10 +31,10 @@ public abstract class ItemProperty {
     public static class TraitItemProperty extends ItemProperty {
 
         private final TraitName trait;
-        private final float statValue;
+        private final double statValue;
         private final String propertyDescription;
 
-        public TraitItemProperty(TraitName trait, float statValue) {
+        public TraitItemProperty(TraitName trait, double statValue) {
             this.trait = trait;
             this.statValue = statValue;
 
@@ -63,11 +63,13 @@ public abstract class ItemProperty {
     @Getter
     public static class HealthItemProperty extends ItemProperty {
 
-        private final float healthAmount;
+        private final double healthAmount;
+        private final boolean adjustMaxHealth;
         private final String propertyDescription;
 
-        public HealthItemProperty(float healthAmount) {
+        public HealthItemProperty(double healthAmount, boolean adjustMaxHealth) {
             this.healthAmount = healthAmount;
+            this.adjustMaxHealth = adjustMaxHealth;
 
             final StringBuilder sb = new StringBuilder();
             if (healthAmount < 0) {
@@ -83,13 +85,21 @@ public abstract class ItemProperty {
         @Override
         public void applyProperty(EntityActor entity) {
             DynamicValueComponent healthComponent = entity.getHealthComponent();
-            healthComponent.adjustMaxValueBy(healthAmount);
+            if (adjustMaxHealth) {
+                healthComponent.adjustMaxValueBy(healthAmount);
+            } else {
+                healthComponent.adjustCurrentValueBy(healthAmount);
+            }
         }
 
         @Override
         public void removeProperty(EntityActor entity) {
             DynamicValueComponent healthComponent = entity.getHealthComponent();
-            healthComponent.adjustMaxValueBy(-healthAmount);
+            if (adjustMaxHealth) {
+                healthComponent.adjustMaxValueBy(-healthAmount);
+            } else {
+                healthComponent.adjustCurrentValueBy(-healthAmount);
+            }
         }
     }
 
@@ -97,10 +107,10 @@ public abstract class ItemProperty {
     public static class ItemStatProperty extends ItemProperty {
 
         private final StatName stat;
-        private final float statValue;
+        private final double statValue;
         private final String propertyDescription;
 
-        public ItemStatProperty(StatName stat, float statValue) {
+        public ItemStatProperty(StatName stat, double statValue) {
             this.stat = stat;
             this.statValue = statValue;
             this.propertyDescription = stat.description;
@@ -120,12 +130,12 @@ public abstract class ItemProperty {
     @Getter
     public static class WeaponDamageProperty extends ItemProperty {
 
-        private final float minWeaponDamage;
-        private final float maxWeaponDamage;
+        private final double minWeaponDamage;
+        private final double maxWeaponDamage;
         private final String propertyDescription;
-        private final float weaponSpeed;
+        private final double weaponSpeed;
 
-        public WeaponDamageProperty(float minWeaponDamage, float maxWeaponDamage, float weaponSpeed) {
+        public WeaponDamageProperty(double minWeaponDamage, double maxWeaponDamage, double weaponSpeed) {
             this.minWeaponDamage = minWeaponDamage;
             this.maxWeaponDamage = maxWeaponDamage;
             this.weaponSpeed = weaponSpeed;

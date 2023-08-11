@@ -4,6 +4,7 @@ import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.VDim;
 import com.barelyconscious.worlds.engine.gui.Widget;
+import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.engine.graphics.FontContext;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
@@ -117,6 +118,9 @@ public class ItemSlotWidget extends MouseInputWidget {
             }
             sb.append("\n");
             sb.append("{COLOR=200,200,200,200}{STYLE=ITALIC}").append(description).append("\n");
+            for (var prop : inventoryItem.item.getProperties()) {
+                sb.append("{COLOR=255,255,255,255}{STYLE=NONE}").append(prop.getPropertyDescription()).append("\n");
+            }
             if (inventoryItem.item.isConsumable()) {
                 sb.append("\n").append("{COLOR=0,255,0,255}{STYLE=NONE}Click to use");
             }
@@ -241,6 +245,9 @@ public class ItemSlotWidget extends MouseInputWidget {
         return Sets.intersection(item.getTags(), requiredTags).size() >= 1;
     }
 
+    /**
+     * Use (right click) or pick up (left click) an item
+     */
     @Override
     public boolean onMouseClicked(MouseEvent e) {
         if (isMouseOver()) {
@@ -254,10 +261,20 @@ public class ItemSlotWidget extends MouseInputWidget {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     ItemFollowCursorWidget.setInventoryItemOnCursor(inventory.removeStackAt(inventorySlotId));
                 } else if (e.getButton() == MouseEvent.BUTTON3) {
+
                     System.out.println("Calling item on use");
-                    item.onUse.call(new Item.ItemContext());
-                    if (item.isConsumable()) {
-                        inventory.consumeOrRemoveItem(inventorySlotId);
+
+                    if (item.meetsRequirements(GameInstance.instance().getHeroSelected())) {
+                        System.out.println("Item meets requirements");
+
+                        item.applyProperties(GameInstance.instance().getHeroSelected());
+
+                        item.onUse.call(new Item.ItemContext());
+                        if (item.isConsumable()) {
+                            inventory.consumeOrRemoveItem(inventorySlotId);
+                        }
+                    } else {
+                        System.out.println("Item does not meet requirements");
                     }
                 }
             }

@@ -221,15 +221,15 @@ public class HeroStatsSheetWidget extends Widget {
         }
 
         var statValueTfw = new TextFieldWidget(LayoutData.DEFAULT,
-            tex + statValue.getCurrentValue());
+            tex + String.format("%.0f", statValue.getCurrentValue()));
 
         statValue.delegateOnValueChanged.bindDelegate(e -> {
             if (e.currentValue < 0) {
-                statValueTfw.setText("{COLOR=RED}" + String.format("%.2f", e.currentValue));
+                statValueTfw.setText("{COLOR=RED}" + String.format("%.0f", e.currentValue));
             } else if (e.currentValue > 0) {
-                statValueTfw.setText("{COLOR=GREEN}{STYLE=BOLD}" + String.format("%.2f", e.currentValue));
+                statValueTfw.setText("{COLOR=GREEN}{STYLE=BOLD}" + String.format("%.0f", e.currentValue));
             } else {
-                statValueTfw.setText("{COLOR=LIGHT_GRAY}" + String.format("%.2f", e.currentValue));
+                statValueTfw.setText("{COLOR=LIGHT_GRAY}" + String.format("%.0f", e.currentValue));
             }
             return null;
         });
