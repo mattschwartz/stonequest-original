@@ -10,7 +10,7 @@ public final class VDim {
     public Vector absolute;
 
     public VDim(
-        final float relativeX, final float relativeY,
+        final double relativeX, final double relativeY,
         final int absoluteX, final int absoluteY
     ) {
         this.relative = new Vector(relativeX, relativeY);

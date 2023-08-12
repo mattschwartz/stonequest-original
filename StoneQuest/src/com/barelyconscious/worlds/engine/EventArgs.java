@@ -17,7 +17,7 @@ public class EventArgs {
      * Time in seconds since last update.
      */
     @Getter
-    private final float deltaTime;
+    private final double deltaTime;
 
     @Getter
     private final Vector mouseScreenPos;
@@ -45,7 +45,7 @@ public class EventArgs {
     private final WorldUpdateContext worldContext;
 
     public EventArgs(
-        final float deltaTime,
+        final double deltaTime,
         final Vector mouseScreenPos,
         final Vector mouseWorldPos,
         final Queue<JobExecution> engineThings,

@@ -6,6 +6,7 @@ import java.util.Random;
 
 public final class UMath {
 
+    public static final double EPSILON = 0.0001;
     public static final Random RANDOM = new Random(1L);
 
     public static Vector min(final Vector lhs, final Vector rhs) {

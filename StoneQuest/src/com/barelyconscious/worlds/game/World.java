@@ -43,7 +43,7 @@ public final class World {
         return getActorAt(worldPos.x, worldPos.y);
     }
 
-    public Actor getActorAt(final float worldX, final float worldY) {
+    public Actor getActorAt(final double worldX, final double worldY) {
         final List<Actor> matches = new ArrayList<>();
         for (final Actor a : actors) {
             if (a.getBoundingBox().contains((int) worldX, (int) worldY)) {

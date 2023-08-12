@@ -17,7 +17,7 @@ import lombok.val;
 
 public class BulletAbility extends Ability {
 
-    private final double energyCost = 0.25;
+    private final double energyCost = 50;
 
     public BulletAbility() {
         super("Bullet time", 1.5);
@@ -44,7 +44,7 @@ public class BulletAbility extends Ability {
                             if (col.hit instanceof EntityActor hit) {
                                 final DynamicValueComponent health = hit.getHealthComponent();
                                 if (health != null && health.isEnabled()) {
-                                    health.adjustCurrentValueBy(UMath.RANDOM.nextFloat() * -8);
+                                    health.adjustCurrentValueBy((UMath.RANDOM.nextFloat() * -8) - 6);
                                     aBullet.destroy();
                                 }
                             }

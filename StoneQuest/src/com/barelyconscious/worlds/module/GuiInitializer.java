@@ -1,15 +1,10 @@
 package com.barelyconscious.worlds.module;
 
 import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
+import com.barelyconscious.worlds.engine.gui.*;
 import com.barelyconscious.worlds.engine.gui.widgets.*;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.World;
-import com.barelyconscious.worlds.engine.gui.CraftingWindowWidget;
-import com.barelyconscious.worlds.engine.gui.GuiCanvas;
-import com.barelyconscious.worlds.engine.gui.HeroQuickbarPanel;
-import com.barelyconscious.worlds.engine.gui.LayoutData;
-import com.barelyconscious.worlds.engine.gui.UserInputPanel;
-import com.barelyconscious.worlds.engine.gui.VDim;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
@@ -31,6 +26,7 @@ public final class GuiInitializer {
         tiw.setEnabled(false);
         gui.addWidget(tiw);
 
+        gui.addWidget(new ErrorAlertTextWidget());
         configureHeroQuickbarPanel(gui);
         configureInventory(gui, playerController);
         world.addActor(gui);

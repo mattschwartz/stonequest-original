@@ -48,7 +48,7 @@ public class Camera {
         return viewHeight;
     }
 
-    public Vector worldToScreenPos(final float worldX, final float worldY) {
+    public Vector worldToScreenPos(final double worldX, final double worldY) {
         return new Vector(
             worldX - transform.x,
             worldY - transform.y);

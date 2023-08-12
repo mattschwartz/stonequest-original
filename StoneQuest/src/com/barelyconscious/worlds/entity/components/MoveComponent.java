@@ -8,11 +8,11 @@ import lombok.Getter;
 
 public class MoveComponent extends Component {
 
-    public float moveSpeed;
+    public double moveSpeed;
 
     public MoveComponent(
         final Actor parent,
-        final float moveSpeed
+        final double moveSpeed
     ) {
         super(parent);
         this.moveSpeed = moveSpeed;
@@ -25,7 +25,7 @@ public class MoveComponent extends Component {
      * @param direction the direction to apply impulse
      * @param force     the force to apply in respective direction
      */
-    public void addForce(final Vector direction, final float force) {
+    public void addForce(final Vector direction, final double force) {
         forceVector = UMath.min(
             forceVector.plus(direction.unitVector().multiply(force)),
             direction.unitVector().multiply(moveSpeed));
@@ -54,8 +54,8 @@ public class MoveComponent extends Component {
         final Vector startPos = getParent().transform;
         final Vector endPos = startPos.plus(forceVector);
 
-        final float dx = (endPos.x - startPos.x) * eventArgs.getDeltaTime() * moveSpeed;
-        final float dy = (endPos.y - startPos.y) * eventArgs.getDeltaTime() * moveSpeed;
+        final double dx = (endPos.x - startPos.x) * eventArgs.getDeltaTime() * moveSpeed;
+        final double dy = (endPos.y - startPos.y) * eventArgs.getDeltaTime() * moveSpeed;
 
         desiredLocation = new Vector(startPos.x + dx, startPos.y + dy);
         forceVector = forceVector.minus(new Vector(dx, dy));

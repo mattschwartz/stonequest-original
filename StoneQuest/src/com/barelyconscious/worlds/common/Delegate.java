@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+/**
+ * A delegate is a list of callbacks that can be fired at any time. Only the owner of
+ * a delegate should call the delegate.
+ * @param <TArg0> the type of arguments passed to subscribers of this delegate
+ */
 @Log4j2
 public final class Delegate<TArg0> {
 
@@ -13,11 +18,6 @@ public final class Delegate<TArg0> {
 
     public void bindDelegate(final Function<TArg0, Void> callback) {
         boundDelegates.add(callback);
-    }
-
-    // todo idk if this works
-    public void freeDelegate(final Function<TArg0, Void> callback) {
-        boundDelegates.remove(callback);
     }
 
     public void call(final TArg0 arg0) {

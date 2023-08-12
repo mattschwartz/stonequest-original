@@ -15,6 +15,10 @@ public class TextFieldWidget extends Widget {
 
     @Getter
     @Setter
+    private float fontSize = 16;
+
+    @Getter
+    @Setter
     private String text;
     @Setter
     private FontContext.TextAlign textAlignment;
@@ -72,6 +76,8 @@ public class TextFieldWidget extends Widget {
 
         if (showShadow) {
             final String shadowText = "{COLOR=0,0,0,255}" + text;
+
+            font.setFontSize(fontSize);
 
             font.drawString(shadowText,
                 textAlignment,

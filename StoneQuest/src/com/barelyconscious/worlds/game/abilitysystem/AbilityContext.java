@@ -20,8 +20,8 @@ public class AbilityContext {
     @Getter
     private final Actor caster;
     @Getter
-    private List<Actor> targets = new ArrayList<>();
-    private Map<String, Object> context = new HashMap<>();
+    private List<Actor> targets;
+    private Map<String, Object> context;
 
     public enum ContextKey {
         CASTER_CONTEXT_KEY,

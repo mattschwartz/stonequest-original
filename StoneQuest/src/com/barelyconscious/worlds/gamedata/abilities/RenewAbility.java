@@ -16,7 +16,7 @@ public class RenewAbility extends Ability {
     private final double cost = 2.4;
 
     public RenewAbility() {
-        super("Renew", 1.4);
+        super("Renew", 5);
 
         setBehaviorWorkflow(new BehaviorWorkflow(
             new EntityHasStatBehavior(StatName.SPIRIT, cost),

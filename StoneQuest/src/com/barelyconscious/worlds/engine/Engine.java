@@ -288,7 +288,7 @@ public final class Engine {
 
     private EventArgs buildEventArgs(final long deltaTime) {
         return new EventArgs(
-            deltaTime * 0.001f,
+            deltaTime * 0.001,
             playerController.getMouseScreenPos(),
             playerController.getMouseWorldPos(),
             pendingJobExecutions,

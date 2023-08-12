@@ -60,6 +60,16 @@ public class MouseKeyboardPlayerController extends PlayerController {
 
         keyHandler.delegateOnKeyPressed.bindDelegate(this::onKeyPressed);
         keyHandler.delegateOnKeyReleased.bindDelegate(this::onKeyReleased);
+
+        Ability.delegateOnCooldownChanged.bindDelegate(e -> {
+            log.info("{} {}", e.ability.getName(), e.onCooldown ? "on cooldown" : "off cooldown");
+            return null;
+        });
+
+        Ability.delegateOnAbilityFailed.bindDelegate(e -> {
+            log.error("{} failed: {}", e.ability.getName(), e.message);
+            return null;
+        });
     }
 
     private Void onKeyReleased(KeyEvent keyEvent) {
@@ -155,21 +165,16 @@ public class MouseKeyboardPlayerController extends PlayerController {
         }
 
         if (abilityIndex >= 0) {
-            log.info("Performing ability " + (abilityIndex + 1));
-
             List<AbilityComponent> abilityComponents = GameInstance.instance().getHeroSelected()
                 .getComponentsOfType(AbilityComponent.class);
 
             if (abilityComponents != null && abilityIndex < abilityComponents.size()) {
                 AbilityComponent firstAbility = abilityComponents.get(abilityIndex);
                 if (firstAbility != null) {
-                    Ability.ActionResult result = firstAbility.getAbility().enact(AbilityContext.builder()
+                    firstAbility.getAbility().enact(AbilityContext.builder()
                         .world(GameInstance.instance().getWorld())
                         .caster(GameInstance.instance().getHeroSelected())
                         .build());
-                    if (result.message() != null) {
-                        log.info(result.message());
-                    }
                 }
             }
         }
@@ -199,51 +204,5 @@ public class MouseKeyboardPlayerController extends PlayerController {
         mouseClickedScreenPos = mouseScreenPos = new Vector(mouseEvent.getX(), mouseEvent.getY());
         mouseClickedWorldPos = mouseWorldPos = GameInstance.instance().getCamera().screenToWorldPos(mouseScreenPos);
         return null;
-    }
-
-
-    /**
-     * todo - needs to move to an ability
-     */
-    private static final class AwesomeBulletWeaponItem {
-
-        public void use(
-            final Actor usedBy,
-            final Vector facing,
-            final EventArgs eventArgs
-        ) {
-            val aBullet = new Actor(usedBy + "#Bullet", usedBy.transform.plus(32, 0));
-            aBullet.addComponent(new MoveComponent(aBullet, 32f));
-            aBullet.addComponent(new BoxColliderComponent(aBullet, false, true, new Box(0, 32, 0, 32)));
-            aBullet.addComponent(new SpriteComponent(aBullet, Resources.getSprite(ResourceSprite.POTION)));
-            aBullet.getComponent(BoxColliderComponent.class)
-                .delegateOnEnter.bindDelegate((col) -> {
-                    if (col.causedByActor != aBullet) {
-                        return null;
-                    }
-
-                    if (col.hit instanceof EntityActor hit) {
-                        final DynamicValueComponent health = hit.getHealthComponent();
-                        if (health != null && health.isEnabled()) {
-                            health.adjustCurrentValueBy(UMath.RANDOM.nextFloat() * -3);
-                            aBullet.destroy();
-                        }
-                    }
-
-                    return null;
-                });
-            aBullet.addComponent(new LifetimeComponent(aBullet, 200));
-
-            aBullet.addComponent(new Component(aBullet) {
-                @Override
-                public void update(EventArgs eventArgs) {
-                    aBullet.getComponent(MoveComponent.class)
-                        .addForce(facing, 4500f);
-                }
-            });
-
-            eventArgs.getWorldContext()
-                .addActor(aBullet);
-        }
     }
 }
