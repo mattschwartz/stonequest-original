@@ -7,6 +7,7 @@ import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.entity.Hero;
+import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.game.resources.WSprite;
@@ -78,13 +79,33 @@ public class HeroQuickbarPanel extends MouseInputWidget {
             Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_HEALTHBAR_PROGRESS_FULL_CAP)));
         addWidget(new ProgressBarWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 62, 43))
-            .size(new VDim(0, 0, 167, 11))
+            .size(new VDim(0, 0, 56, 11))
             .build(),
-            hero.getPowerComponent(),
-            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_POWERBAR_PROGRESS_START),
-            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_POWERBAR_PROGRESS_MIDDLE),
-            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_POWERBAR_PROGRESS_PARTIAL_CAP),
-            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_POWERBAR_PROGRESS_FULL_CAP)));
+            hero.stat(StatName.FOCUS).get(),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_FOCUSBAR_PROGRESS_START),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_FOCUSBAR_PROGRESS_MIDDLE),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_FOCUSBAR_PROGRESS_PARTIAL_CAP),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_FOCUSBAR_PROGRESS_FULL_CAP)));
+
+        addWidget(new ProgressBarWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 118, 43))
+            .size(new VDim(0, 0, 56, 11))
+            .build(),
+            hero.stat(StatName.ENERGY).get(),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_ENERGYBAR_PROGRESS_START),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_ENERGYBAR_PROGRESS_MIDDLE),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_ENERGYBAR_PROGRESS_PARTIAL_CAP),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_ENERGYBAR_PROGRESS_FULL_CAP)));
+
+        addWidget(new ProgressBarWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 174, 43))
+            .size(new VDim(0, 0, 56, 11))
+            .build(),
+            hero.stat(StatName.SPIRIT).get(),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_SPIRITBAR_PROGRESS_START),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_SPIRITBAR_PROGRESS_MIDDLE),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_SPIRITBAR_PROGRESS_PARTIAL_CAP),
+            Resources.instance().getSprite(GUISpriteSheet.Resources.HERO_UNITFRAME_SPIRITBAR_PROGRESS_FULL_CAP)));
 
         hero.getHealthComponent()
             .delegateOnValueChanged.bindDelegate(e -> {
