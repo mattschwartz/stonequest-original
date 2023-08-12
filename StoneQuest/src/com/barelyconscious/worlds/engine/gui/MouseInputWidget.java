@@ -17,6 +17,8 @@ import java.awt.event.MouseEvent;
  */
 public class MouseInputWidget extends Widget implements Interactable {
 
+    private InputLayer inputLayer;
+
     private boolean isMouseOver = false;
 
     public final Delegate<Boolean> delegateOnMouseOver = new Delegate<>();
@@ -27,7 +29,18 @@ public class MouseInputWidget extends Widget implements Interactable {
 
     public MouseInputWidget(final LayoutData layout, InputLayer inputLayer) {
         super(layout);
+        this.inputLayer = inputLayer;
         MouseInputHandler.instance().registerInteractable(this, inputLayer);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (!enabled) {
+            MouseInputHandler.instance().unregisterInteractable(this);
+        } else if (enabled) {
+            MouseInputHandler.instance().registerInteractable(this, inputLayer);
+        }
     }
 
     @Override
@@ -63,7 +76,7 @@ public class MouseInputWidget extends Widget implements Interactable {
 
     @Override
     public final boolean isMouseOver() {
-        return isEnabled() && isMouseOver;
+        return isEnabled() && isInteractableEnabled() && isMouseOver;
     }
 
     @Override

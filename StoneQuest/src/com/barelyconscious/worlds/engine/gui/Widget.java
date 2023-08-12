@@ -61,6 +61,9 @@ public abstract class Widget {
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+        // todo -   this makes sense to do, but it causes some child widgets
+        //          to be enabled when they shouldn't be (tooltips)
+        // widgets.forEach(t -> t.setEnabled(enabled));
     }
 
     /**

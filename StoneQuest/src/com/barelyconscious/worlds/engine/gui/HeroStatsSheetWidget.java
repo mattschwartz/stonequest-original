@@ -1,5 +1,6 @@
 package com.barelyconscious.worlds.engine.gui;
 
+import com.barelyconscious.worlds.common.UColor;
 import com.barelyconscious.worlds.engine.gui.widgets.BackgroundPanelWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.ButtonWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.SpriteWidget;
@@ -158,10 +159,10 @@ public class HeroStatsSheetWidget extends Widget {
     }
 
     private Widget createDetailedStatsWidget(SpriteWidget backdrop, Hero hero) {
-        final Widget miw = new MouseInputWidget(LayoutData.builder()
+        final Widget miw = new BackgroundPanelWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 0, -(200 + 6) - 26))
             .size(new VDim(0, 0, GUISpriteSheet.Resources.HERO_STAT_SHEET_BACKDROP.getRegion().getWidth(), 200))
-            .build(), InputLayer.GUI);
+            .build(), UColor.TRANSPARENT);
         final Widget detailedStatsWidget = new BackgroundPanelWidget(LayoutData.DEFAULT,
             new Color(33, 33, 33, 255));
 

@@ -44,7 +44,7 @@ public class MouseInputHandler implements MouseListener, MouseMotionListener, Mo
         interactables.add(interactable);
     }
 
-    public void deregisterInteractable(final Interactable interactable) {
+    public void unregisterInteractable(final Interactable interactable) {
         InputLayer.sorted().forEach(layer -> interactablesByLayer.get(layer).remove(interactable));
     }
 

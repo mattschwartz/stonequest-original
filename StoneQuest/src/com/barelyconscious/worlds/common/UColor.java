@@ -4,6 +4,8 @@ import java.awt.Color;
 
 public final class UColor {
 
+    public static final Color TRANSPARENT = new Color(0, 0, 0, 0);
+
     public static Color combine(final Color lhs, final Color rhs) {
         return new Color(
             lhs.getRed(),
