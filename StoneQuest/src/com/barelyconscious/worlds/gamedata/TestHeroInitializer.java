@@ -101,7 +101,6 @@ public class TestHeroInitializer {
                 }
             }
         });
-        world.addActor(heroJohn);
         GameInstance.instance().setHero(heroJohn, GameInstance.PartySlot.RIGHT);
         world.addActor(HERO_JOHN);
 
@@ -121,7 +120,6 @@ public class TestHeroInitializer {
             }
         });
         GameInstance.instance().setHero(heroNicnole, GameInstance.PartySlot.MIDDLE);
-        world.addActor(heroNicnole);
         world.addActor(HERO_NICNOLE);
 
         Hero heroPaul = HERO_PAUL;
@@ -139,7 +137,6 @@ public class TestHeroInitializer {
                 }
             }
         });
-        world.addActor(heroPaul);
         GameInstance.instance().setHero(heroPaul, GameInstance.PartySlot.LEFT);
         world.addActor(HERO_PAUL);
 

@@ -102,6 +102,10 @@ public final class GameInstance {
         }
     }
 
+    public Hero getHeroBySlot(final PartySlot slot) {
+        return heroParty[slot.index];
+    }
+
     public Hero getHeroSelected() {
         return heroParty[selectedHeroId.index];
     }
