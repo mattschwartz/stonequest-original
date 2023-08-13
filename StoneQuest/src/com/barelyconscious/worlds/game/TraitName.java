@@ -5,15 +5,15 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum TraitName {
-    STRENGTH("Strength", "str",
+    STRENGTH("Strength", "STR",
         "Determines how strong you are. Improves \ndamage for heavy type weapons."),
-    DEXTERITY("Dexterity", "dex",
+    DEXTERITY("Dexterity", "DEX",
         "Determines how mobile and acrobatic you are.\nImproves evasive defences and damage for swift \ntype weapons."),
-    CONSTITUTION("Constitution", "con",
+    CONSTITUTION("Constitution", "CON",
         "Determines how health you are. Improves health \nand physical resistence"),
-    INTELLIGENCE("Intelligence", "int",
+    INTELLIGENCE("Intelligence", "INT",
         "Determines how bigbrain you are. Improves brain."),
-    FAITH("Faith", "fai",
+    FAITH("Faith", "FAI",
         "Determines how strong your bond with the \nspiritual world is. Improves spiritual resistance.")
     ;
 

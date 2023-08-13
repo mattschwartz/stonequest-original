@@ -3,6 +3,7 @@ package com.barelyconscious.worlds.game;
 import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.game.item.Item;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NonNull;
 
 import javax.annotation.Nullable;
@@ -36,6 +37,7 @@ public final class Inventory {
 
     public int currentSize = 0;
     public final int size;
+    @Getter
     private final List<InventoryItem> items;
 
     public Inventory(final int size) {

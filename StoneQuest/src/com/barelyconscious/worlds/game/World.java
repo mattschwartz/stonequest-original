@@ -2,12 +2,32 @@ package com.barelyconscious.worlds.game;
 
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.entity.Actor;
+import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class World {
+
+    private final Map<String, Actor> actorsById = new HashMap<>();
+
+    /**
+     * todo - for the CLI
+     */
+    public Optional<Actor> findActorById(final String id) {
+        return Optional.ofNullable(actorsById.get(id));
+    }
+
+    /**
+     * todo - for the CLI
+     * @param name
+     * @return
+     */
+    public Optional<Actor> findActorByName(final String name) {
+        return actors.stream()
+            .filter(actor -> actor.name.equals(name))
+            .findFirst();
+    }
 
     private final List<Actor> actors;
 
@@ -17,6 +37,7 @@ public final class World {
 
     public void addActor(final Actor actor) {
         actors.add(actor);
+        actorsById.put(actor.id, actor);
     }
 
     // kind of wasn't the most intuitive name
@@ -26,6 +47,7 @@ public final class World {
     }
 
     public synchronized boolean removeActor(final Actor actor) {
+        actorsById.remove(actor.id);
         return actors.remove(actor);
     }
 

@@ -146,15 +146,29 @@ public class TestHeroInitializer {
     }
 
     private static void setupPartyInventory(final PlayerController pc) {
-        if (!(pc instanceof MouseKeyboardPlayerController)) {
-            return;
+        // todo deprecated method...
+        Inventory inventory = pc.getInventory();
+        if (inventory != null) {
+            inventory.addItem(GameItems.WILLOW_BARK.toItem());
+            inventory.addItem(GameItems.CURED_LEATHER.toItem());
+            inventory.addItem(GameItems.IRON_ORE.toItem());
+            inventory.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
+            inventory.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
         }
-        Inventory inventory = ((MouseKeyboardPlayerController) pc).getInventory();
 
-        inventory.addItem(GameItems.WILLOW_BARK.toItem());
-        inventory.addItem(GameItems.CURED_LEATHER.toItem());
-        inventory.addItem(GameItems.IRON_ORE.toItem());
-        inventory.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
-        inventory.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
+        if (pc.getPartyWagon() != null) {
+            Inventory resourcePouch = pc.getPartyWagon().getResourcePouch();
+            Inventory storage = pc.getPartyWagon().getStorage();
+
+            resourcePouch.addItem(GameItems.WILLOW_BARK.toItem());
+            resourcePouch.addItem(GameItems.CURED_LEATHER.toItem());
+            resourcePouch.addItem(GameItems.IRON_ORE.toItem());
+            resourcePouch.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
+            resourcePouch.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
+
+            storage.addItem(GameItems.IRON_SHIELD.toItem());
+            storage.addItem(GameItems.CLOTH_ROBE.toItem());
+            storage.addItem(GameItems.RECURVE_BOW.toItem());
+        }
     }
 }

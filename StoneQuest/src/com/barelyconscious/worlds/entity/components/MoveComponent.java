@@ -32,6 +32,10 @@ public class MoveComponent extends Component {
         getParent().facing = forceVector.unitVector();
     }
 
+    public void setFacing(final Vector facing) {
+        getParent().facing = facing;
+    }
+
     private Vector desiredLocation;
 
     public Vector getDesiredLocation() {

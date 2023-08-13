@@ -9,16 +9,17 @@ import com.barelyconscious.worlds.engine.graphics.IRenderContext;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
 import com.barelyconscious.worlds.engine.graphics.Screen;
 import com.barelyconscious.worlds.entity.Actor;
+import com.barelyconscious.worlds.entity.EntityActor;
+import com.barelyconscious.worlds.entity.PartyWagon;
 import com.barelyconscious.worlds.entity.PlayerPersonalDevice;
 import com.barelyconscious.worlds.entity.components.AbilityComponent;
-import com.barelyconscious.worlds.game.GameInstance;
-import com.barelyconscious.worlds.game.GameState;
-import com.barelyconscious.worlds.game.StatName;
-import com.barelyconscious.worlds.game.World;
+import com.barelyconscious.worlds.entity.components.MoveComponent;
+import com.barelyconscious.worlds.game.*;
 import com.barelyconscious.worlds.game.abilitysystem.Ability;
 import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.gamedata.TestHeroInitializer;
+import com.barelyconscious.worlds.gamedata.TestWorldInitializer;
 import com.google.common.util.concurrent.RateLimiter;
 
 import java.awt.image.BufferStrategy;
@@ -48,7 +49,14 @@ public class GameRunnerCLI {
             blankScreen,
             playerController);
 
+        var pw = new PartyWagon(
+            new Inventory(8),
+            new Inventory(8));
+        world.addActor(pw);
+        playerController.setPartyWagon(pw);
+
         TestHeroInitializer.createHeroes(world, playerController);
+        TestWorldInitializer.createWorld(world);
 
         GameInstance.instance().setHero(HERO_JOHN, GameInstance.PartySlot.LEFT);
         GameInstance.instance().setHero(HERO_NICNOLE, GameInstance.PartySlot.MIDDLE);
@@ -56,17 +64,28 @@ public class GameRunnerCLI {
 
         GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
 
+        System.out.println("\n+---------------------+");
+        System.out.println("|  Worlds v1.0 - CLI  |");
+        System.out.println("+---------------------+");
+        System.out.println("\nEnter a command");
 
         var scn = new Scanner(System.in);
         while (true) {
             System.out.print("> ");
-            var input= scn.nextLine();
-            if (!playerController.handleInput(scn, input)) {
-                break;
-            }
+            var input = scn.nextLine();
 
-            engine.tick(new EventArgs(1/60f, Vector.ZERO, Vector.ZERO, new ArrayDeque<>(),
-                playerController, world, gameState));
+            int continuationResult = playerController.handleInput(scn, input);
+            switch (continuationResult) {
+                case CliPlayerController.CONTINUE:
+                    break;
+                case CliPlayerController.TICK:
+                    System.out.println("The world is updating...");
+                    engine.tick(new EventArgs(6, Vector.ZERO, Vector.ZERO, new ArrayDeque<>(),
+                        playerController, world, gameState));
+                    break;
+                case CliPlayerController.EXIT:
+                    System.exit(0);
+            }
         }
     }
 
@@ -76,17 +95,50 @@ public class GameRunnerCLI {
 
     static class CliPlayerController extends PlayerController {
 
+        static final int CONTINUE = 0;
+        static final int TICK = 1;
+        static final int EXIT = 2;
+
         /**
          * @return true if the game should continue running, false otherwise
          */
-        public boolean handleInput(Scanner scn, String input) {
+        public int handleInput(Scanner scn, String input) {
             switch (input) {
                 case "list":
-                    System.out.println("Actors:");
+                    System.out.println("Actors: " + world.getActors().size());
+                    break;
+
+                case "look":
+                    System.out.println("\tNearby entities:");
                     for (Actor actor : world.getActors()) {
-                        System.out.println("  " + actor.name);
+                        if (actor instanceof EntityActor) {
+                            System.out.printf("\t%s (%s)\n", actor.name, actor.id);
+                        }
                     }
                     break;
+                case "examine":
+                    System.out.println("Examine what?");
+                    System.out.print("\t> ");
+                    String examineChoice = scn.nextLine();
+                    if (examineChoice.equals("self")) {
+                        System.out.println("You are " + GameInstance.instance().getHeroSelected().name);
+                    } else {
+                        world.findActorById(examineChoice).ifPresentOrElse(actor -> {
+                            System.out.println("You see " + actor.name);
+                        }, () -> {
+                            world.findActorByName(examineChoice).ifPresentOrElse(actor -> {
+                                System.out.println("You see " + actor.name);
+                                if (actor instanceof EntityActor) {
+                                    prettyPrintStats((EntityActor) actor);
+                                }
+                            }, () -> {
+                                System.out.println("You don't see anything like that.");
+                            });
+                        });
+
+                    }
+                    break;
+
                 case "whoami":
                     System.out.println("You are " + GameInstance.instance().getHeroSelected().name);
                     break;
@@ -98,8 +150,8 @@ public class GameRunnerCLI {
                     break;
                 case "cast":
                     List<AbilityComponent> abilities = GameInstance.instance().getHeroSelected().getComponentsOfType(AbilityComponent.class);
-                    System.out.println("You know the following abilities:");
                     if (abilities != null) {
+                        System.out.println("You know the following abilities:");
                         for (int i = 0; i < abilities.size(); i++) {
                             System.out.println("  " + i + ": " + abilities.get(i).getAbility().getName());
                         }
@@ -111,9 +163,12 @@ public class GameRunnerCLI {
                             if (choiceNum >= 0 && choiceNum < abilities.size()) {
                                 System.out.println("Casting: " + abilities.get(choiceNum).getAbility().getName());
                                 Ability.ActionResult result = abilities.get(choiceNum).getAbility().enact(AbilityContext.builder()
+                                    .world(world)
                                     .caster(GameInstance.instance().getHeroSelected())
                                     .build());
-                                System.out.println("Result: " + result);
+                                if (!result.success()) {
+                                    System.out.println("Failed to cast ability: " + result.message());
+                                }
                             }
                         } catch (NumberFormatException e) {
                             System.out.println("Invalid choice. Try again next time");
@@ -121,23 +176,127 @@ public class GameRunnerCLI {
                     } else {
                         System.out.println("No learned abilities.");
                     }
-                    break;
+                    return TICK;
 
                 case "stats":
-                    System.out.println("Stats:");
-                    System.out.println("  Spirit: " + GameInstance.instance().getHeroSelected().stat(StatName.SPIRIT).get().getCurrentValue());
-                    break;
+                    prettyPrintStats(GameInstance.instance().getHeroSelected());
+
+                    return CONTINUE;
+
+                case "facing":
+                    Vector facing = GameInstance.instance().getHeroSelected().facing;
+                    if (Vector.UP.equals(facing)) {
+                        System.out.println("Facing: NORTH");
+                    } else if (Vector.DOWN.equals(facing)) {
+                        System.out.println("Facing: SOUTH");
+                    } else if (Vector.LEFT.equals(facing)) {
+                        System.out.println("Facing: WEST");
+                    } else if (Vector.RIGHT.equals(facing)) {
+                        System.out.println("Facing: EAST");
+                    } else {
+                        System.out.println("Facing: " + facing);
+                    }
+                    return CONTINUE;
+
+                case "north":
+                    GameInstance.instance().getHeroSelected().facing = Vector.UP;
+                    return TICK;
+                case "south":
+                    GameInstance.instance().getHeroSelected().facing = Vector.DOWN;
+                    return TICK;
+                case "east":
+                    GameInstance.instance().getHeroSelected().facing = Vector.RIGHT;
+                    return TICK;
+                case "west":
+                    GameInstance.instance().getHeroSelected().facing = Vector.LEFT;
+                    return TICK;
+
+                case "switch 1":
+                    GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
+                    return CONTINUE;
+                case "switch 2":
+                    GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.MIDDLE);
+                    return CONTINUE;
+                case "switch 3":
+                    GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
+                    return CONTINUE;
 
                 case "inv":
                 case "i":
                 case "bag":
+                    var pouch = playerController.getPartyWagon().getResourcePouch();
+                    var storage = playerController.getPartyWagon().getStorage();
+                    System.out.printf("Pouch (%d/%d):\n", pouch.currentSize, pouch.size);
+                    for (var item : pouch.getItems()) {
+                        if (item != null && item.item != null) {
+                            System.out.println("\t" + item.item.getName() + " x" + item.stackSize);
+                        } else {
+                            System.out.println("\t------------");
+                        }
+                    }
+
+                    System.out.printf("Storage (%d/%d):\n", storage.currentSize, storage.size);
+                    for (var item : storage.getItems()) {
+                        if (item != null && item.item != null) {
+                            System.out.println("\t" + item.item.getName() + " x" + item.stackSize);
+                        } else {
+                            System.out.println("\t------------");
+                        }
+                    }
+
+
+                    break;
                 case "exit":
                 case "quit":
-                    return false;
+                    return EXIT;
             }
-            return true;
+
+            return CONTINUE;
+        }
+
+        private void prettyPrintStats(final EntityActor entityActor) {
+            System.out.println("\t+--- TRAITS ---+--------------------------------+--------- STATS --------+-------------------------+");
+            System.out.println("\t|              |  Offenses                      | Defenses               |  Resources              |");
+            System.out.printf("\t|  STR     %2.0f  +--------------------------------+------------------------+-------------------------+%n",
+                entityActor.trait(TraitName.STRENGTH).get().getCurrentValue());
+            System.out.printf("\t|  DEX     %2.0f  |                                |  Health       %3.0f/%3.0f  |                         |%n",
+                entityActor.trait(TraitName.DEXTERITY).get().getCurrentValue(),
+                entityActor.stat(StatName.HEALTH).get().getCurrentValue(),
+                entityActor.stat(StatName.HEALTH).get().getMaxValue());
+            System.out.printf("\t|  CON     %2.0f  |  Ability Power        %3.0f/%3.0f  |  Armor        %3.0f/%3.0f  |  Energy        %3.0f/%3.0f  |%n",
+                entityActor.trait(TraitName.CONSTITUTION).get().getCurrentValue(),
+                entityActor.stat(StatName.ABILITY_POWER).get().getCurrentValue(),
+                entityActor.stat(StatName.ABILITY_POWER).get().getMaxValue(),
+
+                entityActor.stat(StatName.ARMOR).get().getCurrentValue(),
+                entityActor.stat(StatName.ARMOR).get().getMaxValue(),
+
+                entityActor.stat(StatName.ENERGY).get().getCurrentValue(),
+                entityActor.stat(StatName.ENERGY).get().getMaxValue());
+
+            System.out.printf("\t|  INT     %2.0f  |  Ability Speed        %3.0f/%3.0f  |  Fortitude    %3.0f/%3.0f  |  Focus         %3.0f/%3.0f  |%n",
+                entityActor.trait(TraitName.INTELLIGENCE).get().getCurrentValue(),
+                entityActor.stat(StatName.ABILITY_SPEED).get().getCurrentValue(),
+                entityActor.stat(StatName.ABILITY_SPEED).get().getMaxValue(),
+
+                entityActor.stat(StatName.FORTITUDE).get().getCurrentValue(),
+                entityActor.stat(StatName.FORTITUDE).get().getMaxValue(),
+
+                entityActor.stat(StatName.FOCUS).get().getCurrentValue(),
+                entityActor.stat(StatName.FOCUS).get().getMaxValue());
+            System.out.printf("\t|  FAI     %2.0f  |  Precision            %3.0f/%3.0f  |  Warding      %3.0f/%3.0f  |  Spirit        %3.0f/%3.0f  |%n",
+                entityActor.trait(TraitName.FAITH).get().getCurrentValue(),
+                entityActor.stat(StatName.PRECISION).get().getCurrentValue(),
+                entityActor.stat(StatName.PRECISION).get().getMaxValue(),
+                entityActor.stat(StatName.WARDING).get().getCurrentValue(),
+                entityActor.stat(StatName.WARDING).get().getMaxValue(),
+                entityActor.stat(StatName.SPIRIT).get().getCurrentValue(),
+                entityActor.stat(StatName.SPIRIT).get().getMaxValue());
+            System.out.println("\t+--------------+--------------------------------+------------------------+-------------------------+");
+
         }
     }
+
 
     static class BlankScreen implements Screen {
 
@@ -175,7 +334,6 @@ public class GameRunnerCLI {
 
         @Override
         public void render(RenderContext renderContext) {
-            System.out.println("\t\t[ENG] Rendering");
         }
     }
 
@@ -190,7 +348,6 @@ public class GameRunnerCLI {
 
         @Override
         public void updatePhysics(EventArgs eventArgs, List<Actor> actors) {
-            System.out.println("\t\t[ENG] Updating physics");
         }
     }
 }

@@ -2,6 +2,8 @@ package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.entity.EntityFactory;
 import com.barelyconscious.worlds.entity.ItemLootActor;
+import com.barelyconscious.worlds.entity.PartyWagon;
+import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
@@ -22,7 +24,7 @@ public final class TestWorldInitializer {
         TestMapGenerator.generateMapTiles(world);
         createEntities(world);
 
-        world.spawnActor(new ItemLootActor(
+        world.addActor(new ItemLootActor(
             new Vector(200, 175), GameItems.IRON_SHIELD.toItem()));
     }
 
@@ -42,7 +44,7 @@ public final class TestWorldInitializer {
 
         aRat.addComponent(new DropOnDeathComponent(aRat, GameItems.WILLOW_BARK.toItem()));
 
-        world.spawnActor(aRat);
+        world.addActor(aRat);
     }
 
     private TestWorldInitializer() {}
