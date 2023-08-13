@@ -2,9 +2,9 @@ package com.barelyconscious.worlds.entity;
 
 import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.entity.components.EntityLevelComponent;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.TraitName;
-import com.barelyconscious.worlds.game.abilitysystem.Ability;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

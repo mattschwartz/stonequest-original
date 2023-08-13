@@ -8,7 +8,6 @@ import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.abilitysystem.*;
-import com.barelyconscious.worlds.game.abilitysystem.behaviors.AdjustEntityStatBehavior;
 import com.barelyconscious.worlds.game.abilitysystem.behaviors.ConsumeCombatResourceBehavior;
 import com.barelyconscious.worlds.game.abilitysystem.behaviors.EntityHasStatBehavior;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;

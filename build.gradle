@@ -31,6 +31,11 @@ run {
     mainClassName = 'com.barelyconscious.worlds.GameRunnerCLI'
 }
 
+run {
+    standardInput = System.in
+    mainClassName = 'com.barelyconscious.worlds.terminal.GameRunnerTerminal'
+}
+
 jar {
     manifest {
         attributes 'Main-Class': 'com.barelyconscious.worlds.GameRunner'
@@ -79,6 +84,11 @@ dependencies {
     implementation("software.amazon.awssdk:dynamodb")
     implementation("software.amazon.awssdk:dynamodb-enhanced")
     // end AWS SDK
+
+    //
+    implementation 'com.googlecode.lanterna:lanterna:3.1.1'
+    implementation 'info.picocli:picocli:4.7.4'
+    annotationProcessor 'info.picocli:picocli-codegen:4.7.4'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

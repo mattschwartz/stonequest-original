@@ -4,7 +4,6 @@ import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
-import com.barelyconscious.worlds.entity.components.ItemPropertyComponent;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -159,31 +158,6 @@ public abstract class ItemProperty {
         @Override
         public void removeProperty(EntityActor entity) {
 
-        }
-    }
-
-    /**
-     * A property that adds the specified component to the entity.
-     */
-    @Getter
-    public static class ComponentItemProperty extends ItemProperty {
-
-        private final ItemPropertyComponent component;
-        private final String propertyDescription;
-
-        public ComponentItemProperty(final ItemPropertyComponent component) {
-            this.component = component;
-            this.propertyDescription = component.getPropertyDescription();
-        }
-
-        @Override
-        public void applyProperty(EntityActor entity) {
-            entity.addComponent(component);
-        }
-
-        @Override
-        public void removeProperty(EntityActor entity) {
-            entity.removeComponent(component);
         }
     }
 }
