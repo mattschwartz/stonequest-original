@@ -44,7 +44,7 @@ public class EquipmentComponent extends Component {
      */
     private int itemClassToSlotId(final EquipmentItemTag tag) {
         final int slotId = SLOT_ID_BY_TAG.get(tag);
-        if (slotId >= equipmentInventory.size || slotId < 0) {
+        if (slotId >= equipmentInventory.capacity || slotId < 0) {
             return -1;
         }
         return slotId;

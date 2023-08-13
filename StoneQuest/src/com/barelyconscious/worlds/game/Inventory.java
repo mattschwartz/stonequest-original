@@ -36,14 +36,14 @@ public final class Inventory {
     }
 
     public int currentSize = 0;
-    public final int size;
+    public final int capacity;
     @Getter
     private final List<InventoryItem> items;
 
-    public Inventory(final int size) {
-        this.size = size;
+    public Inventory(final int capacity) {
+        this.capacity = capacity;
         items = new ArrayList<>();
-        for (int i = 0; i < size; ++i) {
+        for (int i = 0; i < capacity; ++i) {
             items.add(null);
         }
     }
@@ -52,7 +52,7 @@ public final class Inventory {
      * @param inventoryItem if null, nothing happens
      */
     public InventoryItem setItem(final int slotId, final InventoryItem inventoryItem) {
-        if (slotId < size && inventoryItem != null) {
+        if (slotId < capacity && inventoryItem != null) {
             final InventoryItem prevItem = items.set(slotId, inventoryItem);
             if (prevItem == null) {
                 currentSize++;
@@ -75,7 +75,7 @@ public final class Inventory {
      */
     @Deprecated
     public InventoryItem setItemAt(final int slotId, final Item item) {
-        if (slotId < size) {
+        if (slotId < capacity) {
             final InventoryItem prevItem = items.set(slotId, new InventoryItem(item, 1));
             if (prevItem == null) {
                 currentSize++;
@@ -138,7 +138,7 @@ public final class Inventory {
      * @return the item and stack size and removes it from the inventory
      */
     public InventoryItem removeStackAt(final int slotId) {
-        if (slotId < 0 || slotId >= size) {
+        if (slotId < 0 || slotId >= capacity) {
             return null;
         }
         final InventoryItem itemRemoved = items.set(slotId, null);
@@ -177,14 +177,14 @@ public final class Inventory {
 
     @Nullable
     public InventoryItem getItem(final int slot) {
-        if (slot < 0 || slot >= size) {
+        if (slot < 0 || slot >= capacity) {
             return null;
         }
         return items.get(slot);
     }
 
     public boolean isFull() {
-        return currentSize >= size;
+        return currentSize >= capacity;
     }
 
     /**

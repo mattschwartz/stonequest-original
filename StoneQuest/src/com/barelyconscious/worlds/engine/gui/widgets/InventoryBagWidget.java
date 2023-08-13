@@ -41,9 +41,9 @@ public final class InventoryBagWidget extends Widget {
         this.configureWidgets();
         inventory.delegateOnItemChanged.bindDelegate(this::onInventoryChanged);
 
-        if (inventory.size != numRows * numCols) {
+        if (inventory.capacity != numRows * numCols) {
             log.error("Inventory size ({}) does not match specified rows ({}) and columns ({})!",
-                inventory.size, numRows, numCols);
+                inventory.capacity, numRows, numCols);
         }
     }
 

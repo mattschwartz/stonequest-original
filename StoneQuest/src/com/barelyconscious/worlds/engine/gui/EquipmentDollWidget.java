@@ -32,7 +32,7 @@ public class EquipmentDollWidget extends MouseInputWidget {
     }
 
     private Void onEquipmentChanged(Inventory.InventoryItemEvent itemChanged) {
-        for (int i = 0; i < equipmentComponent.getEquipmentInventory().size; ++i) {
+        for (int i = 0; i < equipmentComponent.getEquipmentInventory().capacity; ++i) {
             final ItemSlotWidget itemSlotWidget = itemSlotsByClassType.get(i);
 
             if (itemSlotWidget == null) {

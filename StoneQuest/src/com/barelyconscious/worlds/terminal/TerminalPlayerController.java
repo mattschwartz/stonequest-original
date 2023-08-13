@@ -143,7 +143,7 @@ public class TerminalPlayerController extends PlayerController {
 
         var pouch = getPartyWagon().getResourcePouch();
         var storage = getPartyWagon().getStorage();
-        System.out.printf("Pouch (%d/%d):\n", pouch.currentSize, pouch.size);
+        System.out.printf("Pouch (%d/%d):\n", pouch.currentSize, pouch.capacity);
         for (var item : pouch.getItems()) {
             if (item != null && item.item != null) {
                 System.out.println("\t" + item.item.getName() + " x" + item.stackSize);
@@ -152,7 +152,7 @@ public class TerminalPlayerController extends PlayerController {
             }
         }
 
-        System.out.printf("Storage (%d/%d):\n", storage.currentSize, storage.size);
+        System.out.printf("Storage (%d/%d):\n", storage.currentSize, storage.capacity);
         for (var item : storage.getItems()) {
             if (item != null && item.item != null) {
                 System.out.println("\t" + item.item.getName() + " x" + item.stackSize);
