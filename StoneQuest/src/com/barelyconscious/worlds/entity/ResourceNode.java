@@ -1,7 +1,6 @@
 package com.barelyconscious.worlds.entity;
 
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.game.item.Item;
 
 import java.util.List;

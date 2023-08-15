@@ -4,6 +4,7 @@ import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.entity.ResourceNode;
+import com.barelyconscious.worlds.entity.TileActor;
 import com.barelyconscious.worlds.entity.components.AbilityComponent;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.StatName;
@@ -129,8 +130,8 @@ public class TerminalPlayerController extends PlayerController {
 
         System.out.println("\tNearby entities:");
         for (Actor actor : world.getActors()) {
-            if (actor instanceof EntityActor || actor instanceof ResourceNode) {
-                System.out.printf("\t%s (%s)\n", actor.name, actor.id);
+            if (!(actor instanceof TileActor)) {
+                System.out.printf("\t%s\n", actor.name);
             }
         }
         return true;
@@ -204,18 +205,14 @@ public class TerminalPlayerController extends PlayerController {
         System.out.print("\t> ");
         String gatherChoice = scn.nextLine();
         world.findActorByName(gatherChoice).ifPresentOrElse(actor -> {
-            if (actor instanceof ResourceNode) {
-                var items = ((ResourceNode) actor).prospect(null);
-                if (items != null && !items.isEmpty()) {
-                    System.out.println("You gather:");
-                    for (var item : items) {
-                        System.out.println("\t" + item.getName());
-                    }
+            if (actor instanceof ResourceNode res) {
+                Item harvest = res.harvest(GameInstance.instance().getHeroSelected());
+                if (harvest != null) {
+                    System.out.println("You gather " + harvest.getName());
+                    getPartyWagon().getResourcePouch().addItem(harvest);
                 } else {
-                    System.out.println("You find nothing.");
+                    System.out.println("You don't find anything.");
                 }
-            } else {
-                System.out.println("You can't gather that.");
             }
         }, () -> {
             System.out.println("You don't see anything like that.");

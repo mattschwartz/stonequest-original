@@ -1,8 +1,7 @@
 package com.barelyconscious.worlds.gamedata;
 
-import com.barelyconscious.worlds.entity.Actor;
-import com.barelyconscious.worlds.entity.EntityFactory;
-import com.barelyconscious.worlds.entity.ItemLootActor;
+import com.barelyconscious.worlds.entity.*;
+import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
@@ -10,7 +9,6 @@ import com.barelyconscious.worlds.entity.components.DestroyOnDeathComponent;
 import com.barelyconscious.worlds.entity.components.DropOnDeathComponent;
 import com.barelyconscious.worlds.entity.components.HealthBarComponent;
 import com.barelyconscious.worlds.entity.components.SpriteComponent;
-import com.barelyconscious.worlds.entity.ResourceNode;
 import com.barelyconscious.worlds.game.item.GameItems;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
@@ -57,6 +55,18 @@ public final class TestWorldInitializer {
 
         world.addActor(ironResourceNode);
 
+        var ironProducer = new BuildingActor("Iron Mine", Vector.ZERO,
+            ironResourceNode, new Inventory(16), 3);
+        world.addActor(ironProducer);
+
+        ironProducer.delegateOnItemProduced.bindDelegate((item) -> {
+            System.out.println("Produced an item: " + item.item.getName());
+            return null;
+        });
+        ironProducer.delegateOnProductionHalted.bindDelegate((e) -> {
+            System.out.println("Production halted");
+            return null;
+        });
     }
 
     private static void createEntities(final World world) {

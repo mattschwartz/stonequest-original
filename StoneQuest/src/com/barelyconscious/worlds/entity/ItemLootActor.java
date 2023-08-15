@@ -35,7 +35,7 @@ public class ItemLootActor extends Actor {
     private Item item;
 
     public ItemLootActor(final Vector transform, final Item item) {
-        super(transform);
+        super(item == null ? "Nothing" : "Loot of " + item.getName(), transform);
         this.item = item;
 
         Sprite sprite = Resources.getSprite(ResourceSprite.ITEM_LOOT_ACTOR_SPRITE);
