@@ -66,6 +66,12 @@ public final class Inventory {
         return null;
     }
 
+    public void clear() {
+        for (int i = 0; i < capacity; ++i) {
+            items.set(i, null);
+        }
+    }
+
     public boolean contains(Item item) {
         return findIndexOfItem(item) != -1;
     }
@@ -181,6 +187,10 @@ public final class Inventory {
             return null;
         }
         return items.get(slot);
+    }
+
+    public boolean isEmpty() {
+        return currentSize == 0;
     }
 
     public boolean isFull() {

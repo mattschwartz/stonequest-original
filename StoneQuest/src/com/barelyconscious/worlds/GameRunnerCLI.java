@@ -1,20 +1,12 @@
 package com.barelyconscious.worlds;
 
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.engine.Camera;
 import com.barelyconscious.worlds.engine.Engine;
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.Physics;
-import com.barelyconscious.worlds.engine.graphics.RenderContext;
 import com.barelyconscious.worlds.engine.graphics.Screen;
 import com.barelyconscious.worlds.entity.*;
-import com.barelyconscious.worlds.entity.components.AbilityComponent;
 import com.barelyconscious.worlds.game.*;
-import com.barelyconscious.worlds.game.abilitysystem.Ability;
-import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
-import com.barelyconscious.worlds.entity.ResourceNode;
-import com.barelyconscious.worlds.game.item.Item;
-import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.gamedata.TestHeroInitializer;
 import com.barelyconscious.worlds.gamedata.TestWorldInitializer;
 import com.barelyconscious.worlds.terminal.BlankScreen;
@@ -23,7 +15,6 @@ import com.google.common.util.concurrent.RateLimiter;
 
 import java.time.Clock;
 import java.util.ArrayDeque;
-import java.util.List;
 import java.util.Scanner;
 
 import static com.barelyconscious.worlds.gamedata.TestHeroInitializer.*;
@@ -43,26 +34,7 @@ public class GameRunnerCLI {
     static TerminalPlayerController playerController = new TerminalPlayerController(new Scanner(System.in), world);
 
     public static void main(String[] args) {
-        engine.prestart(
-            GameInstance.instance(),
-            world,
-            blankScreen,
-            playerController);
-
-        var pw = new PartyWagon(
-            new Inventory(8),
-            new Inventory(8));
-        world.addActor(pw);
-        playerController.setPartyWagon(pw);
-
-        TestHeroInitializer.createHeroes(world, playerController);
-        TestWorldInitializer.createWorld(world);
-
-        GameInstance.instance().setHero(HERO_JOHN, GameInstance.PartySlot.LEFT);
-        GameInstance.instance().setHero(HERO_NICNOLE, GameInstance.PartySlot.MIDDLE);
-        GameInstance.instance().setHero(HERO_PAUL, GameInstance.PartySlot.RIGHT);
-
-        GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
+        setUpGame();
 
         System.out.println("\n+---------------------+");
         System.out.println("|  Worlds v1.0 - CLI  |");
@@ -85,5 +57,28 @@ public class GameRunnerCLI {
                     System.exit(0);
             }
         }
+    }
+
+    private static void setUpGame( ) {
+        engine.prestart(
+            GameInstance.instance(),
+            world,
+            blankScreen,
+            playerController);
+
+        var pw = new Wagon(
+            new Inventory(8),
+            new Inventory(8));
+        world.addActor(pw);
+        GameInstance.instance().setWagon(pw);
+
+        TestHeroInitializer.createHeroes(world, playerController);
+        TestWorldInitializer.createWorld(world);
+
+        GameInstance.instance().setHero(HERO_JOHN, GameInstance.PartySlot.LEFT);
+        GameInstance.instance().setHero(HERO_NICNOLE, GameInstance.PartySlot.MIDDLE);
+        GameInstance.instance().setHero(HERO_PAUL, GameInstance.PartySlot.RIGHT);
+
+        GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
     }
 }

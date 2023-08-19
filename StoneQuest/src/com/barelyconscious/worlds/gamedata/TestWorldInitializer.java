@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.entity.*;
+import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.World;
@@ -23,6 +24,8 @@ import java.util.List;
 public final class TestWorldInitializer {
 
     public static void createWorld(final World world) {
+        GameInstance.instance().setPlayerVillage(new Village("Ravenfell", Vector.ZERO));
+
         TestMapGenerator.generateMapTiles(world);
         createEntities(world);
         createResources(world);
@@ -33,40 +36,37 @@ public final class TestWorldInitializer {
     }
 
     private static void createResources(final World world) {
-        var ironResourceNode = new ResourceNode("Iron Ore", Vector.ZERO) {
-            private List<Item> stock = Lists.newArrayList(
-                GameItems.IRON_ORE.toItem(),
-                GameItems.IRON_ORE.toItem(),
-                GameItems.IRON_ORE.toItem(),
-                GameItems.IRON_ORE.toItem());
-            @Override
-            public List<Item> prospect(Actor a) {
-                return stock;
-            }
-
-            @Override
-            public Item harvest(Actor a) {
-                if (stock.isEmpty()) {
-                    return null;
-                }
-                return stock.remove(0);
-            }
-        };
+        var ironResourceNode = new ResourceNode("Iron Ore", Vector.ZERO, Lists.newArrayList(
+            GameItems.IRON_ORE.toItem(),
+            GameItems.IRON_ORE.toItem(),
+            GameItems.IRON_ORE.toItem(),
+            GameItems.IRON_ORE.toItem()));
+        var chamomileResourceNode = new ResourceNode("Chamomile", Vector.ZERO, Lists.newArrayList(
+            GameItems.CHAMOMILE.toItem(),
+            GameItems.CHAMOMILE.toItem(),
+            GameItems.CHAMOMILE.toItem(),
+            GameItems.CHAMOMILE.toItem()));
 
         world.addActor(ironResourceNode);
+        world.addActor(chamomileResourceNode);
 
-        var ironProducer = new BuildingActor("Iron Mine", Vector.ZERO,
+        var ironProducer = new HarvesterBuilding("Iron Mine", ironResourceNode.transform,
             ironResourceNode, new Inventory(16), 3);
         world.addActor(ironProducer);
 
-        ironProducer.delegateOnItemProduced.bindDelegate((item) -> {
+        ironProducer.delegateOnItemProduced.bindDelegate((item) ->
+
+        {
             System.out.println("Produced an item: " + item.item.getName());
             return null;
         });
-        ironProducer.delegateOnProductionHalted.bindDelegate((e) -> {
+        ironProducer.delegateOnProductionHalted.bindDelegate((e) ->
+
+        {
             System.out.println("Production halted");
             return null;
         });
+
     }
 
     private static void createEntities(final World world) {
@@ -88,5 +88,6 @@ public final class TestWorldInitializer {
         world.addActor(aRat);
     }
 
-    private TestWorldInitializer() {}
+    private TestWorldInitializer() {
+    }
 }

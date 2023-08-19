@@ -9,6 +9,8 @@ import lombok.Getter;
 public enum ResourceItemTag implements ItemTag {
     CLOTH("Cloth"),
     ORE("Ore"),
+    METAL("Metal"),
+    WOOD("Wood"),
     HERB("Herb"),
     LEATHER("Leather"),
     TECH("Tech");

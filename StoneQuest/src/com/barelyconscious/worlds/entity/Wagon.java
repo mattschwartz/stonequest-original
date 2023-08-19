@@ -5,7 +5,7 @@ import com.barelyconscious.worlds.game.Inventory;
 import lombok.Getter;
 import lombok.Setter;
 
-public class PartyWagon extends Actor {
+public class Wagon extends Actor {
 
     @Getter
     @Setter
@@ -14,7 +14,7 @@ public class PartyWagon extends Actor {
     @Setter
     private Inventory storage;
 
-    public PartyWagon(
+    public Wagon(
         Inventory resourcePouch,
         Inventory storage
     ) {

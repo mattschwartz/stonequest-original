@@ -1,19 +1,14 @@
 package com.barelyconscious.worlds.terminal;
 
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.entity.Actor;
-import com.barelyconscious.worlds.entity.EntityActor;
-import com.barelyconscious.worlds.entity.ResourceNode;
-import com.barelyconscious.worlds.entity.TileActor;
+import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.entity.components.AbilityComponent;
-import com.barelyconscious.worlds.game.GameInstance;
-import com.barelyconscious.worlds.game.StatName;
-import com.barelyconscious.worlds.game.TraitName;
-import com.barelyconscious.worlds.game.World;
+import com.barelyconscious.worlds.game.*;
 import com.barelyconscious.worlds.game.abilitysystem.Ability;
 import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
+import com.barelyconscious.worlds.game.systems.BuildingSystem;
 
 import java.util.List;
 import java.util.Scanner;
@@ -50,6 +45,9 @@ public class TerminalPlayerController extends PlayerController {
             return CONTINUE;
         }
         if (handleGather(input)) {
+            return TICK;
+        }
+        if (handleBuilding(input)) {
             return TICK;
         }
 
@@ -123,6 +121,69 @@ public class TerminalPlayerController extends PlayerController {
         return CONTINUE;
     }
 
+    private boolean handleBuilding(String input) {
+        if (!input.startsWith("build")) {
+            return false;
+        }
+
+        System.out.println("Build what?");
+        System.out.println("\t[1] Gathering building");
+        System.out.println("\t[2] Crafting building");
+        System.out.println("\t[3] Production building");
+        System.out.print("> ");
+        String choice = scn.nextLine();
+        try {
+            int buildingType = Integer.parseInt(choice);
+            switch (buildingType) {
+                case 1:
+                    System.out.println("Building gathering building...");
+                    List<Actor> resourceNodes = world.getActors().stream()
+                        .filter(t -> t instanceof ResourceNode)
+                        .toList();
+
+                    for (int i = 1; i <= resourceNodes.size(); ++i) {
+                        System.out.printf("\t[%d] %s\n", i, resourceNodes.get(i - 1).name);
+                    }
+
+                    System.out.print("> ");
+                    choice = scn.nextLine();
+                    int resourceNodeIndex = Integer.parseInt(choice);
+                    ResourceNode resourceNode = (ResourceNode) resourceNodes.get(resourceNodeIndex - 1);
+
+                    GameInstance gi = GameInstance.instance();
+                    Village playerVillage = gi.getPlayerVillage();
+                    BuildingSystem buildingSystem = gi.getBuildingSystem();
+
+                    HarvesterBuilding harvesterBuilding = buildingSystem.constructHarvesterBuilding(
+                        resourceNode, playerVillage);
+
+                    harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
+                        System.out.println("Produced an item: " + item.item.getName());
+                        return null;
+                    });
+                    harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) -> {
+                        System.out.println("Production halted");
+                        return null;
+                    });
+
+                    break;
+                case 2:
+                    System.out.println("Building crafting building...");
+                    break;
+                case 3:
+                    System.out.println("Building production building...");
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+                    break;
+            }
+        } catch (NumberFormatException ex) {
+            System.out.println("Invalid choice.");
+        }
+
+        return true;
+    }
+
     private boolean handleLook(String input) {
         if (!input.startsWith("look")) {
             return false;
@@ -142,25 +203,13 @@ public class TerminalPlayerController extends PlayerController {
             return false;
         }
 
-        var pouch = getPartyWagon().getResourcePouch();
-        var storage = getPartyWagon().getStorage();
+        var pouch = GameInstance.instance().getWagon().getResourcePouch();
+        var storage = GameInstance.instance().getWagon().getStorage();
         System.out.printf("Pouch (%d/%d):\n", pouch.currentSize, pouch.capacity);
-        for (var item : pouch.getItems()) {
-            if (item != null && item.item != null) {
-                System.out.println("\t" + item.item.getName() + " x" + item.stackSize);
-            } else {
-                System.out.println("\t------------");
-            }
-        }
+        printInventory(pouch);
 
         System.out.printf("Storage (%d/%d):\n", storage.currentSize, storage.capacity);
-        for (var item : storage.getItems()) {
-            if (item != null && item.item != null) {
-                System.out.println("\t" + item.item.getName() + " x" + item.stackSize);
-            } else {
-                System.out.println("\t------------");
-            }
-        }
+        printInventory(storage);
 
         return true;
     }
@@ -185,6 +234,8 @@ public class TerminalPlayerController extends PlayerController {
                         prettyPrintStats((EntityActor) actor);
                     } else if (actor instanceof ResourceNode) {
                         printInventory(((ResourceNode) actor).prospect(null));
+                    } else if (actor instanceof HarvesterBuilding) {
+                        printInventory(((HarvesterBuilding) actor).getStockpile());
                     }
                 }, () -> {
                     System.out.println("You don't see anything like that.");
@@ -209,7 +260,7 @@ public class TerminalPlayerController extends PlayerController {
                 Item harvest = res.harvest(GameInstance.instance().getHeroSelected());
                 if (harvest != null) {
                     System.out.println("You gather " + harvest.getName());
-                    getPartyWagon().getResourcePouch().addItem(harvest);
+                    GameInstance.instance().getWagon().getResourcePouch().addItem(harvest);
                 } else {
                     System.out.println("You don't find anything.");
                 }
@@ -218,6 +269,16 @@ public class TerminalPlayerController extends PlayerController {
             System.out.println("You don't see anything like that.");
         });
         return true;
+    }
+
+    private void printInventory(Inventory inventory) {
+        for (var item : inventory.getItems()) {
+            if (item != null && item.item != null) {
+                System.out.println("\t" + item.item.getName() + " x" + item.stackSize);
+            } else {
+                System.out.println("\t------------");
+            }
+        }
     }
 
     private void printInventory(List<Item> items) {

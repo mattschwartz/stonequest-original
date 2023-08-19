@@ -3,9 +3,12 @@ package com.barelyconscious.worlds.game;
 import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.engine.Camera;
 import com.barelyconscious.worlds.entity.Hero;
+import com.barelyconscious.worlds.entity.Village;
+import com.barelyconscious.worlds.entity.Wagon;
 import com.barelyconscious.worlds.entity.PlayerPersonalDevice;
 import com.barelyconscious.worlds.entity.components.AbilityComponent;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
+import com.barelyconscious.worlds.game.systems.BuildingSystem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +47,17 @@ public final class GameInstance {
     @Getter
     @Setter
     private PlayerController playerController = new PlayerController();
+
+    @Getter
+    private final BuildingSystem buildingSystem = new BuildingSystem();
+
+    @Getter
+    @Setter
+    private Wagon wagon;
+
+    @Getter
+    @Setter
+    private Village playerVillage;
 
     @Getter
     @Setter

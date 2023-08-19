@@ -14,6 +14,7 @@ public enum RelatedSkillItemTag implements ItemTag {
     SURVIVAL("Survival"),
     ANIMAL_HANDLING("Animal Handling"),
     COOKING("Cooking"),
+    WOODWORKING("Woodworking"),
 
     CHEMISTRY("Chemistry"),
     METALWORKING("Metalworking"),

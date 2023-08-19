@@ -25,7 +25,7 @@ public final class World {
      */
     public Optional<Actor> findActorByName(final String name) {
         return actors.stream()
-            .filter(actor -> actor.name.equals(name))
+            .filter(actor -> actor.name.equalsIgnoreCase(name))
             .findFirst();
     }
 

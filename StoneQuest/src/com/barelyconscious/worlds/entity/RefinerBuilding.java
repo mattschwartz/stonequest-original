@@ -7,10 +7,14 @@ import com.barelyconscious.worlds.entity.components.Component;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.item.Item;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.time.Clock;
 
-public class BuildingActor extends Actor {
+/**
+ * Building takes raw materials and creates items.
+ */
+public class RefinerBuilding extends Building {
 
     public Delegate<ItemProducedEvent> delegateOnItemProduced = new Delegate<>();
     public Delegate<ProductionHaltedEvent> delegateOnProductionHalted = new Delegate<>();
@@ -23,14 +27,15 @@ public class BuildingActor extends Actor {
         public final Item item;
     }
 
+    private final Inventory intakeStockpile;
+    @Getter
+    private final Inventory outputStockpile;
+
     /**
-     * The resource being processed.
+     * The recipe that this building is currently processing.
      */
-    private final ResourceNode resourceNode;
-    /**
-     * Where items go as they get produced
-     */
-    private final Inventory stockpile;
+//    private final Recipe recipe;
+
     /**
      * Amount of time in seconds it takes this building to
      * produce 1 item.
@@ -41,16 +46,16 @@ public class BuildingActor extends Actor {
 
     private final Clock clock;
 
-    public BuildingActor(
+    public RefinerBuilding(
         String name,
         Vector transform,
-        ResourceNode resourceNode,
-        Inventory stockpile,
+        Inventory intakeStockpile,
+        Inventory outputStockpile,
         double timeToProduceSeconds
     ) {
         super(name, transform);
-        this.resourceNode = resourceNode;
-        this.stockpile = stockpile;
+        this.intakeStockpile = intakeStockpile;
+        this.outputStockpile = outputStockpile;
         this.timeToProduceSeconds = timeToProduceSeconds;
         clock = Clock.systemDefaultZone();
 
@@ -75,16 +80,17 @@ public class BuildingActor extends Actor {
 
             long current = clock.millis();
             if (current - timeOfLastProductionMillis > timeToProduceSeconds * 1000) {
-                timeOfLastProductionMillis = current;
-
-                var item = resourceNode.harvest(getParent());
-                if (item != null) {
-                    delegateOnItemProduced.call(new ItemProducedEvent(item));
-                    stockpile.addItem(item);
-                } else {
+                if (intakeStockpile.isEmpty()) {
                     delegateOnProductionHalted.call(new ProductionHaltedEvent());
                     isProductionEnabled = false;
                 }
+
+                timeOfLastProductionMillis = current;
+
+                // todo - implement
+                // from recipe, get items required
+                // try to pull items from stock
+                // produce an item and put it in the output stockpile
             }
         }
     }

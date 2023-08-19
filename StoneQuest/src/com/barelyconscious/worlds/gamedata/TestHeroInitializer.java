@@ -10,7 +10,6 @@ import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
 import com.barelyconscious.worlds.game.hero.HeroClassType;
 import com.barelyconscious.worlds.game.item.GameItems;
-import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
@@ -156,9 +155,9 @@ public class TestHeroInitializer {
             inventory.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
         }
 
-        if (pc.getPartyWagon() != null) {
-            Inventory resourcePouch = pc.getPartyWagon().getResourcePouch();
-            Inventory storage = pc.getPartyWagon().getStorage();
+        if (GameInstance.instance().getWagon() != null) {
+            Inventory resourcePouch = GameInstance.instance().getWagon().getResourcePouch();
+            Inventory storage = GameInstance.instance().getWagon().getStorage();
 
             resourcePouch.addItem(GameItems.WILLOW_BARK.toItem());
             resourcePouch.addItem(GameItems.CURED_LEATHER.toItem());
