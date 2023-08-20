@@ -2,33 +2,33 @@ package com.barelyconscious.worlds.gamedata;
 
 public class EntityStatsCalculator {
 
-    private static final float CONS_HEALTH_MODIFIER = 0.6f;
-    private static final float LEVEL_HEALTH_MODIFIER = 2.5f;
-    private static final float DIFFICULTY_CLASS_MODIFIER = 8f;
+    private static final double CONS_HEALTH_MODIFIER = 0.6f;
+    private static final double LEVEL_HEALTH_MODIFIER = 2.5f;
+    private static final double DIFFICULTY_CLASS_MODIFIER = 8f;
 
-    public float toHealth(
-        float constitutionValue,
+    public double toHealth(
+        double constitutionValue,
         int level,
         int difficultyClass
     ) {
-        float healthFromCons = constitutionValue * CONS_HEALTH_MODIFIER;
-        float healthFromLevel = level * LEVEL_HEALTH_MODIFIER;
-        float healthFromDc = difficultyClass * DIFFICULTY_CLASS_MODIFIER;
+        double healthFromCons = constitutionValue * CONS_HEALTH_MODIFIER;
+        double healthFromLevel = level * LEVEL_HEALTH_MODIFIER;
+        double healthFromDc = difficultyClass * DIFFICULTY_CLASS_MODIFIER;
 
-        float totalContributedHealth = healthFromCons + healthFromLevel + healthFromDc;
+        double totalContributedHealth = healthFromCons + healthFromLevel + healthFromDc;
         return totalContributedHealth;
     }
 
-    public float toPower(
-        float intValue,
+    public double toPower(
+        double intValue,
         int level,
         int difficultyClass
     ) {
-        float powerFromInt = intValue;
-        float powerFromLevel = level * LEVEL_HEALTH_MODIFIER;
-        float powerFromDc = difficultyClass * DIFFICULTY_CLASS_MODIFIER;
+        double powerFromInt = intValue;
+        double powerFromLevel = level * LEVEL_HEALTH_MODIFIER;
+        double powerFromDc = difficultyClass * DIFFICULTY_CLASS_MODIFIER;
 
-        float totalContributedPower = powerFromInt + powerFromLevel + powerFromDc;
+        double totalContributedPower = powerFromInt + powerFromLevel + powerFromDc;
         return totalContributedPower;
     }
 }

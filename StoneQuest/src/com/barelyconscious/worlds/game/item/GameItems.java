@@ -77,6 +77,12 @@ public enum GameItems {
         Set.of(ResourceItemTag.HERB, RelatedSkillItemTag.MEDICINE, RelatedSkillItemTag.COOKING, StackableItemTag.STACKABLE, ConsumableItemTag.EDIBLE),
         new ArrayList<>(),
         Lists.newArrayList(new ItemProperty.HealthItemProperty(5, false))),
+    IRON_SWORD(10, 1,
+        "Iron Sword", "A sword made of iron.",
+        new BetterSpriteResource("items::iron_sword"),
+        Set.of(EquipmentItemTag.EQUIPMENT_RIGHT_HAND, RelatedSkillItemTag.METALWORKING),
+        Lists.newArrayList(new ItemRequirement.TraitItemRequirement(TraitName.STRENGTH, 10)),
+        Lists.newArrayList(new ItemProperty.WeaponDamageProperty(5, 10, 2.0f))),
     ;
 
     private final int itemId;

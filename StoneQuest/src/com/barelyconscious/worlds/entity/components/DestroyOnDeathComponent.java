@@ -35,7 +35,9 @@ public class DestroyOnDeathComponent extends OnDeathComponent {
             remainingCorpseDuration -= eventArgs.getDeltaTime();
             if (remainingCorpseDuration <= 0) {
                 getParent().destroy();
-                eventArgs.getWorldContext().addActor(new AGravestone(getParent().transform));
+                eventArgs.getWorldContext().addActor(new AGravestone(
+                    "Grave of " + getParent().name,
+                    getParent().transform));
             }
         }
     }

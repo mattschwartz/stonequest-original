@@ -3,6 +3,7 @@ package com.barelyconscious.worlds.terminal;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.entity.components.AbilityComponent;
+import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.game.*;
 import com.barelyconscious.worlds.game.abilitysystem.Ability;
 import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
@@ -11,6 +12,7 @@ import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.systems.BuildingSystem;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class TerminalPlayerController extends PlayerController {
@@ -48,6 +50,9 @@ public class TerminalPlayerController extends PlayerController {
             return TICK;
         }
         if (handleBuilding(input)) {
+            return TICK;
+        }
+        if (handleAttack(input)) {
             return TICK;
         }
 
@@ -106,12 +111,15 @@ public class TerminalPlayerController extends PlayerController {
 
             case "switch 1":
                 GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
+                System.out.println("You are now " + GameInstance.instance().getHeroSelected().name);
                 return CONTINUE;
             case "switch 2":
                 GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.MIDDLE);
+                System.out.println("You are now " + GameInstance.instance().getHeroSelected().name);
                 return CONTINUE;
             case "switch 3":
                 GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
+                System.out.println("You are now " + GameInstance.instance().getHeroSelected().name);
                 return CONTINUE;
             case "exit":
             case "quit":
@@ -180,6 +188,54 @@ public class TerminalPlayerController extends PlayerController {
         } catch (NumberFormatException ex) {
             System.out.println("Invalid choice.");
         }
+
+        return true;
+    }
+
+    private boolean handleAttack(String input) {
+        if (!input.startsWith("attack")) {
+            return false;
+        }
+        String[] split = input.split(" ");
+        EntityActor entity;
+        if (split.length >= 2) {
+            StringBuilder name = new StringBuilder();
+            for (int i = 1; i < split.length; ++i) {
+                name.append(split[i]).append(" ");
+            }
+            Optional<Actor> optional = world.findActorByName(name.toString().trim());
+            if (optional.isEmpty() || !(optional.get() instanceof EntityActor)) {
+                System.out.println("You see nothing like that.");
+                return false;
+            }
+
+            entity = (EntityActor) optional.get();
+        } else {
+            System.out.println("Attack what?");
+            List<Actor> entities = world.getActors().stream().filter(t -> t instanceof EntityActor)
+                .toList();
+            for (int i = 1; i <= entities.size(); ++i) {
+                entity = (EntityActor) entities.get(i - 1);
+                DynamicValueComponent hp = entity.stat(StatName.HEALTH).get();
+                System.out.printf("\t[%d] %s (%.0f/%.0f)\n",
+                    i,
+                    entity.name, hp.getCurrentValue(), hp.getMaxValue());
+            }
+            System.out.print("> ");
+            String choice = scn.nextLine();
+            try {
+                int entityIndex = Integer.parseInt(choice);
+                entity = (EntityActor) entities.get(entityIndex - 1);
+            } catch (NumberFormatException ex) {
+                System.out.println("You see nothing like that.");
+                return false;
+            }
+        }
+
+        System.out.printf("Attacking %s%n", entity.name);
+        var gi = GameInstance.instance();
+        var hero = gi.getHeroSelected();
+        gi.getCombatSystem().meleeAttack(hero, entity);
 
         return true;
     }
@@ -330,7 +386,8 @@ public class TerminalPlayerController extends PlayerController {
 
     private void prettyPrintStats(final EntityActor entityActor) {
         System.out.println("\t+--- TRAITS ---+--------------------------------+--------- STATS --------+-------------------------+");
-        System.out.println("\t|              |  Offenses                      | Defenses               |  Resources              |");
+        System.out.printf("\t|  LVL     %2d  |  Offenses                      | Defenses               |  Resources              |%n",
+            entityActor.getEntityLevelComponent().getEntityLevel());
         System.out.printf("\t|  STR     %2.0f  +--------------------------------+------------------------+-------------------------+%n",
             entityActor.trait(TraitName.STRENGTH).get().getCurrentValue());
         System.out.printf("\t|  DEX     %2.0f  |                                |  Health       %3.0f/%3.0f  |                         |%n",

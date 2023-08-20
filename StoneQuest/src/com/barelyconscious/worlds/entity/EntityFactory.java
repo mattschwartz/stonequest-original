@@ -24,10 +24,10 @@ public class EntityFactory {
         protected String name;
         protected Vector transform;
         protected int entityLevel;
-        protected float currentExperience;
+        protected double currentExperience;
         protected int difficultyClass;
-        protected Map<TraitName, Pair<Float, Float>> traits = new HashMap<>();
-        protected Map<StatName, Pair<Float, Float>> stats = new HashMap<>();
+        protected Map<TraitName, Pair<Double, Double>> traits = new HashMap<>();
+        protected Map<StatName, Pair<Double, Double>> stats = new HashMap<>();
 
         private final EntityStatsCalculator statsCalculator = new EntityStatsCalculator();
 
@@ -41,7 +41,7 @@ public class EntityFactory {
             return this;
         }
 
-        public EntityActorBuilder withCreatureLevel(int entityLevel, float currentExperience, int difficultyClass) {
+        public EntityActorBuilder withCreatureLevel(int entityLevel, double currentExperience, int difficultyClass) {
             this.entityLevel = entityLevel;
             this.currentExperience = currentExperience;
             this.difficultyClass = difficultyClass;
@@ -53,7 +53,7 @@ public class EntityFactory {
             return this;
         }
 
-        public EntityActorBuilder withTrait(TraitName traitName, float value) {
+        public EntityActorBuilder withTrait(TraitName traitName, double value) {
             traits.put(traitName, Pair.of(value, value));
 
             return this;
@@ -67,17 +67,17 @@ public class EntityFactory {
                 .withTrait(TraitName.FAITH, heroClassType.getStartingFaith());
         }
 
-        public EntityActorBuilder withStat(StatName statName, float value) {
+        public EntityActorBuilder withStat(StatName statName, double value) {
             return withStat(statName, value, value);
         }
 
-        public EntityActorBuilder withStat(StatName statName, float currentValue, float maxValue) {
+        public EntityActorBuilder withStat(StatName statName, double currentValue, double maxValue) {
             stats.put(statName, Pair.of(currentValue, maxValue));
 
             return this;
         }
 
-        public EntityActorBuilder withTrait(TraitName traitName, float currentValue, float maxValue) {
+        public EntityActorBuilder withTrait(TraitName traitName, double currentValue, double maxValue) {
             traits.put(traitName, Pair.of(currentValue, maxValue));
 
             return this;
@@ -143,9 +143,9 @@ public class EntityFactory {
             return postBuild(result);
         }
 
-        public Hero buildHero(Inventory inventory, HeroClassType heroClassType) {
+        public Hero buildHero(HeroClassType heroClassType) {
             preBuild();
-            var result = new Hero(name, transform, inventory, heroClassType);
+            var result = new Hero(name, transform, heroClassType);
             result.addComponent(new EntityLevelComponent(result, entityLevel, currentExperience));
 
             return (Hero) postBuild(result);

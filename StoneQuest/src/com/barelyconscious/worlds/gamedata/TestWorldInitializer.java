@@ -1,10 +1,7 @@
 package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.entity.*;
-import com.barelyconscious.worlds.game.GameInstance;
-import com.barelyconscious.worlds.game.Inventory;
-import com.barelyconscious.worlds.game.TraitName;
-import com.barelyconscious.worlds.game.World;
+import com.barelyconscious.worlds.game.*;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
 import com.barelyconscious.worlds.entity.components.DestroyOnDeathComponent;
 import com.barelyconscious.worlds.entity.components.DropOnDeathComponent;
@@ -76,6 +73,7 @@ public final class TestWorldInitializer {
             .locatedAt(new Vector(264f, 208f))
             .withCreatureLevel(1, 0, 0)
             .withTrait(TraitName.CONSTITUTION, 10f)
+            .withStat(StatName.ARMOR, 1f)
             .build();
 
         aRat.addComponent(new BoxColliderComponent(aRat, true, true, new Box(0, 32, 0, 32)));

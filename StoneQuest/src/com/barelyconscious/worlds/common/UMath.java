@@ -17,6 +17,10 @@ public final class UMath {
         return lhs;
     }
 
+    public static double clamp(final double value, final double min) {
+        return clamp(value, min, value);
+    }
+
     public static int clamp(final int value, final int min, final int max) {
         if (value < min) {
             return min;

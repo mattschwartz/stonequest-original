@@ -9,6 +9,7 @@ import com.barelyconscious.worlds.entity.PlayerPersonalDevice;
 import com.barelyconscious.worlds.entity.components.AbilityComponent;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.systems.BuildingSystem;
+import com.barelyconscious.worlds.game.systems.CombatSystem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,6 +51,9 @@ public final class GameInstance {
 
     @Getter
     private final BuildingSystem buildingSystem = new BuildingSystem();
+
+    @Getter
+    private final CombatSystem combatSystem = new CombatSystem();
 
     @Getter
     @Setter

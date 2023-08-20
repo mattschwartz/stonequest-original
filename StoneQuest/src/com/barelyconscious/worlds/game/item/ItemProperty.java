@@ -103,13 +103,13 @@ public abstract class ItemProperty {
     }
 
     @Getter
-    public static class ItemStatProperty extends ItemProperty {
+    public static class StatItemProperty extends ItemProperty {
 
         private final StatName stat;
         private final double statValue;
         private final String propertyDescription;
 
-        public ItemStatProperty(StatName stat, double statValue) {
+        public StatItemProperty(StatName stat, double statValue) {
             this.stat = stat;
             this.statValue = statValue;
             this.propertyDescription = stat.description;

@@ -33,7 +33,7 @@ public class TestHeroInitializer {
             .withStat(StatName.ARMOR, 18f)
             .withStat(StatName.ABILITY_POWER, 6f)
             .withStat(StatName.ABILITY_SPEED, 3f)
-            .buildHero(new Inventory(28), HeroClassType.MACHINIST);
+            .buildHero(HeroClassType.MACHINIST);
 
         HERO_NICNOLE.addComponent(new MoveComponent(HERO_NICNOLE, 32f));
         HERO_NICNOLE.addComponent(new SpriteComponent(HERO_NICNOLE, Resources.getSprite(ResourceSprite.HERO_2), RenderLayer.ENTITIES));
@@ -48,7 +48,9 @@ public class TestHeroInitializer {
             .withHeroClass(HeroClassType.THIEF)
             .withStat(StatName.ARMOR, 9f)
             .withStat(StatName.FOCUS, 10)
-            .buildHero(new Inventory(28), HeroClassType.THIEF);
+            .withStat(StatName.PRECISION, 2.5)
+            .withStat(StatName.ABILITY_POWER, 6)
+            .buildHero(HeroClassType.THIEF);
 
         HERO_JOHN.addComponent(new MoveComponent(HERO_JOHN, 32f));
         HERO_JOHN.addComponent(new SpriteComponent(HERO_JOHN, Resources.getSprite(ResourceSprite.HERO_3), RenderLayer.ENTITIES));
@@ -60,6 +62,8 @@ public class TestHeroInitializer {
             0.5f,
             1f));
 
+        HERO_JOHN.getEquipment().setEquippedItem(GameItems.IRON_SWORD.toItem());
+
         HERO_PAUL = EntityFactory.anEntity()
             .called("Paul")
             .locatedAt(new Vector(200, 200))
@@ -68,7 +72,7 @@ public class TestHeroInitializer {
             .withStat(StatName.ARMOR, 3f)
             .withStat(StatName.FOCUS, -1f)
             .withStat(StatName.SPIRIT, 10f)
-            .buildHero(new Inventory(28), HeroClassType.PRIEST);
+            .buildHero(HeroClassType.PRIEST);
 
         // Add some abilities
         HERO_PAUL.addComponent(new AbilityComponent(HERO_PAUL, new RenewAbility()));

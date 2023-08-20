@@ -8,8 +8,8 @@ import com.barelyconscious.worlds.common.shape.Vector;
 
 public class AGravestone extends Actor {
 
-    public AGravestone(Vector transform) {
-        super(transform);
+    public AGravestone(String name, Vector transform) {
+        super(name, transform);
         addComponent(new SpriteComponent(
             this,
             Resources.getSprite(ResourceSprite.GRAVESTONE),

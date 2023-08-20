@@ -20,19 +20,15 @@ import java.awt.Color;
 @Getter
 public class Hero extends EntityActor {
 
-    private final Inventory inventory;
-
     @Getter
     private final HeroClassType heroClassType;
 
     public Hero(
         final String name,
         final Vector transform,
-        final Inventory inventory,
         final HeroClassType heroClassType
     ) {
         super(name, transform);
-        this.inventory = inventory;
         this.heroClassType = heroClassType;
 
         addComponent(new HeroSelectedSpriteComponent(this));
