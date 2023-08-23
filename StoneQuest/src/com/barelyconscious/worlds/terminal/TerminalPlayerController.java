@@ -55,6 +55,9 @@ public class TerminalPlayerController extends PlayerController {
         if (handleAttack(input)) {
             return TICK;
         }
+        if (handleVillage(input)) {
+            return CONTINUE;
+        }
 
         switch (input) {
             case "rest":
@@ -127,6 +130,22 @@ public class TerminalPlayerController extends PlayerController {
         }
 
         return CONTINUE;
+    }
+
+    private boolean handleVillage(String input) {
+        if (!input.startsWith("village")) {
+            return false;
+        }
+
+        System.out.println("Village actions");
+
+        Village playerVillage = GameInstance.instance().getPlayerVillage();
+        System.out.println("The Village of " + playerVillage.name);
+        System.out.println("  Population: " + playerVillage.getCitizens().size());
+        System.out.println("  Buildings: " + playerVillage.getBuildings().size());
+        System.out.println("  Stockpile: " + playerVillage.getStockpile().currentSize);
+
+        return true;
     }
 
     private boolean handleBuilding(String input) {

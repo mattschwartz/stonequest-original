@@ -47,17 +47,15 @@ public final class TestWorldInitializer {
         world.addActor(ironResourceNode);
         world.addActor(chamomileResourceNode);
 
-        var ironProducer = new HarvesterBuilding("Iron Mine", ironResourceNode.transform,
-            ironResourceNode, new Inventory(16), 3);
-        world.addActor(ironProducer);
-
-        ironProducer.delegateOnItemProduced.bindDelegate((item) ->
+        HarvesterBuilding harvesterBuilding = GameInstance.instance().getBuildingSystem()
+            .constructHarvesterBuilding(ironResourceNode, GameInstance.instance().getPlayerVillage());
+        harvesterBuilding.delegateOnItemProduced.bindDelegate((item) ->
 
         {
             System.out.println("Produced an item: " + item.item.getName());
             return null;
         });
-        ironProducer.delegateOnProductionHalted.bindDelegate((e) ->
+        harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) ->
 
         {
             System.out.println("Production halted");

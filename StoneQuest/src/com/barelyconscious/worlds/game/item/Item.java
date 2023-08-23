@@ -3,6 +3,7 @@ package com.barelyconscious.worlds.game.item;
 
 import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.entity.EntityActor;
+import com.barelyconscious.worlds.game.Requirement;
 import com.barelyconscious.worlds.game.item.tags.ConsumableItemTag;
 import com.barelyconscious.worlds.game.item.tags.StackableItemTag;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
@@ -24,7 +25,7 @@ public class Item {
     private final String name;
     private final String description;
     private final BetterSpriteResource sprite;
-    private final List<ItemRequirement> requirements;
+    private final List<Requirement> requirements;
     private final List<ItemProperty> properties;
 
     /**

@@ -1,34 +1,35 @@
-package com.barelyconscious.worlds.game.item;
+package com.barelyconscious.worlds.game;
 
+import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.entity.EntityActor;
-import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
 import com.barelyconscious.worlds.entity.components.EntityLevelComponent;
-import com.barelyconscious.worlds.game.TraitName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-/**
- * A check against an Entity to ensure some requirement is met before an item can be used/equipped.
- */
-public abstract class ItemRequirement {
+public abstract class Requirement {
 
-    public abstract boolean meetsRequirement(final EntityActor entity);
+    public abstract boolean meetsRequirement(Actor actor);
 
     @AllArgsConstructor
-    public static class LevelItemRequirement extends ItemRequirement {
+    public static class LevelRequirement extends Requirement {
 
         private final int requiredLevel;
 
         @Override
-        public boolean meetsRequirement(EntityActor entity) {
-            EntityLevelComponent entityLevelComponent = entity.getEntityLevelComponent();
-            return entityLevelComponent.getEntityLevel() >= requiredLevel;
+        public boolean meetsRequirement(Actor actor) {
+
+            EntityLevelComponent component = actor.getComponent(EntityLevelComponent.class);
+            if (component == null) {
+                return false;
+            } else {
+                return component.getEntityLevel() >= requiredLevel;
+            }
         }
     }
 
     @Getter
-    public static class StatItemRequirement extends ItemRequirement {
+    public static class StatRequirement extends Requirement {
         private final StatName stat;
         private final float requiredStatValue;
         /**
@@ -38,18 +39,22 @@ public abstract class ItemRequirement {
          */
         private final boolean useMaxStatValue;
 
-        public StatItemRequirement(StatName stat, float requiredStatValue) {
+        public StatRequirement(StatName stat, float requiredStatValue) {
             this(stat, requiredStatValue, true);
         }
 
-        public StatItemRequirement(StatName stat, float requiredStatValue, boolean useMaxStatValue) {
+        public StatRequirement(StatName stat, float requiredStatValue, boolean useMaxStatValue) {
             this.stat = stat;
             this.requiredStatValue = requiredStatValue;
             this.useMaxStatValue = useMaxStatValue;
         }
 
         @Override
-        public boolean meetsRequirement(EntityActor entity) {
+        public boolean meetsRequirement(Actor actor) {
+            if (!(actor instanceof EntityActor entity)) {
+                return false;
+            }
+
             DynamicValueComponent adjStat = entity.stat(stat).get();
 
             if (useMaxStatValue) {
@@ -61,12 +66,16 @@ public abstract class ItemRequirement {
     }
 
     @AllArgsConstructor
-    public static class TraitItemRequirement extends ItemRequirement {
+    public static class TraitRequirement extends Requirement {
         private final TraitName trait;
         private final float requiredTraitValue;
 
         @Override
-        public boolean meetsRequirement(EntityActor entity) {
+        public boolean meetsRequirement(Actor actor) {
+            if (!(actor instanceof EntityActor entity)) {
+                return false;
+            }
+
             return entity.trait(trait).get().getCurrentValue() >= requiredTraitValue;
         }
     }

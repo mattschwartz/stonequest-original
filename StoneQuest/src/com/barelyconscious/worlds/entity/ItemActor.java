@@ -1,7 +1,7 @@
 package com.barelyconscious.worlds.entity;
 
+import com.barelyconscious.worlds.game.Requirement;
 import com.barelyconscious.worlds.game.item.ItemProperty;
-import com.barelyconscious.worlds.game.item.ItemRequirement;
 import com.barelyconscious.worlds.game.item.ItemTag;
 import com.barelyconscious.worlds.game.item.tags.ConsumableItemTag;
 import com.barelyconscious.worlds.game.item.tags.StackableItemTag;
@@ -20,7 +20,7 @@ public class ItemActor extends Actor {
     protected String description;
     protected Set<ItemTag> tags = new HashSet<>();
     protected BetterSpriteResource sprite;
-    protected List<ItemRequirement> requirements = new ArrayList<>();
+    protected List<Requirement> requirements = new ArrayList<>();
     protected List<ItemProperty> properties = new ArrayList<>();
 
     public boolean isConsumable() {

@@ -1,5 +1,6 @@
 package com.barelyconscious.worlds.game.item;
 
+import com.barelyconscious.worlds.game.Requirement;
 import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.item.tags.ConsumableItemTag;
 import com.barelyconscious.worlds.game.item.tags.EquipmentItemTag;
@@ -51,7 +52,7 @@ public enum GameItems {
         "Iron Shield", "A shield made of iron.",
         new BetterSpriteResource("items::shield"),
         Set.of(EquipmentItemTag.EQUIPMENT_LEFT_HAND, RelatedSkillItemTag.METALWORKING),
-        Lists.newArrayList(new ItemRequirement.TraitItemRequirement(TraitName.STRENGTH, 10)),
+        Lists.newArrayList(new Requirement.TraitRequirement(TraitName.STRENGTH, 10)),
         new ArrayList<>()),
     CLOTH_ROBE(6, 1,
         "Cloth Robe", "Little more than a bath robe.",
@@ -63,7 +64,7 @@ public enum GameItems {
         "Recurve Bow", "A bow with a recurved shape.",
         new BetterSpriteResource("items::recurve_bow"),
         Set.of(EquipmentItemTag.EQUIPMENT_TWO_HANDED, RelatedSkillItemTag.FLETCHING),
-        Lists.newArrayList(new ItemRequirement.TraitItemRequirement(TraitName.DEXTERITY, 10)),
+        Lists.newArrayList(new Requirement.TraitRequirement(TraitName.DEXTERITY, 10)),
         Lists.newArrayList(new ItemProperty.WeaponDamageProperty(3, 7, 2.3f))),
     LUMBER(8, 1,
         "Lumber", "A piece of lumber.",
@@ -81,7 +82,7 @@ public enum GameItems {
         "Iron Sword", "A sword made of iron.",
         new BetterSpriteResource("items::iron_sword"),
         Set.of(EquipmentItemTag.EQUIPMENT_RIGHT_HAND, RelatedSkillItemTag.METALWORKING),
-        Lists.newArrayList(new ItemRequirement.TraitItemRequirement(TraitName.STRENGTH, 10)),
+        Lists.newArrayList(new Requirement.TraitRequirement(TraitName.STRENGTH, 10)),
         Lists.newArrayList(new ItemProperty.WeaponDamageProperty(5, 10, 2.0f))),
     ;
 
@@ -91,7 +92,7 @@ public enum GameItems {
     private final String description;
     private final BetterSpriteResource sprite;
     private final Set<ItemTag> tags;
-    private final List<ItemRequirement> requirements;
+    private final List<Requirement> requirements;
     private final List<ItemProperty> properties;
 
     public Item toItem() {

@@ -46,7 +46,7 @@ public class BuildingSystem {
         List<Item> constructionCost = CONSTRUCTION_COST_BY_TYPE.get(BuildingType.HARVESTER);
 
         var building = new HarvesterBuilding(resourceNode.name + " Harvester", resourceNode.transform,
-            resourceNode, new Inventory(16), 3);
+            resourceNode, village.getStockpile(), 3);
 
         village.getBuildings().add(building);
 
