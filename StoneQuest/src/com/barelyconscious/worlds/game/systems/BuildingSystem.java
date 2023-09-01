@@ -2,10 +2,8 @@ package com.barelyconscious.worlds.game.systems;
 
 import com.barelyconscious.worlds.entity.HarvesterBuilding;
 import com.barelyconscious.worlds.entity.ResourceNode;
-import com.barelyconscious.worlds.entity.Territory;
 import com.barelyconscious.worlds.entity.Village;
 import com.barelyconscious.worlds.game.GameInstance;
-import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.item.GameItems;
 import com.barelyconscious.worlds.game.item.Item;
 import com.google.common.collect.Lists;

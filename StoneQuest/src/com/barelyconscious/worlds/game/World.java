@@ -40,12 +40,6 @@ public final class World {
         actorsById.put(actor.id, actor);
     }
 
-    // kind of wasn't the most intuitive name
-    @Deprecated
-    public void spawnActor(final Actor actor) {
-        actors.add(actor);
-    }
-
     public synchronized boolean removeActor(final Actor actor) {
         actorsById.remove(actor.id);
         return actors.remove(actor);

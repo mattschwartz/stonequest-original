@@ -80,7 +80,7 @@ public class TestMapGenerator {
                     aTile.setOpacity(TileActor.OpacityPresets.HEAVILY_OBSCURED);
                 }
 
-                world.spawnActor(aTile);
+                world.addActor(aTile);
             }
         }
     }

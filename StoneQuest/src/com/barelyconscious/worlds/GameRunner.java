@@ -56,7 +56,7 @@ public final class GameRunner {
         TestHeroInitializer.createHeroes(world, playerController);
         TestWorldInitializer.createWorld(world);
 
-        world.spawnActor(new CameraActor(screen.getCamera()));
+        world.addActor(new CameraActor(screen.getCamera()));
 
         frame.requestFocus();
 

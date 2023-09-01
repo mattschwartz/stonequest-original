@@ -155,6 +155,7 @@ public class TestHeroInitializer {
             inventory.addItem(GameItems.WILLOW_BARK.toItem());
             inventory.addItem(GameItems.CURED_LEATHER.toItem());
             inventory.addItem(GameItems.IRON_ORE.toItem());
+            inventory.addItem(GameItems.LUMBER.toItem());
             inventory.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
             inventory.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
         }
