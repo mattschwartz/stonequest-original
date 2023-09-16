@@ -13,10 +13,16 @@ repositories {
 sourceSets {
     main {
         java {
-            srcDirs = ['StoneQuest/src']
+            srcDirs = ['StoneQuest/src', 'StoneQuest/test/java']
         }
         resources {
             srcDirs = ['StoneQuest/res']
+        }
+    }
+    test {
+        java.srcDirs = ['StoneQuest/test/java']
+        resources {
+            srcDir('StoneQuest/test/resources')
         }
     }
 }
@@ -59,6 +65,14 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.28'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.12.4'
+    implementation 'org.mockito:mockito-junit-jupiter:3.12.4'
+
+
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 
@@ -96,4 +110,8 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+}
+
+test {
+    useJUnitPlatform()
 }

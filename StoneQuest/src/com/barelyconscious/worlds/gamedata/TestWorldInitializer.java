@@ -8,15 +8,12 @@ import com.barelyconscious.worlds.entity.components.DropOnDeathComponent;
 import com.barelyconscious.worlds.entity.components.HealthBarComponent;
 import com.barelyconscious.worlds.entity.components.SpriteComponent;
 import com.barelyconscious.worlds.game.item.GameItems;
-import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.google.common.collect.Lists;
 import lombok.val;
-
-import java.util.List;
 
 public final class TestWorldInitializer {
 
@@ -33,12 +30,12 @@ public final class TestWorldInitializer {
     }
 
     private static void createResources(final World world) {
-        var ironResourceNode = new ResourceNode("Iron Ore", Vector.ZERO, Lists.newArrayList(
+        var ironResourceNode = new ResourceDeposit("Iron Ore", Vector.ZERO, Lists.newArrayList(
             GameItems.IRON_ORE.toItem(),
             GameItems.IRON_ORE.toItem(),
             GameItems.IRON_ORE.toItem(),
             GameItems.IRON_ORE.toItem()));
-        var chamomileResourceNode = new ResourceNode("Chamomile", Vector.ZERO, Lists.newArrayList(
+        var chamomileResourceNode = new ResourceDeposit("Chamomile", Vector.ZERO, Lists.newArrayList(
             GameItems.CHAMOMILE.toItem(),
             GameItems.CHAMOMILE.toItem(),
             GameItems.CHAMOMILE.toItem(),

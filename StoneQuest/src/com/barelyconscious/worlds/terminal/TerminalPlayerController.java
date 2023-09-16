@@ -10,6 +10,7 @@ import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.systems.BuildingSystem;
+import com.barelyconscious.worlds.terminal.commands.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,9 @@ public class TerminalPlayerController extends PlayerController {
     public TerminalPlayerController(Scanner scn, World world) {
         this.scn = scn;
         this.world = world;
+
+        Command.registerCommand("help", new HelpCommand());
+        Command.registerCommand("build", new BuildingCommand());
     }
 
     /**
@@ -34,6 +38,21 @@ public class TerminalPlayerController extends PlayerController {
      */
     public int handleInput() {
         String input = scn.nextLine();
+
+        CommandLineArgs args = CommandLineArgs.parse(input);
+        Command command = Command.findCommand(args.commandName);
+        if (command != null) {
+            CommandLineResults result = command.run(scn, args);
+            switch (result.continuationResult) {
+                case CONTINUE:
+                    return CONTINUE;
+                case TICK:
+                    return TICK;
+                case EXIT:
+                    return EXIT;
+            }
+        }
+
         if (handleAbilityCasting(input)) {
             return TICK;
         }
@@ -165,7 +184,7 @@ public class TerminalPlayerController extends PlayerController {
                 case 1:
                     System.out.println("Building gathering building...");
                     List<Actor> resourceNodes = world.getActors().stream()
-                        .filter(t -> t instanceof ResourceNode)
+                        .filter(t -> t instanceof ResourceDeposit)
                         .toList();
 
                     for (int i = 1; i <= resourceNodes.size(); ++i) {
@@ -175,7 +194,7 @@ public class TerminalPlayerController extends PlayerController {
                     System.out.print("> ");
                     choice = scn.nextLine();
                     int resourceNodeIndex = Integer.parseInt(choice);
-                    ResourceNode resourceNode = (ResourceNode) resourceNodes.get(resourceNodeIndex - 1);
+                    ResourceDeposit resourceNode = (ResourceDeposit) resourceNodes.get(resourceNodeIndex - 1);
 
                     GameInstance gi = GameInstance.instance();
                     Village playerVillage = gi.getPlayerVillage();
@@ -307,8 +326,8 @@ public class TerminalPlayerController extends PlayerController {
                     System.out.println("You see " + actor.name);
                     if (actor instanceof EntityActor) {
                         prettyPrintStats((EntityActor) actor);
-                    } else if (actor instanceof ResourceNode) {
-                        printInventory(((ResourceNode) actor).prospect(null));
+                    } else if (actor instanceof ResourceDeposit) {
+                        printInventory(((ResourceDeposit) actor).prospect(null));
                     } else if (actor instanceof HarvesterBuilding) {
                         printInventory(((HarvesterBuilding) actor).getStockpile());
                     }
@@ -331,7 +350,7 @@ public class TerminalPlayerController extends PlayerController {
         System.out.print("\t> ");
         String gatherChoice = scn.nextLine();
         world.findActorByName(gatherChoice).ifPresentOrElse(actor -> {
-            if (actor instanceof ResourceNode res) {
+            if (actor instanceof ResourceDeposit res) {
                 Item harvest = res.harvest(GameInstance.instance().getHeroSelected());
                 if (harvest != null) {
                     System.out.println("You gather " + harvest.getName());

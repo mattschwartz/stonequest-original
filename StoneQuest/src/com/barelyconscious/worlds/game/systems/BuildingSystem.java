@@ -1,7 +1,7 @@
 package com.barelyconscious.worlds.game.systems;
 
 import com.barelyconscious.worlds.entity.HarvesterBuilding;
-import com.barelyconscious.worlds.entity.ResourceNode;
+import com.barelyconscious.worlds.entity.ResourceDeposit;
 import com.barelyconscious.worlds.entity.Village;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.item.GameItems;
@@ -38,7 +38,7 @@ public class BuildingSystem {
      * @param village the village that will own the building
      */
     public HarvesterBuilding constructHarvesterBuilding(
-        ResourceNode resourceNode,
+        ResourceDeposit resourceNode,
         Village village
     ) {
         List<Item> constructionCost = CONSTRUCTION_COST_BY_TYPE.get(BuildingType.HARVESTER);

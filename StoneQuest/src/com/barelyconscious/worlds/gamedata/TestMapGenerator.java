@@ -1,11 +1,16 @@
 package com.barelyconscious.worlds.gamedata;
 
+import com.barelyconscious.worlds.entity.Territory;
 import com.barelyconscious.worlds.entity.TileActor;
+import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.input.MouseInputHandler;
+import com.barelyconscious.worlds.game.item.GameItems;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.entity.Tile;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.game.systems.TerritorySystem;
+import com.google.common.collect.Lists;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +58,8 @@ public class TestMapGenerator {
     }};
 
     private static void createTiles(final World world) {
+        createTerritories(world);
+
         int tileWidth = 16;
         int tileHeight = 16;
 
@@ -83,5 +90,26 @@ public class TestMapGenerator {
                 world.addActor(aTile);
             }
         }
+    }
+
+    private static void createTerritories(World world) {
+        GameInstance gi = GameInstance.instance();
+        TerritorySystem ts = new TerritorySystem();
+        gi.registerSystem(ts);
+
+        Territory territory = new Territory(
+            "TestTerritory",
+            Vector.ZERO,
+            Lists.newArrayList(
+                new Territory.TerritoryResource(
+                    GameItems.IRON_ORE.toItem(), 0.4),
+                new Territory.TerritoryResource(
+                    GameItems.CHAMOMILE.toItem(), 0.6)));
+        world.addActor(territory);
+        // add a territory to the player's village
+        ts.addTerritory(
+            territory,
+            gi.getPlayerVillage()
+        );
     }
 }

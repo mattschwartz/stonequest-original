@@ -11,6 +11,7 @@ import com.barelyconscious.worlds.engine.input.MouseInputHandler;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
 import com.barelyconscious.worlds.common.exception.InvalidGameConfigurationException;
 import com.barelyconscious.worlds.engine.Physics;
+import com.barelyconscious.worlds.game.systems.TerritorySystem;
 import com.google.common.util.concurrent.RateLimiter;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -188,7 +189,8 @@ public class WorldsModule extends AbstractModule {
     @Singleton
     @Provides
     GameInstance providesGameInstance() {
-        return GameInstance.instance();
+        var gi = GameInstance.instance();
+        return gi;
     }
 
     @Provides

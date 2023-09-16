@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * A node which can be harvested for resources. It has a finite stock before being exhausted
  */
-public class ResourceNode extends Actor {
+public class ResourceDeposit extends Actor {
 
     private final List<Item> items;
 
@@ -16,7 +16,7 @@ public class ResourceNode extends Actor {
      * The skill required to prospect and harvest this node.
      */
 //    private SkillRequirement skillRequirement;
-    public ResourceNode(String name, Vector transform, List<Item> items) {
+    public ResourceDeposit(String name, Vector transform, List<Item> items) {
         super(name, transform);
         this.items = items;
     }

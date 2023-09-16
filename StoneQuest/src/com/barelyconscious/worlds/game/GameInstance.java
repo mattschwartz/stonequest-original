@@ -10,6 +10,7 @@ import com.barelyconscious.worlds.entity.components.AbilityComponent;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.systems.BuildingSystem;
 import com.barelyconscious.worlds.game.systems.CombatSystem;
+import com.barelyconscious.worlds.game.systems.GameSystem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,22 @@ import java.util.Map;
  * Expect that pretttty much all of this is going to go away
  */
 public final class GameInstance {
+
+    private final Map<Class<?>, GameSystem> gameSystems = new HashMap<>();
+
+    public void registerSystem(GameSystem system) {
+        if (gameSystems.containsKey(system.getClass())) {
+            throw new IllegalArgumentException("A system of type " + system.getClass().getName() + " is already registered.");
+        }
+        gameSystems.put(system.getClass(), system);
+    }
+
+    public <T extends GameSystem> T getSystem(Class<T> systemClass) {
+        if (!gameSystems.containsKey(systemClass)) {
+            throw new IllegalArgumentException("No system of type " + systemClass.getName() + " is registered.");
+        }
+        return (T) gameSystems.get(systemClass);
+    }
 
     public final Delegate<HeroSelectionChanged> delegateHeroSelectionChanged = new Delegate<>();
 
@@ -102,7 +119,7 @@ public final class GameInstance {
 
     /**
      * todo thoughts on how to do ability slots
-     *
+     * <p>
      * heroes have ability components which include all of their abilities. the hero
      * party slot only has 6 slots and each slot has a keybinding, which may change if
      * that hero is selected. the player also can bind abilities to the UI, so hero party slots

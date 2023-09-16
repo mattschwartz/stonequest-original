@@ -23,6 +23,10 @@ public class Village extends Actor {
      * All the buildings within this village
      */
     private final List<Building> buildings;
+    /**
+     * The territories owned by this village
+     */
+    private final List<Territory> ownedTerritories;
 
     public Village(String name, Vector transform) {
         super(name, transform);
@@ -30,5 +34,6 @@ public class Village extends Actor {
         stockpile = new Inventory(128);
         citizens = new ArrayList<>();
         buildings = new ArrayList<>();
+        ownedTerritories = new ArrayList<>();
     }
 }

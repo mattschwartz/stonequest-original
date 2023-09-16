@@ -7,6 +7,7 @@ import com.barelyconscious.worlds.engine.Physics;
 import com.barelyconscious.worlds.engine.graphics.Screen;
 import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.game.*;
+import com.barelyconscious.worlds.game.systems.TerritorySystem;
 import com.barelyconscious.worlds.gamedata.TestHeroInitializer;
 import com.barelyconscious.worlds.gamedata.TestWorldInitializer;
 import com.barelyconscious.worlds.terminal.BlankScreen;
@@ -59,9 +60,16 @@ public class GameRunnerCLI {
         }
     }
 
+    public static void tick() {
+        engine.tick(new EventArgs(1.5, Vector.ZERO, Vector.ZERO, new ArrayDeque<>(),
+            playerController, world, gameState));
+    }
+
     private static void setUpGame( ) {
+        GameInstance gi = GameInstance.instance();
+
         engine.prestart(
-            GameInstance.instance(),
+            gi,
             world,
             blankScreen,
             playerController);
@@ -70,15 +78,15 @@ public class GameRunnerCLI {
             new Inventory(8),
             new Inventory(8));
         world.addActor(pw);
-        GameInstance.instance().setWagon(pw);
+        gi.setWagon(pw);
 
         TestHeroInitializer.createHeroes(world, playerController);
         TestWorldInitializer.createWorld(world);
 
-        GameInstance.instance().setHero(HERO_JOHN, GameInstance.PartySlot.LEFT);
-        GameInstance.instance().setHero(HERO_NICNOLE, GameInstance.PartySlot.MIDDLE);
-        GameInstance.instance().setHero(HERO_PAUL, GameInstance.PartySlot.RIGHT);
+        gi.setHero(HERO_JOHN, GameInstance.PartySlot.LEFT);
+        gi.setHero(HERO_NICNOLE, GameInstance.PartySlot.MIDDLE);
+        gi.setHero(HERO_PAUL, GameInstance.PartySlot.RIGHT);
 
-        GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
+        gi.setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
     }
 }

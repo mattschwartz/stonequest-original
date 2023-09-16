@@ -27,7 +27,7 @@ public class HarvesterBuilding extends Building {
     /**
      * The resource being processed.
      */
-    private final ResourceNode resourceNode;
+    private final ResourceDeposit resourceNode;
 
     /**
      * Where items go as they get produced
@@ -47,7 +47,7 @@ public class HarvesterBuilding extends Building {
     public HarvesterBuilding(
         String name,
         Vector transform,
-        ResourceNode resourceNode,
+        ResourceDeposit resourceNode,
         Inventory stockpile,
         double timeToProduceSeconds
     ) {
