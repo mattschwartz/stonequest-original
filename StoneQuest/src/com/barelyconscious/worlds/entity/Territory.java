@@ -19,7 +19,7 @@ public class Territory extends Actor {
 
     @Getter
     @Setter
-    private Village owningVillage;
+    private Settlement owningSettlement;
     private final List<Building> buildings = new ArrayList<>();
 
     /**

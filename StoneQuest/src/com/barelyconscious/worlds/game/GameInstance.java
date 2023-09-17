@@ -3,7 +3,7 @@ package com.barelyconscious.worlds.game;
 import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.engine.Camera;
 import com.barelyconscious.worlds.entity.Hero;
-import com.barelyconscious.worlds.entity.Village;
+import com.barelyconscious.worlds.entity.Settlement;
 import com.barelyconscious.worlds.entity.Wagon;
 import com.barelyconscious.worlds.entity.PlayerPersonalDevice;
 import com.barelyconscious.worlds.entity.components.AbilityComponent;
@@ -81,7 +81,7 @@ public final class GameInstance {
 
     @Getter
     @Setter
-    private Village playerVillage;
+    private Settlement playerVillage;
 
     @Getter
     @Setter

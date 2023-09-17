@@ -8,27 +8,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class Village extends Actor {
+public class Settlement extends Actor {
 
     /**
-     * All the resources owned by the village
+     * All the resources owned by the settlement
      */
     private final Inventory stockpile;
 
     /**
-     * All the entities that are citizens of this village
+     * All the entities that are citizens of this settlement
      */
     private final List<EntityActor> citizens;
     /**
-     * All the buildings within this village
+     * All the buildings within this settlement
      */
     private final List<Building> buildings;
     /**
-     * The territories owned by this village
+     * The territories owned by this settlement
      */
     private final List<Territory> ownedTerritories;
 
-    public Village(String name, Vector transform) {
+    public Settlement(String name, Vector transform) {
         super(name, transform);
         // todo -should be a FlexibleInventory that is unbounded in size
         stockpile = new Inventory(128);
