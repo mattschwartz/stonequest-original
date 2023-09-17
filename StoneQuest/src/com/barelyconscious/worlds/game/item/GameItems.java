@@ -84,6 +84,12 @@ public enum GameItems {
         Set.of(EquipmentItemTag.EQUIPMENT_RIGHT_HAND, RelatedSkillItemTag.METALWORKING),
         Lists.newArrayList(new Requirement.TraitRequirement(TraitName.STRENGTH, 10)),
         Lists.newArrayList(new ItemProperty.WeaponDamageProperty(5, 10, 2.0f))),
+    WOOD(11, 1,
+        "Wood", "A plank of wood.",
+        new BetterSpriteResource("items::wood"),
+        Set.of(ResourceItemTag.WOOD, RelatedSkillItemTag.WOODWORKING, StackableItemTag.STACKABLE),
+        new ArrayList<>(),
+        new ArrayList<>()),
     ;
 
     private final int itemId;

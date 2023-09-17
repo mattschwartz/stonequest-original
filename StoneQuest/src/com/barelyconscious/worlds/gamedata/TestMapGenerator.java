@@ -9,7 +9,10 @@ import com.barelyconscious.worlds.game.item.GameItems;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.entity.Tile;
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.game.systems.TerritorySystem;
+import com.barelyconscious.worlds.game.systems.ChancellorSystem;
+import com.barelyconscious.worlds.game.types.Biome;
+import com.barelyconscious.worlds.game.types.Climate;
+import com.barelyconscious.worlds.game.types.TerritoryResource;
 import com.google.common.collect.Lists;
 
 import java.util.HashMap;
@@ -94,22 +97,42 @@ public class TestMapGenerator {
 
     private static void createTerritories(World world) {
         GameInstance gi = GameInstance.instance();
-        TerritorySystem ts = new TerritorySystem();
-        gi.registerSystem(ts);
+        ChancellorSystem cs = gi.getSystem(ChancellorSystem.class);
 
-        Territory territory = new Territory(
-            "TestTerritory",
+        Territory territory1 = new Territory(
+            "Territory(0,0)",
             Vector.ZERO,
+            Biome.FOREST,
+            Climate.TEMPERATE,
+            0.25,
+            0.10,
             Lists.newArrayList(
-                new Territory.TerritoryResource(
+                new TerritoryResource(
+                    GameItems.WOOD.toItem(),
+                    0.85),
+                new TerritoryResource(
                     GameItems.IRON_ORE.toItem(), 0.4),
-                new Territory.TerritoryResource(
+                new TerritoryResource(
                     GameItems.CHAMOMILE.toItem(), 0.6)));
-        world.addActor(territory);
+        Territory territory2 = new Territory(
+            "Territory(0,1)",
+            Vector.ZERO,
+            Biome.FOREST,
+            Climate.TEMPERATE,
+            0.4,
+            0.25,
+            Lists.newArrayList(
+                new TerritoryResource(
+                    GameItems.WOOD.toItem(),
+                    0.85)));
+        world.addActor(territory1);
+        world.addActor(territory2);
         // add a territory to the player's village
-        ts.addTerritory(
-            territory,
-            gi.getPlayerVillage()
-        );
+        cs.addTerritory(
+            territory1,
+            gi.getPlayerVillage());
+        cs.addTerritory(
+            territory2,
+            gi.getPlayerVillage());
     }
 }

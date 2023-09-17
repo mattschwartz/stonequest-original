@@ -1,9 +1,9 @@
 package com.barelyconscious.worlds.terminal.commands;
 
-import com.barelyconscious.worlds.GameRunnerCLI;
 import com.barelyconscious.worlds.entity.Territory;
 import com.barelyconscious.worlds.game.GameInstance;
-import com.barelyconscious.worlds.game.systems.TerritorySystem;
+import com.barelyconscious.worlds.game.systems.ChancellorSystem;
+import com.barelyconscious.worlds.game.types.TerritoryResource;
 import com.barelyconscious.worlds.terminal.InputDialog;
 
 import java.util.List;
@@ -15,45 +15,32 @@ public class BuildingCommand extends Command {
     public CommandLineResults run(Scanner scn, CommandLineArgs args) {
         if (!args.parameters.isEmpty()) {
             System.out.println("You provided some args bro good for you. Returning to main menu");
-            return CommandLineResults.CONTINUE;
+            return CommandLineResults.TICK;
         }
 
-        System.out.println("    +-----------------+");
-        System.out.println("    |  BUILDING MENU  |");
-        System.out.println("    | 'esc' to return |");
-        System.out.println("    +-----------------+");
+        System.out.println("+-----------------+");
+        System.out.println("|  BUILDING MENU  |");
+        System.out.println("| 'esc' to return |");
+        System.out.println("+-----------------+");
 
-        while (true) {
+        boolean userAccepted = InputDialog.question("What would you build?")
+            .answer("A building for Gathering", () -> buildGatheringHut(scn, args))
+            .answer("A building for Crafting", () -> buildCraftingBuilding(scn, args))
+            .answer("A building for Production", () -> buildProductionBuilding(scn, args))
+            .ask(scn, true);
 
-            boolean userAccepted = InputDialog.question("What would you build?")
-                .answer("A building for Gathering", () -> buildGatheringHut(scn, args))
-                .answer("A building for Crafting", () -> buildCraftingBuilding(scn, args))
-                .answer("A building for Production", () -> buildProductionBuilding(scn, args))
-                .ask(scn, true);
-
-            if (!userAccepted) {
-                return CommandLineResults.CONTINUE;
-            } else {
-                GameRunnerCLI.tick();
-            }
-
-            System.out.println("    +-----------------+");
-            System.out.println("    |  BUILDING MENU  |");
-            System.out.println("    | 'esc' to return |");
-            System.out.println("    +-----------------+");
-            System.out.println("> ");
-
-            if ("esc".equalsIgnoreCase(scn.nextLine())) {
-                return CommandLineResults.CONTINUE;
-            }
+        if (!userAccepted) {
+            return CommandLineResults.CONTINUE;
+        } else {
+            return CommandLineResults.TICK;
         }
     }
 
     private Void buildGatheringHut(Scanner scn, CommandLineArgs args) {
         GameInstance gi = GameInstance.instance();
-        TerritorySystem ts = gi.getSystem(TerritorySystem.class);
+        ChancellorSystem ts = gi.getSystem(ChancellorSystem.class);
 
-        List<Territory.TerritoryResource> availableResources = ts.getTerritoriesOwnedByVillage(gi.getPlayerVillage())
+        List<TerritoryResource> availableResources = ts.getTerritoriesOwnedByVillage(gi.getPlayerVillage())
             .stream().map(Territory::getAvailableResources)
             .flatMap(List::stream)
             .toList();

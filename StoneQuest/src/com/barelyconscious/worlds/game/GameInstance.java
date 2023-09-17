@@ -14,6 +14,7 @@ import com.barelyconscious.worlds.game.systems.GameSystem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.Map;
 /**
  * Expect that pretttty much all of this is going to go away
  */
+@Log4j2
 public final class GameInstance {
 
     private final Map<Class<?>, GameSystem> gameSystems = new HashMap<>();
@@ -30,6 +32,7 @@ public final class GameInstance {
         if (gameSystems.containsKey(system.getClass())) {
             throw new IllegalArgumentException("A system of type " + system.getClass().getName() + " is already registered.");
         }
+        log.info("Registered system: " + system.getClass().getName());
         gameSystems.put(system.getClass(), system);
     }
 

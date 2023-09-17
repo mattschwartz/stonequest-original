@@ -30,7 +30,14 @@ public class TerminalPlayerController extends PlayerController {
         this.world = world;
 
         Command.registerCommand("help", new HelpCommand());
-        Command.registerCommand("build", new BuildingCommand());
+        var bc = new BuildingCommand();
+        Command.registerCommand("build", bc);
+        Command.registerCommand("b", bc);
+
+        var tc = new TerritoryCommand();
+        Command.registerCommand("territory", tc);
+        Command.registerCommand("t", tc);
+
     }
 
     /**
