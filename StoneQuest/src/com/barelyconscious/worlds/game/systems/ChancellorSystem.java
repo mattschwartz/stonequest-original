@@ -1,6 +1,8 @@
 package com.barelyconscious.worlds.game.systems;
 
+import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.entity.Building;
+import com.barelyconscious.worlds.entity.HarvesterBuilding;
 import com.barelyconscious.worlds.entity.Territory;
 import com.barelyconscious.worlds.entity.Settlement;
 import lombok.extern.log4j.Log4j2;
@@ -23,9 +25,17 @@ public class ChancellorSystem implements GameSystem {
     public Map<Settlement, List<Territory>> villageToTerritories = new HashMap<>();
     public List<Territory> allTerritories = new ArrayList<>();
 
+    /**
+     * To construct a harvester building, we need to know
+     * - the territory in which to construct the harvester
+     * - the resource being harvested
+     * - the owning settlement of the new building
+     * @param territory
+     */
     public void constructHarvesterBuilding(
         Territory territory
     ) {
+
         Settlement owningVillage = territory.getOwningSettlement();
         if (owningVillage == null) {
             log.error("Cannot construct a harvester building on a territory that does not belong to a village.");

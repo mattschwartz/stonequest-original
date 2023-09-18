@@ -30,7 +30,7 @@ public class BulletAbility extends Ability {
                         return new BehaviorFeedback(ContinuationResult.STOP, context, "Caster is not an entity");
                     }
 
-                    val aBullet = new Actor(usedBy.name + "#Bullet", usedBy.transform.plus(32, 0));
+                    val aBullet = new Actor(usedBy.name + "#Bullet", usedBy.getTransform().plus(32, 0));
                     aBullet.addComponent(new MoveComponent(aBullet, 32f));
                     aBullet.addComponent(new BoxColliderComponent(aBullet, false, true, new Box(0, 32, 0, 32)));
                     aBullet.addComponent(new SpriteComponent(aBullet, Resources.getSprite(ResourceSprite.POTION)));

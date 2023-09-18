@@ -36,7 +36,7 @@ public class DropOnDeathComponent extends OnDeathComponent {
             }
 
             itemsOnDrop.forEach(droppedItem -> e.getWorldContext().addActor(new ItemLootActor(
-                getParent().transform, droppedItem
+                getParent().getTransform(), droppedItem
             )));
             itemsOnDrop.clear();
             setRemoveOnNextUpdate(true);

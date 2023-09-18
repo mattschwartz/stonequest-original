@@ -55,8 +55,8 @@ public class Hero extends EntityActor {
         public void render(EventArgs eventArgs, RenderContext renderContext) {
             renderContext.render(
                 sprite.getTexture(),
-                (int) getParent().transform.x - 8,
-                (int) getParent().transform.y - 14,
+                (int) getParent().getTransform().x - 8,
+                (int) getParent().getTransform().y - 14,
                 48, 48,
                 RenderLayer.ENTITIES
             );
@@ -72,8 +72,8 @@ public class Hero extends EntityActor {
         @Override
         public void render(EventArgs eventArgs, RenderContext renderContext) {
             final Vector worldPos = new Vector(
-                getParent().transform.x + 12,
-                getParent().transform.y + 52);
+                getParent().getTransform().x + 12,
+                getParent().getTransform().y + 52);
             final Vector screenPos = renderContext.camera
                 .worldToScreenPos(worldPos);
 

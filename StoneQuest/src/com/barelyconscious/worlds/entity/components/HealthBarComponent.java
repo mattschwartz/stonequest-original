@@ -56,7 +56,7 @@ public class HealthBarComponent extends Component {
     public void render(final EventArgs eventArgs, final RenderContext renderContext) {
         double healthRemainingWidth = width * progress;
 
-        final Vector position = getParent().transform;
+        final Vector position = getParent().getTransform();
         if (progress != 1) {
             renderContext.renderRect(
                 Color.BLACK,

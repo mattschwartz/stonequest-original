@@ -42,7 +42,7 @@ public class CameraActor extends Actor {
             this.camera = camera;
         }
 
-        private Vector desiredLocation = getParent().transform;
+        private Vector desiredLocation = getParent().getTransform();
 
         public void translate(final Vector delta) {
             desiredLocation = desiredLocation.plus(delta);

@@ -40,7 +40,7 @@ public class BoxColliderComponent extends ColliderComponent {
             ? Color.RED
             : Color.BLUE;
 
-        final Vector location = getParent().transform;
+        final Vector location = getParent().getTransform();
         renderContext.debugRenderBox(
             debugColor,
             (int) location.x + bounds.left,
@@ -54,7 +54,7 @@ public class BoxColliderComponent extends ColliderComponent {
         if (other instanceof BoxColliderComponent) {
             final Box otherBounds = ((BoxColliderComponent) other).bounds;
 
-            final Vector otherPosition = other.getParent().transform;
+            final Vector otherPosition = other.getParent().getTransform();
 
             final Box positionBounds = new Box(
                 bounds.left + (int) myPosition.x,
@@ -79,8 +79,8 @@ public class BoxColliderComponent extends ColliderComponent {
         if (other instanceof BoxColliderComponent) {
             final Box otherBounds = ((BoxColliderComponent) other).bounds;
 
-            final Vector position = getParent().transform;
-            final Vector otherPosition = other.getParent().transform;
+            final Vector position = getParent().getTransform();
+            final Vector otherPosition = other.getParent().getTransform();
 
             final Box positionBounds = new Box(
                 bounds.left + (int) position.x,

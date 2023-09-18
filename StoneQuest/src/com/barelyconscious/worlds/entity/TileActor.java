@@ -82,7 +82,7 @@ public class TileActor extends Actor implements Interactable {
         if (GameInstance.instance() != null) {
             final Camera camera = GameInstance.instance().getCamera();
             if (camera != null) {
-                final Vector screenPos = camera.worldToScreenPos(transform);
+                final Vector screenPos = camera.worldToScreenPos(getTransform());
                 if (screenPos != null) {
                     return mouseCaptureBounds.boxAtPosition(screenPos).contains(screenX, screenY);
                 }

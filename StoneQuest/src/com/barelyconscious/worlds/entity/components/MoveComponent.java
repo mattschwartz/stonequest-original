@@ -49,13 +49,13 @@ public class MoveComponent extends Component {
     public void physicsUpdate(final EventArgs eventArgs) {
         // no force need be applied
         if (Vector.ZERO.equals(forceVector) || forceVector.magnitude() <= e) {
-            desiredLocation = getParent().transform;
+            desiredLocation = getParent().getTransform();
             forceVector = Vector.ZERO;
             return;
         }
 
         // apply force to determine how far and in what direction the actor is trying to move
-        final Vector startPos = getParent().transform;
+        final Vector startPos = getParent().getTransform();
         final Vector endPos = startPos.plus(forceVector);
 
         final double dx = (endPos.x - startPos.x) * eventArgs.getDeltaTime() * moveSpeed;

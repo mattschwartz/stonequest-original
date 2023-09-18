@@ -90,6 +90,12 @@ public enum GameItems {
         Set.of(ResourceItemTag.WOOD, RelatedSkillItemTag.WOODWORKING, StackableItemTag.STACKABLE),
         new ArrayList<>(),
         new ArrayList<>()),
+    STONE(12, 1,
+        "Stone", "Rock flesh",
+        new BetterSpriteResource("items::stone"),
+        Set.of(ResourceItemTag.STONE, RelatedSkillItemTag.STONEWORKING, StackableItemTag.STACKABLE),
+        new ArrayList<>(),
+        new ArrayList<>()),
     ;
 
     private final int itemId;

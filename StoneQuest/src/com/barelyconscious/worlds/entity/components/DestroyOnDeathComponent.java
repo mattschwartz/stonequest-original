@@ -37,7 +37,7 @@ public class DestroyOnDeathComponent extends OnDeathComponent {
                 getParent().destroy();
                 eventArgs.getWorldContext().addActor(new AGravestone(
                     "Grave of " + getParent().name,
-                    getParent().transform));
+                    getParent().getTransform()));
             }
         }
     }

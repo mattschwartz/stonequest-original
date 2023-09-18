@@ -207,17 +207,17 @@ public class TerminalPlayerController extends PlayerController {
                     Settlement playerVillage = gi.getPlayerVillage();
                     BuildingSystem buildingSystem = gi.getBuildingSystem();
 
-                    HarvesterBuilding harvesterBuilding = buildingSystem.constructHarvesterBuilding(
-                        resourceNode, playerVillage);
-
-                    harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
-                        System.out.println("Produced an item: " + item.item.getName());
-                        return null;
-                    });
-                    harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) -> {
-                        System.out.println("Production halted");
-                        return null;
-                    });
+//                    HarvesterBuilding harvesterBuilding = buildingSystem.constructHarvesterBuilding(
+//                        resourceNode, playerVillage);
+//
+//                    harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
+//                        System.out.println("Produced an item: " + item.item.getName());
+//                        return null;
+//                    });
+//                    harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) -> {
+//                        System.out.println("Production halted");
+//                        return null;
+//                    });
 
                     break;
                 case 2:

@@ -22,7 +22,7 @@ public enum RelatedSkillItemTag implements ItemTag {
     GUNSMITHING("Gunsmithing"),
     TECHSMITHING("Techsmithing"),
     FLETCHING("Fletching"),
-    ;
+    STONEWORKING("Stoneworking");
 
     private final String tagName;
 }

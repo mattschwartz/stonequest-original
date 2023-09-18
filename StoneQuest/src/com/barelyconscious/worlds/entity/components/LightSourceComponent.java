@@ -27,8 +27,8 @@ public class LightSourceComponent extends BoxColliderComponent {
     @Override
     public void render(EventArgs eventArgs, RenderContext renderContext) {
         {
-            final int worldX = (int) (getParent().transform.x - (radius - 16));
-            final int worldY = (int) (getParent().transform.y - (radius - 16));
+            final int worldX = (int) (getParent().getTransform().x - (radius - 16));
+            final int worldY = (int) (getParent().getTransform().y - (radius - 16));
 
             renderContext.renderCircle(
                 new Color(255, 255, 255, (int) (255 * opacity)),

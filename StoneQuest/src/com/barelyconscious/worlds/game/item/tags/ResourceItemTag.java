@@ -13,7 +13,8 @@ public enum ResourceItemTag implements ItemTag {
     WOOD("Wood"),
     HERB("Herb"),
     LEATHER("Leather"),
-    TECH("Tech");
+    TECH("Tech"),
+    STONE("Stone");
 
     private final String tagName;
 }

@@ -44,20 +44,20 @@ public final class TestWorldInitializer {
         world.addActor(ironResourceNode);
         world.addActor(chamomileResourceNode);
 
-        HarvesterBuilding harvesterBuilding = GameInstance.instance().getBuildingSystem()
-            .constructHarvesterBuilding(ironResourceNode, GameInstance.instance().getPlayerVillage());
-        harvesterBuilding.delegateOnItemProduced.bindDelegate((item) ->
-
-        {
-            System.out.println("Produced an item: " + item.item.getName());
-            return null;
-        });
-        harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) ->
-
-        {
-            System.out.println("Production halted");
-            return null;
-        });
+//        HarvesterBuilding harvesterBuilding = GameInstance.instance().getBuildingSystem()
+//            .constructHarvesterBuilding(ironResourceNode, GameInstance.instance().getPlayerVillage());
+//        harvesterBuilding.delegateOnItemProduced.bindDelegate((item) ->
+//
+//        {
+//            System.out.println("Produced an item: " + item.item.getName());
+//            return null;
+//        });
+//        harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) ->
+//
+//        {
+//            System.out.println("Production halted");
+//            return null;
+//        });
 
     }
 

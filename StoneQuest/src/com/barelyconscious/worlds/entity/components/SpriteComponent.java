@@ -76,7 +76,7 @@ public class SpriteComponent extends Component {
     }
 
     public Box getBounds() {
-        final Vector worldPos = getParent().transform;
+        final Vector worldPos = getParent().getTransform();
 
         if (spriteResource != null) {
             return new Box(
@@ -92,7 +92,7 @@ public class SpriteComponent extends Component {
 
     @Override
     public void render(final EventArgs eventArgs, final RenderContext renderContext) {
-        final Vector position = getParent().transform;
+        final Vector position = getParent().getTransform();
 
         if (spriteResource != null) {
             renderContext.render(RenderContext.RenderRequest.builder()

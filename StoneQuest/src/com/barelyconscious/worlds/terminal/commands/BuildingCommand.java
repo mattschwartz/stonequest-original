@@ -54,7 +54,7 @@ public class BuildingCommand extends Command {
 
         var choice = InputDialog.pollObjects("What would you like to build?", availableResources)
             .withFormatter(t -> String.format("%s (%d%% richness)",
-                t.resource.getName(),
+                t.item.getName(),
                 (int) (t.richness * 100)))
             .prompt(scn, true);
 
@@ -62,7 +62,7 @@ public class BuildingCommand extends Command {
             System.out.println("Nothing selected.");
             return null;
         } else {
-            System.out.println("Building a hut for " + choice.resource.getName());
+            System.out.println("Building a hut for " + choice.item.getName());
         }
 
         return null;

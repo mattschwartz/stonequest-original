@@ -8,12 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -26,6 +21,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class Actor {
 
     private Actor parent = null;
+    private final Set<Actor> children = new HashSet<>();
 
     public final String id;
     public final String name;
@@ -37,7 +33,7 @@ public class Actor {
     private boolean isEnabled = true;
     private boolean isDestroying = false;
 
-    public Vector transform;
+    private Vector transform;
     public Vector facing = Vector.UP;
 
     // todo: game owns instantiation on actors?
@@ -60,6 +56,17 @@ public class Actor {
         this(null, transform);
     }
 
+    public Vector getTransform() {
+        if (parent != null) {
+            return parent.transform.plus(transform);
+        }
+        return transform;
+    }
+
+    public void setTransform(Vector other) {
+        this.transform = other;
+    }
+
     /**
      * todo: need to actually implement parent logic
      * @param newParent
@@ -69,9 +76,30 @@ public class Actor {
         Actor oldParent = parent;
         if (oldParent != null) {
             // do anything needed here
+            oldParent.children.remove(this);
         }
+
         parent = newParent;
+
+        if (parent != null) {
+            parent.children.add(this);
+        }
+
         return oldParent;
+    }
+
+    public void addChild(final Actor child) {
+        child.setParent(this);
+        children.add(child);
+    }
+
+    public void removeChild(final Actor child) {
+        if (child.parent != this) {
+            throw new IllegalArgumentException("child is not a child of this actor");
+        }
+
+        child.setParent(null);
+        children.remove(child);
     }
 
     public Actor(

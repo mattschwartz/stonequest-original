@@ -61,7 +61,7 @@ public class Physics {
             final Vector desiredLocation = move.getDesiredLocation();
 
             // actor did not move
-            if (Objects.equals(actor.transform, desiredLocation)) {
+            if (Objects.equals(actor.getTransform(), desiredLocation)) {
                 continue;
             }
 
@@ -75,7 +75,7 @@ public class Physics {
             }
 
             if (didMove) {
-                actor.transform = desiredLocation;
+                actor.setTransform(desiredLocation);
             }
         }
 

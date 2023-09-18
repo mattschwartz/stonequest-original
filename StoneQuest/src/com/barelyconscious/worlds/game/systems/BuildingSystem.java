@@ -1,11 +1,13 @@
 package com.barelyconscious.worlds.game.systems;
 
+import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.entity.HarvesterBuilding;
-import com.barelyconscious.worlds.entity.ResourceDeposit;
 import com.barelyconscious.worlds.entity.Settlement;
+import com.barelyconscious.worlds.entity.Territory;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.item.GameItems;
 import com.barelyconscious.worlds.game.item.Item;
+import com.barelyconscious.worlds.game.types.TerritoryResource;
 import com.google.common.collect.Lists;
 
 import java.util.HashMap;
@@ -38,13 +40,21 @@ public class BuildingSystem {
      * @param village the village that will own the building
      */
     public HarvesterBuilding constructHarvesterBuilding(
-        ResourceDeposit resourceNode,
+        Territory territory,
+        TerritoryResource resource,
+        Vector location,
         Settlement village
     ) {
         List<Item> constructionCost = CONSTRUCTION_COST_BY_TYPE.get(BuildingType.HARVESTER);
 
-        var building = new HarvesterBuilding(resourceNode.name + " Harvester", resourceNode.transform,
-            resourceNode, village.getStockpile(), 3);
+        var building = new HarvesterBuilding(
+            resource.item.getName() + " Harvester",
+            location,
+            HarvesterBuilding.BUILDING_TIER_1,
+            resource,
+            village.getStockpile());
+
+        territory.addChild(building);
 
         village.getBuildings().add(building);
 

@@ -37,7 +37,7 @@ public class TerritoryCommand extends Command {
             System.out.printf("%s%n", territory.name);
             for (var resource : territory.getAvailableResources()) {
                 System.out.printf("  • %s (%d%% richness)%n",
-                    resource.resource.getName(),
+                    resource.item.getName(),
                     (int) (resource.richness * 100));
             }
         }
