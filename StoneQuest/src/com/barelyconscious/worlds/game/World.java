@@ -41,6 +41,7 @@ public final class World {
     }
 
     public synchronized boolean removeActor(final Actor actor) {
+        actor.setParent(null);
         actorsById.remove(actor.id);
         return actors.remove(actor);
     }

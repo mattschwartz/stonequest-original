@@ -3,6 +3,7 @@ package com.barelyconscious.worlds.entity;
 import com.barelyconscious.worlds.entity.components.Component;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +22,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class Actor {
 
     private Actor parent = null;
+    @Getter
     private final Set<Actor> children = new HashSet<>();
 
     public final String id;

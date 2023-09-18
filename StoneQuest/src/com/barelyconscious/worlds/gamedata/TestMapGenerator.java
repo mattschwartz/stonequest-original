@@ -12,10 +12,12 @@ import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
 import com.barelyconscious.worlds.game.types.TerritoryResource;
 import com.google.common.collect.Lists;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Log4j2
 public class TestMapGenerator {
     public static void generateMapTiles(final World world) {
         createTiles(world);
@@ -131,21 +133,36 @@ public class TestMapGenerator {
             territory2,
             gi.getPlayerVillage());
 
+        world.addActor(territory1);
+        world.addActor(territory2);
+
         // construct a harvester in territory 1
         HarvesterBuilding harvesterBuilding = cs.constructHarvester(territory1, territory1.getAvailableResources().get(0), Vector.ZERO);
 
         assert harvesterBuilding != null;
 
         harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
-            System.out.println("Produced an item: " + item.item);
+            log.info("Produced an item: " + item.item.getName());
             return null;
         });
 
         harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) -> {
-            System.out.println("Production halted");
+            log.info("Production halted");
             return null;
         });
 
         harvesterBuilding = cs.constructHarvester(territory2, territory2.getAvailableResources().get(1), Vector.ZERO);
+
+        assert harvesterBuilding != null;
+
+        harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
+            log.info("Produced an item: " + item.item.getName());
+            return null;
+        });
+
+        harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) -> {
+            log.info("Production halted");
+            return null;
+        });
     }
 }

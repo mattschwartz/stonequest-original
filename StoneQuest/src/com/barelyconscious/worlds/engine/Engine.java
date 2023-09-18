@@ -177,7 +177,12 @@ public final class Engine {
         final List<Component> componentsToUpdate = new ArrayList<>();
         final List<Actor> actorsToRemove = new ArrayList<>();
 
-        for (final Actor actor : world.getActors()) {
+        final List<Actor> allActors = world.getActors();
+        for (var actor : world.getActors()) {
+            allActors.addAll(actor.getChildren());
+        }
+
+        for (final Actor actor : allActors) {
             if (actor.isDestroying()) {
                 actorsToRemove.add(actor);
                 continue;
