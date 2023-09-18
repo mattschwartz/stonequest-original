@@ -74,6 +74,14 @@ public class ChancellorSystem implements GameSystem {
         territory.addChild(building);
         settlement.getBuildings().add(building);
 
+        territory.getAvailableResources().remove(resource);
+
+        if (!territoryToBuildings.containsKey(territory)) {
+            territoryToBuildings.put(territory, Lists.newArrayList(building));
+        } else {
+            territoryToBuildings.get(territory).add(building);
+        }
+
         return building;
     }
 

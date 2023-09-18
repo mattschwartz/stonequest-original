@@ -4,11 +4,14 @@ import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
 import com.barelyconscious.worlds.game.types.TerritoryResource;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public class Territory extends Actor {
 
+    private final int territoryLevel;
     private final Biome biome;
     private final Climate climate;
     private final double hostility;
@@ -30,6 +33,7 @@ public class Territory extends Actor {
     public Territory(
         String name,
         Vector transform,
+        int territoryLevel,
         Biome biome,
         Climate climate,
         double hostility,
@@ -37,14 +41,11 @@ public class Territory extends Actor {
         List<TerritoryResource> availableResources
     ) {
         super(name, transform);
+        this.territoryLevel = territoryLevel;
         this.biome = biome;
         this.climate = climate;
         this.hostility = hostility;
         this.corruption = corruption;
         this.availableResources = availableResources;
-    }
-
-    public List<TerritoryResource> getAvailableResources() {
-        return availableResources;
     }
 }

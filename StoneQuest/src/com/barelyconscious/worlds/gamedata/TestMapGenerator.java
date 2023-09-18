@@ -102,6 +102,7 @@ public class TestMapGenerator {
         Territory territory1 = new Territory(
             "Territory(0,0)",
             Vector.ZERO,
+            1,
             Biome.FOREST,
             Climate.TEMPERATE,
             0.25,
@@ -113,6 +114,7 @@ public class TestMapGenerator {
         Territory territory2 = new Territory(
             "Territory(0,1)",
             Vector.ZERO,
+            2,
             Biome.FOREST,
             Climate.TEMPERATE,
             0.4,

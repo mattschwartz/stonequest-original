@@ -40,6 +40,7 @@ public class EntityActor extends Actor {
         final String name,
         final Vector transform,
         final int entityLevel,
+        // todo - these don't make sense anymore
         final double currentExperience,
         final double currentPower,
         final double maxPower,
