@@ -7,6 +7,7 @@ import com.barelyconscious.worlds.engine.Physics;
 import com.barelyconscious.worlds.engine.graphics.Screen;
 import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.game.*;
+import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.barelyconscious.worlds.gamedata.TestHeroInitializer;
 import com.barelyconscious.worlds.gamedata.TestWorldInitializer;
 import com.barelyconscious.worlds.terminal.BlankScreen;
@@ -66,6 +67,7 @@ public class GameRunnerCLI {
 
     private static void setUpGame( ) {
         GameInstance gi = GameInstance.instance();
+        gi.registerSystem(new ChancellorSystem());
 
         engine.prestart(
             gi,

@@ -88,14 +88,6 @@ public class HarvesterBuilding extends Building {
                 return;
             }
 
-            // harvest a little every second
-            // determine how much of an item is harvested, based on the richness of the resource
-            //  and the maximum harvesting rate per minute of the building
-
-            // 15 items per minute @ 30% richness = 4.5 items per minute
-            // 4.5 items per minute = 0.075 items per second
-            // so we accumulate 0.075 items every second
-
             long current = clock.millis();
             if (current - timeOfLastProductionMillis > 1000) { // a second has passed
                 // to preserve cpu delay, we need to carry over the remainder of the previous second

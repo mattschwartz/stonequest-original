@@ -17,19 +17,4 @@ import java.util.Map;
 
 public class BuildingSystem {
 
-    enum BuildingType {
-        HARVESTER,
-        PRODUCTION,
-        CRAFTING
-    }
-
-    private static final Map<BuildingType, List<Item>> CONSTRUCTION_COST_BY_TYPE = new HashMap<>() {{
-        put(BuildingType.HARVESTER, Lists.newArrayList(
-            GameItems.LUMBER.toItem(),
-            GameItems.LUMBER.toItem(),
-            GameItems.LUMBER.toItem()
-        ));
-        put(BuildingType.PRODUCTION, Lists.newArrayList());
-        put(BuildingType.CRAFTING, Lists.newArrayList());
-    }};
 }

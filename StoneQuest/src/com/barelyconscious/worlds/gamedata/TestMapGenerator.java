@@ -142,7 +142,7 @@ public class TestMapGenerator {
         assert harvesterBuilding != null;
 
         harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
-            log.info("Produced an item: " + item.item.getName());
+            log.info("Produced {} x{}", item.item.getName(), item.amount);
             return null;
         });
 
@@ -156,7 +156,7 @@ public class TestMapGenerator {
         assert harvesterBuilding != null;
 
         harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
-            log.info("Produced an item: " + item.item.getName());
+            log.info("Produced {} x{}", item.item.getName(), item.amount);
             return null;
         });
 
