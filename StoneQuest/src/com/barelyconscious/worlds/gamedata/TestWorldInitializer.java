@@ -22,42 +22,9 @@ public final class TestWorldInitializer {
 
         TestMapGenerator.generateMapTiles(world);
         createEntities(world);
-        createResources(world);
 
         world.addActor(new ItemLootActor(
             new Vector(200, 175), GameItems.IRON_SHIELD.toItem()));
-
-    }
-
-    private static void createResources(final World world) {
-        var ironResourceNode = new ResourceDeposit("Iron Ore", Vector.ZERO, Lists.newArrayList(
-            GameItems.IRON_ORE.toItem(),
-            GameItems.IRON_ORE.toItem(),
-            GameItems.IRON_ORE.toItem(),
-            GameItems.IRON_ORE.toItem()));
-        var chamomileResourceNode = new ResourceDeposit("Chamomile", Vector.ZERO, Lists.newArrayList(
-            GameItems.CHAMOMILE.toItem(),
-            GameItems.CHAMOMILE.toItem(),
-            GameItems.CHAMOMILE.toItem(),
-            GameItems.CHAMOMILE.toItem()));
-
-        world.addActor(ironResourceNode);
-        world.addActor(chamomileResourceNode);
-
-//        HarvesterBuilding harvesterBuilding = GameInstance.instance().getBuildingSystem()
-//            .constructHarvesterBuilding(ironResourceNode, GameInstance.instance().getPlayerVillage());
-//        harvesterBuilding.delegateOnItemProduced.bindDelegate((item) ->
-//
-//        {
-//            System.out.println("Produced an item: " + item.item.getName());
-//            return null;
-//        });
-//        harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) ->
-//
-//        {
-//            System.out.println("Production halted");
-//            return null;
-//        });
 
     }
 

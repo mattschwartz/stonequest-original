@@ -5,7 +5,12 @@ import com.barelyconscious.worlds.entity.Building;
 import com.barelyconscious.worlds.entity.HarvesterBuilding;
 import com.barelyconscious.worlds.entity.Territory;
 import com.barelyconscious.worlds.entity.Settlement;
+import com.barelyconscious.worlds.game.GameInstance;
+import com.barelyconscious.worlds.game.item.Item;
+import com.barelyconscious.worlds.game.types.TerritoryResource;
+import com.google.common.collect.Lists;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -22,7 +27,16 @@ import java.util.Map;
 public class ChancellorSystem implements GameSystem {
 
     public Map<Territory, List<Building>> territoryToBuildings = new HashMap<>();
-    public Map<Settlement, List<Territory>> villageToTerritories = new HashMap<>();
+    /**
+     * Signifies the relationship between every settlement and the territories it owns.
+     *
+     * the null settlement corresponds to neutral territories
+     */
+    public Map<Settlement, List<Territory>> settlementToTerritories = new HashMap<>();
+    /**
+     * Signifies the relationship between every territory and the settlement that owns it.
+     */
+    public Map<Territory, Settlement> territoryToSettlement = new HashMap<>();
     public List<Territory> allTerritories = new ArrayList<>();
 
     /**
@@ -30,23 +44,52 @@ public class ChancellorSystem implements GameSystem {
      * - the territory in which to construct the harvester
      * - the resource being harvested
      * - the owning settlement of the new building
+     *
      * @param territory
      */
-    public void constructHarvesterBuilding(
-        Territory territory
+    public @Nullable HarvesterBuilding constructHarvester(
+        Territory territory,
+        TerritoryResource resource,
+        Vector location
     ) {
-
-        Settlement owningVillage = territory.getOwningSettlement();
-        if (owningVillage == null) {
-            log.error("Cannot construct a harvester building on a territory that does not belong to a village.");
-            return;
+        var settlement = territoryToSettlement.get(territory);
+        if (settlement == null) {
+            log.error("Cannot construct a harvester building in a territory that does not belong to a settlement");
+            return null;
         }
+        if (!territory.getAvailableResources().contains(resource)) {
+            log.error("Cannot construct a harvester building on a resource that is not available in the territory");
+            return null;
+        }
+
+        List<Pair<Item, Integer>> constructionCost = HarvesterBuilding.BUILDING_TIER_1.getMaterialCost();
+
+        var building = new HarvesterBuilding(
+            resource.item.getName() + " Harvester",
+            location,
+            HarvesterBuilding.BUILDING_TIER_1,
+            resource,
+            settlement.getStockpile());
+
+        territory.addChild(building);
+        settlement.getBuildings().add(building);
+
+        return building;
     }
 
-    public void addTerritory(Territory territory, @Nullable Settlement village) {
-        territory.setOwningSettlement(village);
+    /**
+     * doesn't add to world
+     */
+    public void addTerritory(Territory territory, @Nullable Settlement settlement) {
         allTerritories.add(territory);
-        villageToTerritories.computeIfAbsent(village, k -> new ArrayList<>()).add(territory);
+        territoryToSettlement.put(territory, settlement);
+
+        if (settlementToTerritories.containsKey(settlement)) {
+            settlementToTerritories.get(settlement).add(territory);
+        } else {
+            List<Territory> settlementTerritories = Lists.newArrayList(territory);
+            settlementToTerritories.put(settlement, settlementTerritories);
+        }
     }
 
     /**
@@ -60,7 +103,7 @@ public class ChancellorSystem implements GameSystem {
      * Returns a list of all buildings within the given village
      */
     public List<Building> getBuildingsWithinVillage(Settlement village) {
-        return villageToTerritories.get(village).stream()
+        return settlementToTerritories.get(village).stream()
             .map(territory -> territoryToBuildings.get(territory))
             .reduce((a, b) -> {
                 a.addAll(b);
@@ -73,6 +116,6 @@ public class ChancellorSystem implements GameSystem {
      * Returns a list of all territories owned by the given village
      */
     public List<Territory> getTerritoriesOwnedByVillage(Settlement village) {
-        return villageToTerritories.get(village);
+        return settlementToTerritories.get(village);
     }
 }

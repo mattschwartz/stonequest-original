@@ -138,8 +138,9 @@ public class HarvesterBuilding extends Building {
         15 /* items per minute */);
 
 
+    @Getter
     @AllArgsConstructor
-    static class BuildingTier {
+    public static class BuildingTier {
         private List<Pair<Item, Integer>> materialCost;
         @Nullable
         private List<Pair<Item, Integer>> upgradeCost; // cost to get to the next tier

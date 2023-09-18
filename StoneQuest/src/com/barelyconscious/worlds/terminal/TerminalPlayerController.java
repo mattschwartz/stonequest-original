@@ -10,6 +10,7 @@ import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.systems.BuildingSystem;
+import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.barelyconscious.worlds.terminal.commands.*;
 
 import java.util.List;
@@ -198,17 +199,19 @@ public class TerminalPlayerController extends PlayerController {
                         System.out.printf("\t[%d] %s\n", i, resourceNodes.get(i - 1).name);
                     }
 
-                    System.out.print("> ");
-                    choice = scn.nextLine();
-                    int resourceNodeIndex = Integer.parseInt(choice);
-                    ResourceDeposit resourceNode = (ResourceDeposit) resourceNodes.get(resourceNodeIndex - 1);
-
-                    GameInstance gi = GameInstance.instance();
-                    Settlement playerVillage = gi.getPlayerVillage();
-                    BuildingSystem buildingSystem = gi.getBuildingSystem();
-
-//                    HarvesterBuilding harvesterBuilding = buildingSystem.constructHarvesterBuilding(
-//                        resourceNode, playerVillage);
+                    // todo remove once moved to command
+//                    System.out.print("> ");
+//                    choice = scn.nextLine();
+//                    int resourceNodeIndex = Integer.parseInt(choice);
+//                    ResourceDeposit resourceNode = (ResourceDeposit) resourceNodes.get(resourceNodeIndex - 1);
+//
+//                    GameInstance gi = GameInstance.instance();
+//                    Settlement playerVillage = gi.getPlayerVillage();
+//                    ChancellorSystem cs = gi.getSystem(ChancellorSystem.class);
+//
+//                    HarvesterBuilding harvesterBuilding = cs.constructHarvester(
+//                        resourceNode,
+//                        playerVillage);
 //
 //                    harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
 //                        System.out.println("Produced an item: " + item.item.getName());

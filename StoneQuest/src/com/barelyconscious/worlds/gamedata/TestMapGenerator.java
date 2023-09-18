@@ -1,13 +1,11 @@
 package com.barelyconscious.worlds.gamedata;
 
-import com.barelyconscious.worlds.entity.Territory;
-import com.barelyconscious.worlds.entity.TileActor;
+import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.input.MouseInputHandler;
 import com.barelyconscious.worlds.game.item.GameItems;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
-import com.barelyconscious.worlds.entity.Tile;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.barelyconscious.worlds.game.types.Biome;
@@ -23,32 +21,32 @@ public class TestMapGenerator {
         createTiles(world);
     }
 
-    private static final int[] map = new int[] {
-        3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-        3,1,1,1,1,1,6,5,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
-        3,7,7,7,7,1,6,5,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
-        3,7,7,7,7,1,6,5,6,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,3,
-        3,7,7,7,7,1,6,5,6,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,3,
-        3,1,1,1,1,1,6,5,6,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,3,
-        3,1,1,1,1,1,6,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,3,
-        3,1,1,1,1,1,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,
-        3,1,1,1,1,1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,3,
-        3,1,1,1,1,1,2,2,2,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,3,
-        3,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,2,2,2,2,3,
-        3,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,2,2,2,2,3,
-        3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,
-        3,2,2,2,2,2,2,2,3,3,1,1,1,1,2,2,2,2,2,2,2,2,2,2,3,
-        3,2,4,4,4,2,2,2,2,3,3,1,1,1,1,1,1,1,3,3,2,2,2,2,3,
-        3,2,4,4,4,2,2,3,3,3,1,1,1,1,1,1,1,2,3,3,2,2,2,2,3,
-        3,2,2,2,2,2,2,3,3,3,1,1,1,1,1,1,1,1,3,3,2,2,2,2,3,
-        3,2,2,2,2,2,2,2,3,3,2,1,1,1,1,3,3,2,2,2,2,2,2,2,3,
-        3,2,2,2,2,2,2,2,2,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,3,
-        3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,
-        3,2,2,2,2,2,4,2,2,2,4,2,4,2,2,2,2,2,2,2,2,2,2,2,3,
-        3,2,2,2,2,4,4,4,4,2,2,4,4,2,2,2,2,2,2,2,2,2,2,2,3,
-        3,2,2,2,4,2,4,4,2,2,4,2,4,2,2,2,2,2,2,2,2,2,2,2,3,
-        3,2,2,2,2,2,2,2,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,
-        3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,};
+    private static final int[] map = new int[]{
+        3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+        3, 1, 1, 1, 1, 1, 6, 5, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3,
+        3, 7, 7, 7, 7, 1, 6, 5, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3,
+        3, 7, 7, 7, 7, 1, 6, 5, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3,
+        3, 7, 7, 7, 7, 1, 6, 5, 6, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 1, 1, 1, 1, 1, 6, 5, 6, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 1, 1, 1, 1, 1, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 3,
+        3, 1, 1, 1, 1, 1, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3,
+        3, 1, 1, 1, 1, 1, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 3,
+        3, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 3,
+        3, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 3,
+        3, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 3,
+        3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 2, 2, 2, 2, 2, 2, 2, 3, 3, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 2, 4, 4, 4, 2, 2, 2, 2, 3, 3, 1, 1, 1, 1, 1, 1, 1, 3, 3, 2, 2, 2, 2, 3,
+        3, 2, 4, 4, 4, 2, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 2, 3, 3, 2, 2, 2, 2, 3,
+        3, 2, 2, 2, 2, 2, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 2, 2, 2, 2, 3,
+        3, 2, 2, 2, 2, 2, 2, 2, 3, 3, 2, 1, 1, 1, 1, 3, 3, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 2, 2, 2, 2, 2, 4, 2, 2, 2, 4, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 2, 2, 2, 2, 4, 4, 4, 4, 2, 2, 4, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 2, 2, 2, 4, 2, 4, 4, 2, 2, 4, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,};
 
     private static final Map<Integer, BetterSpriteResource> KEY_SPRITE = new HashMap<>() {{
         put(1, new BetterSpriteResource("texture::fallgrass"));
@@ -75,7 +73,7 @@ public class TestMapGenerator {
                 final BetterSpriteResource rSprite = KEY_SPRITE.get(key);
 
                 int width = 64;
-                int height =64;
+                int height = 64;
 
                 final Tile tile = new Tile(0, "Grass", key == 3, false);
                 final Vector transform = new Vector(x * width, y * height);
@@ -109,11 +107,7 @@ public class TestMapGenerator {
             Lists.newArrayList(
                 new TerritoryResource(
                     GameItems.WOOD.toItem(),
-                    0.85),
-                new TerritoryResource(
-                    GameItems.IRON_ORE.toItem(), 0.4),
-                new TerritoryResource(
-                    GameItems.CHAMOMILE.toItem(), 0.6)));
+                    0.85)));
         Territory territory2 = new Territory(
             "Territory(0,1)",
             Vector.ZERO,
@@ -124,15 +118,34 @@ public class TestMapGenerator {
             Lists.newArrayList(
                 new TerritoryResource(
                     GameItems.WOOD.toItem(),
-                    0.85)));
-        world.addActor(territory1);
-        world.addActor(territory2);
-        // add a territory to the player's village
+                    0.85),
+                new TerritoryResource(
+                    GameItems.IRON_ORE.toItem(), 0.4),
+                new TerritoryResource(
+                    GameItems.CHAMOMILE.toItem(), 0.6)));
+
         cs.addTerritory(
             territory1,
             gi.getPlayerVillage());
         cs.addTerritory(
             territory2,
             gi.getPlayerVillage());
+
+        // construct a harvester in territory 1
+        HarvesterBuilding harvesterBuilding = cs.constructHarvester(territory1, territory1.getAvailableResources().get(0), Vector.ZERO);
+
+        assert harvesterBuilding != null;
+
+        harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
+            System.out.println("Produced an item: " + item.item);
+            return null;
+        });
+
+        harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) -> {
+            System.out.println("Production halted");
+            return null;
+        });
+
+        harvesterBuilding = cs.constructHarvester(territory2, territory2.getAvailableResources().get(1), Vector.ZERO);
     }
 }

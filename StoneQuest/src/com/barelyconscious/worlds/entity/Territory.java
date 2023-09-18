@@ -4,10 +4,7 @@ import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
 import com.barelyconscious.worlds.game.types.TerritoryResource;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Territory extends Actor {
@@ -16,11 +13,6 @@ public class Territory extends Actor {
     private final Climate climate;
     private final double hostility;
     private final double corruption;
-
-    @Getter
-    @Setter
-    private Settlement owningSettlement;
-    private final List<Building> buildings = new ArrayList<>();
 
     /**
      * Item types available to be gathered.
