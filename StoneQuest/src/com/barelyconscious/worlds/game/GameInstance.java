@@ -24,23 +24,6 @@ import java.util.Map;
 @Log4j2
 public final class GameInstance {
 
-    private final Map<Class<?>, GameSystem> gameSystems = new HashMap<>();
-
-    public void registerSystem(GameSystem system) {
-        if (gameSystems.containsKey(system.getClass())) {
-            throw new IllegalArgumentException("A system of type " + system.getClass().getName() + " is already registered.");
-        }
-        log.info("Registered system: " + system.getClass().getName());
-        gameSystems.put(system.getClass(), system);
-    }
-
-    public <T extends GameSystem> T getSystem(Class<T> systemClass) {
-        if (!gameSystems.containsKey(systemClass)) {
-            throw new IllegalArgumentException("No system of type " + systemClass.getName() + " is registered.");
-        }
-        return (T) gameSystems.get(systemClass);
-    }
-
     public final Delegate<HeroSelectionChanged> delegateHeroSelectionChanged = new Delegate<>();
 
     @AllArgsConstructor
@@ -59,6 +42,8 @@ public final class GameInstance {
     public static GameInstance instance() {
         return GameInstance.InstanceHolder.instance;
     }
+
+    private final Map<Class<?>, GameSystem> gameSystems = new HashMap<>();
 
     @Getter
     @Setter
@@ -152,5 +137,20 @@ public final class GameInstance {
 
     public void setHero(final Hero hero, final PartySlot slot) {
         heroParty[slot.index] = hero;
+    }
+
+    public void registerSystem(GameSystem system) {
+        if (gameSystems.containsKey(system.getClass())) {
+            throw new IllegalArgumentException("A system of type " + system.getClass().getName() + " is already registered.");
+        }
+        log.info("Registered system: " + system.getClass().getName());
+        gameSystems.put(system.getClass(), system);
+    }
+
+    public <T extends GameSystem> T getSystem(Class<T> systemClass) {
+        if (!gameSystems.containsKey(systemClass)) {
+            throw new IllegalArgumentException("No system of type " + systemClass.getName() + " is registered.");
+        }
+        return (T) gameSystems.get(systemClass);
     }
 }
