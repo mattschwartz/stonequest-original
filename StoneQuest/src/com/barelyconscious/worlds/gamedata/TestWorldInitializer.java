@@ -18,7 +18,8 @@ import lombok.val;
 public final class TestWorldInitializer {
 
     public static void createWorld(final World world) {
-        GameInstance.instance().setPlayerVillage(new Settlement("Ravenfell", Vector.ZERO));
+        GameInstance.instance().getWorld().setPlayerSettlement(
+            new Settlement("Ravenfell", Vector.ZERO));
 
         TestMapGenerator.generateMapTiles(world);
         createEntities(world);

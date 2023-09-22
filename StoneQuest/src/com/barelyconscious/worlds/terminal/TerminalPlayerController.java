@@ -164,7 +164,7 @@ public class TerminalPlayerController extends PlayerController {
 
         System.out.println("Village actions");
 
-        Settlement playerVillage = GameInstance.instance().getPlayerVillage();
+        Settlement playerVillage = GameInstance.instance().getWorld().getPlayerSettlement();
         System.out.println("The Village of " + playerVillage.name);
         System.out.println("  Population: " + playerVillage.getCitizens().size());
         System.out.println("  Buildings: " + playerVillage.getBuildings().size());

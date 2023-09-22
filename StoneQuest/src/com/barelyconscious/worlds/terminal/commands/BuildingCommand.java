@@ -40,7 +40,7 @@ public class BuildingCommand extends Command {
         GameInstance gi = GameInstance.instance();
         ChancellorSystem ts = gi.getSystem(ChancellorSystem.class);
 
-        List<TerritoryResource> availableResources = ts.getTerritoriesOwnedByVillage(gi.getPlayerVillage())
+        List<TerritoryResource> availableResources = ts.getTerritoriesOwnedByVillage(gi.getWorld().getPlayerSettlement())
             .stream().map(Territory::getAvailableResources)
             .flatMap(List::stream)
             .toList();

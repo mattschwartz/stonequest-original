@@ -37,7 +37,7 @@ public class TerritoryCommand extends Command {
     private Void load(Scanner scn, CommandLineArgs args) {
         Territory selectATerritoryToSpawn = InputDialog.pollObjects("Select a territory to spawn", GameInstance.instance()
                 .getSystem(ChancellorSystem.class)
-                .getTerritoriesOwnedByVillage(GameInstance.instance().getPlayerVillage()))
+                .getTerritoriesOwnedByVillage(GameInstance.instance().getWorld().getPlayerSettlement()))
             .withFormatter((territory) -> territory.name)
             .prompt(scn, true);
 
@@ -79,7 +79,7 @@ public class TerritoryCommand extends Command {
     private Void details(Scanner scn, CommandLineArgs args) {
         GameInstance gi = GameInstance.instance();
         ChancellorSystem cs = gi.getSystem(ChancellorSystem.class);
-        List<Territory> territories = cs.getTerritoriesOwnedByVillage(gi.getPlayerVillage());
+        List<Territory> territories = cs.getTerritoriesOwnedByVillage(gi.getWorld().getPlayerSettlement());
 
         for (var territory : territories) {
             System.out.printf("%s%n", territory.name);
@@ -110,7 +110,7 @@ public class TerritoryCommand extends Command {
         GameInstance gi = GameInstance.instance();
         System.out.printf("You own %s territories%n", gi
             .getSystem(ChancellorSystem.class)
-            .getTerritoriesOwnedByVillage(gi.getPlayerVillage())
+            .getTerritoriesOwnedByVillage(gi.getWorld().getPlayerSettlement())
             .size());
         return null;
     }

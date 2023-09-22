@@ -133,10 +133,10 @@ public class TestMapGenerator {
 
         cs.claimTerritory(
             territory1,
-            gi.getPlayerVillage());
+            gi.getWorld().getPlayerSettlement());
         cs.claimTerritory(
             territory2,
-            gi.getPlayerVillage());
+            gi.getWorld().getPlayerSettlement());
 
         // construct a harvester in territory 1
         HarvesterBuilding harvesterBuilding = cs.constructHarvester(territory1, territory1.getAvailableResources().get(0), Vector.ZERO);
