@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Random;
 
 public class TerritoryGeneration {
+
+    static final Random RNG = new Random(1234567890L);
+
     /**
      * properties that qualify this territory and are used
      * for generation in the world
@@ -96,8 +99,6 @@ public class TerritoryGeneration {
             result.addChild(buildingActor);
         }
     }
-
-    static final Random RNG = new Random(1234567890L);
 
     private void spawnEnemies(Actor container, Territory territory, Actor[][] worldSpace) {
         int numEnemies = (int) (NUM_ENEMY_PACKS * territory.getHostility());

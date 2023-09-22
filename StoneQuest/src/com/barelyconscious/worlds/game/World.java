@@ -1,21 +1,43 @@
 package com.barelyconscious.worlds.game;
 
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.Actor;
+import com.barelyconscious.worlds.entity.BuildingActor;
 import com.barelyconscious.worlds.entity.Settlement;
 import com.barelyconscious.worlds.entity.Territory;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class World {
 
+    @Getter
+    @Setter
     private Settlement playerSettlement;
-    private List<Settlement> settlements;
-    private List<Territory> territories;
 
+    @Getter
+    private final List<Settlement> settlements = new ArrayList<>();
+
+    @Getter
+    private final List<Territory> territories = new ArrayList<>();
+
+    private final List<Actor> actors;
     private final Map<String, Actor> actorsById = new HashMap<>();
+
+    public final Map<Territory, List<BuildingActor>> territoryToBuildings = new HashMap<>();
+    /**
+     * Signifies the relationship between every settlement and the territories it owns.
+     *
+     * the null settlement corresponds to neutral territories
+     */
+    public final Map<Settlement, List<Territory>> settlementToTerritories = new HashMap<>();
+    /**
+     * Signifies the relationship between every territory and the settlement that owns it.
+     */
+    public final Map<Territory, Settlement> territoryToSettlement = new HashMap<>();
 
     /**
      * todo - for the CLI
@@ -34,8 +56,6 @@ public final class World {
             .filter(actor -> actor.name.equalsIgnoreCase(name))
             .findFirst();
     }
-
-    private final List<Actor> actors;
 
     public World() {
         actors = new CopyOnWriteArrayList<>();
@@ -77,5 +97,13 @@ public final class World {
             int index = matches.size() - 1;
             return matches.get(index);
         }
+    }
+
+    /**
+     * Updates the world, which includes territories and settlements.
+     */
+    public void update(EventArgs args) {
+        territories.forEach(territory -> territory.update(args));
+        settlements.forEach(settlement -> settlement.update(args));
     }
 }

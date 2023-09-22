@@ -128,15 +128,15 @@ public class TestMapGenerator {
                 new TerritoryResource(
                     GameItems.CHAMOMILE.toItem(), 0.6)));
 
-        cs.addTerritory(
+        world.getTerritories().add(territory1);
+        world.getTerritories().add(territory2);
+
+        cs.claimTerritory(
             territory1,
             gi.getPlayerVillage());
-        cs.addTerritory(
+        cs.claimTerritory(
             territory2,
             gi.getPlayerVillage());
-
-        world.addActor(territory1);
-        world.addActor(territory2);
 
         // construct a harvester in territory 1
         HarvesterBuilding harvesterBuilding = cs.constructHarvester(territory1, territory1.getAvailableResources().get(0), Vector.ZERO);

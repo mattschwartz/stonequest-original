@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.entity;
 
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.game.Inventory;
 import lombok.Getter;
 
@@ -35,5 +36,8 @@ public class Settlement extends Actor {
         citizens = new ArrayList<>();
         buildings = new ArrayList<>();
         ownedTerritories = new ArrayList<>();
+    }
+
+    public void update(EventArgs args) {
     }
 }

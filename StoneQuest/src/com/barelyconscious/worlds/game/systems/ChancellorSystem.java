@@ -5,6 +5,8 @@ import com.barelyconscious.worlds.entity.BuildingActor;
 import com.barelyconscious.worlds.entity.HarvesterBuilding;
 import com.barelyconscious.worlds.entity.Territory;
 import com.barelyconscious.worlds.entity.Settlement;
+import com.barelyconscious.worlds.game.GameInstance;
+import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.types.TerritoryResource;
 import com.google.common.collect.Lists;
@@ -25,19 +27,6 @@ import java.util.Map;
 @Log4j2
 public class ChancellorSystem implements GameSystem {
 
-    public Map<Territory, List<BuildingActor>> territoryToBuildings = new HashMap<>();
-    /**
-     * Signifies the relationship between every settlement and the territories it owns.
-     *
-     * the null settlement corresponds to neutral territories
-     */
-    public Map<Settlement, List<Territory>> settlementToTerritories = new HashMap<>();
-    /**
-     * Signifies the relationship between every territory and the settlement that owns it.
-     */
-    public Map<Territory, Settlement> territoryToSettlement = new HashMap<>();
-    public List<Territory> allTerritories = new ArrayList<>();
-
     /**
      * To construct a harvester building, we need to know
      * - the territory in which to construct the harvester
@@ -51,7 +40,9 @@ public class ChancellorSystem implements GameSystem {
         TerritoryResource resource,
         Vector location
     ) {
-        var settlement = territoryToSettlement.get(territory);
+        World world = GameInstance.instance().getWorld();
+
+        var settlement = world.territoryToSettlement.get(territory);
         if (settlement == null) {
             log.error("Cannot construct a harvester building in a territory that does not belong to a settlement");
             return null;
@@ -70,15 +61,15 @@ public class ChancellorSystem implements GameSystem {
             resource,
             settlement.getStockpile());
 
-        territory.addChild(building);
+        territory.getBuildings().add(building);
         settlement.getBuildings().add(building);
 
         territory.getAvailableResources().remove(resource);
 
-        if (!territoryToBuildings.containsKey(territory)) {
-            territoryToBuildings.put(territory, Lists.newArrayList(building));
+        if (!world.territoryToBuildings.containsKey(territory)) {
+            world.territoryToBuildings.put(territory, Lists.newArrayList(building));
         } else {
-            territoryToBuildings.get(territory).add(building);
+            world.territoryToBuildings.get(territory).add(building);
         }
 
         return building;
@@ -87,15 +78,16 @@ public class ChancellorSystem implements GameSystem {
     /**
      * doesn't add to world
      */
-    public void addTerritory(Territory territory, @Nullable Settlement settlement) {
-        allTerritories.add(territory);
-        territoryToSettlement.put(territory, settlement);
+    public void claimTerritory(Territory territory, Settlement settlement) {
+        World world = GameInstance.instance().getWorld();
 
-        if (settlementToTerritories.containsKey(settlement)) {
-            settlementToTerritories.get(settlement).add(territory);
+        world.territoryToSettlement.put(territory, settlement);
+
+        if (world.settlementToTerritories.containsKey(settlement)) {
+            world.settlementToTerritories.get(settlement).add(territory);
         } else {
             List<Territory> settlementTerritories = Lists.newArrayList(territory);
-            settlementToTerritories.put(settlement, settlementTerritories);
+            world.settlementToTerritories.put(settlement, settlementTerritories);
         }
     }
 
@@ -103,26 +95,13 @@ public class ChancellorSystem implements GameSystem {
      * Returns a list of all buildings within the given territory
      */
     public List<BuildingActor> getBuildingsWithinTerritory(Territory territory) {
-        return territoryToBuildings.get(territory);
-    }
-
-    /**
-     * Returns a list of all buildings within the given village
-     */
-    public List<BuildingActor> getBuildingsWithinVillage(Settlement village) {
-        return settlementToTerritories.get(village).stream()
-            .map(territory -> territoryToBuildings.get(territory))
-            .reduce((a, b) -> {
-                a.addAll(b);
-                return a;
-            })
-            .orElseGet(() -> new ArrayList<>(0));
+        return GameInstance.instance().getWorld().territoryToBuildings.get(territory);
     }
 
     /**
      * Returns a list of all territories owned by the given village
      */
     public List<Territory> getTerritoriesOwnedByVillage(Settlement village) {
-        return settlementToTerritories.get(village);
+        return GameInstance.instance().getWorld().settlementToTerritories.get(village);
     }
 }

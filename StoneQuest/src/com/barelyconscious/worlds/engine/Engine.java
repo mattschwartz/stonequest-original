@@ -219,6 +219,8 @@ public final class Engine {
         actorsToRemove.forEach(world::removeActor);
 
         eventArgs.getWorldContext().applyActorOperations();
+
+        world.update(eventArgs);
     }
 
     private void runJobs(final EventArgs eventArgs) {

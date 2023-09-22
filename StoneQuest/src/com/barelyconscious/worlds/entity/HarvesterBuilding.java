@@ -51,6 +51,7 @@ public class HarvesterBuilding extends BuildingActor {
     private double itemsPerSecond;
 
     private boolean isProductionEnabled = true;
+    private long timeOfLastProductionMillis;
 
     private final Clock clock;
 
@@ -69,45 +70,35 @@ public class HarvesterBuilding extends BuildingActor {
         itemsPerSecond = (tier.itemsPerMinute * resource.richness) / 60.0;
         clock = Clock.systemDefaultZone();
 
-        addComponent(new ProductionComponent(this));
+        timeOfLastProductionMillis = clock.millis();
     }
 
-    private class ProductionComponent extends Component {
-
-        private long timeOfLastProductionMillis;
-
-        public ProductionComponent(Actor parent) {
-            super(parent);
-            timeOfLastProductionMillis = clock.millis();
+    @Override
+    public void update(EventArgs eventArgs) {
+        super.update(eventArgs);
+        if (!isProductionEnabled) {
+            return;
         }
 
-        @Override
-        public void update(EventArgs eventArgs) {
-            super.update(eventArgs);
-            if (!isProductionEnabled) {
-                return;
+        long current = clock.millis();
+        if (current - timeOfLastProductionMillis > 1000) { // a second has passed
+            // to preserve cpu delay, we need to carry over the remainder of the previous second
+            long carryover = current - timeOfLastProductionMillis - 1000;
+            timeOfLastProductionMillis = current;
+            if (carryover > 0) {
+                timeOfLastProductionMillis -= carryover;
             }
 
-            long current = clock.millis();
-            if (current - timeOfLastProductionMillis > 1000) { // a second has passed
-                // to preserve cpu delay, we need to carry over the remainder of the previous second
-                long carryover = current - timeOfLastProductionMillis - 1000;
-                timeOfLastProductionMillis = current;
-                if (carryover > 0) {
-                    timeOfLastProductionMillis -= carryover;
-                }
+            // accumulate some material
+            materialsHarvested += itemsPerSecond;
 
-                // accumulate some material
-                materialsHarvested += itemsPerSecond;
+            int wholeItemsHarvestedSoFar = (int) materialsHarvested;
+            if (wholeItemsHarvestedSoFar >= 1) {
+                var item = resource.item;
 
-                int wholeItemsHarvestedSoFar = (int) materialsHarvested;
-                if (wholeItemsHarvestedSoFar >= 1) {
-                    var item = resource.item;
-
-                    materialsHarvested -= wholeItemsHarvestedSoFar;
-                    stockpile.addItem(item);
-                    delegateOnItemProduced.call(new ItemProducedEvent(item, wholeItemsHarvestedSoFar));
-                }
+                materialsHarvested -= wholeItemsHarvestedSoFar;
+                stockpile.addItem(item);
+                delegateOnItemProduced.call(new ItemProducedEvent(item, wholeItemsHarvestedSoFar));
             }
         }
     }

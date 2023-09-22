@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.entity;
 
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.engine.EventArgs;
 
 /**
  * A building is a structure that can be built by the player.
@@ -14,5 +15,9 @@ public class BuildingActor extends Actor {
         Vector transform
     ) {
         super(name, transform);
+    }
+
+    public void update(EventArgs eventArgs) {
+        // todo - update building
     }
 }

@@ -1,11 +1,13 @@
 package com.barelyconscious.worlds.entity;
 
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
 import com.barelyconscious.worlds.game.types.TerritoryResource;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -16,6 +18,9 @@ public class Territory extends Actor {
     private final Climate climate;
     private final double hostility;
     private final double corruption;
+
+    @Getter
+    private final List<BuildingActor> buildings = new ArrayList<>();
 
     /**
      * Item types available to be gathered.
@@ -47,5 +52,9 @@ public class Territory extends Actor {
         this.hostility = hostility;
         this.corruption = corruption;
         this.availableResources = availableResources;
+    }
+
+    public void update(EventArgs args) {
+        buildings.forEach(building -> building.update(args));
     }
 }
