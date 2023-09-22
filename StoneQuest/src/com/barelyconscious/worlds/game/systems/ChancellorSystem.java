@@ -1,11 +1,10 @@
 package com.barelyconscious.worlds.game.systems;
 
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.entity.Building;
+import com.barelyconscious.worlds.entity.BuildingActor;
 import com.barelyconscious.worlds.entity.HarvesterBuilding;
 import com.barelyconscious.worlds.entity.Territory;
 import com.barelyconscious.worlds.entity.Settlement;
-import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.types.TerritoryResource;
 import com.google.common.collect.Lists;
@@ -26,7 +25,7 @@ import java.util.Map;
 @Log4j2
 public class ChancellorSystem implements GameSystem {
 
-    public Map<Territory, List<Building>> territoryToBuildings = new HashMap<>();
+    public Map<Territory, List<BuildingActor>> territoryToBuildings = new HashMap<>();
     /**
      * Signifies the relationship between every settlement and the territories it owns.
      *
@@ -103,14 +102,14 @@ public class ChancellorSystem implements GameSystem {
     /**
      * Returns a list of all buildings within the given territory
      */
-    public List<Building> getBuildingsWithinTerritory(Territory territory) {
+    public List<BuildingActor> getBuildingsWithinTerritory(Territory territory) {
         return territoryToBuildings.get(territory);
     }
 
     /**
      * Returns a list of all buildings within the given village
      */
-    public List<Building> getBuildingsWithinVillage(Settlement village) {
+    public List<BuildingActor> getBuildingsWithinVillage(Settlement village) {
         return settlementToTerritories.get(village).stream()
             .map(territory -> territoryToBuildings.get(territory))
             .reduce((a, b) -> {

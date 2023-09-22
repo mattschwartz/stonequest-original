@@ -31,8 +31,8 @@ public class TerritoryGeneration {
     public static final int NUM_TILES_ROWS = 16; // 1,024 height
     public static final int NUM_TILES_COLS = 24; // 1536 width
 
-    public Actor generateTerritory(Territory territory) {
-        Actor result = new Actor(); // empty container actor
+    public WildernessLevel generateTerritory(Territory territory) {
+        WildernessLevel result = new WildernessLevel(); // empty container actor
 
         Actor[][] worldSpace = new Actor[NUM_TILES_ROWS][NUM_TILES_COLS];
 
@@ -75,11 +75,11 @@ public class TerritoryGeneration {
     }
 
     private void spawnBuildings(Actor result, Territory territory, Actor[][] worldSpace) {
-        List<Building> buildingsWithinTerritory = GameInstance.instance().getSystem(ChancellorSystem.class)
+        List<BuildingActor> buildingsWithinTerritory = GameInstance.instance().getSystem(ChancellorSystem.class)
             .getBuildingsWithinTerritory(territory);
 
         // place building randomly in map
-        for (Building building : buildingsWithinTerritory) {
+        for (BuildingActor building : buildingsWithinTerritory) {
             Vector transform;
             // don't place buildings on top of each other
             do {
@@ -88,9 +88,12 @@ public class TerritoryGeneration {
                     RNG.nextInt(NUM_TILES_COLS));
             } while (worldSpace[(int) transform.x][(int) transform.y] != null);
 
-            building.setTransform(transform.multiply(32)); // to calculate world position
+            var buildingActor = new BuildingActor(building.name, transform.multiply(32));
+
+            // add appropriate sprite to the building actor
+
             worldSpace[(int) transform.x][(int) transform.y] = building;
-            result.addChild(building);
+            result.addChild(buildingActor);
         }
     }
 

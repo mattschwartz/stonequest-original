@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 import java.time.Clock;
 import java.util.List;
 
-public class HarvesterBuilding extends Building {
+public class HarvesterBuilding extends BuildingActor {
 
     public Delegate<ItemProducedEvent> delegateOnItemProduced = new Delegate<>();
     public Delegate<ProductionHaltedEvent> delegateOnProductionHalted = new Delegate<>();

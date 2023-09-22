@@ -14,7 +14,7 @@ import java.time.Clock;
 /**
  * Building takes raw materials and creates items.
  */
-public class RefinerBuilding extends Building {
+public class RefinerBuilding extends BuildingActor {
 
     public Delegate<ItemProducedEvent> delegateOnItemProduced = new Delegate<>();
     public Delegate<ProductionHaltedEvent> delegateOnProductionHalted = new Delegate<>();

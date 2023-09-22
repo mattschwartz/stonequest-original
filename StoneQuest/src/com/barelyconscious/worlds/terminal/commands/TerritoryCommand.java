@@ -3,7 +3,6 @@ package com.barelyconscious.worlds.terminal.commands;
 import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.rng.TerritoryGeneration;
-import com.barelyconscious.worlds.game.systems.BuildingSystem;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.barelyconscious.worlds.terminal.InputDialog;
 
@@ -23,6 +22,7 @@ public class TerritoryCommand extends Command {
                 .answer("Overview", () -> overview(scn, args))
                 .answer("Details", () -> details(scn, args))
                 .answer("Spawn", () -> spawn(scn, args))
+                .answer("Look", () -> look(scn, args))
                 .ask(scn, true);
 
             if (!userAccepted) {
@@ -59,7 +59,7 @@ public class TerritoryCommand extends Command {
             int y = (int) (child.getTransform().y / 32);
             if (child instanceof EntityActor) {
                 map[x][y] = "👹";
-            } else if (child instanceof Building) {
+            } else if (child instanceof BuildingActor) {
                 map[x][y] = "🏠";
             } else if (child instanceof ResourceDeposit) {
                 map[x][y] = "🌱";
@@ -83,7 +83,13 @@ public class TerritoryCommand extends Command {
 
         for (var territory : territories) {
             System.out.printf("%s%n", territory.name);
-            List<Building> buildingsWithinTerritory = cs.getBuildingsWithinTerritory(territory);
+
+            System.out.println("  Biome: " + territory.getBiome().name());
+            System.out.println("  Climate: " + territory.getClimate().name());
+            System.out.printf("  Hostility: %d%%%n", (int) (territory.getHostility() * 100));
+            System.out.printf("  Corruption: %d%%%n", (int) (territory.getCorruption() * 100));
+
+            List<BuildingActor> buildingsWithinTerritory = cs.getBuildingsWithinTerritory(territory);
             if (buildingsWithinTerritory != null) {
                 for (var building : buildingsWithinTerritory) {
                     System.out.printf("  • 🏠 %s%n", building.name);
@@ -106,6 +112,18 @@ public class TerritoryCommand extends Command {
             .getSystem(ChancellorSystem.class)
             .getTerritoriesOwnedByVillage(gi.getPlayerVillage())
             .size());
+        return null;
+    }
+
+    private Void look(Scanner scn, CommandLineArgs args) {
+        Territory selectATerritory = InputDialog.pollObjects("Where would you look?", GameInstance.instance()
+                .getSystem(ChancellorSystem.class)
+                .getTerritoriesOwnedByVillage(GameInstance.instance().getPlayerVillage()))
+            .withFormatter((territory) -> territory.name)
+            .prompt(scn, true);
+
+//        System.out.printf("This territory has %d enemies", selectATerritory.getEnemies().size());
+
         return null;
     }
 }

@@ -7,9 +7,9 @@ import com.barelyconscious.worlds.common.shape.Vector;
  * Buildings can be used to produce items, store items, or
  * provide a service.
  */
-public class Building extends Actor {
+public class BuildingActor extends Actor {
 
-    public Building(
+    public BuildingActor(
         String name,
         Vector transform
     ) {

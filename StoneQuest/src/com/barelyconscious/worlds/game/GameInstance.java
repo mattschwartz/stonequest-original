@@ -62,6 +62,7 @@ public final class GameInstance {
     }
 
     @Getter
+    @Setter
     private World world;
 
     @Getter
@@ -156,15 +157,5 @@ public final class GameInstance {
 
     public void setHero(final Hero hero, final PartySlot slot) {
         heroParty[slot.index] = hero;
-    }
-
-    public void changeWorld(final World world) {
-        if (this.world != null) {
-            this.world.unloadWorld();
-        }
-
-        world.loadWorld();
-
-        this.world = world;
     }
 }

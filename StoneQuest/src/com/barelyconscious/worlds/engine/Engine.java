@@ -80,7 +80,7 @@ public final class Engine {
         this.gameInstance = gameInstance;
 
         gameInstance.setCamera(screen.getCamera());
-        gameInstance.changeWorld(world);
+        gameInstance.setWorld(world);
         gameInstance.setPlayerController(playerController);
         readyToStart = true;
     }
@@ -172,15 +172,22 @@ public final class Engine {
         screen.render(renderContext);
     }
 
+    private List<Actor> getAllChildren(List<Actor> allActors) {
+        List<Actor> result = new ArrayList<>();
+        // get children of all actors
+        for (var actor : allActors) {
+            result.addAll(actor.getChildren());
+            result.addAll(getAllChildren(actor.getChildren().stream().toList()));
+        }
+        return result;
+    }
+
     public void tick(final EventArgs eventArgs) {
         gameClockMillis += eventArgs.getDeltaTime() * 1000;
         final List<Component> componentsToUpdate = new ArrayList<>();
         final List<Actor> actorsToRemove = new ArrayList<>();
 
-        final List<Actor> allActors = world.getActors();
-        for (var actor : world.getActors()) {
-            allActors.addAll(actor.getChildren());
-        }
+        final List<Actor> allActors = getAllChildren(world.getActors());
 
         for (final Actor actor : allActors) {
             if (actor.isDestroying()) {

@@ -2,12 +2,18 @@ package com.barelyconscious.worlds.game;
 
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.entity.Actor;
+import com.barelyconscious.worlds.entity.Settlement;
+import com.barelyconscious.worlds.entity.Territory;
 import lombok.Getter;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class World {
+
+    private Settlement playerSettlement;
+    private List<Settlement> settlements;
+    private List<Territory> territories;
 
     private final Map<String, Actor> actorsById = new HashMap<>();
 
@@ -48,12 +54,6 @@ public final class World {
 
     public synchronized List<Actor> getActors() {
         return actors;
-    }
-
-    public void loadWorld() {
-    }
-
-    public void unloadWorld() {
     }
 
     public Actor getActorAt(final Vector worldPos) {

@@ -10,7 +10,7 @@ import java.util.List;
  * A crafting building which can be used to create items. Crafters
  * offer a selection of recipes that can be used to create items.
  */
-public class CrafterBuilding extends Building {
+public class CrafterBuilding extends BuildingActor {
 
     /**
      * The recipes provided by this crafter

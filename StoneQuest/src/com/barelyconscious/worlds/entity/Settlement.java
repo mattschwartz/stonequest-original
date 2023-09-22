@@ -22,7 +22,7 @@ public class Settlement extends Actor {
     /**
      * All the buildings within this settlement
      */
-    private final List<Building> buildings;
+    private final List<BuildingActor> buildings;
     /**
      * The territories owned by this settlement
      */
