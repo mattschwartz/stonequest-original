@@ -55,7 +55,7 @@ public class TerritoryGeneration {
         return result;
     }
 
-    private void spawnDeposits(Actor result, Territory territory, Actor[][] worldSpace) {
+    private void spawnDeposits(WildernessLevel wilderness, Territory territory, Actor[][] worldSpace) {
         for (var resource : territory.getAvailableResources()) {
             int numDeposits = (int) (NUM_DEPOSITS * resource.richness);
             for (int i = 0; i < numDeposits; ++i) {
@@ -72,12 +72,12 @@ public class TerritoryGeneration {
                     transform.multiply(32),
                     Lists.newArrayList());
                 worldSpace[(int) transform.x][(int) transform.y] = deposit;
-                result.addChild(deposit);
+                wilderness.addDeposit(deposit);
             }
         }
     }
 
-    private void spawnBuildings(Actor result, Territory territory, Actor[][] worldSpace) {
+    private void spawnBuildings(WildernessLevel wilderness, Territory territory, Actor[][] worldSpace) {
         List<BuildingActor> buildingsWithinTerritory = GameInstance.instance().getSystem(ChancellorSystem.class)
             .getBuildingsWithinTerritory(territory);
 
@@ -96,11 +96,11 @@ public class TerritoryGeneration {
             // add appropriate sprite to the building actor
 
             worldSpace[(int) transform.x][(int) transform.y] = building;
-            result.addChild(buildingActor);
+            wilderness.addBuilding(buildingActor);
         }
     }
 
-    private void spawnEnemies(Actor container, Territory territory, Actor[][] worldSpace) {
+    private void spawnEnemies(WildernessLevel wilderness, Territory territory, Actor[][] worldSpace) {
         int numEnemies = (int) (NUM_ENEMY_PACKS * territory.getHostility());
 
         for (int i = 0; i < numEnemies; ++i) {
@@ -123,7 +123,7 @@ public class TerritoryGeneration {
                 transform.multiply(32), // to calculate world position
                 territory.getTerritoryLevel() + (isBoss ? 5 : isElite ? 2 : 0),
                 0, -1, -1, -1);
-            container.addChild(enemy);
+            wilderness.addEntity(enemy);
             worldSpace[(int) transform.x][(int) transform.y] = enemy;
         }
     }

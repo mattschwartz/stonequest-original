@@ -2,10 +2,7 @@ package com.barelyconscious.worlds.game;
 
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.engine.EventArgs;
-import com.barelyconscious.worlds.entity.Actor;
-import com.barelyconscious.worlds.entity.BuildingActor;
-import com.barelyconscious.worlds.entity.Settlement;
-import com.barelyconscious.worlds.entity.Territory;
+import com.barelyconscious.worlds.entity.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +10,12 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class World {
+
+    /**
+     * The currently loaded wilderness level/scene/area.
+     */
+    @Getter
+    private WildernessLevel wildernessLevel;
 
     @Getter
     @Setter
@@ -38,6 +41,10 @@ public final class World {
      * Signifies the relationship between every territory and the settlement that owns it.
      */
     public final Map<Territory, Settlement> territoryToSettlement = new HashMap<>();
+
+    public void setWildernessLevel(WildernessLevel wildernessLevel) {
+        this.wildernessLevel = wildernessLevel;
+    }
 
     /**
      * todo - for the CLI

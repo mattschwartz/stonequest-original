@@ -21,7 +21,7 @@ public class TerritoryCommand extends Command {
             boolean userAccepted = InputDialog.question("What would you do?")
                 .answer("Overview", () -> overview(scn, args))
                 .answer("Details", () -> details(scn, args))
-                .answer("Spawn", () -> spawn(scn, args))
+                .answer("Load", () -> load(scn, args))
                 .answer("Look", () -> look(scn, args))
                 .ask(scn, true);
 
@@ -32,12 +32,9 @@ public class TerritoryCommand extends Command {
     }
 
     /**
-     * Spawn a territory as if we were loading it into the game world.
-     * @param scn
-     * @param args
-     * @return
+     * Load a territory as if we were loading it into the game world.
      */
-    private Void spawn(Scanner scn, CommandLineArgs args) {
+    private Void load(Scanner scn, CommandLineArgs args) {
         Territory selectATerritoryToSpawn = InputDialog.pollObjects("Select a territory to spawn", GameInstance.instance()
                 .getSystem(ChancellorSystem.class)
                 .getTerritoriesOwnedByVillage(GameInstance.instance().getPlayerVillage()))
@@ -45,7 +42,7 @@ public class TerritoryCommand extends Command {
             .prompt(scn, true);
 
         var tg = new TerritoryGeneration();
-        var territoryContainer = tg.generateTerritory(selectATerritoryToSpawn);
+        var wilderness = tg.generateTerritory(selectATerritoryToSpawn);
 
         var map = new String[TerritoryGeneration.NUM_TILES_ROWS][TerritoryGeneration.NUM_TILES_COLS];
         // fill map with .'s
@@ -54,7 +51,7 @@ public class TerritoryCommand extends Command {
                 map[x][y] = "◼️";
             }
         }
-        for (var child : territoryContainer.getChildren()) {
+        for (var child : wilderness.getChildren()) {
             int x = (int) (child.getTransform().x / 32);
             int y = (int) (child.getTransform().y / 32);
             if (child instanceof EntityActor) {
@@ -72,6 +69,9 @@ public class TerritoryCommand extends Command {
             }
             System.out.println();
         }
+
+        GameInstance.instance().getWorld()
+            .setWildernessLevel(wilderness);
 
         return null;
     }
@@ -116,13 +116,16 @@ public class TerritoryCommand extends Command {
     }
 
     private Void look(Scanner scn, CommandLineArgs args) {
-        Territory selectATerritory = InputDialog.pollObjects("Where would you look?", GameInstance.instance()
-                .getSystem(ChancellorSystem.class)
-                .getTerritoriesOwnedByVillage(GameInstance.instance().getPlayerVillage()))
-            .withFormatter((territory) -> territory.name)
-            .prompt(scn, true);
+        WildernessLevel wild = GameInstance.instance().getWorld().getWildernessLevel();
 
-//        System.out.printf("This territory has %d enemies", selectATerritory.getEnemies().size());
+        if (wild == null) {
+            System.out.println("You are not in the wilderness");
+            return null;
+        }
+
+        System.out.printf("This territory has %d enemies%n", wild.getEntities().size());
+        System.out.printf("This territory has %d buildings%n", wild.getBuildings().size());
+        System.out.printf("This territory has %d deposits%n", wild.getDeposits().size());
 
         return null;
     }

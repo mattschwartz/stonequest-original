@@ -1,5 +1,7 @@
 package com.barelyconscious.worlds.entity;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,5 +13,27 @@ import java.util.List;
  */
 public class WildernessLevel extends Actor {
 
-    private List<EntityActor> entities = new ArrayList<>();
+    @Getter
+    private final List<EntityActor> entities = new ArrayList<>();
+
+    @Getter
+    private final List<ResourceDeposit> deposits = new ArrayList<>();
+
+    @Getter
+    private final List<BuildingActor> buildings = new ArrayList<>();
+
+    public void addEntity(EntityActor entity) {
+        this.entities.add(entity);
+        addChild(entity);
+    }
+
+    public void addDeposit(ResourceDeposit deposit) {
+        this.deposits.add(deposit);
+        addChild(deposit);
+    }
+
+    public void addBuilding(BuildingActor building) {
+        this.buildings.add(building);
+        addChild(building);
+    }
 }
