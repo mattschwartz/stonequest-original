@@ -173,7 +173,7 @@ public final class Engine {
     }
 
     private List<Actor> getAllChildren(List<Actor> allActors) {
-        List<Actor> result = new ArrayList<>();
+        List<Actor> result = new ArrayList<>(allActors);
         // get children of all actors
         for (var actor : allActors) {
             result.addAll(actor.getChildren());
