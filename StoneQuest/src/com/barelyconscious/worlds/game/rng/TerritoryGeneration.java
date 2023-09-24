@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class TerritoryGeneration {
 
-    static final Random RNG = new Random(1234567890L);
+    static final Random RNG = new Random();
 
     /**
      * properties that qualify this territory and are used
@@ -37,7 +37,7 @@ public class TerritoryGeneration {
     public WildernessLevel generateTerritory(Territory territory) {
         WildernessLevel result = new WildernessLevel(); // empty container actor
 
-        Actor[][] worldSpace = new Actor[NUM_TILES_ROWS][NUM_TILES_COLS];
+        Actor[][] worldSpace = createWorldSpace(result, territory);
 
         // determine tileset based on biome
         // based on climate and biome, determine weather
@@ -55,6 +55,132 @@ public class TerritoryGeneration {
         return result;
     }
 
+    /**
+     * returns the worldspace
+     */
+    private Actor[][] createWorldSpace(WildernessLevel wilderness, Territory territory) {
+        var result = new Actor[NUM_TILES_ROWS][NUM_TILES_COLS];
+
+        // random walker to create roads
+        result = createRoads(result);
+
+        // add every actor in result to the wilderness as children
+        for (var row : result) {
+            for (var actor : row) {
+                if (actor != null) {
+                    wilderness.addChild(actor);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private Actor[][] createRoads(Actor[][] result) {
+        int maxNumSkips = 8;
+        int skips = maxNumSkips;
+
+        // randomly draw a path east to west
+        int x = 0;
+        int y = RNG.nextInt(NUM_TILES_COLS);
+        do {
+            result[x][y] = new Actor("🔷", new Vector(x * 32, y * 32));
+            x += RNG.nextInt(3) - 1;
+            y += RNG.nextInt(3) - 1;
+        } while (x >= 0 && x < NUM_TILES_ROWS && y >= 0 && y < NUM_TILES_COLS);
+
+
+        // randomly create 4 medium patches of grass
+        for (int i = 0; i < 4; ++i) {
+            int patchX;
+            int patchY;
+            do {
+                patchX = RNG.nextInt(NUM_TILES_ROWS);
+                patchY = RNG.nextInt(NUM_TILES_COLS);
+            } while (result[patchX][patchY] != null && skips-- > 0);
+
+            skips = maxNumSkips;
+            for (int j = 0; j < 10; ++j) {
+                int patchSize = RNG.nextInt(3) + 1;
+                for (int k = 0; k < patchSize; ++k) {
+                    for (int l = 0; l < patchSize; ++l) {
+                        if (patchX + k >= 0 && patchX + k < NUM_TILES_ROWS && patchY + l >= 0 && patchY + l < NUM_TILES_COLS) {
+                            result[patchX + k][patchY + l] = new Actor("🟩", new Vector((patchX + k) * 32, (patchY + l) * 32));
+                        }
+                    }
+                }
+            }
+        }
+
+        // randomly create 4 small patches of grass
+        for (int i = 0; i < 12; ++i) {
+            int patchX;
+            int patchY;
+            do {
+                patchX = RNG.nextInt(NUM_TILES_ROWS);
+                patchY = RNG.nextInt(NUM_TILES_COLS);
+            } while (result[patchX][patchY] != null && skips-- > 0);
+
+            skips = maxNumSkips;
+            for (int j = 0; j < 10; ++j) {
+                int patchSize = RNG.nextInt(2) + 1;
+                for (int k = 0; k < patchSize; ++k) {
+                    for (int l = 0; l < patchSize; ++l) {
+                        if (patchX + k >= 0 && patchX + k < NUM_TILES_ROWS && patchY + l >= 0 && patchY + l < NUM_TILES_COLS) {
+                            result[patchX + k][patchY + l] = new Actor("🟩", new Vector((patchX + k) * 32, (patchY + l) * 32));
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < 16; ++i) {
+            int patchX;
+            int patchY;
+            do {
+                patchX = RNG.nextInt(NUM_TILES_ROWS);
+                patchY = RNG.nextInt(NUM_TILES_COLS);
+            } while (result[patchX][patchY] != null && skips-- > 0);
+
+            skips = maxNumSkips;
+
+            for (int j = 0; j < 10; ++j) {
+                int patchSize = RNG.nextInt(2) + 1;
+                for (int k = 0; k < patchSize; ++k) {
+                    for (int l = 0; l < patchSize; ++l) {
+                        if (patchX + k >= 0 && patchX + k < NUM_TILES_ROWS && patchY + l >= 0 && patchY + l < NUM_TILES_COLS) {
+                            result[patchX + k][patchY + l] = new Actor("🟩", new Vector((patchX + k) * 32, (patchY + l) * 32));
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < 16; ++i) {
+            int patchX;
+            int patchY;
+            do {
+                patchX = RNG.nextInt(NUM_TILES_ROWS);
+                patchY = RNG.nextInt(NUM_TILES_COLS);
+            } while (result[patchX][patchY] != null && skips-- > 0);
+
+            skips = maxNumSkips;
+
+            for (int j = 0; j < 10; ++j) {
+                int patchSize = RNG.nextInt(2) + 1;
+                for (int k = 0; k < patchSize; ++k) {
+                    for (int l = 0; l < patchSize; ++l) {
+                        if (patchX + k >= 0 && patchX + k < NUM_TILES_ROWS && patchY + l >= 0 && patchY + l < NUM_TILES_COLS) {
+                            result[patchX + k][patchY + l] = new Actor("🟫", new Vector((patchX + k) * 32, (patchY + l) * 32));
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
     private void spawnDeposits(WildernessLevel wilderness, Territory territory, Actor[][] worldSpace) {
         for (var resource : territory.getAvailableResources()) {
             int numDeposits = (int) (NUM_DEPOSITS * resource.richness);
@@ -68,7 +194,7 @@ public class TerritoryGeneration {
                 } while (worldSpace[(int) transform.x][(int) transform.y] != null);
 
                 var deposit = new ResourceDeposit(
-                    "Deposit",
+                    resource.item.getName() + " Deposit",
                     transform.multiply(32),
                     Lists.newArrayList());
                 worldSpace[(int) transform.x][(int) transform.y] = deposit;

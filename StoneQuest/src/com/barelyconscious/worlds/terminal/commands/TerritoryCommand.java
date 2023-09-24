@@ -17,6 +17,11 @@ public class TerritoryCommand extends Command {
         System.out.println("|  TERRITORY MENU  |");
         System.out.println("+------------------+");
 
+        if ("load".equalsIgnoreCase(args.parameters.get(0))) {
+            load(scn, args);
+            return CommandLineResults.TICK;
+        }
+
         while (true) {
             boolean userAccepted = InputDialog.question("What would you do?")
                 .answer("Overview", () -> overview(scn, args))
@@ -35,11 +40,22 @@ public class TerritoryCommand extends Command {
      * Load a territory as if we were loading it into the game world.
      */
     private Void load(Scanner scn, CommandLineArgs args) {
-        Territory selectATerritoryToSpawn = InputDialog.pollObjects("Select a territory to spawn", GameInstance.instance()
-                .getSystem(ChancellorSystem.class)
-                .getTerritoriesOwnedByVillage(GameInstance.instance().getWorld().getPlayerSettlement()))
-            .withFormatter((territory) -> territory.name)
-            .prompt(scn, true);
+
+        final Territory selectATerritoryToSpawn;
+        // check if args contains a territory index
+        if (args.parameters.size() > 1) {
+            int territoryIndex = Integer.parseInt(args.parameters.get(1));
+            selectATerritoryToSpawn = GameInstance.instance().getSystem(ChancellorSystem.class)
+                .getTerritoriesOwnedByVillage(GameInstance.instance().getWorld().getPlayerSettlement())
+                .get(territoryIndex);
+        } else {
+            selectATerritoryToSpawn = InputDialog.pollObjects("Select a territory to spawn", GameInstance.instance()
+                    .getSystem(ChancellorSystem.class)
+                    .getTerritoriesOwnedByVillage(GameInstance.instance().getWorld().getPlayerSettlement()))
+                .withFormatter((territory) -> territory.name)
+                .prompt(scn, true);
+        }
+
 
         var tg = new TerritoryGeneration();
         var wilderness = tg.generateTerritory(selectATerritoryToSpawn);
@@ -60,6 +76,8 @@ public class TerritoryCommand extends Command {
                 map[x][y] = "🏠";
             } else if (child instanceof ResourceDeposit) {
                 map[x][y] = "🌱";
+            } else {
+                map[x][y] = child.name;
             }
         }
 
