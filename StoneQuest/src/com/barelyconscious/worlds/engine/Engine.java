@@ -145,7 +145,7 @@ public final class Engine {
             next += 250;
         }
 
-        for (final Actor actor : world.getActors()) {
+        for (final Actor actor : getAllChildren(world.getActors())) {
             if (!actor.isEnabled() || actor.isDestroying()) {
                 continue;
             }
@@ -211,7 +211,7 @@ public final class Engine {
             componentsToRemove.forEach(actor::removeComponent);
         }
 
-        physics.updatePhysics(eventArgs, world.getActors());
+        physics.updatePhysics(eventArgs, allActors);
         // Run jobs submitted from last tick
         runJobs(eventArgs);
         update(eventArgs, componentsToUpdate);
