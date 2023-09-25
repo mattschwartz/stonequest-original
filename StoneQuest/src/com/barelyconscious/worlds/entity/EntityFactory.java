@@ -41,6 +41,10 @@ public class EntityFactory {
             return this;
         }
 
+        public EntityActorBuilder withCreatureLevel(int entityLevel) {
+            return this.withCreatureLevel(entityLevel, 0, 0);
+        }
+
         public EntityActorBuilder withCreatureLevel(int entityLevel, double currentExperience, int difficultyClass) {
             this.entityLevel = entityLevel;
             this.currentExperience = currentExperience;

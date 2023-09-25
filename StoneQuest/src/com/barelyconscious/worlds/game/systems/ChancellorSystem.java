@@ -89,6 +89,8 @@ public class ChancellorSystem implements GameSystem {
             List<Territory> settlementTerritories = Lists.newArrayList(territory);
             world.settlementToTerritories.put(settlement, settlementTerritories);
         }
+
+        territory.setOwningSettlement(settlement);
     }
 
     /**

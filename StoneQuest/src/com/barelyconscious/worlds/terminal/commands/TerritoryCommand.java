@@ -17,9 +17,20 @@ public class TerritoryCommand extends Command {
         System.out.println("|  TERRITORY MENU  |");
         System.out.println("+------------------+");
 
-        if ("load".equalsIgnoreCase(args.parameters.get(0))) {
-            load(scn, args);
-            return CommandLineResults.TICK;
+        if (!args.parameters.isEmpty()) {
+            if ("load".equalsIgnoreCase(args.parameters.get(0))) {
+                load(scn, args);
+                return CommandLineResults.TICK;
+            } else if ("look".equalsIgnoreCase(args.parameters.get(0))) {
+                look(scn, args);
+                return CommandLineResults.TICK;
+            } else if ("details".equalsIgnoreCase(args.parameters.get(0))) {
+                details(scn, args);
+                return CommandLineResults.TICK;
+            } else if ("overview".equalsIgnoreCase(args.parameters.get(0))) {
+                overview(scn, args);
+                return CommandLineResults.TICK;
+            }
         }
 
         while (true) {

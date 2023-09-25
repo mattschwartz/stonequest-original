@@ -9,6 +9,7 @@ import com.barelyconscious.worlds.engine.input.MouseInputHandler;
 import com.barelyconscious.worlds.game.item.GameItems;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.game.rng.TerritoryGeneration;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
@@ -62,35 +63,13 @@ public class TestMapGenerator {
         put(7, new BetterSpriteResource("texture::farm"));
     }};
 
+    static Territory territory1;
+
     private static void createTiles(final World world) {
         createTerritories(world);
         // load the first territory into the world
 
-        WildernessLevel wild = new WildernessLevel();
-
-        int tileWidth = 16;
-        int tileHeight = 16;
-
-        for (int x = 0; x < tileWidth; ++x) {
-            for (int y = 0; y < tileHeight; ++y) {
-                int key = map[
-                    x + y * tileWidth
-                    ];
-                final BetterSpriteResource rSprite = KEY_SPRITE.get(key);
-
-                int width = 64;
-                int height = 64;
-
-                final Tile tile = new Tile(0, "Grass", key == 3, false);
-                final Vector transform = new Vector(x * width, y * height);
-                final TileActor aTile = new TileActor(transform, tile, rSprite,
-                    width, height, MouseInputHandler.instance());
-
-                aTile.setOpacity(TileActor.OpacityPresets.VISIBLE);
-
-                wild.addChild(aTile);
-            }
-        }
+        WildernessLevel wild = new TerritoryGeneration().generateTerritory(territory1);
 
         world.setWildernessLevel(wild);
     }
@@ -99,7 +78,7 @@ public class TestMapGenerator {
         GameInstance gi = GameInstance.instance();
         ChancellorSystem cs = gi.getSystem(ChancellorSystem.class);
 
-        Territory territory1 = new Territory(
+        territory1 = new Territory(
             "Territory(0,0)",
             Vector.ZERO,
             1,
@@ -113,7 +92,7 @@ public class TestMapGenerator {
                     0.85)));
         Territory territory2 = new Territory(
             "Territory(0,1)",
-            Vector.ZERO,
+            new Vector(0, 1),
             2,
             Biome.FOREST,
             Climate.TEMPERATE,

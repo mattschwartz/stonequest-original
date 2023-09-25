@@ -26,6 +26,7 @@ public class Actor {
     private final Set<Actor> children = new HashSet<>();
 
     public final String id;
+    @Getter
     public final String name;
 
     private final Map<Class<? extends Component>, List<Component>> componentsByType;

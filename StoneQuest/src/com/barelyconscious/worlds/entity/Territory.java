@@ -6,6 +6,7 @@ import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
 import com.barelyconscious.worlds.game.types.TerritoryResource;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,10 @@ public class Territory extends Actor {
     private final double corruption;
 
     @Getter
+    @Setter
+    private Settlement owningSettlement;
+
+    @Getter
     private final List<BuildingActor> buildings = new ArrayList<>();
 
     /**
@@ -30,14 +35,14 @@ public class Territory extends Actor {
      * <p>
      * when a building is placed on a resource, it is consumed and removed
      * from the availableResources
-     *
+     * <p>
      * remove a resource when a harvester building is placed on it
      */
     private final List<TerritoryResource> availableResources;
 
     public Territory(
         String name,
-        Vector transform,
+        Vector worldPosition, // like the overworld position
         int territoryLevel,
         Biome biome,
         Climate climate,
@@ -45,7 +50,7 @@ public class Territory extends Actor {
         double corruption,
         List<TerritoryResource> availableResources
     ) {
-        super(name, transform);
+        super(name, worldPosition);
         this.territoryLevel = territoryLevel;
         this.biome = biome;
         this.climate = climate;

@@ -1,13 +1,24 @@
 package com.barelyconscious.worlds.game.rng;
 
+import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.engine.input.MouseInputHandler;
 import com.barelyconscious.worlds.entity.*;
+import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.game.GameInstance;
+import com.barelyconscious.worlds.game.StatName;
+import com.barelyconscious.worlds.game.TraitName;
+import com.barelyconscious.worlds.game.item.GameItems;
+import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
+import com.barelyconscious.worlds.game.resources.ResourceSprite;
+import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class TerritoryGeneration {
@@ -31,11 +42,11 @@ public class TerritoryGeneration {
     public static final int NUM_RIPS = 10; // at 100% corruption
     public static final int NUM_DEPOSITS = 8; // at 100% resource availability
 
-    public static final int NUM_TILES_ROWS = 16; // 1,024 height
-    public static final int NUM_TILES_COLS = 24; // 1536 width
+    public static final int NUM_TILES_ROWS = 48; // 1,024 height
+    public static final int NUM_TILES_COLS = 32; // 1536 width
 
     public WildernessLevel generateTerritory(Territory territory) {
-        WildernessLevel result = new WildernessLevel(); // empty container actor
+        WildernessLevel result = new WildernessLevel(territory);
 
         Actor[][] worldSpace = createWorldSpace(result, territory);
 
@@ -81,17 +92,23 @@ public class TerritoryGeneration {
         int skips = maxNumSkips;
 
         // randomly draw a path east to west
-        int x = 0;
+        int x = RNG.nextInt(NUM_TILES_ROWS);
         int y = RNG.nextInt(NUM_TILES_COLS);
         do {
-            result[x][y] = new Actor("🔷", new Vector(x * 32, y * 32));
+            var tile = new Tile(0, "🔷", true, false);
+            var transform = new Vector(x * 32, y * 32);
+
+            result[x][y] = new TileActor(
+                transform,
+                tile,
+                new BetterSpriteResource("texture::water"),
+                32, 32, MouseInputHandler.instance());
             x += RNG.nextInt(3) - 1;
             y += RNG.nextInt(3) - 1;
         } while (x >= 0 && x < NUM_TILES_ROWS && y >= 0 && y < NUM_TILES_COLS);
 
-
         // randomly create 4 medium patches of grass
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 24; ++i) {
             int patchX;
             int patchY;
             do {
@@ -105,7 +122,14 @@ public class TerritoryGeneration {
                 for (int k = 0; k < patchSize; ++k) {
                     for (int l = 0; l < patchSize; ++l) {
                         if (patchX + k >= 0 && patchX + k < NUM_TILES_ROWS && patchY + l >= 0 && patchY + l < NUM_TILES_COLS) {
-                            result[patchX + k][patchY + l] = new Actor("🟩", new Vector((patchX + k) * 32, (patchY + l) * 32));
+                            var tile = new Tile(0, "🟩", false, false);
+                            var transform = new Vector((patchX + k) * 32, (patchY + l) * 32);
+
+                            result[patchX + k][patchY + l] = new TileActor(
+                                transform,
+                                tile,
+                                new BetterSpriteResource("texture::grass"),
+                                32, 32, MouseInputHandler.instance());
                         }
                     }
                 }
@@ -113,7 +137,7 @@ public class TerritoryGeneration {
         }
 
         // randomly create 4 small patches of grass
-        for (int i = 0; i < 12; ++i) {
+        for (int i = 0; i < 24; ++i) {
             int patchX;
             int patchY;
             do {
@@ -127,14 +151,21 @@ public class TerritoryGeneration {
                 for (int k = 0; k < patchSize; ++k) {
                     for (int l = 0; l < patchSize; ++l) {
                         if (patchX + k >= 0 && patchX + k < NUM_TILES_ROWS && patchY + l >= 0 && patchY + l < NUM_TILES_COLS) {
-                            result[patchX + k][patchY + l] = new Actor("🟩", new Vector((patchX + k) * 32, (patchY + l) * 32));
+                            var tile = new Tile(0, "🟩", false, false);
+                            var transform = new Vector((patchX + k) * 32, (patchY + l) * 32);
+
+                            result[patchX + k][patchY + l] = new TileActor(
+                                transform,
+                                tile,
+                                new BetterSpriteResource("texture::falldirt"),
+                                32, 32, MouseInputHandler.instance());
                         }
                     }
                 }
             }
         }
 
-        for (int i = 0; i < 16; ++i) {
+        for (int i = 0; i < 24; ++i) {
             int patchX;
             int patchY;
             do {
@@ -149,14 +180,21 @@ public class TerritoryGeneration {
                 for (int k = 0; k < patchSize; ++k) {
                     for (int l = 0; l < patchSize; ++l) {
                         if (patchX + k >= 0 && patchX + k < NUM_TILES_ROWS && patchY + l >= 0 && patchY + l < NUM_TILES_COLS) {
-                            result[patchX + k][patchY + l] = new Actor("🟩", new Vector((patchX + k) * 32, (patchY + l) * 32));
+                            var tile = new Tile(0, "🟩", false, false);
+                            var transform = new Vector((patchX + k) * 32, (patchY + l) * 32);
+
+                            result[patchX + k][patchY + l] = new TileActor(
+                                transform,
+                                tile,
+                                new BetterSpriteResource("texture::fallgrass"),
+                                32, 32, MouseInputHandler.instance());
                         }
                     }
                 }
             }
         }
 
-        for (int i = 0; i < 16; ++i) {
+        for (int i = 0; i < 24; ++i) {
             int patchX;
             int patchY;
             do {
@@ -171,10 +209,53 @@ public class TerritoryGeneration {
                 for (int k = 0; k < patchSize; ++k) {
                     for (int l = 0; l < patchSize; ++l) {
                         if (patchX + k >= 0 && patchX + k < NUM_TILES_ROWS && patchY + l >= 0 && patchY + l < NUM_TILES_COLS) {
-                            result[patchX + k][patchY + l] = new Actor("🟫", new Vector((patchX + k) * 32, (patchY + l) * 32));
+                            var tile = new Tile(0, "🟩", false, false);
+                            var transform = new Vector((patchX + k) * 32, (patchY + l) * 32);
+
+                            result[patchX + k][patchY + l] = new TileActor(
+                                transform,
+                                tile,
+                                new BetterSpriteResource("texture::forest"),
+                                32, 32, MouseInputHandler.instance());
                         }
                     }
                 }
+            }
+        }
+
+        // randomly generate a lake
+        int lakeX = RNG.nextInt(NUM_TILES_ROWS);
+        int lakeY = RNG.nextInt(NUM_TILES_COLS);
+        int lakeSize = RNG.nextInt(3) + 1;
+        for (int i = 0; i < lakeSize; ++i) {
+            for (int j = 0; j < lakeSize; ++j) {
+                if (lakeX + i >= 0 && lakeX + i < NUM_TILES_ROWS && lakeY + j >= 0 && lakeY + j < NUM_TILES_COLS) {
+                    var tile = new Tile(0, "🟦", false, false);
+                    var transform = new Vector((lakeX + i) * 32, (lakeY + j) * 32);
+
+                    result[lakeX + i][lakeY + j] = new TileActor(
+                        transform,
+                        tile,
+                        new BetterSpriteResource("texture::water"),
+                        32, 32, MouseInputHandler.instance());
+                }
+            }
+        }
+
+        // fill the rest of the world with grass
+        for (x = 0; x < NUM_TILES_ROWS; ++x) {
+            for (y = 0; y < NUM_TILES_COLS; ++y) {
+                if (result[x][y] != null) {
+                    continue;
+                }
+                var tile = new Tile(0, "🟤", false, false);
+                var transform = new Vector(x * 32, y * 32);
+
+                result[x][y] = new TileActor(
+                    transform,
+                    tile,
+                    new BetterSpriteResource("texture::dirt"),
+                    32, 32, MouseInputHandler.instance());
             }
         }
 
@@ -215,7 +296,8 @@ public class TerritoryGeneration {
                 transform = new Vector(
                     RNG.nextInt(NUM_TILES_ROWS),
                     RNG.nextInt(NUM_TILES_COLS));
-            } while (worldSpace[(int) transform.x][(int) transform.y] != null);
+            } while (worldSpace[(int) transform.x][(int) transform.y] != null
+                && !(worldSpace[(int) transform.x][(int) transform.y] instanceof TileActor));
 
             var buildingActor = new BuildingActor(building.name, transform.multiply(32));
 
@@ -239,16 +321,27 @@ public class TerritoryGeneration {
                 transform = new Vector(
                     RNG.nextInt(NUM_TILES_ROWS),
                     RNG.nextInt(NUM_TILES_COLS));
-            } while (worldSpace[(int) transform.x][(int) transform.y] != null);
+            } while (worldSpace[(int) transform.x][(int) transform.y] != null
+                && !(worldSpace[(int) transform.x][(int) transform.y] instanceof TileActor));
 
             boolean isElite = RNG.nextDouble() < 0.25;
             boolean isBoss = RNG.nextDouble() < 0.05;
 
-            var enemy = new EntityActor(
-                name,
-                transform.multiply(32), // to calculate world position
-                territory.getTerritoryLevel() + (isBoss ? 5 : isElite ? 2 : 0),
-                0, -1, -1, -1);
+            var enemy = EntityFactory.anEntity()
+                .called(name)
+                .locatedAt(transform.multiply(32))
+                .withCreatureLevel(territory.getTerritoryLevel() + (isBoss ? 5 : isElite ? 2 : 0))
+                .withTrait(TraitName.CONSTITUTION, 10f)
+                .withStat(StatName.ARMOR, (isBoss ? 5f : isElite ? 2f : 0f))
+                .build();
+
+            enemy.addComponent(new BoxColliderComponent(enemy, true, true, new Box(0, 32, 0, 32)));
+            enemy.addComponent(new SpriteComponent(enemy, Resources.getSprite(ResourceSprite.SEWER_RAT)));
+            enemy.addComponent(new HealthBarComponent(enemy, enemy.getHealthComponent()));
+            enemy.addComponent(new DestroyOnDeathComponent(enemy, 0));
+
+            enemy.addComponent(new DropOnDeathComponent(enemy, GameItems.WILLOW_BARK.toItem()));
+
             wilderness.addEntity(enemy);
             worldSpace[(int) transform.x][(int) transform.y] = enemy;
         }

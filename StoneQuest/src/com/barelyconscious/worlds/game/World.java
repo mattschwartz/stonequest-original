@@ -5,11 +5,17 @@ import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@Log4j2
 public final class World {
+
+    @Getter
+    private boolean isLevelLoading = false;
+    private WildernessLevel loadingLevel;
 
     /**
      * The currently loaded wilderness level/scene/area.
@@ -43,18 +49,13 @@ public final class World {
     public final Map<Territory, Settlement> territoryToSettlement = new HashMap<>();
 
     public void setWildernessLevel(WildernessLevel wildernessLevel) {
-        if (this.wildernessLevel != null) {
-            // remove wilderness children actors from world
-            for (final Actor actor : this.wildernessLevel.getChildren()) {
-                removeActor(actor);
-            }
+        if (isLevelLoading) {
+            log.error("Cannot set wilderness level while another level is loading.");
+            return;
         }
 
-        this.wildernessLevel = wildernessLevel;
-        // add winderness children actors to world
-        for (final Actor actor : wildernessLevel.getChildren()) {
-            addActor(actor);
-        }
+        isLevelLoading = true;
+        this.loadingLevel = wildernessLevel;
     }
 
     /**
@@ -121,7 +122,32 @@ public final class World {
      * Updates the world, which includes territories and settlements.
      */
     public void update(EventArgs args) {
+        readyLoadWorld();
         territories.forEach(territory -> territory.update(args));
         settlements.forEach(settlement -> settlement.update(args));
+    }
+
+    public void readyLoadWorld() {
+        if (!isLevelLoading) {
+            return;
+        }
+
+        log.info("Loading level: " + loadingLevel.getName());
+
+        if (this.wildernessLevel != null) {
+            // remove wilderness children actors from world
+            for (final Actor actor : this.wildernessLevel.getChildren()) {
+                removeActor(actor);
+            }
+        }
+
+        this.wildernessLevel = loadingLevel;
+        // add winderness children actors to world
+        for (final Actor actor : wildernessLevel.getChildren()) {
+            addActor(actor);
+        }
+
+        this.isLevelLoading = false;
+        log.info("Level loaded: " + wildernessLevel.getName());
     }
 }

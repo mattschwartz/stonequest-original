@@ -36,6 +36,7 @@ public class GameRunnerCLI {
 
     public static void main(String[] args) {
         setUpGame();
+        tick();
 
         System.out.println("\n+---------------------+");
         System.out.println("|  Worlds v1.0 - CLI  |");
@@ -51,8 +52,7 @@ public class GameRunnerCLI {
                     break;
                 case TerminalPlayerController.TICK:
                     System.out.println("The world is updating...");
-                    engine.tick(new EventArgs(1.5, Vector.ZERO, Vector.ZERO, new ArrayDeque<>(),
-                        playerController, world, gameState));
+                    tick();
                     break;
                 case TerminalPlayerController.EXIT:
                     System.exit(0);

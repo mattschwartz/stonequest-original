@@ -37,10 +37,6 @@ public class TileActor extends Actor implements Interactable {
         private final float opacity;
     }
 
-    public void setOpacity(final OpacityPresets opacityPresets) {
-        spriteComponent.setOpacity(opacityPresets.opacity);
-    }
-
     public TileActor(
         final Vector transform,
         @NonNull final Tile tile,

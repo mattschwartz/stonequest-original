@@ -16,10 +16,10 @@ import lombok.val;
 
 public class BulletAbility extends Ability {
 
-    private final double energyCost = 50;
+    private final double energyCost = 5;
 
     public BulletAbility() {
-        super("Bullet time", 1.5);
+        super("Bullet time", .5);
 
         setBehaviorWorkflow(new BehaviorWorkflow(
             new EntityHasStatBehavior(StatName.ENERGY, energyCost),
