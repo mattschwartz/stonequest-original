@@ -1,6 +1,8 @@
 package com.barelyconscious.worlds.gamedata;
 
+import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.*;
+import com.barelyconscious.worlds.entity.components.Component;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.input.MouseInputHandler;
@@ -62,11 +64,13 @@ public class TestMapGenerator {
 
     private static void createTiles(final World world) {
         createTerritories(world);
+        // load the first territory into the world
+
+        WildernessLevel wild = new WildernessLevel();
 
         int tileWidth = 16;
         int tileHeight = 16;
 
-        int i = 0;
         for (int x = 0; x < tileWidth; ++x) {
             for (int y = 0; y < tileHeight; ++y) {
                 int key = map[
@@ -84,9 +88,11 @@ public class TestMapGenerator {
 
                 aTile.setOpacity(TileActor.OpacityPresets.VISIBLE);
 
-                world.addActor(aTile);
+                wild.addChild(aTile);
             }
         }
+
+        world.setWildernessLevel(wild);
     }
 
     private static void createTerritories(World world) {

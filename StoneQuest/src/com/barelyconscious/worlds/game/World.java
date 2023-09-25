@@ -43,7 +43,18 @@ public final class World {
     public final Map<Territory, Settlement> territoryToSettlement = new HashMap<>();
 
     public void setWildernessLevel(WildernessLevel wildernessLevel) {
+        if (this.wildernessLevel != null) {
+            // remove wilderness children actors from world
+            for (final Actor actor : this.wildernessLevel.getChildren()) {
+                removeActor(actor);
+            }
+        }
+
         this.wildernessLevel = wildernessLevel;
+        // add winderness children actors to world
+        for (final Actor actor : wildernessLevel.getChildren()) {
+            addActor(actor);
+        }
     }
 
     /**
