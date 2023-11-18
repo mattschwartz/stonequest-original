@@ -7,7 +7,7 @@ import com.barelyconscious.worlds.entity.Wagon;
 import com.barelyconscious.worlds.entity.PlayerPersonalDevice;
 import com.barelyconscious.worlds.entity.components.AbilityComponent;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
-import com.barelyconscious.worlds.game.systems.CombatSystem;
+import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
 import com.barelyconscious.worlds.game.systems.GameSystem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

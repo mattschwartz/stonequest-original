@@ -1,4 +1,4 @@
-package com.barelyconscious.worlds.game.systems;
+package com.barelyconscious.worlds.game.systems.combat;
 
 import com.barelyconscious.worlds.common.UMath;
 import com.barelyconscious.worlds.entity.EntityActor;
@@ -8,15 +8,47 @@ import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.item.ItemProperty;
 import com.barelyconscious.worlds.game.item.tags.EquipmentItemTag;
+import com.barelyconscious.worlds.game.systems.GameSystem;
+import lombok.extern.log4j.Log4j2;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
  * Commands combat encounters between entities.
  */
-public class CombatSystem {
+@Log4j2
+public class CombatSystem implements GameSystem {
 
-    private static final Random RAND = new Random(6111991L);
+    private Map<Integer, ThreatTable> combatEncounters = new HashMap<>();
+
+    /**
+     * @param encounterId the id of the combat encounter
+     * @return the threat table for the given combat encounter
+     */
+    public ThreatTable getThreatTable(int encounterId) {
+        if (!combatEncounters.containsKey(encounterId)) {
+            throw new IllegalArgumentException("No combat encounter with id " + encounterId);
+        }
+
+        return combatEncounters.get(encounterId);
+    }
+
+    public int createCombatEncounter() {
+        int combatEncounterId =  UMath.RANDOM.nextInt();
+
+        combatEncounters.put(combatEncounterId, new ThreatTable());
+
+        return combatEncounterId;
+    }
+
+    public void endCombatEncounter(int encounterId) {
+        log.info("Ending combat encounter {}", encounterId);
+        combatEncounters.remove(encounterId);
+    }
+
+    // `resolveAttack` should be in the combat system, but the calculations should be somewhere else
 
     public double calculateWeaponDamage(EntityActor entity) {
         Item weapon = entity.getEquipment().getEquippedItem(EquipmentItemTag.EQUIPMENT_RIGHT_HAND);
@@ -47,13 +79,13 @@ public class CombatSystem {
             }
         }
 
-        return RAND.nextDouble() * (str + maxWeaponDamage) + minWeaponDamage + ap * 2.5;
+        return UMath.RANDOM.nextDouble() * (str + maxWeaponDamage) + minWeaponDamage + ap * 2.5;
     }
 
     public void meleeAttack(EntityActor attacker, EntityActor defender) {
         double precision = attacker.stat(StatName.PRECISION).get().getCurrentValue();
 
-        double random = RAND.nextDouble() * 100;
+        double random = UMath.RANDOM.nextDouble() * 100;
         if (random <= (15 - precision)) {
             System.out.println("Missed!");
             return;

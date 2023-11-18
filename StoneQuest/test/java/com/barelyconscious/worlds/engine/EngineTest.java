@@ -1,10 +1,12 @@
 package com.barelyconscious.worlds.engine;
 
+import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
 import com.barelyconscious.worlds.engine.graphics.Screen;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.World;
+import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.RateLimiter;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,6 +48,11 @@ public class EngineTest {
             mockClock,
             mockUpsLimiter,
             mockFpsLimiter);
+        classUnderTest.prestart(
+            mockGameInstance,
+            mockWorld,
+            mockScreen,
+            mock(PlayerController.class));
     }
 
     @Test
@@ -60,19 +67,22 @@ public class EngineTest {
 
     @Test
     void tick_withPhysicsComponent_shouldUpdatePhysics() {
-        Actor actor_withPhysicsComponent = mock(Actor.class);
-
+        Actor actor_withPhysicsComponent = new Actor();
         BoxColliderComponent mockPhysicsComponent = mock(BoxColliderComponent.class);
-        when(actor_withPhysicsComponent.isEnabled()).thenReturn(true);
-        when(actor_withPhysicsComponent.isDestroying()).thenReturn(false);
-        when(actor_withPhysicsComponent.getComponents()).thenReturn(
-            Lists.newArrayList(mockPhysicsComponent));
+
+        when(mockPhysicsComponent.isEnabled()).thenReturn(true);
+        when(mockPhysicsComponent.isRemoveOnNextUpdate()).thenReturn(false);
+        actor_withPhysicsComponent.addComponent(mockPhysicsComponent);
+
+        mockWorld.addActor(actor_withPhysicsComponent);
         when(mockWorld.getActors()).thenReturn(
             Lists.newArrayList(actor_withPhysicsComponent));
 
-        classUnderTest.tick(mock(EventArgs.class));
+        var eventArgs = mock(EventArgs.class);
+        when(eventArgs.getWorldContext()).thenReturn(mock(WorldUpdateContext.class));
+        classUnderTest.tick(eventArgs);
 
-        verify(mockPhysics).updatePhysics(any(EventArgs.class), eq(mockWorld.getActors()));
-        verify(mockPhysicsComponent).update(any());
+        verify(mockPhysics).updatePhysics(eventArgs, mockWorld.getActors());
+        verify(mockPhysicsComponent).update(eventArgs);
     }
 }

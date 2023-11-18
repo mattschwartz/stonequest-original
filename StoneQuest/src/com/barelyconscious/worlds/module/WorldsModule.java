@@ -11,6 +11,7 @@ import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerContr
 import com.barelyconscious.worlds.common.exception.InvalidGameConfigurationException;
 import com.barelyconscious.worlds.engine.Physics;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
+import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
 import com.google.common.util.concurrent.RateLimiter;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -188,10 +189,12 @@ public class WorldsModule extends AbstractModule {
     @Singleton
     @Provides
     GameInstance providesGameInstance(
-        ChancellorSystem chancellorSystem
+        ChancellorSystem chancellorSystem,
+        CombatSystem combatSystem
     ) {
         var gi = GameInstance.instance();
         gi.registerSystem(chancellorSystem);
+        gi.registerSystem(combatSystem);
         return gi;
     }
 
