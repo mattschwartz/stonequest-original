@@ -1,8 +1,8 @@
 package com.barelyconscious.worlds.entity;
 
-import com.barelyconscious.worlds.entity.components.Component;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.entity.components.Component;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -10,12 +10,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * A thing which can be spawned into the game world.
- *
+ * <p>
  * todo: components' inheritance is messy
  */
 @Log4j2
@@ -30,7 +31,7 @@ public class Actor {
     public final String name;
 
     private final Map<Class<? extends Component>, List<Component>> componentsByType;
-//    private final List<Component> components;
+    //    private final List<Component> components;
     private final List<Component> allComponents;
 
     private boolean isEnabled = true;
@@ -40,7 +41,8 @@ public class Actor {
     public Vector facing = Vector.UP;
 
     // todo: game owns instantiation on actors?
-    public void init() {}
+    public void init() {
+    }
 
     // todo (p0) implement this better
     public Box getBoundingBox() {
@@ -72,6 +74,7 @@ public class Actor {
 
     /**
      * todo: need to actually implement parent logic
+     *
      * @param newParent
      * @return
      */
@@ -186,6 +189,25 @@ public class Actor {
             return components.get(0);
         }
         return null;
+    }
+
+    /**
+     * Attempts to get the component of the provided type. If the component does not exist, the provided callback is
+     * not called.
+     *
+     * @param componentType the type of component to get
+     * @param callback      the callback to call if the component exists
+     * @param <T>           the type of component to get
+     */
+    public <T extends Component> void tryGetComponent(final Class<T> componentType, final Function<T, Void> callback) {
+        final var component = getComponent(componentType);
+        if (component != null) {
+            try {
+                callback.apply(component);
+            } catch (Exception ex) {
+                log.error("Error calling callback", ex);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")

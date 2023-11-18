@@ -21,31 +21,36 @@ import java.util.Random;
 @Log4j2
 public class CombatSystem implements GameSystem {
 
-    private Map<Integer, ThreatTable> combatEncounters = new HashMap<>();
+    public static final class CombatEncounter {
+        private final ThreatTable threatTable;
 
-    /**
-     * @param encounterId the id of the combat encounter
-     * @return the threat table for the given combat encounter
-     */
-    public ThreatTable getThreatTable(int encounterId) {
-        if (!combatEncounters.containsKey(encounterId)) {
-            throw new IllegalArgumentException("No combat encounter with id " + encounterId);
+        public CombatEncounter(ThreatTable threatTable) {
+            this.threatTable = threatTable;
         }
 
-        return combatEncounters.get(encounterId);
+        public ThreatTable getThreatTable() {
+            return threatTable;
+        }
     }
 
-    public int createCombatEncounter() {
-        int combatEncounterId =  UMath.RANDOM.nextInt();
+    /**
+     * An encounter begins when two or enemies engage in conflict.
+     * @param instigator
+     * @param defenders
+     * @return
+     */
+    public CombatEncounter createCombatEncounter(EntityActor instigator, EntityActor... defenders) {
+        var threatTable = new ThreatTable();
 
-        combatEncounters.put(combatEncounterId, new ThreatTable());
+        // add all actors to the threat table
+        threatTable.addCombatant(instigator);
+        if (defenders != null) {
+            for (var defender : defenders) {
+                threatTable.addCombatant(defender);
+            }
+        }
 
-        return combatEncounterId;
-    }
-
-    public void endCombatEncounter(int encounterId) {
-        log.info("Ending combat encounter {}", encounterId);
-        combatEncounters.remove(encounterId);
+        return new CombatEncounter(threatTable);
     }
 
     // `resolveAttack` should be in the combat system, but the calculations should be somewhere else
