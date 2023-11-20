@@ -40,7 +40,7 @@ public final class GuiInitializer {
 
         // Player's backpack
         Inventory inventory = playerController.getInventory();
-        val wBackpack = new InventoryBagWidget(LayoutData.builder()
+        var wBackpack = new InventoryBagWidget(LayoutData.builder()
             .anchor(new VDim(1, 0.5f,
                 -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 75),
                 -(INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight() / 2)))
@@ -73,6 +73,7 @@ public final class GuiInitializer {
 
         gui.addWidget(new UserInputPanel(
             wBackpack,
+            wStockPile,
             wCraftingMenu,
             wWorldMapMenu,
             wGameMenu));

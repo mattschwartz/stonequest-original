@@ -1,12 +1,8 @@
 package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.entity.*;
+import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.game.*;
-import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
-import com.barelyconscious.worlds.entity.components.DestroyOnDeathComponent;
-import com.barelyconscious.worlds.entity.components.DropOnDeathComponent;
-import com.barelyconscious.worlds.entity.components.HealthBarComponent;
-import com.barelyconscious.worlds.entity.components.SpriteComponent;
 import com.barelyconscious.worlds.game.item.GameItems;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
@@ -30,7 +26,6 @@ public final class TestWorldInitializer {
     }
 
     private static void createEntities(final World world) {
-
         val aRat = EntityFactory.anEntity()
             .called("Sewer Rat")
             .locatedAt(new Vector(264f, 208f))
@@ -43,8 +38,8 @@ public final class TestWorldInitializer {
         aRat.addComponent(new SpriteComponent(aRat, Resources.getSprite(ResourceSprite.SEWER_RAT)));
         aRat.addComponent(new HealthBarComponent(aRat, aRat.getHealthComponent()));
         aRat.addComponent(new DestroyOnDeathComponent(aRat, 0));
-
         aRat.addComponent(new DropOnDeathComponent(aRat, GameItems.WILLOW_BARK.toItem()));
+        aRat.addComponent(new AIMoveComponent(aRat));
 
         world.addActor(aRat);
     }

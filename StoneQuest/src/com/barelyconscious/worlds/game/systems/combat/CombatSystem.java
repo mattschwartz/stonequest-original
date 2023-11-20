@@ -9,6 +9,7 @@ import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.item.ItemProperty;
 import com.barelyconscious.worlds.game.item.tags.EquipmentItemTag;
 import com.barelyconscious.worlds.game.systems.GameSystem;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -29,7 +30,8 @@ public class CombatSystem implements GameSystem {
         }
     }
 
-    public CombatEncounter activeCombatEncounter;
+    @Getter
+    private CombatEncounter activeCombatEncounter;
 
     /**
      * Resolves damage-dealing abilities and attacks.

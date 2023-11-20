@@ -1,10 +1,13 @@
 package com.barelyconscious.worlds.engine.gui;
 
+import com.barelyconscious.worlds.common.UColor;
+import com.barelyconscious.worlds.engine.gui.widgets.BackgroundPanelWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.SpriteWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.ButtonWidget;
 import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.Resources;
 
+import java.awt.*;
 import java.util.EnumMap;
 
 /**
@@ -20,18 +23,21 @@ public class UserInputPanel extends Widget {
         .build();
 
     private final Widget inventoryBagWidget;
+    private final Widget stockpileBagWidget;
     private final Widget craftingMenuWidget;
     private final Widget worldMapWidget;
     private final Widget gameMenuWidget;
 
     public UserInputPanel(
         final Widget inventoryBagWidget,
+        final Widget stockpileBagWidget,
         final Widget craftingMenuWidget,
         final Widget worldMapWidget,
         final Widget gameMenuWidget
     ) {
-        super(LAYOUT);
+        super(LayoutData.DEFAULT);
         this.inventoryBagWidget = inventoryBagWidget;
+        this.stockpileBagWidget = stockpileBagWidget;
         this.craftingMenuWidget = craftingMenuWidget;
         this.worldMapWidget = worldMapWidget;
         this.gameMenuWidget = gameMenuWidget;
@@ -40,13 +46,55 @@ public class UserInputPanel extends Widget {
         this.craftingMenuWidget.setEnabled(false);
         this.gameMenuWidget.setEnabled(false);
 
-        addWidget(new SpriteWidget(LayoutData.DEFAULT,
-            Resources.instance().getSprite(GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND)));
-
-        configureMenuButtons();
+        configureFactionMenuButtons();
+        configureUserInputButtons();
     }
 
-    private void configureMenuButtons() {
+    private void configureFactionMenuButtons() {
+        Widget topLeftMenuWidget = new BackgroundPanelWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 0, 0))
+            .build()
+            , UColor.TRANSPARENT);
+        addWidget(topLeftMenuWidget);
+
+        ButtonWidget stockButton = new ButtonWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 2, 2))
+            .size(GUISpriteSheet.Resources.BUTTON_DEFAULT)
+            .build(),
+            "Stockpile",
+            () -> {
+                stockpileBagWidget.setEnabled(!stockpileBagWidget.isEnabled());
+                return null;
+            });
+        topLeftMenuWidget.addWidget(stockButton);
+
+        ButtonWidget constructionButton = new ButtonWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 84, 2))
+            .size(new VDim(0, 0, 120, 26))
+            .build(),
+            "Construction",
+            () -> {
+                return null;
+            });
+        topLeftMenuWidget.addWidget(constructionButton);
+
+        ButtonWidget settlementButton = new ButtonWidget(LayoutData.builder()
+            .anchor(new VDim(0, 0, 205, 2))
+            .size(new VDim(0, 0, 120, 26))
+            .build(),
+            "Settlement",
+            () -> {
+                return null;
+            });
+        topLeftMenuWidget.addWidget(settlementButton);
+    }
+
+    private void configureUserInputButtons() {
+        Widget topRightMenuWidget = new BackgroundPanelWidget(LAYOUT, UColor.TRANSPARENT);
+        addWidget(topRightMenuWidget);
+        topRightMenuWidget.addWidget(new SpriteWidget(LayoutData.DEFAULT,
+            Resources.instance().getSprite(GUISpriteSheet.Resources.UI_INPUT_CONTROL_BACKGROUND)));
+
         ButtonWidget invButton = new ButtonWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 11, 11))
             .size(GUISpriteSheet.Resources.UI_MENU_BUTTON_INVENTORY_DEFAULT)
@@ -61,7 +109,7 @@ public class UserInputPanel extends Widget {
             put(ButtonWidget.ButtonWidgetState.MOUSE_DOWN, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_INVENTORY_DOWN));
             put(ButtonWidget.ButtonWidgetState.DISABLED, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_INVENTORY_DISABLED));
         }});
-        addWidget(invButton);
+        topRightMenuWidget.addWidget(invButton);
 
         ButtonWidget craftingButton = new ButtonWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 54 + 12, 11))
@@ -76,7 +124,7 @@ public class UserInputPanel extends Widget {
             put(ButtonWidget.ButtonWidgetState.MOUSE_DOWN, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DOWN));
             put(ButtonWidget.ButtonWidgetState.DISABLED, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_CRAFTING_DISABLED));
         }});
-        addWidget(craftingButton);
+        topRightMenuWidget.addWidget(craftingButton);
 
         ButtonWidget worldMapButton = new ButtonWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 107 + 14, 11))
@@ -91,7 +139,7 @@ public class UserInputPanel extends Widget {
             put(ButtonWidget.ButtonWidgetState.MOUSE_DOWN, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_WORLD_MAP_DOWN));
             put(ButtonWidget.ButtonWidgetState.DISABLED, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_WORLD_MAP_DISABLED));
         }});
-        addWidget(worldMapButton);
+        topRightMenuWidget.addWidget(worldMapButton);
 
         ButtonWidget gameMenuButton = new ButtonWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 176, 11))
@@ -107,6 +155,6 @@ public class UserInputPanel extends Widget {
             put(ButtonWidget.ButtonWidgetState.MOUSE_DOWN, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_GAME_MENU_DOWN));
             put(ButtonWidget.ButtonWidgetState.DISABLED, Resources.instance().getSprite(GUISpriteSheet.Resources.UI_MENU_BUTTON_GAME_MENU_DISABLED));
         }});
-        addWidget(gameMenuButton);
+        topRightMenuWidget.addWidget(gameMenuButton);
     }
 }
