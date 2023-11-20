@@ -9,6 +9,7 @@ import com.barelyconscious.worlds.game.abilitysystem.Ability;
 import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
+import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
 import com.barelyconscious.worlds.terminal.commands.*;
 
 import java.util.List;
@@ -281,7 +282,7 @@ public class TerminalPlayerController extends PlayerController {
         System.out.printf("Attacking %s%n", entity.name);
         var gi = GameInstance.instance();
         var hero = gi.getHeroSelected();
-        gi.getCombatSystem().meleeAttack(hero, entity);
+        gi.getSystem(CombatSystem.class).meleeAttack(hero, entity);
 
         return true;
     }

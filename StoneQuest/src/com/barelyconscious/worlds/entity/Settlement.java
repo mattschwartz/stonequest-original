@@ -32,7 +32,7 @@ public class Settlement extends Actor {
     public Settlement(String name, Vector transform) {
         super(name, transform);
         // todo -should be a FlexibleInventory that is unbounded in size
-        stockpile = new Inventory(128);
+        stockpile = new Inventory(64);
         citizens = new ArrayList<>();
         buildings = new ArrayList<>();
         ownedTerritories = new ArrayList<>();

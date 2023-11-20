@@ -253,6 +253,14 @@ public class ItemSlotWidget extends MouseInputWidget {
         if (isMouseOver()) {
             final Inventory.InventoryItem itemOnCursor = ItemFollowCursorWidget.getInventoryItemOnCursor();
             if (itemOnCursor != null) {
+                if (item != null && itemOnCursor.item.getItemId() == item.getItemId()) {
+                    // same item, stack
+                    var inventoryItem = inventory.getItem(inventorySlotId);
+                    if (inventoryItem != null) {
+                        inventoryItem.stackSize = itemOnCursor.stackSize + inventoryItem.stackSize;
+                        ItemFollowCursorWidget.setInventoryItemOnCursor(null);
+                    }
+                } else
                 if (acceptsItem(itemOnCursor.item)) {
                     final Inventory.InventoryItem prevItem = inventory.setItem(inventorySlotId, itemOnCursor);
                     ItemFollowCursorWidget.setInventoryItemOnCursor(prevItem);

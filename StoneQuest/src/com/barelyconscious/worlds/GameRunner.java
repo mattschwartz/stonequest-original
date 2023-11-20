@@ -8,11 +8,10 @@ import com.barelyconscious.worlds.game.GameResourceManager;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.input.KeyInputHandler;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
-import com.barelyconscious.worlds.game.resources.spritesheet.SpritesheetManager;
 import com.barelyconscious.worlds.gamedata.TestHeroInitializer;
 import com.barelyconscious.worlds.gamedata.TestTechInitializer;
 import com.barelyconscious.worlds.gamedata.TestWorldInitializer;
-import com.barelyconscious.worlds.module.GuiInitializer;
+import com.barelyconscious.worlds.gamedata.GuiInitializer;
 import com.barelyconscious.worlds.module.WorldsModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -52,9 +51,10 @@ public final class GameRunner {
         engine.prestart(gi, world, screen, playerController);
 
         TestTechInitializer.init();
-        GuiInitializer.createGui(screen, world, playerController);
-        TestHeroInitializer.createHeroes(world, playerController);
         TestWorldInitializer.createWorld(world);
+        TestHeroInitializer.createHeroes(world, playerController);
+
+        GuiInitializer.createGui(screen, world, playerController);
 
         world.addActor(new CameraActor(screen.getCamera()));
 

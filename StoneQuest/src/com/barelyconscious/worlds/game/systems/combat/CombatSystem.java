@@ -11,10 +11,6 @@ import com.barelyconscious.worlds.game.item.tags.EquipmentItemTag;
 import com.barelyconscious.worlds.game.systems.GameSystem;
 import lombok.extern.log4j.Log4j2;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 /**
  * Commands combat encounters between entities.
  */
@@ -33,13 +29,48 @@ public class CombatSystem implements GameSystem {
         }
     }
 
+    public CombatEncounter activeCombatEncounter;
+
+    /**
+     * Resolves damage-dealing abilities and attacks.
+     * <p>
+     * Determines the attacker's bonuses, crit chance, precision and all that
+     * Determines the defender's defenses, dodge chance, armor and all that
+     *
+     * @param attacker      the actor who is attacking
+     * @param defender      the actor who is defending
+     * @param damageAbility the ability that is being used to deal damage
+     */
+    public void applyDamage(EntityActor attacker, EntityActor defender, DamagingAbility damageAbility) {
+        if (activeCombatEncounter == null) {
+            activeCombatEncounter = createCombatEncounter(attacker, defender);
+        }
+
+        var health = defender.getHealthComponent();
+        if (health != null && health.isEnabled()) {
+            log.info("Dealing " + damageAbility.damage + " damage to " + defender.getName() +
+                " with " + damageAbility.damageType);
+            health.adjustCurrentValueBy(-damageAbility.damage);
+        }
+
+        var threatTable = activeCombatEncounter.getThreatTable();
+        threatTable.addThreat(attacker, defender, damageAbility.damage * damageAbility.threatMultiplier);
+
+        log.info("{} has generated {} threat to {}",
+            attacker.getName(),
+            damageAbility.damage * damageAbility.threatMultiplier,
+            defender.getName());
+    }
+
     /**
      * An encounter begins when two or enemies engage in conflict.
+     *
      * @param instigator
      * @param defenders
      * @return
      */
-    public CombatEncounter createCombatEncounter(EntityActor instigator, EntityActor... defenders) {
+    public CombatEncounter createCombatEncounter(EntityActor instigator,
+                                                 EntityActor... defenders) {
         var threatTable = new ThreatTable();
 
         // add all actors to the threat table
@@ -76,8 +107,7 @@ public class CombatSystem implements GameSystem {
                     if (statProp.getStat() == StatName.ABILITY_POWER) {
                         ap += statProp.getStatValue();
                     }
-                }
-                else if (prop instanceof ItemProperty.WeaponDamageProperty wep) {
+                } else if (prop instanceof ItemProperty.WeaponDamageProperty wep) {
                     minWeaponDamage = wep.getMinWeaponDamage();
                     maxWeaponDamage = wep.getMaxWeaponDamage();
                 }

@@ -54,9 +54,6 @@ public final class GameInstance {
     private PlayerController playerController = new PlayerController();
 
     @Getter
-    private final CombatSystem combatSystem = new CombatSystem();
-
-    @Getter
     @Setter
     private Wagon wagon;
 

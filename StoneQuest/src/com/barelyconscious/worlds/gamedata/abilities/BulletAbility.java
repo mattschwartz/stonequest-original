@@ -6,12 +6,15 @@ import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.entity.components.*;
+import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.abilitysystem.*;
 import com.barelyconscious.worlds.game.abilitysystem.behaviors.ConsumeCombatResourceBehavior;
 import com.barelyconscious.worlds.game.abilitysystem.behaviors.EntityHasStatBehavior;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
+import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
+import com.barelyconscious.worlds.game.systems.combat.DamagingAbility;
 import lombok.val;
 
 public class BulletAbility extends Ability {
@@ -40,12 +43,12 @@ public class BulletAbility extends Ability {
                                 return null;
                             }
 
+                            var combatSystem = GameInstance.instance().getSystem(CombatSystem.class);
+
                             if (col.hit instanceof EntityActor hit) {
-                                final DynamicValueComponent health = hit.getHealthComponent();
-                                if (health != null && health.isEnabled()) {
-                                    health.adjustCurrentValueBy((UMath.RANDOM.nextFloat() * -8) - 6);
-                                    aBullet.destroy();
-                                }
+                                double dmg = (UMath.RANDOM.nextDouble() * 8) + 6;
+                                combatSystem.applyDamage(usedBy, hit, new DamagingAbility(dmg));
+                                aBullet.destroy();
                             }
 
                             return null;

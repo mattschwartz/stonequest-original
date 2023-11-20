@@ -1,8 +1,9 @@
-package com.barelyconscious.worlds.module;
+package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
 import com.barelyconscious.worlds.engine.gui.*;
 import com.barelyconscious.worlds.engine.gui.widgets.*;
+import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
@@ -37,8 +38,8 @@ public final class GuiInitializer {
             return;
         }
 
-        Inventory inventory = ((MouseKeyboardPlayerController) playerController).getInventory();
-
+        // Player's backpack
+        Inventory inventory = playerController.getInventory();
         val wBackpack = new InventoryBagWidget(LayoutData.builder()
             .anchor(new VDim(1, 0.5f,
                 -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 75),
@@ -48,10 +49,23 @@ public final class GuiInitializer {
                 INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight()))
             .build(), inventory, 4, 4);
 
+        // Faction inventory
+        Inventory stockpile = GameInstance.instance().getWorld().getPlayerSettlement().getStockpile();
+        var wStockPile = new InventoryBagWidget(LayoutData.builder()
+            .anchor(new VDim(1, 1f,
+                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 5),
+                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight())))
+            .size(new VDim(0, 0,
+                INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth(),
+                INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight()))
+            .build(), stockpile, 8, 8);
+        wStockPile.setVisible(true);
+
         val wCraftingMenu = new CraftingWindowWidget();
         var wWorldMapMenu = new WorldMapWidget();
         var wGameMenu = new PlayerPersonalDeviceWidget();
 
+        gui.addWidget(wStockPile);
         gui.addWidget(wBackpack);
         gui.addWidget(wCraftingMenu);
         gui.addWidget(wWorldMapMenu);
