@@ -8,6 +8,7 @@ import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.graphics.FontContext;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
+import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
@@ -66,7 +67,7 @@ public class ItemLootActor extends Actor {
 
         nextUpdateComponent.onNextUpdate(eventArgs -> {
             if (numHeroesOver > 0 && item != null) {
-                final Inventory inventory = eventArgs.getPlayerController().getInventory();
+                final Inventory inventory = GameInstance.instance().getWagon().getStorage();
                 if (inventory.addItem(item)) {
                     System.out.println("Picked up: " + item.getName());
                     item = null;

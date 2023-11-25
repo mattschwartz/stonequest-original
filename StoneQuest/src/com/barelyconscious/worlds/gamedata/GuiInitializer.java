@@ -39,7 +39,7 @@ public final class GuiInitializer {
         }
 
         // Player's backpack
-        Inventory inventory = playerController.getInventory();
+        Inventory inventory = GameInstance.instance().getWagon().getStorage();
         var wBackpack = new InventoryBagWidget(LayoutData.builder()
             .anchor(new VDim(1, 0.5f,
                 -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 75),

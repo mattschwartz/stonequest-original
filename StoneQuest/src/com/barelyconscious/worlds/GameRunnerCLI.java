@@ -81,7 +81,7 @@ public class GameRunnerCLI {
         world.addActor(pw);
         gi.setWagon(pw);
 
-        TestHeroInitializer.createHeroes(world, playerController);
+        TestHeroInitializer.createHeroes(world);
         TestWorldInitializer.createWorld(world);
 
         gi.setHero(HERO_JOHN, GameInstance.PartySlot.LEFT);

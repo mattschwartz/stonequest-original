@@ -26,19 +26,4 @@ public class PlayerController {
 
     @Getter
     private Camera playerCamera;
-
-    @Deprecated // todo - should be somewhere else right?
-    @Getter
-    @NonNull
-    private final Inventory inventory;
-
-    public PlayerController() {
-        this(new Inventory(0));
-    }
-
-    public PlayerController(
-        @NonNull final Inventory inventory
-    ) {
-        this.inventory = inventory;
-    }
 }

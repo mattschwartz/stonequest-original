@@ -9,7 +9,6 @@ import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
 import com.barelyconscious.worlds.game.hero.HeroClassType;
-import com.barelyconscious.worlds.game.item.GameItems;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
@@ -88,7 +87,7 @@ public class TestHeroInitializer {
         HERO_PAUL.addComponent(new HealthBarComponent(HERO_PAUL, HERO_PAUL.getHealthComponent()));
     }
 
-    public static void createHeroes(final World world, final PlayerController playerController) {
+    public static void createHeroes(final World world) {
         Hero heroJohn = HERO_JOHN;
         heroJohn.addComponent(new LightSourceComponent(heroJohn, 250));
         heroJohn.addComponent(new Component(heroJohn) {
@@ -145,21 +144,10 @@ public class TestHeroInitializer {
 
         GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
 
-        setupPartyInventory(playerController);
+        setupPartyInventory();
     }
 
-    private static void setupPartyInventory(final PlayerController pc) {
-        // todo deprecated method...
-        Inventory inventory = pc.getInventory();
-        if (inventory != null) {
-            inventory.addItem(GameItems.WILLOW_BARK.toItem());
-            inventory.addItem(GameItems.CURED_LEATHER.toItem());
-            inventory.addItem(GameItems.IRON_ORE.toItem());
-            inventory.addItem(GameItems.LUMBER.toItem());
-            inventory.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
-            inventory.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
-        }
-
+    private static void setupPartyInventory() {
         if (GameInstance.instance().getWagon() != null) {
             Inventory resourcePouch = GameInstance.instance().getWagon().getResourcePouch();
             Inventory storage = GameInstance.instance().getWagon().getStorage();
@@ -170,6 +158,12 @@ public class TestHeroInitializer {
             resourcePouch.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
             resourcePouch.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
 
+            storage.addItem(GameItems.WILLOW_BARK.toItem());
+            storage.addItem(GameItems.CURED_LEATHER.toItem());
+            storage.addItem(GameItems.IRON_ORE.toItem());
+            storage.addItem(GameItems.LUMBER.toItem());
+            storage.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
+            storage.addItem(GameItems.ELDRITCH_CIRCUIT.toItem());
             storage.addItem(GameItems.IRON_SHIELD.toItem());
             storage.addItem(GameItems.CLOTH_ROBE.toItem());
             storage.addItem(GameItems.RECURVE_BOW.toItem());

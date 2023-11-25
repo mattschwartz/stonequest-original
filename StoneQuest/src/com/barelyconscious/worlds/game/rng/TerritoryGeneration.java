@@ -8,7 +8,7 @@ import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.TraitName;
-import com.barelyconscious.worlds.game.item.GameItems;
+import com.barelyconscious.worlds.gamedata.GameItems;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
@@ -16,9 +16,7 @@ import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class TerritoryGeneration {

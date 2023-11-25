@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.module;
 
 import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
+import com.barelyconscious.worlds.entity.Wagon;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.World;
@@ -189,10 +190,12 @@ public class WorldsModule extends AbstractModule {
     @Singleton
     @Provides
     GameInstance providesGameInstance(
+        Wagon partyWagon,
         ChancellorSystem chancellorSystem,
         CombatSystem combatSystem
     ) {
         var gi = GameInstance.instance();
+        gi.setWagon(partyWagon);
         gi.registerSystem(chancellorSystem);
         gi.registerSystem(combatSystem);
         return gi;
@@ -200,19 +203,19 @@ public class WorldsModule extends AbstractModule {
 
     @Provides
     @Singleton
-    Inventory providesInventory() {
-        return new Inventory(16);
+    Wagon providesWagon() {
+        return new Wagon(
+            new Inventory(32),
+            new Inventory(16));
     }
 
     @Singleton
     @Provides
     MouseKeyboardPlayerController providesPlayerController(
-        final Inventory inventory,
         final MouseInputHandler mouseInputHandler,
         final KeyInputHandler keyInputHandler
     ) {
         return new MouseKeyboardPlayerController(
-            inventory,
             mouseInputHandler,
             keyInputHandler);
     }

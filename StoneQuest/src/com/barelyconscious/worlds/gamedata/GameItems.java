@@ -1,7 +1,10 @@
-package com.barelyconscious.worlds.game.item;
+package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.game.Requirement;
 import com.barelyconscious.worlds.game.TraitName;
+import com.barelyconscious.worlds.game.item.Item;
+import com.barelyconscious.worlds.game.item.ItemProperty;
+import com.barelyconscious.worlds.game.item.ItemTag;
 import com.barelyconscious.worlds.game.item.tags.ConsumableItemTag;
 import com.barelyconscious.worlds.game.item.tags.EquipmentItemTag;
 import com.barelyconscious.worlds.game.item.tags.RelatedSkillItemTag;

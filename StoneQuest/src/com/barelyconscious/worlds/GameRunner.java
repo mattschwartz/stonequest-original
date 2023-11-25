@@ -52,7 +52,7 @@ public final class GameRunner {
 
         TestTechInitializer.init();
         TestWorldInitializer.createWorld(world);
-        TestHeroInitializer.createHeroes(world, playerController);
+        TestHeroInitializer.createHeroes(world);
 
         GuiInitializer.createGui(screen, world, playerController);
 

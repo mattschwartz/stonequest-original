@@ -47,12 +47,9 @@ public class MouseKeyboardPlayerController extends PlayerController {
     public static final Delegate<Object> delegateOnInterruptRequested = new Delegate<>();
 
     public MouseKeyboardPlayerController(
-        @NonNull final Inventory inventory,
         final MouseInputHandler mouseHandler,
         final KeyInputHandler keyHandler
     ) {
-        super(inventory);
-
         mouseHandler.onMouseClicked.bindDelegate(this::onMouseClicked);
         mouseHandler.onMouseMoved.bindDelegate(this::onMouseMoved);
         mouseHandler.onMouseReleased.bindDelegate(this::onMouseReleased);

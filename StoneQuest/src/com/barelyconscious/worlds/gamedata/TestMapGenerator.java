@@ -1,12 +1,8 @@
 package com.barelyconscious.worlds.gamedata;
 
-import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.*;
-import com.barelyconscious.worlds.entity.components.Component;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.World;
-import com.barelyconscious.worlds.engine.input.MouseInputHandler;
-import com.barelyconscious.worlds.game.item.GameItems;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.game.rng.TerritoryGeneration;
