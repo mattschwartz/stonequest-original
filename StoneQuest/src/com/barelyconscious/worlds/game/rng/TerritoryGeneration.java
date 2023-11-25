@@ -339,6 +339,7 @@ public class TerritoryGeneration {
             enemy.addComponent(new DestroyOnDeathComponent(enemy, 0));
 
             enemy.addComponent(new DropOnDeathComponent(enemy, GameItems.WILLOW_BARK.toItem()));
+            enemy.addComponent(new AIMoveComponent(enemy, 32));
 
             wilderness.addEntity(enemy);
             worldSpace[(int) transform.x][(int) transform.y] = enemy;

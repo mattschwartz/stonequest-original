@@ -49,6 +49,9 @@ public class ThreatTable {
     public EntityActor getHighestThreatActor(EntityActor defender) {
         double highestThreat = 0;
         EntityActor highestThreatActor = null;
+        if (!defenderThreatTable.containsKey(defender)) {
+            return null;
+        }
 
         for (var actor : defenderThreatTable.get(defender).keySet()) {
             if (defenderThreatTable.get(defender).get(actor) > highestThreat) {

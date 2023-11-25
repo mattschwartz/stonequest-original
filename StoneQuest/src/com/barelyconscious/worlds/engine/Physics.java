@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.engine;
 
 import com.barelyconscious.worlds.entity.Actor;
+import com.barelyconscious.worlds.entity.components.AIMoveComponent;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
 import com.barelyconscious.worlds.entity.components.ColliderComponent;
 import com.barelyconscious.worlds.entity.components.MoveComponent;
@@ -51,9 +52,12 @@ public class Physics {
         final List<Actor> actors
     ) {
         for (final Actor actor : actors) {
-            final MoveComponent move = actor.getComponent(MoveComponent.class);
+            MoveComponent move = actor.getComponent(MoveComponent.class);
             if (move == null) {
-                continue;
+                move = actor.getComponent(AIMoveComponent.class);
+                if (move == null) {
+                    continue;
+                }
             }
 
             move.physicsUpdate(eventArgs);

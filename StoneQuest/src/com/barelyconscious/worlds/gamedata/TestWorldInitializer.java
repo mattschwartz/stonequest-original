@@ -37,7 +37,7 @@ public final class TestWorldInitializer {
         aRat.addComponent(new HealthBarComponent(aRat, aRat.getHealthComponent()));
         aRat.addComponent(new DestroyOnDeathComponent(aRat, 0));
         aRat.addComponent(new DropOnDeathComponent(aRat, GameItems.WILLOW_BARK.toItem()));
-        aRat.addComponent(new AIMoveComponent(aRat));
+        aRat.addComponent(new AIMoveComponent(aRat, 32));
 
         world.addActor(aRat);
     }
