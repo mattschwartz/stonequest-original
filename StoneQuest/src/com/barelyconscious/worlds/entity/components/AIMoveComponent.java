@@ -17,7 +17,11 @@ public class AIMoveComponent extends MoveComponent {
         lastMove = System.currentTimeMillis();
     }
 
-    long lastMove;
+    /**
+     * how quickly the AI makes decisions
+     */
+    private long decisionSpeed = 100;
+    private long lastMove;
 
     @Override
     public void update(EventArgs eventArgs) {
@@ -28,42 +32,73 @@ public class AIMoveComponent extends MoveComponent {
             return;
         }
 
+        if (!canMakeDecision()) {
+            return;
+        }
+
+        if (!inCombat()) {
+            randomWalk();
+        } else {
+            EntityActor attacker = getCombatTarget();
+
+            var direction = attacker.getTransform().minus(getParent().getTransform()).unitVector();
+            addForce(direction, 16);
+        }
+    }
+
+    /**
+     * idk the name. just returns true if enough time has passed since
+     * the last decision was made
+     */
+    private boolean canMakeDecision() {
+        long now = System.currentTimeMillis();
+        if (now - lastMove >= decisionSpeed) {
+            lastMove = now;
+            return true;
+        }
+        return false;
+    }
+
+    private void randomWalk() {
+        Vector direction;
+        var ran = UMath.RANDOM.nextInt(0, 4);
+        // choose a random direction to walk in
+        switch (ran) {
+            case 0:
+                direction = Vector.LEFT;
+                break;
+            case 1:
+                direction = Vector.RIGHT;
+                break;
+            case 2:
+                direction = Vector.UP;
+                break;
+            case 3:
+                direction = Vector.DOWN;
+                break;
+            default:
+                direction = Vector.ZERO;
+        }
+        addForce(direction, 16);
+    }
+
+    private EntityActor getCombatTarget() {
+        if (!inCombat()) {
+            return null;
+        }
+
+        var combatEncounter = GameInstance.instance().getSystem(CombatSystem.class).getActiveCombatEncounter();
+        var threatTable = combatEncounter.getThreatTable();
+
+        return threatTable.getHighestThreatActor((EntityActor) getParent());
+    }
+    private boolean inCombat() {
         var combatEncounter = GameInstance.instance().getSystem(CombatSystem.class).getActiveCombatEncounter();
         if (combatEncounter == null) {
-            if (System.currentTimeMillis() - lastMove < 250) {
-                return;
-            }
-            Vector direction;
-            var ran = UMath.RANDOM.nextInt(0, 4);
-            // choose a random direction to walk in
-            switch (ran) {
-                case 0:
-                    direction = Vector.LEFT;
-                    break;
-                case 1:
-                    direction = Vector.RIGHT;
-                    break;
-                case 2:
-                    direction = Vector.UP;
-                    break;
-                case 3:
-                    direction = Vector.DOWN;
-                    break;
-                default:
-                    direction = Vector.ZERO;
-            }
-            lastMove = System.currentTimeMillis();
-            addForce(direction, 100);
-
-            return;
+            return false;
         }
-
         var threatTable = combatEncounter.getThreatTable();
         var attacker = threatTable.getHighestThreatActor((EntityActor) getParent());
-        if (attacker == null) {
-            return;
-        }
-
-        log.info("Attacking highest threat combatant: {}", attacker.getName());
+        return attacker != null;
     }
 }
