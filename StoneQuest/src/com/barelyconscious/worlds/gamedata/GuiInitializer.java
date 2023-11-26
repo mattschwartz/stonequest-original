@@ -42,7 +42,7 @@ public final class GuiInitializer {
         Inventory inventory = GameInstance.instance().getWagon().getStorage();
         var wBackpack = new InventoryBagWidget(LayoutData.builder()
             .anchor(new VDim(1, 0.5f,
-                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 75),
+                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 5),
                 -(INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight() / 2)))
             .size(new VDim(0, 0,
                 INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth(),
@@ -54,7 +54,7 @@ public final class GuiInitializer {
         var wStockPile = new InventoryBagWidget(LayoutData.builder()
             .anchor(new VDim(1, 1f,
                 -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 5),
-                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight())))
+                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight() + 5)))
             .size(new VDim(0, 0,
                 INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth(),
                 INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight()))

@@ -2,6 +2,7 @@ package com.barelyconscious.worlds.game.rng;
 
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.engine.graphics.RenderLayer;
 import com.barelyconscious.worlds.engine.input.MouseInputHandler;
 import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.entity.components.*;
@@ -334,7 +335,7 @@ public class TerritoryGeneration {
                 .build();
 
             enemy.addComponent(new BoxColliderComponent(enemy, true, true, new Box(0, 32, 0, 32)));
-            enemy.addComponent(new SpriteComponent(enemy, Resources.getSprite(ResourceSprite.SEWER_RAT)));
+            enemy.addComponent(new SpriteComponent(enemy, Resources.getSprite(ResourceSprite.SEWER_RAT), RenderLayer.ENTITIES));
             enemy.addComponent(new HealthBarComponent(enemy, enemy.getHealthComponent()));
             enemy.addComponent(new DestroyOnDeathComponent(enemy, 0));
 
