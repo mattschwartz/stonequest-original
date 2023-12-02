@@ -112,7 +112,14 @@ public abstract class ItemProperty {
         public StatItemProperty(StatName stat, double statValue) {
             this.stat = stat;
             this.statValue = statValue;
-            this.propertyDescription = stat.description;
+            StringBuilder sb = new StringBuilder();
+            if (statValue < 0) {
+                sb.append("-");
+            } else if (statValue > 0) {
+                sb.append("+");
+            }
+            sb.append(statValue).append(" ").append(stat.name);
+            propertyDescription = sb.toString();
         }
 
         @Override

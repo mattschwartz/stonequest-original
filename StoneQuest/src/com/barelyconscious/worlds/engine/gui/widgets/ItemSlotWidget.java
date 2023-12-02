@@ -1,5 +1,6 @@
 package com.barelyconscious.worlds.engine.gui.widgets;
 
+import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.VDim;
@@ -16,6 +17,7 @@ import com.barelyconscious.worlds.game.item.ItemTag;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.google.common.collect.Sets;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -36,6 +38,15 @@ public class ItemSlotWidget extends MouseInputWidget {
     private final Widget itemHighlightWidget;
 
     private final Inventory inventory;
+
+    public final Delegate<ItemSlotEvent> delegateOnItemChanged = new Delegate<>();
+
+    @AllArgsConstructor
+    public static final class ItemSlotEvent {
+        public final Item prevItem;
+        public final Item newItem;
+        public final int inventorySlotId;
+    }
 
     private boolean shouldShowTooltip() {
         return isEnabled() && isMouseOver();
@@ -197,6 +208,9 @@ public class ItemSlotWidget extends MouseInputWidget {
         }
 
         this.item = item;
+
+        delegateOnItemChanged.call(new ItemSlotEvent(prevItem, item, inventorySlotId));
+
         return prevItem;
     }
 

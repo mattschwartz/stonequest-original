@@ -1,15 +1,19 @@
 package com.barelyconscious.worlds.entity.components;
 
 import com.barelyconscious.worlds.entity.Actor;
+import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.item.Item;
+import com.barelyconscious.worlds.game.item.ItemProperty;
 import com.barelyconscious.worlds.game.item.tags.EquipmentItemTag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.log4j.Log4j2;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;
 
+@Log4j2
 public class EquipmentComponent extends Component {
 
     @Getter
@@ -56,14 +60,36 @@ public class EquipmentComponent extends Component {
         return inventoryItem == null ? null : inventoryItem.item;
     }
 
+    public Item setEquippedItem(final EquipmentItemTag equipmentTag, final Item item) {
+        if (item != null) {
+            for (ItemProperty property : item.getProperties()) {
+                log.info("Applying property {} to {}", property.getClass().getSimpleName(), getParent().getName());
+                property.applyProperty((EntityActor) getParent());
+            }
+        }
+
+        Inventory.InventoryItem prevItem = equipmentInventory.setItem(itemClassToSlotId(equipmentTag),
+            new Inventory.InventoryItem(item, 1));
+
+        if (prevItem == null || prevItem.item == null) {
+            log.info("Nothing?");
+            return null;
+        }
+
+        for (ItemProperty property : prevItem.item.getProperties()) {
+            log.info("Removing property {} from {}", property.getClass().getSimpleName(), getParent().getName());
+            property.removeProperty((EntityActor) getParent());
+        }
+
+        return prevItem.item;
+    }
+
     public Item setEquippedItem(final Item item) {
         EquipmentItemTag equipmentTag = (EquipmentItemTag) item.getTags().stream().filter(t -> t instanceof EquipmentItemTag).findFirst().orElse(null);
         if (equipmentTag == null) {
             return null;
         }
 
-        Inventory.InventoryItem prevItem = equipmentInventory.setItem(itemClassToSlotId(equipmentTag),
-            new Inventory.InventoryItem(item, 1));
-        return prevItem == null ? null : prevItem.item;
+        return setEquippedItem(equipmentTag, item);
     }
 }

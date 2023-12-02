@@ -31,17 +31,40 @@ public class SpriteComponent extends Component {
     private final int height;
 
     public SpriteComponent(final Actor parent, final BetterSpriteResource spriteResource, final int width, final int height) {
+        this(parent, spriteResource, width, height, RenderLayer.GROUND);
+    }
+
+    public SpriteComponent(
+        final Actor parent,
+        final BetterSpriteResource spriteResource,
+        final int width,
+        final int height,
+        final RenderLayer renderLayer
+    ) {
         super(parent);
 
         this.spriteResource = spriteResource;
         this.sprite = null;
-        this.renderLayer = RenderLayer.GROUND;
+        this.renderLayer = renderLayer;
         this.width = width;
         this.height = height;
     }
 
     public SpriteComponent(final Actor parent, final BetterSpriteResource spriteResource) {
         this(parent, spriteResource, spriteResource.getWidth(), spriteResource.getHeight());
+    }
+
+    public SpriteComponent(
+        final Actor parent,
+        final BetterSpriteResource spriteResource,
+        final RenderLayer renderLayer
+    ) {
+        this(
+            parent,
+            spriteResource,
+            spriteResource.getWidth(),
+            spriteResource.getHeight(),
+            renderLayer);
     }
 
     /**

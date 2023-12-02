@@ -24,7 +24,6 @@ public final class Inventory {
     @AllArgsConstructor
     public static final class InventoryItemEvent {
 
-        @NonNull
         public final Item item;
         public final int index;
     }

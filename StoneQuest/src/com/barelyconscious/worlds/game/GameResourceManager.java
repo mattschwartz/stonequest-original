@@ -55,6 +55,7 @@ public class GameResourceManager {
     public static void loadResources() {
         SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.ITEMS, "sprites/items_spritesheet.json", "sprites/items_spritesheet.png");
         SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.TEXTURE, "tiles/texture_spritesheet.json", "tiles/texture_spritesheet.png");
+        SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.GUI, "spritesheets/gui_spritesheet.json", "spritesheets/gui_spritesheet.png");
     }
 
     public void loadSprites() {

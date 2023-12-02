@@ -146,7 +146,12 @@ public class HeroQuickbarPanel extends MouseInputWidget {
         });
 
 
-        addWidget(hoverControlWidget = new OnHoverRenderWidget(hero.getHealthComponent(), hero.getPowerComponent()));
+        addWidget(hoverControlWidget = new OnHoverRenderWidget(
+            hero.getHealthComponent(),
+            hero.stat(StatName.FOCUS).get(),
+            hero.stat(StatName.ENERGY).get(),
+            hero.stat(StatName.SPIRIT).get()
+        ));
         addWidget(statsSheet);
 
         hoverControlWidget.setVisible(false);
@@ -178,16 +183,27 @@ public class HeroQuickbarPanel extends MouseInputWidget {
     private static class OnHoverRenderWidget extends Widget {
 
         private final TextFieldWidget healthWidget;
-        private final TextFieldWidget powerWidget;
+        private final TextFieldWidget focusWidget;
+        private final TextFieldWidget energyWidget;
+        private final TextFieldWidget spiritWidget;
 
-        public OnHoverRenderWidget(final DynamicValueComponent healthComponent, final DynamicValueComponent powerComponent) {
+        public OnHoverRenderWidget(
+            final DynamicValueComponent healthComponent,
+            final DynamicValueComponent focusComponent,
+            final DynamicValueComponent energyComponent,
+            final DynamicValueComponent spiritComponent
+        ) {
             super(LayoutData.DEFAULT);
 
             healthWidget = setupHealthWidget(healthComponent);
-            powerWidget = setupPowerWidget(powerComponent);
+            focusWidget = setUpFocusComponent(focusComponent);
+            energyWidget = setUpEnergyComponent(energyComponent);
+            spiritWidget = setUpSpiritComponent(spiritComponent);
 
             addWidget(healthWidget);
-            addWidget(powerWidget);
+            addWidget(focusWidget);
+            addWidget(energyWidget);
+            addWidget(spiritWidget);
         }
 
         private TextFieldWidget setupHealthWidget(final DynamicValueComponent healthComponent) {
@@ -205,14 +221,44 @@ public class HeroQuickbarPanel extends MouseInputWidget {
             return result;
         }
 
-        private TextFieldWidget setupPowerWidget(final DynamicValueComponent powerComponent) {
+        private TextFieldWidget setUpFocusComponent(final DynamicValueComponent focusComponent) {
             final TextFieldWidget result = new TextFieldWidget(LayoutData.builder()
-                .anchor(new VDim(0, 0, 65, 44))
-                .size(new VDim(0, 0, 161, 8))
+                .anchor(new VDim(0, 0, 32, 46))
+                .size(new VDim(0, 0, 118, 8))
                 .build(),
-                formatAdjustableValue(powerComponent.getCurrentValue(), powerComponent.getMaxValue(), "{SIZE=13}"));
+                formatAdjustableValue(focusComponent.getCurrentValue(), focusComponent.getMaxValue(), "{SIZE=13}"));
 
-            powerComponent.delegateOnValueChanged.bindDelegate(e -> {
+            focusComponent.delegateOnValueChanged.bindDelegate(e -> {
+                result.setText(formatAdjustableValue(e.currentValue, e.maxValue, "{SIZE=13}"));
+                return null;
+            });
+
+            return result;
+        }
+
+        private TextFieldWidget setUpEnergyComponent(final DynamicValueComponent energyComponent) {
+            final TextFieldWidget result = new TextFieldWidget(LayoutData.builder()
+                .anchor(new VDim(0, 0, 88, 46))
+                .size(new VDim(0, 0, 118, 8))
+                .build(),
+                formatAdjustableValue(energyComponent.getCurrentValue(), energyComponent.getMaxValue(), "{SIZE=13}"));
+
+            energyComponent.delegateOnValueChanged.bindDelegate(e -> {
+                result.setText(formatAdjustableValue(e.currentValue, e.maxValue, "{SIZE=13}"));
+                return null;
+            });
+
+            return result;
+        }
+
+        private TextFieldWidget setUpSpiritComponent(final DynamicValueComponent spiritComponent) {
+            final TextFieldWidget result = new TextFieldWidget(LayoutData.builder()
+                .anchor(new VDim(0, 0, 140, 46))
+                .size(new VDim(0, 0, 118, 8))
+                .build(),
+                formatAdjustableValue(spiritComponent.getCurrentValue(), spiritComponent.getMaxValue(), "{SIZE=13}"));
+
+            spiritComponent.delegateOnValueChanged.bindDelegate(e -> {
                 result.setText(formatAdjustableValue(e.currentValue, e.maxValue, "{SIZE=13}"));
                 return null;
             });
@@ -226,7 +272,9 @@ public class HeroQuickbarPanel extends MouseInputWidget {
 
         public void setVisible(final boolean isVisible) {
             healthWidget.setEnabled(isVisible);
-            powerWidget.setEnabled(isVisible);
+            focusWidget.setEnabled(isVisible);
+            energyWidget.setEnabled(isVisible);
+            spiritWidget.setEnabled(isVisible);
         }
     }
 }

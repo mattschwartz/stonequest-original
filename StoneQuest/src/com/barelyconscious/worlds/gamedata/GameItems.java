@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.game.Requirement;
+import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.item.ItemProperty;
@@ -56,13 +57,16 @@ public enum GameItems {
         new BetterSpriteResource("items::shield"),
         Set.of(EquipmentItemTag.EQUIPMENT_LEFT_HAND, RelatedSkillItemTag.METALWORKING),
         Lists.newArrayList(new Requirement.TraitRequirement(TraitName.STRENGTH, 10)),
-        new ArrayList<>()),
+        Lists.newArrayList(new ItemProperty.StatItemProperty(StatName.ARMOR, 5))),
     CLOTH_ROBE(6, 1,
         "Cloth Robe", "Little more than a bath robe.",
         new BetterSpriteResource("items::blue_robe"),
         Set.of(EquipmentItemTag.EQUIPMENT_CHEST, RelatedSkillItemTag.TAILORING),
         new ArrayList<>(),
-        new ArrayList<>()),
+        Lists.newArrayList(
+            new ItemProperty.StatItemProperty(StatName.ARMOR, 1),
+            new ItemProperty.TraitItemProperty(TraitName.INTELLIGENCE, 1)
+        )),
     RECURVE_BOW(7, 1,
         "Recurve Bow", "A bow with a recurved shape.",
         new BetterSpriteResource("items::recurve_bow"),

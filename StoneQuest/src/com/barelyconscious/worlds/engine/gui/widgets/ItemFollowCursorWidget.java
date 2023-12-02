@@ -17,7 +17,11 @@ public class ItemFollowCursorWidget extends Widget {
 
     public static Inventory.InventoryItem setInventoryItemOnCursor(final Inventory.InventoryItem newWidget) {
         final Inventory.InventoryItem prevWidget = inventoryItemOnCursor;
-        inventoryItemOnCursor = newWidget;
+        if (newWidget == null || newWidget.item == null) {
+            inventoryItemOnCursor = null;
+        } else {
+            inventoryItemOnCursor = newWidget;
+        }
         return prevWidget;
     }
 

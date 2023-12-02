@@ -50,6 +50,21 @@ public class EquipmentDollWidget extends MouseInputWidget {
         return null;
     }
 
+    private Void onItemSlotChanged(ItemSlotWidget.ItemSlotEvent itemSlotEvent) {
+        if (itemSlotEvent.newItem == itemSlotEvent.prevItem) {
+            return null;
+        }
+
+        log.info("Equipment slot {} changed to {}",
+            EquipmentItemTag.values()[itemSlotEvent.inventorySlotId].name(),
+            itemSlotEvent.newItem == null ? "nothing" : itemSlotEvent.newItem.getName());
+
+        final EquipmentItemTag tag = EquipmentItemTag.values()[itemSlotEvent.inventorySlotId];
+
+        equipmentComponent.setEquippedItem(tag, itemSlotEvent.newItem);
+        return null;
+    }
+
     private void setupEquipmentSlots() {
         ItemSlotWidget itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 19, 42))
@@ -61,6 +76,7 @@ public class EquipmentDollWidget extends MouseInputWidget {
         itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_HEAD);
         addWidget(itemSlotWidget);
         itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_HEAD.ordinal(), itemSlotWidget);
+        itemSlotWidget.delegateOnItemChanged.bindDelegate(this::onItemSlotChanged);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 19, 78))
@@ -72,6 +88,7 @@ public class EquipmentDollWidget extends MouseInputWidget {
         itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_NECK);
         addWidget(itemSlotWidget);
         itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_NECK.ordinal(), itemSlotWidget);
+        itemSlotWidget.delegateOnItemChanged.bindDelegate(this::onItemSlotChanged);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 19, 114))
@@ -83,6 +100,7 @@ public class EquipmentDollWidget extends MouseInputWidget {
         itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_CHEST);
         addWidget(itemSlotWidget);
         itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_CHEST.ordinal(), itemSlotWidget);
+        itemSlotWidget.delegateOnItemChanged.bindDelegate(this::onItemSlotChanged);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 127, 42))
@@ -94,6 +112,7 @@ public class EquipmentDollWidget extends MouseInputWidget {
         itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_GLOVES);
         addWidget(itemSlotWidget);
         itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_GLOVES.ordinal(), itemSlotWidget);
+        itemSlotWidget.delegateOnItemChanged.bindDelegate(this::onItemSlotChanged);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 127, 78))
@@ -105,6 +124,7 @@ public class EquipmentDollWidget extends MouseInputWidget {
         itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_LEGS);
         addWidget(itemSlotWidget);
         itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_LEGS.ordinal(), itemSlotWidget);
+        itemSlotWidget.delegateOnItemChanged.bindDelegate(this::onItemSlotChanged);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 127, 114))
@@ -116,6 +136,7 @@ public class EquipmentDollWidget extends MouseInputWidget {
         itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_FEET);
         addWidget(itemSlotWidget);
         itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_FEET.ordinal(), itemSlotWidget);
+        itemSlotWidget.delegateOnItemChanged.bindDelegate(this::onItemSlotChanged);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 55, 150))
@@ -127,6 +148,7 @@ public class EquipmentDollWidget extends MouseInputWidget {
         itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_RIGHT_HAND);
         addWidget(itemSlotWidget);
         itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_RIGHT_HAND.ordinal(), itemSlotWidget);
+        itemSlotWidget.delegateOnItemChanged.bindDelegate(this::onItemSlotChanged);
 
         itemSlotWidget = new ItemSlotWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 91, 150))
@@ -138,5 +160,6 @@ public class EquipmentDollWidget extends MouseInputWidget {
         itemSlotWidget.addRequiredItemTag(EquipmentItemTag.EQUIPMENT_LEFT_HAND);
         addWidget(itemSlotWidget);
         itemSlotsByClassType.put(EquipmentItemTag.EQUIPMENT_LEFT_HAND.ordinal(), itemSlotWidget);
+        itemSlotWidget.delegateOnItemChanged.bindDelegate(this::onItemSlotChanged);
     }
 }

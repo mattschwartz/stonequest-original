@@ -69,7 +69,7 @@ public class TestHeroInitializer {
             .withCreatureLevel(3, 144, 12)
             .withHeroClass(HeroClassType.PRIEST)
             .withStat(StatName.ARMOR, 3f)
-            .withStat(StatName.FOCUS, -1f)
+            .withStat(StatName.FOCUS, 1f)
             .withStat(StatName.SPIRIT, 10f)
             .buildHero(HeroClassType.PRIEST);
 
@@ -85,6 +85,21 @@ public class TestHeroInitializer {
         HERO_PAUL.addComponent(new SpriteComponent(HERO_PAUL, Resources.getSprite(ResourceSprite.HERO_1), RenderLayer.ENTITIES));
         HERO_PAUL.addComponent(new BoxColliderComponent(HERO_PAUL, true, true, new Box(0, 32, 0, 32)));
         HERO_PAUL.addComponent(new HealthBarComponent(HERO_PAUL, HERO_PAUL.getHealthComponent()));
+        HERO_PAUL.addComponent(new RegenDynamicValueComponent(
+            HERO_PAUL,
+            HERO_PAUL.stat(StatName.FOCUS).get(),
+            2.5,
+            1f));
+        HERO_PAUL.addComponent(new RegenDynamicValueComponent(
+            HERO_PAUL,
+            HERO_PAUL.stat(StatName.ENERGY).get(),
+            2.5,
+            1f));
+        HERO_PAUL.addComponent(new RegenDynamicValueComponent(
+            HERO_PAUL,
+            HERO_PAUL.stat(StatName.SPIRIT).get(),
+            2.5,
+            1f));
     }
 
     public static void createHeroes(final World world) {

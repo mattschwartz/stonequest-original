@@ -122,10 +122,6 @@ public class EntityActor extends Actor {
         return new StatAccessor(name);
     }
 
-    public DynamicValueComponent getPowerComponent() {
-        return stats.get(StatName.ENERGY);
-    }
-
     public DynamicValueComponent getHealthComponent() {
         return stats.get(StatName.HEALTH);
     }

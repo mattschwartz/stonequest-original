@@ -11,6 +11,10 @@ public final class Box implements Shape {
     public final int width;
     public final int height;
 
+    public static Box square(int size) {
+        return new Box(0, size, 0, size);
+    }
+
     public Box(int left, int right, int top, int bottom) {
         this.left = left;
         this.right = right;

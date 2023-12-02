@@ -51,14 +51,14 @@ public class ProgressBarWidget extends Widget {
 
         this.progress = stat.getCurrentValue() / stat.getMaxValue();
         stat.delegateOnValueChanged.bindDelegate((event) -> {
-            setProgress(event.currentValue / event.maxValue);
+            setProgress(event.maxValue == 0 ? 0 : event.currentValue / event.maxValue);
             return null;
         });
     }
 
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
-        if (progress <= 0) {
+        if (progress < 0) {
             return;
         }
 

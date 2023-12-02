@@ -62,7 +62,20 @@ public class TerritoryGeneration {
         // based on faction, spawn faction-specific enemies
         // spawn any special events, like side quests or bosses
 
+        // these will go first when we can build the world around them
+        spawnTravelLocations(result, territory, worldSpace);
+
         return result;
+    }
+
+    private void spawnTravelLocations(
+        WildernessLevel wilderness,
+        Territory territory,
+        Actor[][] worldSpace
+    ) {
+        wilderness.addChild(new LoadTerritoryActor(
+            Vector.ZERO
+        ));
     }
 
     /**
