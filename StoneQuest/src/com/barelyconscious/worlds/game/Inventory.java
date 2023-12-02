@@ -25,6 +25,8 @@ public final class Inventory {
     public static final class InventoryItemEvent {
 
         public final Item item;
+        @Nullable
+        public final Item prevItem;
         public final int index;
     }
 
@@ -57,8 +59,8 @@ public final class Inventory {
                 currentSize++;
             }
 
-            delegateOnItemAdded.call(new InventoryItemEvent(inventoryItem.item, currentSize));
-            delegateOnItemChanged.call(new InventoryItemEvent(inventoryItem.item, currentSize));
+            delegateOnItemAdded.call(new InventoryItemEvent(inventoryItem.item, prevItem == null ? null : prevItem.item, currentSize));
+            delegateOnItemChanged.call(new InventoryItemEvent(inventoryItem.item, prevItem == null ? null : prevItem.item, currentSize));
 
             return prevItem;
         }
@@ -86,8 +88,8 @@ public final class Inventory {
                 currentSize++;
             }
 
-            delegateOnItemAdded.call(new InventoryItemEvent(item, currentSize));
-            delegateOnItemChanged.call(new InventoryItemEvent(item, currentSize));
+            delegateOnItemAdded.call(new InventoryItemEvent(item, null, currentSize));
+            delegateOnItemChanged.call(new InventoryItemEvent(item, prevItem == null ? null : prevItem.item, currentSize));
 
             return prevItem;
         }
@@ -115,8 +117,8 @@ public final class Inventory {
             ++currentSize;
         }
 
-        delegateOnItemAdded.call(new InventoryItemEvent(item, currentSize));
-        delegateOnItemChanged.call(new InventoryItemEvent(item, currentSize));
+        delegateOnItemAdded.call(new InventoryItemEvent(item, null, currentSize));
+        delegateOnItemChanged.call(new InventoryItemEvent(item, null, currentSize));
 
         return true;
     }
@@ -150,8 +152,8 @@ public final class Inventory {
 
         if (itemRemoved != null) {
             --currentSize;
-            delegateOnItemRemoved.call(new InventoryItemEvent(itemRemoved.item, slotId));
-            delegateOnItemChanged.call(new InventoryItemEvent(itemRemoved.item, slotId));
+            delegateOnItemRemoved.call(new InventoryItemEvent(itemRemoved.item, null, slotId));
+            delegateOnItemChanged.call(new InventoryItemEvent(null, itemRemoved.item, slotId));
         }
 
         return itemRemoved;

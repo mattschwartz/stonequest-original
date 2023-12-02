@@ -59,9 +59,10 @@ public class DynamicValueComponent extends Component {
         if (proposedNewMaxValue >= this.maxValue) {
             final double diff = proposedNewMaxValue - this.maxValue;
             this.currentValue += diff;
-        } else if (maxValueDelta < this.maxValue) {
-            this.currentValue = UMath.clamp(this.currentValue, this.currentValue, maxValueDelta);
+        } else {
+            this.currentValue = UMath.clamp(this.currentValue, 0, proposedNewMaxValue);
         }
+
         this.maxValue = proposedNewMaxValue;
 
         delegateOnValueChanged.call(new DynamicValueChanged(

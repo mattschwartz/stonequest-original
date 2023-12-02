@@ -30,6 +30,7 @@ public class EquipmentComponent extends Component {
         super(parent);
 
         this.equipmentInventory = new Inventory(8);
+        equipmentInventory.delegateOnItemChanged.bindDelegate(this::onEquipmentChanged);
     }
 
     private static final EnumMap<EquipmentItemTag, Integer> SLOT_ID_BY_TAG = new EnumMap<>(EquipmentItemTag.class) {{
@@ -42,6 +43,8 @@ public class EquipmentComponent extends Component {
         put(EquipmentItemTag.EQUIPMENT_LEFT_HAND, 6);
         put(EquipmentItemTag.EQUIPMENT_RIGHT_HAND, 7);
     }};
+
+
 
     /**
      * @return -1 if item class type is not equipment
@@ -60,36 +63,47 @@ public class EquipmentComponent extends Component {
         return inventoryItem == null ? null : inventoryItem.item;
     }
 
-    public Item setEquippedItem(final EquipmentItemTag equipmentTag, final Item item) {
-        if (item != null) {
-            for (ItemProperty property : item.getProperties()) {
-                log.info("Applying property {} to {}", property.getClass().getSimpleName(), getParent().getName());
+    private Void onEquipmentChanged(Inventory.InventoryItemEvent inventoryItemEvent) {
+        var newItem = inventoryItemEvent.item;
+        var prevItem = inventoryItemEvent.prevItem;
+
+        if (newItem == prevItem) {
+            log.warn("Nothing changed!?");
+            return null;
+        }
+
+        EquipmentItemTag equipmentTag;
+        if (newItem == null) {
+            equipmentTag = (EquipmentItemTag) prevItem.getTags().stream().filter(t -> t instanceof EquipmentItemTag).findFirst().orElse(null);
+        } else {
+            equipmentTag = (EquipmentItemTag) newItem.getTags().stream().filter(t -> t instanceof EquipmentItemTag).findFirst().orElse(null);
+        }
+
+        if (equipmentTag == null) {
+            log.error("Invalid item!");
+            return null;
+        }
+
+        if (prevItem != null) {
+            for (ItemProperty property : prevItem.getProperties()) {
+                property.removeProperty((EntityActor) getParent());
+            }
+        }
+        if (newItem != null) {
+            for (ItemProperty property : newItem.getProperties()) {
                 property.applyProperty((EntityActor) getParent());
             }
         }
 
-        Inventory.InventoryItem prevItem = equipmentInventory.setItem(itemClassToSlotId(equipmentTag),
-            new Inventory.InventoryItem(item, 1));
-
-        if (prevItem == null || prevItem.item == null) {
-            log.info("Nothing?");
-            return null;
-        }
-
-        for (ItemProperty property : prevItem.item.getProperties()) {
-            log.info("Removing property {} from {}", property.getClass().getSimpleName(), getParent().getName());
-            property.removeProperty((EntityActor) getParent());
-        }
-
-        return prevItem.item;
+        return null;
     }
 
-    public Item setEquippedItem(final Item item) {
+    public void setEquippedItem(final Item item) {
         EquipmentItemTag equipmentTag = (EquipmentItemTag) item.getTags().stream().filter(t -> t instanceof EquipmentItemTag).findFirst().orElse(null);
         if (equipmentTag == null) {
-            return null;
+            return;
         }
 
-        return setEquippedItem(equipmentTag, item);
+        equipmentInventory.setItem(itemClassToSlotId(equipmentTag), new Inventory.InventoryItem(item, 1));
     }
 }
