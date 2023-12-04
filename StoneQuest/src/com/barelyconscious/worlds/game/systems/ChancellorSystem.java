@@ -77,6 +77,7 @@ public class ChancellorSystem implements GameSystem {
 
     /**
      * doesn't add to world
+     * todo - or territorysystem???
      */
     public void claimTerritory(Territory territory, Settlement settlement) {
         World world = GameInstance.instance().getWorld();

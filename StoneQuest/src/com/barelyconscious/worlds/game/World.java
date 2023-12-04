@@ -48,12 +48,16 @@ public final class World {
      */
     public final Map<Territory, Settlement> territoryToSettlement = new HashMap<>();
 
+    /**
+     * Will unload the previous level when loading a new one. happens on next game update
+     * @param wildernessLevel
+     */
     public void setWildernessLevel(WildernessLevel wildernessLevel) {
         if (isLevelLoading) {
             log.error("Cannot set wilderness level while another level is loading.");
             return;
         }
-
+        log.info("Changing level to {}", wildernessLevel.getName());
         isLevelLoading = true;
         this.loadingLevel = wildernessLevel;
     }
@@ -78,6 +82,45 @@ public final class World {
 
     public World() {
         actors = new CopyOnWriteArrayList<>();
+    }
+
+    /**
+     * Updates the world, which includes territories and settlements.
+     */
+    public void update(EventArgs args) {
+        readyLoadWorld();
+        territories.forEach(territory -> territory.update(args));
+        settlements.forEach(settlement -> settlement.update(args));
+    }
+
+    // make sure level loads occur during game updates only?
+    public void readyLoadWorld() {
+        if (!isLevelLoading) {
+            return;
+        }
+
+        long currentTime = System.currentTimeMillis();
+        log.info("Loading level: " + loadingLevel.getName());
+
+        if (wildernessLevel != null) {
+            // remove wilderness children actors from world
+            var children = new ArrayList<>(wildernessLevel.getChildren());
+            for (final Actor actor : children) {
+                removeActor(actor);
+            }
+        }
+
+        wildernessLevel = loadingLevel;
+        // add winderness children actors to world
+        var children = new ArrayList<>(wildernessLevel.getChildren());
+        for (final Actor actor : children) {
+            addActor(actor);
+        }
+
+        long timeToLoad = System.currentTimeMillis() - currentTime;
+        log.info("{} loaded. {}ms", wildernessLevel.getName(), timeToLoad);
+
+        isLevelLoading = false;
     }
 
     public void addActor(final Actor actor) {
@@ -116,38 +159,5 @@ public final class World {
             int index = matches.size() - 1;
             return matches.get(index);
         }
-    }
-
-    /**
-     * Updates the world, which includes territories and settlements.
-     */
-    public void update(EventArgs args) {
-        readyLoadWorld();
-        territories.forEach(territory -> territory.update(args));
-        settlements.forEach(settlement -> settlement.update(args));
-    }
-
-    public void readyLoadWorld() {
-        if (!isLevelLoading) {
-            return;
-        }
-
-        log.info("Loading level: " + loadingLevel.getName());
-
-        if (this.wildernessLevel != null) {
-            // remove wilderness children actors from world
-            for (final Actor actor : this.wildernessLevel.getChildren()) {
-                removeActor(actor);
-            }
-        }
-
-        this.wildernessLevel = loadingLevel;
-        // add winderness children actors to world
-        for (final Actor actor : wildernessLevel.getChildren()) {
-            addActor(actor);
-        }
-
-        this.isLevelLoading = false;
-        log.info("Level loaded: " + wildernessLevel.getName());
     }
 }

@@ -187,38 +187,42 @@ public final class Engine {
         final List<Component> componentsToUpdate = new ArrayList<>();
         final List<Actor> actorsToRemove = new ArrayList<>();
 
-        final List<Actor> allActors = getAllChildren(world.getActors());
+        if (!world.isLevelLoading()) {
+            final List<Actor> allActors = getAllChildren(world.getActors());
 
-        for (final Actor actor : allActors) {
-            if (actor.isDestroying()) {
-                actorsToRemove.add(actor);
-                continue;
-            }
-            if (!actor.isEnabled()) {
-                continue;
-            }
-
-            final List<Component> componentsToRemove = new ArrayList<>();
-            for (final Component c : actor.getComponents()) {
-                if (c.isRemoveOnNextUpdate()) {
-                    componentsToRemove.add(c);
+            for (final Actor actor : allActors) {
+                if (actor.isDestroying()) {
+                    actorsToRemove.add(actor);
                     continue;
                 }
-                if (c.isEnabled()) {
-                    componentsToUpdate.add(c);
+                if (!actor.isEnabled()) {
+                    continue;
                 }
+
+                final List<Component> componentsToRemove = new ArrayList<>();
+                for (final Component c : actor.getComponents()) {
+                    if (c.isRemoveOnNextUpdate()) {
+                        componentsToRemove.add(c);
+                        continue;
+                    }
+                    if (c.isEnabled()) {
+                        componentsToUpdate.add(c);
+                    }
+                }
+                componentsToRemove.forEach(actor::removeComponent);
             }
-            componentsToRemove.forEach(actor::removeComponent);
+
+            physics.updatePhysics(eventArgs, allActors);
+            // Run jobs submitted from last tick
+            runJobs(eventArgs);
+            update(eventArgs, componentsToUpdate);
+
+            actorsToRemove.forEach(world::removeActor);
+
+            eventArgs.getWorldContext().applyActorOperations();
+        } else {
+            log.info("Leveling is loading, so not updating actors");
         }
-
-        physics.updatePhysics(eventArgs, allActors);
-        // Run jobs submitted from last tick
-        runJobs(eventArgs);
-        update(eventArgs, componentsToUpdate);
-
-        actorsToRemove.forEach(world::removeActor);
-
-        eventArgs.getWorldContext().applyActorOperations();
 
         world.update(eventArgs);
     }

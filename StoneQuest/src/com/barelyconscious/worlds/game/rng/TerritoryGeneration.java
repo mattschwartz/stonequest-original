@@ -74,7 +74,7 @@ public class TerritoryGeneration {
         Actor[][] worldSpace
     ) {
         wilderness.addChild(new LoadTerritoryActor(
-            Vector.ZERO
+            new Vector(64 + RNG.nextDouble() * 64, 64 + RNG.nextDouble() * 64)
         ));
     }
 
@@ -275,6 +275,8 @@ public class TerritoryGeneration {
     }
 
     private void spawnDeposits(WildernessLevel wilderness, Territory territory, Actor[][] worldSpace) {
+        int maxAttempts = 30;
+        int j = 0;
         for (var resource : territory.getAvailableResources()) {
             int numDeposits = (int) (NUM_DEPOSITS * resource.richness);
             for (int i = 0; i < numDeposits; ++i) {
@@ -284,6 +286,9 @@ public class TerritoryGeneration {
                     transform = new Vector(
                         RNG.nextInt(NUM_TILES_ROWS),
                         RNG.nextInt(NUM_TILES_COLS));
+                    if (++j > maxAttempts) {
+                        break;
+                    }
                 } while (worldSpace[(int) transform.x][(int) transform.y] != null);
 
                 var deposit = new ResourceDeposit(
@@ -299,6 +304,10 @@ public class TerritoryGeneration {
     private void spawnBuildings(WildernessLevel wilderness, Territory territory, Actor[][] worldSpace) {
         List<BuildingActor> buildingsWithinTerritory = GameInstance.instance().getSystem(ChancellorSystem.class)
             .getBuildingsWithinTerritory(territory);
+
+        if (buildingsWithinTerritory == null) {
+            return;
+        }
 
         // place building randomly in map
         for (BuildingActor building : buildingsWithinTerritory) {
