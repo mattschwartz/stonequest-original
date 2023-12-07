@@ -9,7 +9,6 @@ import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
 import com.barelyconscious.worlds.game.hero.HeroClassType;
-import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Box;
@@ -119,7 +118,7 @@ public class TestHeroInitializer {
             }
         });
         GameInstance.instance().setHero(heroJohn, GameInstance.PartySlot.RIGHT);
-        world.addActor(HERO_JOHN);
+        world.addPersistentActor(HERO_JOHN);
 
         Hero heroNicnole = HERO_NICNOLE;
         heroNicnole.addComponent(new LightSourceComponent(heroNicnole, 250));
@@ -137,7 +136,7 @@ public class TestHeroInitializer {
             }
         });
         GameInstance.instance().setHero(heroNicnole, GameInstance.PartySlot.MIDDLE);
-        world.addActor(HERO_NICNOLE);
+        world.addPersistentActor(HERO_NICNOLE);
 
         Hero heroPaul = HERO_PAUL;
         heroPaul.addComponent(new LightSourceComponent(heroPaul, 250));
@@ -155,7 +154,7 @@ public class TestHeroInitializer {
             }
         });
         GameInstance.instance().setHero(heroPaul, GameInstance.PartySlot.LEFT);
-        world.addActor(HERO_PAUL);
+        world.addPersistentActor(HERO_PAUL);
 
         GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
 

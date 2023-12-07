@@ -1,6 +1,5 @@
 package com.barelyconscious.worlds.gamedata;
 
-import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
 import com.barelyconscious.worlds.engine.gui.*;
 import com.barelyconscious.worlds.engine.gui.widgets.*;
 import com.barelyconscious.worlds.game.GameInstance;
@@ -11,7 +10,6 @@ import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
-import com.barelyconscious.worlds.gamedata.TestHeroInitializer;
 import lombok.val;
 
 import static com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet.Resources.INV_ITEM_SLOT_BACKGROUND;
@@ -33,7 +31,7 @@ public final class GuiInitializer {
         gui.addWidget(new ErrorAlertTextWidget());
         configureHeroQuickbarPanel(gui);
         configureInventory(gui, playerController);
-        world.addActor(gui);
+        world.addPersistentActor(gui);
     }
 
     private static void configureInventory(GuiCanvas gui, final PlayerController playerController) {

@@ -59,7 +59,7 @@ public final class GameRunner {
             injector.getInstance(GuiCanvas.class),
             world, playerController);
 
-        world.addActor(new CameraActor(screen.getCamera()));
+        world.addPersistentActor(new CameraActor(screen.getCamera()));
 
         frame.requestFocus();
 

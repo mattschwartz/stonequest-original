@@ -48,6 +48,12 @@ public final class World {
      */
     public final Map<Territory, Settlement> territoryToSettlement = new HashMap<>();
 
+
+    /**
+     * Actors that are removed from the world between scenes
+     */
+    private final List<Actor> sceneActors = new ArrayList<>();
+
     /**
      * Will unload the previous level when loading a new one. happens on next game update
      * @param wildernessLevel
@@ -108,6 +114,10 @@ public final class World {
             for (final Actor actor : children) {
                 removeActor(actor);
             }
+            for (final Actor actor : sceneActors) {
+                removeActor(actor);
+            }
+            sceneActors.clear();
         }
 
         wildernessLevel = loadingLevel;
@@ -124,6 +134,17 @@ public final class World {
     }
 
     public void addActor(final Actor actor) {
+        actors.add(actor);
+        actorsById.put(actor.id, actor);
+        sceneActors.add(actor);
+    }
+
+    /**
+     *
+     * @param actor
+     * @param isPersistent whether the actor persists between levels
+     */
+    public void addPersistentActor(final Actor actor) {
         actors.add(actor);
         actorsById.put(actor.id, actor);
     }

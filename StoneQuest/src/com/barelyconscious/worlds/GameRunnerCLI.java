@@ -78,7 +78,7 @@ public class GameRunnerCLI {
         var pw = new Wagon(
             new Inventory(8),
             new Inventory(8));
-        world.addActor(pw);
+        world.addPersistentActor(pw);
         gi.setWagon(pw);
 
         TestHeroInitializer.createHeroes(world);

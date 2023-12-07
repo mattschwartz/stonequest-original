@@ -2,10 +2,12 @@ package com.barelyconscious.worlds.game.systems;
 
 import com.barelyconscious.worlds.engine.gui.GuiCanvas;
 import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
+import lombok.Getter;
 
 public class GuiSystem implements GameSystem {
 
     private final GuiCanvas canvas;
+    @Getter
     private final TooltipWidget tooltip;
 
     public GuiSystem(GuiCanvas canvas, TooltipWidget tooltip) {
