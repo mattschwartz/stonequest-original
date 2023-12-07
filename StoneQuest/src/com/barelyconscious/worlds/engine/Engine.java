@@ -220,8 +220,6 @@ public final class Engine {
             actorsToRemove.forEach(world::removeActor);
 
             eventArgs.getWorldContext().applyActorOperations();
-        } else {
-            log.info("Leveling is loading, so not updating actors");
         }
 
         world.update(eventArgs);

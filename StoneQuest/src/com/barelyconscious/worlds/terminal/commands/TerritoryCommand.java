@@ -2,7 +2,7 @@ package com.barelyconscious.worlds.terminal.commands;
 
 import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.game.GameInstance;
-import com.barelyconscious.worlds.game.rng.TerritoryGeneration;
+import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.barelyconscious.worlds.terminal.InputDialog;
 
@@ -68,10 +68,11 @@ public class TerritoryCommand extends Command {
         }
 
 
-        var tg = new TerritoryGeneration();
-        var wilderness = tg.generateTerritory(selectATerritoryToSpawn);
+        var wilderness = TerritoryGenerator.generator()
+            .territory(selectATerritoryToSpawn)
+            .generate();
 
-        var map = new String[TerritoryGeneration.NUM_TILES_ROWS][TerritoryGeneration.NUM_TILES_COLS];
+        var map = new String[TerritoryGenerator.NUM_TILES_ROWS][TerritoryGenerator.NUM_TILES_COLS];
         // fill map with .'s
         for (int x = 0; x < map.length; ++x) {
             for (int y = 0; y < map[0].length; ++y) {

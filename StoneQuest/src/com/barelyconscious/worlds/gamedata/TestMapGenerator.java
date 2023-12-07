@@ -3,18 +3,14 @@ package com.barelyconscious.worlds.gamedata;
 import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.World;
-import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.game.rng.TerritoryGeneration;
+import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
 import com.barelyconscious.worlds.game.types.TerritoryResource;
 import com.google.common.collect.Lists;
 import lombok.extern.log4j.Log4j2;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Log4j2
 public class TestMapGenerator {
@@ -28,7 +24,8 @@ public class TestMapGenerator {
         createTerritories(world);
         // load the first territory into the world
 
-        WildernessLevel wild = new TerritoryGeneration().generateTerritory(territory1);
+        WildernessLevel wild = TerritoryGenerator.generator()
+            .territory(territory1).generate();
 
         world.setWildernessLevel(wild);
     }

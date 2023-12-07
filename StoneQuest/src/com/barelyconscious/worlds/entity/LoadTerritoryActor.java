@@ -9,13 +9,16 @@ import com.barelyconscious.worlds.entity.components.MouseListenerComponent;
 import com.barelyconscious.worlds.entity.components.SpriteComponent;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
-import com.barelyconscious.worlds.game.rng.TerritoryGeneration;
+import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
 import com.barelyconscious.worlds.game.systems.GuiSystem;
 
 import java.awt.event.MouseEvent;
 
 /**
  * todo: how to reload territories visited by the player so the state is tracked
+ *
+ * todo(bug): you can click to load the territory, move the hero away without moving the mouse,
+ *  and then click again to load the territory again
  */
 public class LoadTerritoryActor extends Actor {
     private int numHeroesNearby = 0;
@@ -99,9 +102,10 @@ public class LoadTerritoryActor extends Actor {
 
     private Void onMouseClicked(MouseEvent mouseEvent) {
         if (numHeroesNearby > 0) {
-            WildernessLevel wild = new TerritoryGeneration()
-                .generateTerritory(GameInstance.instance().getWorld()
-                    .getTerritories().get(1));
+            WildernessLevel wild = TerritoryGenerator.generator()
+                .territory(GameInstance.instance().getWorld()
+                    .getTerritories().get(1))
+                .generate();
 
             GameInstance.instance().getWorld()
                 .setWildernessLevel(wild);
