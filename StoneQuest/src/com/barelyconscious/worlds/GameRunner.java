@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds;
 
 import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
+import com.barelyconscious.worlds.engine.gui.GuiCanvas;
 import com.barelyconscious.worlds.entity.CameraActor;
 import com.barelyconscious.worlds.engine.Engine;
 import com.barelyconscious.worlds.game.GameInstance;
@@ -54,7 +55,9 @@ public final class GameRunner {
         TestWorldInitializer.createWorld(world);
         TestHeroInitializer.createHeroes(world);
 
-        GuiInitializer.createGui(screen, world, playerController);
+        GuiInitializer.createGui(
+            injector.getInstance(GuiCanvas.class),
+            world, playerController);
 
         world.addActor(new CameraActor(screen.getCamera()));
 

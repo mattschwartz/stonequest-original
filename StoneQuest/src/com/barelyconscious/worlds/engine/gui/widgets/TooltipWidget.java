@@ -7,6 +7,8 @@ import com.barelyconscious.worlds.engine.graphics.RenderLayer;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.Widget;
 import com.barelyconscious.worlds.common.shape.Box;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.awt.Color;
 
@@ -17,9 +19,17 @@ public class TooltipWidget extends Widget {
     private static final String ACTION_TEXT_FORMAT_STRING = "{STYLE=BOLD}{COLOR=GREEN}";
     private static final String TOP_RIGHT_TEXT_FORMAT_STRING = "{STYLE=BOLD}{COLOR=WHITE}";
 
+    @Getter
+    @Setter
     private String title;
+    @Getter
+    @Setter
     private String description;
+    @Getter
+    @Setter
     private String actionText;
+    @Getter
+    @Setter
     private String topRightText;
 
     public TooltipWidget(

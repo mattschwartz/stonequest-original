@@ -122,7 +122,7 @@ public class SpriteComponent extends Component {
                 .spriteResource(spriteResource)
                 .width(width).height(height)
                 .worldX((int) position.x).worldY((int) position.y)
-                .renderOpacity(1)
+                .renderOpacity(opacity)
                 .renderLayer(renderLayer)
                 .build());
             // also render to the accumulated light so this sprite still shows up as "seen"

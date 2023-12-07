@@ -18,8 +18,11 @@ import static com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteShe
 
 public final class GuiInitializer {
 
-    public static void createGui(final CanvasScreen screen, final World world, final PlayerController playerController) {
-        val gui = new GuiCanvas(screen);
+    public static void createGui(
+        final GuiCanvas gui,
+        final World world,
+        final PlayerController playerController
+    ) {
         TileInfoWidget tiw = new TileInfoWidget(LayoutData.builder()
             .anchor(new VDim(0.5f, 0, -45, 15))
             .size(new VDim(0, 0, 15, 45))
@@ -41,9 +44,9 @@ public final class GuiInitializer {
         // Player's backpack
         Inventory inventory = GameInstance.instance().getWagon().getStorage();
         var wBackpack = new InventoryBagWidget(LayoutData.builder()
-            .anchor(new VDim(1, 0.5f,
+            .anchor(new VDim(1, 0,
                 -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 5),
-                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight() / 2)))
+                105))
             .size(new VDim(0, 0,
                 INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth(),
                 INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight()))
@@ -52,14 +55,13 @@ public final class GuiInitializer {
         // Faction inventory
         Inventory stockpile = GameInstance.instance().getWorld().getPlayerSettlement().getStockpile();
         var wStockPile = new InventoryBagWidget(LayoutData.builder()
-            .anchor(new VDim(1, 1f,
-                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 5),
-                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight() + 5)))
+            .anchor(new VDim(0, 0,
+                5,
+                33))
             .size(new VDim(0, 0,
                 INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth(),
                 INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight()))
             .build(), stockpile, 8, 8);
-        wStockPile.setVisible(true);
 
         val wCraftingMenu = new CraftingWindowWidget();
         var wWorldMapMenu = new WorldMapWidget();

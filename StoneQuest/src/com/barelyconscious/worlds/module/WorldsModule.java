@@ -1,6 +1,10 @@
 package com.barelyconscious.worlds.module;
 
 import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
+import com.barelyconscious.worlds.engine.graphics.Screen;
+import com.barelyconscious.worlds.engine.gui.GuiCanvas;
+import com.barelyconscious.worlds.engine.gui.LayoutData;
+import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
 import com.barelyconscious.worlds.entity.Wagon;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
@@ -12,6 +16,7 @@ import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerContr
 import com.barelyconscious.worlds.common.exception.InvalidGameConfigurationException;
 import com.barelyconscious.worlds.engine.Physics;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
+import com.barelyconscious.worlds.game.systems.GuiSystem;
 import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
 import com.google.common.util.concurrent.RateLimiter;
 import com.google.inject.AbstractModule;
@@ -192,13 +197,38 @@ public class WorldsModule extends AbstractModule {
     GameInstance providesGameInstance(
         Wagon partyWagon,
         ChancellorSystem chancellorSystem,
-        CombatSystem combatSystem
+        CombatSystem combatSystem,
+        GuiSystem guiSystem
     ) {
         var gi = GameInstance.instance();
         gi.setWagon(partyWagon);
         gi.registerSystem(chancellorSystem);
         gi.registerSystem(combatSystem);
+        gi.registerSystem(guiSystem);
         return gi;
+    }
+
+    @Provides
+    @Singleton
+    GuiSystem providesGuiSystem(GuiCanvas guiCanvas) {
+        return new GuiSystem(guiCanvas, new TooltipWidget(
+            LayoutData.builder()
+                .anchor(1, 1, -260, -50)
+                .size(0, 0, 120, 0)
+                .build(),
+            "Tooltip",
+            "Description",
+            "ActionText",
+            "topRightText"
+        ));
+    }
+
+    @Provides
+    @Singleton
+    GuiCanvas providesGuiCanvas(
+        final CanvasScreen screen
+    ) {
+        return new GuiCanvas(screen);
     }
 
     @Provides

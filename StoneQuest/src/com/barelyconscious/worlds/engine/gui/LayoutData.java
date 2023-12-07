@@ -89,6 +89,16 @@ public final class LayoutData {
             return this;
         }
 
+        public LayoutDataBuilder anchor(
+            double relativeX,
+            double relativeY,
+            int absoluteX,
+            int absoluteY
+        ) {
+            this.anchor = new VDim(relativeX, relativeY, absoluteX, absoluteY);
+            return this;
+        }
+
         public LayoutDataBuilder size(final SpriteResource sprite) {
             Region region = sprite.getRegion();
             this.size = new VDim(0, 0,
@@ -109,6 +119,11 @@ public final class LayoutData {
         private LayoutDataBuilder() {
             anchor = ANCHOR_TOP_LEFT;
             size = new VDim(1, 1, 0, 0);
+        }
+
+        public LayoutDataBuilder size(double relativeX, double relativeY, int absoluteX, int absoluteY) {
+            this.size = new VDim(relativeX, relativeY, absoluteX, absoluteY);
+            return this;
         }
     }
 }

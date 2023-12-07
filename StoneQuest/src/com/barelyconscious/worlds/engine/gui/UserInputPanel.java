@@ -43,6 +43,7 @@ public class UserInputPanel extends Widget {
         this.gameMenuWidget = gameMenuWidget;
 
         this.inventoryBagWidget.setEnabled(false);
+        this.stockpileBagWidget.setEnabled(false);
         this.craftingMenuWidget.setEnabled(false);
         this.gameMenuWidget.setEnabled(false);
 
