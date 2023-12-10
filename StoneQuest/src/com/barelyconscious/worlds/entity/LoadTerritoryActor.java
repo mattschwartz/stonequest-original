@@ -27,6 +27,7 @@ public class LoadTerritoryActor extends Actor {
     private final int size = 32;
     private final MouseListenerComponent mouse;
     private final SpriteComponent sprite;
+    private final Vector facing;
     private final Territory territoryToLoad;
 
     public LoadTerritoryActor(
@@ -37,6 +38,8 @@ public class LoadTerritoryActor extends Actor {
         super("Load Territory", transform);
 
         this.territoryToLoad = territoryToLoad;
+        this.facing = facing;
+
         String spriteName;
         if (facing == Vector.LEFT) {
             spriteName = "gui::world_move_btn_left";
@@ -121,9 +124,13 @@ public class LoadTerritoryActor extends Actor {
 
     private Void onMouseClicked(MouseEvent mouseEvent) {
         if (numHeroesNearby > 0) {
+            var currentTerritory = GameInstance.instance().getWorld()
+                .getWildernessLevel().getTerritory();
+
             var sys = GameInstance.instance()
                 .getSystem(WildernessSystem.class);
             var wild = sys.getWildernessLevel(
+                currentTerritory.getTransform(),
                 territoryToLoad.getTransform(),
                 territoryToLoad.getTerritoryLevel());
 

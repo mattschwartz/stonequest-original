@@ -48,7 +48,7 @@ public final class World {
     public final Map<Territory, List<BuildingActor>> territoryToBuildings = new HashMap<>();
     /**
      * Signifies the relationship between every settlement and the territories it owns.
-     *
+     * <p>
      * the null settlement corresponds to neutral territories
      */
     public final Map<Settlement, List<Territory>> settlementToTerritories = new HashMap<>();
@@ -65,6 +65,7 @@ public final class World {
 
     /**
      * Will unload the previous level when loading a new one. happens on next game update
+     *
      * @param wildernessLevel
      */
     public void setWildernessLevel(WildernessLevel wildernessLevel) {
@@ -86,6 +87,7 @@ public final class World {
 
     /**
      * todo - for the CLI
+     *
      * @param name
      * @return
      */
@@ -109,6 +111,7 @@ public final class World {
     }
 
     // make sure level loads occur during game updates only?
+    // todo: need to be able to re-calculate mouse events and physics overlap events on world load
     public void readyLoadWorld() {
         if (!isLevelLoading) {
             return;
@@ -155,7 +158,6 @@ public final class World {
     }
 
     /**
-     *
      * @param actor
      * @param isPersistent whether the actor persists between levels
      */

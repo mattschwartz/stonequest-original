@@ -14,20 +14,42 @@ public class WildernessSystem implements GameSystem {
     // todo: territory blueprints need to be generated somehow based on spanning biomes and things
     private final Map<Vector, Territory> worldMap = new HashMap<>();
 
-    public WildernessLevel getWildernessLevel(Vector position, int level) {
-        Territory territory;
+    public WildernessLevel getWildernessLevel(
+        Vector fromPosition,
+        Vector position,
+        int level
+    ) {
+        Territory fromTerritory;
+        Territory toTerritory;
+
+        if (!worldMap.containsKey(fromPosition)) {
+            fromTerritory = TerritoryGenerator.territoryBuilder()
+                .at(fromPosition)
+                .level(level)
+                .generate();
+            worldMap.put(fromPosition, fromTerritory);
+        } else {
+            fromTerritory = worldMap.get(fromPosition);
+        }
+
         if (!worldMap.containsKey(position)) {
-            territory = TerritoryGenerator.territoryBuilder()
+            toTerritory = TerritoryGenerator.territoryBuilder()
                 .at(position)
                 .level(level)
                 .generate();
-            worldMap.put(position, territory);
+            worldMap.put(position, toTerritory);
         } else {
-            territory = worldMap.get(position);
+            toTerritory = worldMap.get(position);
         }
 
+        var fromDirection = fromPosition.minus(position);
+
+        // (0, 1) (1, 1) (2, 1)
+        // (0, 2) (1, 2) (2, 2)
+
         return TerritoryGenerator.wildernessBuilder()
-            .territory(territory)
+            .fromTerritory(fromTerritory, fromDirection)
+            .territory(toTerritory)
             .generate();
     }
 

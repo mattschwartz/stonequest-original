@@ -133,10 +133,24 @@ public class TerritoryGenerator {
 
     public static class WildernessLevelBuilder {
 
+        private Territory fromTerritory;
+        private Vector fromDirection;
         private Territory territory;
 
         public WildernessLevelBuilder territory(Territory territory) {
             this.territory = territory;
+            return this;
+        }
+
+        /**
+         *
+         * @param territory the territory we came from
+         * @param direction points to the direction from which we came
+         * @return
+         */
+        public WildernessLevelBuilder fromTerritory(Territory territory, Vector direction) {
+            this.fromTerritory = territory;
+            this.fromDirection = direction;
             return this;
         }
 
@@ -172,7 +186,7 @@ public class TerritoryGenerator {
             int width = worldSpace.length;
             int height = worldSpace[0].length;
 
-            int leftX = 5;
+            int leftX = 0;
             int leftY = (height * 32) / 2;
             wilderness.addChild(new LoadTerritoryActor(
                 TerritoryGenerator.territoryBuilder()
@@ -183,7 +197,7 @@ public class TerritoryGenerator {
                 Vector.LEFT
             ));
 
-            int rightX = (width - 1) * 32 - 5;
+            int rightX = (width - 1) * 32;
             int rightY = (height * 32) / 2;
             wilderness.addChild(new LoadTerritoryActor(
                 TerritoryGenerator.territoryBuilder()
@@ -195,7 +209,7 @@ public class TerritoryGenerator {
             ));
 
             int topX = (width * 32) / 2;
-            int topY = 5;
+            int topY = 0;
             wilderness.addChild(new LoadTerritoryActor(
                 TerritoryGenerator.territoryBuilder()
                     .at(territory.getTransform().plus(Vector.UP))
@@ -206,7 +220,7 @@ public class TerritoryGenerator {
             ));
 
             int bottomX = (width * 32) / 2;
-            int bottomY = (height - 1) * 32 - 5;
+            int bottomY = (height - 1) * 32;
             wilderness.addChild(new LoadTerritoryActor(
                 TerritoryGenerator.territoryBuilder()
                     .at(territory.getTransform().plus(Vector.DOWN))
@@ -215,6 +229,37 @@ public class TerritoryGenerator {
                 new Vector(bottomX, bottomY),
                 Vector.DOWN
             ));
+
+            Hero firstHero = GameInstance.instance().getHeroBySlot(GameInstance.PartySlot.LEFT);
+            Hero secondHero = GameInstance.instance().getHeroBySlot(GameInstance.PartySlot.MIDDLE);
+            Hero thirdHero = GameInstance.instance().getHeroBySlot(GameInstance.PartySlot.RIGHT);
+
+            // todo camera should reposition on top of player spawn
+            if (Vector.UP.equals(fromDirection)) {
+                firstHero.setTransform(new Vector(topX, topY + 32));
+                secondHero.setTransform(new Vector(topX + 32, topY + 32));
+                thirdHero.setTransform(new Vector(topX + 64, topY + 32));
+                GameInstance.instance().getCamera()
+                    .setTransform(new Vector(topX + 32, topY + 32));
+            } else if (Vector.DOWN.equals(fromDirection)) {
+                firstHero.setTransform(new Vector(bottomX, bottomY + 32));
+                secondHero.setTransform(new Vector(bottomX + 32, bottomY + 32));
+                thirdHero.setTransform(new Vector(bottomX + 64, bottomY + 32));
+                GameInstance.instance().getCamera()
+                    .setTransform(new Vector(bottomX + 32, bottomY + 32));
+            } else if (Vector.LEFT.equals(fromDirection)) {
+                firstHero.setTransform(new Vector(leftX, leftY + 32));
+                secondHero.setTransform(new Vector(leftX + 32, leftY + 32));
+                thirdHero.setTransform(new Vector(leftX + 64, leftY + 32));
+                GameInstance.instance().getCamera()
+                    .setTransform(new Vector(leftX + 32, leftY + 32));
+            } else if (Vector.RIGHT.equals(fromDirection)) {
+                firstHero.setTransform(new Vector(rightX, rightY + 32));
+                secondHero.setTransform(new Vector(rightX + 32, rightY + 32));
+                thirdHero.setTransform(new Vector(rightX + 64, rightY + 32));
+                GameInstance.instance().getCamera()
+                    .setTransform(new Vector(rightX + 32, rightY + 32));
+            }
         }
 
         /**

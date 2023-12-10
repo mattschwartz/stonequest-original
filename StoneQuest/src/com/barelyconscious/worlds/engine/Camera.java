@@ -2,11 +2,15 @@ package com.barelyconscious.worlds.engine;
 
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.annotation.Nullable;
 
 public class Camera {
 
+    @Getter
+    @Setter
     public Vector transform;
 
     private int viewWidth;

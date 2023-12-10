@@ -45,7 +45,6 @@ public class MouseListenerComponent extends Component implements Interactable {
     @Override
     public void onRemove() {
         super.onRemove();
-        System.out.println("Deregistering mouse listener");
         MouseInputHandler.instance().unregisterInteractable(this);
     }
 

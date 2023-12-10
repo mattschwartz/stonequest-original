@@ -3,7 +3,6 @@ package com.barelyconscious.worlds.common.shape;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@EqualsAndHashCode
 public final class Vector {
 
     public static final Vector ZERO = new Vector(0, 0);
@@ -67,5 +66,14 @@ public final class Vector {
     @Override
     public String toString() {
         return String.format("(%.2f, %.2f)", x, y);
+    }
+
+    @Override
+    public boolean equals(Object rhs) {
+        if (!(rhs instanceof Vector rhsVector)) {
+            return false;
+        }
+
+        return x == rhsVector.x && y == rhsVector.y;
     }
 }
