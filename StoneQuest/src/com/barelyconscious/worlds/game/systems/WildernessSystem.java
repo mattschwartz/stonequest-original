@@ -4,10 +4,12 @@ import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.entity.Territory;
 import com.barelyconscious.worlds.entity.WildernessLevel;
 import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Log4j2
 public class WildernessSystem implements GameSystem {
 
     // World is made up of wilderness levels
@@ -43,9 +45,6 @@ public class WildernessSystem implements GameSystem {
         }
 
         var fromDirection = fromPosition.minus(position);
-
-        // (0, 1) (1, 1) (2, 1)
-        // (0, 2) (1, 2) (2, 2)
 
         return TerritoryGenerator.wildernessBuilder()
             .fromTerritory(fromTerritory, fromDirection)

@@ -52,11 +52,14 @@ public class NametagComponent extends MouseListenerComponent {
 
         var fc = renderContext.getFontContext();
         var position = getParent().getTransform().plus(16, -2);
+
+        var screenPosition = GameInstance.instance().getCamera().worldToScreenPos(position);
+
         fc.drawString(
             getParent().getName(),
             FontContext.TextAlign.CENTER,
-            (int) position.x,
-            (int) position.y
+            (int) screenPosition.x,
+            (int) screenPosition.y
         );
     }
 }

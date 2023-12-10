@@ -19,11 +19,14 @@ public class WildernessInfoPanel extends Widget {
     private final TextFieldWidget territoryBiome;
     private final TextFieldWidget territoryClimate;
     private final TextFieldWidget numEnemies;
+    private final TextFieldWidget numRips;
+    private double hostility;
+    private double corruption;
 
     public WildernessInfoPanel() {
         super(LayoutData.builder()
-            .anchor(0, 1, 0, -100)
-            .size(0, 0, 200, 100)
+            .anchor(0, 1, 0, -200)
+            .size(0, 0, 200, 200)
             .build());
 
         GameInstance.instance().getWorld().delegateOnWorldLoaded
@@ -38,7 +41,7 @@ public class WildernessInfoPanel extends Widget {
         territoryName = new TextFieldWidget(
             null,
             LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 0)
+                .anchor(0, 0, 1, 5 + 3)
                 .size(0, 0, 100, 20)
                 .build());
         addWidget(territoryName);
@@ -46,7 +49,7 @@ public class WildernessInfoPanel extends Widget {
         territoryLevel = new TextFieldWidget(
             null,
             LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 20)
+                .anchor(0, 0, 1, 5 + 23)
                 .size(0, 0, 100, 20)
                 .build());
         addWidget(territoryLevel);
@@ -54,7 +57,7 @@ public class WildernessInfoPanel extends Widget {
         territoryPosition = new TextFieldWidget(
             null,
             LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 40)
+                .anchor(0, 0, 1, 5 + 43)
                 .size(0, 0, 100, 20)
                 .build());
         addWidget(territoryPosition);
@@ -62,7 +65,7 @@ public class WildernessInfoPanel extends Widget {
         territoryBiome = new TextFieldWidget(
             null,
             LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 60)
+                .anchor(0, 0, 1, 5 + 63)
                 .size(0, 0, 100, 20)
                 .build());
         addWidget(territoryBiome);
@@ -70,7 +73,7 @@ public class WildernessInfoPanel extends Widget {
         territoryClimate = new TextFieldWidget(
             null,
             LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 80)
+                .anchor(0, 0, 1, 5 + 83)
                 .size(0, 0, 100, 20)
                 .build());
         addWidget(territoryClimate);
@@ -78,10 +81,18 @@ public class WildernessInfoPanel extends Widget {
         numEnemies = new TextFieldWidget(
             null,
             LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 100)
+                .anchor(0, 0, 1, 5 + 103)
                 .size(0, 0, 100, 20)
                 .build());
         addWidget(numEnemies);
+
+        numRips = new TextFieldWidget(
+            null,
+            LayoutData.builder()
+                .anchor(0, 0, 1, 5 + 123)
+                .size(0, 0, 100, 20)
+                .build());
+        addWidget(numRips);
     }
 
     private Void onWorldLoaded(World.OnWorldLoadArgs args) {
@@ -93,12 +104,18 @@ public class WildernessInfoPanel extends Widget {
         territoryPosition.setText("Position: " + territory.getTransform());
         territoryBiome.setText("Biome: " + territory.getBiome().name());
         territoryClimate.setText("Climate: " + territory.getClimate().name());
+        hostility = territory.getHostility();
+        corruption = territory.getCorruption();
 
         return null;
     }
 
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
-        numEnemies.setText("Enemies: " + (wilderness.getEntities().size()));
+        var text = String.format("Enemies: %d (%.0f%%)", wilderness.getEntities().size(), hostility*100, corruption*100);
+        numEnemies.setText(text);
+
+        text = String.format("Rips: %d (%.0f%%)", 0, corruption*100);
+        numRips.setText(text);
     }
 }
