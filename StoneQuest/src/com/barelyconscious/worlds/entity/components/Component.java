@@ -74,6 +74,10 @@ public abstract class Component {
     public void guiRender(EventArgs eventArgs, RenderContext renderContext) {
     }
 
+    public void onRemove() {
+        // do any cleanup
+    }
+
     private Function<EventArgs, Void> pendingUpdate;
 
     /**

@@ -37,13 +37,28 @@ public class AIMoveComponent extends MoveComponent {
         }
 
         if (!inCombat()) {
-            randomWalk();
+            // make a random decision
+            Decision decision;
+            var ran = UMath.RANDOM.nextInt(100);
+            if (ran < 5) {
+                decision = Decision.WALK;
+            } else {
+                decision = Decision.NOTHING;
+            }
+            if (decision == Decision.WALK) {
+                randomWalk();
+            }
         } else {
             EntityActor attacker = getCombatTarget();
 
             var direction = attacker.getTransform().minus(getParent().getTransform()).unitVector();
             addForce(direction, 16);
         }
+    }
+
+    enum Decision {
+        WALK,
+        NOTHING,
     }
 
     /**

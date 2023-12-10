@@ -209,7 +209,10 @@ public final class Engine {
                         componentsToUpdate.add(c);
                     }
                 }
-                componentsToRemove.forEach(actor::removeComponent);
+                componentsToRemove.forEach(t -> {
+                    actor.removeComponent(t);
+                    t.onRemove();
+                });
             }
 
             physics.updatePhysics(eventArgs, allActors);
@@ -217,7 +220,10 @@ public final class Engine {
             runJobs(eventArgs);
             update(eventArgs, componentsToUpdate);
 
-            actorsToRemove.forEach(world::removeActor);
+            actorsToRemove.forEach(t -> {
+                world.destroyActor(t);
+                t.onDestroy();
+            });
 
             eventArgs.getWorldContext().applyActorOperations();
         }

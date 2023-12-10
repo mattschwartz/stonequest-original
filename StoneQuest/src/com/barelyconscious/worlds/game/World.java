@@ -147,6 +147,11 @@ public final class World {
         actors.add(actor);
         actorsById.put(actor.id, actor);
         sceneActors.add(actor);
+
+//        // todo - trying to keep state of wildernessLevel actors for reloading scenes
+//        if (wildernessLevel != null) {
+//            wildernessLevel.addChild(actor);
+//        }
     }
 
     /**
@@ -159,10 +164,16 @@ public final class World {
         actorsById.put(actor.id, actor);
     }
 
-    public synchronized boolean removeActor(final Actor actor) {
+    public synchronized void removeActor(final Actor actor) {
         actor.setParent(null);
+        actor.destroy();
         actorsById.remove(actor.id);
-        return actors.remove(actor);
+    }
+
+    public synchronized void destroyActor(final Actor actor) {
+        actor.destroy();
+        actorsById.remove(actor.id);
+        actors.remove(actor);
     }
 
     public synchronized List<Actor> getActors() {

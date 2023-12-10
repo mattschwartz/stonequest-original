@@ -143,6 +143,10 @@ public class Actor {
         return isDestroying;
     }
 
+    public void onDestroy() {
+        allComponents.forEach(Component::onRemove);
+    }
+
     public boolean addComponent(final Component component) {
         checkArgument(component != null, "component is null");
 
@@ -174,6 +178,7 @@ public class Actor {
             first.ifPresent(t -> {
                 t.setParent(null);
                 components.remove(t);
+                t.onRemove();
             });
         }
     }

@@ -20,9 +20,7 @@ import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class TerritoryGenerator {
 
@@ -171,24 +169,52 @@ public class TerritoryGenerator {
             Territory territory,
             Actor[][] worldSpace
         ) {
+            int width = worldSpace.length;
+            int height = worldSpace[0].length;
+
+            int leftX = 5;
+            int leftY = (height * 32) / 2;
             wilderness.addChild(new LoadTerritoryActor(
                 TerritoryGenerator.territoryBuilder()
                     .at(territory.getTransform().plus(Vector.LEFT))
                     .level(2)
                     .generate(),
-                new Vector(64 + UMath.RANDOM.nextDouble() * 64, 64 + UMath.RANDOM.nextDouble() * 64),
+                new Vector(leftX, leftY),
                 Vector.LEFT
             ));
 
+            int rightX = (width - 1) * 32 - 5;
+            int rightY = (height * 32) / 2;
             wilderness.addChild(new LoadTerritoryActor(
                 TerritoryGenerator.territoryBuilder()
                     .at(territory.getTransform().plus(Vector.RIGHT))
                     .level(2)
                     .generate(),
-                new Vector(256 + UMath.RANDOM.nextDouble() * 64, 64 + UMath.RANDOM.nextDouble() * 64),
+                new Vector(rightX, rightY),
                 Vector.RIGHT
             ));
 
+            int topX = (width * 32) / 2;
+            int topY = 5;
+            wilderness.addChild(new LoadTerritoryActor(
+                TerritoryGenerator.territoryBuilder()
+                    .at(territory.getTransform().plus(Vector.UP))
+                    .level(2)
+                    .generate(),
+                new Vector(topX, topY),
+                Vector.UP
+            ));
+
+            int bottomX = (width * 32) / 2;
+            int bottomY = (height - 1) * 32 - 5;
+            wilderness.addChild(new LoadTerritoryActor(
+                TerritoryGenerator.territoryBuilder()
+                    .at(territory.getTransform().plus(Vector.DOWN))
+                    .level(2)
+                    .generate(),
+                new Vector(bottomX, bottomY),
+                Vector.DOWN
+            ));
         }
 
         /**
@@ -476,6 +502,7 @@ public class TerritoryGenerator {
 
                 enemy.addComponent(new DropOnDeathComponent(enemy, GameItems.WILLOW_BARK.toItem()));
                 enemy.addComponent(new AIMoveComponent(enemy, 32));
+                enemy.addComponent(new NametagComponent(enemy, Box.square(32)));
 
                 wilderness.addEntity(enemy);
                 worldSpace[(int) transform.x][(int) transform.y] = enemy;

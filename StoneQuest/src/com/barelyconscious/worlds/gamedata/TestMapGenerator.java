@@ -30,6 +30,7 @@ public class TestMapGenerator {
         world.setWildernessLevel(wild);
     }
 
+    // just for testing
     private static void createTerritories(World world) {
         GameInstance gi = GameInstance.instance();
         ChancellorSystem cs = gi.getSystem(ChancellorSystem.class);

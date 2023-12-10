@@ -15,6 +15,10 @@ import com.barelyconscious.worlds.common.shape.Vector;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
+/**
+ * todo: entities that walk into the mouse don't trigger mouse events
+ * todo: multiple mouseover components do not work together
+ */
 public class MouseListenerComponent extends Component implements Interactable {
 
     private final Box listenerBounds;
@@ -36,6 +40,13 @@ public class MouseListenerComponent extends Component implements Interactable {
         if (screenListenerBounds != null && EventArgs.IS_DEBUG) {
             renderContext.renderRect(Color.GREEN, false, screenListenerBounds, RenderLayer._DEBUG);
         }
+    }
+
+    @Override
+    public void onRemove() {
+        super.onRemove();
+        System.out.println("Deregistering mouse listener");
+        MouseInputHandler.instance().unregisterInteractable(this);
     }
 
     @Override
