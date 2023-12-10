@@ -1,6 +1,10 @@
-package com.barelyconscious.worlds.entity;
+package com.barelyconscious.worlds.entity.wilderness;
 
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.entity.Actor;
+import com.barelyconscious.worlds.entity.BuildingActor;
+import com.barelyconscious.worlds.entity.EntityActor;
+import com.barelyconscious.worlds.entity.ResourceDeposit;
 import lombok.Getter;
 
 import java.util.ArrayList;

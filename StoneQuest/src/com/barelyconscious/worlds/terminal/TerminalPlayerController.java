@@ -4,6 +4,7 @@ import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.entity.components.AbilityComponent;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
+import com.barelyconscious.worlds.entity.wilderness.Settlement;
 import com.barelyconscious.worlds.game.*;
 import com.barelyconscious.worlds.game.abilitysystem.Ability;
 import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;

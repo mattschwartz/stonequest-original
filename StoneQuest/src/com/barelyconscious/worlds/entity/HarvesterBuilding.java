@@ -56,12 +56,11 @@ public class HarvesterBuilding extends BuildingActor {
 
     public HarvesterBuilding(
         String name,
-        Vector transform,
         BuildingTier tier,
         TerritoryResource resource,
         Inventory stockpile
     ) {
-        super(name, transform);
+        super(name, Vector.ZERO);
         this.tier = tier;
         this.resource = resource;
         this.stockpile = stockpile;

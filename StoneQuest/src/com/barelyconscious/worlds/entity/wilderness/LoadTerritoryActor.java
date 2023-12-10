@@ -1,9 +1,11 @@
-package com.barelyconscious.worlds.entity;
+package com.barelyconscious.worlds.entity.wilderness;
 
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.engine.CollisionData;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
+import com.barelyconscious.worlds.entity.Actor;
+import com.barelyconscious.worlds.entity.Hero;
 import com.barelyconscious.worlds.entity.components.BoxColliderComponent;
 import com.barelyconscious.worlds.entity.components.MouseListenerComponent;
 import com.barelyconscious.worlds.entity.components.SpriteComponent;

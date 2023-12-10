@@ -1,6 +1,6 @@
 package com.barelyconscious.worlds.terminal.commands;
 
-import com.barelyconscious.worlds.entity.Territory;
+import com.barelyconscious.worlds.entity.wilderness.Territory;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.barelyconscious.worlds.game.types.TerritoryResource;

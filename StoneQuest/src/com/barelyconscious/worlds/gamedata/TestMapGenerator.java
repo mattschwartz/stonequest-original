@@ -1,6 +1,9 @@
 package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.entity.*;
+import com.barelyconscious.worlds.entity.wilderness.Settlement;
+import com.barelyconscious.worlds.entity.wilderness.Territory;
+import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.common.shape.Vector;
@@ -67,12 +70,18 @@ public class TestMapGenerator {
         world.getTerritories().add(territory1);
         world.getTerritories().add(territory2);
 
-        cs.claimTerritory(
-            territory1,
-            gi.getWorld().getPlayerSettlement());
-        cs.claimTerritory(
-            territory2,
-            gi.getWorld().getPlayerSettlement());
+        var playerSettlement = gi.getWorld().getPlayerSettlement();
+        playerSettlement.claimTerritory(Settlement.ClaimTerritoryRequest.builder()
+            .territory(territory1)
+            .build());
+        playerSettlement.claimTerritory(Settlement.ClaimTerritoryRequest.builder()
+            .territory(territory2)
+            .build());
+
+        playerSettlement.constructBuilding(Settlement.ConstructBuildingRequest.builder()
+            .territory(territory1)
+            .resource(territory1.getAvailableResources().get(0))
+            .build());
 
         // construct a harvester in territory 1
         HarvesterBuilding harvesterBuilding = cs.constructHarvester(territory1, territory1.getAvailableResources().get(0), Vector.ZERO);

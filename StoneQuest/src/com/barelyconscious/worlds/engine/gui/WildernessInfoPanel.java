@@ -4,7 +4,7 @@ import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
 import com.barelyconscious.worlds.engine.gui.widgets.BackgroundPanelWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
-import com.barelyconscious.worlds.entity.WildernessLevel;
+import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.World;
 

@@ -1,8 +1,8 @@
 package com.barelyconscious.worlds.game.systems;
 
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.entity.Territory;
-import com.barelyconscious.worlds.entity.WildernessLevel;
+import com.barelyconscious.worlds.entity.wilderness.Territory;
+import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
 import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
 import lombok.extern.log4j.Log4j2;
 

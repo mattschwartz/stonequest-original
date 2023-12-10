@@ -1,7 +1,9 @@
-package com.barelyconscious.worlds.entity;
+package com.barelyconscious.worlds.entity.wilderness;
 
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.engine.EventArgs;
+import com.barelyconscious.worlds.entity.Actor;
+import com.barelyconscious.worlds.entity.BuildingActor;
 import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
 import com.barelyconscious.worlds.game.types.TerritoryResource;
@@ -51,7 +53,7 @@ public class Territory extends Actor {
         List<TerritoryResource> availableResources
     ) {
         super(name, worldPosition);
-        this.territoryLevel =territoryLevel;
+        this.territoryLevel = territoryLevel;
         this.biome = biome;
         this.climate = climate;
         this.hostility = hostility;

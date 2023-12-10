@@ -3,8 +3,8 @@ package com.barelyconscious.worlds.game.systems;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.entity.BuildingActor;
 import com.barelyconscious.worlds.entity.HarvesterBuilding;
-import com.barelyconscious.worlds.entity.Territory;
-import com.barelyconscious.worlds.entity.Settlement;
+import com.barelyconscious.worlds.entity.wilderness.Territory;
+import com.barelyconscious.worlds.entity.wilderness.Settlement;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.game.item.Item;
@@ -14,16 +14,14 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The system that controls all the chancellor stuff like
  * constructing buildings, expanding territories, and
  * managing the player's village.
  */
+@Deprecated
 @Log4j2
 public class ChancellorSystem implements GameSystem {
 
