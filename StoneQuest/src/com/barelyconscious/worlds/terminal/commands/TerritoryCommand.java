@@ -68,7 +68,7 @@ public class TerritoryCommand extends Command {
         }
 
 
-        var wilderness = TerritoryGenerator.generator()
+        var wilderness = TerritoryGenerator.wildernessBuilder()
             .territory(selectATerritoryToSpawn)
             .generate();
 

@@ -10,6 +10,8 @@ import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.TraitName;
+import com.barelyconscious.worlds.game.types.Biome;
+import com.barelyconscious.worlds.game.types.Climate;
 import com.barelyconscious.worlds.gamedata.GameItems;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
@@ -18,12 +20,117 @@ import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TerritoryGenerator {
 
-    public static WildernessLevelBuilder generator() {
+    public static TerritoryBuilder territoryBuilder() {
+        return new TerritoryBuilder();
+    }
+
+    public static WildernessLevelBuilder wildernessBuilder() {
         return new WildernessLevelBuilder();
+    }
+
+    public static class TerritoryBuilder {
+
+        private Vector position = Vector.ZERO;
+        private int level = 1;
+
+        public TerritoryBuilder at(Vector position) {
+            this.position = position;
+            return this;
+        }
+
+        public TerritoryBuilder level(int level) {
+            this.level = level;
+            return this;
+        }
+
+        public Territory generate() {
+            Biome biome = Biome.values()[UMath.RANDOM.nextInt(Biome.values().length)];
+            Climate climate = Climate.values()[UMath.RANDOM.nextInt(Climate.values().length)];
+            double hostility = UMath.RANDOM.nextDouble();
+            double corruption = UMath.RANDOM.nextDouble();
+
+            String adjective;
+            String noun;
+            switch (climate) {
+                case ARID:
+                    // choose a random adjective from the aridAdjectives list
+                    int i = UMath.RANDOM.nextInt(aridAdjectives.size());
+                    adjective = aridAdjectives.get(i);
+                    break;
+                case COLD:
+                    // choose a random adjective from the coldAdjectives list
+                    i = UMath.RANDOM.nextInt(coldAdjectives.size());
+                    adjective = coldAdjectives.get(i);
+                    break;
+                case TEMPERATE:
+                    // choose a random adjective from the temperateAdjectives list
+                    i = UMath.RANDOM.nextInt(temperateAdjectives.size());
+                    adjective = temperateAdjectives.get(i);
+                    break;
+                case TROPICAL:
+                    // choose a random adjective from the tropicalAdjectives list
+                    i = UMath.RANDOM.nextInt(tropicalAdjectives.size());
+                    adjective = tropicalAdjectives.get(i);
+                    break;
+                case WET:
+                    // choose a random adjective from the wetAdjectives list
+                    i = UMath.RANDOM.nextInt(wetAdjectives.size());
+                    adjective = wetAdjectives.get(i);
+                    break;
+                default:
+                    adjective = "Confusing";
+            }
+            switch (biome) {
+                case DESERT:
+                    // choose a random noun from the desertNouns list
+                    int i = UMath.RANDOM.nextInt(desertNouns.size());
+                    noun = desertNouns.get(i);
+                    break;
+                case FOREST:
+                    // choose a random noun from the forestNouns list
+                    i = UMath.RANDOM.nextInt(forestNouns.size());
+                    noun = forestNouns.get(i);
+                    break;
+                case MOUNTAINOUS:
+                    // choose a random noun from the mountainsNouns list
+                    i = UMath.RANDOM.nextInt(mountainNouns.size());
+                    noun = mountainNouns.get(i);
+                    break;
+                case PLAINS:
+                    // choose a random noun from the plainsNouns list
+                    i = UMath.RANDOM.nextInt(plainsNouns.size());
+                    noun = plainsNouns.get(i);
+                    break;
+                case SWAMP:
+                    // choose a random noun from the swampNouns list
+                    i = UMath.RANDOM.nextInt(swampNouns.size());
+                    noun = swampNouns.get(i);
+                    break;
+                case TUNDRA:
+                    // choose a random noun from the tundraNouns list
+                    i = UMath.RANDOM.nextInt(tundraNouns.size());
+                    noun = tundraNouns.get(i);
+                    break;
+                default:
+                    noun = "Unknowns";
+            }
+
+            return new Territory(
+                adjective + " " + noun,
+                position,
+                level,
+                biome,
+                climate,
+                hostility,
+                corruption,
+                Lists.newArrayList());
+        }
     }
 
     public static class WildernessLevelBuilder {
@@ -57,14 +164,31 @@ public class TerritoryGenerator {
             spawnTravelLocations(result, territory, worldSpace);
 
             return result;
-        }private void spawnTravelLocations(
+        }
+
+        private void spawnTravelLocations(
             WildernessLevel wilderness,
             Territory territory,
             Actor[][] worldSpace
         ) {
             wilderness.addChild(new LoadTerritoryActor(
-                new Vector(64 + UMath.RANDOM.nextDouble() * 64, 64 + UMath.RANDOM.nextDouble() * 64)
+                TerritoryGenerator.territoryBuilder()
+                    .at(territory.getTransform().plus(Vector.LEFT))
+                    .level(2)
+                    .generate(),
+                new Vector(64 + UMath.RANDOM.nextDouble() * 64, 64 + UMath.RANDOM.nextDouble() * 64),
+                Vector.LEFT
             ));
+
+            wilderness.addChild(new LoadTerritoryActor(
+                TerritoryGenerator.territoryBuilder()
+                    .at(territory.getTransform().plus(Vector.RIGHT))
+                    .level(2)
+                    .generate(),
+                new Vector(256 + UMath.RANDOM.nextDouble() * 64, 64 + UMath.RANDOM.nextDouble() * 64),
+                Vector.RIGHT
+            ));
+
         }
 
         /**
@@ -366,6 +490,95 @@ public class TerritoryGenerator {
 
     public static final int NUM_TILES_ROWS = 48; // 1,024 height
     public static final int NUM_TILES_COLS = 32; // 1536 width
+
+    static List<String> aridAdjectives = Lists.newArrayList(
+        "Arid",
+        "Dry",
+        "Dusty",
+        "Sandy",
+        "Barren",
+        "Bleak",
+        "Desolate",
+        "Lifeless",
+        "Sterile",
+        "Wasteland");
+    static List<String> coldAdjectives = Lists.newArrayList(
+        "Cold",
+        "Frigid",
+        "Frozen",
+        "Icy",
+        "Chilly",
+        "Bitter",
+        "Harsh",
+        "Severe",
+        "Brisk",
+        "Raw",
+        "Polar");
+    static List<String> temperateAdjectives = Lists.newArrayList(
+        "Temperate",
+        "Balmy",
+        "Mild",
+        "Moderate",
+        "Clement",
+        "Equable",
+        "Genial",
+        "Gentle",
+        "Soft",
+        "Pleasant");
+    static List<String> tropicalAdjectives = Lists.newArrayList(
+        "Tropical",
+        "Humid",
+        "Steamy",
+        "Sultry",
+        "Muggy",
+        "Tropical",
+        "Tropics",
+        "Torrid",
+        "Subtropical",
+        "Equatorial");
+    static List<String> wetAdjectives = Lists.newArrayList(
+        "Wet",
+        "Damp",
+        "Moist",
+        "Humid",
+        "Soggy",
+        "Sodden",
+        "Waterlogged",
+        "Drenched",
+        "Soaked",
+        "Saturated");
+
+    static List<String> desertNouns = Lists.newArrayList(
+        "Desert",
+        "Wasteland",
+        "Badlands",
+        "Barrens",
+        "Waste");
+    static List<String> forestNouns = Lists.newArrayList(
+        "Forest",
+        "Woods",
+        "Woodlands",
+        "Wilds");
+    static List<String> mountainNouns = Lists.newArrayList(
+        "Mountains",
+        "Peaks",
+        "Hills",
+        "Highlands");
+    static List<String> plainsNouns = Lists.newArrayList(
+        "Plains",
+        "Grasslands",
+        "Meadows");
+    static List<String> swampNouns = Lists.newArrayList(
+        "Swamp",
+        "Bog",
+        "Marsh",
+        "Fen");
+    static List<String> tundraNouns = Lists.newArrayList(
+        "Tundra",
+        "Wasteland",
+        "Badlands",
+        "Barrens",
+        "Waste");
 
     static List<Pair<String, Double>> enemyFrequencies = Lists.newArrayList(
         Pair.of("goblin", 0.5),

@@ -81,8 +81,7 @@ public class Actor {
     public Actor setParent(final Actor newParent) {
         Actor oldParent = parent;
         if (oldParent != null) {
-            // do anything needed here
-            oldParent.children.remove(this);
+            oldParent.removeChild(this);
         }
 
         parent = newParent;
@@ -104,7 +103,7 @@ public class Actor {
             throw new IllegalArgumentException("child is not a child of this actor");
         }
 
-        child.setParent(null);
+        child.parent = null;
         children.remove(child);
     }
 

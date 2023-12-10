@@ -4,7 +4,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @EqualsAndHashCode
-@ToString
 public final class Vector {
 
     public static final Vector ZERO = new Vector(0, 0);
@@ -65,4 +64,8 @@ public final class Vector {
         return plus(-rhs.x, -rhs.y);
     }
 
+    @Override
+    public String toString() {
+        return String.format("(%.2f, %.2f)", x, y);
+    }
 }

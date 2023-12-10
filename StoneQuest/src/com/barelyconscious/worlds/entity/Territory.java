@@ -51,7 +51,7 @@ public class Territory extends Actor {
         List<TerritoryResource> availableResources
     ) {
         super(name, worldPosition);
-        this.territoryLevel = territoryLevel;
+        this.territoryLevel =territoryLevel;
         this.biome = biome;
         this.climate = climate;
         this.hostility = hostility;

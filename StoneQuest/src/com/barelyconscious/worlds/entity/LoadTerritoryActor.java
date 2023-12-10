@@ -9,16 +9,17 @@ import com.barelyconscious.worlds.entity.components.MouseListenerComponent;
 import com.barelyconscious.worlds.entity.components.SpriteComponent;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
-import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
 import com.barelyconscious.worlds.game.systems.GuiSystem;
+import com.barelyconscious.worlds.game.systems.WildernessSystem;
 
 import java.awt.event.MouseEvent;
 
 /**
  * todo: how to reload territories visited by the player so the state is tracked
- *
+ * <p>
  * todo(bug): you can click to load the territory, move the hero away without moving the mouse,
  *  and then click again to load the territory again
+ *  i think this bug is because the mouse component is not being removed at the right time
  */
 public class LoadTerritoryActor extends Actor {
     private int numHeroesNearby = 0;
@@ -26,12 +27,30 @@ public class LoadTerritoryActor extends Actor {
     private final int size = 32;
     private final MouseListenerComponent mouse;
     private final SpriteComponent sprite;
+    private final Territory territoryToLoad;
 
-    public LoadTerritoryActor(Vector transform) {
+    public LoadTerritoryActor(
+        Territory territoryToLoad,
+        Vector transform,
+        Vector facing
+    ) {
         super("Load Territory", transform);
 
+        this.territoryToLoad = territoryToLoad;
+        String spriteName;
+        if (facing == Vector.LEFT) {
+            spriteName = "gui::world_move_btn_left";
+        } else if (facing == Vector.RIGHT) {
+            spriteName = "gui::world_move_btn_right";
+        } else if (facing == Vector.UP) {
+            spriteName = "gui::world_move_btn_up";
+        } else if (facing == Vector.DOWN) {
+            spriteName = "gui::world_move_btn_down";
+        } else {
+            throw new IllegalArgumentException("Invalid facing: " + facing);
+        }
         sprite = new SpriteComponent(this,
-            new BetterSpriteResource("gui::world_move_btn"),
+            new BetterSpriteResource(spriteName),
             RenderLayer.SKY);
         sprite.setOpacity(0.3);
 
@@ -102,10 +121,11 @@ public class LoadTerritoryActor extends Actor {
 
     private Void onMouseClicked(MouseEvent mouseEvent) {
         if (numHeroesNearby > 0) {
-            WildernessLevel wild = TerritoryGenerator.generator()
-                .territory(GameInstance.instance().getWorld()
-                    .getTerritories().get(1))
-                .generate();
+            var sys = GameInstance.instance()
+                .getSystem(WildernessSystem.class);
+            var wild = sys.getWildernessLevel(
+                territoryToLoad.getTransform(),
+                territoryToLoad.getTerritoryLevel());
 
             GameInstance.instance().getWorld()
                 .setWildernessLevel(wild);

@@ -1,8 +1,10 @@
 package com.barelyconscious.worlds.game;
 
+import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -32,6 +34,13 @@ public final class World {
 
     @Getter
     private final List<Territory> territories = new ArrayList<>();
+
+    public final Delegate<OnWorldLoadArgs> delegateOnWorldLoaded = new Delegate<>();
+
+    @AllArgsConstructor
+    public static class OnWorldLoadArgs {
+        public final WildernessLevel newLevel;
+    }
 
     private final List<Actor> actors;
     private final Map<String, Actor> actorsById = new HashMap<>();
@@ -131,6 +140,7 @@ public final class World {
         log.info("{} loaded. {}ms", wildernessLevel.getName(), timeToLoad);
 
         isLevelLoading = false;
+        delegateOnWorldLoaded.call(new OnWorldLoadArgs(wildernessLevel));
     }
 
     public void addActor(final Actor actor) {

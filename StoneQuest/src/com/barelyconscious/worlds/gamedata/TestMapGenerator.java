@@ -24,7 +24,7 @@ public class TestMapGenerator {
         createTerritories(world);
         // load the first territory into the world
 
-        WildernessLevel wild = TerritoryGenerator.generator()
+        WildernessLevel wild = TerritoryGenerator.wildernessBuilder()
             .territory(territory1).generate();
 
         world.setWildernessLevel(wild);

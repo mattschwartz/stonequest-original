@@ -27,6 +27,14 @@ public class TextFieldWidget extends Widget {
     @Setter
     private FontContext.VerticalTextAlignment verticalTextAlignment;
 
+    public TextFieldWidget(final String text, final LayoutData layout) {
+        super(layout);
+        this.text = text;
+        this.textAlignment = FontContext.TextAlign.LEFT;
+        this.verticalTextAlignment = FontContext.VerticalTextAlignment.CENTER;
+    }
+
+    @Deprecated
     public TextFieldWidget(final LayoutData layout, final String text) {
         super(layout);
         this.text = text;

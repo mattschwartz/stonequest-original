@@ -15,6 +15,9 @@ import java.util.List;
 public class WildernessLevel extends Actor {
 
     @Getter
+    private final Territory territory;
+
+    @Getter
     private final List<EntityActor> entities = new ArrayList<>();
 
     @Getter
@@ -26,6 +29,7 @@ public class WildernessLevel extends Actor {
     public WildernessLevel(Territory territory) {
         super("Level " + territory.getTerritoryLevel() + " territory",
             Vector.ZERO);
+        this.territory = territory;
     }
 
     public void addEntity(EntityActor entity) {
@@ -41,5 +45,17 @@ public class WildernessLevel extends Actor {
     public void addBuilding(BuildingActor building) {
         this.buildings.add(building);
         addChild(building);
+    }
+
+    @Override
+    public void removeChild(Actor child) {
+        super.removeChild(child);
+        if (child instanceof EntityActor) {
+            entities.remove(child);
+        } else if (child instanceof ResourceDeposit) {
+            deposits.remove(child);
+        } else if (child instanceof BuildingActor) {
+            buildings.remove(child);
+        }
     }
 }

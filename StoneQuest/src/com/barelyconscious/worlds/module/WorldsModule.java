@@ -17,6 +17,7 @@ import com.barelyconscious.worlds.common.exception.InvalidGameConfigurationExcep
 import com.barelyconscious.worlds.engine.Physics;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.barelyconscious.worlds.game.systems.GuiSystem;
+import com.barelyconscious.worlds.game.systems.WildernessSystem;
 import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
 import com.google.common.util.concurrent.RateLimiter;
 import com.google.inject.AbstractModule;
@@ -198,13 +199,15 @@ public class WorldsModule extends AbstractModule {
         Wagon partyWagon,
         ChancellorSystem chancellorSystem,
         CombatSystem combatSystem,
-        GuiSystem guiSystem
+        GuiSystem guiSystem,
+        WildernessSystem wildernessSystem
     ) {
         var gi = GameInstance.instance();
         gi.setWagon(partyWagon);
         gi.registerSystem(chancellorSystem);
         gi.registerSystem(combatSystem);
         gi.registerSystem(guiSystem);
+        gi.registerSystem(wildernessSystem);
         return gi;
     }
 
