@@ -2,6 +2,7 @@ package com.barelyconscious.worlds.engine;
 
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.entity.CameraActor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,11 +10,14 @@ import javax.annotation.Nullable;
 
 public class Camera {
 
+    public Vector transform;
     @Getter
     @Setter
-    public Vector transform;
+    private CameraActor cameraActor;
 
+    @Getter
     private int viewWidth;
+    @Getter
     private int viewHeight;
 
     public Camera(final int viewWidth, final int viewHeight) {

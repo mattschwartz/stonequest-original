@@ -234,31 +234,33 @@ public class TerritoryGenerator {
             Hero secondHero = GameInstance.instance().getHeroBySlot(GameInstance.PartySlot.MIDDLE);
             Hero thirdHero = GameInstance.instance().getHeroBySlot(GameInstance.PartySlot.RIGHT);
 
-            // todo camera should reposition on top of player spawn
+            int cameraXOffs = GameInstance.instance().getCamera().getViewWidth() / 2;
+            int cameraYOffs = GameInstance.instance().getCamera().getViewHeight() / 2;
+
             if (Vector.UP.equals(fromDirection)) {
                 firstHero.setTransform(new Vector(topX, topY + 32));
                 secondHero.setTransform(new Vector(topX + 32, topY + 32));
                 thirdHero.setTransform(new Vector(topX + 64, topY + 32));
                 GameInstance.instance().getCamera()
-                    .setTransform(new Vector(topX + 32, topY + 32));
+                    .getCameraActor().setPosition(new Vector(topX + 32 - cameraXOffs, cameraYOffs + topY + 32 - cameraYOffs*2));
             } else if (Vector.DOWN.equals(fromDirection)) {
                 firstHero.setTransform(new Vector(bottomX, bottomY + 32));
                 secondHero.setTransform(new Vector(bottomX + 32, bottomY + 32));
                 thirdHero.setTransform(new Vector(bottomX + 64, bottomY + 32));
                 GameInstance.instance().getCamera()
-                    .setTransform(new Vector(bottomX + 32, bottomY + 32));
+                    .getCameraActor().setPosition(new Vector(bottomX + 32 - cameraXOffs, bottomY + 32 - cameraYOffs));
             } else if (Vector.LEFT.equals(fromDirection)) {
                 firstHero.setTransform(new Vector(leftX, leftY + 32));
                 secondHero.setTransform(new Vector(leftX + 32, leftY + 32));
                 thirdHero.setTransform(new Vector(leftX + 64, leftY + 32));
                 GameInstance.instance().getCamera()
-                    .setTransform(new Vector(leftX + 32, leftY + 32));
+                    .getCameraActor().setPosition(new Vector(leftX + 32 - cameraXOffs, leftY + 32 - cameraYOffs));
             } else if (Vector.RIGHT.equals(fromDirection)) {
                 firstHero.setTransform(new Vector(rightX, rightY + 32));
                 secondHero.setTransform(new Vector(rightX + 32, rightY + 32));
                 thirdHero.setTransform(new Vector(rightX + 64, rightY + 32));
                 GameInstance.instance().getCamera()
-                    .setTransform(new Vector(rightX + 32, rightY + 32));
+                    .getCameraActor().setPosition(new Vector(rightX + 32 - cameraXOffs, rightY + 32 - cameraYOffs));
             }
         }
 

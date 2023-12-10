@@ -13,6 +13,7 @@ public class CameraActor extends Actor {
 
     public CameraActor(final Camera camera) {
         super(camera.transform);
+        camera.setCameraActor(this);
 
         final TranslateMoveComponent cameraMoveComponent = new TranslateMoveComponent(this, camera);
         addComponent(cameraMoveComponent);
@@ -32,6 +33,10 @@ public class CameraActor extends Actor {
             }
             return null;
         });
+    }
+
+    public void setPosition(Vector position) {
+        getComponent(TranslateMoveComponent.class).desiredLocation = position;
     }
 
     private static class TranslateMoveComponent extends Component {
