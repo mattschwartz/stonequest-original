@@ -125,7 +125,7 @@ public class LoadTerritoryActor extends Actor {
     }
 
     private Void onMouseClicked(MouseEvent mouseEvent) {
-        if (numHeroesNearby > 0) {
+        if (numHeroesNearby >= 0) {
             var currentTerritory = GameInstance.instance().getWorld()
                 .getWildernessLevel().getTerritory();
 

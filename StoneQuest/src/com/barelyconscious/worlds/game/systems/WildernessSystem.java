@@ -1,10 +1,13 @@
 package com.barelyconscious.worlds.game.systems;
 
+import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.wilderness.Territory;
 import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
 import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
@@ -13,8 +16,16 @@ import java.util.Map;
 @Log4j2
 public class WildernessSystem implements GameSystem {
 
+    public Delegate<TerritoryAdded> delegateOnTerritoryAdded = new Delegate<>();
+    @AllArgsConstructor
+    public static class TerritoryAdded {
+        public final Vector location;
+        public final Territory newTerritory;
+    }
+
     // World is made up of wilderness levels
     // todo: territory blueprints need to be generated somehow based on spanning biomes and things
+    @Getter
     private final Map<Vector, Territory> worldMap = new HashMap<>();
 
     public void update(EventArgs args) {
@@ -31,7 +42,7 @@ public class WildernessSystem implements GameSystem {
 
     public WildernessLevel getWildernessLevel(
         Vector fromPosition,
-        Vector position,
+        Vector toPosition,
         int level
     ) {
         Territory fromTerritory;
@@ -43,21 +54,23 @@ public class WildernessSystem implements GameSystem {
                 .level(level)
                 .generate();
             worldMap.put(fromPosition, fromTerritory);
+            delegateOnTerritoryAdded.call(new TerritoryAdded(fromPosition, fromTerritory));
         } else {
             fromTerritory = worldMap.get(fromPosition);
         }
 
-        if (!worldMap.containsKey(position)) {
+        if (!worldMap.containsKey(toPosition)) {
             toTerritory = TerritoryGenerator.territoryBuilder()
-                .at(position)
+                .at(toPosition)
                 .level(level)
                 .generate();
-            worldMap.put(position, toTerritory);
+            worldMap.put(toPosition, toTerritory);
+            delegateOnTerritoryAdded.call(new TerritoryAdded(toPosition, toTerritory));
         } else {
-            toTerritory = worldMap.get(position);
+            toTerritory = worldMap.get(toPosition);
         }
 
-        var fromDirection = fromPosition.minus(position);
+        var fromDirection = fromPosition.minus(toPosition);
 
         return TerritoryGenerator.wildernessBuilder()
             .fromTerritory(fromTerritory, fromDirection)

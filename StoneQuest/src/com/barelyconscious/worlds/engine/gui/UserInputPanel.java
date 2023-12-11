@@ -45,6 +45,7 @@ public class UserInputPanel extends Widget {
         this.inventoryBagWidget.setEnabled(false);
         this.stockpileBagWidget.setEnabled(false);
         this.craftingMenuWidget.setEnabled(false);
+        this.worldMapWidget.setEnabled(false);
         this.gameMenuWidget.setEnabled(false);
 
         configureFactionMenuButtons();

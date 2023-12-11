@@ -66,14 +66,14 @@ public final class GuiInitializer {
             .build(), stockpile, 8, 8);
 
         val wCraftingMenu = new CraftingWindowWidget();
-        var wWorldMapMenu = new WorldMapWidget();
         var wGameMenu = new PlayerPersonalDeviceWidget();
+        var wWorldMapMenu = new WorldMap();
 
         gui.addWidget(wStockPile);
         gui.addWidget(wBackpack);
         gui.addWidget(wCraftingMenu);
-        gui.addWidget(wWorldMapMenu);
         gui.addWidget(wGameMenu);
+        gui.addWidget(wWorldMapMenu);
 
         gui.addWidget(new UserInputPanel(
             wBackpack,

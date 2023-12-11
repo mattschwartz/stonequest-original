@@ -41,11 +41,55 @@ public class TestMapGenerator {
         var settlement = gi.getSystem(SettlementSystem.class);
         var wild = gi.getSystem(WildernessSystem.class);
 
+        wild.putTerritory(new Vector(0, -1), new Territory(
+            "Territory (0,-1)",
+            new Vector(0, -1),
+            1,
+            Biome.FOREST,
+            Climate.ARID,
+            0.25,
+            0.10,
+            Lists.newArrayList()
+        ));
+
+        wild.putTerritory(new Vector(-1, 0), new Territory(
+            "Territory (-1, 0)",
+            new Vector(-1, 0),
+            1,
+            Biome.SWAMP,
+            Climate.ARID,
+            0.25,
+            0.10,
+            Lists.newArrayList()
+        ));
+
+        wild.putTerritory(new Vector(-1, -1), new Territory(
+            "Territory (-1, -1)",
+            new Vector(-1, -1),
+            1,
+            Biome.MOUNTAINOUS,
+            Climate.ARID,
+            0.25,
+            0.10,
+            Lists.newArrayList()
+        ));
+
+        wild.putTerritory(new Vector(1, 1), new Territory(
+            "Territory (1, 1)",
+            new Vector(1, 1),
+            1,
+            Biome.TUNDRA,
+            Climate.ARID,
+            0.25,
+            0.10,
+            Lists.newArrayList()
+        ));
+
         territory1 = new Territory(
             "Territory(0,0)",
             Vector.ZERO,
             1,
-            Biome.FOREST,
+            Biome.DESERT,
             Climate.TEMPERATE,
             0.25,
             0.10,
@@ -59,8 +103,8 @@ public class TestMapGenerator {
             "Territory(0,1)",
             new Vector(0, 1),
             2,
-            Biome.FOREST,
-            Climate.TEMPERATE,
+            Biome.PLAINS,
+            Climate.ARID,
             0.4,
             0.25,
             Lists.newArrayList(
