@@ -122,6 +122,12 @@ public class TerritoryGenerator {
                     noun = "Unknowns";
             }
 
+            var possibleResources = Lists.newArrayList(
+                GameItems.WOOD.toItem(),
+                GameItems.IRON_ORE.toItem(),
+                GameItems.CHAMOMILE.toItem()
+            );
+
             return new Territory(
                 adjective + " " + noun,
                 position,

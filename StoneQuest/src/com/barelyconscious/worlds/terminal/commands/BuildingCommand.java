@@ -3,6 +3,7 @@ package com.barelyconscious.worlds.terminal.commands;
 import com.barelyconscious.worlds.entity.wilderness.Territory;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
+import com.barelyconscious.worlds.game.systems.SettlementSystem;
 import com.barelyconscious.worlds.game.types.TerritoryResource;
 import com.barelyconscious.worlds.terminal.InputDialog;
 
@@ -40,7 +41,7 @@ public class BuildingCommand extends Command {
         GameInstance gi = GameInstance.instance();
         ChancellorSystem ts = gi.getSystem(ChancellorSystem.class);
 
-        List<TerritoryResource> availableResources = ts.getTerritoriesOwnedByVillage(gi.getWorld().getPlayerSettlement())
+        List<TerritoryResource> availableResources = ts.getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement())
             .stream().map(Territory::getAvailableResources)
             .flatMap(List::stream)
             .toList();

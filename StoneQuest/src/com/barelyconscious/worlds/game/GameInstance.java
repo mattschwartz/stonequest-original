@@ -2,6 +2,7 @@ package com.barelyconscious.worlds.game;
 
 import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.engine.Camera;
+import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.Hero;
 import com.barelyconscious.worlds.entity.Wagon;
 import com.barelyconscious.worlds.entity.PlayerPersonalDevice;
@@ -149,5 +150,11 @@ public final class GameInstance {
             throw new IllegalArgumentException("No system of type " + systemClass.getName() + " is registered.");
         }
         return (T) gameSystems.get(systemClass);
+    }
+
+    public void updateSystems(EventArgs args) {
+        for (GameSystem system : gameSystems.values()) {
+            system.update(args);
+        }
     }
 }

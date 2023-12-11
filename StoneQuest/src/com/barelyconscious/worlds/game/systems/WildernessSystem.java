@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.game.systems;
 
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.wilderness.Territory;
 import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
 import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
@@ -15,6 +16,18 @@ public class WildernessSystem implements GameSystem {
     // World is made up of wilderness levels
     // todo: territory blueprints need to be generated somehow based on spanning biomes and things
     private final Map<Vector, Territory> worldMap = new HashMap<>();
+
+    public void update(EventArgs args) {
+        for (Territory territory : worldMap.values()) {
+            territory.update(args);
+        }
+    }
+
+    // only for now(tm)
+    @Deprecated
+    public void putTerritory(Vector position, Territory territory) {
+        worldMap.put(position, territory);
+    }
 
     public WildernessLevel getWildernessLevel(
         Vector fromPosition,

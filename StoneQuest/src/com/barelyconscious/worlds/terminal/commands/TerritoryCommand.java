@@ -6,6 +6,7 @@ import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
+import com.barelyconscious.worlds.game.systems.SettlementSystem;
 import com.barelyconscious.worlds.terminal.InputDialog;
 
 import java.util.List;
@@ -59,12 +60,12 @@ public class TerritoryCommand extends Command {
         if (args.parameters.size() > 1) {
             int territoryIndex = Integer.parseInt(args.parameters.get(1));
             selectATerritoryToSpawn = GameInstance.instance().getSystem(ChancellorSystem.class)
-                .getTerritoriesOwnedByVillage(GameInstance.instance().getWorld().getPlayerSettlement())
+                .getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement())
                 .get(territoryIndex);
         } else {
             selectATerritoryToSpawn = InputDialog.pollObjects("Select a territory to spawn", GameInstance.instance()
                     .getSystem(ChancellorSystem.class)
-                    .getTerritoriesOwnedByVillage(GameInstance.instance().getWorld().getPlayerSettlement()))
+                    .getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement()))
                 .withFormatter((territory) -> territory.name)
                 .prompt(scn, true);
         }
@@ -111,7 +112,7 @@ public class TerritoryCommand extends Command {
     private Void details(Scanner scn, CommandLineArgs args) {
         GameInstance gi = GameInstance.instance();
         ChancellorSystem cs = gi.getSystem(ChancellorSystem.class);
-        List<Territory> territories = cs.getTerritoriesOwnedByVillage(gi.getWorld().getPlayerSettlement());
+        List<Territory> territories = cs.getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement());
 
         for (var territory : territories) {
             System.out.printf("%s%n", territory.name);
@@ -142,7 +143,7 @@ public class TerritoryCommand extends Command {
         GameInstance gi = GameInstance.instance();
         System.out.printf("You own %s territories%n", gi
             .getSystem(ChancellorSystem.class)
-            .getTerritoriesOwnedByVillage(gi.getWorld().getPlayerSettlement())
+            .getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement())
             .size());
         return null;
     }

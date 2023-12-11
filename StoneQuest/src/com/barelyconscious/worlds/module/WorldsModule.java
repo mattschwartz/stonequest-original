@@ -6,6 +6,7 @@ import com.barelyconscious.worlds.engine.gui.GuiCanvas;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
 import com.barelyconscious.worlds.entity.Wagon;
+import com.barelyconscious.worlds.entity.wilderness.Settlement;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.World;
@@ -17,6 +18,7 @@ import com.barelyconscious.worlds.common.exception.InvalidGameConfigurationExcep
 import com.barelyconscious.worlds.engine.Physics;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.barelyconscious.worlds.game.systems.GuiSystem;
+import com.barelyconscious.worlds.game.systems.SettlementSystem;
 import com.barelyconscious.worlds.game.systems.WildernessSystem;
 import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
 import com.google.common.util.concurrent.RateLimiter;
@@ -200,7 +202,8 @@ public class WorldsModule extends AbstractModule {
         ChancellorSystem chancellorSystem,
         CombatSystem combatSystem,
         GuiSystem guiSystem,
-        WildernessSystem wildernessSystem
+        WildernessSystem wildernessSystem,
+        SettlementSystem settlementSystem
     ) {
         var gi = GameInstance.instance();
         gi.setWagon(partyWagon);
@@ -208,7 +211,15 @@ public class WorldsModule extends AbstractModule {
         gi.registerSystem(combatSystem);
         gi.registerSystem(guiSystem);
         gi.registerSystem(wildernessSystem);
+        gi.registerSystem(settlementSystem);
         return gi;
+    }
+
+    @Provides
+    @Singleton
+    SettlementSystem providesSettlementSystem() {
+        var playerSettlement = new Settlement("Ravenfell");
+        return new SettlementSystem(playerSettlement);
     }
 
     @Provides

@@ -10,6 +10,7 @@ import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
+import com.barelyconscious.worlds.game.systems.SettlementSystem;
 import lombok.val;
 
 import static com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet.Resources.INV_ITEM_SLOT_BACKGROUND;
@@ -52,7 +53,9 @@ public final class GuiInitializer {
             .build(), inventory, 4, 4);
 
         // Faction inventory
-        Inventory stockpile = GameInstance.instance().getWorld().getPlayerSettlement().getStockpile();
+        Inventory stockpile = GameInstance.instance().getSystem(SettlementSystem.class)
+            .getPlayerSettlement()
+            .getStockpile();
         var wStockPile = new InventoryBagWidget(LayoutData.builder()
             .anchor(new VDim(0, 0,
                 5,

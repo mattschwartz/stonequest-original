@@ -229,6 +229,7 @@ public final class Engine {
         }
 
         world.update(eventArgs);
+        GameInstance.instance().updateSystems(eventArgs);
     }
 
     private void runJobs(final EventArgs eventArgs) {

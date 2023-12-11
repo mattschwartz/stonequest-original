@@ -10,6 +10,7 @@ import com.barelyconscious.worlds.game.abilitysystem.Ability;
 import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
+import com.barelyconscious.worlds.game.systems.SettlementSystem;
 import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
 import com.barelyconscious.worlds.terminal.commands.*;
 
@@ -166,7 +167,7 @@ public class TerminalPlayerController extends PlayerController {
 
         System.out.println("Village actions");
 
-        Settlement playerVillage = GameInstance.instance().getWorld().getPlayerSettlement();
+        Settlement playerVillage = GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement();
         System.out.println("The Village of " + playerVillage.name);
         System.out.println("  Population: " + playerVillage.getCitizens().size());
         System.out.println("  Buildings: " + playerVillage.getBuildings().size());

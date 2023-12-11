@@ -7,6 +7,7 @@ import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.entity.wilderness.Settlement;
 import com.barelyconscious.worlds.entity.wilderness.Territory;
 import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
+import com.barelyconscious.worlds.game.systems.WildernessSystem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,14 +30,7 @@ public final class World {
     private WildernessLevel wildernessLevel;
 
     @Getter
-    @Setter
-    private Settlement playerSettlement;
-
-    @Getter
     private final List<Settlement> settlements = new ArrayList<>();
-
-    @Getter
-    private final List<Territory> territories = new ArrayList<>();
 
     public final Delegate<OnWorldLoadArgs> delegateOnWorldLoaded = new Delegate<>();
 
@@ -109,7 +103,6 @@ public final class World {
      */
     public void update(EventArgs args) {
         readyLoadWorld();
-        territories.forEach(territory -> territory.update(args));
         settlements.forEach(settlement -> settlement.update(args));
     }
 

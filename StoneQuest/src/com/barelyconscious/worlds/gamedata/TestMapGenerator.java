@@ -9,6 +9,8 @@ import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
 import com.barelyconscious.worlds.game.systems.ChancellorSystem;
+import com.barelyconscious.worlds.game.systems.SettlementSystem;
+import com.barelyconscious.worlds.game.systems.WildernessSystem;
 import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
 import com.barelyconscious.worlds.game.types.TerritoryResource;
@@ -36,7 +38,8 @@ public class TestMapGenerator {
     // just for testing
     private static void createTerritories(World world) {
         GameInstance gi = GameInstance.instance();
-        ChancellorSystem cs = gi.getSystem(ChancellorSystem.class);
+        var settlement = gi.getSystem(SettlementSystem.class);
+        var wild = gi.getSystem(WildernessSystem.class);
 
         territory1 = new Territory(
             "Territory(0,0)",
@@ -50,6 +53,8 @@ public class TestMapGenerator {
                 new TerritoryResource(
                     GameItems.WOOD.toItem(),
                     0.85)));
+        wild.putTerritory(Vector.ZERO, territory1);
+
         Territory territory2 = new Territory(
             "Territory(0,1)",
             new Vector(0, 1),
@@ -66,11 +71,9 @@ public class TestMapGenerator {
                     GameItems.IRON_ORE.toItem(), 0.4),
                 new TerritoryResource(
                     GameItems.CHAMOMILE.toItem(), 0.6)));
+        wild.putTerritory(new Vector(0, 1), territory2);
 
-        world.getTerritories().add(territory1);
-        world.getTerritories().add(territory2);
-
-        var playerSettlement = gi.getWorld().getPlayerSettlement();
+        var playerSettlement = settlement.getPlayerSettlement();
         playerSettlement.claimTerritory(Settlement.ClaimTerritoryRequest.builder()
             .territory(territory1)
             .build());
@@ -78,15 +81,12 @@ public class TestMapGenerator {
             .territory(territory2)
             .build());
 
-        playerSettlement.constructBuilding(Settlement.ConstructBuildingRequest.builder()
+        HarvesterBuilding harvesterBuilding = playerSettlement.constructBuilding(Settlement.ConstructBuildingRequest.builder()
             .territory(territory1)
             .resource(territory1.getAvailableResources().get(0))
-            .build());
-
-        // construct a harvester in territory 1
-        HarvesterBuilding harvesterBuilding = cs.constructHarvester(territory1, territory1.getAvailableResources().get(0), Vector.ZERO);
-
+            .build()).harvesterBuilding;
         assert harvesterBuilding != null;
+
 
         harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
             log.info("Produced {} x{}", item.item.getName(), item.amount);
@@ -98,7 +98,10 @@ public class TestMapGenerator {
             return null;
         });
 
-        harvesterBuilding = cs.constructHarvester(territory2, territory2.getAvailableResources().get(1), Vector.ZERO);
+        harvesterBuilding = playerSettlement.constructBuilding(Settlement.ConstructBuildingRequest.builder()
+            .territory(territory2)
+            .resource(territory2.getAvailableResources().get(1))
+            .build()).harvesterBuilding;
 
         assert harvesterBuilding != null;
 

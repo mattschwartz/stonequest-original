@@ -54,7 +54,6 @@ public class ChancellorSystem implements GameSystem {
 
         var building = new HarvesterBuilding(
             resource.item.getName() + " Harvester",
-            location,
             HarvesterBuilding.BUILDING_TIER_1,
             resource,
             settlement.getStockpile());

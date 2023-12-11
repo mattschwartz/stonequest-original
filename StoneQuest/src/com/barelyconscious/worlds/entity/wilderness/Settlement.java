@@ -38,8 +38,8 @@ public class Settlement extends Actor {
      */
     private final List<Territory> ownedTerritories;
 
-    public Settlement(String name, Vector transform) {
-        super(name, transform);
+    public Settlement(String name) {
+        super(name, Vector.ZERO);
         // todo -should be a FlexibleInventory that is unbounded in size
         stockpile = new Inventory(64);
         citizens = new ArrayList<>();
@@ -78,6 +78,7 @@ public class Settlement extends Actor {
 
     @AllArgsConstructor
     public static class ConstructBuildingResponse {
+        public final HarvesterBuilding harvesterBuilding;
 
     }
 
@@ -100,7 +101,7 @@ public class Settlement extends Actor {
 
         territory.getAvailableResources().remove(resource);
 
-        return new ConstructBuildingResponse();
+        return new ConstructBuildingResponse(building);
     }
 
     public void update(EventArgs args) {
