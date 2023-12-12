@@ -26,6 +26,12 @@ public class WorldMap extends Widget {
             .size(LayoutData.SIZE_FILL)
             .build(),
             new Color(0, 0, 0, 0.5f)));
+        addWidget(new BackgroundPanelWidget(LayoutData.builder()
+            .anchor(0, 0, 0, 0)
+            .size(LayoutData.SIZE_FILL)
+            .build(),
+            Color.YELLOW,
+            false));
         addWidget(new TextFieldWidget("World Map",
             LayoutData.builder()
                 .anchor(0, 0, 0, -12)
@@ -36,6 +42,10 @@ public class WorldMap extends Widget {
         wild.delegateOnTerritoryAdded.bindDelegate(this::onTerritoryAdded);
 
         addWidget(new DrawMapComponent());
+        addWidget(new WildernessInfoPanel(LayoutData.builder()
+            .anchor(0, 1, 0, -70)
+            .size(0, 0, 200, 80)
+            .build()));
     }
 
     private Void onTerritoryAdded(WildernessSystem.TerritoryAdded territoryAdded) {
@@ -91,25 +101,18 @@ public class WorldMap extends Widget {
 
                     var pos = new Vector((x + Math.abs(minCols)) * 32, (y + Math.abs(minRows)) * 32);
                     pos = pos.plus(screenBounds.left, screenBounds.top);
-                    var screenPos = GameInstance.instance().getCamera().screenToWorldPos(pos);
 
-                    renderContext.renderRect(
-                        color,
-                        true,
-                        (int) screenPos.x + 1,
-                        (int) screenPos.y + 1,
-                        31,
-                        31,
-                        RenderLayer.GUI);
+                    renderContext.renderGuiRect(color, true,
+                        (int) pos.x + 1, (int) pos.y + 1, 31, 31);
+
                     if (territory == currentTerritory) {
-                        renderContext.renderRect(
-                            Color.WHITE,
+                        renderContext.renderGuiRect(
+                            Color.YELLOW,
                             false,
-                            (int) screenPos.x,
-                            (int) screenPos.y,
+                            (int) pos.x,
+                            (int) pos.y,
                             32,
-                            32,
-                            RenderLayer.GUI);
+                            32);
                     }
                 }
             }

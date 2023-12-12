@@ -15,33 +15,20 @@ public class WildernessInfoPanel extends Widget {
     private WildernessLevel wilderness;
     private final TextFieldWidget territoryName;
     private final TextFieldWidget territoryLevel;
-    private final TextFieldWidget territoryPosition;
-    private final TextFieldWidget territoryBiome;
-    private final TextFieldWidget territoryClimate;
     private final TextFieldWidget numEnemies;
     private final TextFieldWidget numRips;
-    private double hostility;
-    private double corruption;
 
-    public WildernessInfoPanel() {
-        super(LayoutData.builder()
-            .anchor(0, 1, 0, -200)
-            .size(0, 0, 200, 200)
-            .build());
+    public WildernessInfoPanel(LayoutData layoutData) {
+        super(layoutData);
 
         GameInstance.instance().getWorld().delegateOnWorldLoaded
             .bindDelegate(this::onWorldLoaded);
 
-        addWidget(new BackgroundPanelWidget(LayoutData.builder()
-            .anchor(0, 0, 0, 0)
-            .size(LayoutData.SIZE_FILL)
-            .build(),
-            Color.DARK_GRAY));
-
+        int xOffs = 5;
         territoryName = new TextFieldWidget(
             null,
             LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 3)
+                .anchor(0, 0, xOffs, 0)
                 .size(0, 0, 100, 20)
                 .build());
         addWidget(territoryName);
@@ -49,39 +36,15 @@ public class WildernessInfoPanel extends Widget {
         territoryLevel = new TextFieldWidget(
             null,
             LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 23)
+                .anchor(0, 0, xOffs, 20)
                 .size(0, 0, 100, 20)
                 .build());
         addWidget(territoryLevel);
 
-        territoryPosition = new TextFieldWidget(
-            null,
-            LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 43)
-                .size(0, 0, 100, 20)
-                .build());
-        addWidget(territoryPosition);
-
-        territoryBiome = new TextFieldWidget(
-            null,
-            LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 63)
-                .size(0, 0, 100, 20)
-                .build());
-        addWidget(territoryBiome);
-
-        territoryClimate = new TextFieldWidget(
-            null,
-            LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 83)
-                .size(0, 0, 100, 20)
-                .build());
-        addWidget(territoryClimate);
-
         numEnemies = new TextFieldWidget(
             null,
             LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 103)
+                .anchor(0, 0, xOffs, 40)
                 .size(0, 0, 100, 20)
                 .build());
         addWidget(numEnemies);
@@ -89,10 +52,17 @@ public class WildernessInfoPanel extends Widget {
         numRips = new TextFieldWidget(
             null,
             LayoutData.builder()
-                .anchor(0, 0, 1, 5 + 123)
+                .anchor(0, 0, xOffs, 60)
                 .size(0, 0, 100, 20)
                 .build());
         addWidget(numRips);
+    }
+
+    public WildernessInfoPanel() {
+        this(LayoutData.builder()
+            .anchor(0, 1, 0, -200)
+            .size(0, 0, 200, 200)
+            .build());
     }
 
     private Void onWorldLoaded(World.OnWorldLoadArgs args) {
@@ -101,21 +71,16 @@ public class WildernessInfoPanel extends Widget {
 
         territoryName.setText(territory.getName());
         territoryLevel.setText("Level " + territory.getTerritoryLevel());
-        territoryPosition.setText("Position: " + territory.getTransform());
-        territoryBiome.setText("Biome: " + territory.getBiome().name());
-        territoryClimate.setText("Climate: " + territory.getClimate().name());
-        hostility = territory.getHostility();
-        corruption = territory.getCorruption();
 
         return null;
     }
 
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
-        var text = String.format("Enemies: %d (%.0f%%)", wilderness.getEntities().size(), hostility*100, corruption*100);
+        var text = String.format("Enemies: %d", wilderness.getEntities().size());
         numEnemies.setText(text);
 
-        text = String.format("Rips: %d (%.0f%%)", 0, corruption*100);
+        text = String.format("Rips: %d", 0);
         numRips.setText(text);
     }
 }

@@ -15,13 +15,20 @@ public class BackgroundPanelWidget extends Widget {
     @Setter
     private Color fillColor;
 
-    public BackgroundPanelWidget(final LayoutData layout, final Color fillColor) {
+    private final boolean isFill;
+
+    public BackgroundPanelWidget(final LayoutData layout, final Color color, final boolean isFill) {
         super(layout);
-        this.fillColor = fillColor;
+        this.fillColor = color;
+        this.isFill = isFill;
+    }
+
+    public BackgroundPanelWidget(final LayoutData layout, final Color fillColor) {
+        this(layout, fillColor, true);
     }
 
     @Override
     protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
-        renderContext.renderGuiRect(fillColor, true, screenBounds);
+        renderContext.renderGuiRect(fillColor, isFill, screenBounds);
     }
 }

@@ -29,7 +29,6 @@ public final class GuiInitializer {
         tiw.setEnabled(false);
         gui.addWidget(tiw);
 
-        gui.addWidget(new WildernessInfoPanel());
         gui.addWidget(new ErrorAlertTextWidget());
         configureHeroQuickbarPanel(gui);
         configureInventory(gui, playerController);
