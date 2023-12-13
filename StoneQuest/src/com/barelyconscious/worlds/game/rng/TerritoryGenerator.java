@@ -556,7 +556,7 @@ public class TerritoryGenerator {
                 enemy.addComponent(new HealthBarComponent(enemy, enemy.getHealthComponent()));
                 enemy.addComponent(new DestroyOnDeathComponent(enemy, 0));
 
-                enemy.addComponent(new DropOnDeathComponent(enemy, GameItems.WILLOW_BARK.toItem()));
+                enemy.addComponent(new DropOnDeathComponent(enemy, LootTable.generateRandomItem(1)));
                 enemy.addComponent(new AIMoveComponent(enemy, 32));
                 enemy.addComponent(new NametagComponent(enemy, Box.square(32)));
 
