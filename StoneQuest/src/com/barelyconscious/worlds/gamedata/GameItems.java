@@ -86,7 +86,7 @@ public class GameItems {
         new ArrayList<>());
     public static GameItems CHAMOMILE = new GameItems(1,
         "Chamomile", "A flower with a pleasant aroma.",
-        new BetterSpriteResource("items::chamomile"),
+        new BetterSpriteResource("items::chamomile_flower"),
         Set.of(ResourceItemTag.HERB, RelatedSkillItemTag.MEDICINE, RelatedSkillItemTag.COOKING, StackableItemTag.STACKABLE, ConsumableItemTag.EDIBLE),
         new ArrayList<>(),
         Lists.newArrayList(new ItemProperty.HealthItemProperty(5, false)));

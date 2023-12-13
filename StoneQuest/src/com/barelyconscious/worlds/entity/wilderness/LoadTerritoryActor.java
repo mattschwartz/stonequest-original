@@ -29,7 +29,6 @@ public class LoadTerritoryActor extends Actor {
     private final int size = 32;
     private final MouseListenerComponent mouse;
     private final SpriteComponent sprite;
-    private final Vector facing;
     private final Territory territoryToLoad;
 
     public LoadTerritoryActor(
@@ -40,7 +39,6 @@ public class LoadTerritoryActor extends Actor {
         super("Load Territory", transform);
 
         this.territoryToLoad = territoryToLoad;
-        this.facing = facing;
 
         String spriteName;
         if (facing == Vector.LEFT) {

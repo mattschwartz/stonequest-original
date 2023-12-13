@@ -27,12 +27,10 @@ public final class Resources {
     }
 
     private final SpriteSheet guiSpriteSheet;
-    private final SpriteSheet itemsSpriteSheet;
     private final SpriteSheet craftingWindowSpriteSheet;
 
     private Resources() {
         this.guiSpriteSheet = GUISpriteSheet.createGuiSpriteSheet();
-        this.itemsSpriteSheet = ItemsSpriteSheet.createItemSpriteSheet();
         this.craftingWindowSpriteSheet = CraftingWindowSpriteSheet.createCraftingWindowSpriteSheet();
     }
 
