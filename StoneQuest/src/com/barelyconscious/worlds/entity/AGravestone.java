@@ -2,6 +2,7 @@ package com.barelyconscious.worlds.entity;
 
 import com.barelyconscious.worlds.entity.components.SpriteComponent;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
+import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Vector;
@@ -12,7 +13,7 @@ public class AGravestone extends Actor {
         super(name, transform);
         addComponent(new SpriteComponent(
             this,
-            Resources.getSprite(ResourceSprite.GRAVESTONE),
+            new BetterSpriteResource("doodads::blood_splatter"),
             RenderLayer.DOODADS));
     }
 }

@@ -70,7 +70,8 @@ public class SpritesheetManager {
     public enum Namespace {
         ITEMS("items"),
         GUI("gui"),
-        TEXTURE("texture");
+        TEXTURE("texture"),
+        DOODADS("doodads");
         private final String namespace;
     }
 

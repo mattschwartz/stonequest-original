@@ -52,10 +52,14 @@ public class GameResourceManager {
         private final String namespace;
     }
 
+    /**
+     * Add new spritesheets here
+     */
     public static void loadResources() {
         SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.ITEMS, "spritesheets/items_spritesheet.json", "spritesheets/items_spritesheet.png");
         SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.TEXTURE, "tiles/texture_spritesheet.json", "tiles/texture_spritesheet.png");
         SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.GUI, "spritesheets/gui_spritesheet.json", "spritesheets/gui_spritesheet.png");
+        SpritesheetManager.loadItemsSpritesheet(SpritesheetManager.Namespace.DOODADS, "spritesheets/doodads_spritesheet.json", "spritesheets/doodads_spritesheet.png");
     }
 
     public void loadSprites() {
