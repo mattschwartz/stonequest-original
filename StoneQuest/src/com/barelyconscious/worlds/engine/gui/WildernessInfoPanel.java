@@ -2,7 +2,6 @@ package com.barelyconscious.worlds.engine.gui;
 
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
-import com.barelyconscious.worlds.engine.gui.widgets.BackgroundPanelWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
 import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
 import com.barelyconscious.worlds.game.GameInstance;
@@ -56,13 +55,6 @@ public class WildernessInfoPanel extends Widget {
                 .size(0, 0, 100, 20)
                 .build());
         addWidget(numRips);
-    }
-
-    public WildernessInfoPanel() {
-        this(LayoutData.builder()
-            .anchor(0, 1, 0, -200)
-            .size(0, 0, 200, 200)
-            .build());
     }
 
     private Void onWorldLoaded(World.OnWorldLoadArgs args) {

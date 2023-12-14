@@ -2,12 +2,14 @@ package com.barelyconscious.worlds.game.resources;
 
 import com.barelyconscious.worlds.game.resources.spritesheet.SpritesheetManager;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.awt.image.BufferedImage;
 
 /**
  * todo is new way?
  */
+@Log4j2
 @AllArgsConstructor
 public class BetterSpriteResource {
     private final String resourceName;
@@ -25,6 +27,10 @@ public class BetterSpriteResource {
     }
 
     public WSprite load() {
-        return SpritesheetManager.SPRITE_MAP.get(resourceName);
+        var res = SpritesheetManager.SPRITE_MAP.get(resourceName);
+        if (res == null) {
+            log.error("Could not find sprite resource: " + resourceName);
+        }
+        return res;
     }
 }
