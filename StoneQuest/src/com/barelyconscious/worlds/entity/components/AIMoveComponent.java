@@ -7,6 +7,7 @@ import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
+import com.barelyconscious.worlds.game.systems.combat.DamagingAbility;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -40,7 +41,7 @@ public class AIMoveComponent extends MoveComponent {
             // make a random decision
             Decision decision;
             var ran = UMath.RANDOM.nextInt(100);
-            if (ran < 5) {
+            if (ran < 10) {
                 decision = Decision.WALK;
             } else {
                 decision = Decision.NOTHING;
@@ -52,6 +53,12 @@ public class AIMoveComponent extends MoveComponent {
             EntityActor attacker = getCombatTarget();
 
             var direction = attacker.getTransform().minus(getParent().getTransform()).unitVector();
+            if (attacker.getTransform().minus(getParent().getTransform()).magnitude() <= 64) {
+                // get combat system
+                var combatSystem = GameInstance.instance().getSystem(CombatSystem.class);
+                combatSystem.applyDamage((EntityActor) getParent(), attacker, new DamagingAbility(5));
+                lastMove += 1000;
+            }
             addForce(direction, 16);
         }
     }
@@ -75,25 +82,9 @@ public class AIMoveComponent extends MoveComponent {
     }
 
     private void randomWalk() {
-        Vector direction;
-        var ran = UMath.RANDOM.nextInt(0, 4);
-        // choose a random direction to walk in
-        switch (ran) {
-            case 0:
-                direction = Vector.LEFT;
-                break;
-            case 1:
-                direction = Vector.RIGHT;
-                break;
-            case 2:
-                direction = Vector.UP;
-                break;
-            case 3:
-                direction = Vector.DOWN;
-                break;
-            default:
-                direction = Vector.ZERO;
-        }
+        Vector direction = new Vector(
+            UMath.RANDOM.nextDouble() * 2 - 1,
+            UMath.RANDOM.nextDouble() * 2 - 1);
         addForce(direction, 16);
     }
 
@@ -107,6 +98,7 @@ public class AIMoveComponent extends MoveComponent {
 
         return threatTable.getHighestThreatActor((EntityActor) getParent());
     }
+
     private boolean inCombat() {
         var combatEncounter = GameInstance.instance().getSystem(CombatSystem.class).getActiveCombatEncounter();
         if (combatEncounter == null) {
