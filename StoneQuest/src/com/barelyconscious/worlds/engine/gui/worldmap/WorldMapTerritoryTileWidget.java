@@ -1,7 +1,9 @@
-package com.barelyconscious.worlds.engine.gui.widgets;
+package com.barelyconscious.worlds.engine.gui.worldmap;
 
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.MouseInputWidget;
+import com.barelyconscious.worlds.engine.gui.widgets.BackgroundPanelWidget;
+import com.barelyconscious.worlds.engine.gui.widgets.SpriteWidget;
 import com.barelyconscious.worlds.entity.wilderness.Territory;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;

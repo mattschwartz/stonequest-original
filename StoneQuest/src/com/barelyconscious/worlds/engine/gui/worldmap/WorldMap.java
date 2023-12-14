@@ -1,11 +1,14 @@
-package com.barelyconscious.worlds.engine.gui;
+package com.barelyconscious.worlds.engine.gui.worldmap;
 
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.graphics.RenderContext;
+import com.barelyconscious.worlds.engine.gui.LayoutData;
+import com.barelyconscious.worlds.engine.gui.Widget;
+import com.barelyconscious.worlds.engine.gui.WildernessInfoPanel;
 import com.barelyconscious.worlds.engine.gui.widgets.BackgroundPanelWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
-import com.barelyconscious.worlds.engine.gui.widgets.WorldMapTerritoryTileWidget;
+import com.barelyconscious.worlds.engine.gui.worldmap.WorldMapTerritoryTileWidget;
 import com.barelyconscious.worlds.entity.wilderness.Territory;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.systems.WildernessSystem;
@@ -20,7 +23,7 @@ public class WorldMap extends Widget {
     private final int centerRow = 7;
     private final WorldMapTerritoryTileWidget[][] mapTiles =
         new WorldMapTerritoryTileWidget[numMapCols][numMapRows];
-    private final TextFieldWidget selectedTerritoryName;
+    private final TerritoryDetailsPanel territoryDetailsPanel;
 
     public WorldMap() {
         super(LayoutData.builder()
@@ -48,13 +51,12 @@ public class WorldMap extends Widget {
             .anchor(0, 1, 0, -70)
             .size(0, 0, 200, 80)
             .build()));
-        selectedTerritoryName = new TextFieldWidget("None",
-            LayoutData.builder()
-                .anchor(1, 0, -200, 20)
-                .size(0, 0, 200, 20)
-                .build());
-        selectedTerritoryName.setEnabled(false);
-        addWidget(selectedTerritoryName);
+
+        territoryDetailsPanel = new TerritoryDetailsPanel(LayoutData.builder()
+            .anchor(1, 0, -200, 10)
+            .size(0, 0, 200, 80)
+            .build());
+        addWidget(territoryDetailsPanel);
 
         for (int x = 0; x < numMapCols; ++x) {
             for (int y = 0; y < numMapRows; ++y) {
@@ -70,12 +72,7 @@ public class WorldMap extends Widget {
     }
 
     public Void setSelectedTerritory(Territory territory) {
-        if (territory != null) {
-            selectedTerritoryName.setText(territory.getName());
-            selectedTerritoryName.setEnabled(true);
-        } else {
-            selectedTerritoryName.setEnabled(false);
-        }
+        territoryDetailsPanel.setTerritory(territory);
         return null;
     }
 

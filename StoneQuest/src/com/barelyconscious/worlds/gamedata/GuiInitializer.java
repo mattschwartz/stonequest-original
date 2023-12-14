@@ -2,6 +2,7 @@ package com.barelyconscious.worlds.gamedata;
 
 import com.barelyconscious.worlds.engine.gui.*;
 import com.barelyconscious.worlds.engine.gui.widgets.*;
+import com.barelyconscious.worlds.engine.gui.worldmap.WorldMap;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.World;
