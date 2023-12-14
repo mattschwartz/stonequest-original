@@ -31,7 +31,7 @@ public class NametagComponent extends MouseListenerComponent {
             );
         }
 
-        return true;
+        return false;
     }
 
     @Override

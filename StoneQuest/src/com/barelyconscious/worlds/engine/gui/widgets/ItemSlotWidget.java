@@ -133,7 +133,7 @@ public class ItemSlotWidget extends MouseInputWidget {
                 sb.append("{COLOR=255,255,255,255}{STYLE=NONE}").append(prop.getPropertyDescription()).append("\n");
             }
             if (inventoryItem.item.isConsumable()) {
-                sb.append("\n").append("{COLOR=0,255,0,255}{STYLE=NONE}Click to use");
+                sb.append("\n").append("{COLOR=0,255,0,255}{STYLE=NONE}Right click to use");
             }
 
             final String tooltipText = sb.toString();

@@ -1,5 +1,7 @@
 package com.barelyconscious.worlds.entity;
 
+import com.barelyconscious.worlds.common.shape.Box;
+import com.barelyconscious.worlds.entity.components.NametagComponent;
 import com.barelyconscious.worlds.entity.components.SpriteComponent;
 import com.barelyconscious.worlds.engine.graphics.RenderLayer;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
@@ -15,5 +17,6 @@ public class AGravestone extends Actor {
             this,
             new BetterSpriteResource("doodads::blood_splatter"),
             RenderLayer.DOODADS));
+        addComponent(new NametagComponent(this, Box.square(32)));
     }
 }
