@@ -17,28 +17,32 @@ public class TerritoryDetailsPanel extends Widget {
     public TerritoryDetailsPanel(LayoutData layout) {
         super(layout);
 
-        territoryName = new TextFieldWidget("Hover over a territory", LayoutData.builder()
+        addWidget(new TextFieldWidget("Territory Details", LayoutData.builder()
             .anchor(0, 0, 0, 0)
             .size(LayoutData.SIZE_FILL)
-            .build());
-        territoryDescription = new TextFieldWidget("", LayoutData.builder()
+            .build()));
+        territoryName = new TextFieldWidget("Hover over a territory", LayoutData.builder()
             .anchor(0, 0, 0, 20)
             .size(LayoutData.SIZE_FILL)
             .build());
-        territoryLevel = new TextFieldWidget("", LayoutData.builder()
+        territoryDescription = new TextFieldWidget("", LayoutData.builder()
             .anchor(0, 0, 0, 40)
             .size(LayoutData.SIZE_FILL)
             .build());
-        territoryHostility = new TextFieldWidget("", LayoutData.builder()
+        territoryLevel = new TextFieldWidget("", LayoutData.builder()
             .anchor(0, 0, 0, 60)
             .size(LayoutData.SIZE_FILL)
             .build());
-        territoryCorruption = new TextFieldWidget("", LayoutData.builder()
+        territoryHostility = new TextFieldWidget("", LayoutData.builder()
             .anchor(0, 0, 0, 80)
             .size(LayoutData.SIZE_FILL)
             .build());
-        territoryResources = new TextFieldWidget("", LayoutData.builder()
+        territoryCorruption = new TextFieldWidget("", LayoutData.builder()
             .anchor(0, 0, 0, 100)
+            .size(LayoutData.SIZE_FILL)
+            .build());
+        territoryResources = new TextFieldWidget("", LayoutData.builder()
+            .anchor(0, 0, 0, 120)
             .size(LayoutData.SIZE_FILL)
             .build());
         addWidget(territoryName);
@@ -51,6 +55,12 @@ public class TerritoryDetailsPanel extends Widget {
 
     public void setTerritory(Territory territory) {
         if (territory == null) {
+            territoryName.setText("Hover over a territory");
+            territoryDescription.setText("");
+            territoryLevel.setText("");
+            territoryHostility.setText("");
+            territoryCorruption.setText("");
+            territoryResources.setText("");
             return;
         }
 
