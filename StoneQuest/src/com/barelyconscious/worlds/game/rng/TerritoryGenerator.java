@@ -36,6 +36,10 @@ public class TerritoryGenerator {
         return new WildernessLevelBuilder();
     }
 
+    public static void loadRequiredResources() {
+        BiomeTilemaps.loadBiomeTilemaps();
+    }
+
     public static class TerritoryBuilder {
 
         private Vector position = Vector.ZERO;
@@ -99,7 +103,7 @@ public class TerritoryGenerator {
                     i = UMath.RANDOM.nextInt(forestNouns.size());
                     noun = forestNouns.get(i);
                     break;
-                case MOUNTAINOUS:
+                case MOUNTAIN:
                     // choose a random noun from the mountainsNouns list
                     i = UMath.RANDOM.nextInt(mountainNouns.size());
                     noun = mountainNouns.get(i);
@@ -281,7 +285,7 @@ public class TerritoryGenerator {
             var result = new Actor[NUM_TILES_ROWS][NUM_TILES_COLS];
 
             // random walker to create roads
-            result = createRoads(result);
+            result = createRoads(result, territory.getBiome());
 
             // add every actor in result to the wilderness as children
             for (var row : result) {
@@ -295,7 +299,7 @@ public class TerritoryGenerator {
             return result;
         }
 
-        private Actor[][] createRoads(Actor[][] result) {
+        private Actor[][] createRoads(Actor[][] result, Biome biome) {
             int maxNumSkips = 8;
             int skips = maxNumSkips;
 
@@ -309,7 +313,7 @@ public class TerritoryGenerator {
                 result[x][y] = new TileActor(
                     transform,
                     tile,
-                    new BetterSpriteResource("texture::water"),
+                    BiomeTilemaps.spritesByBiome.get(biome).get(0),
                     32, 32, MouseInputHandler.instance());
                 x += UMath.RANDOM.nextInt(3) - 1;
                 y += UMath.RANDOM.nextInt(3) - 1;
@@ -336,7 +340,7 @@ public class TerritoryGenerator {
                                 result[patchX + k][patchY + l] = new TileActor(
                                     transform,
                                     tile,
-                                    new BetterSpriteResource("texture::grass"),
+                                    BiomeTilemaps.spritesByBiome.get(biome).get(1),
                                     32, 32, MouseInputHandler.instance());
                             }
                         }
@@ -365,7 +369,7 @@ public class TerritoryGenerator {
                                 result[patchX + k][patchY + l] = new TileActor(
                                     transform,
                                     tile,
-                                    new BetterSpriteResource("texture::falldirt"),
+                                    BiomeTilemaps.spritesByBiome.get(biome).get(2),
                                     32, 32, MouseInputHandler.instance());
                             }
                         }
@@ -394,7 +398,7 @@ public class TerritoryGenerator {
                                 result[patchX + k][patchY + l] = new TileActor(
                                     transform,
                                     tile,
-                                    new BetterSpriteResource("texture::fallgrass"),
+                                    BiomeTilemaps.spritesByBiome.get(biome).get(3),
                                     32, 32, MouseInputHandler.instance());
                             }
                         }
@@ -423,7 +427,7 @@ public class TerritoryGenerator {
                                 result[patchX + k][patchY + l] = new TileActor(
                                     transform,
                                     tile,
-                                    new BetterSpriteResource("texture::forest"),
+                                    BiomeTilemaps.spritesByBiome.get(biome).get(4),
                                     32, 32, MouseInputHandler.instance());
                             }
                         }
@@ -444,7 +448,7 @@ public class TerritoryGenerator {
                         result[lakeX + i][lakeY + j] = new TileActor(
                             transform,
                             tile,
-                            new BetterSpriteResource("texture::water"),
+                            BiomeTilemaps.spritesByBiome.get(biome).get(5),
                             32, 32, MouseInputHandler.instance());
                     }
                 }
@@ -462,7 +466,7 @@ public class TerritoryGenerator {
                     result[x][y] = new TileActor(
                         transform,
                         tile,
-                        new BetterSpriteResource("texture::dirt"),
+                        BiomeTilemaps.spritesByBiome.get(biome).get(6),
                         32, 32, MouseInputHandler.instance());
                 }
             }

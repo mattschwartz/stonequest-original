@@ -8,7 +8,6 @@ import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
-import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.barelyconscious.worlds.game.systems.SettlementSystem;
 import com.barelyconscious.worlds.game.systems.WildernessSystem;
 import com.barelyconscious.worlds.game.types.Biome;
@@ -67,7 +66,7 @@ public class TestMapGenerator {
             "Territory (-1, -1)",
             new Vector(-1, -1),
             1,
-            Biome.MOUNTAINOUS,
+            Biome.MOUNTAIN,
             Climate.ARID,
             0.25,
             0.10,

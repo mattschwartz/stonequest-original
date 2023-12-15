@@ -1,0 +1,86 @@
+[
+    {
+        "biome": "DESERT",
+        "tileset": [
+            "water",
+            "sandstonebrick",
+            "tar",
+            "rock",
+            "sand",
+            "sand",
+            "cave_sandstone_u"
+        ],
+        "baseHostility": 0.5,
+        "baseCorruption": 0.15
+    },
+    {
+        "biome": "FOREST",
+        "tileset": [
+            "water",
+            "grass",
+            "falldirt",
+            "fallgrass",
+            "forest",
+            "dirt",
+            "fallpacked"
+        ],
+        "baseHostility": 0.5,
+        "baseCorruption": 0.15
+    },
+    {
+        "biome": "MOUNTAIN",
+        "tileset": [
+            "cave_marble",
+            "cliff",
+            "cobble",
+            "wintercobble2",
+            "wintercobble",
+            "winterslatebricks",
+            "gravel"
+        ],
+        "baseHostility": 0.5,
+        "baseCorruption": 0
+    },
+    {
+        "biome": "PLAINS",
+        "tileset": [
+            "water",
+            "grass",
+            "sandstonebrick",
+            "sandstoneslab",
+            "farm",
+            "sand",
+            "lawn"
+        ],
+        "baseHostility": 0.5,
+        "baseCorruption": 0
+    },
+    {
+        "biome": "SWAMP",
+        "tileset": [
+            "water",
+            "tar",
+            "marsh",
+            "moss",
+            "enchantedgrass",
+            "enchantedforest",
+            "peat"
+        ],
+        "baseHostility": 0.5,
+        "baseCorruption": 0.15
+    },
+    {
+        "biome": "TUNDRA",
+        "tileset": [
+            "water",
+            "wintersnow1",
+            "wintercobble",
+            "wintercobble2",
+            "winterpacked",
+            "winterslab",
+            "winterslab"
+        ],
+        "baseHostility": 0.5,
+        "baseCorruption": 0.15
+    }
+]

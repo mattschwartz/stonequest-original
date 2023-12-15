@@ -20,7 +20,7 @@ public class WorldMapTerritoryTileWidget extends MouseInputWidget {
     private static final Map<Biome, Color> biomeColors = Map.of(
         Biome.DESERT, new Color(193, 181, 103),
         Biome.FOREST, new Color(7, 91, 7),
-        Biome.MOUNTAINOUS, new Color(114, 129, 136),
+        Biome.MOUNTAIN, new Color(114, 129, 136),
         Biome.PLAINS, new Color(210, 188, 46),
         Biome.SWAMP, new Color(62, 147, 106),
         Biome.TUNDRA, new Color(114, 227, 232)

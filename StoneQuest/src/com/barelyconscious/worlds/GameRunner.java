@@ -9,6 +9,7 @@ import com.barelyconscious.worlds.game.GameResourceManager;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.input.KeyInputHandler;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
+import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
 import com.barelyconscious.worlds.gamedata.TestHeroInitializer;
 import com.barelyconscious.worlds.gamedata.TestTechInitializer;
 import com.barelyconscious.worlds.gamedata.TestWorldInitializer;
@@ -25,6 +26,7 @@ public final class GameRunner {
 
     public static void main(final String[] args) {
         GameResourceManager.loadResources();
+        TerritoryGenerator.loadRequiredResources();
 
         final String propertiesFilePath = "Worlds.properties";
         final Injector injector = Guice.createInjector(new WorldsModule(propertiesFilePath));
