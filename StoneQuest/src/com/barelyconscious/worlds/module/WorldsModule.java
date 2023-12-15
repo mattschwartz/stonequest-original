@@ -3,6 +3,7 @@ package com.barelyconscious.worlds.module;
 import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
 import com.barelyconscious.worlds.engine.gui.GuiCanvas;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
+import com.barelyconscious.worlds.engine.gui.WorldLogPanel;
 import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
 import com.barelyconscious.worlds.entity.Wagon;
 import com.barelyconscious.worlds.entity.wilderness.Settlement;
@@ -238,7 +239,7 @@ public class WorldsModule extends AbstractModule {
             "Description",
             "ActionText",
             "topRightText"
-        ));
+        ), new WorldLogPanel());
     }
 
     @Provides

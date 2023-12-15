@@ -31,8 +31,7 @@ public class WildernessLevel extends Actor {
     private final List<BuildingActor> buildings = new ArrayList<>();
 
     public WildernessLevel(Territory territory) {
-        super("Level " + territory.getTerritoryLevel() + " territory",
-            Vector.ZERO);
+        super(territory.getName(), Vector.ZERO);
         this.territory = territory;
     }
 

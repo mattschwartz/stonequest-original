@@ -8,6 +8,7 @@ import com.barelyconscious.worlds.entity.Wagon;
 import com.barelyconscious.worlds.entity.PlayerPersonalDevice;
 import com.barelyconscious.worlds.entity.components.AbilityComponent;
 import com.barelyconscious.worlds.game.playercontroller.PlayerController;
+import com.barelyconscious.worlds.game.systems.GuiSystem;
 import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
 import com.barelyconscious.worlds.game.systems.GameSystem;
 import lombok.AllArgsConstructor;
@@ -45,6 +46,15 @@ public final class GameInstance {
     }
 
     private final Map<Class<?>, GameSystem> gameSystems = new HashMap<>();
+
+    /**
+     * Helper method to add a log to the GUI
+     * @param message
+     */
+    public static void log(String message) {
+        var gui = instance().getSystem(GuiSystem.class);
+        gui.getWorldLogPanel().addLogEntry(message);
+    }
 
     @Getter
     @Setter

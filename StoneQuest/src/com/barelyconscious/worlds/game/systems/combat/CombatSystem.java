@@ -3,6 +3,7 @@ package com.barelyconscious.worlds.game.systems.combat;
 import com.barelyconscious.worlds.common.UMath;
 import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.entity.components.DynamicValueComponent;
+import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.item.Item;
@@ -50,8 +51,11 @@ public class CombatSystem implements GameSystem {
 
         var health = defender.getHealthComponent();
         if (health != null && health.isEnabled()) {
-            log.info("Dealing " + damageAbility.damage + " damage to " + defender.getName() +
-                " with " + damageAbility.damageType);
+            GameInstance.log(String.format("%s dealt %d damage to %s with %s",
+                attacker.getName(),
+                (int) damageAbility.damage,
+                defender.getName(),
+                damageAbility.damageType));
             health.adjustCurrentValueBy(-damageAbility.damage);
         }
 

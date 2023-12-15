@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
+import java.awt.*;
+
 public class TextFieldWidget extends Widget {
 
     @Getter
@@ -83,22 +85,24 @@ public class TextFieldWidget extends Widget {
             screenBounds.top + yOffs, screenBounds.bottom + yOffs);
 
         if (showShadow) {
-            final String shadowText = "{COLOR=0,0,0,255}" + text;
+            var oldColor =font.getColor();
 
+            font.setColor(Color.BLACK);
             font.setFontSize(fontSize);
 
-            font.drawString(shadowText,
+            font.drawString(text,
                 textAlignment,
                 new Box(textBounds.left + 1, textBounds.right + 1, textBounds.top, textBounds.bottom));
-            font.drawString(shadowText,
+            font.drawString(text,
                 textAlignment,
                 new Box(textBounds.left - 1, textBounds.right - 1, textBounds.top, textBounds.bottom));
-            font.drawString(shadowText,
+            font.drawString(text,
                 textAlignment,
                 new Box(textBounds.left, textBounds.right, textBounds.top + 1, textBounds.bottom + 1));
-            font.drawString(shadowText,
+            font.drawString(text,
                 textAlignment,
                 new Box(textBounds.left, textBounds.right, textBounds.top - 1, textBounds.bottom - 1));
+            font.setColor(oldColor);
         }
 
         font.drawString(text,

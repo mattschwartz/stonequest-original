@@ -70,6 +70,9 @@ public final class GameRunner {
             return null;
         });
 
+        GameInstance.log("Welcome to Worlds v 1.0.0");
+        GameInstance.log("Press F1 to toggle the debug overlay");
+
         engine.start();
         System.out.println("Saving game...");
         System.out.println("Cleaning up...");

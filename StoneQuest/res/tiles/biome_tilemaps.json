@@ -8,7 +8,7 @@
             "rock",
             "sand",
             "sand",
-            "cave_sandstone_u"
+            "sand"
         ],
         "baseHostility": 0.5,
         "baseCorruption": 0.15

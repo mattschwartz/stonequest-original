@@ -140,6 +140,10 @@ public final class World {
 
         isLevelLoading = false;
         delegateOnWorldLoaded.call(new OnWorldLoadArgs(wildernessLevel));
+        GameInstance.log(String.format("You have entered a %s %s known as %s.",
+            wildernessLevel.getTerritory().getClimate(),
+            wildernessLevel.getTerritory().getBiome(),
+            wildernessLevel.getName()));
     }
 
     public void addActor(final Actor actor) {
