@@ -28,7 +28,7 @@ public class AIMoveComponent extends MoveComponent {
     public void update(EventArgs eventArgs) {
         super.update(eventArgs);
         if (!(getParent() instanceof EntityActor)) {
-            log.info("I'm not eligible for participating in combat. {}", getParent().getName());
+            log.error("I'm not eligible for participating in combat. {}", getParent().getName());
             setRemoveOnNextUpdate(true);
             return;
         }
@@ -54,7 +54,7 @@ public class AIMoveComponent extends MoveComponent {
 
             var direction = attacker.getTransform().minus(getParent().getTransform()).unitVector();
             if (attacker.getTransform().minus(getParent().getTransform()).magnitude() <= 64) {
-                // get combat system
+                // todo replace with abilities
                 var combatSystem = GameInstance.instance().getSystem(CombatSystem.class);
                 combatSystem.applyDamage((EntityActor) getParent(), attacker, new DamagingAbility(5));
                 lastMove += 1000;

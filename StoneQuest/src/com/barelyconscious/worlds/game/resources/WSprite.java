@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.awt.image.BufferedImage;
-// todo - is this the new way?
+
 @Getter
 @AllArgsConstructor
 public class WSprite {

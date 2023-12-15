@@ -63,6 +63,8 @@ public final class InventoryBagWidget extends Widget {
     private void configureWidgets() {
         addWidget(new BackgroundPanelWidget(LayoutData.DEFAULT,
             new Color(33, 33, 33, 204)));
+        // todo need to make it so we can construct inventory widgets dynamically
+        //  currently assumes the same 4x4 square
         addWidget(new SpriteWidget(LayoutData.DEFAULT, Resources.instance()
             .getSprite(GUISpriteSheet.Resources.INV_ITEM_SLOT_BACKGROUND)));
 

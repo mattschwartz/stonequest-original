@@ -13,6 +13,7 @@ import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.TraitName;
+import com.barelyconscious.worlds.game.systems.LootSystem;
 import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
 import com.barelyconscious.worlds.gamedata.GameItems;
@@ -556,7 +557,8 @@ public class TerritoryGenerator {
                 enemy.addComponent(new HealthBarComponent(enemy, enemy.getHealthComponent()));
                 enemy.addComponent(new DestroyOnDeathComponent(enemy, 0));
 
-                enemy.addComponent(new DropOnDeathComponent(enemy, LootTable.generateRandomItem(1)));
+                enemy.addComponent(new DropOnDeathComponent(enemy,
+                    GameInstance.instance().getSystem(LootSystem.class).generateRandomItem(1)));
                 enemy.addComponent(new AIMoveComponent(enemy, 32));
                 enemy.addComponent(new NametagComponent(enemy, Box.square(32)));
 

@@ -21,7 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-// todo - is this the new way?
+/**
+ * A spritesheet is a single image file that contains multiple sprites. This class
+ * is responsible for loading spritesheets and parsing their metadata files.
+ */
 public class SpritesheetManager {
 
     @AllArgsConstructor

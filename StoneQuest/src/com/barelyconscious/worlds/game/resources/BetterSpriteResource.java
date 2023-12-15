@@ -7,7 +7,8 @@ import lombok.extern.log4j.Log4j2;
 import java.awt.image.BufferedImage;
 
 /**
- * todo is new way?
+ * A wrapper class for a sprite resource that provides a more convenient way to
+ * access the sprite's properties.
  */
 @Log4j2
 @AllArgsConstructor

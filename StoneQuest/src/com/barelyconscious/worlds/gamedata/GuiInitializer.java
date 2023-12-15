@@ -32,15 +32,11 @@ public final class GuiInitializer {
 
         gui.addWidget(new ErrorAlertTextWidget());
         configureHeroQuickbarPanel(gui);
-        configureInventory(gui, playerController);
+        configureInventory(gui);
         world.addPersistentActor(gui);
     }
 
-    private static void configureInventory(GuiCanvas gui, final PlayerController playerController) {
-        if (!(playerController instanceof MouseKeyboardPlayerController)) {
-            return;
-        }
-
+    private static void configureInventory(GuiCanvas gui) {
         // Player's backpack
         Inventory inventory = GameInstance.instance().getWagon().getStorage();
         var wBackpack = new InventoryBagWidget(LayoutData.builder()

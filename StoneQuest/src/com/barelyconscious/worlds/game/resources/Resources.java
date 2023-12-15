@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@Deprecated // todo is it tho?
+@Deprecated
 public final class Resources {
 
     private static final class InstanceHolder {
