@@ -16,7 +16,7 @@ import java.util.*;
 
 public class ClimateDefinitions {
 
-    private static final String CLIMATE_TILEMAPS_PATH = "tiles/climate_definition.json";
+    private static final String CLIMATE_TILEMAPS_PATH = "data/climate_definition.json";
 
     public static final Map<Climate, List<String>> adjectivesByClimate = new HashMap<>();
 

@@ -20,7 +20,7 @@ import java.util.*;
  */
 public class BiomeDefinitions {
 
-    private static final String BIOME_TILEMAPS_PATH = "tiles/biome_definition.json";
+    private static final String BIOME_TILEMAPS_PATH = "data/biome_definition.json";
 
     public static final Map<Biome, List<BetterSpriteResource>> spritesByBiome = new HashMap<>();
     public static final Map<Biome, List<String>> nounsByBiome = new HashMap<>();
