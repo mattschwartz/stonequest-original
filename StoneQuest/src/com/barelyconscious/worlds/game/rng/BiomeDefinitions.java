@@ -3,7 +3,6 @@ package com.barelyconscious.worlds.game.rng;
 import com.barelyconscious.worlds.GameRunner;
 import com.barelyconscious.worlds.common.exception.MissingResourceException;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
-import com.barelyconscious.worlds.game.resources.spritesheet.SpritesheetManager;
 import com.barelyconscious.worlds.game.types.Biome;
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
@@ -11,8 +10,6 @@ import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -21,11 +18,14 @@ import java.util.*;
  * Might consider putting the load functionality in TerritoryGenerator?
  * or might want to expand the responsibilities of this class
  */
-public class BiomeTilemaps {
+public class BiomeDefinitions {
 
-    private static final String BIOME_TILEMAPS_PATH = "tiles/biome_tilemaps.json";
+    private static final String BIOME_TILEMAPS_PATH = "tiles/biome_definition.json";
 
     public static final Map<Biome, List<BetterSpriteResource>> spritesByBiome = new HashMap<>();
+    public static final Map<Biome, List<String>> nounsByBiome = new HashMap<>();
+
+    public static final Map<Biome, BiomeDefinition> definitionByBiome = new HashMap<>();
 
     @Data
     @AllArgsConstructor
@@ -34,6 +34,16 @@ public class BiomeTilemaps {
         public final List<String> tileset;
         public final double baseHostility;
         public final double baseCorruption;
+        public final List<String> generativeNouns;
+
+        public List<BetterSpriteResource> getSprites() {
+            final List<BetterSpriteResource> sprites = new ArrayList<>();
+
+            for (String tileName : tileset) {
+                sprites.add(new BetterSpriteResource("texture::" + tileName));
+            }
+            return sprites;
+        }
     }
 
     public static void loadBiomeTilemaps() {
@@ -61,6 +71,7 @@ public class BiomeTilemaps {
             }
 
             spritesByBiome.put(definition.getBiome(), sprites);
+            nounsByBiome.put(definition.getBiome(), definition.getGenerativeNouns());
         }
     }
 }

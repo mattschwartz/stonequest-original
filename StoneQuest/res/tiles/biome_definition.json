@@ -11,7 +11,14 @@
             "sand"
         ],
         "baseHostility": 0.5,
-        "baseCorruption": 0.15
+        "baseCorruption": 0.15,
+        "generativeNouns": [
+            "Desert",
+            "Wasteland",
+            "Badlands",
+            "Barrens",
+            "Waste"
+        ]
     },
     {
         "biome": "FOREST",
@@ -25,7 +32,15 @@
             "fallpacked"
         ],
         "baseHostility": 0.5,
-        "baseCorruption": 0.15
+        "baseCorruption": 0.15,
+        "generativeNouns": [
+            "Forest",
+            "Woods",
+            "Jungle",
+            "Grove",
+            "Woodlands",
+            "Wilds"
+        ]
     },
     {
         "biome": "MOUNTAIN",
@@ -39,7 +54,15 @@
             "gravel"
         ],
         "baseHostility": 0.5,
-        "baseCorruption": 0
+        "baseCorruption": 0,
+        "generativeNouns": [
+            "Mountains",
+            "Hills",
+            "Peaks",
+            "Range",
+            "Cliffs",
+            "Highlands"
+        ]
     },
     {
         "biome": "PLAINS",
@@ -53,7 +76,15 @@
             "lawn"
         ],
         "baseHostility": 0.5,
-        "baseCorruption": 0
+        "baseCorruption": 0,
+        "generativeNouns": [
+            "Plains",
+            "Fields",
+            "Meadows",
+            "Prairie",
+            "Grasslands",
+            "Savannah"
+        ]
     },
     {
         "biome": "SWAMP",
@@ -67,7 +98,15 @@
             "peat"
         ],
         "baseHostility": 0.5,
-        "baseCorruption": 0.15
+        "baseCorruption": 0.15,
+        "generativeNouns": [
+            "Swamp",
+            "Marsh",
+            "Bog",
+            "Fen",
+            "Wetlands",
+            "Wetland"
+        ]
     },
     {
         "biome": "TUNDRA",
@@ -81,6 +120,14 @@
             "winterslab"
         ],
         "baseHostility": 0.5,
-        "baseCorruption": 0.15
+        "baseCorruption": 0.15,
+        "generativeNouns": [
+            "Tundra",
+            "Ice",
+            "Snow",
+            "Glacier",
+            "Frost",
+            "Frozen"
+        ]
     }
 ]
