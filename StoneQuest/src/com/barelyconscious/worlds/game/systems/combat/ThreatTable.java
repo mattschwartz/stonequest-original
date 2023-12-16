@@ -99,6 +99,14 @@ public class ThreatTable {
         }
     }
 
+    public void removeCombatant(EntityActor actor) {
+        defenderThreatTable.remove(actor);
+
+        for (var otherActor : defenderThreatTable.keySet()) {
+            defenderThreatTable.get(otherActor).remove(actor);
+        }
+    }
+
     /**
      * Clears the threat of the attacker against all its defenders
      *

@@ -50,7 +50,7 @@ public class WorldLogPanel extends Widget {
     public void addLogEntry(String entry) {
         logEntries.add(entry);
 
-        int backOfTheLine = Math.max(logEntries.size() - 1, 10);
+        int backOfTheLine = Math.max(logEntries.size(), 10);
         int start = Math.max(backOfTheLine - 10, 0);
 
         StringBuilder sb = new StringBuilder();

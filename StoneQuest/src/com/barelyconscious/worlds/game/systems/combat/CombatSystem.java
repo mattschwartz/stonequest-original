@@ -34,6 +34,13 @@ public class CombatSystem implements GameSystem {
     @Getter
     private CombatEncounter activeCombatEncounter;
 
+    public void killEntity(EntityActor entity) {
+        GameInstance.log(String.format("%s has perished.", entity.name));
+        // todo: maybe other stuff will happen too later
+        activeCombatEncounter.threatTable
+            .removeCombatant(entity);
+    }
+
     /**
      * Resolves damage-dealing abilities and attacks.
      * <p>

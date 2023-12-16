@@ -27,6 +27,7 @@ public class RenewAbility extends Ability {
                         return new BehaviorFeedback(ContinuationResult.STOP, context, "Caster is not an entity");
                     }
 
+                    // todo should go thru combat system
                     caster
                         .addComponent(new StatChangeOverTimeComponent(
                             caster,

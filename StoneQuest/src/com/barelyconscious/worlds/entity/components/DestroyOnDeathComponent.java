@@ -4,6 +4,8 @@ import com.barelyconscious.worlds.entity.AGravestone;
 import com.barelyconscious.worlds.entity.Actor;
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.EntityActor;
+import com.barelyconscious.worlds.game.GameInstance;
+import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
 
 /**
  * Simple componet that destroys an actor when its health falls to 0.
@@ -38,6 +40,11 @@ public class DestroyOnDeathComponent extends OnDeathComponent {
                 eventArgs.getWorldContext().addActor(new AGravestone(
                     "Corpse of " + getParent().name,
                     getParent().getTransform()));
+                var combat = GameInstance.instance().getSystem(CombatSystem.class);
+
+                if (getParent() instanceof EntityActor entity) {
+                    combat.killEntity(entity);
+                }
             }
         }
     }
