@@ -1,5 +1,6 @@
 package com.barelyconscious.worlds.game.systems;
 
+import com.barelyconscious.worlds.engine.gui.CollectorDialogPanel;
 import com.barelyconscious.worlds.engine.gui.GuiCanvas;
 import com.barelyconscious.worlds.engine.gui.WorldLogPanel;
 import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
@@ -12,15 +13,24 @@ public class GuiSystem implements GameSystem {
     private final TooltipWidget tooltip;
     @Getter
     private final WorldLogPanel worldLogPanel;
+    @Getter
+    private final CollectorDialogPanel collectorDialogPanel;
 
-    public GuiSystem(GuiCanvas canvas, TooltipWidget tooltip, WorldLogPanel worldLogPanel) {
+    public GuiSystem(
+        GuiCanvas canvas,
+        TooltipWidget tooltip,
+        WorldLogPanel worldLogPanel,
+        CollectorDialogPanel collectorDialogPanel
+    ) {
         this.canvas = canvas;
         this.tooltip = tooltip;
         this.worldLogPanel = worldLogPanel;
+        this.collectorDialogPanel = collectorDialogPanel;
 
         tooltip.setVisible(false);
         canvas.addWidget(tooltip);
         canvas.addWidget(worldLogPanel);
+        canvas.addWidget(collectorDialogPanel);
     }
 
     public void showTooltip(

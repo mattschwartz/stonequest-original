@@ -74,7 +74,9 @@ public class SpritesheetManager {
         ITEMS("items"),
         GUI("gui"),
         TEXTURE("texture"),
-        DOODADS("doodads");
+        DOODADS("doodads"),
+        ENTITIES("entities");
+
         private final String namespace;
     }
 

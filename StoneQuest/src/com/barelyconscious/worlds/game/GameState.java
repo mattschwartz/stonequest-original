@@ -8,4 +8,7 @@ package com.barelyconscious.worlds.game;
  */
 public class GameState {
 
+    private int collectorLevel;
+    private int extractorLevel;
+
 }

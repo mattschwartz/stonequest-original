@@ -31,6 +31,7 @@ public final class GuiInitializer {
         gui.addWidget(tiw);
 
         gui.addWidget(new ErrorAlertTextWidget());
+
         configureHeroQuickbarPanel(gui);
         configureInventory(gui);
         world.addPersistentActor(gui);

@@ -13,6 +13,8 @@ import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.TraitName;
+import com.barelyconscious.worlds.game.entities.CollectorNpc;
+import com.barelyconscious.worlds.game.entities.ExtractorNpc;
 import com.barelyconscious.worlds.game.systems.LootSystem;
 import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
@@ -135,6 +137,9 @@ public class TerritoryGenerator {
 
             // these will go first when we can build the world around them
             spawnTravelLocations(result, territory, worldSpace);
+
+            result.addChild(new CollectorNpc(new Vector(128, 128)));
+            result.addChild(new ExtractorNpc(new Vector(64, 128)));
 
             return result;
         }

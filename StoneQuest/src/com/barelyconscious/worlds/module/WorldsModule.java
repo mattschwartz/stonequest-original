@@ -1,6 +1,7 @@
 package com.barelyconscious.worlds.module;
 
 import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
+import com.barelyconscious.worlds.engine.gui.CollectorDialogPanel;
 import com.barelyconscious.worlds.engine.gui.GuiCanvas;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.WorldLogPanel;
@@ -236,8 +237,9 @@ public class WorldsModule extends AbstractModule {
             "Tooltip",
             "Description",
             "ActionText",
-            "topRightText"
-        ), new WorldLogPanel());
+            "topRightText"),
+            new WorldLogPanel(),
+            new CollectorDialogPanel());
     }
 
     @Provides
