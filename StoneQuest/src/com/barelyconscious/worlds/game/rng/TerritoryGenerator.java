@@ -19,9 +19,7 @@ import com.barelyconscious.worlds.game.types.Climate;
 import com.barelyconscious.worlds.gamedata.GameItems;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
-import com.barelyconscious.worlds.game.systems.ChancellorSystem;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 import java.util.Set;
@@ -451,31 +449,31 @@ public class TerritoryGenerator {
         }
 
         private void spawnBuildings(WildernessLevel wilderness, Territory territory, Actor[][] worldSpace) {
-            List<BuildingActor> buildingsWithinTerritory = GameInstance.instance().getSystem(ChancellorSystem.class)
-                .getBuildingsWithinTerritory(territory);
-
-            if (buildingsWithinTerritory == null) {
-                return;
-            }
-
-            // place building randomly in map
-            for (BuildingActor building : buildingsWithinTerritory) {
-                Vector transform;
-                // don't place buildings on top of each other
-                do {
-                    transform = new Vector(
-                        UMath.RANDOM.nextInt(NUM_TILES_ROWS),
-                        UMath.RANDOM.nextInt(NUM_TILES_COLS));
-                } while (worldSpace[(int) transform.x][(int) transform.y] != null
-                    && !(worldSpace[(int) transform.x][(int) transform.y] instanceof TileActor));
-
-                var buildingActor = new BuildingActor(building.name, transform.multiply(32));
-
-                // add appropriate sprite to the building actor
-
-                worldSpace[(int) transform.x][(int) transform.y] = building;
-                wilderness.addBuilding(buildingActor);
-            }
+//            List<BuildingActor> buildingsWithinTerritory = GameInstance.instance().getSystem(ChancellorSystem.class)
+//                .getBuildingsWithinTerritory(territory);
+//
+//            if (buildingsWithinTerritory == null) {
+//                return;
+//            }
+//
+//            // place building randomly in map
+//            for (BuildingActor building : buildingsWithinTerritory) {
+//                Vector transform;
+//                // don't place buildings on top of each other
+//                do {
+//                    transform = new Vector(
+//                        UMath.RANDOM.nextInt(NUM_TILES_ROWS),
+//                        UMath.RANDOM.nextInt(NUM_TILES_COLS));
+//                } while (worldSpace[(int) transform.x][(int) transform.y] != null
+//                    && !(worldSpace[(int) transform.x][(int) transform.y] instanceof TileActor));
+//
+//                var buildingActor = new BuildingActor(building.name, transform.multiply(32));
+//
+//                // add appropriate sprite to the building actor
+//
+//                worldSpace[(int) transform.x][(int) transform.y] = building;
+//                wilderness.addBuilding(buildingActor);
+//            }
         }
 
         private void spawnEnemies(WildernessLevel wilderness, Territory territory, Actor[][] worldSpace) {

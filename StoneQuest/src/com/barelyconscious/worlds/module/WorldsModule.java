@@ -196,7 +196,6 @@ public class WorldsModule extends AbstractModule {
     @Provides
     GameInstance providesGameInstance(
         Wagon partyWagon,
-        ChancellorSystem chancellorSystem,
         CombatSystem combatSystem,
         GuiSystem guiSystem,
         WildernessSystem wildernessSystem,
@@ -205,7 +204,6 @@ public class WorldsModule extends AbstractModule {
     ) {
         var gi = GameInstance.instance();
         gi.setWagon(partyWagon);
-        gi.registerSystem(chancellorSystem);
         gi.registerSystem(combatSystem);
         gi.registerSystem(guiSystem);
         gi.registerSystem(wildernessSystem);

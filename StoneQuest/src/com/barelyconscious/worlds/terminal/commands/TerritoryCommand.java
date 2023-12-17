@@ -1,15 +1,9 @@
 package com.barelyconscious.worlds.terminal.commands;
 
-import com.barelyconscious.worlds.entity.*;
-import com.barelyconscious.worlds.entity.wilderness.Territory;
 import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
 import com.barelyconscious.worlds.game.GameInstance;
-import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
-import com.barelyconscious.worlds.game.systems.ChancellorSystem;
-import com.barelyconscious.worlds.game.systems.SettlementSystem;
 import com.barelyconscious.worlds.terminal.InputDialog;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class TerritoryCommand extends Command {
@@ -55,96 +49,96 @@ public class TerritoryCommand extends Command {
      */
     private Void load(Scanner scn, CommandLineArgs args) {
 
-        final Territory selectATerritoryToSpawn;
-        // check if args contains a territory index
-        if (args.parameters.size() > 1) {
-            int territoryIndex = Integer.parseInt(args.parameters.get(1));
-            selectATerritoryToSpawn = GameInstance.instance().getSystem(ChancellorSystem.class)
-                .getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement())
-                .get(territoryIndex);
-        } else {
-            selectATerritoryToSpawn = InputDialog.pollObjects("Select a territory to spawn", GameInstance.instance()
-                    .getSystem(ChancellorSystem.class)
-                    .getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement()))
-                .withFormatter((territory) -> territory.name)
-                .prompt(scn, true);
-        }
-
-
-        var wilderness = TerritoryGenerator.wildernessBuilder()
-            .territory(selectATerritoryToSpawn)
-            .generate();
-
-        var map = new String[TerritoryGenerator.NUM_TILES_ROWS][TerritoryGenerator.NUM_TILES_COLS];
-        // fill map with .'s
-        for (int x = 0; x < map.length; ++x) {
-            for (int y = 0; y < map[0].length; ++y) {
-                map[x][y] = "◼️";
-            }
-        }
-        for (var child : wilderness.getChildren()) {
-            int x = (int) (child.getTransform().x / 32);
-            int y = (int) (child.getTransform().y / 32);
-            if (child instanceof EntityActor) {
-                map[x][y] = "👹";
-            } else if (child instanceof BuildingActor) {
-                map[x][y] = "🏠";
-            } else if (child instanceof ResourceDeposit) {
-                map[x][y] = "🌱";
-            } else {
-                map[x][y] = child.name;
-            }
-        }
-
-        for (int x = 0; x < map.length; ++x) {
-            for (int y = 0; y < map[0].length; ++y) {
-                System.out.print(map[x][y]);
-            }
-            System.out.println();
-        }
-
-        GameInstance.instance().getWorld()
-            .setWildernessLevel(wilderness);
+//        final Territory selectATerritoryToSpawn;
+//        // check if args contains a territory index
+//        if (args.parameters.size() > 1) {
+//            int territoryIndex = Integer.parseInt(args.parameters.get(1));
+//            selectATerritoryToSpawn = GameInstance.instance().getSystem(ChancellorSystem.class)
+//                .getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement())
+//                .get(territoryIndex);
+//        } else {
+//            selectATerritoryToSpawn = InputDialog.pollObjects("Select a territory to spawn", GameInstance.instance()
+//                    .getSystem(ChancellorSystem.class)
+//                    .getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement()))
+//                .withFormatter((territory) -> territory.name)
+//                .prompt(scn, true);
+//        }
+//
+//
+//        var wilderness = TerritoryGenerator.wildernessBuilder()
+//            .territory(selectATerritoryToSpawn)
+//            .generate();
+//
+//        var map = new String[TerritoryGenerator.NUM_TILES_ROWS][TerritoryGenerator.NUM_TILES_COLS];
+//        // fill map with .'s
+//        for (int x = 0; x < map.length; ++x) {
+//            for (int y = 0; y < map[0].length; ++y) {
+//                map[x][y] = "◼️";
+//            }
+//        }
+//        for (var child : wilderness.getChildren()) {
+//            int x = (int) (child.getTransform().x / 32);
+//            int y = (int) (child.getTransform().y / 32);
+//            if (child instanceof EntityActor) {
+//                map[x][y] = "👹";
+//            } else if (child instanceof BuildingActor) {
+//                map[x][y] = "🏠";
+//            } else if (child instanceof ResourceDeposit) {
+//                map[x][y] = "🌱";
+//            } else {
+//                map[x][y] = child.name;
+//            }
+//        }
+//
+//        for (int x = 0; x < map.length; ++x) {
+//            for (int y = 0; y < map[0].length; ++y) {
+//                System.out.print(map[x][y]);
+//            }
+//            System.out.println();
+//        }
+//
+//        GameInstance.instance().getWorld()
+//            .setWildernessLevel(wilderness);
 
         return null;
     }
 
     private Void details(Scanner scn, CommandLineArgs args) {
-        GameInstance gi = GameInstance.instance();
-        ChancellorSystem cs = gi.getSystem(ChancellorSystem.class);
-        List<Territory> territories = cs.getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement());
-
-        for (var territory : territories) {
-            System.out.printf("%s%n", territory.name);
-
-            System.out.println("  Biome: " + territory.getBiome().name());
-            System.out.println("  Climate: " + territory.getClimate().name());
-            System.out.printf("  Hostility: %d%%%n", (int) (territory.getHostility() * 100));
-            System.out.printf("  Corruption: %d%%%n", (int) (territory.getCorruption() * 100));
-
-            List<BuildingActor> buildingsWithinTerritory = cs.getBuildingsWithinTerritory(territory);
-            if (buildingsWithinTerritory != null) {
-                for (var building : buildingsWithinTerritory) {
-                    System.out.printf("  • 🏠 %s%n", building.name);
-                }
-            }
-
-            for (var resource : territory.getAvailableResources()) {
-                System.out.printf("  • 🌱 %s (%d%% richness)%n",
-                    resource.item.getName(),
-                    (int) (resource.richness * 100));
-            }
-        }
+//        GameInstance gi = GameInstance.instance();
+//        ChancellorSystem cs = gi.getSystem(ChancellorSystem.class);
+//        List<Territory> territories = cs.getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement());
+//
+//        for (var territory : territories) {
+//            System.out.printf("%s%n", territory.name);
+//
+//            System.out.println("  Biome: " + territory.getBiome().name());
+//            System.out.println("  Climate: " + territory.getClimate().name());
+//            System.out.printf("  Hostility: %d%%%n", (int) (territory.getHostility() * 100));
+//            System.out.printf("  Corruption: %d%%%n", (int) (territory.getCorruption() * 100));
+//
+//            List<BuildingActor> buildingsWithinTerritory = cs.getBuildingsWithinTerritory(territory);
+//            if (buildingsWithinTerritory != null) {
+//                for (var building : buildingsWithinTerritory) {
+//                    System.out.printf("  • 🏠 %s%n", building.name);
+//                }
+//            }
+//
+//            for (var resource : territory.getAvailableResources()) {
+//                System.out.printf("  • 🌱 %s (%d%% richness)%n",
+//                    resource.item.getName(),
+//                    (int) (resource.richness * 100));
+//            }
+//        }
 
         return null;
     }
 
     private Void overview(Scanner scn, CommandLineArgs args) {
-        GameInstance gi = GameInstance.instance();
-        System.out.printf("You own %s territories%n", gi
-            .getSystem(ChancellorSystem.class)
-            .getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement())
-            .size());
+//        GameInstance gi = GameInstance.instance();
+//        System.out.printf("You own %s territories%n", gi
+//            .getSystem(ChancellorSystem.class)
+//            .getTerritoriesOwnedByVillage(GameInstance.instance().getSystem(SettlementSystem.class).getPlayerSettlement())
+//            .size());
         return null;
     }
 
