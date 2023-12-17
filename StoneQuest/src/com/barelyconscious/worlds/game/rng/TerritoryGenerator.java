@@ -24,6 +24,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
+import java.util.Set;
 
 public class TerritoryGenerator {
 
@@ -36,8 +37,9 @@ public class TerritoryGenerator {
     }
 
     public static void loadRequiredResources() {
-        BiomeDefinitions.loadBiomeTilemaps();
-        ClimateDefinitions.loadClimateDefinitions();
+        BiomeDefinitions.loadDefinitions();
+        ClimateDefinitions.loadDefinitions();
+        EnemyDefinitions.loadDefinitions();
     }
 
     public static class TerritoryBuilder {
@@ -480,8 +482,12 @@ public class TerritoryGenerator {
             int numEnemies = (int) (NUM_ENEMY_PACKS * territory.getHostility());
 
             for (int i = 0; i < numEnemies; ++i) {
-                String name = enemyPrefixes.get(UMath.RANDOM.nextInt(enemyPrefixes.size()))
-                    + " " + enemyFrequencies.get(UMath.RANDOM.nextInt(enemyFrequencies.size())).getLeft();
+                Set<String> enemyTypes = EnemyDefinitions.definitionByEnemyType.keySet();
+                String enemyType = enemyTypes.toArray(new String[0])[UMath.RANDOM.nextInt(enemyTypes.size())];
+                List<String> enemyPrefixes = EnemyDefinitions.definitionByEnemyType.get(enemyType).getAdjectives();
+                String enemyPrefix = enemyPrefixes.get(UMath.RANDOM.nextInt(enemyPrefixes.size()));
+
+                String name = enemyPrefix + " " + enemyType;
 
                 Vector transform;
                 // don't place enemies on top of each other
@@ -526,51 +532,4 @@ public class TerritoryGenerator {
 
     public static final int NUM_TILES_ROWS = 48; // 1,024 height
     public static final int NUM_TILES_COLS = 32; // 1536 width
-
-    static List<Pair<String, Double>> enemyFrequencies = Lists.newArrayList(
-        Pair.of("goblin", 0.5),
-        Pair.of("orc", 0.3),
-        Pair.of("troll", 0.2),
-        Pair.of("ogre", 0.1),
-        Pair.of("giant", 0.05),
-        Pair.of("dragon", 0.01),
-        Pair.of("demon", 0.01));
-
-    static List<String> enemyPrefixes = Lists.newArrayList(
-        "Menacing",
-        "Fearsome",
-        "Terrifying",
-        "Horrifying",
-        "Monstrous",
-        "Gigantic",
-        "Colossal",
-        "Gargantuan",
-        "Hulking",
-        "Massive",
-        "Enormous",
-        "Ferocious",
-        "Savage",
-        "Vicious",
-        "Brutal",
-        "Ruthless",
-        "Merciless",
-        "Spiteful",
-        "Malicious",
-        "Vindictive",
-        "Cruel",
-        "Sadistic",
-        "Vile",
-        "Wicked",
-        "Evil",
-        "Diabolical",
-        "Demonic",
-        "Satanic",
-        "Hellish",
-        "Infernal",
-        "Fiendish",
-        "Nefarious",
-        "Villainous",
-        "Sinister",
-        "Depraved",
-        "Corrupt");
 }

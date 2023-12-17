@@ -46,7 +46,7 @@ public class BiomeDefinitions {
         }
     }
 
-    public static void loadBiomeTilemaps() {
+    public static void loadDefinitions() {
         final Gson gson = new Gson();
         BiomeDefinition[] definitions;
 

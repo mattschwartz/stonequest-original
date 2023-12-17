@@ -1,0 +1,149 @@
+[
+    {
+        "enemyType": "goblin",
+        "adjectives": [
+            "nasty",
+            "ugly",
+            "smelly",
+            "stinky",
+            "filthy",
+            "dirty",
+            "foul",
+            "disgusting",
+            "gross",
+            "repulsive",
+            "vile"
+        ]
+    },
+    {
+        "enemyType": "orc",
+        "adjectives": [
+            "formidable",
+            "fearsome",
+            "terrifying",
+            "scary",
+            "frightening",
+            "intimidating",
+            "menacing",
+            "threatening"
+        ]
+    },
+    {
+        "enemyType": "troll",
+        "adjectives": [
+            "gigantic",
+            "huge",
+            "enormous",
+            "massive",
+            "colossal",
+            "tremendous",
+            "immense",
+            "monstrous",
+            "gargantuan",
+            "titanic",
+            "vast",
+            "giant"
+        ]
+    },
+    {
+        "enemyType": "ogre",
+        "adjectives": [
+            "gigantic",
+            "huge",
+            "enormous",
+            "massive",
+            "colossal",
+            "tremendous",
+            "immense",
+            "monstrous",
+            "gargantuan",
+            "titanic",
+            "vast",
+            "giant"
+        ]
+    },
+    {
+        "enemyType": "giant",
+        "adjectives": [
+            "gigantic",
+            "huge",
+            "enormous",
+            "massive",
+            "colossal",
+            "tremendous",
+            "immense",
+            "monstrous",
+            "gargantuan",
+            "titanic",
+            "vast",
+            "giant"
+        ]
+    },
+    {
+        "enemyType": "dragon",
+        "adjectives": [
+            "fearsome",
+            "terrifying",
+            "scary",
+            "frightening",
+            "intimidating",
+            "menacing",
+            "threatening",
+            "formidable",
+            "gigantic",
+            "huge",
+            "enormous",
+            "massive",
+            "colossal",
+            "tremendous",
+            "immense",
+            "monstrous",
+            "gargantuan",
+            "titanic",
+            "vast",
+            "giant"
+        ]
+    },
+    {
+        "enemyType": "giant spider",
+        "adjectives": [
+            "gigantic",
+            "huge",
+            "enormous",
+            "massive",
+            "colossal",
+            "tremendous",
+            "immense",
+            "monstrous",
+            "gargantuan",
+            "titanic",
+            "vast",
+            "giant"
+        ]
+    },
+    {
+        "enemyType": "demon",
+        "adjectives": [
+            "fearsome",
+            "terrifying",
+            "scary",
+            "frightening",
+            "intimidating",
+            "menacing",
+            "threatening",
+            "formidable",
+            "gigantic",
+            "huge",
+            "enormous",
+            "massive",
+            "colossal",
+            "tremendous",
+            "immense",
+            "monstrous",
+            "gargantuan",
+            "titanic",
+            "vast",
+            "giant"
+        ]
+    }
+]

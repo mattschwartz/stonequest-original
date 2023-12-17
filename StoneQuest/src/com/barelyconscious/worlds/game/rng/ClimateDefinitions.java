@@ -41,7 +41,7 @@ public class ClimateDefinitions {
         }
     }
 
-    public static void loadClimateDefinitions() {
+    public static void loadDefinitions() {
         final Gson gson = new Gson();
         ClimateDefinitions.ClimateDefinition[] definitions;
 
