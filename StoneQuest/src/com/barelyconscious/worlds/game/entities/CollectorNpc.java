@@ -22,8 +22,8 @@ public class CollectorNpc extends Actor {
             addComponent(new SpriteComponent(this,
                 new BetterSpriteResource("entities::collector_npc1"),
                 RenderLayer.ENTITIES));
-            addComponent(new NametagComponent(this, Box.square(64), "Click to talk"));
             addComponent(new BoxColliderComponent(this, true, false, Box.square(64)));
+            addComponent(new NametagComponent(this, Box.square(64), "Click to talk"));
 
             var mouse = new MouseListenerComponent(this, Box.square(64));
             mouse.delegateOnMouseClicked.bindDelegate((args) -> {
@@ -34,10 +34,7 @@ public class CollectorNpc extends Actor {
 
                 return null;
             });
-//            addComponent(new SpeakComponent(this,
-//                Box.square(64),
-//                "Hello, I am a collector NPC. I collect things."));
-//            addComponent(mouse);
+            addComponent(mouse);
         }
 
         public static String getRandomSalutation() {
