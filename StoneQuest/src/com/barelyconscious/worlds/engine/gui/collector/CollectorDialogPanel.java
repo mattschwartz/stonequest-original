@@ -1,6 +1,8 @@
-package com.barelyconscious.worlds.engine.gui;
+package com.barelyconscious.worlds.engine.gui.collector;
 
 import com.barelyconscious.worlds.engine.graphics.FontContext;
+import com.barelyconscious.worlds.engine.gui.LayoutData;
+import com.barelyconscious.worlds.engine.gui.Widget;
 import com.barelyconscious.worlds.engine.gui.widgets.ButtonWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.CloseButtonWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.SpriteWidget;
@@ -51,6 +53,7 @@ public class CollectorDialogPanel extends Widget {
         addWidget(dialogText);
         addWidget(collectionHintText);
 
+        addWidget(new WantedItemsWidget());
         addOptionSelectWidgets();
     }
 

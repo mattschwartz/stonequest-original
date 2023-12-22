@@ -1,6 +1,6 @@
 package com.barelyconscious.worlds.game.systems;
 
-import com.barelyconscious.worlds.engine.gui.CollectorDialogPanel;
+import com.barelyconscious.worlds.engine.gui.collector.CollectorDialogPanel;
 import com.barelyconscious.worlds.engine.gui.GuiCanvas;
 import com.barelyconscious.worlds.engine.gui.WorldLogPanel;
 import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
@@ -28,6 +28,8 @@ public class GuiSystem implements GameSystem {
         this.collectorDialogPanel = collectorDialogPanel;
 
         tooltip.setVisible(false);
+        collectorDialogPanel.setEnabled(false);
+
         canvas.addWidget(tooltip);
         canvas.addWidget(worldLogPanel);
         canvas.addWidget(collectorDialogPanel);

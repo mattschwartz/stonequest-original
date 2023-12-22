@@ -10,6 +10,8 @@ import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.item.ItemProperty;
 import com.barelyconscious.worlds.game.item.tags.EquipmentItemTag;
 import com.barelyconscious.worlds.game.systems.GameSystem;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
@@ -31,11 +33,19 @@ public class CombatSystem implements GameSystem {
         }
     }
 
-    @Getter
-    private CombatEncounter activeCombatEncounter;
+    @Data
+    @Builder
+    public static final class CombatState {
+        private CombatEncounter activeCombatEncounter;
+    }
 
     public void killEntity(EntityActor entity) {
         GameInstance.log(String.format("%s has perished.", entity.name));
+
+        var activeCombatEncounter = GameInstance.instance().getGameState()
+            .getCombatState()
+            .getActiveCombatEncounter();
+
         // todo: maybe other stuff will happen too later
         activeCombatEncounter.threatTable
             .removeCombatant(entity);
@@ -52,8 +62,15 @@ public class CombatSystem implements GameSystem {
      * @param damageAbility the ability that is being used to deal damage
      */
     public void applyDamage(EntityActor attacker, EntityActor defender, DamagingAbility damageAbility) {
+        var activeCombatEncounter = GameInstance.instance().getGameState()
+            .getCombatState()
+            .getActiveCombatEncounter();
+
         if (activeCombatEncounter == null) {
             activeCombatEncounter = createCombatEncounter(attacker, defender);
+            GameInstance.instance().getGameState()
+                .getCombatState()
+                .setActiveCombatEncounter(activeCombatEncounter);
         }
 
         var health = defender.getHealthComponent();

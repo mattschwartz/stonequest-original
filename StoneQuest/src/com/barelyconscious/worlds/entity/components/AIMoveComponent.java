@@ -37,7 +37,7 @@ public class AIMoveComponent extends MoveComponent {
             return;
         }
 
-        if (!inCombat()) {
+        if (!inCombat(eventArgs)) {
             // make a random decision
             Decision decision;
             var ran = UMath.RANDOM.nextInt(100);
@@ -50,7 +50,7 @@ public class AIMoveComponent extends MoveComponent {
                 randomWalk();
             }
         } else {
-            EntityActor attacker = getCombatTarget();
+            EntityActor attacker = getCombatTarget(eventArgs);
 
             var direction = attacker.getTransform().minus(getParent().getTransform()).unitVector();
             if (attacker.getTransform().minus(getParent().getTransform()).magnitude() <= 64) {
@@ -88,19 +88,22 @@ public class AIMoveComponent extends MoveComponent {
         addForce(direction, 16);
     }
 
-    private EntityActor getCombatTarget() {
-        if (!inCombat()) {
+    private EntityActor getCombatTarget(EventArgs eventArgs) {
+        if (!inCombat(eventArgs)) {
             return null;
         }
-
-        var combatEncounter = GameInstance.instance().getSystem(CombatSystem.class).getActiveCombatEncounter();
+        var combatEncounter = eventArgs.getGameState()
+            .getCombatState()
+            .getActiveCombatEncounter();
         var threatTable = combatEncounter.getThreatTable();
 
         return threatTable.getHighestThreatActor((EntityActor) getParent());
     }
 
-    private boolean inCombat() {
-        var combatEncounter = GameInstance.instance().getSystem(CombatSystem.class).getActiveCombatEncounter();
+    private boolean inCombat(EventArgs eventArgs) {
+        var combatEncounter = eventArgs.getGameState()
+            .getCombatState()
+            .getActiveCombatEncounter();
         if (combatEncounter == null) {
             return false;
         }

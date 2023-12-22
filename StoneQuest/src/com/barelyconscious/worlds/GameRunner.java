@@ -6,14 +6,12 @@ import com.barelyconscious.worlds.entity.CameraActor;
 import com.barelyconscious.worlds.engine.Engine;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.GameResourceManager;
+import com.barelyconscious.worlds.game.GameState;
 import com.barelyconscious.worlds.game.World;
 import com.barelyconscious.worlds.engine.input.KeyInputHandler;
 import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
 import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
-import com.barelyconscious.worlds.gamedata.TestHeroInitializer;
-import com.barelyconscious.worlds.gamedata.TestTechInitializer;
-import com.barelyconscious.worlds.gamedata.TestWorldInitializer;
-import com.barelyconscious.worlds.gamedata.GuiInitializer;
+import com.barelyconscious.worlds.gamedata.*;
 import com.barelyconscious.worlds.module.WorldsModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -27,11 +25,13 @@ public final class GameRunner {
     public static void main(final String[] args) {
         GameResourceManager.loadResources();
         TerritoryGenerator.loadRequiredResources();
+        GameState gameState = GameStateManager.load();
 
         final String propertiesFilePath = "Worlds.properties";
         final Injector injector = Guice.createInjector(new WorldsModule(propertiesFilePath));
 
         final GameInstance gi = injector.getInstance(GameInstance.class);
+        gi.setGameState(gameState);
 
         final JFrame frame = injector.getInstance(JFrame.class);
         final World world = injector.getInstance(World.class);

@@ -7,6 +7,7 @@ import com.barelyconscious.worlds.engine.Physics;
 import com.barelyconscious.worlds.engine.graphics.Screen;
 import com.barelyconscious.worlds.entity.*;
 import com.barelyconscious.worlds.game.*;
+import com.barelyconscious.worlds.gamedata.GameStateManager;
 import com.barelyconscious.worlds.gamedata.TestHeroInitializer;
 import com.barelyconscious.worlds.gamedata.TestWorldInitializer;
 import com.barelyconscious.worlds.terminal.BlankScreen;
@@ -21,7 +22,7 @@ import static com.barelyconscious.worlds.gamedata.TestHeroInitializer.*;
 
 public class GameRunnerCLI {
 
-    static GameState gameState = new GameState();
+    static GameState gameState = GameStateManager.load();
     static Physics physics = new Physics();
     //new MockPhysics();
     static Engine engine = new Engine(physics,

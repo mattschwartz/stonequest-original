@@ -5,8 +5,10 @@ import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.entity.wilderness.Territory;
 import com.barelyconscious.worlds.entity.wilderness.WildernessLevel;
+import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.rng.TerritoryGenerator;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
@@ -16,6 +18,12 @@ import java.util.Map;
 @Log4j2
 public class WildernessSystem implements GameSystem {
 
+    @Getter
+    @Builder
+    public static final class WildernessState {
+        private final Map<Vector, Territory> worldMap = new HashMap<>();
+    }
+
     public Delegate<TerritoryAdded> delegateOnTerritoryAdded = new Delegate<>();
     @AllArgsConstructor
     public static class TerritoryAdded {
@@ -23,12 +31,10 @@ public class WildernessSystem implements GameSystem {
         public final Territory newTerritory;
     }
 
-    // World is made up of wilderness levels
-    // todo: territory blueprints need to be generated somehow based on spanning biomes and things
-    @Getter
-    private final Map<Vector, Territory> worldMap = new HashMap<>();
-
     public void update(EventArgs args) {
+        var worldMap = args.getGameState()
+            .getWildernessState()
+            .getWorldMap();
         for (Territory territory : worldMap.values()) {
             territory.update(args);
         }
@@ -37,6 +43,10 @@ public class WildernessSystem implements GameSystem {
     // only for now(tm)
     @Deprecated
     public void putTerritory(Vector position, Territory territory) {
+        var worldMap = GameInstance.instance()
+            .getGameState()
+            .getWildernessState()
+            .getWorldMap();
         worldMap.put(position, territory);
     }
 
@@ -47,6 +57,10 @@ public class WildernessSystem implements GameSystem {
     ) {
         Territory fromTerritory;
         Territory toTerritory;
+        var worldMap = GameInstance.instance()
+            .getGameState()
+            .getWildernessState()
+            .getWorldMap();
 
         if (!worldMap.containsKey(fromPosition)) {
             fromTerritory = TerritoryGenerator.territoryBuilder()

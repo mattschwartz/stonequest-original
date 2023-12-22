@@ -64,6 +64,10 @@ public class ButtonWidget extends MouseInputWidget {
         addWidget(textWidget);
     }
 
+    public void setText(String text) {
+        textWidget.setText(text);
+    }
+
     /**
      * all states should be supplied, but will fallback to default buttons if not specified for any or all states
      */

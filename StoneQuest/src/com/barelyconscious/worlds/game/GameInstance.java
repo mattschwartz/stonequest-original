@@ -62,6 +62,10 @@ public final class GameInstance {
 
     @Getter
     @Setter
+    private GameState gameState;
+
+    @Getter
+    @Setter
     private PlayerController playerController = new PlayerController();
 
     @Getter

@@ -88,7 +88,10 @@ public class WorldMap extends Widget {
         @Override
         protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
             super.onRender(eventArgs, renderContext);
-            var wild = GameInstance.instance().getSystem(WildernessSystem.class);
+            var wild = GameInstance.instance()
+                .getGameState()
+                .getWildernessState()
+                .getWorldMap();
             var currentTerritory = GameInstance.instance()
                 .getWorld().getWildernessLevel().getTerritory();
 
@@ -101,7 +104,7 @@ public class WorldMap extends Widget {
                 for (int y = 0; y < mapTiles[0].length; ++y) {
                     var tile = mapTiles[x][y];
                     var pos = new Vector(startX + x, startY + y);
-                    var territory = wild.getWorldMap().get(pos);
+                    var territory = wild.get(pos);
                     tile.setTerritory(territory);
                 }
             }

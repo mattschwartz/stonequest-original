@@ -1,7 +1,7 @@
 package com.barelyconscious.worlds.module;
 
 import com.barelyconscious.worlds.engine.graphics.CanvasScreen;
-import com.barelyconscious.worlds.engine.gui.CollectorDialogPanel;
+import com.barelyconscious.worlds.engine.gui.collector.CollectorDialogPanel;
 import com.barelyconscious.worlds.engine.gui.GuiCanvas;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.WorldLogPanel;
@@ -222,8 +222,7 @@ public class WorldsModule extends AbstractModule {
     @Provides
     @Singleton
     SettlementSystem providesSettlementSystem() {
-        var playerSettlement = new Settlement("Ravenfell");
-        return new SettlementSystem(playerSettlement);
+        return new SettlementSystem();
     }
 
     @Provides

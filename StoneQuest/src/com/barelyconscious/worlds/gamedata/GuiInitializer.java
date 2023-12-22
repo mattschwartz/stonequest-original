@@ -50,7 +50,9 @@ public final class GuiInitializer {
             .build(), inventory, 4, 4);
 
         // Faction inventory
-        Inventory stockpile = GameInstance.instance().getSystem(SettlementSystem.class)
+        Inventory stockpile = GameInstance.instance()
+            .getGameState()
+            .getSettlementState()
             .getPlayerSettlement()
             .getStockpile();
         var wStockPile = new InventoryBagWidget(LayoutData.builder()

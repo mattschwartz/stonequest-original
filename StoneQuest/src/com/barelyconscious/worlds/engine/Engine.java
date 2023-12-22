@@ -317,6 +317,6 @@ public final class Engine {
             pendingJobExecutions,
             playerController,
             world,
-            new GameState());
+            GameInstance.instance().getGameState());
     }
 }

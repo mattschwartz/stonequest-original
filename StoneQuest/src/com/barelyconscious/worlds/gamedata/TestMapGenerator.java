@@ -37,7 +37,6 @@ public class TestMapGenerator {
     // just for testing
     private static void createTerritories(World world) {
         GameInstance gi = GameInstance.instance();
-        var settlement = gi.getSystem(SettlementSystem.class);
         var wild = gi.getSystem(WildernessSystem.class);
 
         wild.putTerritory(new Vector(0, -1), new Territory(
@@ -116,7 +115,10 @@ public class TestMapGenerator {
                     GameItems.CHAMOMILE.toItem(), 0.6)));
         wild.putTerritory(new Vector(0, 1), territory2);
 
-        var playerSettlement = settlement.getPlayerSettlement();
+        var playerSettlement = GameInstance.instance()
+            .getGameState()
+            .getSettlementState()
+            .getPlayerSettlement();
         playerSettlement.claimTerritory(Settlement.ClaimTerritoryRequest.builder()
             .territory(territory1)
             .build());
@@ -132,12 +134,12 @@ public class TestMapGenerator {
 
 
         harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
-            log.info("Produced {} x{}", item.item.getName(), item.amount);
+            GameInstance.log("Produced " + item.item.getName() + " x" + item.amount);
             return null;
         });
 
         harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) -> {
-            log.info("Production halted");
+            GameInstance.log("Production halted");
             return null;
         });
 
@@ -149,12 +151,12 @@ public class TestMapGenerator {
         assert harvesterBuilding != null;
 
         harvesterBuilding.delegateOnItemProduced.bindDelegate((item) -> {
-            log.info("Produced {} x{}", item.item.getName(), item.amount);
+            GameInstance.log("Produced " + item.item.getName() + " x" + item.amount);
             return null;
         });
 
         harvesterBuilding.delegateOnProductionHalted.bindDelegate((e) -> {
-            log.info("Production halted");
+            GameInstance.log("Production halted");
             return null;
         });
     }

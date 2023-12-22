@@ -108,6 +108,30 @@ public class GameItems {
         Set.of(ResourceItemTag.STONE, RelatedSkillItemTag.STONEWORKING, StackableItemTag.STACKABLE),
         new ArrayList<>(),
         new ArrayList<>());
+    public static GameItems GLOWING_ESSENCE = new GameItems(1,
+        "Glowing Essence", "A glowing essence.",
+        new BetterSpriteResource("items::glowing_essence"),
+        Set.of(StackableItemTag.STACKABLE),
+        new ArrayList<>(),
+        new ArrayList<>());
+    public static GameItems CORRUPTED_IMAGE = new GameItems(1,
+        "Corrupted Image", "A corrupted image.",
+        new BetterSpriteResource("items::digital_image_corrupt"),
+        Set.of(StackableItemTag.STACKABLE),
+        new ArrayList<>(),
+        new ArrayList<>());
+    public static GameItems RECOVERED_IMAGE = new GameItems(1,
+        "Recovered Image", "A recovered image.",
+        new BetterSpriteResource("items::recovered_digital_image"),
+        Set.of(StackableItemTag.STACKABLE),
+        new ArrayList<>(),
+        new ArrayList<>());
+    public static GameItems ELDRITCH_DRIVE = new GameItems(1,
+        "Eldritch Drive", "A drive imbued with eldritch fluid.",
+        new BetterSpriteResource("items::eldritch_drive"),
+        Set.of(ResourceItemTag.TECH, RelatedSkillItemTag.TECHSMITHING, StackableItemTag.STACKABLE),
+        new ArrayList<>(),
+        new ArrayList<>());
 
     private final int itemId;
     private final int itemLevel;
