@@ -1,7 +1,6 @@
 package com.barelyconscious.worlds.game;
 
 import com.barelyconscious.worlds.common.Delegate;
-import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.systems.CollectorSystem;
 import com.barelyconscious.worlds.game.systems.SettlementSystem;
 import com.barelyconscious.worlds.game.systems.WildernessSystem;

@@ -29,9 +29,6 @@ public final class World {
     @Getter
     private WildernessLevel wildernessLevel;
 
-    @Getter
-    private final List<Settlement> settlements = new ArrayList<>();
-
     public final Delegate<OnWorldLoadArgs> delegateOnWorldLoaded = new Delegate<>();
 
     @AllArgsConstructor
@@ -41,19 +38,6 @@ public final class World {
 
     private final List<Actor> actors;
     private final Map<String, Actor> actorsById = new HashMap<>();
-
-    public final Map<Territory, List<BuildingActor>> territoryToBuildings = new HashMap<>();
-    /**
-     * Signifies the relationship between every settlement and the territories it owns.
-     * <p>
-     * the null settlement corresponds to neutral territories
-     */
-    public final Map<Settlement, List<Territory>> settlementToTerritories = new HashMap<>();
-    /**
-     * Signifies the relationship between every territory and the settlement that owns it.
-     */
-    public final Map<Territory, Settlement> territoryToSettlement = new HashMap<>();
-
 
     /**
      * Actors that are removed from the world between scenes
@@ -103,7 +87,6 @@ public final class World {
      */
     public void update(EventArgs args) {
         readyLoadWorld();
-        settlements.forEach(settlement -> settlement.update(args));
     }
 
     // make sure level loads occur during game updates only?

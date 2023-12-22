@@ -22,12 +22,14 @@ import java.util.Map;
 
 /**
  * Expect that pretttty much all of this is going to go away
+ * ^ lol well that didn't happen
  */
 @Log4j2
 public final class GameInstance {
 
     public final Delegate<HeroSelectionChanged> delegateHeroSelectionChanged = new Delegate<>();
 
+    // todo move to GameState probably
     @AllArgsConstructor
     public static final class HeroSelectionChanged {
 
@@ -68,6 +70,7 @@ public final class GameInstance {
     @Setter
     private PlayerController playerController = new PlayerController();
 
+    // todo move to GameState
     @Getter
     @Setter
     private Wagon wagon;
