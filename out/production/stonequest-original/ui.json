@@ -1,0 +1,25 @@
+{
+  "widgets": [
+    {
+      "name": "HeroQuickbarPanel",
+      "anchor": [0.67, 1, 0, -164],
+      "size": [0, 0, 400, 94],
+      "widgets": [
+        {
+          "__type": "BackgroundPanelWidget",
+          "color": [55, 55, 55]
+        },
+        {
+          "__type": "TextFieldWidget",
+          "anchor": [0, 1, 6, -10],
+          "size": [0, 0, 64, 14]
+        },
+        {
+          "__type": "Sprite",
+          "size": [0, 0, 100, 100],
+          "resourceSprite": "HERO_PORTRAIT_LEFT",
+        }
+      ]
+    }
+  ]
+}

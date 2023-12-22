@@ -1,0 +1,63 @@
+[
+  {
+    "itemId": 0,
+    "itemLevel": 1,
+    "name": "Willow Bark",
+    "description": "Bark from the willow tree. Has minimal healing properties.",
+    "sprite": "ITEM_WILLOW_BARK"
+  },
+  {
+    "itemId": 1,
+    "itemLevel": 1,
+    "tags": [
+      "MATERIAL",
+      "STACKABLE"
+    ],
+    "name": "Cured Leather",
+    "description": "What ails the leather that it needs curing?",
+    "sprite": "ITEM_CURED_LEATHER"
+  },
+  {
+    "itemId": 2,
+    "itemLevel": 1,
+    "tags": [
+      "MATERIAL",
+      "STACKABLE"
+    ],
+    "name": "Iron Ore",
+    "description": "Unrefined iron ore.",
+    "sprite": "ITEM_IRON_ORE"
+  },
+  {
+    "itemId": 3,
+    "itemLevel": 1,
+    "tags": [
+      "MATERIAL",
+      "CONSUMABLE",
+      "STACKABLE"
+    ],
+    "name": "Stream Drive",
+    "description": "A stream drive.",
+    "sprite": "ITEM_STREAM_DRIVE"
+  },
+  {
+    "itemId": 4,
+    "itemLevel": 1,
+    "tags": [
+      "EQUIPMENT_LEFT_HAND"
+    ],
+    "name": "Iron Shield",
+    "description": "A shield made of iron.",
+    "sprite": "ITEM_IRON_SHIELD"
+  },
+  {
+    "itemId": 5,
+    "itemLevel": 1,
+    "tags": [
+      "EQUIPMENT_CHEST"
+    ],
+    "name": "Cloth Robe",
+    "description": "Little more than a bath robe.",
+    "sprite": "ITEM_CLOTH_ROBE"
+  }
+]
