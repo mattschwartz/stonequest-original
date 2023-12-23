@@ -20,6 +20,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import javax.annotation.Nullable;
 import java.awt.Color;
@@ -36,6 +37,15 @@ public class ItemSlotWidget extends MouseInputWidget {
     private final int inventorySlotId;
     private final SpriteWidget itemSpriteWidget;
     private final Widget itemHighlightWidget;
+
+    // uses OR
+    private final Set<ItemTag> requiredTags = new HashSet<>();
+    /**
+     * Can the player move items in and out of this slot?
+     */
+    @Getter
+    @Setter
+    private boolean isInteractable = true;
 
     private final Inventory inventory;
 
@@ -194,6 +204,10 @@ public class ItemSlotWidget extends MouseInputWidget {
     @Nullable
     @CanIgnoreReturnValue
     public Item setItem(final Item item) {
+        if (!isInteractable) {
+            return null;
+        }
+
         final Item prevItem = this.item;
         if (item == null) {
             itemSpriteWidget.setEnabled(false);
@@ -240,9 +254,6 @@ public class ItemSlotWidget extends MouseInputWidget {
         };
     }
 
-    // uses OR
-    private final Set<ItemTag> requiredTags = new HashSet<>();
-
     public void addRequiredItemTag(final ItemTag requiredTag) {
         requiredTags.add(requiredTag);
     }
@@ -252,6 +263,10 @@ public class ItemSlotWidget extends MouseInputWidget {
      * default=true
      */
     public boolean acceptsItem(final Item item) {
+        if (!isInteractable) {
+            return false;
+        }
+
         if (requiredTags.isEmpty()) {
             return true;
         }
@@ -265,6 +280,10 @@ public class ItemSlotWidget extends MouseInputWidget {
      */
     @Override
     public boolean onMouseClicked(MouseEvent e) {
+        if (!isInteractable) {
+            return false;
+        }
+
         if (isMouseOver()) {
             final Inventory.InventoryItem itemOnCursor = ItemFollowCursorWidget.getInventoryItemOnCursor();
             if (itemOnCursor != null) {

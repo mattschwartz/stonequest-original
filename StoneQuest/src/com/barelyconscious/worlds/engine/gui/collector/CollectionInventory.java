@@ -32,6 +32,7 @@ public class CollectionInventory extends Widget {
                     collectionInventory,
                     null,
                     itemSlotIndex);
+                itemWidget.setInteractable(false);
                 itemWidgets.add(itemWidget);
                 addWidget(itemWidget);
             }
