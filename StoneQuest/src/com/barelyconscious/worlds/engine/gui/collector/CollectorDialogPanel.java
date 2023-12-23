@@ -54,6 +54,7 @@ public class CollectorDialogPanel extends Widget {
         addWidget(collectionHintText);
 
         addWidget(new WantedItemsWidget());
+        addWidget(new CollectionInventory());
         addOptionSelectWidgets();
     }
 

@@ -202,6 +202,7 @@ public class ItemSlotWidget extends MouseInputWidget {
         } else if (acceptsItem(item)) {
             this.item = item;
             itemSpriteWidget.setSprite(item.getSprite().load());
+            System.out.println("set sprite to " + item.getName());
             itemSpriteWidget.setEnabled(true);
         } else {
             return null;
@@ -274,8 +275,7 @@ public class ItemSlotWidget extends MouseInputWidget {
                         inventoryItem.stackSize = itemOnCursor.stackSize + inventoryItem.stackSize;
                         ItemFollowCursorWidget.setInventoryItemOnCursor(null);
                     }
-                } else
-                if (acceptsItem(itemOnCursor.item)) {
+                } else if (acceptsItem(itemOnCursor.item)) {
                     final Inventory.InventoryItem prevItem = inventory.setItem(inventorySlotId, itemOnCursor);
                     ItemFollowCursorWidget.setInventoryItemOnCursor(prevItem);
                 }

@@ -59,8 +59,10 @@ public final class Inventory {
                 currentSize++;
             }
 
-            delegateOnItemAdded.call(new InventoryItemEvent(inventoryItem.item, prevItem == null ? null : prevItem.item, currentSize));
-            delegateOnItemChanged.call(new InventoryItemEvent(inventoryItem.item, prevItem == null ? null : prevItem.item, currentSize));
+            delegateOnItemAdded.call(new InventoryItemEvent(
+                inventoryItem.item, prevItem == null ? null : prevItem.item, slotId));
+            delegateOnItemChanged.call(new InventoryItemEvent(
+                inventoryItem.item, prevItem == null ? null : prevItem.item, slotId));
 
             return prevItem;
         }
