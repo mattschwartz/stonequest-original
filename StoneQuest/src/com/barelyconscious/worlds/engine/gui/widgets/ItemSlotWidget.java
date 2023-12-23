@@ -102,7 +102,9 @@ public class ItemSlotWidget extends MouseInputWidget {
             protected void onRender(EventArgs eventArgs, RenderContext renderContext) {
                 Inventory.InventoryItem inventoryItemOnCursor = ItemFollowCursorWidget.getInventoryItemOnCursor();
                 if (inventoryItemOnCursor != null) {
-                    if (acceptsItem(inventoryItemOnCursor.item)) {
+                    if (!isInteractable) {
+                        renderContext.renderRect(new Color(113, 143, 234), false, screenBounds, RenderLayer.GUI);
+                    } else if (acceptsItem(inventoryItemOnCursor.item)) {
                         renderContext.renderRect(new Color(69, 182, 69), false, screenBounds, RenderLayer.GUI);
                     } else {
                         renderContext.renderRect(new Color(172, 50, 50), false, screenBounds, RenderLayer.GUI);
@@ -204,10 +206,6 @@ public class ItemSlotWidget extends MouseInputWidget {
     @Nullable
     @CanIgnoreReturnValue
     public Item setItem(final Item item) {
-        if (!isInteractable) {
-            return null;
-        }
-
         final Item prevItem = this.item;
         if (item == null) {
             itemSpriteWidget.setEnabled(false);
@@ -263,10 +261,6 @@ public class ItemSlotWidget extends MouseInputWidget {
      * default=true
      */
     public boolean acceptsItem(final Item item) {
-        if (!isInteractable) {
-            return false;
-        }
-
         if (requiredTags.isEmpty()) {
             return true;
         }

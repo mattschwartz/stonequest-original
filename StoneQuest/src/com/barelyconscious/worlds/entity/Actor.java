@@ -127,6 +127,10 @@ public class Actor {
         this.componentsByType = new HashMap<>();
     }
 
+    public void onReady() {
+        allComponents.forEach(Component::onReady);
+    }
+
     public boolean isEnabled() {
         return this.isEnabled;
     }

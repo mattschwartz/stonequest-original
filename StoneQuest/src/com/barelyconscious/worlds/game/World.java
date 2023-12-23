@@ -116,6 +116,7 @@ public final class World {
         var children = new ArrayList<>(wildernessLevel.getChildren());
         for (final Actor actor : children) {
             addActor(actor);
+            actor.onReady();
         }
 
         long timeToLoad = System.currentTimeMillis() - currentTime;

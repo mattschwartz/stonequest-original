@@ -3,6 +3,7 @@ package com.barelyconscious.worlds.engine.gui.collector;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.Widget;
 import com.barelyconscious.worlds.engine.gui.widgets.ItemSlotWidget;
+import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
 
 import java.util.ArrayList;
@@ -39,6 +40,20 @@ public class CollectionInventory extends Widget {
         }
 
         collectionInventory.delegateOnItemChanged.bindDelegate(this::onItemChanged);
+    }
+
+    @Override
+    public void onReady() {
+        var collection = GameInstance.instance().getGameState()
+            .getCollectorState()
+            .getCollection();
+
+        for (int i = 0; i < collection.size(); i++) {
+            collectionInventory.setItem(i, new Inventory.InventoryItem(
+                collection.get(i),
+                1
+            ));
+        }
     }
 
     private Void onItemChanged(Inventory.InventoryItemEvent inventoryItemEvent) {

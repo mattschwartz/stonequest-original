@@ -46,6 +46,10 @@ public abstract class Component {
         return parent;
     }
 
+    public void onReady() {
+
+    }
+
     /**
      * Removes this component from its current parent and reassigns the component's parent to the supplied parent
      */

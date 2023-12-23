@@ -40,6 +40,10 @@ public class GuiCanvas extends Actor {
         screen.onResize.bindDelegate((e) -> resize(e.newWidth, e.newHeight));
     }
 
+    public void onReady() {
+        widgets.forEach(Widget::onReady);
+    }
+
     public Void resize(final int width, final int height) {
         this.width = width;
         this.height = height;

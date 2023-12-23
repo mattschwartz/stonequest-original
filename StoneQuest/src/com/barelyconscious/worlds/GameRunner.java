@@ -38,6 +38,7 @@ public final class GameRunner {
         final CanvasScreen screen = injector.getInstance(CanvasScreen.class);
         final KeyInputHandler keyInputHandler = injector.getInstance(KeyInputHandler.class);
         final Engine engine = injector.getInstance(Engine.class);
+        final GuiCanvas guiCanvas = injector.getInstance(GuiCanvas.class);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
@@ -72,6 +73,8 @@ public final class GameRunner {
 
         GameInstance.log("Welcome to Worlds v 1.0.0");
         GameInstance.log("Press F1 to toggle the debug overlay");
+
+        guiCanvas.onReady();
 
         engine.start();
         System.out.println("Saving game...");
