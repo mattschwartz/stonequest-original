@@ -15,6 +15,8 @@ import com.barelyconscious.worlds.engine.input.InputLayer;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.item.ItemTag;
 import com.barelyconscious.worlds.common.shape.Box;
+import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
+import com.barelyconscious.worlds.game.resources.WSprite;
 import com.barelyconscious.worlds.game.systems.PartySystem;
 import com.google.common.collect.Sets;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
@@ -38,6 +40,7 @@ public class ItemSlotWidget extends MouseInputWidget {
     private final int inventorySlotId;
     private final SpriteWidget itemSpriteWidget;
     private final Widget itemHighlightWidget;
+    private final WSprite emptyItemSlotSprite;
 
     // uses OR
     private final Set<ItemTag> requiredTags = new HashSet<>();
@@ -71,10 +74,14 @@ public class ItemSlotWidget extends MouseInputWidget {
         final InputLayer inputLayer
     ) {
         super(layout, inputLayer);
+        emptyItemSlotSprite = new BetterSpriteResource("gui::inventory_item_slot_md").load();
+
         this.item = item;
         this.inventory = inventory;
         this.inventorySlotId = inventorySlotId;
-        this.itemSpriteWidget = new SpriteWidget(LayoutData.DEFAULT, item == null ? null : item.getSprite().load());
+        this.itemSpriteWidget = new SpriteWidget(LayoutData.DEFAULT, item == null
+            ? emptyItemSlotSprite
+            : item.getSprite().load());
         this.itemHighlightWidget = createItemHighlightWidget();
 
         addWidget(itemSpriteWidget);
@@ -235,8 +242,9 @@ public class ItemSlotWidget extends MouseInputWidget {
     public Item setItem(final Item item) {
         final Item prevItem = this.item;
         if (item == null) {
-            itemSpriteWidget.setEnabled(false);
-            itemSpriteWidget.setSprite(null);
+            this.item = null;
+            itemSpriteWidget.setEnabled(true);
+            itemSpriteWidget.setSprite(emptyItemSlotSprite);
             itemHighlightWidget.setEnabled(false);
         } else if (acceptsItem(item)) {
             this.item = item;
@@ -245,8 +253,6 @@ public class ItemSlotWidget extends MouseInputWidget {
         } else {
             return null;
         }
-
-        this.item = item;
 
         delegateOnItemChanged.call(new ItemSlotEvent(prevItem, item, inventorySlotId));
 

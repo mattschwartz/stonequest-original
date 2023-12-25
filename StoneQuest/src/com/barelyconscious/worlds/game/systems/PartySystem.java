@@ -22,6 +22,7 @@ public class PartySystem implements GameSystem {
         private PartySlot selectedHeroId;
         private final Hero[] heroParty = new Hero[PartySlot.values().length];
         private final Wagon wagon;
+        private int gold;
     }
 
     public PartySlot getSlotByHero(final Hero hero) {

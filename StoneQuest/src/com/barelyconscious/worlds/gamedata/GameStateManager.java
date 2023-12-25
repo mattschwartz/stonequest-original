@@ -45,6 +45,7 @@ public class GameStateManager {
                 .build()
             )
             .partyState(PartySystem.PartyState.builder()
+                .gold(1044)
                 .wagon(new Wagon(
                     new Inventory(32),
                     new Inventory(16)

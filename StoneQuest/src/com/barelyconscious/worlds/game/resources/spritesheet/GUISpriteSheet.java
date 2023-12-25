@@ -51,8 +51,6 @@ public final class GUISpriteSheet {
         HERO_UNITFRAME_SPIRITBAR_PROGRESS_PARTIAL_CAP(new Region(120, 0, 4, 10)),
         HERO_UNITFRAME_SPIRITBAR_PROGRESS_FULL_CAP(new Region(125, 0, 3, 10)),
 
-        INV_ITEM_SLOT_BACKGROUND(new Region(0, 229, 198, 198)),
-
         HERO_STAT_SHEET_BACKDROP(new Region(0, 427, 211, 199)),
 
         BUTTON_DEFAULT(new Region(0, 626, 81, 26)),

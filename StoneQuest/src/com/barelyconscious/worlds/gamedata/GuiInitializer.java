@@ -6,15 +6,11 @@ import com.barelyconscious.worlds.engine.gui.worldmap.WorldMap;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.World;
-import com.barelyconscious.worlds.game.playercontroller.MouseKeyboardPlayerController;
-import com.barelyconscious.worlds.game.playercontroller.PlayerController;
 import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
-import com.barelyconscious.worlds.game.systems.SettlementSystem;
 import lombok.val;
 
-import static com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet.Resources.INV_ITEM_SLOT_BACKGROUND;
 
 public final class GuiInitializer {
 
@@ -44,11 +40,11 @@ public final class GuiInitializer {
             .getWagon().getStorage();
         var wBackpack = new InventoryBagWidget(LayoutData.builder()
             .anchor(new VDim(1, 0,
-                -(INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth() + 5),
+                -4 * (48 + 2) - 5,
                 105))
             .size(new VDim(0, 0,
-                INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth(),
-                INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight()))
+                4 * (48 + 2),
+                4 * (48 + 2)))
             .build(), inventory, 4, 4);
 
         // Faction inventory
@@ -62,8 +58,8 @@ public final class GuiInitializer {
                 5,
                 33))
             .size(new VDim(0, 0,
-                INV_ITEM_SLOT_BACKGROUND.getRegion().getWidth(),
-                INV_ITEM_SLOT_BACKGROUND.getRegion().getHeight()))
+                8 * (48 + 2),
+                8 * (48 + 2)))
             .build(), stockpile, 8, 8);
 
         val wCraftingMenu = new CraftingWindowWidget();
