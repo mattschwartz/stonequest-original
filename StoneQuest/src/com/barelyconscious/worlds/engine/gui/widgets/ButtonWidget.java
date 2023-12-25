@@ -35,6 +35,10 @@ public class ButtonWidget extends MouseInputWidget {
         this(layout, null, onClick);
     }
 
+    public ButtonWidget(String text, LayoutData layout, Callable<Void> onClick) {
+        this(layout, text, onClick);
+    }
+
     public ButtonWidget(LayoutData layout, @Nullable String text, Callable<Void> onClick) {
         super(layout, InputLayer.USER_INPUT);
 

@@ -15,7 +15,6 @@ import java.util.List;
 public class CollectorDialogPanel extends Widget {
 
     private TextFieldWidget dialogText;
-    private TextFieldWidget collectionHintText;
     private final List<ButtonWidget> options = new ArrayList<>(4);
 
     private enum DialogState {
@@ -39,22 +38,14 @@ public class CollectorDialogPanel extends Widget {
                 .anchor(0, 0, 8, 0)
                 .size(1, 1, 0, 0)
                 .build());
-        collectionHintText = new TextFieldWidget(
-            "{COLOR=GRAY}{STYLE=ITALIC}Drag an item from your\n{COLOR=GRAY}{STYLE=ITALIC}inventory here to sell it",
-            LayoutData.builder()
-                .anchor(0.5, 1, -15, -80)
-                .size(1, 1, 0, 0)
-                .build());
-        collectionHintText.setTextAlignment(FontContext.TextAlign.LEFT);
-        collectionHintText.setShowShadow(false);
 
         addWidget(new SpriteWidget(new BetterSpriteResource("gui::collector_panel").load()));
         addWidget(new CloseButtonWidget(this));
         addWidget(dialogText);
-        addWidget(collectionHintText);
 
         addWidget(new WantedItemsWidget());
         addWidget(new CollectionInventory());
+        addWidget(new CollectionDropBoxWidget());
         addOptionSelectWidgets();
     }
 

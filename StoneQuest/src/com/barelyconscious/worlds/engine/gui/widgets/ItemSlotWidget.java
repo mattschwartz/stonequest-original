@@ -147,6 +147,10 @@ public class ItemSlotWidget extends MouseInputWidget {
             if (inventoryItem.item.isConsumable()) {
                 sb.append("\n").append("{COLOR=0,255,0,255}{STYLE=NONE}Right click to use");
             }
+            // append tags
+            for (var tag : inventoryItem.item.getTags()) {
+                sb.append("\n{COLOR=GRAY}").append(tag.getTagName()).append(" ");
+            }
 
             final String tooltipText = sb.toString();
 
@@ -155,32 +159,61 @@ public class ItemSlotWidget extends MouseInputWidget {
             final int ttWidth = fontContext.getStringWidth(tooltipText);
             final int ttHeight = fontContext.getStringHeight(tooltipText);
 
-            final Box textBounds = new Box(
-                screenBounds.left - ttWidth,
-                screenBounds.left,
-                screenBounds.top + 8,
-                screenBounds.top);
+            final Box textBounds, borderBounds;
 
-            final Box bb = new Box(
-                textBounds.left - 4,
-                screenBounds.left + 4,
-                screenBounds.top - ttHeight - 8,
-                screenBounds.top);
+//            textBounds = new Box(
+//                screenBounds.left - ttWidth,
+//                screenBounds.left,
+//                screenBounds.top + 8,
+//                screenBounds.top);
+//
+//            borderBounds = new Box(
+//                textBounds.left - 4,
+//                screenBounds.left + 4,
+//                screenBounds.top - ttHeight - 8,
+//                screenBounds.top);
+
+
+            int xOffs = 0;
+            int yOffs = 0;
+
+            if (getScreenBounds().top - ttHeight < 5) {
+                yOffs = screenBounds.top + ttHeight + 61;
+            } else if (getScreenBounds().top - ttHeight >= 5) {
+                yOffs =screenBounds.top + 2;
+            }
+            if (getScreenBounds().left - ttWidth < 30) {
+                xOffs = screenBounds.left - 40;
+            } else if (getScreenBounds().left - ttWidth >= 30) {
+                xOffs = screenBounds.left - ttWidth - 2;
+            }
+
+            textBounds = new Box(
+                xOffs,
+                screenBounds.left,
+                yOffs + 8,
+                yOffs);
+
+            borderBounds = new Box(
+                xOffs - 4,
+                xOffs + ttWidth + 4,
+                yOffs - ttHeight - 8,
+                yOffs);
 
             renderContext.renderRect(
                 new Color(33, 33, 33),
                 true,
-                bb,
-                RenderLayer.GUI);
+                borderBounds,
+                RenderLayer.GUI_FOCUS);
 
             renderContext.renderRect(
                 new Color(155, 155, 155),
                 false,
-                bb,
-                RenderLayer.GUI);
+                borderBounds,
+                RenderLayer.GUI_FOCUS);
 
             fontContext.setColor(Color.white);
-            fontContext.setRenderLayer(RenderLayer.GUI);
+            fontContext.setRenderLayer(RenderLayer.GUI_FOCUS);
 
             fontContext.drawString(
                 tooltipText,

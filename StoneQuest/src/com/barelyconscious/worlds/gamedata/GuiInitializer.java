@@ -68,8 +68,6 @@ public final class GuiInitializer {
         var wGameMenu = new PlayerPersonalDeviceWidget();
         var wWorldMapMenu = new WorldMap();
 
-        gui.addWidget(wStockPile);
-        gui.addWidget(wBackpack);
         gui.addWidget(wCraftingMenu);
         gui.addWidget(wGameMenu);
         gui.addWidget(wWorldMapMenu);
@@ -80,6 +78,9 @@ public final class GuiInitializer {
             wCraftingMenu,
             wWorldMapMenu,
             wGameMenu));
+
+        gui.addWidget(wStockPile);
+        gui.addWidget(wBackpack);
     }
 
     private static void configureHeroQuickbarPanel(final GuiCanvas gui) {

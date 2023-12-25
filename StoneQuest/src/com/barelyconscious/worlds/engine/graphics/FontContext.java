@@ -176,6 +176,7 @@ public class FontContext {
     /**
      * todo(p0): this logic prevents formats from occurring within a line eg "Pick up {COLOR=GREEN}ItemName" removes
      *  the "Pick Up" from the line bc of the index here
+     *  maybe {/STYLE} should be a thing to reset the style?
      * @return the index after any format matching
      */
     private int applyFormat(final String line, final Graphics g) {

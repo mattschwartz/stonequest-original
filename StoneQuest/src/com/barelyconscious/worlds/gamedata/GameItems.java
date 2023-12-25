@@ -6,11 +6,7 @@ import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.item.ItemProperty;
 import com.barelyconscious.worlds.game.item.ItemTag;
-import com.barelyconscious.worlds.game.item.tags.ConsumableItemTag;
-import com.barelyconscious.worlds.game.item.tags.EquipmentItemTag;
-import com.barelyconscious.worlds.game.item.tags.RelatedSkillItemTag;
-import com.barelyconscious.worlds.game.item.tags.ResourceItemTag;
-import com.barelyconscious.worlds.game.item.tags.StackableItemTag;
+import com.barelyconscious.worlds.game.item.tags.*;
 import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 import com.google.common.collect.Lists;
 import lombok.Getter;
@@ -54,7 +50,7 @@ public class GameItems {
     public static GameItems ELDRITCH_CIRCUIT = new GameItems(1,
         "Eldritch Circuitry", "Electronic circuitry imbued with eldritch fluid.",
         new BetterSpriteResource("items::eldritch_circuit"),
-        Set.of(ResourceItemTag.TECH, RelatedSkillItemTag.TECHSMITHING, StackableItemTag.STACKABLE),
+        Set.of(ResourceItemTag.TECH, RelatedSkillItemTag.TECHSMITHING, StackableItemTag.STACKABLE, ExtractableItemTag.EXTRACTABLE),
         new ArrayList<>(),
         new ArrayList<>());
     public static GameItems IRON_SHIELD = new GameItems(1,
@@ -117,13 +113,13 @@ public class GameItems {
     public static GameItems CORRUPTED_IMAGE = new GameItems(1,
         "Corrupted Image", "A corrupted image.",
         new BetterSpriteResource("items::digital_image_corrupt"),
-        Set.of(StackableItemTag.STACKABLE),
+        Set.of(StackableItemTag.STACKABLE, CollectibleItemTag.COLLECTIBLE, ExtractableItemTag.EXTRACTABLE),
         new ArrayList<>(),
         new ArrayList<>());
     public static GameItems RECOVERED_IMAGE = new GameItems(1,
         "Recovered Image", "A recovered image.",
         new BetterSpriteResource("items::recovered_digital_image"),
-        Set.of(StackableItemTag.STACKABLE),
+        Set.of(StackableItemTag.STACKABLE, CollectibleItemTag.COLLECTIBLE, ExtractableItemTag.EXTRACTABLE),
         new ArrayList<>(),
         new ArrayList<>());
     public static GameItems ELDRITCH_DRIVE = new GameItems(1,

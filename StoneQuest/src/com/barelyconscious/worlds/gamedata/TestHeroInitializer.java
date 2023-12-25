@@ -181,6 +181,8 @@ public class TestHeroInitializer {
             storage.addItem(GameItems.IRON_SHIELD.toItem());
             storage.addItem(GameItems.CLOTH_ROBE.toItem());
             storage.addItem(GameItems.RECURVE_BOW.toItem());
+            storage.addItem(GameItems.CORRUPTED_IMAGE.toItem());
+            storage.addItem(GameItems.RECOVERED_IMAGE.toItem());
         }
     }
 }
