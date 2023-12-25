@@ -12,8 +12,7 @@ import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.game.GameInstance;
-import com.barelyconscious.worlds.game.Inventory;
-import com.barelyconscious.worlds.game.systems.HeroSystem;
+import com.barelyconscious.worlds.game.systems.PartySystem;
 import lombok.Getter;
 
 import java.awt.Color;
@@ -50,7 +49,7 @@ public class Hero extends EntityActor {
         @Override
         public void update(EventArgs eventArgs) {
             var selectedHero = GameInstance.instance()
-                .getSystem(HeroSystem.class)
+                .getSystem(PartySystem.class)
                 .getHeroSelected();
 
             setRenderEnabled(selectedHero == getParent());
@@ -91,8 +90,8 @@ public class Hero extends EntityActor {
                 RenderLayer.GUI
             );
 
-            final HeroSystem.PartySlot slot = GameInstance.instance()
-                .getSystem(HeroSystem.class)
+            final PartySystem.PartySlot slot = GameInstance.instance()
+                .getSystem(PartySystem.class)
                 .getSlotByHero((Hero) getParent());
 
             final FontContext font = renderContext.getFontContext();

@@ -7,7 +7,6 @@ import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.WorldLogPanel;
 import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
 import com.barelyconscious.worlds.entity.Wagon;
-import com.barelyconscious.worlds.entity.wilderness.Settlement;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.World;
@@ -196,25 +195,23 @@ public class WorldsModule extends AbstractModule {
     @Singleton
     @Provides
     GameInstance providesGameInstance(
-        Wagon partyWagon,
         CombatSystem combatSystem,
         GuiSystem guiSystem,
         WildernessSystem wildernessSystem,
         SettlementSystem settlementSystem,
         LootSystem lootSystem,
         CollectorSystem collectorSystem,
-        HeroSystem heroSystem
+        PartySystem partySystem
     ) {
         var gi = GameInstance.instance();
 
-        gi.setWagon(partyWagon);
         gi.registerSystem(combatSystem);
         gi.registerSystem(guiSystem);
         gi.registerSystem(wildernessSystem);
         gi.registerSystem(settlementSystem);
         gi.registerSystem(lootSystem);
         gi.registerSystem(collectorSystem);
-        gi.registerSystem(heroSystem);
+        gi.registerSystem(partySystem);
 
         return gi;
     }
@@ -241,14 +238,6 @@ public class WorldsModule extends AbstractModule {
         final CanvasScreen screen
     ) {
         return new GuiCanvas(screen);
-    }
-
-    @Provides
-    @Singleton
-    Wagon providesWagon() {
-        return new Wagon(
-            new Inventory(32),
-            new Inventory(16));
     }
 
     @Singleton

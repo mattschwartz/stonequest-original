@@ -1,32 +1,19 @@
 package com.barelyconscious.worlds.game.playercontroller;
 
 import com.barelyconscious.worlds.common.Delegate;
-import com.barelyconscious.worlds.entity.Actor;
-import com.barelyconscious.worlds.entity.EntityActor;
 import com.barelyconscious.worlds.entity.components.*;
 import com.barelyconscious.worlds.game.GameInstance;
-import com.barelyconscious.worlds.entity.Hero;
-import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.input.KeyInputHandler;
 import com.barelyconscious.worlds.engine.input.MouseInputHandler;
 import com.barelyconscious.worlds.game.abilitysystem.Ability;
 import com.barelyconscious.worlds.game.abilitysystem.AbilityContext;
-import com.barelyconscious.worlds.game.resources.ResourceSprite;
-import com.barelyconscious.worlds.game.resources.Resources;
-import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.common.UMath;
-import com.barelyconscious.worlds.game.systems.HeroSystem;
-import com.barelyconscious.worlds.gamedata.abilities.RenewAbility;
-import lombok.NonNull;
+import com.barelyconscious.worlds.game.systems.PartySystem;
 import lombok.extern.log4j.Log4j2;
-import lombok.val;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -99,22 +86,22 @@ public class MouseKeyboardPlayerController extends PlayerController {
             delegateOnQuitRequested.call(true);
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
-            GameInstance.instance().getSystem(HeroSystem.class)
-                .setHeroSelectedSlot(HeroSystem.PartySlot.LEFT);
+            GameInstance.instance().getSystem(PartySystem.class)
+                .setHeroSelectedSlot(PartySystem.PartySlot.LEFT);
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_F2) {
-            GameInstance.instance().getSystem(HeroSystem.class)
-                .setHeroSelectedSlot(HeroSystem.PartySlot.MIDDLE);
+            GameInstance.instance().getSystem(PartySystem.class)
+                .setHeroSelectedSlot(PartySystem.PartySlot.MIDDLE);
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
-            GameInstance.instance().getSystem(HeroSystem.class)
-                .setHeroSelectedSlot(HeroSystem.PartySlot.RIGHT);
+            GameInstance.instance().getSystem(PartySystem.class)
+                .setHeroSelectedSlot(PartySystem.PartySlot.RIGHT);
         }
 
         handleAbilityKeybinding(keyEvent);
 
         final MoveComponent move = GameInstance.instance()
-            .getSystem(HeroSystem.class)
+            .getSystem(PartySystem.class)
             .getHeroSelected()
             .getComponent(MoveComponent.class);
 
@@ -136,11 +123,11 @@ public class MouseKeyboardPlayerController extends PlayerController {
         if (keyEvent.getKeyCode() == KeyEvent.VK_TAB) {
             int curIndex = GameInstance.instance()
                 .getGameState()
-                .getHeroState()
+                .getPartyState()
                 .getSelectedHeroId().index;
             int newIndex = (curIndex + 1) % 3;
-            GameInstance.instance().getSystem(HeroSystem.class)
-                .setHeroSelectedSlot(HeroSystem.PartySlot.fromSlotId(newIndex));
+            GameInstance.instance().getSystem(PartySystem.class)
+                .setHeroSelectedSlot(PartySystem.PartySlot.fromSlotId(newIndex));
         }
 
         return null;
@@ -171,7 +158,7 @@ public class MouseKeyboardPlayerController extends PlayerController {
 
         if (abilityIndex >= 0) {
             List<AbilityComponent> abilityComponents = GameInstance.instance()
-                .getSystem(HeroSystem.class)
+                .getSystem(PartySystem.class)
                 .getHeroSelected()
                 .getComponentsOfType(AbilityComponent.class);
 
@@ -181,7 +168,7 @@ public class MouseKeyboardPlayerController extends PlayerController {
                     firstAbility.getAbility().enact(AbilityContext.builder()
                         .world(GameInstance.instance().getWorld())
                         .caster(GameInstance.instance()
-                            .getSystem(HeroSystem.class)
+                            .getSystem(PartySystem.class)
                             .getHeroSelected())
                         .build());
                 }

@@ -1,9 +1,11 @@
 package com.barelyconscious.worlds.gamedata;
 
+import com.barelyconscious.worlds.entity.Wagon;
 import com.barelyconscious.worlds.entity.wilderness.Settlement;
 import com.barelyconscious.worlds.game.GameState;
+import com.barelyconscious.worlds.game.Inventory;
 import com.barelyconscious.worlds.game.systems.CollectorSystem;
-import com.barelyconscious.worlds.game.systems.HeroSystem;
+import com.barelyconscious.worlds.game.systems.PartySystem;
 import com.barelyconscious.worlds.game.systems.SettlementSystem;
 import com.barelyconscious.worlds.game.systems.WildernessSystem;
 import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
@@ -42,7 +44,11 @@ public class GameStateManager {
             .combatState(CombatSystem.CombatState.builder()
                 .build()
             )
-            .heroState(HeroSystem.HeroState.builder()
+            .partyState(PartySystem.PartyState.builder()
+                .wagon(new Wagon(
+                    new Inventory(32),
+                    new Inventory(16)
+                ))
                 .build())
             .build();
     }

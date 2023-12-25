@@ -53,11 +53,6 @@ public final class GameInstance {
     @Setter
     private PlayerController playerController = new PlayerController();
 
-    // todo move to GameState
-    @Getter
-    @Setter
-    private Wagon wagon;
-
     @Getter
     @Setter
     private PlayerPersonalDevice playerPersonalDevice;

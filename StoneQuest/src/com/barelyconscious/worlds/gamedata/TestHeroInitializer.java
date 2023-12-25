@@ -13,7 +13,7 @@ import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.game.systems.HeroSystem;
+import com.barelyconscious.worlds.game.systems.PartySystem;
 import com.barelyconscious.worlds.gamedata.abilities.BulletAbility;
 import com.barelyconscious.worlds.gamedata.abilities.RenewAbility;
 
@@ -110,7 +110,7 @@ public class TestHeroInitializer {
             public void update(EventArgs eventArgs) {
                 LightSourceComponent component = getParent().getComponent(LightSourceComponent.class);
                 if (component != null && component.isEnabled()) {
-                    if (GameInstance.instance().getSystem(HeroSystem.class).getHeroSelected() == HERO_JOHN) {
+                    if (GameInstance.instance().getSystem(PartySystem.class).getHeroSelected() == HERO_JOHN) {
                         component.setOpacity(1);
                     } else {
                         component.setOpacity(0.5f);
@@ -118,7 +118,7 @@ public class TestHeroInitializer {
                 }
             }
         });
-        GameInstance.instance().getSystem(HeroSystem.class).setHero(heroJohn, HeroSystem.PartySlot.RIGHT);
+        GameInstance.instance().getSystem(PartySystem.class).setHero(heroJohn, PartySystem.PartySlot.RIGHT);
         world.addPersistentActor(HERO_JOHN);
 
         Hero heroNicnole = HERO_NICNOLE;
@@ -128,7 +128,7 @@ public class TestHeroInitializer {
             public void update(EventArgs eventArgs) {
                 LightSourceComponent component = getParent().getComponent(LightSourceComponent.class);
                 if (component != null && component.isEnabled()) {
-                    if (GameInstance.instance().getSystem(HeroSystem.class).getHeroSelected() == HERO_NICNOLE) {
+                    if (GameInstance.instance().getSystem(PartySystem.class).getHeroSelected() == HERO_NICNOLE) {
                         component.setOpacity(1);
                     } else {
                         component.setOpacity(0.5f);
@@ -136,7 +136,7 @@ public class TestHeroInitializer {
                 }
             }
         });
-        GameInstance.instance().getSystem(HeroSystem.class).setHero(heroNicnole, HeroSystem.PartySlot.MIDDLE);
+        GameInstance.instance().getSystem(PartySystem.class).setHero(heroNicnole, PartySystem.PartySlot.MIDDLE);
         world.addPersistentActor(HERO_NICNOLE);
 
         Hero heroPaul = HERO_PAUL;
@@ -146,7 +146,7 @@ public class TestHeroInitializer {
             public void update(EventArgs eventArgs) {
                 LightSourceComponent component = getParent().getComponent(LightSourceComponent.class);
                 if (component != null && component.isEnabled()) {
-                    if (GameInstance.instance().getSystem(HeroSystem.class).getHeroSelected() == HERO_PAUL) {
+                    if (GameInstance.instance().getSystem(PartySystem.class).getHeroSelected() == HERO_PAUL) {
                         component.setOpacity(1);
                     } else {
                         component.setOpacity(0.5f);
@@ -154,18 +154,19 @@ public class TestHeroInitializer {
                 }
             }
         });
-        GameInstance.instance().getSystem(HeroSystem.class).setHero(heroPaul, HeroSystem.PartySlot.LEFT);
+        GameInstance.instance().getSystem(PartySystem.class).setHero(heroPaul, PartySystem.PartySlot.LEFT);
         world.addPersistentActor(HERO_PAUL);
 
-        GameInstance.instance().getSystem(HeroSystem.class).setHeroSelectedSlot(HeroSystem.PartySlot.LEFT);
+        GameInstance.instance().getSystem(PartySystem.class).setHeroSelectedSlot(PartySystem.PartySlot.LEFT);
 
         setupPartyInventory();
     }
 
     private static void setupPartyInventory() {
-        if (GameInstance.instance().getWagon() != null) {
-            Inventory resourcePouch = GameInstance.instance().getWagon().getResourcePouch();
-            Inventory storage = GameInstance.instance().getWagon().getStorage();
+        var wagon = GameInstance.instance().getGameState().getPartyState().getWagon();
+        if (wagon != null) {
+            Inventory resourcePouch = wagon.getResourcePouch();
+            Inventory storage = wagon.getStorage();
 
             resourcePouch.addItem(GameItems.WILLOW_BARK.toItem());
             resourcePouch.addItem(GameItems.CURED_LEATHER.toItem());

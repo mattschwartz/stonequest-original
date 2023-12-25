@@ -15,7 +15,7 @@ import com.barelyconscious.worlds.game.StatName;
 import com.barelyconscious.worlds.game.TraitName;
 import com.barelyconscious.worlds.game.entities.CollectorNpc;
 import com.barelyconscious.worlds.game.entities.ExtractorNpc;
-import com.barelyconscious.worlds.game.systems.HeroSystem;
+import com.barelyconscious.worlds.game.systems.PartySystem;
 import com.barelyconscious.worlds.game.systems.LootSystem;
 import com.barelyconscious.worlds.game.types.Biome;
 import com.barelyconscious.worlds.game.types.Climate;
@@ -198,14 +198,14 @@ public class TerritoryGenerator {
             ));
 
             Hero firstHero = GameInstance.instance()
-                .getSystem(HeroSystem.class)
-                .getHeroBySlot(HeroSystem.PartySlot.LEFT);
+                .getSystem(PartySystem.class)
+                .getHeroBySlot(PartySystem.PartySlot.LEFT);
             Hero secondHero = GameInstance.instance()
-                .getSystem(HeroSystem.class)
-                .getHeroBySlot(HeroSystem.PartySlot.MIDDLE);
+                .getSystem(PartySystem.class)
+                .getHeroBySlot(PartySystem.PartySlot.MIDDLE);
             Hero thirdHero = GameInstance.instance()
-                .getSystem(HeroSystem.class)
-                .getHeroBySlot(HeroSystem.PartySlot.RIGHT);
+                .getSystem(PartySystem.class)
+                .getHeroBySlot(PartySystem.PartySlot.RIGHT);
 
             int cameraXOffs = GameInstance.instance().getCamera().getViewWidth() / 2;
             int cameraYOffs = GameInstance.instance().getCamera().getViewHeight() / 2;

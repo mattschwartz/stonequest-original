@@ -12,7 +12,7 @@ import com.barelyconscious.worlds.game.resources.spritesheet.GUISpriteSheet;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.game.resources.WSprite;
 import com.barelyconscious.worlds.common.shape.Vector;
-import com.barelyconscious.worlds.game.systems.HeroSystem;
+import com.barelyconscious.worlds.game.systems.PartySystem;
 import lombok.extern.log4j.Log4j2;
 
 import java.awt.Color;
@@ -142,7 +142,7 @@ public class HeroQuickbarPanel extends MouseInputWidget {
             spriteHeroPortrait));
 
         GameInstance.instance()
-            .getSystem(HeroSystem.class).delegateHeroSelectionChanged.bindDelegate(e -> {
+            .getSystem(PartySystem.class).delegateHeroSelectionChanged.bindDelegate(e -> {
                 this.selectedSpriteWidget.setEnabled(e.getSelectedHero() == hero);
                 return null;
             });

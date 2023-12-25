@@ -67,7 +67,11 @@ public class ItemLootActor extends Actor {
 
         nextUpdateComponent.onNextUpdate(eventArgs -> {
             if (numHeroesOver > 0 && item != null) {
-                final Inventory inventory = GameInstance.instance().getWagon().getStorage();
+                final Inventory inventory = GameInstance.instance()
+                    .getGameState()
+                    .getPartyState()
+                    .getWagon()
+                    .getStorage();
                 if (inventory.addItem(item)) {
                     System.out.println("Picked up: " + item.getName());
                     item = null;

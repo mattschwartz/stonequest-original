@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a021717e-f034-41bd-ac90-3e2c55716ee3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.1.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.1.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.1.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.1.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.1.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.1.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
@@ -12,13 +14,16 @@
       <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/engine/gui/HeroQuickbarPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/engine/gui/HeroQuickbarPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/engine/gui/widgets/ItemSlotWidget.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/engine/gui/widgets/ItemSlotWidget.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/entity/Hero.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/entity/Hero.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/entity/ItemLootActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/entity/ItemLootActor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/GameInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/GameInstance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/GameState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/playercontroller/MouseKeyboardPlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/playercontroller/MouseKeyboardPlayerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/rng/TerritoryGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/rng/TerritoryGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/systems/CollectorSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/systems/CollectorSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/systems/HeroSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/game/systems/PartySystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/gamedata/GameStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/gamedata/GameStateManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/gamedata/GuiInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/gamedata/GuiInitializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/gamedata/TestHeroInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/gamedata/TestHeroInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StoneQuest/test/java/com/barelyconscious/worlds/terminal/commands/CommandLineArgsTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/module/WorldsModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/StoneQuest/src/com/barelyconscious/worlds/module/WorldsModule.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
