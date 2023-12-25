@@ -2,7 +2,6 @@ package com.barelyconscious.worlds.game.systems;
 
 import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.game.GameInstance;
-import com.barelyconscious.worlds.game.GameState;
 import com.barelyconscious.worlds.game.item.Item;
 import lombok.Getter;
 

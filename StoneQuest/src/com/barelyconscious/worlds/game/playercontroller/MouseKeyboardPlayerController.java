@@ -17,6 +17,7 @@ import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
 import com.barelyconscious.worlds.common.UMath;
+import com.barelyconscious.worlds.game.systems.HeroSystem;
 import com.barelyconscious.worlds.gamedata.abilities.RenewAbility;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -98,18 +99,22 @@ public class MouseKeyboardPlayerController extends PlayerController {
             delegateOnQuitRequested.call(true);
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
-            GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
+            GameInstance.instance().getSystem(HeroSystem.class)
+                .setHeroSelectedSlot(HeroSystem.PartySlot.LEFT);
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_F2) {
-            GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.MIDDLE);
+            GameInstance.instance().getSystem(HeroSystem.class)
+                .setHeroSelectedSlot(HeroSystem.PartySlot.MIDDLE);
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
-            GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.RIGHT);
+            GameInstance.instance().getSystem(HeroSystem.class)
+                .setHeroSelectedSlot(HeroSystem.PartySlot.RIGHT);
         }
 
         handleAbilityKeybinding(keyEvent);
 
         final MoveComponent move = GameInstance.instance()
+            .getSystem(HeroSystem.class)
             .getHeroSelected()
             .getComponent(MoveComponent.class);
 
@@ -129,10 +134,13 @@ public class MouseKeyboardPlayerController extends PlayerController {
         }
 
         if (keyEvent.getKeyCode() == KeyEvent.VK_TAB) {
-            int curIndex = GameInstance.instance().getSelectedHeroId().index;
+            int curIndex = GameInstance.instance()
+                .getGameState()
+                .getHeroState()
+                .getSelectedHeroId().index;
             int newIndex = (curIndex + 1) % 3;
-            GameInstance.instance().setHeroSelectedSlot(
-                GameInstance.PartySlot.fromSlotId(newIndex));
+            GameInstance.instance().getSystem(HeroSystem.class)
+                .setHeroSelectedSlot(HeroSystem.PartySlot.fromSlotId(newIndex));
         }
 
         return null;
@@ -162,7 +170,9 @@ public class MouseKeyboardPlayerController extends PlayerController {
         }
 
         if (abilityIndex >= 0) {
-            List<AbilityComponent> abilityComponents = GameInstance.instance().getHeroSelected()
+            List<AbilityComponent> abilityComponents = GameInstance.instance()
+                .getSystem(HeroSystem.class)
+                .getHeroSelected()
                 .getComponentsOfType(AbilityComponent.class);
 
             if (abilityComponents != null && abilityIndex < abilityComponents.size()) {
@@ -170,7 +180,9 @@ public class MouseKeyboardPlayerController extends PlayerController {
                 if (firstAbility != null) {
                     firstAbility.getAbility().enact(AbilityContext.builder()
                         .world(GameInstance.instance().getWorld())
-                        .caster(GameInstance.instance().getHeroSelected())
+                        .caster(GameInstance.instance()
+                            .getSystem(HeroSystem.class)
+                            .getHeroSelected())
                         .build());
                 }
             }

@@ -202,7 +202,8 @@ public class WorldsModule extends AbstractModule {
         WildernessSystem wildernessSystem,
         SettlementSystem settlementSystem,
         LootSystem lootSystem,
-        CollectorSystem collectorSystem
+        CollectorSystem collectorSystem,
+        HeroSystem heroSystem
     ) {
         var gi = GameInstance.instance();
 
@@ -213,6 +214,7 @@ public class WorldsModule extends AbstractModule {
         gi.registerSystem(settlementSystem);
         gi.registerSystem(lootSystem);
         gi.registerSystem(collectorSystem);
+        gi.registerSystem(heroSystem);
 
         return gi;
     }

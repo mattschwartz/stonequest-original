@@ -15,6 +15,7 @@ import com.barelyconscious.worlds.engine.input.InputLayer;
 import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.item.ItemTag;
 import com.barelyconscious.worlds.common.shape.Box;
+import com.barelyconscious.worlds.game.systems.HeroSystem;
 import com.google.common.collect.Sets;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.AllArgsConstructor;
@@ -317,9 +318,9 @@ public class ItemSlotWidget extends MouseInputWidget {
                 } else if (e.getButton() == MouseEvent.BUTTON3) {
                     GameInstance.log("Calling item on use");
 
-                    if (item.meetsRequirements(GameInstance.instance().getHeroSelected())) {
+                    if (item.meetsRequirements(GameInstance.instance().getSystem(HeroSystem.class).getHeroSelected())) {
 
-                        item.applyProperties(GameInstance.instance().getHeroSelected());
+                        item.applyProperties(GameInstance.instance().getSystem(HeroSystem.class).getHeroSelected());
 
                         item.onUse.call(new Item.ItemContext());
                         if (item.isConsumable()) {

@@ -13,6 +13,7 @@ import com.barelyconscious.worlds.game.resources.ResourceSprite;
 import com.barelyconscious.worlds.game.resources.Resources;
 import com.barelyconscious.worlds.common.shape.Box;
 import com.barelyconscious.worlds.common.shape.Vector;
+import com.barelyconscious.worlds.game.systems.HeroSystem;
 import com.barelyconscious.worlds.gamedata.abilities.BulletAbility;
 import com.barelyconscious.worlds.gamedata.abilities.RenewAbility;
 
@@ -109,7 +110,7 @@ public class TestHeroInitializer {
             public void update(EventArgs eventArgs) {
                 LightSourceComponent component = getParent().getComponent(LightSourceComponent.class);
                 if (component != null && component.isEnabled()) {
-                    if (GameInstance.instance().getHeroSelected() == HERO_JOHN) {
+                    if (GameInstance.instance().getSystem(HeroSystem.class).getHeroSelected() == HERO_JOHN) {
                         component.setOpacity(1);
                     } else {
                         component.setOpacity(0.5f);
@@ -117,7 +118,7 @@ public class TestHeroInitializer {
                 }
             }
         });
-        GameInstance.instance().setHero(heroJohn, GameInstance.PartySlot.RIGHT);
+        GameInstance.instance().getSystem(HeroSystem.class).setHero(heroJohn, HeroSystem.PartySlot.RIGHT);
         world.addPersistentActor(HERO_JOHN);
 
         Hero heroNicnole = HERO_NICNOLE;
@@ -127,7 +128,7 @@ public class TestHeroInitializer {
             public void update(EventArgs eventArgs) {
                 LightSourceComponent component = getParent().getComponent(LightSourceComponent.class);
                 if (component != null && component.isEnabled()) {
-                    if (GameInstance.instance().getHeroSelected() == HERO_NICNOLE) {
+                    if (GameInstance.instance().getSystem(HeroSystem.class).getHeroSelected() == HERO_NICNOLE) {
                         component.setOpacity(1);
                     } else {
                         component.setOpacity(0.5f);
@@ -135,7 +136,7 @@ public class TestHeroInitializer {
                 }
             }
         });
-        GameInstance.instance().setHero(heroNicnole, GameInstance.PartySlot.MIDDLE);
+        GameInstance.instance().getSystem(HeroSystem.class).setHero(heroNicnole, HeroSystem.PartySlot.MIDDLE);
         world.addPersistentActor(HERO_NICNOLE);
 
         Hero heroPaul = HERO_PAUL;
@@ -145,7 +146,7 @@ public class TestHeroInitializer {
             public void update(EventArgs eventArgs) {
                 LightSourceComponent component = getParent().getComponent(LightSourceComponent.class);
                 if (component != null && component.isEnabled()) {
-                    if (GameInstance.instance().getHeroSelected() == HERO_PAUL) {
+                    if (GameInstance.instance().getSystem(HeroSystem.class).getHeroSelected() == HERO_PAUL) {
                         component.setOpacity(1);
                     } else {
                         component.setOpacity(0.5f);
@@ -153,10 +154,10 @@ public class TestHeroInitializer {
                 }
             }
         });
-        GameInstance.instance().setHero(heroPaul, GameInstance.PartySlot.LEFT);
+        GameInstance.instance().getSystem(HeroSystem.class).setHero(heroPaul, HeroSystem.PartySlot.LEFT);
         world.addPersistentActor(HERO_PAUL);
 
-        GameInstance.instance().setHeroSelectedSlot(GameInstance.PartySlot.LEFT);
+        GameInstance.instance().getSystem(HeroSystem.class).setHeroSelectedSlot(HeroSystem.PartySlot.LEFT);
 
         setupPartyInventory();
     }

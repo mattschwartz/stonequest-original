@@ -2,6 +2,7 @@ package com.barelyconscious.worlds.game;
 
 import com.barelyconscious.worlds.common.Delegate;
 import com.barelyconscious.worlds.game.systems.CollectorSystem;
+import com.barelyconscious.worlds.game.systems.HeroSystem;
 import com.barelyconscious.worlds.game.systems.SettlementSystem;
 import com.barelyconscious.worlds.game.systems.WildernessSystem;
 import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
@@ -26,4 +27,5 @@ public class GameState {
     private final SettlementSystem.SettlementState settlementState;
     private final WildernessSystem.WildernessState wildernessState;
     private final CombatSystem.CombatState combatState;
+    private final HeroSystem.HeroState heroState;
 }
