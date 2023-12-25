@@ -60,7 +60,7 @@ public final class GameRunner {
 
         GuiInitializer.createGui(
             injector.getInstance(GuiCanvas.class),
-            world, playerController);
+            world);
 
         world.addPersistentActor(new CameraActor(screen.getCamera()));
 

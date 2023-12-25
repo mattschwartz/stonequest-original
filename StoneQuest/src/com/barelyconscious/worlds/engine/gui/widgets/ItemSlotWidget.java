@@ -143,14 +143,20 @@ public class ItemSlotWidget extends MouseInputWidget {
             sb.append("\n");
             sb.append("{COLOR=200,200,200,200}{STYLE=ITALIC}").append(description).append("\n");
             for (var prop : inventoryItem.item.getProperties()) {
-                sb.append("{COLOR=255,255,255,255}{STYLE=NONE}").append(prop.getPropertyDescription()).append("\n");
+                if (prop.getPropertyDescription() == null) {
+                    System.out.println("This prop has null desc:" + prop);
+                }
+                sb.append("\n").append("{COLOR=255,255,255,255}{STYLE=NONE}").append(prop.getPropertyDescription());
             }
             if (inventoryItem.item.isConsumable()) {
                 sb.append("\n").append("{COLOR=0,255,0,255}{STYLE=NONE}Right click to use");
             }
-            // append tags
-            for (var tag : inventoryItem.item.getTags()) {
-                sb.append("\n{COLOR=GRAY}").append(tag.getTagName()).append(" ");
+
+            if (eventArgs.IS_DEBUG) {
+                // append tags
+                for (var tag : inventoryItem.item.getTags()) {
+                    sb.append("\n{COLOR=GRAY}").append(tag.getTagName()).append(" ");
+                }
             }
 
             final String tooltipText = sb.toString();

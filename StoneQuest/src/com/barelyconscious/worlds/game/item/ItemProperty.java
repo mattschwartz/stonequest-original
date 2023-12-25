@@ -148,13 +148,8 @@ public abstract class ItemProperty {
 
             final StringBuilder sb = new StringBuilder();
             sb.append(minWeaponDamage).append("-").append(maxWeaponDamage).append(" damage");
-            sb.append(" (").append(weaponSpeed).append("s)");
+            sb.append(" (").append(String.format("%.2f", weaponSpeed)).append("s)");
             propertyDescription = sb.toString();
-        }
-
-        @Override
-        public String getPropertyDescription() {
-            return null;
         }
 
         @Override

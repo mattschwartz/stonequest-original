@@ -20,8 +20,7 @@ public final class GuiInitializer {
 
     public static void createGui(
         final GuiCanvas gui,
-        final World world,
-        final PlayerController playerController
+        final World world
     ) {
         TileInfoWidget tiw = new TileInfoWidget(LayoutData.builder()
             .anchor(new VDim(0.5f, 0, -45, 15))
