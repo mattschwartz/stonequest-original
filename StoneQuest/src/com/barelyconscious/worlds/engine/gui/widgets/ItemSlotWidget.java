@@ -161,19 +161,6 @@ public class ItemSlotWidget extends MouseInputWidget {
 
             final Box textBounds, borderBounds;
 
-//            textBounds = new Box(
-//                screenBounds.left - ttWidth,
-//                screenBounds.left,
-//                screenBounds.top + 8,
-//                screenBounds.top);
-//
-//            borderBounds = new Box(
-//                textBounds.left - 4,
-//                screenBounds.left + 4,
-//                screenBounds.top - ttHeight - 8,
-//                screenBounds.top);
-
-
             int xOffs = 0;
             int yOffs = 0;
 
@@ -247,7 +234,6 @@ public class ItemSlotWidget extends MouseInputWidget {
         } else if (acceptsItem(item)) {
             this.item = item;
             itemSpriteWidget.setSprite(item.getSprite().load());
-            System.out.println("set sprite to " + item.getName());
             itemSpriteWidget.setEnabled(true);
         } else {
             return null;
@@ -329,11 +315,9 @@ public class ItemSlotWidget extends MouseInputWidget {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     ItemFollowCursorWidget.setInventoryItemOnCursor(inventory.removeStackAt(inventorySlotId));
                 } else if (e.getButton() == MouseEvent.BUTTON3) {
-
-                    System.out.println("Calling item on use");
+                    GameInstance.log("Calling item on use");
 
                     if (item.meetsRequirements(GameInstance.instance().getHeroSelected())) {
-                        System.out.println("Item meets requirements");
 
                         item.applyProperties(GameInstance.instance().getHeroSelected());
 
@@ -342,7 +326,7 @@ public class ItemSlotWidget extends MouseInputWidget {
                             inventory.consumeOrRemoveItem(inventorySlotId);
                         }
                     } else {
-                        System.out.println("Item does not meet requirements");
+                        GameInstance.log("Item does not meet requirements");
                     }
                 }
             }
