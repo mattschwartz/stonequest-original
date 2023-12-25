@@ -201,28 +201,20 @@ public class WorldsModule extends AbstractModule {
         GuiSystem guiSystem,
         WildernessSystem wildernessSystem,
         SettlementSystem settlementSystem,
-        LootSystem lootSystem
+        LootSystem lootSystem,
+        CollectorSystem collectorSystem
     ) {
         var gi = GameInstance.instance();
+
         gi.setWagon(partyWagon);
         gi.registerSystem(combatSystem);
         gi.registerSystem(guiSystem);
         gi.registerSystem(wildernessSystem);
         gi.registerSystem(settlementSystem);
         gi.registerSystem(lootSystem);
+        gi.registerSystem(collectorSystem);
+
         return gi;
-    }
-
-    @Provides
-    @Singleton
-    LootSystem providesLootSystem() {
-        return new LootSystem();
-    }
-
-    @Provides
-    @Singleton
-    SettlementSystem providesSettlementSystem() {
-        return new SettlementSystem();
     }
 
     @Provides

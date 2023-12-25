@@ -5,6 +5,7 @@ import com.barelyconscious.worlds.engine.gui.Widget;
 import com.barelyconscious.worlds.engine.gui.widgets.ItemSlotWidget;
 import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
+import com.barelyconscious.worlds.game.systems.CollectorSystem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,12 @@ public class CollectionInventory extends Widget {
 
     @Override
     public void onReady() {
+        GameInstance.instance().getSystem(CollectorSystem.class).delegateOnStateChanged
+            .bindDelegate(this::updateCollectionInventory);
+        updateCollectionInventory(null);
+    }
+
+    private Void updateCollectionInventory(CollectorSystem.CollectorState state) {
         var collection = GameInstance.instance().getGameState()
             .getCollectorState()
             .getCollection();
@@ -54,6 +61,8 @@ public class CollectionInventory extends Widget {
                 1
             ));
         }
+
+        return null;
     }
 
     private Void onItemChanged(Inventory.InventoryItemEvent inventoryItemEvent) {

@@ -6,8 +6,11 @@ import com.barelyconscious.worlds.engine.gui.Widget;
 import com.barelyconscious.worlds.engine.gui.widgets.ButtonWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.ItemSlotWidget;
 import com.barelyconscious.worlds.engine.gui.widgets.TextFieldWidget;
+import com.barelyconscious.worlds.game.GameInstance;
 import com.barelyconscious.worlds.game.Inventory;
+import com.barelyconscious.worlds.game.item.Item;
 import com.barelyconscious.worlds.game.item.tags.CollectibleItemTag;
+import com.barelyconscious.worlds.game.systems.CollectorSystem;
 
 public class CollectionDropBoxWidget extends Widget {
 
@@ -50,6 +53,12 @@ public class CollectionDropBoxWidget extends Widget {
             .size(0, 0, 80, 24)
             .build(),
             () -> {
+                var collector = GameInstance.instance().getSystem(CollectorSystem.class);
+                collector.addToCollection(dropslot.getItem());
+
+                dropslotInventory.removeItemAt(0);
+                setThings(null);
+
                 return null;
             });
         sellButton.setEnabled(false);
@@ -66,18 +75,22 @@ public class CollectionDropBoxWidget extends Widget {
             return null;
         }
 
-        if (inventoryItemEvent.item == null) {
+        setThings(inventoryItemEvent.item);
+
+        return null;
+    }
+
+    private void setThings(Item item) {
+        if (item == null) {
             dropslot.setItem(null);
             itemName.setText(null);
             collectionHintText.setEnabled(true);
             sellButton.setEnabled(false);
         } else {
-            dropslot.setItem(inventoryItemEvent.item);
-            itemName.setText(inventoryItemEvent.item.getName());
+            dropslot.setItem(item);
+            itemName.setText(item.getName());
             collectionHintText.setEnabled(false);
             sellButton.setEnabled(true);
         }
-
-        return null;
     }
 }

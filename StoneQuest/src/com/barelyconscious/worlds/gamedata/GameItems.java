@@ -111,15 +111,15 @@ public class GameItems {
         new ArrayList<>(),
         new ArrayList<>());
     public static GameItems CORRUPTED_IMAGE = new GameItems(1,
-        "Corrupted Image", "A corrupted image.",
+        "Corrupted Image", "A corrupted image. Take to an extractor.",
         new BetterSpriteResource("items::digital_image_corrupt"),
-        Set.of(StackableItemTag.STACKABLE, CollectibleItemTag.COLLECTIBLE, ExtractableItemTag.EXTRACTABLE),
+        Set.of(StackableItemTag.STACKABLE, ExtractableItemTag.EXTRACTABLE),
         new ArrayList<>(),
         new ArrayList<>());
     public static GameItems RECOVERED_IMAGE = new GameItems(1,
-        "Recovered Image", "A recovered image.",
+        "Recovered Image", "A recovered image. Take to a collector.",
         new BetterSpriteResource("items::recovered_digital_image"),
-        Set.of(StackableItemTag.STACKABLE, CollectibleItemTag.COLLECTIBLE, ExtractableItemTag.EXTRACTABLE),
+        Set.of(StackableItemTag.STACKABLE, CollectibleItemTag.COLLECTIBLE),
         new ArrayList<>(),
         new ArrayList<>());
     public static GameItems ELDRITCH_DRIVE = new GameItems(1,
