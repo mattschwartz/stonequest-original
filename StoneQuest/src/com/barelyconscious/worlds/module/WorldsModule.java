@@ -5,6 +5,7 @@ import com.barelyconscious.worlds.engine.gui.collector.CollectorDialogPanel;
 import com.barelyconscious.worlds.engine.gui.GuiCanvas;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.WorldLogPanel;
+import com.barelyconscious.worlds.engine.gui.extractor.ExtractorDialogPanel;
 import com.barelyconscious.worlds.engine.gui.widgets.TooltipWidget;
 import com.barelyconscious.worlds.entity.Wagon;
 import com.barelyconscious.worlds.game.GameInstance;
@@ -229,7 +230,8 @@ public class WorldsModule extends AbstractModule {
             "ActionText",
             "topRightText"),
             new WorldLogPanel(),
-            new CollectorDialogPanel());
+            new CollectorDialogPanel(),
+            new ExtractorDialogPanel());
     }
 
     @Provides

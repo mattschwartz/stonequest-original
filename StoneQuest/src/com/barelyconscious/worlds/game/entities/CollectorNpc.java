@@ -42,11 +42,15 @@ public class CollectorNpc extends Actor {
         }
 
         private final static List<String> SALUTATIONS = List.of(
-            "What kin I do fer you now?",
-            "How can I help ya?",
-            "What can I do for ya?",
-            "What can I do for ya, stranger?",
-            "Hey there",
-            "How are ya?"
+            "Greetings, techno-traveler!",
+            "Hello there, bearer of digital wonders!",
+            "Salutations, keeper of the electronic realm!",
+            "Ahoy, digital voyager! What have you brought me today?",
+            "Well met, bringer of technological tidings!",
+            "Hey, savvy tech-treasure seeker! What's in your bag of wonders?",
+            "Hello, seeker of circuits and screens! What can I do for you?",
+            "Greetings, wanderer of the digital landscape! What stories do your devices hold?",
+            "Ah, the harbinger of gadgets approaches! What can I do for you today?",
+            "Hello, fellow tech enthusiast! What goodies do you have for trade?"
         );
 }

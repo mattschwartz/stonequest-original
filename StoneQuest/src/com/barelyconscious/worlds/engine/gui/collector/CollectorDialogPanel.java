@@ -51,6 +51,7 @@ public class CollectorDialogPanel extends Widget {
 
     public void show() {
         setEnabled(true);
+        widgets.forEach(widget -> widget.setEnabled(true));
     }
 
     private void addOptionSelectWidgets() {

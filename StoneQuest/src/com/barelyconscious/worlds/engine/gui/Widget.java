@@ -16,6 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class Widget {
 
     private boolean isEnabled = true;
+    private boolean lastEnabled = true;
 
     @Getter
     @Setter
@@ -59,11 +60,18 @@ public abstract class Widget {
         return isEnabled;
     }
 
+
     public void setEnabled(boolean enabled) {
+        // todo there's a good chance this is also wrong
+        lastEnabled = isEnabled;
         isEnabled = enabled;
-        // todo -   this makes sense to do, but it causes some child widgets
-        //          to be enabled when they shouldn't be (tooltips)
-        // widgets.forEach(t -> t.setEnabled(enabled));
+//        widgets.forEach(t -> {
+//            if (enabled) {
+//                t.setEnabled(t.lastEnabled);
+//            } else {
+//                t.setEnabled(false);
+//            }
+//        });
     }
 
     /**

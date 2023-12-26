@@ -9,16 +9,15 @@ import java.util.EnumMap;
 
 public class CloseButtonWidget extends Widget {
 
+    private final ButtonWidget buttonWidget;
+
     public CloseButtonWidget(Widget parent) {
         super(LayoutData.builder()
             .anchor(1, 0, -25, 2)
             .size(0, 0, 24, 20)
             .build());
 
-        ButtonWidget buttonWidget = new ButtonWidget(LayoutData.DEFAULT, () -> {
-            parent.setEnabled(false);
-            return null;
-        });
+        buttonWidget = new ButtonWidget(LayoutData.DEFAULT, () -> onClick(parent));
 
         WSprite btnDefault = new BetterSpriteResource("gui::button_close_up").load();
         WSprite btnOver = new BetterSpriteResource("gui::button_close_over").load();
@@ -32,5 +31,17 @@ public class CloseButtonWidget extends Widget {
             put(ButtonWidget.ButtonWidgetState.DISABLED, btnDisabled);
         }});
         addWidget(buttonWidget);
+    }
+
+    private Void onClick(Widget parent) {
+        parent.setEnabled(false);
+        buttonWidget.setEnabled(false);
+        return null;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        buttonWidget.setEnabled(enabled);
     }
 }
