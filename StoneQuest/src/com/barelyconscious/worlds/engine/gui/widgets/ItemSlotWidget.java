@@ -306,6 +306,8 @@ public class ItemSlotWidget extends MouseInputWidget {
      */
     @Override
     public boolean onMouseClicked(MouseEvent e) {
+        System.out.println("Clicked");
+
         if (!isInteractable) {
             return false;
         }

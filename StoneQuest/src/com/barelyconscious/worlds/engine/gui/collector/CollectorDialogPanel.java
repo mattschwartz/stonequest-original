@@ -1,6 +1,5 @@
 package com.barelyconscious.worlds.engine.gui.collector;
 
-import com.barelyconscious.worlds.engine.graphics.FontContext;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.Widget;
 import com.barelyconscious.worlds.engine.gui.widgets.ButtonWidget;

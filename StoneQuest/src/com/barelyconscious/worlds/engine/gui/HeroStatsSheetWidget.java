@@ -46,11 +46,13 @@ public class HeroStatsSheetWidget extends Widget {
         setupStatsWidgets(backdrop);
 
         final String heroClassText = "{SIZE=12}{COLOR=200,200,200,255}" + hero.getHeroClassType().getHeroClassName();
-        addWidget(new TextFieldWidget(LayoutData.builder()
+        var tfw = new TextFieldWidget(LayoutData.builder()
             .anchor(new VDim(0, 0, 11, 30))
             .size(new VDim(0, 0, 156, 0))
             .build(),
-            heroClassText));
+            heroClassText);
+        tfw.setShowShadow(false);
+        addWidget(tfw);
 
         createHeroDescriptionTooltipWidget(backdrop);
         detailedStatsWidget = createDetailedStatsWidget(backdrop, hero);
@@ -114,6 +116,7 @@ public class HeroStatsSheetWidget extends Widget {
             .anchor(new VDim(0, 0.5f, 0, 0))
             .build(),
             formatString + Math.round(avc.getCurrentValue()));
+        statWidget.setShowShadow(false);
         avc.delegateOnValueChanged.bindDelegate(e -> {
             statWidget.setText(formatString + Math.round(e.currentValue));
             return null;
@@ -205,6 +208,7 @@ public class HeroStatsSheetWidget extends Widget {
         DynamicValueComponent statValue
     ) {
         var statNameTfw = new TextFieldWidget(LayoutData.DEFAULT, "{COLOR=LIGHT_GRAY}" + statName.name);
+        statNameTfw.setShowShadow(false);
         statNameTfw.setTextAlignment(FontContext.TextAlign.LEFT);
         statNameTfw.setVerticalTextAlignment(FontContext.VerticalTextAlignment.TOP);
 
@@ -221,6 +225,7 @@ public class HeroStatsSheetWidget extends Widget {
 
         var statValueTfw = new TextFieldWidget(LayoutData.DEFAULT,
             tex + String.format("%.0f", statValue.getCurrentValue()));
+        statValueTfw.setShowShadow(false);
 
         statValue.delegateOnValueChanged.bindDelegate(e -> {
             if (e.currentValue < 0) {

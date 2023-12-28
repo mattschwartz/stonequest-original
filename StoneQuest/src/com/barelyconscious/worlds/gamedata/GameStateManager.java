@@ -4,12 +4,11 @@ import com.barelyconscious.worlds.entity.Wagon;
 import com.barelyconscious.worlds.entity.wilderness.Settlement;
 import com.barelyconscious.worlds.game.GameState;
 import com.barelyconscious.worlds.game.Inventory;
-import com.barelyconscious.worlds.game.systems.CollectorSystem;
-import com.barelyconscious.worlds.game.systems.PartySystem;
-import com.barelyconscious.worlds.game.systems.SettlementSystem;
-import com.barelyconscious.worlds.game.systems.WildernessSystem;
+import com.barelyconscious.worlds.game.systems.*;
 import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
 import com.google.common.collect.Lists;
+
+import java.util.ArrayList;
 
 public class GameStateManager {
 
@@ -50,6 +49,10 @@ public class GameStateManager {
                     new Inventory(32),
                     new Inventory(16)
                 ))
+                .build())
+            .extractorState(ExtractorSystem.ExtractorState.builder()
+                .codecs(new ArrayList<>())
+                .peripherals(new ArrayList<>())
                 .build())
             .build();
     }

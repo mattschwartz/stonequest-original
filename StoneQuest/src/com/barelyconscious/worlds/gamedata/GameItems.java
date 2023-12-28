@@ -129,6 +129,43 @@ public class GameItems {
         new ArrayList<>(),
         new ArrayList<>());
 
+    public static GameItems CODEC_IMAGE = new GameItems(1,
+        "Codec Image", "A codec for displaying images.",
+        new BetterSpriteResource("items::extractor_codec_img"),
+        Set.of(),
+        new ArrayList<>(),
+        new ArrayList<>());
+    public static GameItems CODEC_AUDIO = new GameItems(1,
+        "Codec Audio", "A codec for playing audio.",
+        new BetterSpriteResource("items::extractor_codec_aux"),
+        Set.of(),
+        new ArrayList<>(),
+        new ArrayList<>());
+    public static GameItems CODEC_VIDEO = new GameItems(1,
+        "Codec Video", "A codec for playing video.",
+        new BetterSpriteResource("items::extractor_codec_vid"),
+        Set.of(),
+        new ArrayList<>(),
+        new ArrayList<>());
+    public static GameItems HANDAXE = new GameItems(1,
+        "Handaxe", "A small axe.",
+        new BetterSpriteResource("items::handaxe"),
+        Set.of(EquipmentItemTag.EQUIPMENT_RIGHT_HAND, RelatedSkillItemTag.WOODWORKING),
+        Lists.newArrayList(new Requirement.TraitRequirement(TraitName.STRENGTH, 10)),
+        Lists.newArrayList(new ItemProperty.WeaponDamageProperty(3, 6, 2.0f)));
+    public static GameItems DOUBLE_AXE = new GameItems(1,
+        "Double Axe", "A double axe.",
+        new BetterSpriteResource("items::double_axe"),
+        Set.of(EquipmentItemTag.EQUIPMENT_TWO_HANDED, RelatedSkillItemTag.WOODWORKING),
+        Lists.newArrayList(new Requirement.TraitRequirement(TraitName.STRENGTH, 10)),
+        Lists.newArrayList(new ItemProperty.WeaponDamageProperty(5, 10, 2.0f)));
+    public static GameItems IRON_BOOTS = new GameItems(1,
+        "Iron Boots", "A pair of iron boots.",
+        new BetterSpriteResource("items::iron_boots"),
+        Set.of(EquipmentItemTag.EQUIPMENT_FEET, RelatedSkillItemTag.METALWORKING),
+        Lists.newArrayList(new Requirement.TraitRequirement(TraitName.STRENGTH, 6)),
+        Lists.newArrayList(new ItemProperty.StatItemProperty(StatName.ARMOR, 3)));
+
     private final int itemId;
     private final int itemLevel;
     private final String name;

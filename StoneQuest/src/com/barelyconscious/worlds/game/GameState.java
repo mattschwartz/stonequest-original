@@ -1,10 +1,7 @@
 package com.barelyconscious.worlds.game;
 
 import com.barelyconscious.worlds.common.Delegate;
-import com.barelyconscious.worlds.game.systems.CollectorSystem;
-import com.barelyconscious.worlds.game.systems.PartySystem;
-import com.barelyconscious.worlds.game.systems.SettlementSystem;
-import com.barelyconscious.worlds.game.systems.WildernessSystem;
+import com.barelyconscious.worlds.game.systems.*;
 import com.barelyconscious.worlds.game.systems.combat.CombatSystem;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,4 +25,5 @@ public class GameState {
     private final WildernessSystem.WildernessState wildernessState;
     private final CombatSystem.CombatState combatState;
     private final PartySystem.PartyState partyState;
+    private final ExtractorSystem.ExtractorState extractorState;
 }

@@ -1,6 +1,5 @@
 package com.barelyconscious.worlds.engine.gui.extractor;
 
-import com.barelyconscious.worlds.engine.EventArgs;
 import com.barelyconscious.worlds.engine.gui.LayoutData;
 import com.barelyconscious.worlds.engine.gui.Widget;
 import com.barelyconscious.worlds.engine.gui.widgets.CloseButtonWidget;
@@ -10,7 +9,7 @@ import com.barelyconscious.worlds.game.resources.BetterSpriteResource;
 
 public class ExtractorDialogPanel extends Widget {
 
-    private final TextFieldWidget dialogText;
+
 
     public ExtractorDialogPanel() {
         super(LayoutData.builder()
@@ -18,7 +17,7 @@ public class ExtractorDialogPanel extends Widget {
             .size(0, 0, 840, 376)
             .build());
 
-        dialogText = new TextFieldWidget(
+        var dialogText = new TextFieldWidget(
             "Ah, greetings traveler! Fancy parting ways with\n" +
                 "some of your tech treasures? I'm in the market\n" +
                 "for all kinds of digital delights.\n\nWhat do you say?",
@@ -30,11 +29,17 @@ public class ExtractorDialogPanel extends Widget {
         addWidget(new SpriteWidget(new BetterSpriteResource("gui::extractor_panel").load()));
         addWidget(new CloseButtonWidget(this));
         addWidget(dialogText);
-
+        addWidget(new ExtractorUpgradesWidget());
     }
 
     public void show() {
         setEnabled(true);
         widgets.forEach(widget -> widget.setEnabled(true));
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        widgets.forEach(widget -> widget.setEnabled(enabled));
     }
 }

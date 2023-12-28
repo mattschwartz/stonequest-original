@@ -185,6 +185,10 @@ public class TestHeroInitializer {
             storage.addItem(GameItems.RECURVE_BOW.toItem());
             storage.addItem(GameItems.CORRUPTED_IMAGE.toItem());
             storage.addItem(GameItems.RECOVERED_IMAGE.toItem());
+            storage.addItem(GameItems.CODEC_IMAGE.toItem());
+            storage.addItem(GameItems.CODEC_AUDIO.toItem());
+            storage.addItem(GameItems.CODEC_VIDEO.toItem());
+            storage.addItem(GameItems.HANDAXE.toItem());
         }
     }
 }
