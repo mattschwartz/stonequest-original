@@ -188,6 +188,7 @@ public class TestHeroInitializer {
             storage.addItem(GameItems.CODEC_IMAGE.toItem());
             storage.addItem(GameItems.CODEC_AUDIO.toItem());
             storage.addItem(GameItems.CODEC_VIDEO.toItem());
+            storage.addItem(GameItems.CODEC_VIDEO.toItem());
             storage.addItem(GameItems.HANDAXE.toItem());
         }
     }
